@@ -1,0 +1,78 @@
+<div class="zzc_heka_nav">
+    <div class="zzc_heka_nav_li" data-type="card_word">
+   
+            <img class="" src="__HOME_IMAGES__/h_icon_1<if condition='I("get.do") eq card_word'>_on</if>.png">
+            <div class="zzc_heka_nav_li_title">贺词</div>
+      
+    </div>
+    <div class="zzc_heka_nav_li" data-type="cardEditBg">
+   
+            <img class="" src="__HOME_IMAGES__/h_icon_2<if condition='I("get.do") eq cardEditBg'>_on</if>.png">
+            <div class="zzc_heka_nav_li_title">背景</div>
+
+    </div>
+    <div class="zzc_heka_nav_li" data-type="music">
+
+            <img class="" src="__HOME_IMAGES__/h_icon_3<if condition='I("get.do") eq music'>_on</if>.png">
+            <div class="zzc_heka_nav_li_title">音乐</div>
+
+    </div>
+    <div class="zzc_heka_nav_li" data-type="cardWechatShare">
+
+            <img class="" src="__HOME_IMAGES__/h_icon_4<if condition='I("get.do") eq cardWechatShare'>_on</if>.png">
+            <div class="zzc_heka_nav_li_title">分享</div>
+
+    </div>
+    <div class="zzc_heka_nav_li" data-type="cardPreview">
+
+            <img class="" src="__HOME_IMAGES__/h_icon_5<if condition='I("get.do") eq cardPreview'>_on</if>.png">
+            <div class="zzc_heka_nav_li_title">布局</div>
+
+    </div>
+</div>
+<div class="zzc_myranwen_bottom" style="z-index:999" >
+            <input type="button" name="预览" id="yulan" value="预览" class="zzc_myruanwen_bottom_button" />
+            <input type="button" name="保存" id="save" data-type="{$Think.get.do}" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg"  />
+        </div>
+<block name="js_extend">
+<script type="text/javascript">
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+    $(function(){       //, #save
+        $('.zzc_heka_nav_li').on('touchend',function(){
+
+            var type=$(this).attr('data-type');
+            $('input[name=do]').val(type);
+            if(typeof( $("#moveid").position())!="undefined"){
+                var top = $("#moveid").position().top;
+                $('input[name=content_y]').val(top);
+            }
+            
+            $("#form").submit();
+        });
+        $('#yulan').on('touchend',function(){
+            var type=$(this).attr('data-type');
+            $('input[name=do]').val(type);
+            if(typeof( $("#moveid").position())!="undefined"){
+                var top = $("#moveid").position().top;
+                $('input[name=content_y]').val(top);
+            }
+            var jump_url="{:url('Home/Greeting/templetPreview?id='.I('get.id'))}";
+            $('input[name=jump_url]').val(jump_url);
+            $("#form").submit();
+        });
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+
+</block>

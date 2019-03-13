@@ -1,0 +1,20 @@
+<?php
+
+namespace app\admin\controller;
+
+use think\Controller;
+
+class Base extends Controller
+{
+
+    function getModelClass()
+    {
+        $clazz = get_called_class();
+        $clazz = str_replace('controller','model',$clazz);
+        $object = new $clazz();
+        return $object;
+    }
+
+
+
+}

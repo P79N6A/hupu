@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<title>人脉设置</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				padding: .8rem;
+				background: #FFF;
+			}
+			
+			.div_select,
+			input {
+				width: 100%;
+				height: 50px;
+				background: #F6F6F7;
+				border: none;
+				font-size: 14px;
+				color: #999!important;
+				margin-bottom: 10px;
+			}
+			
+			input {
+				padding-left: 15px;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			ul li {
+				width: 100%;
+				height: 50px;
+				line-height: 50px;
+				border: 1px solid #E5E5E5;
+				border-left: 0;
+				border-right: 0;
+				font-size: 16px;
+			}
+			
+			button {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				border-radius: 0;
+				background: #2FB3D3;
+				color: #FFF;
+			}
+			
+			.mui-switch {
+				float: right;
+				margin-top: 10px;
+			}
+			
+			.mui-switch:before {
+				top: -10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form action="" id="form" method="post">
+			<div class="div_select"><span style="margin:10px;line-height: 50px;"><a href="{:U('Home/Trade/select')}"><if condition="$data['sq_type_id'] neq ''">{:getsqname($data['id'])}<else />请选择你的行业</if></a></span></div>
+			<!-- <input type="" name="" id="" value="" placeholder=""/> -->
+			<input type="text" name="sq_keyword" id="" value="{$data.sq_keyword}" placeholder="输入搜索关键词,空格隔开" />
+			<p style="margin-top: 5px;">设置关键词，可以使您更容易地被搜索到</p>
+			<ul>
+				<li>
+					<span>允许被搜索</span>
+					<div id="sq_is_search" class="mui-switch <if condition=" $data[ 'sq_is_search']==1 ">mui-active</if>">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li style="border-top: 0;">
+					<span>需交换V网</span>
+					<div id="sq_is_share" class="mui-switch <if condition=" $data[ 'sq_is_share']==1 ">mui-active</if>">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+			</ul>
+			<input type="hidden" name="sq_is_search" value="{$data.sq_is_search}">
+			<input type="hidden" name="sq_is_share" value="{$data.sq_is_share}">
+
+		</form>
+		<button onclick="submit()">确定</button>
+	</body>
+	<script>
+		function submit() {
+			if($('#sq_is_search.mui-switch').hasClass('mui-active')) {
+				$('input[name=sq_is_search]').val(1);
+			} else {
+				$('input[name=sq_is_search]').val(0);
+			}
+			if($('#sq_is_share.mui-switch').hasClass('mui-active')) {
+				$('input[name=sq_is_share]').val(1);
+			} else {
+				$('input[name=sq_is_share]').val(0);
+			}
+			$("#form").submit();
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+</html>

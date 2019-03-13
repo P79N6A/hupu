@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>添加图文</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+		* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #FFF;
+			}
+			
+			.top {
+				width: 90%;
+				height: 2rem;
+				line-height: 2.5rem;
+				margin: 0 auto;
+				font-size: 0.8rem;
+				color: #333;
+				font-weight: 600;
+			}
+			
+			.txt {
+				width: 90%;
+				height: 1.6rem;
+				margin: 0 auto;
+				font-weight: 400;
+				padding-bottom: 0.8rem;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.txt>input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				font-size: 0.7rem;
+				font-weight: 400;
+				text-align: top;
+			}
+			
+			.cover {
+				width: 90%;
+				height: 3.175rem;
+				line-height: 3.175rem;
+				margin: 0 auto;
+				display: flex;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.c_cen {
+				width: 50%;
+				height: 100%;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.c_img {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				position: relative;
+			}
+			
+			.c_img>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.c_img>img {
+				width: 2.05rem;
+				height: 2.05rem;
+				margin: 0.5625rem 0;
+				border-radius: 0.25rem;
+			}
+			
+			.tu_img {
+				width: 90%;
+				height: 2.275rem;
+				line-height: 2.275rem;
+				margin: 0 auto;
+				display: flex;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.tu_tit {
+				width: 50%;
+				height: 100%;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.tu_kai {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #C5C5C5;
+				font-size: 0.7rem;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.tu_kai>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #C5C5C5;
+			}
+			
+			.tu_word {
+				width: 90%;
+				float: left;
+			}
+			
+			.tu_fu {
+				width: 0.4rem;
+				height: 0.7rem;
+				float: right;
+				margin: 0.8rem 0 0.725rem;
+			}
+			
+			.tu_fu>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.confirm {
+				width: 100%;
+				height: 2rem;
+				background: #fff;
+				padding: 0.2rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.save {
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.25rem;
+				line-height: 2rem;
+				border-radius: 0.2rem;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			.mask {
+				width: 7.5rem;
+				height: 6rem;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 0.125rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -3rem;
+				margin-left: -3.75rem;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mask img {
+				width: 2rem;
+				height: 2rem;
+				display: block;
+				margin: 0 auto;
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mask p {
+				color: #fff;
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			
+			/* 截图的 */
+			.btun {
+				width: 548px;
+				height: 10%;
+				margin: 0 auto;
+				font-size: 20px;
+			}
+			
+			#clipBtn {
+				width: 35%;
+				height: 80px;
+				line-height: 80px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				z-index: 999;
+				border-radius: 5px;
+				font-size: 32px;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 80px;
+				line-height: 80px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 26%;
+				position: relative;
+				z-index: 999;
+				font-size: 32px;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 229;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				width: 3rem;
+				height: 3rem;
+				position: absolute;
+				top: 42.5%;
+    			left: 50%;
+    			transform: translate(-50%, -42.5%);
+			}
+			
+			#clipArea {
+				height: 85%;
+				width: 100%;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			.photo-clip-layer{
+				background: rgba(255,255,255,0.8)
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel">取消</button>
+				<button id="clipBtn">截取</button>
+			</div>
+		</div>
+		<div class="top">图文标题</div>
+		<div class="txt">
+			<input class="txt_tit" type="text" value="" placeholder="点此输入标题" />
+		</div>
+		<div class="cover">
+			<div class="c_cen">封面</div>
+			<div class="c_img">
+				<input type="file" accept="image/*" id="up">
+				<img class="cover_img" src="__HOME_IMAGES__/newvnet/vhome/cover.png" alt="">
+			</div>
+		</div>
+		<div class="tu_img">
+			<div class="tu_tit">图文内容</div>
+			<div class="tu_kai">
+				<a href="javascript:;">
+					<div class="tu_word">开始编辑</div>
+					<div class="tu_fu">
+						<img src="__HOME_IMAGES__/newvnet/vhome/shape2x.png" alt="" />
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="confirm">
+			<div class="save">
+				保存
+			</div>
+		</div>
+		<div class="mask">
+			<img src="/Public/Home/images/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<div class="model"></div>
+		<input class="y_img" type="hidden" value="" />
+		<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+		<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+		<script>
+			var unionid = "{$unionid}";
+			//裁剪
+			var clipArea =  new PhotoClip("#clipArea", {
+				size: [700, 700],
+				outputSize: [640, 640],
+				file: "#up",
+				ok: "#clipBtn",
+				loadStart: function() {
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					$('.gif').hide();
+				},
+				done: function(dataURL) {
+                    var imgsrc = dataURL;
+                $.ajax({
+                    url: "/index.php?s=/Api/IndexApi/uploads_img",
+                    type: "post",
+                    data: {
+                        unionid: unionid,
+                        img: imgsrc,
+                        start_name: "Cards",
+                    },
+                    beforeSend: function () {
+                        $('.loading').show()
+                        $('.mask').show()
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        downing = res.AppendData;
+                        $(".cover_img").attr("src", downing);
+                        $(".y_img").val(downing);
+                        $('.loading').hide()
+                        $('.mask').hide()
+
+                    },
+                    error: function () {
+                        console.log('走了错误')
+                        $('.loading').hide()
+                        $('.mask').hide()
+                    }
+                })
+					
+				}
+            });
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+			});
+				$(".c_img img").on("click", function() {
+				$("#up").click();
+				$(".clip").show();
+			})
+
+			
+			var show_id = "{$show_id}";
+			var type_id = "{$type_id}";
+			var title = "{$title}"
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					show_id: show_id,
+					type_id: type_id
+
+				},
+				success: function(res) {
+//					console.log(res)
+					if(res.ResultType == 0) {
+						$(".txt_tit").val(res.AppendData.title);
+						if(res.AppendData.thumb==null||res.AppendData.thumb==""||res.AppendData.thumb==undefined){
+							$(".cover_img").attr("src", "__HOME_IMAGES__/newvnet/vhome/cover.png");
+						}else{
+							$(".cover_img").attr("src", res.AppendData.thumb);
+							$(".y_img").val(res.AppendData.thumb);
+						}
+						
+						
+						//							window.location.href = '/index.php?s=/Home/vhome/addimgtxt/type_id/'+type_id
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			//			$("#up").change(function() {
+			//				var that = $(this)
+			//				var file_img = this.files[0];
+			//				var unionid = "{$unionid}";
+			//				var formdata = new FormData();
+			//				formdata.append("img", file_img);
+			//				formdata.append("start_name", 'Cards');
+			//				formdata.append("unionid", unionid);
+			//				var render = new FileReader();
+			//				render.readAsDataURL(file_img)
+			//				render.onload = function(res) {
+			//					$.ajax({
+			//						type: 'post',
+			//						url: '/index.php?s=/Api/IndexApi/uploads_img',
+			//						dataType: 'json',
+			//						data: formdata,
+			//						processData: false,
+			//						contentType: false,
+			//						beforeSend: function() {
+			//							$(".mask").show();
+			//						},
+			//						success: function(result) {
+			//							$(".mask").hide();
+			//							if(result.ResultType == 0) {
+			//								$(".cover_img").attr("src", result.AppendData)
+			//								$(".y_img").val(result.AppendData);
+			//							}
+			//						},
+			//						error: function() {
+			//							console.log("错误")
+			//						}
+			//					});
+			//				}
+			//			})
+		
+
+			$(".tu_kai").on("click", function() {
+				//				var unionid = "{$unionid}";
+				//				var type_id = "{$type_id}";
+				//				var show_id = "{$show_id}";
+				//				var title="{$title}"
+				var tit = $(".txt_tit").val();
+				var co_img = $(".y_img").val();
+				//				console.log(unionid)
+				//				console.log(type_id)
+				//				console.log(tit)
+				//				console.log(co_img)
+				if($(".txt_tit").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入标题");
+					return false;
+				}
+				if($(".y_img").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请选择封面");
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: 'index.php?s=/Api/NewShowListApi/add_show_list',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						title: tit,
+						cover_img: co_img,
+						type_id: type_id,
+						show_id: show_id
+					},
+					success: function(res) {
+						console.log(res)
+						if(res.ResultType == 0) {
+							if(show_id == "") {
+								show_id = res.AppendData;
+							} else {
+								show_id = "{$show_id}";
+							}
+							window.location.href = '/index.php?s=/Home/vhome/addimgtxt/type_id/' + type_id + '/title/' + title+'/show_id/' + show_id
+	
+							//window.location.href = '/index.php?s=/Home/vhome/addimgtxt/show_id/' + show_id
+						}
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+			
+			
+			$(".save").on("click", function() {
+				//				var unionid = "{$unionid}";
+				//				var type_id = "{$type_id}";
+				//				var show_id = "{$show_id}";
+				//				var title="{$title}"
+				var tit = $(".txt_tit").val();
+				var co_img = $(".y_img").val();
+				//				console.log(unionid)
+				//				console.log(type_id)
+				//				console.log(tit)
+				//				console.log(co_img)
+				if($(".txt_tit").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入标题");
+					return false;
+				}
+				if($(".y_img").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请选择封面");
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: 'index.php?s=/Api/NewShowListApi/add_show_list',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						title: tit,
+						cover_img: co_img,
+						type_id: type_id,
+						show_id: show_id
+					},
+					success: function(res) {
+						console.log(res)
+						if(show_id == "") {
+
+							show_id = res.AppendData;
+						} else {
+
+							show_id = "{$show_id}";
+						}
+
+						window.location.href = '/index.php?s=/Home/vhome/myres/type_id/' + type_id + '/title/' + title+'/show_id/' + show_id
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+//			$(".tu_kai").on("click", function() {
+//				//				console.log(show_id);
+//				window.location.href = '/index.php?s=/Home/Vhome/addimgtxt/type_id/' + type_id + '/show_id/' + show_id + '/title/' + title
+//			})
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

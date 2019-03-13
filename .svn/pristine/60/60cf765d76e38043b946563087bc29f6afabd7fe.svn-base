@@ -1,0 +1,621 @@
+<?php
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+/** 新商圈*/
+class  Humancircle extends HomeBase{
+
+    /**
+     * 商脉搜索
+     */
+    public function index()
+    {
+    	$this->id = $this->userInfo['id'];
+        $this->unionid=$this->userInfo['unionid'];
+        // var_dump($this->id);die;
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $this->assign('phone',$this->userInfo['phone']);
+        $this->assign('share_url', $url);
+        return  $this->fetch();
+    }
+
+    /**
+     * 商脉搜索结果
+     */
+    public function myTrades()
+    {
+        $userInfo = session('user_info');
+        $data =['user_id' => $userInfo['id'],];
+        $tradeList = get_obj('trade_area')->trade_area_list($data);
+        $myTrade = get_obj('trade_area')->trade_area_find($data);
+        $tradeList=(json_decode($tradeList, true));
+        $myTrade=(json_decode($myTrade, true));
+        $joinTrade = Db::table('s_user_trade_area_member m')->join('s_user_trade_area as a on a.id = m.trade_id', 'left')
+            ->field('m.*, a.name,a.logo')->where(['m.user_id' => $userInfo['id']])->order('m.id DESC')->select();
+        if (count($tradeList['list']) == 0) {
+            return  $this->fetch('myTrade');
+        } else {
+            $this->assign('trade', $tradeList['list']);
+            $this->assign('myTrade', $myTrade['obj']);
+            $this->assign('joinTrade', $joinTrade);
+            $this->assign('count', count($joinTrade['list']));
+            $this->assign('joinCount', count($joinTrade));
+            return  $this->fetch();
+        }
+
+    }
+
+    /**
+     * 商会介绍
+     */
+    public function tradeDetail()
+    {
+        $countMember = Db::table('s_user_trade_area_member')->where(['trade_id' => Input('id'), 'status' => 1])->count();
+        $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+        $this->assign('trade', $trade);
+        $this->assign('countMember', $countMember);
+        return  $this->fetch();
+    }
+
+    /**
+     * 商会介绍
+     */
+    public function tradeManager()
+    {
+        $userInfo = session('user_info');
+        $data =[
+            'user_id' => $userInfo['id'],
+        ];
+        $myTrade = get_obj('trade_area')->trade_area_find($data);
+        $myTrade=(json_decode($myTrade, true));
+        $this->assign('trade', $myTrade['obj']);
+        return  $this->fetch();
+    }
+
+    /**
+     * 成员管理
+     */
+    public function memberManager()
+    {
+        $userInfo = session('user_info');
+        $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+        $members = Db::table('s_user_trade_area_member m')->join('s_user_info u on u.id=m.user_id', 'left')
+            ->field('m.*,u.nick_name')->where(['trade_id' => $trade['id']])->select();
+        $this->assign('user', $userInfo);
+        $this->assign('trade', $trade);
+        $this->assign('members', $members);
+        $this->assign('count', count($members));
+        return  $this->fetch();
+    }
+
+    /**
+     * 广告管理
+     */
+    public function adManager()
+    {
+        $ad = Db::table('s_user_trade_area_ad')->where(['trade_id' => Input('id')])->find();
+        if(isPost){
+            if ($ad) {
+                $images = json_decode($ad['pics'], true);
+                $image = imgupload(Input('image'));
+                $images[] = $image['data']['path'];
+                $ad['pics'] = json_encode($images);
+                $res = Db::table('s_user_trade_area_ad')->save($ad);
+                if ($res === false) {
+                    return json(['status' => 0, 'msg' => '添加失败']);
+                } else {
+                    return json(['status' => 1, 'msg' => '添加成功']);
+                }
+            } else {
+                $image = imgupload(Input('image'));
+                $images[] = $image['data']['path'];
+                $data['pics'] = json_encode($images);
+                $data['trade_id'] = Input('id');
+                $data['add_time'] = time();
+                $res = Db::table('s_user_trade_area_ad')->insert($data);
+                if ($res) {
+                    return json(['status' => 1, 'msg' => '添加成功']);
+                } else {
+                    return json(['status' => 0, 'msg' => '添加失败']);
+                }
+            }
+
+        } else {
+            $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+            $images = json_decode($ad['pics'], true);
+            $count = count($images);
+            $this->assign('trade', $trade);
+            $this->assign('count', $count);
+            $this->assign('images', $images);
+            return  $this->fetch();
+        }
+
+    }
+
+    /**
+     * 商会
+     */
+    public function trades()
+    {
+        $userInfo = session('user_info');
+        $trades = Db::table('s_user_trade_area')->where(array('province' => array('in',[1,9,19])))->select();
+        $joinTrades = Db::table('s_user_trade_area_member')->where(array('user_id' => $userInfo['id']))->select();
+        $ids = [];
+        foreach ($joinTrades as $joinTrade) {
+            $ids[] = $joinTrade['trade_id'];
+        }
+        $trade = Db::table('s_user_trade_area')->where(array('user_id' => $userInfo['id']))->find();
+        if ($trade) {
+            $ids[] = $trade['id'];
+        }
+
+        $data = [];
+        foreach ($trades as $k => $trade) {
+            if (in_array($trade['id'], $ids)) {
+                continue;
+            }
+            if (mb_strlen($trade['intro']) > 12) {
+                $trade['intro'] = mb_substr($trade['intro'],0,12,'utf-8') .'...';
+            }
+            $data[] = $trade;
+        }
+        $this->assign('trades', $data);
+        return  $this->fetch();
+    }
+
+    /**
+     * 商脉搜索结果
+     */
+    public function search()
+    {
+        header("location:".url('Home/Humancircle/index'));
+        if(isPost){
+            $get = Input("post.");
+           // var_dump($get);die;
+            $this->keyword=empty($get['keyword'])?"全部":$get['keyword'];
+            $sqname=getsqname2(urldecode($get['type_id']));
+            $this->sqname=empty($sqname)?"全部":$sqname;
+            $this->province_name = Db::table("s_region")->where(['region_id'=>$get['province_id']])->getField("region_name");
+            $this->city_name = Db::table("s_region")->where(['region_id'=>$get['city_id']])->getField("region_name");
+            $where['sq_is_search'] = 1;
+            if(!empty($get['province_id'])){
+                $where['province_id'] = Input("province_id");
+            }
+            if(!empty($get['city_id'])){
+                $where['city_id'] = Input("city_id");
+            }
+            if(!empty($get['keyword'])){
+                $where['_string']="nick_name LIKE '%".$get['keyword']."%'";
+            }
+            if($get['sex']>=0){
+                $where['sex']=$get['sex'];
+            }
+            if($get['age_id']){
+                $where['age_id']=$get['age_id'];
+            }
+            if(!empty($get['type_id'])){
+                $array=explode(",", $get['type_id']);
+                $sql="";
+                foreach ($array as $key => $value) {
+                    $sql.= "FIND_IN_SET('".$value."',sq_type_id)";
+                    if($key!=(count($array)-1)){
+                        $sql.=" or ";
+                    }
+                }
+                $where['_string']=$sql;
+            }
+
+            $lon = $this->userInfo['longitude'];
+            $lat = $this->userInfo['latitude'];
+            $userList = Db::table("s_userInfo")->where($where)->select();
+            $userIds = array();
+            foreach($userList as $k => $v) {
+                $userIds[] = $v['id'];
+                if (mb_strlen($v['position']) > 10) {
+                    $userList[$k]['position'] = mb_substr($v['position'],0,10,'utf-8').'...';
+                }
+                if ($lon && $lat && $v['longitude']&& $v['latitude']) {
+                	$userList[$k]['distance'] = getDistance($lon, $lat, $v['longitude'], $v['latitude']);
+                }
+            }
+            $trades = Db::table('s_user_trade_area')->where(array('user_id'=>array('in',empty($userIds)?array(-1):$userIds)))->select();
+            $this->assign("trades",$trades);
+            $data['sq_type_id'] = $get['type_id'];
+            $data['province_id'] = $get['province_id'];
+            $data['city_id'] = $get['city_id'];
+            $this->assign('data',$data);
+            $this->assign('userList',$userList);
+            return  $this->fetch('searched');
+        } else {
+            $this->age_list = Db::table('s_age')->select();
+            $this->assign("province_list",Db::table('s_region')->where(array('top_parentid'=>0))->select());
+            $this->type = Db::table("s_sqtype")->where("parent_id=0")->select();
+            return  $this->fetch();
+        }
+    }
+    
+    public function newsearch()
+    {
+        $this->id = $this->userInfo['id'];
+        return  $this->fetch();
+    }
+
+    public function Quotientsearch()
+    {
+        $this->id = $this->userInfo['id'];
+
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $this->assign('share_url', $url);
+		$this->assign('leader_id',$this->userInfo['leader_id']);
+		$this->assign('phone',$this->userInfo['phone']);
+
+        return  $this->fetch();
+    }
+
+    /**
+     * 添加商会
+     */
+    public function addTrade()
+    {
+        $userInfo = session('user_info');
+        if(isPost){
+            $data=[
+                'user_id' => $userInfo['id'],
+            ];
+            $res=get_obj('trade_area')->trade_area_list($data);
+            $res=(json_decode($res,true));
+            if (count($res['list'])) {
+                return json(['status' => 0, 'msg' => '不能重复添加商会']);
+            }
+            $citys = explode(',', Input('city'));
+            $image = imgupload(Input('logo'));
+            $data=[
+                'logo' => $image['data']['path'],
+                'country' => 0,
+                'province'=> $citys[0],
+                'city'=> $citys[1],
+                'area'=> $citys[2],
+                'name'=>Input('name'),
+                'money'=>Input('money'),
+                'intro'=>Input('intro'),
+                'user_id' => $userInfo['id'],
+            ];
+            $res=get_obj('trade_area')->trade_area_insert($data);
+            $res=(json_decode($res,true));
+            if ($res) {
+                return json(['status' => 1, 'msg' => '添加成功']);
+            } else {
+                return json(['status' => 0, 'msg' => $res['error']['error_msg']]);
+            }
+
+        }else{
+            $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+            $this->assign('trade', $trade);
+            return  $this->fetch();
+        }
+    }
+
+
+    /**
+     * 编辑商会
+     */
+    public function editTrade(){
+        $userInfo = session('user_info');
+        $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+        if(isPost){
+            $citys = explode(',', Input('city'));
+            $image = imgupload(Input('logo'));
+            if (count($citys)) {
+                $trade['province'] = $citys[0];
+                $trade['city'] = $citys[1];
+                $trade['area'] = $citys[2];
+            }
+            if (!empty(Input('logo'))) {
+                $trade['logo'] = $image['data']['path'];
+            }
+            if (!empty(Input('name'))) {
+                $trade['name'] = Input('name');
+            }
+            if (!empty(Input('money'))) {
+                $trade['money'] = Input('money');
+            }
+            if (!empty(Input('intro'))) {
+                $trade['intro'] = Input('intro');
+            }
+            $res = Db::table('s_user_trade_area')->save($trade);
+            if ($res === false) {
+                return json(['status' => 0, 'msg' => '修改失败']);
+            } else {
+                return json(['status' => 1, 'msg' => '修改成功']);
+            }
+
+        }else{
+            $this->assign('trade', $trade);
+            return  $this->fetch();
+        }
+    }
+
+     public function Tradingarea()
+     {
+        $this->id=$this->userInfo['unionid'];  
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+       	$this->assign('share_url', $url);
+     	$this->assign('unionid', $this->id);
+        return  $this->fetch();
+        
+     }
+
+    /**
+     * 加入商会
+     */
+    public function join()
+    {
+        $userInfo = session('user_info');
+        $data=[
+            'trade_id' => Input('id'),
+            'user_id' => $userInfo['id'],
+            'user_level'=> 1,//TODO level
+        ];
+        $res=get_obj('trade_area')->trade_area_member_find($data);
+        $res=(json_decode($res,true));
+        if (count($res['obj'])) {
+            return json(['status' => 0, 'msg' => '不能重复添加']);
+        }
+        $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+        if ($trade['user_id'] == $userInfo['id']) {
+            return json(['status' => 0, 'msg' => '自己不能加入自己的商会']);
+        }
+        $res=get_obj('trade_area')->trade_area_member_insert($data);
+        $res=(json_decode($res,true));
+        if ($res) {
+            $message['type'] = 1;
+            $message['title'] = '申请加入商会';
+            $message['content'] = '申请加入商会';
+            $message['send_time'] = time();
+            $message['status'] = 1;
+            $message['trade_id'] = Input('id');
+            $message['target_id'] = $trade['user_id'] ;
+            $message['source_id'] = $userInfo['id'];
+            $res = Db::table('s_usre_trade_msg')->insert($message);
+            if ($res) {
+                return json(['status' => 1, 'msg' => '加入成功']);
+            }
+        } else {
+            return json(['status' => 0, 'msg' => $res['error']['error_msg']]);
+        }
+    }
+
+    /**
+     * 消息
+     */
+    public function message()
+    {
+        $userInfo = session('user_info');
+        $trade = Db::table('s_user_trade_area')->where(['user_id' => $userInfo['id']])->find();
+        $messages = Db::table('s_usre_trade_msg m')
+            ->join('s_user_trade_area a on a.id=m.trade_id', 'left')
+            ->field('m.*,a.name,a.logo')
+            ->where(['m.trade_id' => $trade['id']])->select();
+        if (count($messages) == 0) {
+            return  $this->fetch('nomessage');
+        } else {
+            $this->assign('messages', $messages);
+            return  $this->fetch();
+        }
+    }
+
+    /**
+     * 信息内容
+     */
+    public function messageInfo()
+    {
+        if(isPost){
+            $id = Input('post.id');
+            $status = Input('post.status');
+            $mesInfo = Db::table('s_usre_trade_msg')->where(array('id'=>$id))->find();
+            Db::table('s_user_trade_area_member')->where(array('trade_id'=>$mesInfo['trade_id'],'user_id'=>$mesInfo['source_id']))->save(array('status'=>$status ));
+            Db::table('s_usre_trade_msg')->where(array('id'=>$id))->save(array('status'=>$status == 1 ? 2 : 3,'edit_time'=>time()));
+            header("location:".url('Home/Trade/message'));
+        }
+        $id = Input('get.id') ;
+        $messageInfo = Db::table('s_usre_trade_msg')->alias('m')->join('__USER_INFO__  u ON u.id = m.source_id')->
+        where(array('m.id'=>$id))->field('m.*,u.nick_name')->find();
+        $this->assign('messageInfo',$messageInfo);
+        return  $this->fetch();
+    }
+
+    /**
+	 * 消息
+	 */
+    public function article()
+    {
+        $userInfo = session('user_info');
+        $articles = Db::table('s_article_list')->where(['user_id' => $userInfo['id']])->select();
+        $this->assign('articles', $articles);
+        return  $this->fetch();
+    }
+
+    /**
+     * 搜索商会
+     */
+    public function joinTrades()
+    {
+        $userInfo = session('user_info');
+        $where = [];
+        $key = Input('key');
+        if ($key) {
+            $where['name'] = array('LIKE', "%$key%");
+            $areas = Db::table('s_region')->where(['region_name' => array('LIKE', "%$key%")])->select();
+            if (count($areas)) {
+                $ids = [];
+                foreach ($areas as $area) {
+                    $ids[] = $area['region_id'];
+                }
+                $where['province'] = array('IN', $ids);
+                $where['city'] = array('IN', $ids);
+                $where['area'] = array('IN', $ids);
+                $where["_logic"] = "OR";
+            }
+        }
+        $trades = Db::table('s_user_trade_area')->where($where)->select();
+        $joinTrades = Db::table('s_user_trade_area_member')->where(array('user_id' => $userInfo['id']))->select();
+        $ids = [];
+        foreach ($joinTrades as $joinTrade) {
+            $ids[] = $joinTrade['trade_id'];
+        }
+        $trade = Db::table('s_user_trade_area')->where(array('user_id' => $userInfo['id']))->find();
+        if ($trade) {
+            $ids[] = $trade['id'];
+        }
+        $data = [];
+        foreach ($trades as $k => $trade) {
+            if (in_array($trade['id'], $ids)) {
+                continue;
+            }
+            if (mb_strlen($trade['intro']) > 12) {
+                $trade['intro'] = mb_substr($trade['intro'],0,12,'utf-8') .'...';
+            }
+            $data[] = $trade;
+        }
+        $this->assign('trades', $data);
+        return  $this->fetch();
+    }
+
+    /**
+     * 同意
+     */
+    public function agree()
+    {
+        $member = Db::table('s_user_trade_area_member')->where('id='.Input('id'))->find();
+        $member['status'] = 1;
+        $res = Db::table('s_user_trade_area_member')->save($member);
+        if ($res === false) {
+            return json(['status' => 0, 'msg' => '失败']);
+        } else {
+            return json(['status' => 1, 'msg' => '成功']);
+        }
+    }
+
+    /**
+     * 同意
+     */
+    public function reject()
+    {
+        $member = Db::table('s_user_trade_area_member')->where('id='.Input('id'))->find();
+        $member['status'] = 2;
+        $res = Db::table('s_user_trade_area_member')->save($member);
+        if ($res === false) {
+            return json(['status' => 0, 'msg' => '失败']);
+        } else {
+            return json(['status' => 1, 'msg' => '成功']);
+        }
+    }
+
+    /**
+     * 编辑商会
+     */
+    public function share()
+    {
+        $trade = Db::table('s_user_trade_area')->where(['id' => Input('id')])->find();
+
+        $this->assign('trade', $trade);
+        return  $this->fetch();
+    }
+
+    public function select()
+    {
+        if(isPost){
+            $post = Input("post.");
+            $channel = Input('post.channel');
+            $type1 = Input('post.type1');
+            unset($post['channel']);
+            $post['id']=$this->userInfo['id'];
+            Db::table("s_userInfo")->save($post);
+
+            if($channel == 1){
+                header("location:".url("Home/Vmake/editmake"));
+            }else if($channel == 2){
+                header("location:".url("Home/Vmake/editmake"));
+            }else{
+                header("location:".url("Home/Humancircle/setting"));
+            }
+        }else{
+            $this->type = Db::table("s_sqtype")->where("parent_id=0")->select();
+            $this->data = Db::table("s_userInfo")->where(array("id"=>$this->userInfo['id']))->find();
+        }
+        $this->channel = Input('get.channel');
+        $this->type1 = Input('get.type1');
+        return  $this->fetch();
+    }
+    
+    /**
+     * 商脉搜索设置
+     */
+   public function setting()
+   {
+        if(isPost){
+            $post = Input("post.");
+            $post['id']=$this->userInfo['id'];
+            Db::table("s_userInfo")->save($post);
+            header("location:".url("Home/Humancircle/index"));
+        }
+        $this->data = Db::table("s_userInfo")->where(array("id"=>$this->userInfo['id']))->find();
+        return  $this->fetch();
+    }
+
+    public function joinPay()
+    {
+        $userInfo = session('user_info');
+        if (isPost) {
+            $array_return = array("status"=>1,"msg"=>"success","data"=>array());
+            $post = Input("post.");
+            $openid_info=Db::table('s_member')->Where('id='.$userInfo['member_id'])->Find();
+            $openid=$openid_info['openid'];
+
+            $_data['user_id']=$userInfo['id'];
+            $_data['trade_id']=$post['trade_id'];
+            if($openid!=''){
+                $data=[
+                    'connect_id'=>$_data['user_id'],
+                    'type' =>2,
+                    'order_type'=>4,//加入商会付款
+                    'pay_money' =>$post['price'],
+                    'pay_title'=>"加入商会付费",
+                    'pay_stitle'=>"加入商会付费",
+                    'pay_tag'=>'付费',
+                    'mark'=>json_encode($_data),
+                    'openid'=>$openid,
+                ];
+                $pay_info=get_obj('pay_test')->add_pay_log($data);
+                $pay_info=(json_decode($pay_info,true));
+                $pay_info=$pay_info['obj'];
+
+                $array_return['data']=json_decode($pay_info['pra']);
+            }else{
+                $array_return['status']=0;
+                $array_return['msg']="发起支付失败";
+            }
+            
+            return json($array_return);
+        }
+    }
+    
+    //添加好友
+    public function addfriend()
+    {
+        $this->unionid = $this->userInfo['unionid'];
+        $this->img = Db::table('s_user_info')->where(array('unionid'=>Input('unionid')))->getField('headimg');
+        $this->name = Input('get.name');
+        $this->here = Input('get.here');
+        $this->len = Input('get.len');
+        $this->o_id = Input('get.unionid');
+        return  $this->fetch();
+    }
+
+}
+?>

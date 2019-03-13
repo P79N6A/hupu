@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<title>绑定微信</title>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			.top {
+				width: 6.5rem;
+				height: 6.5rem;
+				border-radius: 50%;
+				margin: 2rem auto 0;
+			}
+			
+			.top>img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.name {
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				text-align: center;
+				font-size: 1rem;
+			}
+			
+			.phone {
+				width: 100%;
+				height: 2rem;
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			.relieve {
+				width: 86%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.85rem;
+				color: #fff;
+				text-align: center;
+				background: #32CEA0;
+				border-radius: 1.5rem;
+				margin: 10rem auto 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<img class="top_img" src="" alt="" />
+		</div>
+		<div class="name"></div>
+		<div class="phone">
+			<span>当前绑定的手机号为</span>
+			<span class="num">{$phone}</span>
+		</div>
+		<div class="relieve">解除微信绑定</div>
+		<script>
+			$(function() {
+				var phone = $('.num').html();
+				var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+				$('.num').html(mphone)
+			});
+			var unionid = '{$unionid}';
+			$.ajax({
+				type: "post",
+				url: '/index.php?s=/Api/Wechat/is_wechat', //后台处理程序
+				dataType: 'json', //接受数据格式    
+				data: {
+					unionid: unionid,
+				}, //要传递的数据
+				success: function(res) {
+					console.log(res)
+					$(".name").html(res.AppendData.nickname)
+					$(".top_img").attr('src',res.AppendData.headimg)
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+			$(".relieve").on("click",function(){
+				var unionid = '{$unionid}';
+			$.ajax({
+				type: "post",
+				url: '/index.php?s=/Api/Wechat/untie_wechat', //后台处理程序
+				dataType: 'json', //接受数据格式    
+				data: {
+					unionid: unionid,
+				}, //要传递的数据
+				success: function(res) {
+					console.log(res);
+					window.location.href="{:U('Home/User/binding')}";
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+			})
+		</script>
+	</body>
+
+</html>

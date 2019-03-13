@@ -1,0 +1,49 @@
+<?php
+namespace app\common\controller;
+use think\facade\Cache;
+use think\Controller;
+use think\Db;
+
+class ShareBase extends Controller
+{
+    protected $userInfo = array();
+    
+	/**
+	 * 初始化方法
+	 */
+	public function initialize()
+	{
+		$openid = '';
+        $uinfo = session("user_info");
+        $this->userInfo = $uinfo;
+        $share_openid = session("share_openid");
+ 		
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+		if ($uinfo) {
+	   		$openid = isset($uinfo['openid']) ? $uinfo['openid'] : '';
+			$nickname = $uinfo['nick_name'];
+			$headimgurl = $uinfo['headimg'];
+	   	} elseif (!$share_openid && strpos($user_agent, 'MicroMessenger')){
+           $url = get_current_url();
+           header('Location:/getuserinfo.php?target_url=' . urlencode($url));
+           exit;
+        }elseif($share_openid){   
+	    	$openid = $share_openid;
+			$nickname = session("nickname"); 
+			$headimgurl = session("headimgurl"); 
+	    }
+        
+        //统计用户活动访问
+        $share_user_id = input('get.share_user_id',0);
+        if ($share_user_id && $openid){
+        	$ctr_name = strtolower($this->request->controller());
+        	$act_name = strtolower($this->request->action());
+        	$share_id = input('get.share_id',0);
+	        $data = array('control' => $ctr_name,'action'=>$act_name,'nick_name'=>$nickname,'uid'=>$share_user_id,
+	        	'target_id'=>$share_id,'openid'=>$openid,'avatar'=>$headimgurl,'param'=>json_encode($_REQUEST),'add_time'=>time());
+	        Db::table('s_user_stats')->insert($data);
+        }
+            
+    }
+    
+}

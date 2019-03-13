@@ -1,0 +1,259 @@
+<if condition="$_SESSION['uid'] eq 99">
+    <li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'user_index') ">class="active"</if>>
+    <div class="showtitle" style="width:100px;">
+        <img src="__ADMIN_IMAGES__/leftimg.png" />会员列表
+    </div>
+    <a href="{:U('Users/user_index')}">
+        <span class="sublist-icon glyphicon glyphicon-record"></span>
+        <span class="sub-title">会员列表</span>
+    </a>
+    </li>
+    <else/>
+    <li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'index') ">class="active"</if>>
+    <div class="showtitle" style="width:100px;">
+        <img src="__ADMIN_IMAGES__/leftimg.png" />会员列表
+    </div>
+    <a href="{:U('Users/index')}">
+        <span class="sublist-icon glyphicon glyphicon-record"></span>
+        <span class="sub-title">会员列表</span>
+    </a>
+    </li>
+</if>
+
+
+<li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'industry') ">class="active"</if>>
+<div class="showtitle" style="width:100px;">
+    <img src="__ADMIN_IMAGES__/leftimg.png" />行业管理
+</div>
+<a href="{:U('Users/industry')}">
+    <span class="sublist-icon glyphicon glyphicon-record"></span>
+    <span class="sub-title">行业列表</span>
+</a>
+</li>
+<li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'inte_list') ">class="active"</if>>
+<div class="showtitle" style="width:100px;">
+    <img src="__ADMIN_IMAGES__/leftimg.png" />积分管理
+</div>
+<a href="{:U('Users/inte_list')}">
+    <span class="sublist-icon glyphicon glyphicon-record"></span>
+    <span class="sub-title">积分列表</span>
+</a>
+</li>
+<li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'pay_code_list') ">class="active"</if>>
+<div class="showtitle" style="width:100px;">
+    <img src="__ADMIN_IMAGES__/leftimg.png" />付款码管理
+</div>
+<a href="{:U('Users/pay_code_list')}">
+    <span class="sublist-icon glyphicon glyphicon-record"></span>
+    <span class="sub-title">付款码列表</span>
+</a>
+</li>
+<li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'oil_card_list') ">class="active"</if>>
+<div class="showtitle" style="width:100px;">
+    <img src="__ADMIN_IMAGES__/leftimg.png" />油卡码管理
+</div>
+<a href="{:U('Users/oil_card_list')}">
+    <span class="sublist-icon glyphicon glyphicon-record"></span>
+    <span class="sub-title">油卡码列表</span>
+</a>
+</li>
+<li <if condition="(strtolower($Think.const.CONTROLLER_NAME) eq 'users') and (strtolower($Think.const.ACTION_NAME) eq 'search_img') ">class="active"</if>>
+<div class="showtitle" style="width:100px;">
+    <img src="__ADMIN_IMAGES__/leftimg.png" />商脉搜索导航图片列表
+</div>
+<a href="{:U('Users/search_img')}">
+    <span class="sublist-icon glyphicon glyphicon-record"></span>
+    <span class="sub-title">商脉搜索导航图片</span>
+</a>
+</li>
+
+
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>会员列表</h4>
+        </div>
+        <!--<a href="{:U('Musics/addMusics')}" class="btn btn-primary pull-right margin-top">添加音乐</a>-->
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">内容查询</div>
+        <div class="panel-body">
+            <form method="post" action="" id="searchForm">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">开始时间</label>
+                            <if condition="$start_at neq 0">
+                                <input type="text" name="start_at" value="{$start_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="start_at"  class="form-control"  placeholder="开始时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">结束时间</label>
+                            <if condition="$end_at neq 0">
+                                <input type="text" name="end_at" value="{$end_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="end_at"  class="form-control"  placeholder="结束时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">用户名</label>
+                            <input type="text" name="nick_name" class="form-control" value="{$_nick_name}">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">注册手机号</label>
+                            <input type="text" name="phone" class="form-control" value="{$_phone}">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">手机号</label>
+                            <input type="text" name="mobile" class="form-control" value="{$_mobile}">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">vip等级</label>
+                            <select name="vipgroup" id=""  class="form-control">
+                                <option value=""  <if condition="I('vipGroup') eq '' ">selected</if>>所有</option>
+                                <foreach name="vipGroup" item="vo">
+                                    <option value="{$vo.id}" <if condition="$vo['id'] eq $_vipgroup">selected</if>>{$vo.vip_name}[{$vo.cnt}]人</option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">是否付费</label>
+                            <select name="is_pay" class="form-control">
+                                <option value="0">全部</option>
+                                <option value="1" <if condition="I('is_pay') eq 1">selected</if>>已付费</option>
+                                <option value="2" <if condition="I('is_pay') eq 2">selected</if>>未付费</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-info" type="submit"  id="search">查询</button>
+                        <button class="btn btn-info" type="submit" id="export">导出</button>
+                    </div>
+
+                </div>
+            </form>
+            <div class="col-sm-12 text-left">
+                <a href="{:U('Users/all_vip_excel')}" class="btn btn-primary btn-lg active" role="button">导出所有创投及以上等级未开展下线人员</a>
+                <a href="{:U('Users/all_vip_fans_excel')}" class="btn btn-primary btn-lg active" role="button">导出所有创投及以上等级粉丝数</a>
+                <!--<a href="{:U('Users/send_msg')}" class="btn btn-danger btn-lg active" role="button">短信发送未付费用户</a>-->
+            </div>
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>用户名</td>
+                <td>注册手机号</td>
+                <td>地区</td>
+                <td>累计收入</td>
+                <td>余额</td>
+                <td>注册时间</td>
+                <td>推荐人</td>
+                <td>账号状态</td>
+                <td>成为vip时间</td>
+                <td>vip等级</td>
+                <!--<td>年费</td>-->
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td><span onclick="user_detail('{$vo.id}')">{$vo.nick_name}</span></td>
+                    <td>{$vo.phone}</td>
+                    <td>{$vo.province_name}-{$vo.city_name}-{$vo.district_name}</td>
+                    <td><?php echo number_format(($vo['money']+$vo['frozen_money']+$vo['already_money']),2,".","");?></td>
+                    <td>{$vo.money}</td>
+                    <td>{$vo.add_time|date='Y-m-d H:i:s',###}</td>
+                    <td>{$vo.rec_name}</td>
+                    <td>
+                        <if condition="$vo.status eq 1">
+                            正常
+                            <else/>
+                            冻结
+                        </if>
+                    </td>
+                    <td><if condition="$vo.vip_orver_time gt 0">{$vo.vip_orver_time|strtotime='-1 year',###|date='Y-m-d H:i:s',###}</if></td>
+                    <td>{$vo.vip_name}</td>
+                    <td>
+                        <!--<a href="{:U('Users/setRec', array('id' => $vo['id']))}">修改推荐人</a>-->
+                        <a href="{:U('Users/showRec', array('id' => $vo['id']))}">旗下用户</a>
+                        <span class="text-explode">|</span>
+                        <a href="javascript:void (0)" onclick=del("{:U('Users/delUser', array('id' => $vo['id']))}")>冻结</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_show}</div>
+
+    <script>
+        function del(url) {
+            layer.confirm("确定冻结？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        function user_detail(uid) {
+            var str='user_detail&user_id='+uid;
+            var url = '{:U("'+str+'")}';
+            // alert(url);return;
+            //iframe层
+            layer.open({
+                type: 2,
+                title: '会员详情页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '40%'],
+                content: url//iframe的url
+            });
+        };
+
+        $("#search").click(function(){
+            $("#searchForm").attr('action',"{:U('admin/Users/index')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+
+        $("#export").click(function(){
+            $("#searchForm").attr("action","{:U('admin/Users/export')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+    </script>
+    <script src="__PUBLIC__/Admin/js/My97DatePicker/WdatePicker.js"></script>
+
+</block>

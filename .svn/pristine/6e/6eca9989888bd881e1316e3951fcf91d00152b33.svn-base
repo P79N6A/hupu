@@ -1,0 +1,128 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+</block>
+
+<block name="body">
+
+	<body>
+		<div class="mui-content zzc_magrin_bottom">
+			<div class="myguanggao_li">在文章底部显示
+				<div id="article_cards" value="{$users.article_cards}" class="mui-switch  <if condition=" $users[ 'article_cards']==1 "> mui-active</if> muguanggao_but">
+					<div class="mui-switch-handle"></div>
+				</div>
+			</div>
+			<div class="weisuomingpian_li">
+				<div class="left">
+					<p><b>{$users.nick_name} </b> {$users.position}</p>
+					<p><span>电话： </span>{$users.mobile}</p>
+					<p><span>地址： </span>{$users.address}</p>
+					<p><span>邮箱： </span>{$users.email}</p>
+				</div>
+				<!-- <div class="right"><img src="images/60x60.gif" /></div> -->
+			</div>
+			<div class="weisuomingpian_textarea">
+				<div class="title">我的简介</div>
+				<textarea class="textarea" name="share_my_introduct" id="share_my_introduct" rows="6" cols="6" placeholder="在此输入">{$users.share_my_introduct}</textarea>
+			</div>
+			<div class="weisuomingpian_textarea">
+				<div class="title">我拥有的资源和优势</div>
+				<textarea class="textarea" name="share_my_advantage" id="share_my_advantage" rows="6" cols="6" placeholder="在此输入">{$users.share_my_advantage}</textarea>
+			</div>
+			<div class="weisuomingpian_textarea">
+				<div class="title">我需要对接的资源</div>
+				<textarea class="textarea" name="share_my_resource" id="share_my_resource" rows="6" cols="6" placeholder="在此输入">{$users.share_my_resource}</textarea>
+			</div>
+		</div>
+		<div class="zzc_myranwen_bottom">
+			<input type="button" name="取消" id="" value="取消" class="zzc_myruanwen_bottom_button" onclick="window.history.go(-1)" />
+			<input type="button" name="保存" id="" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+
+	<script>
+		function sumit_click() {
+
+			var _share_my_introduct = $("#share_my_introduct").val();
+			var _share_my_advantage = $('#share_my_advantage').val();
+			var _share_my_resource = $('#share_my_resource').val();
+			var _article_cards = 1;
+
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '你正在编辑状态，是否保存修改？',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+
+								//                                if ( _share_my_introduct.length <= 0 ) {
+								//                                    mui.toast('我得简历不能为空');
+								//                                    this.close();
+								//                                    return false;
+								//                                }
+								//                                if ( _share_my_advantage.length <= 0 ) {
+								//                                    mui.toast('我拥有的资源和优势不能为空');
+								//                                    this.close();
+								//                                    return false;
+								//                                }
+								//                                if ( _share_my_resource.length <= 0 ) {
+								//                                    mui.toast('我需要对接的资源不能为空');
+								//                                    this.close();
+								//                                    return false;
+								//                                }
+								var article_cards = $('#article_cards').attr('value');
+								if($('#article_cards').hasClass('mui-active')) {
+									article_cards = 1;
+								} else {
+									article_cards = 0;
+								}
+								var _url = "{:U('Home/Article/addMicroCard')}";
+								$.post(_url, {
+									"article_cards": article_cards,
+									'share_my_introduct': _share_my_introduct,
+									'share_my_advantage': _share_my_advantage,
+									'share_my_resource': _share_my_resource
+								}, function(res) {
+									if(res.status == 1) {
+										mui.toast(res.msg);
+										setTimeout(function() {
+											top.location.href = "{:U('Home/Article/myListArticle')}";
+										}, 1000);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						}
+					]
+				});
+			});
+
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/newrem.js"></script>
+		<link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+		<link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+		<script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+		<title>小秘广场产品</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.max {
+				width: 100%;
+				height: auto;
+			}
+			
+			.product-box .proitem a {
+				display: block;
+				height: 1.6479rem;
+				width: 100%;
+				position: relative;
+			}
+			
+			.proitem a img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.hot_enter_box {
+				width: 90%;
+				margin: 0.12rem auto 0;
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+			}
+			
+			.hot_enter_box .product-box {
+				width: 48%;
+				height: 2.15rem;
+			}
+			
+			.title{
+				width: 100%;
+				height:0.25rem;
+				font-size: 0.16rem;
+				color:#333;
+				line-height: 0.28rem;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.text{
+				width: 100%;
+				height:0.2rem;
+				font-size: 0.14rem;
+				color:#777;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.hot_enter_box .product-box:nth-child(2n) {
+				margin-left: 4%;
+			}
+			
+			.down {
+				width: .1rem !important;
+				height: 0.08rem !important;
+				position: absolute !important;
+				top: 50% !important;
+				margin-top: -0.04rem !important;
+				right: .05rem !important;
+			}
+			
+			.xs {
+				width: .9rem;
+				height: .2rem;
+				line-height: .2rem;
+				border: 1px solid #c5c5c5;
+				margin-top: .1rem;
+				/*text-align: center;*/
+				border-radius: .3rem;
+				position: relative;
+				margin-right: 0 !important;
+			}
+			
+			.heading-box {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+			}
+			
+			.heading-box .head-box {
+				width: .64rem;
+				height: .64rem;
+				border-radius: 50%;
+				margin-bottom: .12rem;
+				position: relative;
+			}
+			
+			.head-box .user-img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.head-box .leven {
+				width: .28rem;
+				height: .16rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			
+			#loadId {
+				display: none;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 0.65rem;
+				text-align: center;
+				display: block;
+				color: #333;
+				font-size: .12rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading>img {
+				width: .12rem;
+				height: .125rem;
+				animation: change 3s linear infinite;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="max">
+			<div class="hot_enter_box">
+
+			</div>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+
+		<script>
+			//产品渲染
+			var unionid = "{$unionid}";
+			var listc = ""
+			var length = 0;
+			//			console.log(new_type)
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/SquareApi/product_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					start: 0,
+					length: 10,
+				},
+				success: function(res) {
+					console.log(res)
+					if(res.ResultType == 0) {
+
+						$.each(res.AppendData, function(g, h) {
+							listc += '<div class="product-box">'
+							listc += '<div class="proitem">'
+							listc += '<a href="/index.php?s=/Home/vhome/propreview/unionid/'+h.unionid+'/p_id/' + h.id + '">'
+							listc += '<img src="' + h.cover_img + '" alt="">'
+							listc += '</a>'
+							listc += '<p class="title">' + h.title + '</p>'
+							if(h.describe == null || h.describe == "" || h.describe == undefined) {
+								listc += '<div class="text">暂无产品描述</div>'
+							} else {
+								listc += '<div class="text">' + h.describe + '</div>'
+							}
+							listc += '</div>'
+							listc += '</div>'
+						})
+						$(".hot_enter_box").html(listc);
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			//产品上拉加载
+			var scrollFlag = true;
+
+			$(window).scroll(function() {
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+				var listc = "";
+				//页面高度
+				var scrollHeight = $(document).height();
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				if(!scrollFlag) {
+					return false;
+				}
+				console.log(scrollTop + windowHeight)
+				console.log(scrollHeight)
+				if(scrollTop + windowHeight + 1 >= scrollHeight) {
+					length += 10;
+					//					console.log(length)
+					scrollFlag = false;
+					$.ajax({
+						type: 'post',
+						url: 'index.php?s=/Api/SquareApi/product_list',
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: length,
+							length: 10,
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+							console.log(res);
+							scrollFlag = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".max").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlag = false;
+							}
+							if(res.ResultType == 0) {
+								$.each(res.AppendData, function(g, h) {
+									listc += '<div class="product-box">'
+									listc += '<div class="proitem">'
+									listc += '<a href="/index.php?s=/Home/vhome/propreview/unionid/'+h.unionid+'/p_id/' + h.id + '">'
+									listc += '<img src="' + h.cover_img + '" alt="">'
+									listc += '</a>'
+									listc += '<p class="title">' + h.title + '</p>'
+									if(h.describe == null || h.describe == "" || h.describe == undefined) {
+										listc += '<div class="text">暂无产品描述</div>'
+									} else {
+										listc += '<div class="text">' + h.describe + '</div>'
+									}
+									listc += '</div>'
+									listc += '</div>'
+								})
+								$(".hot_enter_box").append(listc);
+							}
+							listc = ""
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

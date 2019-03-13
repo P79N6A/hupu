@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Expires" CONTENT="0">
+		<meta http-equiv="Cache-Control" CONTENT="no-cache">
+		<meta http-equiv="Pragma" CONTENT="no-cache">
+		<meta name="referrer" content="never">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>编辑文章</title>
+		<link href="__HOME_CSS__/wx.css" rel="stylesheet" />
+		<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+		<link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.min.css">
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				line-height: normal;
+			}
+			
+			body {
+				background-color: #f1f1f1;
+				text-shadow: 0 0 2px #ccc;
+				font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+				overflow-x: hidden;
+				overflow-y: scroll;
+				background: #f6f6f6;
+			}
+			
+			.mui-content {
+				background: #fff;
+				margin-top: 8px;
+				/*padding-top: 16px;*/
+				padding-bottom: 60px;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.zzc_myruanwen_from_li_div>a {
+				color: #32CEA0;
+			}
+			
+			.container {
+				width: 90%;
+				height: auto;
+				margin: 0 auto;
+				background-color: #fff;
+				text-align: left;
+				text-shadow: none;
+				overflow: hidden;
+				padding-top: 16px;
+			}
+			/* 去除红框框 */
+			
+			.rich_media_content .editor-mode:after {
+				display: none;
+			}
+			
+			footer {
+				width: 100%;
+				text-align: center;
+				padding: 10px 0;
+				opacity: 0.6;
+				margin-top: 10px;
+			}
+			
+			.rich_media_content .editor-mode {
+				/*border: dashed 1px red;*/
+				padding: 0px;
+				/*position: relative;*/
+			}
+			
+			.rich_media_content span.editor-mode,
+			.rich_media_content strong.editor-mode {
+				display: inline-block;
+				margin: 1px;
+			}
+			
+			.rich_media_content .editor-mode:after {
+				font-family: Muiicons;
+				position: absolute;
+				right: -5px;
+				top: -5px;
+				color: red;
+				font-size: 24px;
+				content: '\e400';
+				width: 24px;
+				height: 24px;
+				line-height: 24px;
+			}
+			
+			.layui-m-layer textarea {
+				width: 100%;
+			}
+			
+			.mui-content-padded {
+				margin: 5px 10px 0 10px;
+			}
+			
+			.mui-bar-tab-button-group {
+				text-align: center;
+				height: 65px;
+			}
+			
+			.mui-bar-tab-button-group>span {
+				display: inline-block;
+				height: 32px;
+				line-height: 32px;
+				margin: 14px 0;
+			}
+			
+			.mui-bar-tab-button-group span.tag-article-save {
+				background-color: #007aff;
+				color: #fff;
+			}
+			
+			.mui-bar-tab-button-group span.tag-article-preview {
+				background-color: #4cd964;
+				color: #fff;
+			}
+			
+			.mui-bar-tab-button-group span.tag-text-del,
+			.mui-bar-tab-button-group span.tag-picture-del {
+				width: 20%;
+				background-color: #FE5F5F;
+				color: #fff;
+				font-size: 14px;
+				margin-right: 10%;
+			}
+			
+			.mui-bar-tab-button-group span.tag-text-insert-ad {
+				display: block;
+				width: 100%;
+				height: 100%;
+				line-height: 32px;
+			}
+			
+			.mui-bar-tab-button-group span.tag-text-insert-cen {
+				background: #32CEA0;
+				color: #fff;
+				font-size: 14px;
+				line-height: 32px;
+				position: relative;
+				margin-right: 3%;
+			}
+			
+			.mui-bar-tab-button-group span.tag-text-insert-g {
+				background: #F8C85E;
+				color: #fff;
+				font-size: 14px;
+			}
+			
+			.mui-bar-tab-button-group span.tag-text-cancel,
+			.mui-bar-tab-button-group span.tag-picture-cancel,
+			.mui-bar-tab-button-group span.tag-ad-cancel {
+				background: #c5c5c5;
+				color: #fff;
+				font-size: 14px;
+				line-height: 32px;
+			}
+			
+			.mui-control-content {
+				background-color: white;
+				min-height: 215px;
+			}
+			
+			.mui-control-content .mui-loading {
+				margin-top: 50px;
+			}
+			
+			#itemAdEdit>div {
+				padding: 10px;
+			}
+			
+			#itemAdEdit h5 {
+				color: #000;
+				line-height: 20px;
+				border-left: 3px solid #007aff;
+				padding-left: 6px;
+				margin: 10px 0px;
+			}
+			
+			#itemAdEdit img {
+				width: 80px;
+				height: 80px;
+				border: 1px dashed #999;
+			}
+			
+			#itemAdEdit textarea {
+				width: 88%;
+			}
+			
+			#itemAdEdit span.progress-mask {
+				position: absolute;
+				left: 1px;
+				top: 1px;
+				width: 80px;
+				height: 80px;
+				opacity: 0.8;
+				display: block;
+				background-color: #ccc;
+				line-height: 80px;
+				text-align: center;
+				/*z-index: 1;*/
+			}
+			
+			#itemAdEdit span.progress-text {
+				position: absolute;
+				left: 1px;
+				top: 1px;
+				width: 80px;
+				height: 80px;
+				display: block;
+				color: #007aff;
+				font-weight: bold;
+				line-height: 80px;
+				text-align: center;
+				font-size: 30px;
+				/*z-index: 1;*/
+			}
+			
+			#itemAdTemplate .mui-scroll-wrapper {
+				height: 320px;
+				overflow-y: scroll;
+			}
+			
+			.top {
+				width: 100%;
+				height: 32px;
+				background-color: #F8C85E;
+				line-height: 32px;
+				font-size: 12px;
+				text-align: center;
+				font-weight: 550;
+				overflow: hidden;
+				color: #fff;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1000000;
+			}
+			
+			.zzc_from_text {
+				height: 60px !important;
+				width: 100%;
+				background: #FAFAFA !important;
+				border: none !important;
+			}
+			
+			.zzc_myranwen_bottom {
+				height: 56px;
+				overflow: hidden;
+				position: fixed;
+				bottom: 0px;
+				left: 0;
+				width: 100%;
+				padding: 0 5%;
+				background: #fff;
+				border-top: 1px solid #F6F6F6;
+			}
+			
+			.zzc_myruanwen_bottom_button {
+				width: 30%;
+				font-size: 16px !important;
+				font-weight: 600 !important;
+				padding: 0px !important;
+				border-radius: 0px !important;
+				height: 40px;
+				margin: 8px 0;
+				background: #fff !important;
+				color: #333;
+				float: left;
+				border: 0 !important;
+				line-height: 40px;
+				text-align: center;
+				-webkit-appearance: none;
+			}
+			
+			.zzc_blue_bg {
+				width: 70%;
+				border-radius: 4px !important;
+				background: #32CEA0 !important;
+				color: #FFFFFF !important;
+			}
+			
+			.class_fen {
+				width: 90%;
+				margin: 0 auto;
+				height: 60px;
+				line-height: 60px;
+			}
+			
+			.class_fen>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				line-height: 60px;
+				color: #000000;
+			}
+			
+			.max_class {
+				height: 60px;
+				line-height: 60px;
+				border-top: 1px solid #ccc;
+			}
+			
+			.zzc_myruanwen_from_li {
+				height: 53px;
+				line-height: 53px;
+				background: #fff;
+				font-weight: 600;
+				font-size: 16px;
+				color: #333;
+			}
+			
+			.zzc_myruanwen_from_li_div {
+				width: 90%;
+				height: 100%;
+				line-height: 53px;
+				margin: 0 auto;
+				position: relative;
+			}
+			
+			.zzc_myruanwen_from_li_div>a {
+				width: auto;
+				height: 100%;
+				line-height: 53px;
+				position: absolute;
+				right: 0px;
+				top: 0px;
+			}
+			
+			.zzc_myruanwen_from_li_div>a.zzc_a_red {
+				color: #c5c5c5;
+			}
+			
+			.mui-btn .mui-icon {
+				font-size: inherit;
+			}
+			
+			.mui-btn.mui-icon {
+				font-size: 14px;
+				line-height: 1.42
+			}
+			
+			.mui-icon-arrowright:before {
+				content: '\e583'
+			}
+			
+			.zzc_jaidntou {
+				float: right;
+				line-height: 60px;
+			}
+			
+			.thumb {
+				width: 100%;
+			}
+			
+			.addthumb {
+				width: 100%;
+				height: 73px;
+				line-height: 73px;
+				background: #fff;
+				margin-top: 32px;
+			}
+			
+			.a_cen {
+				width: 90%;
+				height: 100%;
+				line-height: 73px;
+				background: #fff;
+				margin: 0 auto;
+				position: relative;
+				display: flex;
+				border-bottom: 1px solid #f6f6f6;
+			}
+			
+			.addthumb .text {
+				width: 50%;
+				line-height: 73px;
+				font-size: 16px;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.addthumb .textimg {
+				width: 50%;
+				height: 100%;
+				line-height: 73px;
+				text-align: right;
+			}
+			
+			.addthumb .textimg img {
+				width: 40px;
+				height: 40px;
+				margin: 16.5px 0;
+				border-radius: 4px;
+			}
+			
+			.btnblue {
+				width: 70px;
+				border-radius: 5px;
+				text-align: center;
+				height: 30px;
+				line-height: 30px;
+				position: absolute;
+				background: #2fb3d3;
+				color: #fff;
+				top: 50%;
+				right: 13%;
+				margin-top: -15px;
+				font-size: 14px;
+			}
+			
+			.mdzzadd {
+				width: 40px;
+				height: 40px;
+				opacity: 0;
+				position: absolute;
+				right: 0;
+				top: 16.5px;
+			}
+			
+			.zzc_myruanwen_from_input {
+				margin-bottom: 20px;
+			}
+			
+			.z_tit {
+				width: 100%;
+				height: 50px;
+				font-size: 16px;
+				font-weight: 550;
+				color: #333;
+				border: none;
+				-moz-user-select: auto;
+				-ms-user-select: auto;
+				-webkit-user-select: auto;
+			}
+			
+			.max_bl {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #333;
+				opacity: 0.5;
+				z-index: 300;
+				display: none;
+			}
+			
+			.mui-bar-nav~.mui-content {
+				padding: 0 !important;
+			}
+			
+			.mui-bar .mui-title {
+				right: 0;
+				left: 0;
+			}
+			
+			#container {
+				width: 80px;
+				height: 80px;
+				background: #eee;
+				position: relative;
+			}
+			
+			#pickfiles {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 999;
+				opacity: 0;
+			}
+			
+			#container img {
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -10px;
+				margin-top: -10px;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				z-index: 999;
+				background: rgba(0, 0, 0, 0.5);
+				display: none;
+			}
+			
+			.loading {
+				width: 155px;
+				height: 120px;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-left: -77.5px;
+				margin-top: -60px;
+				text-align: center;
+				display: none;
+				background-color: rgba(0, 0, 0, 0.5);
+				border-radius: 5px;
+				z-index: 1001;
+			}
+			
+			.loading img {
+				width: 40px;
+				height: 40px;
+				margin-top: 18px;
+				animation: change 3s linear infinite;
+			}
+			
+			.loading span {
+				display: block;
+				color: #fff;
+				margin-top: 12px;
+				font-size: 16px;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.bui-message {
+				width: 310px;
+			}
+			
+			.bui-message button {
+				border-radius: 20px;
+				padding: 5px 25px;
+			}
+			
+			.bui-dialog .bui-stdmod-footer .button+.button {
+				margin-left: 30px;
+				background: #32CEA0;
+				color: #fff;
+				border: 0;
+			}
+			
+			.clearfix::after {
+				content: ".";
+				clear: both;
+				display: block;
+				overflow: hidden;
+				font-size: 0;
+				height: 0;
+			}
+			
+			.tag-text-teaxarea {
+				margin-bottom: 0;
+				/* max-height: 355px; */
+			}
+			
+			.mui-input-row {
+				width: 100%;
+				height: 228px;
+				border: 2px solid #32CEA0;
+				margin: 0 auto;
+			}
+			
+			textarea {
+				border: none;
+				height: 168px;
+				overflow: auto;
+			}
+			
+			.btn {
+				width: 100%;
+				height: 53px;
+				line-height: 53px;
+				overflow: hidden;
+			}
+			
+			.null {
+				width: 64px;
+				height: 28px;
+				margin: 12.5px 0;
+				float: left;
+				color: #777;
+				font-size: 14px;
+				line-height: 28px;
+				text-align: center;
+			}
+			
+			.sure {
+				width: 64px;
+				height: 28px;
+				margin: 12.5px 16px 12.5px 0;
+				float: right;
+				font-size: 14px;
+				line-height: 28px;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+			}
+			
+			.calloff {
+				width: 64px;
+				height: 28px;
+				margin: 12.5px 0;
+				float: right;
+				color: #333;
+				font-size: 14px;
+				line-height: 28px;
+				text-align: center;
+			}
+			
+			.mui-bar {
+				position: fixed;
+				z-index: 10;
+				right: 0;
+				left: 0;
+				height: 65px;
+				padding-right: 10px;
+				padding-left: 10px;
+				border-bottom: 0;
+				background-color: #fff;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			
+			.del {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 遮罩 -->
+		<div class="mask"></div>
+		<div class="loading">
+			<img src="__HOME_IMAGES__/loadad.gif" alt="">
+			<span>正在上传图片中...</span>
+		</div>
+
+		<div class="top">单击段落即可编辑</div>
+		<div class="addthumb">
+			<div class="a_cen">
+				<div class="fl text">封面</div>
+				<div class="textimg">
+					<img class="thumb" src="{$res.thumb}" alt="">
+				</div>
+				<input type="file" class="mdzzadd" id="addimgs" accept="image/*">
+			</div>
+		</div>
+		<div class="zzc_myruanwen_from_li">
+			<div class="zzc_myruanwen_from_li_div">
+				V网信息
+				<if condition="$condition['article_cards'] eq 1">
+					<a onclick="url(1)">已开启
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</a>
+					<else />
+					<a class="zzc_a_red" onclick="url(1)">已关闭
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</a>
+				</if>
+			</div>
+		</div>
+		<div class="mui-content">
+			<div class="container">
+				<div class="zzc_myruanwen_from_input" style="overflow:visible !important;">
+					<input type="hidden" name="id" id="id" value="{$res.id}">
+					<input type="hidden" name="atype_id" id="atype_id" value="{$res.atype_id}" />
+					<input type="hidden" value="{$res.atype_id}" id="typeid" />
+					<input id="title" class="z_tit" value="{$res.title}" />
+				</div>
+				<div class="rich_media_content " id="article_content">
+					<div class="tag-container">{$res.content}</div>
+				</div>
+
+			</div>
+			<div class="zzc_myranwen_bottom">
+				<input type="button" name="预览" id="" value="预览" onclick="gotopre('/Home/Articlegrab/previewArticle/id/{$Think.get.id}.html')" class="zzc_myruanwen_bottom_button" />
+				<input type="button" name="保存" id="" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+			</div>
+			<div class="max_bl"></div>
+		</div>
+		<div id="modal-text" style="display:none;">
+			<!--<header class="mui-bar mui-bar-nav" style="display:none;">
+				<h1 id="title" class="mui-title">文本操作</h1>
+			</header>-->
+			<div class="mui-content mui-content-padded">
+				<div class="mui-input-row">
+					<textarea class="tag-text-teaxarea" rows="8" placeholder=""></textarea>
+					<div class="btn">
+						<div class="null">清空</div>
+						<div class="sure tag-text-modify">确定</div>
+						<div class="calloff tag-text-cancel">取消</div>
+					</div>
+				</div>
+				<!--<div class="mui-button-row">
+	            <button class="mui-btn mui-btn-primary tag-text-modify" type="button" onclick="return false;">修改</button>&nbsp;&nbsp;
+	            <button class="mui-btn mui-btn-grey tag-text-cancel" type="button" onclick="return false;">取消</button>
+	        </div>-->
+			</div>
+			<nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+				<span class="mui-col-xs-4 tag-text-del">删除此条</span>
+				<span class="mui-col-xs-4 tag-text-insert-cen">
+					<span class="mui-col-xs-4 tag-text-insert-ad">添加图片</span>
+				<input type="file" id="pickfiles" accept="image/*">
+				</span>
+				<!--<span class="mui-col-xs-4 tag-text-insert-g">添加广告</span>-->
+
+			</nav>
+		</div>
+		<div id="modal-picture" style="display:none;">
+			<header class="mui-bar mui-bar-nav" style="display:none;">
+				<h1 id="title" class="mui-title">图片操作</h1>
+			</header>
+			<nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+				<span class="mui-col-xs-4 tag-picture-del">删除</span>
+				<span class="mui-col-xs-4 tag-text-insert-cen">
+					<span class="mui-col-xs-4 tag-text-insert-ad">添加图片</span>
+				<input type="file" id="pickfiles" accept="image/*">
+				</span>
+				<span class="mui-col-xs-4 tag-picture-cancel">取消</span>
+			</nav>
+		</div>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_JS__/layer.js"></script>
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/bs3/sea.js"></script>
+		<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+		<script src="__HOME_JS__/jquery.form.js"></script>
+
+		<!--<script id="modal-ad" type="text/html">
+			<header class="mui-bar mui-bar-nav" style="display:none;">
+				<h1 id="title" class="mui-title">插入图片</h1>
+			</header>
+			<nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+				 <span class="mui-col-xs-6 tag-ad-insert">插入</span> 
+				<span class="mui-col-xs-12 tag-ad-cancel">取消</span>
+			</nav>
+			<div class="mui-content">
+				<div id="slider" class="mui-slider">
+					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						<a class="mui-control-item" href="#itemAdEdit">
+							插入图片
+						</a>
+						 <a class="mui-control-item" href="#itemAdTemplate">
+                    广告管理
+                </a> 
+					</div>
+					 <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div> 
+					<div class="mui-slider-group">
+						<div id="itemAdEdit" class="mui-slider-item mui-control-content mui-active">
+							<div>
+								<h5>点击添加图片：</h5>
+								<div id='container' class="mui-input-row">
+									<input type="file" id="pickfiles" accept="image/*">
+									<img src="__HOME_IMAGES__/inco_tianjia copy.png" alt="">
+								</div>
+								 <h5>文本内容：</h5>
+                        <div class="mui-input-row">
+                            <input id="ad_picture_url" type="hidden">
+                            <textarea id="ad_text" rows="5" placeholder="广告文本内容"></textarea>
+                        </div> 
+							</div>
+						</div>
+						 <div id="itemAdTemplate" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view mui-table-view-radio">
+                			</ul>
+                        </div>
+                    </div>
+                </div> 
+					</div>
+				</div>
+			</div>
+		</script>-->
+		<script type="text/javascript">
+			mui.init();
+			var cover;
+			mui.ready(function() {
+				//递归选择可编辑的内容
+				recursive(document.querySelector("#article_content div"));
+				//去除img的边框
+				mui('#article_content img').each(function(index, item) {
+					item.style.border = null;
+				});
+				//
+				videoHeight();
+				//修正视频高宽
+				var width = document.documentElement.clientWidth;
+				[].forEach.call(document.querySelectorAll("iframe.video_iframe"), function(item, index) {
+					item.width = width;
+					item.height = width / 1.33;
+					item.src = item.getAttribute('data-src').replace('preview', 'player')
+						.replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+					item.style.width = width + 'px';
+					item.style.height = width / 1.33 + 'px';
+				});
+			});
+
+			function videoHeight() {
+				//修正视频高宽
+				var width = document.documentElement.clientWidth - 50;
+				[].forEach.call(document.querySelectorAll("iframe"), function(item, index) {
+					item.width = width + 50;
+					item.height = width / 1.33;
+					item.src = item.getAttribute('data-src').replace('preview', 'player')
+						.replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+					item.style.width = width + 'px';
+					item.style.height = width / 1.33 + 'px';
+				});
+			}
+			/*
+			 * 递归选择可编辑的内容
+			 */
+			function recursive(element) {
+				var childrens = element.children;
+				if(childrens && childrens.length > 0) {
+					for(var i = 0; i < childrens.length; i++) {
+						recursive(childrens[i]);
+					}
+				} else {
+					if(element.tagName == "IMG") {
+						element.classList.add("editor-mode");
+						element.classList.add("editor-mode-picture");
+						element.style.zIndex = 1;
+						element.style.height = 'auto';
+					} else if(element.tagName == "IFRAME") {
+						element.parentNode.classList.add("editor-mode");
+						element.parentNode.classList.add("editor-mode-picture");
+					} else if(element.tagName == 'BR') {
+						element.parentNode.classList.add("editor-mode");
+						element.parentNode.classList.add("editor-mode-text");
+					} else if(element.tagName == 'SPAN') {
+						element.parentNode.classList.add("editor-mode");
+						element.parentNode.classList.add("editor-mode-text");
+					} else {
+						if(element.textContent.trim() != '') {
+							element.classList.add("editor-mode");
+							element.classList.add("editor-mode-text");
+						} else {
+							var parent = element.parentNode;
+							element.remove();
+							recursive(parent);
+						}
+					}
+				}
+			}
+			/*
+			 * 文本编辑-点击事件
+			 */
+			var that;
+			mui('#article_content').on('tap', '.editor-mode', function(e) {
+				e.stopPropagation();
+				$(".mask").show()
+				console.log("当前点击的")
+				that = $(this);
+				$target = e.target;
+				if($target.classList.contains('editor-mode-picture')) {
+					showImgEditor($target);
+				} else {
+					showTextEditor($target);
+				}
+			});
+			/*
+			 * 弹出文本编辑框
+			 */
+			function showTextEditor(target) {
+				//弹出编辑窗
+				layer.open({
+					type: 1,
+					content: document.getElementById('modal-text').innerHTML,
+					anim: 'up',
+					style: 'position:fixed; z-index:1000; bottom:0; left:0; width: 100%; height: 315px; padding:10px 0; border:none;background-color: #fff; -webkit-animation-duration: .5s; animation-duration: .5s;'
+				});
+				//文本赋值
+				document.querySelector('.layui-m-layer textarea').value = target.innerText;
+
+				//文本编辑-点击事件-修改按钮
+				mui('.layui-m-layer').on('tap', '.tag-text-modify', function(e) {
+					target.innerText = document.querySelector('.layui-m-layer textarea.tag-text-teaxarea').value;
+					layer.closeAll();
+					$(".mask").hide();
+				});
+
+				mui('.layui-m-layer').on('tap', '.noth', function(e) {
+					document.querySelector('.layui-m-layer textarea').value = ""
+				});
+
+				//文本编辑-点击事件-取消按钮
+				mui('.layui-m-layer').on('tap', '.tag-text-cancel', function(e) {
+					layer.closeAll();
+					$(".mask").hide();
+				});
+				//文本编辑-点击事件-删除按钮
+				mui('.layui-m-layer').on('tap', '.tag-text-del', function(e) {
+					var parent = target.parentNode;
+					parent.removeChild(target);
+					recursive(parent);
+					layer.closeAll();
+					$(".mask").hide();
+				});
+				//文本编辑-点击事件-插入广告
+				mui('.layui-m-layer').on('tap', '.tag-text-insert-ad', function(e) {
+					layer.closeAll();
+					//					showAdEditor(target);
+				});
+				//清空
+				mui('.layui-m-layer').on('tap', '.null', function(e) {
+					$(".tag-text-teaxarea").val("")
+				});
+			}
+
+			/*
+			 * 弹出图片编辑框
+			 */
+			function showImgEditor(target) {
+				//弹出编辑窗
+				layer.open({
+					type: 1,
+					content: document.getElementById('modal-picture').innerHTML,
+					anim: 'up',
+					style: 'position:fixed; z-index:1000; bottom:0; left:0; width: 100%; height: 70px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+				});
+
+				//图片编辑-点击事件-取消按钮
+				mui('.layui-m-layer').on('tap', '.tag-picture-cancel', function(e) {
+					layer.closeAll();
+					$(".mask").hide();
+				});
+				//图片编辑-点击事件-删除按钮
+				mui('.layui-m-layer').on('tap', '.tag-picture-del', function(e) {
+					target.parentNode.removeChild(target);
+					layer.closeAll();
+					$(".mask").hide();
+				});
+				//图片编辑-点击事件-插入广告
+
+			}
+			/*
+			 * 弹出广告编辑框
+			 */
+			function showAdEditor(target) {
+				var $target = target,
+					$other_target = target;
+				//弹出编辑窗
+				layer.open({
+					type: 1,
+					content: document.getElementById('modal-ad').innerText,
+					anim: 'up',
+					shadeClose: false,
+					style: 'position:fixed; z-index:1000; bottom:0; left:0; width: 100%; height: 345px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+				});
+				//禁用背景滚动
+				// document.querySelector('body').style.overflow = 'hidden';
+				mui('.mui-slider').slider();
+				mui('.mui-scroll-wrapper.mui-slider-indicator.mui-segmented-control').scroll({
+					scrollY: false,
+					scrollX: true,
+					indicators: false,
+					snap: '.mui-control-item'
+				});
+
+				//广告编辑-点击事件-插入按钮
+				mui('.layui-m-layer').on('tap', '.tag-ad-insert', function(e) {
+
+					while(!$target.parentNode.classList.contains('tag-container') || target.parentNode.tagName == 'BODY') {
+						$target = $target.parentNode;
+					}
+
+					//获取广告图片与文字内容
+					var content, picture_url;
+					if(document.getElementById("itemAdEdit").classList.contains('mui-active')) {
+						content = document.querySelector("#ad_text").value.trim();
+						picture_url = document.querySelector("#ad_picture_url").value.trim();
+						if('' == picture_url) {
+							layer.open({
+								content: '请上传图片！',
+								skin: 'msg',
+								time: 2 //2秒后自动关闭
+							});
+							return;
+						}
+					} else {
+						//获取选取的模版
+						var li = document.querySelector("#itemAdTemplate li.mui-selected");
+						if(!li) {
+							layer.open({
+								content: '请选择广告！',
+								skin: 'msg',
+								time: 2 //2秒后自动关闭
+							});
+							return;
+						}
+						content = li.getAttribute('data-content');
+						picture_url = li.getAttribute('data-picture');
+					}
+
+					//插入广告图片节点
+					var p = document.createElement('p');
+					var img = document.createElement('img');
+					img.src = picture_url;
+					img.className = 'editor-mode';
+					p.appendChild(img);
+
+//					console.log($other_target);
+//					console.log($target.nextSibling);
+//					console.log($target.parentNode);
+//					console.log($target);
+//					console.log('99');
+//					console.log($target.childNodes);
+					// 2018 9 14 old
+					// $target.parentNode.insertBefore(p, $target.nextSibling);
+
+					// 2018 9 14 xz
+					// $other_target.parentNode.append(p);
+					$($other_target).after(p);
+
+					//插入广告文本节点
+					var p2 = document.createElement('p');
+					p2.innerHTML = content;
+					p2.className = 'editor-mode';
+					if(p2.innerHTML != '') {
+						// 2018 9 14 old
+						// $target.parentNode.insertBefore(p2, p.nextSibling);
+						// 2018 9 14xz
+						// $other_target.parentNode.append(p2);
+						$($other_target).after(p2);
+						//2018 9 14 zsy
+						// $target.insertBefore(p2, $target.childNodes[1]);
+					}
+					//2018 9 14 zsy
+					// $target.insertBefore(p, $target.childNodes[1]);
+					layer.closeAll();
+					//开启背景滚动
+					document.querySelector('body').style.overflow = '';
+					//调高度
+					videoHeight();
+				});
+				//广告编辑-点击事件-取消按钮
+				mui('.layui-m-layer').on('tap', '.tag-ad-cancel', function(e) {
+					layer.closeAll();
+					//开启背景滚动
+					document.querySelector('body').style.overflow = '';
+					$(".mask").hide()
+				});
+			}
+
+			$("body").on("change", "#pickfiles", function() {
+				if(window.FileReader) {
+					var filepath = $("#pickfiles").val();
+					var fileimg = this.files[0];
+					var filesize = this.files[0].size;
+					if(filesize >= 1024 * 1024 * 10) {
+						mui.toast("请上传小于10M的图片");
+						return false;
+					}
+					var render = new FileReader();
+					render.readAsDataURL(fileimg);
+					render.onload = function(res) {
+						console.log(res)
+						var imgsrc = res.target.result;
+						$.ajax({
+							url: "index.php?s=/Api/IndexApi/uploads_img",
+							type: "post",
+							data: {
+								unionid: idd,
+								img: imgsrc,
+								start_name: "article"
+							},
+							beforeSend: function() {
+								$(".mask").show();
+								$(".loading").show();
+							},
+							success: function(res) {
+								console.log(res)
+								downimg = res.AppendData;
+								var list = '';
+								list += '<div class="pgc-img">'
+								list += '<img src="' + downimg + '" img_width="960" img_height="574" alt="" inline="0" class="editor-mode editor-mode-picture" style="z-index: 1;">'
+								list += '</div>'
+								that.after(list)
+								layer.closeAll();
+								$(".mask").hide();
+								$(".loading").hide();
+
+							},
+							error: function() {
+								$(".mask").hide();
+								$(".loading").hide();
+							}
+						})
+					}
+				} else {
+					alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+				}
+			})
+
+			var idd = '{$unionid}';
+			var downimg;
+			var typeid = '';
+			if($(".thumb").attr("src") == '') {
+				$(".thumb").attr("src", "__HOME_IMAGES__/yulanimg.png")
+			}
+
+			
+
+			$(".mdzzadd").on("change", function() {
+				if(window.FileReader) {
+					var filepath = $(this).val();
+					var fileimg = this.files[0];
+					var filesize = this.files[0].size;
+					if(filesize >= 1024 * 1024 * 10) {
+						mui.toast("请上传小于10M的图片");
+						return false;
+					}
+					var render = new FileReader();
+					render.readAsDataURL(fileimg);
+					render.onload = function(res) {
+						var imgsrc = res.target.result;
+						$.ajax({
+							url: "index.php?s=/Api/IndexApi/uploads_img",
+							type: "post",
+							data: {
+								unionid: idd,
+								img: imgsrc,
+								start_name: "article"
+							},
+							beforeSend: function() {
+								$(".mask").show();
+								$(".loading").show();
+							},
+							success: function(res) {
+								$(".mask").hide();
+								$(".loading").hide();
+								downimg = res.AppendData;
+								$(".thumb").attr("src", downimg);
+							},
+							error: function() {
+								$(".mask").hide();
+								$(".loading").hide();
+							}
+						})
+					}
+				} else {
+					alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+				}
+			})
+
+			var _atype_id = $('#atype_id').val();
+
+			function choose(id, name) {
+				_atype_id = id;
+				$('#atype_id').val(id);
+				$('#zzc_title').text(name);
+				fromcat_click();
+			}
+
+			function fromcat_click() {
+				$(".zzc_from_cat_tan").toggle();
+				$(".zzc_from_cat_hidden").toggle();
+			}
+			
+			
+			function url(a) {
+				if(a == 1) {
+					var _article_reward = 0;
+					var _title = $("#title").val();
+					var _content = $("#article_content").html();
+					var _id = $('#id').val();
+					$.ajax({
+						url: "/index.php?s=/Home/Articlegrab/addArticle",
+						type: 'post',
+						data: {
+							"id": _id,
+							'title': _title,
+							'content': _content,
+							'article_reward': _article_reward,
+							'thumb': downimg
+						},
+						success: function(res) {
+							location.href = "{:url('Home/Articlegrab/vnote')}";
+						},
+						error: function() {
+		
+						}
+					})
+					
+				} else if(a == 2) {
+					location.href = "{:url('Home/Article/myListArticle')}";
+				}
+			}
+
+			function gotopre(url) {
+				top.location.href = url;
+			}
+
+			function backToList() {
+				var url = "wap.php?act=article&do=captArticleList";
+				location.href = url;
+			}
+
+			/*
+			 * 提交编辑内容
+			 */
+			function sumit_click() {
+				var _article_reward = 0;
+				var _title = $("#title").val();
+				var _content = $("#article_content").html();
+				var _id = $('#id').val();
+				BUI.use('bui/overlay', function(overlay) {
+					BUI.Message.Show({
+						title: '提示',
+						msg: '你正在编辑状态，是否保存修改？',
+						icon: 'question',
+						buttons: [{
+								text: '取消',
+								elCls: 'button',
+								handler: function() {
+									this.close();
+								}
+							},
+							{
+								text: '确定',
+								elCls: 'button button-primary',
+								handler: function() {
+									if(_title.length <= 0) {
+										mui.toast('标题不能为空');
+										this.close();
+										return false;
+									}
+									if(_content.length <= 0) {
+										mui.toast('内容不能为空');
+										this.close();
+										return false;
+									}
+									var _url = "/index.php?s=/Home/Articlegrab/addArticle";
+									$.post(_url, {
+										"id": _id,
+										'title': _title,
+										'content': _content,
+										//										'atype_id': save_id,
+										'article_reward': _article_reward,
+										'thumb': downimg
+									}, function(res) {
+										console.log(res)
+										if(res.status == 1) {
+											mui.toast(res.msg);
+											setTimeout(function() {
+												top.location.href = "/index.php?s=/Home/Articlegrab/articlelist.html";
+											}, 1000);
+										} else {
+											// mui.toast(res.msg);
+											console.log("走了错误")
+										}
+									});
+									this.close();
+								}
+							}
+						]
+					});
+				});
+			}
+			$('p').find('br').remove();
+			// $('.tag-text-teaxarea').height($('body')[0].clientHeight);
+			var win_h = $(window).height();
+			$("body").height(win_h);
+
+			$(".noth").on("click", function() {
+				$("#txt").val("");
+			})
+
+			$(".tag-text-insert-ad").on("click", function() {
+				$("#pickfiles").click();
+			})
+		</script>
+		<script>
+			if(window.name != "bencalie") {
+				location.reload();
+				window.name = "bencalie";
+			} else {
+				window.name = "";
+			}
+		</script>
+	</body>
+
+</html>

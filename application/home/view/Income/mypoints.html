@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>我的积分</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.6rem;
+            background: #32CEA0;
+            position: relative;
+        }
+
+        .topone {
+            width: 3.43rem;
+            height: 1.2rem;
+            top: .2rem;
+            left: .16rem;
+            background: #fff;
+            position: absolute;
+        }
+
+        .poimac {
+            width: .64rem;
+            height: .64rem;
+            top: .28rem;
+            left: .16rem;
+            position: absolute;
+            border-radius: 50%;
+            background-size: 100% 100%;
+        }
+
+        .ylwnum {
+            /* width: .48rem; */
+            height: .2rem;
+            font-size: .2rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #F8C85E;
+            line-height: .28rem;
+        }
+
+        .dayjf {
+            height: .28rem;
+            line-height: .28rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(119, 119, 119, 1);
+
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .rmint li {
+            /* float: left; */
+            margin-left: .08rem;
+        }
+
+        .topfst ul {
+            left: .9rem;
+            top: .32rem;
+            position: absolute;
+        }
+
+        .rpper li {
+            float: left;
+            margin-left: .04rem;
+        }
+
+        .toptwoo {
+            width: .6rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(50, 206, 160, 1);
+            line-height: .17rem;
+        }
+
+        .toptwone {
+            width: .16rem;
+            height: .16rem;
+        }
+
+        .toptwone img {
+            width: .16rem !important;
+            height: .16rem !important;
+            position: absolute !important;
+            background-size: 100% 100% !important;
+        }
+
+        .rpper {
+            position: absolute;
+            top: .75rem;
+            left: .92rem;
+        }
+
+        .zengs {
+            width: .8rem;
+            height: .32rem;
+            background: rgba(248, 200, 94, 1);
+            border-radius: .02rem;
+            position: absolute;
+            top: .64rem;
+            right: .16rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #fff;
+            line-height: .32rem;
+            text-align: center;
+            right: .32rem;
+        }
+
+        .secdonne {
+            width: 100%;
+            height: .8rem;
+            background: #fff;
+            position: relative;
+        }
+
+        .secdonne img {
+            width: 1.3rem;
+            height: .39rem;
+            top: .2rem;
+            left: 1.22rem;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .secdtwo {
+            width: 3.43rem;
+            height: 1.52rem;
+            position: relative;
+            margin: 0 auto;
+            margin-top: .02rem;
+            background: #fff;
+            box-shadow: 0px .02rem .06rem 0px rgba(187, 187, 187, 0.5);
+        }
+
+        .signone {
+            height: .22rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: .22rem;
+            position: absolute;
+            left: .2rem;
+        }
+
+        .sign span img {
+            width: .16rem;
+            height: .16rem;
+            top: .02rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .sign {
+            width: .88rem;
+            height: .22rem;
+            right: 1.27rem;
+            top: .16rem;
+            position: absolute;
+        }
+
+        .wzjs {
+            width: 2.64rem;
+            height: .34rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+            line-height: .17rem;
+            position: absolute;
+            top: .5rem;
+            left: .4rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .qiand {
+            width: 1.6rem;
+            height: .32rem;
+            font-size: 16px;
+            text-align: center;
+            line-height: .32rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 1);
+            background: rgba(50, 206, 160, 1);
+            position: absolute;
+            left: .92rem;
+            bottom: .16rem;
+        }
+
+        .three {
+            height: 2.07rem;
+        }
+
+        .threeone {
+            width: 3.43rem;
+            height: 1.93rem;
+            background: #fff;
+            position: absolute;
+            left: .16rem;
+            margin-top: .16rem;
+            box-shadow: 0px 2px 6px 0px rgba(187, 187, 187, 0.5);
+        }
+
+        /* 进度条 */
+        .mask {
+            width: 2.8rem;
+            height: .08rem;
+            border-radius: .04rem;
+            border: 1px solid #C5C5C5;
+            position: absolute;
+        }
+
+        .votebox {
+            width: 2.8rem;
+            height: .08rem;
+            border-radius: .04rem;
+            text-align: left;
+            position: relative;
+            z-index: 66;
+            background: pink;
+        }
+
+        /* barbox */
+        .barbox {
+            height: .08rem;
+            line-height: .08rem;
+            overflow: hidden;
+        }
+
+        .barbox dt a {
+            color: #0048CC;
+        }
+
+        .barbox dd {
+            float: left;
+        }
+
+        .barbox dd.last {
+            color: #999;
+        }
+
+        .barbox dd.barline {
+            background: url(__HOME_IMAGES__/slicesrjl/jdtbg.png) left center no-repeat;
+            overflow: hidden;
+            display: inline;
+        }
+
+        .barbox dd.barline div.charts {
+            height: 16px;
+            overflow: hidden;
+            background: url(__HOME_IMAGES__/slicesrjl/barbg.gif) right center repeat-x;
+            border-radius: 8px;
+        }
+
+        /* 进度条结束 */
+        .sureqd {
+            width: 1.6rem;
+            height: .32rem;
+            left: .92rem;
+            bottom: .16rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            position: absolute;
+            color: #fff;
+            line-height: .32rem;
+            text-align: center;
+            background: rgba(50, 206, 160, 1);
+        }
+
+        .fourone {
+            width: 3.43rem;
+            height: 1.52rem;
+            /* background: pink; */
+            position: absolute;
+            left: .16rem;
+            margin-top: .16rem;
+            box-shadow: 0px 2px 6px 0px rgba(187, 187, 187, 0.5);
+        }
+
+        .four {
+            width: 100%;
+            height: 1.68rem;
+        }
+
+        .fiveone {
+            width: 3.43rem;
+            height: 1rem;
+            left: .16rem;
+            margin-top: .16rem;
+            margin-bottom: .16rem;
+            position: absolute;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0px .02rem .06rem 0px rgba(187, 187, 187, 0.5);
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .more {
+            width: .4rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(248, 200, 94, 1);
+            line-height: .17rem;
+            position: absolute;
+            top: .94rem;
+            left: 1.58rem;
+            text-align: center;
+        }
+
+        /* 进度条 */
+        .processcontainer {
+            width: 3rem;
+            border: 1px solid #C5C5C5;
+            height: .08rem;
+            position: absolute;
+            top:1.17rem;
+            left:.22rem;
+        }
+
+        #processbar {
+            background: #95CA0D;
+            float: left;
+            height: 100%;
+            text-align: center;
+            line-height: 150%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="top">
+            <div class="topone">
+                <img src="__HOME_IMAGES__/slicesrjl/source_icon@2x.png" alt="" class="poimac">
+                <div class="topfst">
+                    <ul class="rmint">
+                        <li class="ylwnum"></li>
+                        <li class="dayjf">
+                            <!-- 今日积分：60 -->
+                        </li>
+                    </ul>
+                </div>
+                <div class="toptwo">
+                    <ul class="rpper">
+                        <li class="toptwone">
+                            <img src="__HOME_IMAGES__/slicesrjl/integral_icon@2x.png" alt="">
+                        </li>
+                        <li class="toptwoo"><a href="/index.php?s=/Home/Chat/Integral_record.html" style="color:#32CEA0;">积分记录</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="zengs"> <a href="index.php?s=/Home/income/intransfer.html">赠送</a></div>
+        </div>
+        <div class="secd">
+            <div class="secdonne">
+                <img src="__HOME_IMAGES__/slicesrjl/source_icon@2x.png" alt="">
+            </div>
+            <div class="secdtwo">
+                <div class="sign">
+                    <span><img src="__HOME_IMAGES__/slicesrjl/Signin_icon@2x.png" alt=""></span>
+                    <span class="signone">每日签到</span>
+                </div>
+                <div class="wzjs">连续签到，将获取相应的积分奖励，具体获取规则 请看签到积分页面</div>
+                <div class="qiand"><a class="href" href="/index.php?s=/Home/Chat/sign.html">签到</a></div>
+            </div>
+        </div>
+        <div class="three">
+            <div class="threeone">
+                <div class="sign">
+                    <span><img src="__HOME_IMAGES__/slicesrjl/V_icon@2x.png" alt=""></span>
+                    <span class="signone">V网完善</span>
+                </div>
+                <div class="wzjs"> V网制作完善程度，包括头像、微信二维码、行业、 职务、简介等</div>
+                <div class="make" style="display: block;">
+                    <div class="more"></div>
+                </div>
+                
+                <div class="processcontainer">
+                    <div id="processbar" style="width:0%; font-size:0;"></div>
+                </div>
+
+                <div class="sureqd"><a class="href" href="/index.php?s=/Home/Vmake/vmakee.html">去完善</a></div>
+            </div>
+        </div>
+        <div class="four">
+            <div class="fourone">
+                <div class="sign">
+                    <span><img src="__HOME_IMAGES__/slicesrjl/share_icon@2x.png" alt=""></span>
+                    <span class="signone">文章分享</span>
+                </div>
+                <div class="wzjs"> 在文章栏目里，每天分享系统文章，将获得 相应的积分奖励</div>
+                <div class="sureqd"><a class="href" href="/index.php?s=/Home/Xmsquare/articlelist.html">推广文章</a></div>
+            </div>
+        </div>
+        <div class="five">
+            <div class="fiveone">
+                <div class="sign">
+                    <span><img src="__HOME_IMAGES__/slicesrjl/Extension_icon@2x.png" alt=""></span>
+                    <span class="signone">用户推广</span>
+                </div>
+                <div class="wzjs">推荐用户注册洋小秘可获得相应的积分奖励，此用户付费成为 创客将获得更多的积分奖励</div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script language="javascript">
+    var _width = 0;
+    // $(".toptwoo a").attr("href","/index.php?s=/Home/income/recordcion.html&unionid="+unionid+"");
+    $(function () {
+        var user_id = '{$unionid}';
+        // console.log(user_id)
+        // 获取头像
+        $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IntegralApi/get_info ",
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                var headimg = res.AppendData.headimg;
+                // console.log(headimg);
+                $(".topone>img").attr("src", headimg)
+                $('.ylwnum').html(res.AppendData.inte)
+            },
+
+        })
+        // 获取完善度
+        var per = '{$completion}'+'%';
+        $("#processbar").animate({
+            'width': per
+        })
+        $(".more").html(per)
+
+        //今日积分
+        $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IntegralApi/get_todayinte",
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                var Date = res.AppendData;
+                //   _width=Date;
+                console.log(Date);
+                // more
+                $(".dayjf").html("今日积分：" + Date);
+               
+
+            },
+        })
+    })
+</script>
+
+</html>

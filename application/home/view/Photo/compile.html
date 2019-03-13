@@ -1,0 +1,782 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+	<style>
+		html {
+			margin-bottom: 10px;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		ul {
+			list-style: none;
+		}
+
+		.tab {
+			height: 120px;
+			width: 98%;
+			margin: 0.75rem auto 0;
+		}
+
+		.tab:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+
+		.active {
+			transform: scale(1.3);
+			color: #2FB3D3;
+		}
+
+		.tab li {
+			width: 27%;
+			height: 70px;
+			margin: 0 0.55rem;
+			text-align: center;
+			cursor: pointer;
+			list-style: none;
+			line-height: 30px;
+			float: left;
+		}
+
+		.content:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+
+		.content>li {
+			width: 98%;
+			height: 100%;
+			margin: 0 auto;
+			background: #f7f7f7;
+			display: none;
+		}
+
+		.tit {
+			margin: 0;
+			color: #2FB3D3;
+		}
+
+		p {
+			margin-top: 5px;
+			margin-bottom: 0px;
+		}
+
+		.red {
+			background-color: #FF69B4;
+		}
+
+		.or {
+			background-color: #FF4500;
+		}
+
+		.ye {
+			background-color: #FFFF00;
+		}
+
+		.gr {
+			background-color: #008000;
+		}
+
+		.cy {
+			background-color: #00FFFF;
+		}
+
+		.bl {
+			background-color: #0000FF;
+		}
+
+		.pu {
+			background-color: #800080;
+		}
+
+		.bk {
+			background-color: #000000;
+		}
+
+		.wh {
+			background-color: #ffffff;
+		}
+
+		.pi {
+			background-color: #FFDAB9;
+		}
+
+		.gold {
+			background-color: #FFD700;
+		}
+
+		.silver {
+			background-color: #C0C0C0;
+		}
+
+		.col {
+			width: 100%;
+			height: 15rem;
+			margin-bottom: 60px;
+		}
+
+		.col>li {
+			width: 2.5rem;
+			height: 2.5rem;
+			margin: 1rem 1.01rem;
+			float: left;
+			border-radius: 50%;
+		}
+
+		.nav {
+			width: 3rem;
+			height: 3rem;
+			margin: 0 auto;
+		}
+
+		.nav>img {
+			width: 100%;
+			height: 100%;
+		}
+
+		#div1 {
+			width: 98%;
+			margin: 0 auto;
+			height: auto;
+			position: relative;
+		}
+
+		#div1>img {
+			width: 100%;
+			height: auto;
+		}
+
+		#div2 {
+			position: absolute;
+			bottom: 5px;
+			left: 5px;
+			background: rgba(255, 255, 255, 0.5);
+			font-size: 16px;
+			line-height: 25px;
+			letter-spacing: 2px;
+			height: 300px;
+			/*padding: 20px 30px;*/
+		}
+
+		#Img {
+			width: 100%;
+			height: 100%;
+		}
+
+
+		.btn {
+			width: 100%;
+			height: 60px;
+			font-size: 0;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+		}
+
+		.return {
+			width: 50%;
+			height: 60px;
+			background-color: #fff;
+			color: #000;
+			border: 0;
+		}
+
+		.generate {
+			width: 50%;
+			height: 60px;
+			background-color: #2FB3D3;
+			color: #fff;
+			border: 0;
+		}
+
+		.blank {
+			width: 100%;
+			height: 60px;
+		}
+
+		.cover {
+			width: 98%;
+			margin: 0 auto;
+			height: 200px;
+			background-color: #fff;
+			margin-bottom: 10px;
+			overflow: hidden;
+			clear: both;
+			margin-top: 5px;
+		}
+
+		.cover-img {
+			width: 49%;
+			height: 200PX;
+			float: left;
+			position: relative;
+			z-index: 200;
+		}
+
+		.cover-img>img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.hint {
+			width: 49%;
+			height: 200px;
+			float: left;
+			text-align: center;
+		}
+
+		.hint>p {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			color: red;
+		}
+
+		.end {
+			width: 100%;
+			height: 60px;
+		}
+
+		.mask {
+			width: 150px;
+			height: 120px;
+			background: rgba(0, 0, 0, 0.8);
+			border-radius: 5px;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-top: -60px;
+			margin-left: -75px;
+			display: none;
+			z-index: 999;
+		}
+
+		.mask img {
+			width: 40px;
+			height: 40px;
+			display: block;
+			margin: 0 auto;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			animation: rotate 3s linear infinite;
+		}
+
+		.mask p {
+			color: #fff;
+			text-align: center;
+		}
+
+		#file0{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			z-index: 300;
+		}
+	</style>
+</block>
+<block name="body">
+	<input type="hidden" id="sorts" value="" />
+
+	<body class="">
+		<ul class="tab">
+			<li class="active">
+				<p class="nav">
+					<img src="__HOME_IMAGES__/Group8.png" alt="" />
+				</p>
+				<p class="tit">背景</p>
+			</li>
+			<li>
+				<p class="nav">
+					<img src="__HOME_IMAGES__/Group9.png" alt="" />
+				</p>
+				<p class="tit">字体</p>
+			</li>
+			<li>
+				<p class="nav">
+					<img src="__HOME_IMAGES__/Group10.png" alt="" />
+				</p>
+				<p class="tit">布局</p>
+			</li>
+		</ul>
+		<ul class="content">
+			<li style="display: block;">
+				<div id="div1" ondragstart="return false;">
+					<img src="" alt="" id="bgc" />
+				</div>
+				<div class="cover">
+					<div class="cover-img">
+						<input type="file" name="file0" id="file0" onchange="imgPreview(this)" multiple="multiple" />
+						<img src="" id="img0">
+					</div>
+					<div class="hint">
+						<p>*点击图片更换背景</p>
+						<p>*图片类型：jpg .png</p>
+					</div>
+
+				</div>
+				<div class="end"></div>
+			</li>
+			<li>
+				<textarea name="" class="clur" rows="10" cols="15" id="bb"></textarea>
+				<ul class="col">
+					<li class="red"></li>
+					<li class="or"></li>
+					<li class="ye"></li>
+					<li class="gr"></li>
+					<li class="cy"></li>
+					<li class="bl"></li>
+					<li class="pu"></li>
+					<li class="bk"></li>
+					<li class="wh"></li>
+					<li class="pi"></li>
+					<li class="gold"></li>
+					<li class="silver"></li>
+				</ul>
+			</li>
+			<li>
+				<div id="div1" ondragstart="return false;">
+					<img src="" alt="" id="bgc" class="aa" />
+					<div id="div2">
+						<div id="Img" class="mks"></div>
+					</div>
+				</div>
+				<div class="end"></div>
+			</li>
+		</ul>
+		<div class="zzc_myranwen_bottom">
+			<!-- {:url('Home/Photo/detail')} -->
+			<a href="javascript:void(0)" onclick="yulan()">
+				<input type="button" name="" id="yulan" value="返回" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button"
+				/>
+			</a>
+			<input type="button" name="" id="save" value="确定" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="save()" />
+		</div>
+		<div class="mask">
+			<img src="__HOME_IMAGES__/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<script>
+			var k = ($("body").width()) * 0.7;
+			//			console.log(k);
+			//			console.log(g);
+			$("#div2").css("width", k);
+
+			function yulan() {
+				var tid = '{$tid}';
+				var cids = '{$cids}';
+				// alert(tid);
+				// window.location.href="__ROOT__/index.php?s=/Home/Photo/show/id/"+tid+"/pid/"+pid+"";
+				window.location.href = "__ROOT__/index.php?s=/Home/Photo/show/id/" + tid + "/cids/" + cids;
+			}
+		</script>
+		<script>
+			var w = $("body").width() * 0.96;
+			var h = $("body").height() * 1.5;
+			var w2 = $("#div2").width();
+			var h2 = $("#div2").height();
+			//			console.log(w);
+			//			console.log(h);
+			//			console.log(w2);
+			//			console.log(h2);
+			//			var winh = document.body.clientHeight;
+			//			var winw = document.body.offsetWidth;
+			var flag = false;
+			var div2 = document.getElementById("div2");
+			var cur = {
+				x: 0,
+				y: 0
+			}
+			var nx, ny, dx, dy, x, y;
+
+			function down() {
+				flag = true;
+				var touch;
+				if (event.touches) {
+					touch = event.touches[0];
+				} else {
+					touch = event;
+				}
+				cur.x = touch.clientX;
+				cur.y = touch.clientY;
+				dx = div2.offsetLeft;
+				dy = div2.offsetTop;
+			}
+
+			function move() {
+				if (flag) {
+					var touch;
+					if (event.touches) {
+						touch = event.touches[0];
+					} else {
+						touch = event;
+					}
+					nx = touch.clientX - cur.x;
+					ny = touch.clientY - cur.y;
+					x = dx + nx;
+					y = dy + ny;
+					if (x < 0 || y < 0 || x > (w - w2) || y > (h - h2)) {
+						return false;
+					}
+					div2.style.left = x + "px";
+					div2.style.top = y + "px";
+					//					console.log(div2.style.left);
+
+					//阻止页面的滑动默认事件
+					// document.addEventListener("touchmove", function (event) {
+					// 	console.log(event.target.id)
+					// 	if (event.target.id == "Img") {
+					// 		event.preventDefault();
+					// 	}
+					// }, false);
+				}
+
+			}
+
+			$('#Img').on('touchstart', function (e) {
+				e.preventDefault();
+
+				down();
+
+			});
+			$('#Img').on('touchmove', function () {
+
+				move();
+			});
+			// div2.addEventListener("touchstart", function() {
+			// 	down();
+			// }, false);
+
+			// div2.addEventListener("touchmove", function() {
+			// 	move();
+			// }, false);
+		</script>
+		<script>
+			// $('.tab').find('li').click(function() {
+			// 	var index = $(this).index();
+			// 	$(this).addClass('active').siblings().removeClass('active');
+			// 	$('.content>li').eq(index).show().siblings().hide();
+			// })
+
+			$('.tab').find('li').click(function () {
+				var index = $(this).index();
+				$(this).addClass('active').siblings().removeClass('active');
+				var pid = '{$pid}';
+				var tid = '{$tid}';
+				var id = '{$id}';
+				var url = $("#img0").attr('src');
+				var strReg = '^((https|http|ftp|rtsp|mms)?://)';
+				var re = new RegExp(strReg);
+				if (!re.test(url)) {
+					var id = '{$id}';
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/uploads_img", //url 
+						data: {
+							"id": id,
+							"img": url,
+							"start_name": "photo"
+						},
+						success: function (result) {
+							if (result.ResultType == 0) {
+								// alert('ok');
+								$("#img0").attr('src', result.AppendData);
+							}
+						},
+						error: function () {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					})
+					// return false;  
+				}
+				// else {  
+
+				//     // return true;  
+				// }  
+
+				// alert();
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					data: {
+						"id": id,
+						"my_id": tid
+					},
+					success: function (result) {
+						if (result.ResultType == 0) {
+							$.each(result.AppendData.content_detail, function (idx, item) {
+								if (item.id == pid) {
+									$(".aa").attr('src', item.img);
+
+									$("#bb").css('color', item.font_color);
+									// $("#bb").html();
+									$("#bb").html(item.content);
+
+									$(".mks").html(item.content);
+									$(".mks").css('color', item.font_color);
+									//	                				$(".mks").css("left",item.font_x);
+									//	                				$(".mks").css("top",item.font_y);
+									//
+									//	                				$("#div2").css("left",item.font_x+"px");
+									//	                				$("#div2").css("top",item.font_y+"px");
+									// alert($("#div2").css("left"));
+									// alert($("#div2").css("left"));
+									// $("#sorts").val(item.sort);
+									// alert(item.sort);
+								}
+							})
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+				$('.content>li').eq(index).show().siblings().hide();
+			});
+
+			function save() {
+				var id = '{$id}';
+				var img = $("#bgc").attr('src');	
+				var color = $(".clur").css("color");
+				var pid = '{$pid}';
+				var content = $("#bb").val();
+				var font_x = $("#div2").css("left");
+				//		    alert(font_x);
+				//		    console.log(font_x);
+				var sort = $("#sorts").val();
+				if (font_x) {
+					var reg = /\d+/;
+					var font_x = font_x.match(reg)[0];
+					// font_x=parseInt(font_x);
+				}
+				if (font_y) {
+					var reg = /\d+/;
+					var font_y = font_y.match(reg)[0];
+				}
+				var font_y = $("#div2").css("top");
+
+				var tid = '{$tid}';
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+					data: {
+						"id": id,
+						"user_content_id": pid,
+						"img": img,
+						"content": content,
+						"font_color": color,
+						"font_x": font_x,
+						"font_y": font_y,
+						"sort": sort
+					},
+					async: false,
+					success: function (result) {
+						// console.log(result);
+						if (result.ResultType == 0) {
+							// alert('ok');
+							mui.toast("修改成功");
+							//              	setTimeout(function() {
+							//              		// index.php?s=/Home/Photo/show/id/27
+							// window.location.href = "__ROOT__/index.php?s=/Home/Photo/show/id/"+tid;
+							// }, 2000);
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+
+			}
+		</script>
+		<script>
+			$('.col').find('li').click(function () {
+				var index = $(this).index();
+				$(".clur").css("color", $(this).css("background-color"))
+			})
+		</script>
+		<script>
+		
+			function imgPreview(fileDom) {
+				//判断是否支持FileReader
+				if (window.FileReader) {
+					var reader = new FileReader();
+				} else {
+					alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+				}
+				//获取文件
+				var file = fileDom.files[0];
+				// console.log();return;
+				var imageType = /^image\//;
+				//是否是图片
+				if (!imageType.test(file.type)) {
+					alert("请选择图片！");
+					return;
+				}
+				//读取完成
+				reader.readAsDataURL(file);
+				reader.onload = function (e) {
+					//获取图片dom
+					var img = document.getElementById("img0");
+					var bgc = document.getElementById("bgc");
+				
+					var img =  e.target.result;
+					var id = '{$id}';
+
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/uploads_img", //url 
+						data: {
+							"id": id,
+							"img": img,
+							"start_name": "photo"
+						},
+						beforeSend: function () {
+							$(".mask").show();
+						},
+						success: function (result) {
+							$(".mask").hide();
+							if (result.ResultType == 0) {
+								$("#bgc").attr('src', result.AppendData);
+								$("#img0").attr("src",result.AppendData);
+							}
+						},
+						error: function () {
+							$(".mask").hide();
+							alert("服务器繁忙，请稍后再试！");
+						}
+					})
+				};
+
+
+			}
+
+			$(function () {
+				var pid = '{$pid}';
+				var tid = '{$tid}';
+				var id = '{$id}';
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					data: {
+						"id": id,
+						"my_id": tid
+					},
+					success: function (result) {
+						if (result.ResultType == 0) {
+							$.each(result.AppendData.content_detail, function (idx, item) {
+								if (item.id == pid) {
+									var w = $("#bgc").width();
+									var h = $("#bgc").height();
+									var w2 = $("#div2").width();
+									var h2 = $("#div2").height();
+									var winh = document.body.clientHeight;
+									var winw = document.body.offsetWidth;
+									var flag = false;
+									var div2 = document.getElementById("div2");
+									var cur = {
+										x: 0,
+										y: 0
+									}
+									var nx, ny, dx, dy, x, y;
+
+									function down() {
+										flag = true;
+										var touch;
+										if (event.touches) {
+											touch = event.touches[0];
+										} else {
+											touch = event;
+										}
+										cur.x = touch.clientX;
+										cur.y = touch.clientY;
+										dx = div2.offsetLeft;
+										dy = div2.offsetTop;
+									}
+
+									function move() {
+										if (flag) {
+											var touch;
+											if (event.touches) {
+												touch = event.touches[0];
+											} else {
+												touch = event;
+											}
+											nx = touch.clientX - cur.x;
+											ny = touch.clientY - cur.y;
+											x = dx + nx;
+											y = dy + ny;
+											if (x < 0 || y < 0 || x > (w - w2) || y > (h - h2)) {
+												return false;
+											}
+											div2.style.left = x + "px";
+											div2.style.top = y + "px";
+
+											//阻止页面的滑动默认事件
+											// document.addEventListener("touchmove", function (event) {
+											// 	console.log(event.target.id)
+											// 	if (event.target.id == "Img") {
+											// 		event.preventDefault();
+											// 	}
+											// }, false);
+										}
+
+									}
+
+									$('#Img').on('touchstart', function (e) {
+										e.preventDefault();
+
+										down();
+
+									});
+									$('#Img').on('touchmove', function () {
+
+										move();
+									});
+
+									// $("#bgcs").attr('src',item.img);
+									$(".clur").html(item.content);
+									$(".clur").css("color", item.font_color);
+									$("#bgc").attr('src', item.img);
+									// $("#Img").attr('src',item.img);
+									$("#img0").attr('src', item.img);
+									$("#sorts").val(item.sort);
+									// alert(item.sort);
+								}
+								// alert(item.font_color);
+							});
+
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+
+			});
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+</block>

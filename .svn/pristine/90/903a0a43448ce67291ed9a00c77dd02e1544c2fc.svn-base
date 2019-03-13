@@ -1,0 +1,38 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <<link rel="stylesheet" type="text/css" href="__HOME_CSS__/feedback.css" />
+</block>
+
+<block name="body">
+    <body>
+
+    <header class="mui-bar mui-bar-nav zzc_header">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+        <h1 class="mui-title zzc_header_title">广告编辑</h1>
+        <span class="mui-icon mui-icon-more zzc_right" ></span>
+    </header>
+    <div class="mui-content feedback">
+        <input type="text" name="" class="zzc_guanggao_editinput" id="" value="" placeholder="输入广告标题" />
+        <input type="text" name="" class="zzc_guanggao_editinput" id="" value="" placeholder="输入链接" />
+
+        <div id='image-list' class="row image-list zzc_feedback_img"></div>
+        <textarea id='question' class="mui-input-clear question zzc_guanggao_edittextarea" placeholder="请详细描述你的问题和意见..."></textarea>
+
+        <div class="myguanggao_bottom">
+            <input type="" name="" id="" value="保存" />
+        </div>
+    </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script src="__HOME_JS__/feedback.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	        	// 通过下面这个API隐藏右上角按钮hideOptionMenu
+	        	WeixinJSBridge.call('hideOptionMenu');
+	        });
+	</script>
+</block>

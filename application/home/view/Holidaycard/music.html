@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>音乐</title>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/mui/js/mui.min.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.min.css">
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <style>
+             body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #f6f6f7;
+             height: 100%;
+        }
+
+         #content{
+            width: 100%;
+            overflow: hidden;
+            background: #fff;
+             height: 100%;
+        }
+
+            .title{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ulbox li{
+            width: 20%;
+            height: 3rem;
+            text-align: center;
+        }
+
+        .ulbox li p{
+            font-size: 0.6rem;
+        }
+
+        .ulbox li img{
+            width: 70%;
+        }
+
+        .inmusic{
+            height: 2rem;
+            width: 100%;
+            line-height: 2rem;
+            border-top: 1px solid #eee;
+            font-size: 0.8rem;
+           text-indent: 1rem;
+        }
+
+        .musiclist{
+            width: 100%;
+            height: 100%;
+            padding-bottom: 9.5rem;
+            box-sizing: border-box;
+            overflow-y: scroll;
+            /* height: 30rem; */
+        }
+
+         .musiclist ul{
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            padding: 0.2rem 0.5rem;
+            box-sizing: border-box;
+            
+            
+        }
+
+        .musiclist ul li{
+            width: 100%;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-top: 1px solid #eee;
+            font-size: 0.6rem;
+            color: #999CA0;
+            text-indent: 0.2rem;
+           
+        }
+
+        .musiclist ul li:last-child{
+             border-bottom: 1px solid #eee;
+        }
+
+            .fx{
+              width: 100%;
+              position: fixed;
+              bottom: 0;
+              left: 0;
+              
+          }
+
+           .fx button{
+               width: 50%;
+               height: 2.5rem;
+               border: 0;
+           }
+
+            .fx .yl{
+               background: #eee;
+           }
+            .fx .confirm{
+                color: #fff;
+                background: #2FB3D3;
+            }
+
+            .musiclist li input{
+                margin-top: 0.11rem;
+            }
+
+        .type{
+            width: 50%;
+            height: 2rem;
+            padding-right: 3rem;
+           
+        }
+
+        #music_type{
+            text-align: right;
+            direction:rtl;
+            color: #8f8f94;
+            background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 100% 16px;
+            background-size: 12% 18%;
+             padding-right: 1.5rem;
+        }
+
+         #music_type option{
+             text-align: right;
+         }
+
+         .muc{
+             width: 50%;
+             margin-bottom: 0;
+         }
+              .save_check{
+                 width: 8rem;
+                 height: 1.8rem;
+                 line-height: 1.8rem;
+                 color: #fff;
+                 font-size: 0.9rem;
+                 background:rgba(0,0,0,.5);
+                 position: fixed;
+                 bottom: 4rem;
+                 left: 50%;
+                 margin-left: -4rem;
+                 text-align: center;
+                 border-radius: 3px;
+                 display: none;
+             }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="title">
+            <ul class="ulbox clearfix">
+                <li class="fl">
+                    <a id="href_one" href="index.php?s=/Home/Holidaycard/grats">
+                        <img src="__HOME_IMAGES__/h_icon_1.png" alt="">
+                        <p>贺词</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_two" href="index.php?s=/Home/Holidaycard/beijing">
+                        <img src="__HOME_IMAGES__/h_icon_2.png" alt="">
+                        <p>背景</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_three" href="index.php?s=/Home/Holidaycard/music">
+                        <img src="__HOME_IMAGES__/h_icon_3_on.png" alt="">
+                        <p>音乐</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_four" href="index.php?s=/Home/Holidaycard/share">
+                        <img src="__HOME_IMAGES__/h_icon_4.png" alt="">
+                        <p>分享</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_five" href="index.php?s=/Home/Holidaycard/layout">
+                        <img src="__HOME_IMAGES__/h_icon_5.png" alt="">
+                        <p>布局</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="inmusic clearfix">
+            <p class="fl muc">音乐分类</p>
+            <div class="type fl">
+                <select name="type" id="music_type">
+                  
+                </select>
+            </div>
+        </div>
+        <div class="musiclist">
+            <ul class="musicbox ">
+              
+            </ul>
+        </div>
+        <div class="fx clearfix">
+            <button class="yl fl">预览</button>
+            <button class="confirm fl">保存</button>
+        </div>
+        <audio id="audio" src=""></audio>
+    </div>
+    <div class="save_check">保存成功</div>
+</body>
+</html>
+<!-- 音乐分类 -->
+<script type="text/html" id="muctype">
+<!-- <option  value="">请选择</option> -->
+ {{each AppendData v i}}
+<option data-id="{{v.id}}" value="{{v.id}}">{{v.title}}</option>
+{{/each}}
+</script>
+<!-- 音乐列表 -->
+<script type="text/html" id="muclist">
+    {{each AppendData v i }}
+     <li data-id="{{v.id}}" class="mui-input-row mui-radio" data-src="{{v.url}}">
+        <label>{{v.name}}</label>
+        <input name="radio1" type="radio">
+    </li>
+    {{/each}}
+</script>
+
+<script>
+    mui.init();
+    var  musicsrcid;
+    var id = '{$id}';
+    var type_id = "1";
+    var musc;
+    var music_type;
+    var music_id;
+
+     function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';//便于容错处理
+        }
+
+        var gid = GetQueryString("gid");
+        // console.log(gid)
+
+        $("#href_one").attr("href", "index.php?s=/Home/Holidaycard/grats&gid=" + gid + "");
+        $("#href_two").attr("href", "index.php?s=/Home/Holidaycard/beijing&gid=" + gid + "");
+        $("#href_three").attr("href", "index.php?s=/Home/Holidaycard/music&gid=" + gid + "");
+        $("#href_four").attr("href", "index.php?s=/Home/Holidaycard/share&gid=" + gid + "");
+        $("#href_five").attr("href", "index.php?s=/Home/Holidaycard/layout&gid=" + gid + "");
+
+
+        $.ajax({
+            url:"index.php?s=/Api/IndexApi/get_gcard",
+            type:"post",
+            async:false,
+            data:{
+                id:id,
+                cardid:gid
+            },
+            success:function(res){
+                // console.log(res)
+                $.each(res.AppendData,function(k,v){
+                    music_type = v.music_type;
+                    music_id  = v.music_id;
+                })
+            }
+        })
+
+      
+
+
+
+    //音乐的类型
+    $.ajax({
+        type:"post",
+        url:"index.php?s=/Api/IndexApi/music_type",
+        async: false,
+        data:{
+            id:id,
+        },
+        success:function(res){
+            // console.log(res)
+         $("#music_type").html(template("muctype",res));
+             $("#music_type option[value='" + music_type + "']").attr("selected", "selected"); //根据值让option选中 
+     
+        }
+
+    });
+
+    //默认音乐列表
+        $.ajax({
+                url: "index.php?s=/Api/IndexApi/music_list",
+                type: "post",
+                async: false,
+                data: {
+                    id: id,
+                    type_id: music_type|| type_id
+                },
+                success: function (res) {
+                    console.log(res);
+                    $(".musicbox").html(template("muclist",res));
+                          $(".musicbox li").each(function (i, e) {
+                        if ($(e).attr("data-id") == music_id) {
+                            musicsrcid =  $(this).attr("data-id");
+                            $(this).find("input").attr("checked","checked");
+                            console.log(musicsrcid)
+                        }
+                    })
+
+
+                         $(".musicbox").on("click", "li", function () {
+                        musicsrcid = $(this).attr("data-id");
+                        var musicsrc = $(this).attr("data-src");
+                        console.log(musicsrc)
+                        $("#audio").attr("src", musicsrc);
+                        musc = document.getElementById("audio");
+                        musc.play();
+                    })
+                 
+
+                }
+            })
+
+     
+            
+
+
+    $("#music_type").on("change",function(){
+         type_id = $("#music_type option:selected").attr("data-id");
+        console.log(type_id);
+        $.ajax({
+            url:"index.php?s=/Api/IndexApi/music_list",
+            type:"post",
+            dataType:'json',
+            data:{
+                id:id,
+                type_id: type_id
+            },
+            success:function(res){
+                // console.log(res)
+                $(".musicbox").html(template("muclist", res));
+            }
+        })
+            
+        
+    })
+ 
+    
+
+
+    $(".confirm").on("click",function(){
+       $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IndexApi/addGcard",
+            data:{
+                id:id,
+                card_id: gid,
+                music_id: musicsrcid
+            },
+            success:function(res){
+                musc.pause();
+                console.log(res)
+                $(".save_check").text("保存成功").stop(true).fadeIn(500);
+                $(".save_check").fadeOut(2000);
+            }
+       })
+    })
+
+     $(".yl").on("click", function () {
+            location.href = "index.php?s=/Home/Holidaycard/showview/gid/" + gid + "/id/" + id + "";
+        })
+
+
+
+
+</script>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/template-web.js"></script>
+    <title>佣金来源</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+            height: auto !important;
+        }
+
+        .content {
+            width: 100%;
+            margin-top: .05rem;
+            background: #fff;
+            
+
+        }
+
+        .list {
+            width: 100%;
+
+        }
+
+        .list li {
+            height: .81rem;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .list li a {
+            display: block;
+            height: 100%;
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        .list li a .user_img {
+            width: .51rem;
+            height: .51rem;
+            border-radius: 50%;
+            margin-top: .15rem;
+        }
+
+        .list li a .user_img img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+
+        }
+
+        .list li a .user_name {
+            width: 1.7rem;
+            height: 100%;
+            padding-left: .15rem;
+        
+        }
+
+        .list li a .user_name p:first-child {
+            font-size: .16rem;
+            padding-top: .2rem;
+            padding-bottom: .04rem;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+        }
+
+        .list li a .user_name p:last-child {
+            color: #FF9D49;
+        }
+
+        .list li a .user_date {
+            width: 1.1rem;
+            height: 100%;
+            text-align: center;
+        }
+
+        .list li a .user_date p {
+            color: #999999;
+        }
+
+        .list li a .user_date p:first-child {
+            padding-top: .24rem;
+            font-size: .14rem;
+        }
+        .loading {
+            width: 100%;
+            display: none;
+            text-align: center;
+            height: .5rem;
+            line-height: .5rem;
+        }
+
+        .loading .box {
+            width: 100%;
+            height: .5rem;
+            position: relative;
+        }
+
+        .loading img {
+            width: .35rem;
+            height: .35rem;
+            position: absolute;
+            left: 39%;
+            top: 50%;
+            margin-top: -0.175rem;
+
+        }
+
+        .loading p {
+            color: #000;
+            position: absolute;
+            line-height: .4rem;
+            left: 50%;
+            top: 50%;
+            margin-top: -0.175rem;
+
+        }
+        .tip{
+            font-size: .16rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: .05rem .1rem;
+            width: 1rem;
+            border-radius: .05rem;
+            color: #fff;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            margin-top: -0.1rem;
+            margin-left: -0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="content">
+        <ul class="list">
+
+        </ul>
+        <div class="loading">
+            <div class="box">
+                <img class="" src="/Public/Home/images/new_load.gif" alt="">
+                <p class="">加载中...</p>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="user" value="{$id}">
+    <div class="tip">
+        暂无数据
+    </div>
+</body>
+
+</html>
+<script type="text/html" id="money">
+
+    {{each AppendData v i}}
+    <li class="list_item clearfix">
+        <a href="javascript:;">
+            <div class="user_img fl">
+                <img src="{{v.browser_headimg}}" alt="">
+            </div>
+            <div class="user_name fl">
+                <p> {{v.browser_nickname}}</p>
+                {{if v.activity_id == 1}}
+                <p>查看V网展示推广{{v.money}}元</p>
+                {{/if}}
+                {{if v.activity_id == 2}}
+                <p>查看相册推广展示{{v.money}}元</p>
+                {{/if}}
+                {{if v.activity_id == 3}}
+                <p>查看文章推广展示{{v.money}}元</p>
+                {{/if}}
+                {{if v.activity_id == 4}}
+                <p>活动征集展示{{v.money}}元</p>
+                {{/if}}
+            </div>
+            <div class="user_date fr">
+                <p>{{v.create_time}}</p>
+            </div>
+        </a>
+    </li>
+    {{/each}}
+
+
+</script>
+
+<script>
+    $(function () {
+
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '/';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '/';
+            var D = (date.getDate() < 10? '0' + date.getDate()+' ' : date.getDate()+' ');
+            var h = (date.getHours() < 10 ? '0'+date.getHours()+':':date.getHours()+':');
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes()+':':date.getMinutes()+':');
+            var s = date.getSeconds();
+                return Y + M + D + h + m + s;
+           
+        }
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        var share_id = GetQueryString("share_id");
+        var useid = GetQueryString("user_id");
+        console.log(useid)
+        // console.log(share_id)
+
+        var user_ids = $("#user").val();
+        $.ajax({
+            url: "index.php?s=/Api/Share/my_pay_detail",
+            type: "post",
+            data: {
+                unionid: user_ids,
+                share_id: share_id,
+                user_id: useid,
+                page: 1
+            },
+            success: function (res) {
+                console.log(res)
+                if(res.AppendData.length == 0){
+                    $(".tip").show();
+                }
+                var newtime;
+                $.each(res.AppendData, function (k, v) {
+                    v.share_id = share_id
+                    newtime = timestampToTime(v.create_time);
+                    v.create_time = newtime
+                })
+                $(".list").html(template("money", res))
+
+            }
+        })
+
+        console.log(user_ids)
+        console.log(share_id)
+
+
+
+        var page = 1;
+        var scrollFlag = true;
+        $(window).scroll(function () {
+
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+            if (!scrollFlag) {
+                return false;
+            }
+
+            if (scrollTop + windowHeight == scrollHeight) {
+                page += 1;
+                scrollFlag = false;
+                $.ajax({
+                    url: "index.php?s=/Api/Share/my_pay_detail",
+                    type: "post",
+                    data: {
+                        unionid: user_ids,
+                        page: page,
+                        share_id: share_id,
+                        user_id: useid,
+                    },
+                    beforeSend: function () {
+                        $(".loading").show();
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        var newtime;
+                        $.each(res.AppendData, function (k, v) {
+                            v.share_id = share_id
+                            v.share_id = share_id
+                            newtime = timestampToTime(v.create_time);
+                            v.create_time = newtime
+                        })
+                        $(".loading").hide();
+                        if (res.AppendData == 0) {
+                            scrollFlag = false;
+                            $(".loading").show().html("没有更多数据了");
+                        } else {
+                            scrollFlag = true;
+                            $(".list").append(template("money", res));
+                        }
+
+                    },
+                    error: function () {
+                        $(".loading").hide();
+                        alert("服务器繁忙，请稍后再试");
+                    }
+
+                })
+
+            }
+        });
+
+
+
+
+
+
+    })
+</script>

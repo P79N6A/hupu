@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<title>预览</title>
+		<link href="__HOME_CSS__/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/font/iconfont.css">
+    	<link rel="stylesheet" type="text/css" href="__HOME_CSS__/font/mui-icons-extra.ttf">
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script type="text/javascript" src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.top{
+				width: 100%;
+				height: 6rem;
+				overflow: hidden;
+				position: relative;
+				cursor: pointer;
+			}
+			.top>img{
+				width: 100%;
+				height: auto;
+			}
+			ul{
+				list-style: none;
+			}
+			.infor{
+				width: 100%;
+				height: auto;
+				padding:3% 5%;
+				background-color: #fff;
+			}
+			
+			.lis{
+				width: 100%;
+				padding-left: 0.5rem;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				background: #FAFAFA;
+				margin-bottom: 0.5rem;
+			}
+			.mui-icon{
+				display: inline-block;
+				font-size: 1.2rem;
+				/*height: 2.5rem;*/
+				/*line-height:2.5rem;*/
+			}
+			.mui-icon>img{
+				width: 1rem;
+				height: 1rem;
+				margin-left: 0.18rem;
+			}
+			.explain{
+				font-size: 0.9rem;
+				color:#000;
+				margin-left: 1rem;
+			}
+			.explain:empty::before{  
+	            color:#666;  
+	            content:attr(placeholder);  
+        	}
+        	.here{
+        		overflow: hidden;
+        		/*min-height: 2.5rem;*/
+        		/*line-height:1rem;*/
+        		background: #FAFAFA;
+        		margin-bottom: 0.5rem;
+        		padding-left: 0.5rem;
+        		
+        	}
+        	.here>span{
+        		float:left;
+        	}
+        	.dres{
+        		width: 86%;
+        		height: auto;
+        		line-height: 1.2rem;
+        	}
+        	.Img{
+        		position: fixed;
+        		top:0;
+        		left:0;
+        		width: 100%;
+        		height: 100%;
+        		background-color: #fff;
+        		display: none;
+        	}
+        	.Img>img{
+        		width: 100%;
+        		height:auto;
+        		position: absolute;
+        		top:50%;
+        		left:50%;
+        		-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+        	}
+        	.up{
+        		width: 2rem;
+        		height: 2rem;
+        		position: absolute;
+        		bottom:0;
+        		right:0;
+        		background-color:rgba(255,255,255,0.5);
+        	}
+        	.up>img{
+        		width: 100%;
+        		height: 100%;
+        	}
+		</style>
+	</head>
+	<body>
+		<div class="top">
+			<div class="up">
+				<img src="__HOME_IMAGES__/fanda.png" alt="" />
+			</div>
+			<img src="<if condition="$result.thumb neq ''">{$result.thumb}<else />__HOME_IMAGES__/muwu.jpg</if>" alt="" />
+		</div>
+		<div class="infor">
+			<ul>
+				<li class="lis">
+					<span class="mui-icon mui-icon-person zzc_editpad_ico"></span>
+					<span class="explain" placeholder="姓名">
+						<if condition="$result.type eq  2">{$result.realname}<else />{$result.user_info.nick_name}</if>
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon zzc_editpad_ico">
+						<img src="__HOME_IMAGES__/tel.png">
+					</span>
+					<a href="tel:<if condition="$result.type eq  2">{$result.phone}<else />{$result.user_info.telephone}</if>">
+						<span class="explain" placeholder="电话">
+							<if condition="$result.type eq  2">{$result.phone}<else />{$result.user_info.telephone}</if>
+						</span>
+					</a>
+				</li>
+				<li class="here">
+					<span class="mui-icon mui-icon-home zzc_editpad_ico"></span>
+					<span class="explain dres" placeholder="公司">
+						{$result.company}
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-locked zzc_editpad_ico"></span>
+					<span class="explain" placeholder="职务">
+						{$result.position}
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-phone zzc_editpad_ico"></span>
+					<a href="tel:<if condition="$result.type eq  2">{$result.telephone}<else />{$result.user_info.mobile}</if>">
+						<span class="explain" placeholder="手机号码">
+							<if condition="$result.type eq  2">{$result.telephone}<else />{$result.user_info.mobile}</if>
+						</span>
+					</a>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-email zzc_editpad_ico"></span>
+					<span class="explain" placeholder="邮箱">
+						{$result.email}
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-weixin zzc_editpad_ico"></span>
+					<span class="explain" placeholder="微信">
+						{$result.wxnum}
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-qq zzc_editpad_ico"></span>
+					<span class="explain" placeholder="QQ">
+						{$result.qq}
+					</span>
+				</li>
+				<li class="lis">
+					<span class="mui-icon mui-icon-star zzc_editpad_ico"></span>
+					<span class="explain" placeholder="网址">
+						{$result.site}
+					</span>
+				</li>
+				<li class="here">
+					<span class="mui-icon mui-icon-map zzc_editpad_ico"></span>
+					<span class="explain dres" placeholder="地址">
+						{$result.address}
+					</span>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="Img">
+			<img src="<if condition="$result.thumb neq ''">{$result.thumb}<else />__HOME_IMAGES__/muwu.jpg</if>" alt="" />
+		</div>
+		<script>
+			$(".top").click(function(){
+				$(".Img").show();
+			})
+			$(".Img").click(function(){
+				$(".Img").hide();
+			})
+		</script>
+	</body>
+</html>

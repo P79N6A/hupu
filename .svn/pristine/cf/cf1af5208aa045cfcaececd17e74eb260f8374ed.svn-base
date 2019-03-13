@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<link rel="stylesheet" href="__HOME_CSS__/dist/css/swiper.min.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<title>团队风采</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			
+			.list{
+				width: 90%;
+				height: 4.5rem;
+				margin: 0 auto 0.625rem;
+			}
+			.list>a{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.list:first-child{
+				margin-top: 0.8rem;
+			}
+			
+			.l_left{
+				width: 7rem;
+				height: 4.5rem;
+				float:left;
+				margin-right: 0.6rem;
+			}
+			.l_left>img{
+				width: 100%;
+				height: 100%;
+			}
+			.l_right{
+				float:left;
+				width: 9.275rem;
+				height: 100%;
+			}
+			.l_up{
+				width: 100%;
+				height: 2.25rem;
+			}
+			
+			.n_name {
+				display: block;
+				float: left;
+				width: auto;
+				height:2.25rem;
+				line-height: 2.25rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+				margin-right: 5%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.founder {
+				width: auto;
+				height: 0.85rem;
+				float: left;
+				background: #F8C85E;
+				font-size: 0.6rem;
+				color: #fff;
+				padding: 0 5%;
+				line-height: 0.85rem;
+				margin: 0.7rem 0 0;
+			}
+			.l_down{
+				width: 100%;
+				height: 1.6rem;
+				font-size: 0.6rem;
+				color:#000;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/19">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/561259250148817013.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">杨明鑫</span>
+						<span class="founder">创始人</span>
+					</div>
+					<div class="l_down">
+						合并梦想<br />
+						共创未来
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/62">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/686447167407238713.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">郭树良</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						结果比道理更重要
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/64">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/702109929610709964.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">廖君龙</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						人生不设限<br />才会精彩无限
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/56">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/551458978246973416.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">雨华</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						绽放自我<br />成就你我
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/63">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/328980134362601414.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">符东林</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						意气风发不在一时<br />持续奋斗才是英雄
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/106">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/725476042544715035.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">张宪军</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						坚持自己的梦想<br />即使没有翅膀也能飞翔
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/59">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/20181030202153.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">谭红兵</span>
+						<span class="founder">联合创始人</span>
+					</div>
+					<div class="l_down">
+						突破已知障，<br />
+						洞开新天地！
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/12543">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/166252505040180147.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">李洪青</span>
+						<span class="founder">总裁办主任</span>
+					</div>
+					<div class="l_down">
+						合并梦想<br />共创未来
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/70993">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/439832708830886781.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">边雅娟</span>
+						<span class="founder">商学院执行院长</span>
+					</div>
+					<div class="l_down">
+						努力进取，务实
+					</div>
+				</div>
+			</a>
+		</div>
+		
+		
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/39019">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/868945761460722235.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">张懿</span>
+						<span class="founder">首席公共关系官</span>
+					</div>
+					<div class="l_down">
+						合并梦想<br />共创未来
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/21825">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/589675925948118725.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">鲁燕</span>
+						<span class="founder">首席人力资源官</span>
+					</div>
+					<div class="l_down">
+						合并梦想<br />共创未来
+					</div>
+				</div>
+			</a>
+		</div>
+		<!--<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/84609">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/351661561045348148.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">崔苗</span>
+						<span class="founder">首席品牌官</span>
+					</div>
+					<div class="l_down">
+						像蚂蚁一样工作<br />像蝴蝶一样生活
+					</div>
+				</div>
+			</a>
+		</div>-->
+		
+		<div class="list">
+			<a href="http://wx.yxm360.com/index.php?s=/Nologin/card_jump/id/91853">
+				<div class="l_left">
+					<img src="__HOME_IMAGES__/uccn/yxm/494651367987091763.png" alt="" />
+				</div>
+				<div class="l_right">
+					<div class="l_up">
+						<span class="n_name">林佳妮</span>
+						<span class="founder">首席品牌官</span>
+					</div>
+					<div class="l_down">
+						合并梦想<br />共创未来
+					</div>
+				</div>
+			</a>
+		</div>
+		
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+			//分享
+			$(function() {
+				var share_url = "{$share_url}";
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/WeShare/getSignPackage", //url
+					data: {
+						share_url: share_url
+					},
+					async: true,
+
+					// async: false,
+					success: function(result) {
+
+						var title = "团队风采";
+						var desc = "洋小秘团队风采";
+						var link = "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/Uccns/tmien')}";
+						var img_url = "http://wx.yxm360.com/Public/Home/images/mplogo.jpg";
+
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+							appId: result.AppendData.appId,
+							timestamp: result.AppendData.timestamp,
+							nonceStr: result.AppendData.nonceStr,
+							signature: result.AppendData.signature,
+							jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+								'checkJsApi',
+								'onMenuShareTimeline', //
+								'onMenuShareAppMessage',
+								'onMenuShareQQ',
+								'onMenuShareWeibo',
+								'getLocation'
+							]
+						});		
+						wx.ready(function() {
+							//分享到朋友圈
+							wx.onMenuShareTimeline({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享给朋友
+							wx.onMenuShareAppMessage({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								type: '', // 分享类型,music、video或link，不填默认为link
+								dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ
+							wx.onMenuShareQQ({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到腾讯微博
+							wx.onMenuShareWeibo({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ空间
+							wx.onMenuShareQZone({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+
+						});
+
+					},
+					error: function() {
+						console.log("走了错误")
+					}
+				});
+
+			});
+		</script>
+	</body>
+</html>

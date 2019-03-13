@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<title>每日签到</title>
+		<link rel="stylesheet" href="__HOME_CSS__/bs3/sign.css">
+		<script type="text/javascript" src="__HOME_JS__/jquery-1.8.3.min.js"></script>
+		<script>
+			(function flexible(window, document) {
+				var docEl = document.documentElement
+				var dpr = window.devicePixelRatio || 1
+
+				// adjust body font size
+				function setBodyFontSize() {
+					if(document.body) {
+						document.body.style.fontSize = (12 * dpr) + 'px'
+					} else {
+						document.addEventListener('DOMContentLoaded', setBodyFontSize)
+					}
+				}
+				setBodyFontSize();
+
+				// set 1rem = viewWidth / 10
+				function setRemUnit() {
+					var rem = docEl.clientWidth / 10
+					docEl.style.fontSize = rem + 'px'
+				}
+
+				setRemUnit()
+
+				// reset rem unit','page resize
+				window.addEventListener('resize', setRemUnit)
+				window.addEventListener('pageshow', function(e) {
+					if(e.persisted) {
+						setRemUnit()
+					}
+				})
+
+				// detect 0.5px supports
+				if(dpr >= 2) {
+					var fakeBody = document.createElement('body')
+					var testElement = document.createElement('div')
+					testElement.style.border = '.5px solid transparent'
+					fakeBody.appendChild(testElement)
+					docEl.appendChild(fakeBody)
+					if(testElement.offsetHeight === 1) {
+						docEl.classList.add('hairlines')
+					}
+					docEl.removeChild(fakeBody)
+				}
+			}(window, document))
+		</script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			#schedule-box {
+				width: 100%;
+				font-size: 0.4rem;
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.date {
+				box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.21);
+				border-radius: 0.213rem;
+				height: auto;
+			}
+			
+			.top {
+				width: 90%;
+				margin: 0 auto;
+				height: 1.84rem;
+				line-height: 1.84rem;
+				font-size: 0.6rem;
+				box-shadow: none;
+			}
+			
+			.now {
+				color: #6d6d6d;
+			}
+			
+			.num {
+				line-height: 1.6rem;
+				color: #32CEA0;
+			}
+			
+			.schedule-hd {
+				/*display: flex;*/
+				/*justify-content: space-between;*/
+				/*padding: 0 15px;*/
+				width: 100%;
+				height: 1.68rem;
+				border-radius: 0.213rem 0.213rem 0rem 0rem;
+				background-color: #32CEA0;
+			}
+			
+			.today {
+				text-align: center;
+				height: 1.68rem;
+				line-height: 1.68rem;
+				font-size: 0.5rem;
+				width: 75%;
+				float: left;
+				color: #fff;
+			}
+			
+			.ul-box {
+				overflow: hidden;
+			}
+			
+			.ul-box>li {
+				float: left;
+				width: 14%;
+				height: 1rem;
+				line-height: 1rem;
+				text-align: center;
+				padding: 0.066rem 0;
+				font-size: 0.4rem;
+			}
+			
+			.other-month {
+				color: #999;
+			}
+			
+			.current-month {
+				color: #000;
+			}
+			
+			.today-style {
+				border-radius: 50%;
+				background: #58d321;
+			}
+			
+			.arrow {
+				cursor: pointer;
+				float: left;
+				width: 12%;
+				height: 1.68rem;
+				line-height: 1.5rem;
+				color: #fff;
+				background-color: #fff;
+			}
+			
+			.left {
+				background: url(__HOME_IMAGES__/left.png) no-repeat 50% 50%;
+				background-size: 30% 30%;
+			}
+			
+			.right {
+				background: url(__HOME_IMAGES__/right.png) no-repeat 50% 50%;
+				background-size: 30% 30%;
+			}
+			
+			.dayStyle {
+				display: inline-block;
+				width: 0.8rem;
+				height: 0.8rem;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 0.8rem;
+				cursor: pointer;
+			}
+			/*.boxshaw {
+				background-color: #2FB3D3;
+			}*/
+			
+			#h3Ele {
+				text-align: center;
+				padding: 0.133rem;
+			}
+			
+			.on {
+				background: #32CEA0;
+				color: #fff;
+			}
+			
+			#in {
+				background: #C5C5C5;
+				color: #fff;
+			}
+			
+			.cen {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				width: 6rem;
+				height: 5rem;
+				margin-top: -2.25rem;
+				margin-left: -2.75rem;
+				background: url(__HOME_IMAGES__/Group2.png) no-repeat;
+				background-size: 100% 100%;
+				display: none;
+				z-index: 2;
+				color: #fff;
+				font-size: 0.533rem;
+			}
+			
+			.cen div {
+				width: 100%;
+				height: 0.8rem;
+				text-align: center;
+				line-height: 0.8rem;
+			}
+			
+			.suc {
+				position: absolute;
+				left: 0;
+				bottom: 1.5rem
+			}
+			
+			.get {
+				position: absolute;
+				left: 0;
+				bottom: 0.5rem
+			}
+			
+			.big {
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				z-index: 1;
+				display: none;
+			}
+			
+			.mark {
+				color: red;
+			}
+			
+			.sign_in {
+				width: 90%;
+				height: 0.946rem;
+				line-height: 0.946rem;
+				margin: 0 auto;
+				margin-top: 0.626rem;
+			}
+			
+			.clicks {
+				width: 2.826rem;
+				height: 0.946rem;
+				line-height: 0.946rem;
+				background-color: #32CEA0;
+				margin: 0 auto;
+				text-align: center;
+				border-radius: 0.473rem;
+				color: #fff;
+				font-size: 0.4rem;
+				box-shadow: 0px 3px 9px 0px #32CEA0;
+			}
+			
+			.rule {
+				width: 90%;
+				margin: 0 auto;
+				margin-top: 0.56rem;
+			}
+			
+			.sign_rule {
+				font-size: 0.4rem;
+				color: #32CEA0;
+			}
+			
+			.con {
+				font-size: 0.293rem;
+				color: #A1A1A1;
+				line-height: 0.5rem;
+			}
+			
+			.con1 {
+				margin-top: 0.266rem;
+				letter-spacing: 0.04rem;
+			}
+			
+			.act {
+				background: #C5C5C5;
+				box-shadow: 0px 3px 9px 0px rgba(197, 197, 197, 0.8);
+			}
+			
+			.on11 {
+				background: #C5C5C5
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<span class="now">当前积分：</span>
+			<span class="num">{$inte}分</span>
+		</div>
+		<div id='schedule-box' class="boxshaw">
+
+		</div>
+		<!--<div>
+			<h3 id='h3Ele'></h3>
+		</div>-->
+		<div class="sign_in">
+			<div class="clicks">点击签到</div>
+		</div>
+		<div class="big"></div>
+		<div class="cen"></div>
+		<div class="rule">
+			<div class="sign_rule">签到规则</div>
+			<div class="con con1">1、连续签到，会以前一天的2倍形式获得今日积分，如：2，4，8，16...</div>
+			<div class="con con2">2、每周一或未连续的签到，今日的积分将从2积分重新开始计算。</div>
+		</div>
+
+	</body>
+	<script src="__HOME_CSS__/bs3/sign.js"></script>
+	<script>
+		var openid = '{$openid}';
+		var id = '{$id}';
+		var mySchedule = new Schedule({
+			el: '#schedule-box',
+		});
+
+		function formartDate(y, m, d, symbol) {
+			symbol = symbol || '-';
+			m = (m.toString())[1] ? m : '0' + m;
+			d = (d.toString())[1] ? d : '0' + d;
+			return y + symbol + m + symbol + d
+		}
+		var curDate1 = new Date(),
+			year1 = curDate1.getFullYear(),
+			month1 = curDate1.getMonth(),
+			day1 = curDate1.getDate(),
+			titleDate = formartDate(year1, month1 + 1, day1, '-');
+		$(".clicks").click(function() {
+			$(".clicks").addClass('act');
+			
+			var day = titleDate;
+			$.ajax({
+				type: "post",
+				url: '/index.php?s=/Api/IndexApi/sign_inte', //后台处理程序
+				dataType: 'json', //接受数据格式    
+				data: 'id=' + id + '&day=' + day, //要传递的数据
+				success: function(res) {
+//					console.log(res)
+					if(res.ResultType == 0) {
+						$('.cen').show();
+						$('.big').show();
+						$('[title=' + titleDate + ']').addClass('on');
+						$('.cen').html('<div class="suc">' + '恭喜您签到成功！' + '</div>' + '<div class="get">' + '获得积分:' + '<span class="mark">' + '+' + res.AppendData + '</span></div>');
+						setTimeout(function() {
+							$('.cen').hide();
+							$('.big').hide();
+							window.location.reload();
+						}, 1500);
+						$(".click").html('已签到');
+
+					}
+				}
+			})
+
+			//给后台签到数据
+		})
+	</script>
+	
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+	
+</html>

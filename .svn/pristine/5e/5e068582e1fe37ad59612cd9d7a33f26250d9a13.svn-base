@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta charset="UTF-8">
+		<title>积分赠送</title>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/give.css" />
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="top_img">
+				<img src="{$user.headimg}" alt="" />
+			</div>
+			<div class="name">{$user.nick_name}</div>
+			<div class="iphone">{$user.phone}</div>
+		</div>
+		<div class="pass">积分转赠</div>
+		<div class="end">
+			<div class="explain">每次转赠的积分数必须为100的整倍数，如100,200,300...</div>
+		</div>
+		<div class="num">
+			<input class="nums" type="text" placeholder="请输入您要转赠的积分数" />
+		</div>
+		<div class="foot">
+			<textarea class="word" name="" rows="" cols="" placeholder="添加备注（50字以内）"></textarea>
+		</div>
+		<div class="confirm">确认转赠</div>
+		<div class="privacy">
+			<div class="up">温馨提示</div>
+			<div class="down">您没有足够的积分了哟！</div>
+		</div>
+		<div class="allcity-masks"></div>
+		<div class="success">转赠成功</div>
+		<script>
+			var id = '{$unionid}';
+			var uid = '{$user.id}';
+			$(".confirm").click(function() {
+				var contents = $(".nums").val();
+				var infor = $(".word").val()
+				if(!isNaN(contents)) {
+					contents = 1 * contents;
+					if(contents > 0 && contents % 100 == 0) {
+						$.ajax({
+							type: "post",
+							dataType: "json",
+							url: "index.php?s=/Api/IntegralApi/give_inte",
+							data: {
+								unionid: id,
+								user_id: uid,
+								inte: contents,
+								msg: infor
+							},
+							success: function(result) {
+								if(result.ResultType == 2) {
+									$('.allcity-masks').show();
+									$(".privacy").show();
+									setTimeout(function() {
+										$('.privacy').hide();
+										$('.allcity-masks').hide();
+									}, 1500);
+									return false;
+								}
+								if(result.ResultType == 0){
+									$(".success").show();
+									
+									setTimeout(function() {
+										window.location.href="{:U('Home/Chat/integral')}"
+										}, 1000);
+								}
+							},
+							error: function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+
+					} else {
+						alert("请输入100的整倍数");
+					}
+				}
+
+			})
+		</script>
+	</body>
+
+</html>

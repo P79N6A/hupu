@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>安卓版洋小秘下载</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: url(__HOME_IMAGES__/app/Group4@2x.png) no-repeat;
+				-webkit-background-size: 100% 100%;
+				background-size: 100% 100%;
+			}
+			
+			.top {
+				width: 100%;
+				height: 5.2rem;
+				text-align: center;
+			}
+			
+			.tit {
+				width: 100%;
+				height: 3.125rem;
+				font-size: 1.15rem;
+				color: #fff;
+				line-height: 3.5rem;
+				font-weight: 600;
+			}
+			
+			.xm {
+				width: 100%;
+				height: 2.075rem;
+				font-size: 0.65rem;
+				color: #fff;
+			}
+			
+			.img {
+				width: 9.8rem;
+				height: 19.6rem;
+				margin: 0 auto;
+			}
+			
+			.img>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.foot {
+				width: 7.275rem;
+				height: 1.85rem;
+				margin: 1.5rem auto 0;
+			}
+			
+			.foot>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.mask>img {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="tit">安卓版洋小秘下载</div>
+			<div class="xm">YANG XIAO MI</div>
+		</div>
+		<div class="img">
+			<img src="__HOME_IMAGES__/app/Group3@2x.png" alt="" />
+		</div>
+		<div class="foot">
+			<img src="__HOME_IMAGES__/app/Group5@2x.png" alt="" />
+		</div>
+		<div class="mask">
+			<img src="__HOME_IMAGES__/app/411769307692478066.png" alt="" />
+		</div>
+		<script>
+			$(".foot").click(function() {
+				$(".mask").show();
+			})
+//			var unionid = '{$unionid}';
+//			console.log(unionid);
+			$.ajax({
+				type: "post",
+				url: '/index.php?s=/Api/AppApi/android_update', //后台处理程序
+				//dataType: 'json', //接受数据格式    
+				async: false,
+				data: {
+					unionid:'63hpma9Mk80'
+				},
+
+				success: function(res) {
+					console.log(res.updateurl);
+					function is_weixn() {
+						var ua = navigator.userAgent.toLowerCase();
+						if(ua.match(/MicroMessenger/i) == "micromessenger") {
+							return true;
+						} else {
+							return false;
+						}
+					};
+					if(!is_weixn()) {
+						top.location.href =res.updateurl;
+					}
+
+				},
+				error: function() {
+					console.log("服务器繁忙，请稍后再试！");
+				}
+			})
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

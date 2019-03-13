@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/loading.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <title>找回密码</title>
+    <style>
+        body,html{
+            height: 100%;
+            width: 100%;
+            background: -webkit-linear-gradient(#185c9d, #41cca2);
+            overflow: hidden;
+        }
+
+        .logn_box{
+        width: 3rem;
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        color: #fff;
+        margin-left: -1.5rem;
+        margin-top: -1rem;
+        text-align: center;
+        overflow: hidden;
+    }
+
+     .logn_box p{
+         font-size: .20rem;
+         padding: .1rem 0;
+         color: #000;
+     }
+
+      .logn_box .lg_in{
+          width: 100%;
+          height: .34rem;
+          line-height: .34rem;
+          position: relative;
+          padding: .1rem 0;
+      }
+
+       .logn_box .lg_in input{
+           display: block;
+           width: 80%;
+           height: 100%;
+           margin: 0 auto;
+           color: #fff;
+           border-radius: .18rem;
+           outline: none;
+           border:0;
+           background: rgba(0, 0, 0, 0.1);
+           font-size: .14rem;
+           text-indent: .5rem;
+
+       }
+
+         .logn_box .lg_in img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             top: 50%;
+             left: .45rem;
+             margin-top: -.1rem;
+         }
+
+        ::-webkit-input-placeholder{/*Webkit browsers*/
+             color:#fff;
+             font-size: .14rem;
+             
+        }
+
+        .logn_box .Logn{
+            width: 82%;
+            height: .4rem;
+            line-height: .4rem;
+            text-align: center;
+            color: #fff;
+            outline: none;
+            border: 0;
+            margin: 0 auto;
+            border-radius: .2rem;
+            margin-top: .2rem;
+            /* background: -webkit-linear-gradient(#e7faff,rgba(65, 140, 204, 0.54)); */
+            background: #41cca2;
+            
+        }
+
+
+         .back img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             left: .1rem;
+             margin-top: 0.01rem;
+         }
+
+         .code{
+             width: 50% !important;
+             margin-left:.34rem !important;
+         }
+         .lg_in button{
+             width: 30%;
+             height: 100%;
+             box-sizing: border-box;
+             border: 0;
+             outline: none;
+             text-align: center;
+             background: #41cca2;
+             color: #fff;
+             border-radius: .18rem;
+             line-height: .33rem;
+             font-size: .14rem;
+         }
+        .mint-header{background-color: #1f6f9e;}
+    </style>
+</head>
+
+<body class="hide">
+
+    <div id="htmlbody">
+        <mt-header title="找回密码">
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+            </router-link>
+        </mt-header>
+
+    <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable="true">
+        <mt-tab-container-item id="isValue">
+            <!-- cell组件 -->
+            <div class="logn_box">
+                <p>手机验证</p>
+                <div class="lg_in">
+                    <input type="text" placeholder="请输入手机号码" v-model="phone">
+                    <img src="__HOME_IMAGES__/wh/phone.png" alt="">
+                </div>
+                <div class="lg_in clearfix">
+                    <input class="code fl" type="text" placeholder="输入验证码" v-model="mycode">
+                    <img  src="__HOME_IMAGES__/wh/yzm.png" alt="">
+                    <button class="hq_code fl" @click="sendcode" v-text="sendcodeValue">获取验证码</button>
+                </div>
+                <button class="Logn" @click="isVerification">验证</button>
+            </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="changePwd">
+            <div class="logn_box">
+                <p>密码重置</p>
+                <div class="lg_in">
+                    <input type="password" placeholder="请输入密码" v-model="pwd">
+                    <img src="__HOME_IMAGES__/wh/mima.png" alt="">
+                </div>
+                <div class="lg_in">
+                    <input type="password" placeholder="确认密码" v-model="pwd1">
+                    <img src="__HOME_IMAGES__/wh/qrmm.png" alt="">
+                </div>
+                <button class="Logn" @click="changPwd">完成</button>
+            </div>
+        </mt-tab-container-item>
+    </mt-tab-container>
+    </div>
+    <div class="loading_box">
+        <div id="colorfulPulse">
+            <span class="item-1"></span>
+            <span class="item-2"></span>
+            <span class="item-3"></span>
+            <span class="item-4"></span>
+            <span class="item-5"></span>
+            <span class="item-6"></span>
+            <span class="item-7"></span>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    new Vue({
+        el:"#htmlbody",
+        data:{
+            active:'isValue',
+            sendcodeValue:'获取验证码',
+            sendcodeisfalg:true,
+            phone:'',
+            isphone:false,
+            verphone:'',
+            pwd:'',
+            pwd1:'',
+            isfalg:true,
+            countdown:60,
+            mycode:''
+        },
+        methods:{
+            isVerification:function(){
+              var t=this;
+              if(t.mycode==""){
+                  t.$toast("验证码不能为空");
+                  return;
+              }
+              if(t.mycode!= window.localStorage.getItem("code")){
+                  t.$toast("验证码错误");
+                  return;
+              }
+
+              t.active="changePwd";
+            },
+            settime:function(){
+                var t=this;
+                if(t.countdown == 0) {
+                    t.sendcodeisfalg=true;
+                    t.sendcodeValue='获取验证码',
+                    t.countdown = 60;
+                    return;
+                } else {
+                    t.sendcodeisfalg=false;
+
+                    if(t.countdown < 10) {
+                        t.sendcodeValue="0" + t.countdown + "S";
+                    } else {
+                        t.sendcodeValue=t.countdown + "S";
+                    }
+                    t.countdown--;
+                }
+                setTimeout(function() {
+                    t.settime()
+                }, 1000)
+            },
+            sendcode:function(){
+                var t=this;
+                if(t.phone==""){
+                    t.$toast("手机号不能为空");
+                    return;
+                }
+                if(!t.sendcodeisfalg) return;
+                console.log(t.verphone);
+                console.log(t.phone);
+                if(t.verphone!=t.phone){
+                    t.isphone=false;
+                }
+                if(!t.isphone){
+                    $.ajax({
+                        type: "post",
+                        url:"/index.php?s=/Api/AgencyWeb/is_agencyphone", //后台处理程序
+                        dataType: 'json', //接受数据格式
+                        data: {
+                            phone:t.phone
+                        },
+                        //要传递的数据
+                        success: function(res) {
+                            console.log(res);
+                            if(res.ResultType == 0) {
+                                t.verphone=t.phone;
+                                t.isphone=true;
+                                t.sendusercode();
+                            } else {
+                                t.isphone=false;
+                                t.$toast("用户不存在");
+                                return;
+                            }
+
+                        },
+                        error: function() {
+                            return;
+                        }
+                    });
+                }else{
+                    t.sendusercode();
+                }
+                //上面的逻辑基本实现判断phone是否是代理商，如果phone发生改变则再次判断，如果没有发生改变则不需要判断
+
+
+            },
+            sendusercode:function(){
+                var t=this;
+                t.settime();
+                $.ajax({
+                    type: "post",
+                    url: '/index.php?s=/Api/IndexApi/send_phone_code', //后台处理程序
+                    dataType: 'json', //接受数据格式
+                    data: {
+                        unionid:'EkcIHDJhjog',
+                        phone: t.phone,
+                        type: 6,
+                    },
+                    //要传递的数据
+                    success: function(res) {
+                        if(res.ResultType == 0) {
+                            t.$toast("获取成功");
+                            window.localStorage.setItem("code", res.AppendData);
+                        } else {
+                            t.$toast("获取失败");
+                        }
+
+                    },
+                    error: function() {
+                        alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+            },
+            changPwd:function () {
+                var t=this;
+
+                if(t.pwd=="" || t.pwd.length<6 || t.pwd.length>12){
+                    t.$toast('密码不能为空且长度需在6至12之间');
+                     return;
+                 }
+                 if(t.pwd!=t.pwd1){
+                     t.$toast('两次输入密码不一致');
+                     return;
+                 }
+
+                  t.isfalg=false;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/chang_pwd",
+                    data: {
+                        phone:t.phone,
+                        pwd:t.pwd,
+                        code:t.mycode
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+
+                    success: function (res) {
+                        if(res.ResultType==0){
+                            if((res.AppendData)=="验证码错误"){
+                                t.isfalg=true;
+                                t.$toast(res.AppendData);
+                            }else{
+                                t.$toast("修改成功");
+                                window.location.href="/index.php?s=/Home/WapAgent/sign.html";
+
+                            }
+                            return;
+                        }else{
+                            window.location.href="/index.php?s=/Home/WapAgent/sign.html";
+                            t.isfalg=true;
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            }
+        },
+        mounted:function () {
+            var t=this;
+
+        }
+    })
+</script>
+<script>
+    $(window).load(function () {
+        $("body").removeClass("hide");
+        $(".loading_box").show().delay(1000).fadeOut(1000);
+
+
+    })
+</script>

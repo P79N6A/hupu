@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>奖品管理</title>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="__AGENCY__/js/vue/index.css">
+    <!-- 引入组件库 -->
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <script src="__AGENCY__/js/vue/jquery.min.js"></script>
+</head>
+<body >
+<!--javatom -->
+<div id="app">
+    <div class="api_search">
+    <el-row>
+        <el-col :span="2" style="text-align: center;">
+            中奖者微信名
+        </el-col>
+        <el-col :span="3">
+            <el-input v-model="serachpojo.nick_name" placeholder="请输入中奖者微信名"></el-input>
+        </el-col>
+        <el-col :span="2" style="text-align: center;">
+            中奖日志id
+        </el-col>
+        <el-col :span="3">
+             <el-input v-model="serachpojo.id" placeholder="请输入中奖日志id"></el-input>
+        </el-col>
+        <el-col :span="2" style="text-align: center;">
+            中奖商品
+        </el-col>
+        <el-col :span="3">
+            <el-input v-model="serachpojo.pname" placeholder="中奖商品"></el-input>
+        </el-col>
+
+        <el-col :span="3">
+            <el-button type="primary" size="medium" @click="postTableData">搜索</el-button>
+        </el-col>
+
+        </el-row>
+    </div>
+    <div class="api_table">
+        <template>
+           <!--// field("p.pname,p.pprice,p.ptype,p.pnumber,p.pdis,p.pimgurl,p.createtime,a.nickname,a.sex,a.headimgurl,a.code")-->
+
+            <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop="lid" label="#" width="100">
+                </el-table-column>
+                <el-table-column prop="nickname" label="中奖者微信名" >
+                </el-table-column>
+                <el-table-column prop="code" label="月卡号" >
+                </el-table-column>
+                <el-table-column prop="pname" label="商品名" >
+                </el-table-column>
+                <el-table-column prop="pprice" label="商品价值" >
+                </el-table-column>
+                <el-table-column prop="pdis" label="商品描述" >
+                </el-table-column>
+                <el-table-column label="商品图标" >
+                    <template slot-scope="scope">
+                         <img :src="scope.row.pimgurl" width="150px" height="150px" />
+                    </template>
+                </el-table-column>
+                <el-table-column  label="商品类型" >
+                    <template slot-scope="scope">
+                       <p v-if="scope.row.ptype==1">实物商品</p>
+                        <p v-else-if="scope.row.ptype==2">虚拟商品</p>
+                    </template>
+                </el-table-column>
+                <el-table-column  label="是否兑换" >
+                    <template slot-scope="scope">
+                        <p v-if="scope.row.isfalg==0">未兑换</p>
+                        <p v-else-if="scope.row.isfalg==1">已兑换</p>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" style="width: 20%" >
+                    <template slot-scope="scope">
+                        <el-button size="mini" @click="Edit(scope.row)">查看详情</el-button>
+                        <el-button size="mini" @click="f_prize_luck_ok(scope.row.lid)">确认已兑换</el-button>
+                        <el-button size="mini" @click="addRemakes(scope.row.lid)">添加备注</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+
+    <div class="api_pagination">
+        <el-row type="flex" class="row-bg" justify="end">
+            <el-pagination @current-change="handleCurrentChange" :current-page.sync="pagination.pageNum" :page-size="pagination.pageSize" layout="total,prev, pager, next, jumper" :total="pagination.pageTotal">
+            </el-pagination>
+        </el-row>
+    </div>
+
+    <div class="api_add">
+        <el-dialog title="添加备注" :visible.sync="dialogVisible" center>
+
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+
+                <el-col :span="6" style="text-align: center;">
+                    中奖姓名
+                </el-col>
+                <el-col :span="18">
+                    <el-input
+                            placeholder="中奖姓名"
+                            v-model="pojo.remaks_names"
+                            clearable>
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+
+                <el-col :span="6" style="text-align: center;">
+                    详情
+                </el-col>
+                <el-col :span="18">
+                    <el-input
+                            type="textarea"
+                            :rows="4"
+                            placeholder="请输入详情"
+                            v-model="pojo.remaks_dis">
+                    </el-input>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+
+                <el-col :span="6" style="text-align: center;">
+                    快递单号
+                </el-col>
+                <el-col :span="18">
+                    <el-input
+                            placeholder="中奖姓名"
+                            v-model="pojo.remake_num"
+                            clearable>
+                    </el-input>
+                </el-col>
+            </el-row>
+
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button @click="sub">确认</el-button>
+            </div>
+        </el-dialog>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            dialogVisible: false,
+            currentPage: 5,
+            value: '',
+            tableData: [],
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            //pojo数据
+            pojo: {
+                rid:'',
+                remaks_vote_id:'',
+                remaks_names:'',
+                remaks_dis:'',
+                remake_num:''
+            },
+            startList: [{
+                value: 1,
+                label: '实物商品'
+            },
+                {
+                    value: 2,
+                    label: '虚拟商品'
+                }
+            ],
+            uploadpojo:{
+                "start_name": 'Vote',
+                "id":'468'
+            },
+            serachpojo:{
+                nick_name:'',
+                id:''
+            },
+            uploadaction:'{:U("/Api/IndexApi/uploads_img")}'},
+        methods: {
+            uploadimgsuccess:function(response, file, fileList){
+               // console.log(response)
+                var t=this;
+                t.pojo.pimgurl=response.AppendData;
+
+            },
+            addRemakes:function(lid){
+                var t=this;
+                t.dialogVisible=true;
+                t.pojo={
+                    rid:'',
+                    remaks_vote_id:lid,
+                    remaks_names:'',
+                    remaks_dis:'',
+                    remake_num:''
+                }
+
+            },
+            sub:function(){
+                var _this = this;
+                if(!confirm("是否确认已经兑换")){
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/Vote/add_remaks")}',
+                    data: _this.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        _this.postTableData();
+                    },
+                    error: function() {}
+                })
+            },
+            f_prize_luck_ok:function(lid){
+                var _this = this;
+                if(!confirm("是否确认已经兑换")){
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/Vote/f_prize_luck_ok")}',
+                    data: {
+                        lid:lid
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        _this.postTableData();
+                    },
+                    error: function() {}
+                })
+            },
+
+            //分页点击更新数据数据
+            handleCurrentChange(val) {
+                var t = this;
+                t.n = val;
+                t.postTableData();
+
+            },
+            //简单封装一下请求数据数据
+            postTableData: function() {
+                var _this = this;
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/Vote/f_prize_log")}',
+                    data: {
+                        n: _this.n,
+                        nick_name:_this.serachpojo.nick_name,
+                        id:_this.serachpojo.id
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        var data=res.AppendData;
+                        _this.tableData = data.list;
+                        var paginstion = {
+                            pageNum: parseInt(data.pageNum),
+                            pageSize: data.pageSize,
+                            pageTotal: parseInt(data.pageTotal)
+                        };
+                        _this.pagination = paginstion
+                    },
+                    error: function() {}
+                })
+            },
+
+            Edit:function (row) {
+                var t=this;
+                t.pojo=row;
+                t.dialogVisible=true;
+            },
+
+        },
+
+        mounted: function() {
+            var t=this;
+            t.postTableData();
+
+        },
+
+    })
+</script>
+
+</body>
+</html>

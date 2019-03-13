@@ -1,0 +1,901 @@
+
+
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <style>
+        .zzc_wode_icoone,.zzc_wode_icotwo,.zzc_wode_icothree,.zzc_wode_icofore,.zzc_wode_icofive,.zzc_wode_icoaddsix{background:#B5B5B5 ;color: #FFFFFF;height: 35px;width:35px;line-height: 35px;font-size:18px; text-align: center;border-radius: 50%; position:  absolute;top:10px;}
+        .zzc_wode_icoone{ left: 4%;}
+        .zzc_wode_icotwo{ left: 16%;}
+        .zzc_wode_icoaddsix{ left: 28%;
+            position: absolute;
+            top: 14px;
+        }
+        .zzc_wode_icothree{ right: 28%;}
+        .zzc_wode_icofore{ right: 16%;}
+        .zzc_wode_icofive{ right: 4%;}
+        .zzc_wode_imgdiv{width: 40%;margin: 0px auto;overflow: hidden;}
+        .zzc_wode_img{    width: 100px;
+    margin: 0px auto 20px auto;}
+        .zzc_wode_img img{width: 100%;height: 100%;object-fit: cover;object-position: center;overflow: hidden;border-radius: 50%;}
+        .zzc_wode_imgli{width: 30%;float: left;margin-right: 10px;}
+        .zzc_wode_imgli .icon-sub{
+            position: absolute;
+            right: 1px;
+            top: 8px;
+            border-radius: 50%;
+            background: red;
+            color: #fff;
+            font-size: 12px;
+            width: 15px;
+            text-align: center;
+            height: 15px;
+            line-height: 15px;
+        }
+        .zzc_wode_imgli .zzc_wode_imgli_nei{width: 85%;margin:5px auto;overflow: hidden;text-align: center;background: #fff;}
+        .zzc_wode_imgli p{color: #000;}
+        .zzc_wode_imgli_nei img{width: 100%;}
+        .card{display: none;}
+        .card_panel{text-align: center;width: 250px;height:388px;background: #fff;position: fixed;top: 12%;left:0;right:0;margin: auto;border: 1px solid;border-radius: 20px;z-index:100;}
+        .card_panel .card_code{text-align: center;}
+        .card_panel .card_code p{font-size:15px;}
+        .card_panel .card_button{width: 80%;height: 30px;line-height: 30px;margin: 0 auto;color: #fff;background: #2fb3d3;border-radius: 20px;margin-bottom: 10px;border:1px solid #2fb3d3;font-size: 12px;}
+        .card_button.on{background: #fff;color: #000;}
+        .card .bg{background: rgba(0,0,0,.7);z-index:98;width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;}
+        .card_edit_btn{
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,.5);
+            color: #FFFFFF;
+            border-radius: 50%;
+            position: fixed;
+            right: 1px;
+            z-index: 9;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            text-align: center;
+            line-height: 60px;
+        }
+        .card_edit_btn.on{background: #218afe;}
+
+        .card_edit_btn span{font-size: 32px;}
+        .card_nav_panel{
+            width: 50%;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+        .card_nav_add,.card_nav_del{margin: 0 auto;}
+        .card_nav_panel .mui-icon{font-size: 2rem;width: 100%;margin-bottom: 10px;}
+        .card_nav_panel span{color:#777;}
+        .dn{display: none;}
+        #editUserInfo{margin-bottom: 100px;}
+        .card{display: none;}
+        .nav_box{text-align: center;width: 300px;background: #fff;position: fixed;top: 12%;left:0;right:0;margin: auto;border-radius: 15px;z-index:100;padding: 10px;}
+        .nav_panel .bg{background: rgba(0,0,0,.7);z-index:98;width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;}
+        .nav_title{text-align: left;font-weight: bold;}
+        .nav_select_icon{margin-bottom: 20px;padding-top: 10px;}
+        .nav_select_icon .mui-icon-plusempty{font-size: 48px;color: #2fb3d3;}
+        .nav_content input[type=text]{background: #f7f7f8;border: 0;color: #6a6e70;}
+        .nav_btns button{width: 40%;height: 42px;}
+        .nav_btns .nav_btns_yes{border: 0;color: #fff;background:#2fb3d3; }
+        .nav_select_img{text-align: center;width: 300px;background: #fff;position: fixed;top: 12%;left:0;right:0;margin: auto;border-radius: 15px;z-index:101;padding: 10px;}
+        .nav_select_list img{float: left;width: 50%;border: 5px solid #ffffff;}
+        .nav_select_list img.on{border: 5px solid #2fb3d3;}
+        .nav_select_list{margin-top: 40px;overflow: auto;height: 400px;}
+        .zzc_wode_header{
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: {$result.background_color};
+            background-image:url({$result.background_img});
+            background-repeat:no-repeat;
+            background-size:100%;
+            padding-bottom: 40px;
+        }
+        /*V网图文样式 start*/
+        .showCard_list{
+            width: 90%;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px 20px 0px 0px;
+            margin-top: 15px;
+        }
+        .showCard_title{
+            height: 35px;
+            text-align: center;
+            color: #fff;
+            line-height: 35px;
+            background: #2FB3D3;
+            border-radius: 20px 20px 0px 0px;
+        }
+        .showCard_content{
+            padding: 10px;
+            line-height: 26px;
+            overflow: auto;
+        }
+        .showCard_content img{width: 100%;}
+        /*.showCard_content .pic{width: 31.5%;}*/
+        /*V网图文样式 end*/
+        <switch name="result.style" >
+        <case value="1">
+        /*风格1 开始*/
+        .zzc_wode_header_title{
+            text-align: center;
+            width: 40%;
+            margin: 0 auto;
+            color: #000;
+        }
+        .zzc_wode_header_title input,.card_info input,.card_info textarea {
+            width: 80%;
+            display: none;
+            border: 1px dashed #1a87ff;
+        }
+        .zzc_wode_header_title input{
+            width: 100%;
+        }
+        .zzc_wode_list{
+            width: 100%;
+            background: #fff;
+            overflow: hidden;
+            margin: 8px auto 0px auto;
+            padding: 10px 0;
+        }
+        .zzc_wode_list .zzc_wode_title{
+            color:#000;
+            font-size: 14px;
+            background: #fff;
+        }
+        .mui-bar-tab{color: #929292;background: #fff !important;}
+        .mui-bar-tab .mui-icon {color: #929292;}
+        body{background: #fff !important;}
+        .zzc_mui_content_bg{background: #fff !important;}
+        /*风格1 结束*/
+        </case>
+        <case value="2">
+        /*风格2 开始*/
+        .zzc_wode_header_title{
+            text-align: center;
+            width: 40%;
+            margin: 0 auto;
+            color: #fff;
+
+        }
+        .zzc_wode_header_title input,.card_info input,.card_info textarea{
+            width: 80%;
+            display: none;
+            border: 1px dashed #1a87ff;
+        }
+        .zzc_wode_header_title input{
+            width: 100%;
+        }
+        .zzc_wode_list{
+            width: 100%;
+            background: rgba(26,40,52,.5);
+            overflow: hidden;
+            margin: 8px auto 0px auto;
+            padding: 10px 0;
+        }
+        .zzc_wode_list .zzc_wode_title{
+            color:#fff;
+            font-size: 14px;
+            background: none;
+        }
+        .mui-bar-tab{color: #fff;background: #090d19 !important;}
+        .mui-bar-tab .mui-icon {color: #fff;}
+        body{background: #090d19 !important;}
+        .zzc_mui_content_bg{background: #090d19 !important;}
+        /*风格2 结束*/
+        </case>
+        <case value="3">
+        /*风格3 开始*/
+        .zzc_wode_img{display: none;}
+        .zzc_wode_header{height: 265px;}
+        .zzc_wode_header_title{
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+            position: absolute;
+            bottom: 0;
+            line-height: 25px;
+            color: #fff;
+            background: rgba(0,0,0,.5);
+        }
+        .zzc_wode_header_title input,.card_info input,.card_info textarea{
+            width: 80%;
+            display: none;
+            border: 1px dashed #1a87ff;
+            color: #000;
+        }
+        .zzc_wode_header_title input{
+            width: 100%;
+        }
+        .zzc_wode_list{
+            width: 100%;
+            background: #fff;
+            overflow: hidden;
+            margin: 8px auto 0px auto;
+            padding: 10px 0;
+        }
+        .zzc_wode_list .zzc_wode_title{
+            color:#000;
+            font-size: 14px;
+            background: #fff;
+        }
+        .mui-bar-tab{color: #929292;background: #fff !important;}
+        .mui-bar-tab .mui-icon {color: #929292;}
+        body{background: #fff !important;}
+        .zzc_mui_content_bg{background: #fff !important;}
+        /*风格3 结束*/
+        </case>
+        <case value="4">
+        /*风格4 开始*/
+        .zzc_wode_img{display: none;}
+        .zzc_wode_header{height: 265px;}
+        .zzc_wode_header_title{
+            text-align: center;
+            width: 100%;
+            margin: 0 auto;
+            position: absolute;
+            bottom: 0;
+            line-height: 25px;
+            color: #fff;
+            background: rgba(0,0,0,.5);
+        }
+        .zzc_wode_header_title input,.card_info input,.card_info textarea{
+            width: 80%;
+            display: none;
+            border: 1px dashed #1a87ff;
+            color: #000;
+        }
+        .zzc_wode_header_title input{
+            width: 100%;
+        }
+        .zzc_wode_list{
+            width: 100%;
+            background: rgba(26,40,52,.5);
+            overflow: hidden;
+            margin: 8px auto 0px auto;
+            padding: 10px 0;
+        }
+        .zzc_wode_list .zzc_wode_title{
+            color:#fff;
+            font-size: 14px;
+            background: none;
+        }
+        .mui-bar-tab{color: #929292;background: #090d19 !important;}
+        .mui-bar-tab .mui-icon {color: #929292;}
+        body{background: #090d19 !important;}
+        .zzc_mui_content_bg{background: #090d19 !important;}
+        /*风格4 结束*/
+        </case>
+        <default />
+        </switch>
+        /*背景色设置*/
+        .zzc_wode_header{background-color: {$result.background_color};}
+        /*链接色设置*/
+        .zzc_wode_imgli_nei p{color: {$result.link_color};}
+        /*标题色设置*/
+        .showCard_title{color: {$result.title_color};}
+        /*正文色设置*/
+        .showCard_content{color: {$result.text_color};}
+
+    </style>
+</block>
+<block name="body">
+    <body class="">
+    <include file="Public/music" />
+
+
+    <div class="mui-content zzc_mui_content_bg">
+            <input type="hidden" name="music_id" value="{$result.music_id}">
+            <input type="hidden" name="auto_music" value="{$result.auto_music}">
+            <input type="hidden" name="id" value="{$result.id}">
+            <div class="zzc_wode_header" style="<if condition='$result["background_size"]'>height:{$result.background_size}px;</if>position: relative;">
+            <img id="bg_img" onerror="this.src='https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1651318081,2860235060&fm=27&gp=0.jpg'" src="{$result.background_img}" width="100%" style="z-index:-9999;opacity: 0;position: absolute;" alt="">
+            <a attr="<if condition="$userInfo['id']==I('get.id')">{:url('Home/User/collection')}<else />{:url('Home/User/addCard',array('id'=>I('get.id'),'visit_id'=>$result['visit_id'],'mycard_type'=>1))}</if>" onclick="javascript:void(0);"><span class="mui-icon mui-icon-star zzc_wode_icoone"></span></a>
+            <if condition="$userInfo['id']==I('get.id')"><a attr="{:url('Home/Chat/myMessage?id='.I('get.id'))}"><span class="mui-icon mui-icon-chatbubble zzc_wode_icotwo" ></span></a></if>
+            <if condition="$userInfo['id']!=I('get.id')">   <a attr="{:url('Home/Chat/addMessage?id='.I('get.id'))}"><span class="mui-icon mui-icon-plusempty zzc_wode_icoaddsix"  style="position:absolute; top:12px;color: #FFFFFF;"></span></a></if>
+                <a href="#" id="ewm" ><span class="iconfont icon-erweima zzc_wode_icothree"></span></a>
+                <span id="music_btn" data-play="1" data-edit='0' class="iconfont icon-yinle zzc_wode_icofore"></span>
+            <if condition="$userInfo['id']==I('get.id')">
+                <a attr="{:url('Home/User/usercenter')}" onclick="javascript:void(0);"><span class="mui-icon mui-icon-home zzc_wode_icofive"></span></a>
+                 </if>
+                <div class="zzc_wode_imgdiv">
+                    <div class="zzc_wode_img">
+                        <img src="{$result.headimg}"/>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="zzc_wode_header_title">
+                    <input type="text" name="nick_name" id="" value="{$result.nick_name}">
+                    <span class="_content" style="">{$result.nick_name}</span>
+                    <br/>
+                    <input type="text" name="position" id="" value="{$result.position}">
+                    <span class="_content">{$result.position}</span>
+                </div>
+            </div>
+            <div class="zzc_wode_list card_info">
+                <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-home"></span>
+
+                    <span class="_content">{$result.company}</span>
+                </div>
+                <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-home"></span>
+
+                    <span class="_content">{$result.industry_tag}</span>
+                </div>
+                <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-phone"></span>
+
+
+                    <span class="_content">{$result.mobile}</span>
+                </div>
+                 <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-weixin"></span>
+
+
+                    <span class="_content"> <img class="zzc_afafh_img" src="{$result.wx_ewm_url}" width="100px" alt=""></span>
+                </div>
+                 <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-spinner mui-spin"></span>
+
+                    <span class="_content">{$result.site}</span>
+                </div>
+                 <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-email"></span>
+
+
+                    <span class="_content">{$result.email}</span>
+                </div>
+                <!--<div class="zzc_wode_title">-->
+                    <!--<span class="mui-icon mui-icon-weixin"></span>-->
+                    <!--<input type="text" name="wxnum" id="" value="{$result.wxnum}">-->
+
+                    <!--<span class="_content">{$result.wxnum}</span>-->
+                <!--</div>-->
+                <div class="zzc_wode_title">
+                    <span class="mui-icon mui-icon-qq"></span>
+
+                    <span class="_content">{$result.qq}</span>
+                </div>
+                <div class="zzc_wode_title" style="border: none;">
+                    <span class="mui-icon mui-icon-map"></span>
+
+
+                    <span class="_content">{$result.address}</span>
+                </div>
+                <div class="zzc_wode_title" style="border: none;">
+                    <span class="mui-icon mui-icon-compose"></span>
+
+
+                    <span class="_content">{$result.share_my_introduct}</span>
+                </div>
+            </div>
+            <div class="zzc_wode_list">
+                <!-- 导航列表 -->
+                <div class="zzc_wode_imgul">
+                    <foreach name="result.UserNavList" item="vo">
+                    <div class="zzc_wode_imgli to_url" data-id="{$vo.id}" data-url="{$vo.jump_url}">
+                        <span class="iconfont icon-sub dn"></span>
+                        <div class="zzc_wode_imgli_nei">
+                            <img src="{$vo.icon_url}">
+                            <p style="height: 40px;overflow: hidden;">{$vo.nameTo4}</p>
+                        </div>
+                    </div>
+
+                    </foreach>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+            <if condition="$result['is_map'] eq 1">
+                <div id="dituContent" style="margin:10px auto;width:100%;height:150px;border:#ccc solid 1px;">
+                </div>
+                <else/>
+                <div id="dituContent" style="margin:10px auto;width:100%;height:150px;border:#ccc solid 1px;display: none">
+                </div>
+            </if>
+            <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=0mowWq56hycvTM5TVxXMHytZmx0ksywG&s=1；"></script>
+            <script>
+            var map = new BMap.Map("dituContent");
+            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+            var local = new BMap.LocalSearch(map, {
+                renderOptions:{map: map}
+            });
+            local.search("{$result.address}");
+            </script>
+            <!-- V网图文 -->
+            <foreach name="result.UserContentList" item="vo">
+                <div class="showCard_list">
+                    <div class="showCard_title">{$vo.title}</div>
+                    <div class="showCard_content">
+                        <p>{$vo.content}</p>
+                        <if condition="($vo.thumb neq null) AND ($vo.thumb neq '')">
+                            <img class="mui-media-object" src="{$vo.thumb}">
+                        </if>
+                        <foreach name="vo.ResList" item="voRe">
+                            <if condition="$voRe['type'] eq 1">
+                                <img class="mui-media-object pic" src="{$voRe.data_url}">
+                            </if>
+                            <if condition="$voRe['type'] eq 3">
+                                {$voRe['data_url']}
+                            </if>
+                            <if condition="$voRe['type'] eq 2">
+                                <video src="{$voRe['data_url']}" controls="controls"  style="width: 100%;height: auto">
+                                    your browser does not support the video tag
+                                </video>
+                            </if>
+                        </foreach>
+                    </div>
+                </div>
+            </foreach>
+<div style="height:50px;position:relative"/>
+        <nav class="mui-bar mui-bar-tab">
+
+            <if condition="$isdisplay == 1">
+                <a class="mui-tab-item mui-active" href="javascript:void(0);" attr="tel:{$result.mobile}">
+                    <span class="mui-icon mui-icon-phone"></span>
+                    <span class="mui-tab-label">一键拨号</span>
+                </a>
+                <!--<a class="mui-tab-item " id="txl" onclick="" href="#tabbar-with-contact" onclick="window.location.href=this.href">-->
+                <!--<span class="mui-icon mui-icon-pengyouquan"></span>-->
+                <!--<span class="mui-tab-label">导入通讯录</span>-->
+                <!--</a>-->
+                <a class="mui-tab-item add" href="#tabbar-with-contact" attr="#tabbar-with-contact" >
+                    <span class="mui-icon mui-icon-contact"></span>
+                    <span class="mui-tab-label">加我</span>
+                </a>
+                <a style="" class="mui-tab-item "  attr="{:url('Home/User/register',array('share_id'=>$share_id))}" onclick="javascript:void(0);">
+                <span class="orz" style="color: #fff;display: inline-block;background: orange;width: 100%;height: 100%;"><span style="font-weight: 900;" class="mui-icon mui-icon-plusempty"></span>
+                <span class="mui-tab-label">我也要</span></span>
+
+                    </a>
+
+                 <a class="mui-tab-item" attr="{:url('Home/Card/myEwm?id='.$result['id'])}" onclick="javascript:void(0);">
+                    <span class="mui-icon mui-icon-image"></span>
+                    <span class="mui-tab-label">二维码</span>
+                </a>
+
+            <else/>
+                <a class="mui-tab-item mui-active" href="tel:{$result.mobile}" attr="tel:{$result.mobile}" >
+                    <span class="mui-icon mui-icon-phone"></span>
+                    <span class="mui-tab-label">一键拨号</span>
+                </a>
+                <!--<a class="mui-tab-item " id="txl" onclick="" href="#tabbar-with-contact" onclick="window.location.href=this.href">-->
+                <!--<span class="mui-icon mui-icon-pengyouquan"></span>-->
+                <!--<span class="mui-tab-label">导入通讯录</span>-->
+                <!--</a>-->
+                <a style="" class="mui-tab-item " attr="{:url('Home/User/register',array('share_id'=>$share_id))}" onclick="javascript:void(0);">
+                <span class="orz" style="color: #fff;display: inline-block;background: orange;width: 100%;height: 100%;"><span style="font-weight: 900;" class="mui-icon mui-icon-plusempty"></span>
+                <span class="mui-tab-label">我也要</span></span>
+                </a>
+                <a class="mui-tab-item add" href="#tabbar-with-contact" attr="#tabbar-with-contact">
+                    <span class="mui-icon mui-icon-contact"></span>
+                    <span class="mui-tab-label">加我</span>
+                </a>
+
+            </if>
+        </nav>
+        <div class="card">
+            <div class="bg"></div>
+            <div class="card_panel">
+                <div class="card_code">
+                    <img src="{:url('Home/Card/cardCode?id='.$user_id)}" alt="" width="188" height="188" >
+                    <p>二维码，打开我的V网</p>
+                </div>
+
+                <div class="card_button on" data_type='1'>导入通讯录</div>
+                <div class="card_button" data_type='2'>V网二维码</div>
+                <div class="card_button" data_type='3'>洋小秘公众号</div>
+                <div class="card_button" data_type='4'>微信二维码</div>
+            </div>
+        </div>
+        <audio id="audio" loop="loop" autoplay="autoplay" src="{$result['music_url']}" >
+        </audio>
+    </div>
+
+    </body>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script>
+    var t_img; // 定时器
+    var isLoad = true; // 控制变量
+    // 判断图片加载状况，加载完成后回调
+    isImgLoad(function(){
+        var height=$("#bg_img").height();
+        if($("#bg_img").attr("src")!=""){
+            $(".zzc_wode_header").css("height",height);
+        }
+        // 加载完成
+
+    });
+    // 判断图片加载的函数
+    function isImgLoad(callback){
+        // 查找所有封面图，迭代处理
+        $('#bg_img').each(function(){
+            // 找到为0就将isLoad设为false，并退出each
+            if(this.height === 0 || this.height <50){
+                isLoad = false;
+                return false;
+            }
+        });
+        // 为true，没有发现为0的。加载完毕
+        if(isLoad){
+            clearTimeout(t_img); // 清除定时器
+            // 回调函数
+
+            callback();
+
+        // 为false，因为找到了没有加载完成的图，将调用定时器递归
+
+        }else{
+
+            isLoad = true;
+
+            t_img = setTimeout(function(){
+
+                isImgLoad(callback); // 递归扫描
+
+            },500); // 我这里设置的是500毫秒就扫描一次，可以自己调整
+
+        }
+
+    }
+    //var isshare={$isshare};
+    //if(isshare == 1){
+    //    alert('分享链接已经生成，请点击右上角分享!');
+    //}
+
+    edit=0;
+    function playAudio(answer_audio){
+    var audio = document.createElement('audio')
+
+    if (window.WeixinJSBridge) {
+      wx.getNetworkType({
+        success: function (res) {
+          audio.addEventListener("canplaythrough", function () {
+            console.log('音频文件已经准备好，随时待命');
+            audio.play();
+          }, false);
+        },
+        fail: function (res) {
+          audio.play();
+        }
+      });
+    }else{
+      document.addEventListener("WeixinJSBridgeReady", function() {
+        wx.getNetworkType({
+          success: function (res) {
+            audio.addEventListener("canplaythrough", function () {
+              console.log('音频文件已经准备好，随时待命');
+              audio.play();
+            }, false);
+          },
+          fail: function (res) {
+            audio.play();
+          }
+        });
+      }, false);
+    }
+  }
+
+ // playAudio();
+    var audio = document.getElementById("audio");
+    function open_url(url){
+        var str = url;
+        if(str.indexOf("http")<0 && str.indexOf("/")!=0&&str.indexOf("tel")<0)
+        {
+            str="http://"+url;
+        }
+        top.location.href=str;
+    }
+    function add(){
+        if(edit==0){
+            $('.card').show();
+        }
+    }
+    function checkURL(URL){
+        var Cts = URL;
+        if(Cts.indexOf("#") >= 0 )
+        {
+            return false;
+        }
+        return true;
+    }
+    function orza(){
+        setTimeout(function(){
+            $(".orz").fadeOut()
+            orza2()
+        },1000)
+
+    }orza()
+    function orza2(){
+        setTimeout(function(){
+            $(".orz").fadeIn()
+            orza()
+        },1000)
+    }
+    var musicCheck = function (type){
+        if(type==1){
+            $('#music_btn').removeClass('icon-yinleguanbi').addClass('icon-yinle');
+            //播放音乐代码
+            audio.play();
+        }else if(type==0){
+            $('#music_btn').removeClass('icon-yinle').addClass('icon-yinleguanbi');
+            //暂停音乐代码
+            audio.pause();
+        }
+        $('#music_btn').attr('data-play',type);
+    }
+    function showCode(type){
+            $('.card_button').removeClass('on');
+            $('.card_button[data_type="'+type+'"]').addClass('on');
+            var code="";
+            var msg="";
+            if(type==1){
+                code="{:url('Home/Card/cardCode?id='.$user_id)}";
+                msg="扫描二维码，保存到本机通讯录";
+            }else if(type==2){
+                code="{:url('Home/Card/myCode?id='.$user_id)}";
+                msg="扫描二维码，打开我的V网";
+            }else if(type==3){
+                code="__PUBLIC__/Home/images/8.jpg";
+                msg="扫描二维码，关注洋小秘公众号";
+            }else if(type==4){
+                code="{$result.wx_ewm_url}";
+                msg="扫码二维码，这是我的微信二维码";
+            }
+
+            $('.card_panel .card_code img').attr('src',code);
+            $('.card_panel .card_code p').html(msg);
+            add();
+        }
+        $('.to_url').click(function () {
+            top.location.href = $(this).attr('data-url');
+        });
+    $(function(){
+        HTMLAudioElement.prototype.stop = function() {
+            this.pause();
+            this.currentTime = 0.0;
+        }
+        var auto_music={$result['auto_music']};
+        musicCheck(auto_music);
+        if(auto_music==1){
+            //自动播放
+            audio.src="{$result['music_url']}";
+            audio.play();
+            document.addEventListener("WeixinJSBridgeReady", function () {
+                audio.play();
+             }, false);
+        }
+        $("#txl").on("touchend",function(){
+            showCode(1);
+        });
+
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+
+
+        $('#music_btn').on('touchend',function(){
+            if(edit==0){
+                var type=$(this).attr('data-play');
+                if(type==1){
+                    musicCheck(0);
+                }else if(type==0){
+                    musicCheck(1);
+                }
+            }else{
+                //弹出音乐编辑窗口
+                $('.music_panel').show();
+                $('body').css('overflow','hidden');
+            }
+
+
+        });
+        $('.mui-tab-item.add,#ewm').on('touchend',function(){
+            add();
+
+        });
+
+        $('.nav_select_list img').on('touchend',function(){
+            $('.nav_select_list img').removeClass('on');
+            $(this).addClass('on');
+
+        });
+
+        $('.nav_select_img a.fr').on('touchend',function(){
+            //选择导航图片确定
+            var url=$('.nav_select_list img.on').attr('src');
+            $('.nav_content input[name=img]').val(url);
+            $('.nav_select_icon img').attr('src',url);
+            $('.nav_select_img').hide();
+            $('body').css('overflow','auto');
+        });
+
+        $('.nav_box .nav_btns_canel').on('touchend',function(){
+             //导航取消
+            $('.nav_panel').hide();
+            $('body').css('overflow','auto');
+        });
+
+
+
+        $('.card .bg').on('touchend',function(){
+            $('.card').hide();
+        });
+
+        $('.card_panel .card_button').on('touchend',function(){
+            var type=$(this).attr('data_type');
+            showCode(type);
+        });
+        mui('body').on('tap','a',function() {
+            var href = $(this).attr('attr');
+            if (checkURL(href)) {
+                open_url(href);
+            }
+        });
+
+
+    })
+    </script>
+        <!--微信分享-->
+
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        function sharePush(){
+            var id="{$result.visit_id}";
+            $.post("{:url('Home/Card/sharePush')}",{'id':id},function(){});
+        }
+    </script>
+
+
+
+    <script>
+
+
+
+        $(function() {
+            var share_url = "{$share_url}";
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST", //方法类型
+                dataType: "json", //预期服务器返回的数据类型
+                url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                data:{share_url:share_url},
+                async: true,
+
+                // async: false,
+                success: function(result) {
+
+
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                        appId: result.AppendData.appId,
+                        timestamp: result.AppendData.timestamp,
+                        nonceStr: result.AppendData.nonceStr,
+                        signature: result.AppendData.signature,
+                        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                            'checkJsApi',
+                            'onMenuShareTimeline', //
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'getLocation'
+                        ]
+                    });
+
+
+                    wx.ready(function() {
+                        //分享到朋友圈
+                        wx.onMenuShareTimeline({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/card_jump/id/'.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                // sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享给朋友
+                        wx.onMenuShareAppMessage({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/card_jump/id/'.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            type: '', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                // sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ
+                        wx.onMenuShareQQ({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/card_jump/id/'.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                // sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到腾讯微博
+                        wx.onMenuShareWeibo({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/card_jump/id/'.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                // sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ空间
+                        wx.onMenuShareQZone({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/card_jump/id/'.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                // sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+
+                    });
+
+
+                },
+                error: function() {
+                    alert("服务器繁忙，请稍后再试！");
+                }
+            });
+
+
+
+
+        });
+
+
+    </script>
+
+
+
+
+        <!--微信分享-->
+</block>
+
+<block name="js_extend">
+
+</block>

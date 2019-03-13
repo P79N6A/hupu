@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>咨询记录录入</title>
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="__AGENCY__/js/vue/index.css">
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="咨询记录录入">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <div>
+
+        <mt-field label="客户姓名" placeholder="请输入客户姓名" v-model="pojo.username"></mt-field>
+        <mt-field label="客户手机号" placeholder="请输入手机号" type="tel" v-model="pojo.userphone"></mt-field>
+        <a class="mint-cell mint-field">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title">
+                    <span class="mint-cell-text">咨询类型</span>
+
+                </div>
+                <div class="mint-cell-value">
+
+                    <el-select v-model="pojo.fanwenleixing" clearable placeholder="请选择">
+
+                        <el-option v-for="item in gradeList" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div>
+
+            </div>
+            <div class="mint-cell-right"></div>
+        </a>
+
+        <mt-field label="用户问题" placeholder="用户问题" type="textarea" rows="4" v-model="pojo.userwenti"> </mt-field>
+        <mt-field label="您的回答" placeholder="您的回答" type="textarea" rows="4" v-model="pojo.psolve"> </mt-field>
+        <mt-button type="primary" @click="i_reception" size="large" style="margin-top: 20px" >提交</mt-button>
+    </div>
+</div>
+<script type="text/javascript">
+    // cid int  not  null primary key auto_increment comment '来电id',
+    //     username varchar(20)  comment '用户姓名',
+    //     userphone varchar(20)  comment '用户手机号',
+    //     fanwenleixing varchar(30)  comment '咨询类型',
+    //     userwenti varchar(200)  comment '用户问题',
+    //     psolve varchar(100)  comment '您的回答',
+    //     createtime datetime,
+    //     customer_id int comment '录入id'
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            //动态数据
+            pojo:{
+
+                username: '',
+                fanwenleixing: '',
+                 userphone: '',
+                userwenti: '',
+                psolve: '',
+                customer_id: '',
+
+            },
+            paylist: [],
+            loading: false,
+            isfalg:true,
+
+
+            gradeList: [{
+                value: '电话咨询',
+                label: '电话咨询'
+            },
+                {
+                    value: '微信咨询',
+                    label: '微信咨询'
+                },
+                {
+                    value: '现场咨询',
+                    label: '现场咨询'
+                },
+
+            ],
+
+
+        },
+        methods: {
+
+            i_reception:function(){
+
+                var t=this;
+                if(!t.isfalg) return;
+                t.isfalg=false;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/i_u_call",
+                    data: t.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        //   console.log(res);
+                        if(res.ResultType==0){
+                            t.$toast('上传成功');
+                            $.
+                            window.location.href="/index.php?s=/Home/Customer/center.html";
+                            return;
+                        }else{
+                            t.isfalg=true;
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            },
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+
+            t.cuuid = $.cookie('k_cuuid')
+            if( t.cuuid ==null ||  t.cuuid =='' ){
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+        },
+
+    })
+</script>
+</body>
+
+</html>

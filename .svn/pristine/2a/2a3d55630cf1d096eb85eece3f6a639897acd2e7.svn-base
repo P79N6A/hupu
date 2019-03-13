@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="__HOME_JS__/whjs/js/newrem.js"></script>
+		<script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<title>我的粉丝</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #f8f8f8;
+			}
+			
+			.top {
+				width: 90%;
+				height: 1.3rem;
+				background: #55CEAB;
+				margin: 5% 5%;
+				position: relative;
+			}
+			
+			.left {
+				width: .67rem;
+				height: .26rem;
+				background: #fff;
+				border-radius: 0px 1rem 1rem 0px;
+				top: .11rem;
+				position: absolute;
+				font-size: .11rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				line-height: .26rem;
+				color: rgba(85, 206, 171, 1);
+				padding: 0 .07rem;
+			}
+			
+			.hedmg {
+				width: 0.67rem;
+				height: 0.67rem;
+				border-radius: 50%;
+				position: absolute;
+				top: 0.35rem;
+				left: 0.85rem;
+			}
+			
+			.hedmg img {
+				width: .67rem;
+				height: .67rem;
+				border-radius: 50%;
+				position: absolute;
+				background-size: 100% 100%;
+			}
+			
+			.rne {
+				width: 1.3rem;
+				height: .3rem;
+				font-size: .22rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 1);
+				line-height: .3rem;
+				position: absolute;
+				left: 1.68rem;
+				top: .46rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.ren {
+				/* width: .26rem; */
+				height: .18rem;
+				font-size: .13rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				color: #fff;
+				line-height: .18rem;
+				position: absolute;
+				left: 1.68rem;
+				bottom: .36rem;
+			}
+			
+			.ssue {
+				width: .82rem;
+				height: .18rem;
+				font-size: .13rem;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				color: #fff;
+				line-height: .18rem;
+				position: absolute;
+				left: 2.3rem;
+				bottom: .36rem;
+			}
+			
+			.midell {
+				width: 100%;
+				height: .46rem;
+				background: #fff;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+			}
+			
+			ul li {
+				list-style: none;
+			}
+			
+			.topdao li {
+				float: left;
+				width: 50%;
+				height: .46rem;
+				font-size: .13rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 400;
+				color: #A1A1A1;
+				line-height: .46rem;
+				text-align: center;
+			}
+			
+			.pingz {
+				/* width: .17rem; */
+				height: .46rem;
+				padding: .12rem 0;
+				color: #2B2B2B;
+				font-size: .14rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				border-bottom: .03rem solid #2B2B2B;
+			}
+			
+			.lastone {
+				width: 100%;
+				height: 0.46rem;
+				background: #fff;
+				position: relative;
+			}
+			
+			.fei {
+				width: 60%;
+				height: .2rem;
+				font-size: .14rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				color: rgba(43, 43, 43, 1);
+				line-height: .2rem;
+				top: .2rem;
+				position: absolute;
+				left: .16rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.fei span {
+				color: palevioletred;
+			}
+			
+			.right {
+				width: .62rem;
+				height: .2rem;
+				font-size: .14rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				color: rgba(255, 157, 73, 1);
+				line-height: .2rem;
+				position: absolute;
+				right: .16rem;
+				bottom: .06rem;
+			}
+			
+			.lastwo {
+				width: 100%;
+				background: #fff;
+			}
+			
+			.user_list,.f_list {
+				width: 100%;
+				background: #fff;
+			}
+			
+			.english {
+				width: 90%;
+				height: .97rem;
+				border-bottom: 1px solid #eee;
+				margin: 0 5%;
+				position: relative;
+			}
+			
+			.english img {
+				width: .66rem;
+				height: .66rem;
+				border-radius: 50%;
+				position: absolute;
+				top: .16rem;
+				left: .16rem;
+				background-size: 100% 100%;
+			}
+			
+			.rename {
+				width: 1.1rem;
+				height: .22rem;
+				font-size: .16rem;
+				font-family: PingFangSC-Medium;
+				font-weight: 500;
+				color: rgba(51, 51, 51, 1);
+				line-height: .22rem;
+				position: absolute;
+				left: .94rem;
+				top: .19rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.rencheng {
+				height: .14rem;
+				border-radius: .01rem;
+				border: .01rem solid #FF9D49;
+				font-size: .08rem;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				color: rgba(255, 157, 73, 1);
+				position: absolute;
+				top: .2rem;
+				left: 2.1rem;
+				text-align: center;
+				line-height: .14rem;
+				padding: .02rem .05rem;
+			}
+			
+			.renum {
+				width: 1.5rem;
+				height: .17rem;
+				font-size: .12rem;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				color: rgba(102, 102, 102, 1);
+				line-height: .17rem;
+				position: absolute;
+				top: .46rem;
+				left: .94rem;
+			}
+			
+			.rentime {
+				height: .17rem;
+				font-size: .12rem;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				color: rgba(155, 155, 155, 1);
+				line-height: .17rem;
+				position: absolute;
+				left: .94rem;
+				bottom: .16rem;
+			}
+			/* 粉丝 */
+			
+			.lastb {
+				display: none;
+			}
+			/* 用户 */
+			
+			.lastren {
+				display: none;
+			}
+			
+			.sele {
+				width: .8rem;
+				height: .2rem;
+				font-size: .14rem;
+				font-family: PingFangSC-Semibold;
+				font-weight: 600;
+				color: rgba(255, 157, 73, 1);
+				line-height: .2rem;
+				position: absolute;
+				right: .16rem;
+				bottom: .06rem;
+				border: none;
+				text-align: center;
+				outline: none;
+				background: #fff;
+			}
+			
+			select {
+				-webkit-appearance: none;
+				background: url("Public/Home/images/slicesrjl/jt.png")no-repeat right !important;
+				background-size: 0.1rem !important;
+				background-position-x: 96% !important;
+			}
+			/*上拉加载动画*/
+			
+			.loading {
+				width: 100%;
+				height: 0.65rem;
+				text-align: center;
+				display: block;
+				color: #333;
+				font-size: .12rem;
+				margin-top: 10px;
+				z-index: 1000;
+				float: left;
+				display: none;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading>img {
+				width: .12rem;
+				height: .125rem;
+				animation: change 3s linear infinite;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="content">
+			<div class="top">
+				<div class="left">我的推荐人</div>
+				<div class="hedmg"><img src="{$RecUser['headimg']}" alt=""></div>
+				<span class="rne">{$RecUser['nick_name']}</span>
+				<span class="ren">{$RecUser['vip_group_name']}</span>
+				<span class="ssue">{$RecUser['username']}</span>
+			</div>
+			<div class="midell">
+				<ul class="topdao">
+					<li class="fone"><span>粉丝</span></li>
+					<li class="sone"><span>用户</span></li>
+				</ul>
+			</div>
+
+			<!-- 粉丝 -->
+			<div class="lastb">
+				<div class="last">
+					<div class="lastone">
+						<div class="fei">您共有粉丝<span id="span1">{$MyFans['level_1_count']}</span>位</div>
+						<div class="right">
+							<span class="sel">
+                            <select name="bankname" class="sele sele1">
+                                <option value="0">未付费</option>
+                                <option value="1" selected>创客</option>
+                                <option value="3">创投</option>
+                                <option value="4">创业家</option>
+                                <option value="5">创导</option>
+                            </select>
+                        </span>
+						</div>
+					</div>
+				</div>
+
+				<div class="lastwo class1">
+					<div class="f_list">
+						
+					</div>
+					<!--<div class="english">-->
+					<!--<img src="https://v.yxm360.com/head/20180910/15365891751925.jpg" alt="">-->
+					<!--<span class="rename">洋小秘</span>-->
+					<!--<span class="rencheng">创业家</span>-->
+					<!--<div class="renum">帐号：13456789876</div>-->
+					<!--<div class="rentime">注册时间：{$vo.add_time|date="Y-m-d H:i",###}</div>-->
+					<!--</div>-->
+					<div class="loading" id="loadId">
+						<img src="__HOME_IMAGES__/loading.png" alt="">
+						<span>正在加载中...</span>
+					</div>
+				</div>
+
+			</div>
+			<!-- 用户 -->
+			<div class="lastren">
+				<div class="last">
+					<div class="lastone">
+						<div class="fei">您共有用户<span id="span2">{$MyFans['level_2_count']}</span>位</div>
+						<div class="right">
+							<span class="sel">
+                            <select name="bankname" class="sele sele2">
+                                <option value="0">未付费</option>
+                                <option value="1" selected>创客</option>
+                                <option value="3">创投</option>
+                                <option value="4">创业家</option>
+                                <option value="5">创导</option>
+                            </select>
+                        </span>
+						</div>
+					</div>
+				</div>
+				<div class="lastwo class2">
+					<div class="user_list">
+
+					</div>
+					<div class="loading" id="loadId">
+						<img src="__HOME_IMAGES__/loading.png" alt="">
+						<span>正在加载中...</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var user_id = '{$unionid}';
+		console.log(user_id);
+
+		function timestampToTime(timestamp) {
+			var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var Y = date.getFullYear() + '/';
+			var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() +
+				1) : date.getMonth() + 1) + '/';
+			var D = (date.getDate() < 10 ? '0' + date.getDate() +
+				' ' : date.getDate() + ' ');
+			var h = (date.getHours() < 10 ? '0' + date.getHours() +
+				':' : date.getHours() + ':');
+			var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() +
+				':' : date.getMinutes() + ':');
+			var s = date.getSeconds();
+			return Y + M + D + h + m + s;
+		}
+		var vip_group_id1 = 1;
+		var vip_group_id2 = 1;
+		$(function() {
+			initData();
+			//粉丝
+			$("select.sele1").on("change", function() {
+				vip_group_id1 = $(this).val();
+				$(".fone").click();
+			})
+
+			$("select.sele2").on("change", function() {
+				vip_group_id2 = $(this).val();
+				$(".sone").click();
+			})
+			$(document).on("click", ".english", function() {
+				var article_id = $(this).attr("data-id");
+				console.log(article_id);
+				window.location.href = "/index.php?s=/Home/Nologin/card_jump/id/" + article_id;
+			})
+			$(".fone").click(function() {
+				$.ajax({
+					url: '/index.php?s=/Api/Profit/GetMyFans',
+					type: 'post',
+					data: {
+						unionid: user_id,
+						vip_group_id: vip_group_id1
+					},
+					success: function(res) {
+						console.log(res);
+						var list = '';
+						// $("#span1").text(res.AppendData.FirstCount);
+
+						var names_ = '';
+						$.each(res.AppendData.Firsts, function(k, v) {
+							names_ = v.vip_name == null ? '未付费' : v.vip_name
+							var time = timestampToTime(v.add_time);
+
+							list += '<div class="english" data-id="' + v.user_id + '">'
+							list += '<img src="' + v.headimg + '" alt="">'
+							list += '<span class="rename">' + v.nick_name + '</span>'
+							list += '<span class="rencheng">' + names_ + '</span>'
+							list += '<div class="renum">帐号:' + v.username + '</div>'
+							list += '<div class="rentime">注册时间：' + time + '</div>'
+							list += '</div>'
+						})
+						$('.f_list').html(list)
+					}
+				})
+				$(".fone span").addClass("pingz");
+				$(".sone span").removeClass("pingz");
+				$('.lastb').show();
+				$('.lastren').hide();
+			})
+			// 用户
+			$(".sone").click(function() {
+				var length = 0;
+				var lit = '';
+				$.ajax({
+					url: '/index.php?s=/Api/Profit/GetMyFans',
+					type: 'post',
+					data: {
+						unionid: user_id,
+						vip_group_id: vip_group_id2,
+						start: 0,
+						length: 20
+					},
+					beforeSend: function() {
+						$(".loading").show();
+					},
+					success: function(res) {
+						console.log(res);
+						$(".loading").hide();
+						
+						// $("#span2").text(res.AppendData.FirstCount);
+	
+						$.each(res.AppendData.Seconds, function(k, v) {
+							names_ = v.vip_name == null ? '未付费' : v.vip_name
+	
+							var time = timestampToTime(v.add_time);
+							//帐号:' + v.username + '
+							lit += '<div class="english" data-id="' + v.user_id + '">'
+							lit += '<img src="' + v.headimg + '" alt="">'
+							lit += '<span class="rename">' + v.nick_name + '</span>'
+							lit += '<span class="rencheng">' + names_ + '</span>'
+							lit += '<div class="renum"></div>'
+							lit += '<div class="rentime">注册时间：' + time + '</div>'
+							lit += '</div>'
+							
+						})
+						$('.user_list').html(lit)
+	
+						//上拉加载
+						var scrollFlag = true;
+	
+						$(window).scroll(function(){
+							var lit = '';
+							var scrollTop = $(this).scrollTop();    //滚动条距离顶部的高度
+							var scrollHeight = $(document).height();   //当前页面的总高度
+							var clientHeight = $(this).height();    //当前可视的页面高度
+							if(!scrollFlag) {
+								return false;
+							}
+							console.log(scrollTop + clientHeight);
+							console.log(scrollHeight)
+							if(scrollTop + clientHeight >= scrollHeight){ 
+								length += 20;
+								//console.log(length)
+								scrollFlag = false;
+								$.ajax({
+									type: 'post',
+									url: '/index.php?s=/Api/Profit/GetMyFans',
+									dataType: 'json',
+									data: {
+										unionid: user_id,
+										vip_group_id: vip_group_id2,
+										start: length,
+										length: 20,
+									},
+									beforeSend: function() {
+										$(".loading").show();
+									},
+									success: function(res) {
+										console.log(res);
+										scrollFlag = true;
+										$(".loading").hide();
+	
+										if(res.AppendData.length <= 0) {
+											$(".user_list").append("<div class='loading'>我也是有底线的哟！</div>");
+											scrollFlag = false;
+										}
+										if(res.ResultType == 0) {
+											$(res.AppendData.Seconds).each(function(v, i) {
+												names_ = i.vip_name == null ? '未付费' : i.vip_name
+	
+												var time = timestampToTime(i.add_time);
+												//帐号:' + v.username + '
+												lit += '<div class="english" data-id="' + i.user_id + '">'
+												lit += '<img src="' + i.headimg + '" alt="">'
+												lit += '<span class="rename">' + i.nick_name + '</span>'
+												lit += '<span class="rencheng">' + names_ + '</span>'
+												lit += '<div class="renum"></div>'
+												lit += '<div class="rentime">注册时间：' + time + '</div>'
+												lit += '</div>'
+											})
+											$('.user_list').append(lit)
+										}
+										lit = ""
+									},
+									error: function() {
+										console.log("错误")
+									}
+								});
+							}
+						});
+						$(".sone span").addClass("pingz");
+						$(".fone span").removeClass("pingz");
+						$('.lastren').show();
+						$('.lastb').hide();
+					}
+					
+				})
+			})
+			function initData() {
+				$.ajax({
+					url: '/index.php?s=/Api/Profit/GetMyFans',
+					type: 'post',
+					data: {
+						unionid: user_id,
+						vip_group_id: 1
+					},
+					beforeSend: function() {
+						$(".loading").show();
+					},
+					success: function(res) {
+						$(".loading").hide();
+						console.log(res);
+						var list = '';
+						// $("#span1").text(res.AppendData.FirstCount);
+
+						$.each(res.AppendData.Firsts, function(k, v) {
+							names_ = v.vip_name == null ? '未付费' : v.vip_name
+
+							var time = timestampToTime(v.add_time);
+
+							list += '<div class="english" data-id="' + v.user_id + '">'
+							list += '<img src="' + v.headimg + '" alt="">'
+							list += '<span class="rename">' + v.nick_name + '</span>'
+							list += '<span class="rencheng">' + names_ + '</span>'
+							list += '<div class="renum">帐号:' + v.username + '</div>'
+							list += '<div class="rentime">注册时间：' + time + '</div>'
+							list += '</div>'
+						})
+						$('.f_list').html(list)
+					}
+				})
+				$(".fone span").addClass("pingz");
+				$(".sone span").removeClass("pingz");
+				$('.lastb').show();
+				$('.lastren').hide();
+			}
+		})
+	</script>
+
+</html>

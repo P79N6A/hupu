@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>消息</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f6f6f6;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.98rem;
+            background: #fff;
+        }
+
+        .one {
+            width: 100%;
+            height: .66rem;
+            position: relative;
+        }
+
+        .left {
+            width: .54rem;
+            height: .66rem;
+            position: absolute;
+        }
+
+        .left img {
+            width: .21rem;
+            height: .21rem;
+            top: .24rem;
+            left: .17rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .right {
+            width: 85%;
+            height: .65rem;
+            margin: 0 15%;
+            border-bottom: 1px solid #979797;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            line-height: .66rem;
+        }
+
+        .rightt {
+            width: 85%;
+            height: .65rem;
+            margin: 0 15%;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            line-height: .66rem
+        }
+
+        .rightr {
+            width: 85%;
+            height: .65rem;
+            margin: 0 15%;
+            border-bottom: 1px solid #979797;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            line-height: .66rem;
+        }
+
+        .jiant {
+            width: .07rem;
+            height: .12rem;
+            right: .19rem;
+            position: absolute;
+        }
+
+        .qng {
+            width: .22rem !important;
+            height: .22rem !important;
+            border-radius: 50%;
+            background: #DD5247;
+            position: absolute !important;
+            line-height: .22rem;
+            text-align: center;
+            top: .2rem;
+            font-size: .12rem;
+            color: #fff;
+            right: .3rem;
+            display: none;
+        }
+
+        .last {
+            width: 100%;
+            height: .68rem;
+            background: #fff;
+            margin: .12rem 0;
+        }
+
+        .rentt {
+            width: 85%;
+            height: .65rem;
+            margin: 0 15%;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .4rem;
+            position: absolute;
+        }
+
+        .pen {
+            width: .22rem;
+            height: .22rem;
+            border-radius: 50%;
+            background: #DD5247;
+            position: absolute;
+            line-height: .22rem;
+            text-align: center;
+            top: .2rem;
+            font-size: .12rem;
+            color: #fff;
+            right: .3rem;
+            display: none;
+        }
+
+        .band {
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            line-height: .17rem;
+            position: absolute;
+            left: 0;
+            bottom: .1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conent">
+        <div class="top">
+            <div class="one">
+                <div class="left">
+                    <img src="Public/Home/images/slicesrjl/liuyan_icon@2x.png" alt="">
+                </div>
+                <div class="right">留言信息
+                    <span class="qng">3</span>
+                    <span class="jiant">></span>
+                </div>
+            </div>
+            <div class="one">
+                <div class="left">
+                    <img src="Public/Home/images/slicesrjl/mingpain_icon@2x.png" alt="">
+                </div>
+                <div class="rightr">
+                    交换V网
+                    <span class="qng">3</span>
+                    <span class="jiant">></span>
+
+                </div>
+            </div>
+            <div class="one">
+                <div class="left">
+                    <img src="Public/Home/images/slicesrjl/dianzan_icon@2x.png" alt="">
+                </div>
+                <div class="rightt">收藏
+                    <span class="qng">3</span>
+                    <span class="jiant">></span>
+                </div>
+            </div>
+        </div>
+        <div class="last">
+            <div class="left">
+                <img src="Public/Home/images/slicesrjl/xiaoxi_icon@2x.png" alt="">
+            </div>
+            <div class="rentt">系统版本
+                <span class="band">本次更新版本为洋小秘4.0.0</span>
+                <span class="pen">3</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 留言信息
+    $(".right").click(function () {
+        window.location.href = "index.php?s=/Home/Service/comments.html"
+    })
+    // 交换V网
+    $(".rightr").click(function () {
+        window.location.href = "index.php?s=/Home/Service/exchangev.html"
+    })
+    // 收藏
+    $(".rightt").click(function () {
+        window.location.href = "index.php?s=/Home/Service/pration.html"
+    })
+    // 系统消息
+   
+</script>
+
+</html>

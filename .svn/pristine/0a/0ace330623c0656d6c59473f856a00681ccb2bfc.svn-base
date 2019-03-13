@@ -1,0 +1,1 @@
+<?php//用户注册 数据层namespace app\api\model;use think\Model;class Member extends Model{    protected $table = 's_member';}

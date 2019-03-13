@@ -1,0 +1,277 @@
+<script>
+$.fn.press = function () {
+    var timeOutEvent = 0,startX,startY,offsetX,offsetY,moveX,moveY,imgOffsetTop,imgOffsetLeft,scrollTop,imgHeight,imgWidth,modalHeight,windowHeight,imgIndex,imgArr = [],imgStartOffsetLeft,imgStartOffsetTop,isLongPress;
+    var img = $(this);
+     var imgWidthHeight = img[0].clientWidth;
+     $.each($('.imgClass'),function (i,e) {
+         $(this).css({
+             'position' : 'absolute',
+             'left'     : e.offsetLeft,
+             'top'      : e.offsetTop
+          })
+      })
+      $(img).on({
+          touchstart: function(e){
+              timeOutEvent = setTimeout(function(){
+                  timeOutEvent = 0;
+                  $(img).css({'width':'3rem','height':'3rem'});
+                  imgStartOffsetLeft = $(img)[0].offsetLeft;
+                  imgStartOffsetTop = $(img)[0].offsetTop;
+                  startX  = e.originalEvent.targetTouches[0].pageX;
+                  startY  = e.originalEvent.targetTouches[0].pageY;
+                  offsetX = startX - imgStartOffsetLeft;
+                  offsetY = startY - imgStartOffsetTop;
+                  imgIndex = parseInt($(img).attr('moveindex'));
+            $(img).css({
+                      'position':'absolute',
+                      'z-index':'200',
+                      'left':imgStartOffsetLeft + 'px',
+                     'top':imgStartOffsetTop + 'px'
+                  });
+                  //防止微信露底
+                  document.body.ontouchmove = function (e) {
+                      e.preventDefault();
+                  };
+                 //阻止长按默认行为，比如微信长按图片弹出菜单
+                 $(img).bind('contextmenu', function(e) {
+                      e.preventDefault();
+                  })
+                  //获取当前所有图片的占位位置，为长按拖动后的移动做准备
+                 $.each($('.imgClass'),function (i,e) {
+                      var index = $(e).attr('moveindex');
+                      imgArr[index] = {
+                          x1 : e.offsetLeft,
+                          x2 : imgWidthHeight,
+                          y1 : e.offsetTop,
+                          y2 : imgWidthHeight,
+                          trigger : {
+                              x : e.offsetLeft + imgWidthHeight / 2,
+                              y : e.offsetTop + imgWidthHeight / 2
+                          }
+                      };
+                  }) 
+                    isLongPress = true;
+
+              },200);
+  
+          },
+         touchmove: function(e){
+              clearTimeout(timeOutEvent);
+              timeOutEvent = 0;
+             if(isLongPress) {
+                  moveX = e.originalEvent.targetTouches[0].pageX;
+                  moveY = e.originalEvent.targetTouches[0].pageY;
+                  $(img).css({
+                      'left': moveX - offsetX + 'px',
+                      'top': moveY - offsetY + 'px'
+                  })
+                  imgOffsetTop = $(img)[0].offsetTop;
+                  imgOffsetLeft = $(img)[0].offsetLeft;
+                  scrollTop = document.body.scrollTop;
+                  imgHeight = $(img)[0].offsetHeight;
+                  imgWidth = $(img)[0].offsetWidth;
+                  windowHeight = window.innerHeight;
+  
+ 
+                 //判断当前图片是否移动到其它图片上面
+                 if (imgArr.length > 1) {
+                     for(var i = 0;i < imgArr.length;i++){
+                         var trigger = imgArr[i].trigger;
+                         if( i != imgIndex && trigger.x >= imgOffsetLeft && trigger.x <= (imgOffsetLeft + imgWidth) && trigger.y >= imgOffsetTop && trigger.y <= (imgOffsetTop + imgHeight)){
+                             $('.imgClass[moveindex=' + i + ']').css('position', 'absolute').attr('moveindex',imgIndex).animate({
+                                 'left': imgArr[imgIndex].x1 + 'px',
+                                 'top': imgArr[imgIndex].y1 + 'px'
+                             }, 300);                             
+                             $(img).attr('moveindex', i);
+                             imgIndex = i;
+                         }
+                     }
+                 }
+             }
+ 
+         },
+         touchend: function () {
+             clearTimeout(timeOutEvent);
+             if(isLongPress){
+                 var imgLeft = imgArr[ imgIndex ].x1 + 'px';
+                 var imgTop = imgArr[ imgIndex ].y1 + 'px';
+                 $(imgDiv).css({
+                     'position': 'absolute',
+                     'width': '2.8rem',
+                     'height': '2.8rem',
+                     'left':  imgLeft,
+                     'top': imgTop,
+                     'z-index': 0
+                 });
+             }
+             isLongPress = false;
+             document.body.ontouchmove = function (e) {
+                 e.stopPropagation();
+             };
+            if(timeOutEvent != 0){
+                 console.log('单击了')
+             }
+         }
+     })
+ }
+</script>
+
+<script>
+
+    var imgindex;
+    var imgStartOffsetLeft;
+    var imgStartOffsetTop;
+    var startX;
+    var startY;
+    var offsetX;
+    var offsetY;
+    var imgArr = [];
+    // var x1;
+    // var x2;
+    // var y1;
+    // var y2;
+    var isLongPress;
+    var timeOutEvent = 0;
+    var moveX;
+    var moveY;
+
+    var imgOffsetTop;
+    var imgOffsetLeft;
+    var scrollTop;
+    var imgHeight;
+    var imgWidth;
+    var windowHeight;
+    function absorbEvent_(event) {
+        var e = event || window.event;
+        e.preventDefault && e.preventDefault();
+        e.stopPropagation && e.stopPropagation();
+        e.cancelBubble = true;
+        e.returnValue = false;
+        return false;
+    }
+
+    //   $.each($('.imgClass'), function (i, e) {
+    //         $(this).css({
+    //             'position': 'absolute',
+    //             'left': e.offsetLeft,
+    //             'top': e.offsetTop
+    //         })
+    //     })
+
+    $(".imgClass").on("touchstart", function (e) {
+        timeOutEvent = setTimeout(function () {
+            timeOutEvent = 0;
+
+            var imgWidthHeight = $(".imgClass")[0].clientWidth;
+            imgindex = $(this).attr("moveindex");
+            imgStartOffsetLeft = $(".imgClass")[0].offsetLeft;
+            imgStartOffsetTop = $(".imgClass")[0].offsetTop;
+            startX = e.originalEvent.targetTouches[0].pageX;
+            startY = e.originalEvent.targetTouches[0].pageY;
+            offsetX = startX - imgStartOffsetLeft;
+            offsetY = startY - imgStartOffsetTop;
+            $(this).css({
+                'position': 'absolute',
+                'z-index': '200',
+                'left': imgStartOffsetLeft + 'px',
+                'top': imgStartOffsetTop + 'px'
+            });
+            //防止微信露底
+            document.body.ontouchmove = function (e) {
+                e.preventDefault();
+            };
+            //阻止长按默认行为，比如微信长按图片弹出菜单
+            $(".imgClass").bind('contextmenu', function (e) {
+                e.preventDefault();
+            })
+
+            //获取当前所有图片的占位位置，为长按拖动后的移动做准备
+            $.each($('.imgClass'), function (i, e) {
+                var index = $(e).attr('moveindex');
+                imgArr[index] = {
+                    x1: e.offsetLeft,
+                    x2: imgWidthHeight,
+                    y1: e.offsetTop,
+                    y2: imgWidthHeight,
+                    trigger: {
+                        x: e.offsetLeft + imgWidthHeight / 2,
+                        y: e.offsetTop + imgWidthHeight / 2
+                    }
+                };
+            })
+            // console.log(imgArr)
+            isLongPress = true;
+
+        }, 200)
+    });
+
+
+    $(".imgClass").on("touchmove", function (e) {
+        clearTimeout(timeOutEvent);
+        timeOutEvent = 0;
+        if (isLongPress) {
+            moveX = e.originalEvent.targetTouches[0].pageX;
+            moveY = e.originalEvent.targetTouches[0].pageY;
+            $(this).css({
+                'left': moveX - offsetX + 'px',
+                'top': moveY - offsetY + 'px'
+            });
+
+            imgOffsetTop = $(this)[0].offsetTop;
+            imgOffsetLeft = $(this)[0].offsetLeft;
+            scrollTop = document.body.scrollTop;
+            imgHeight = $(this)[0].offsetHeight;
+            imgWidth = $(this)[0].offsetWidth;
+            windowHeight = window.innerHeight;
+
+            //判断当前图片是否移动到其它图片上面
+            if (imgArr.length > 1) {
+                for (var i = 0; i < imgArr.length; i++) {
+                    var trigger = imgArr[i].trigger;
+                    if (i != imgIndex && trigger.x >= imgOffsetLeft && trigger.x <= (imgOffsetLeft + imgWidth) && trigger.y >= imgOffsetTop && trigger.y <= (imgOffsetTop + imgHeight)) {
+                        $('.imgClass[moveindex=' + i + ']').css('position', 'absolute').attr('moveindex', imgIndex).animate({
+                            'left': imgArr[imgIndex].x1 + 'px',
+                            'top': imgArr[imgIndex].y1 + 'px'
+                        }, 300);
+                        $(img).attr('moveindex', i);
+                        imgIndex = i;
+                    }
+                }
+            }
+        }
+
+
+
+    })
+
+
+    $(".imgClass").on("touchend", function () {
+        clearTimeout(timeOutEvent);
+        if (isLongPress) {
+            var imgLeft = imgArr[imgIndex].x1 + 'px';
+            var imgTop = imgArr[imgIndex].y1 + 'px';
+            $("#box").css({
+                'position': 'absolute',
+                'width': '2.8rem',
+                'height': '2.8rem',
+                'left': imgLeft,
+                'top': imgTop,
+                'z-index': 0
+            });
+            isLongPress = false;
+            document.body.ontouchmove = function (e) {
+                e.stopPropagation();
+            };
+        }
+
+
+
+
+
+
+    })
+
+
+
+
+</script>

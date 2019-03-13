@@ -1,0 +1,17 @@
+<?php
+//用户信息 数据层
+namespace app\api\model;
+use think\Model;
+
+class AccountRelate extends Model
+{
+    protected $table = 's_account_relate';
+    protected $_link = array(
+        'user_info' => array(
+            'mapping_type'      =>  self::HAS_ONE,
+            'foreign_key'       => 'id',
+            'mapping_key'         => 'user_id'
+        ),
+    );
+
+}

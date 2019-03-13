@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link  href="__HOME_JS__/whjs/js/animate.min.css">
+    <link  href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <link  href="__HOME_CSS__/wh/base.css?version:0.1">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script> -->
+    <title>{$title}</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        @keyframes downs {
+            0% {
+                transform: translateY(0px);
+            }
+
+            25% {
+                transform: translateY(-5px);
+            }
+
+            35% {
+                transform: translateY(-7px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            75% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(-15px)
+            }
+
+            
+        }
+
+        .up {
+            width: 25px;
+            height: auto;
+            position: fixed;
+            z-index: 2;
+            bottom: 25px;
+            left: 50%;
+            margin-left: -12.5px;
+            animation: downs 0.8s infinite linear;
+        }
+
+        .up img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .swiper-slide {
+            background-size: 100% 100% !important;
+            height: 100%;
+            position: relative;
+        }
+
+        .edit {
+            width: 2.7rem;
+            position: absolute;
+            /*display: none;*/
+
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .music_box {
+            width: .55rem;
+            height: .55rem;
+            position: fixed;
+            top: .1rem;
+            right: .1rem;
+            z-index: 555;
+        }
+
+        .music_box img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .tip {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .mask {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="up">
+        <img src="__HOME_IMAGES__/uptouch.png" alt="">
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+        </div>
+    </div>
+    <audio id="audio" src=""></audio>
+    <!-- 音乐播放 -->
+    <div class="music_box">
+        <img src="__HOME_IMAGES__/wh/preview_icon_music@2x.png" alt="">
+    </div>
+
+    <div class="mask">
+        <img class="tip" src="__HOME_IMAGES__/wh/tip.png" alt="">
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    $(function () {
+
+
+
+        var edit = '{$modify}';  //地址栏取的
+
+        var tips = '{$share}'  //判断是是否提示
+
+        if (tips == 1) {
+            $('.mask').show();
+            $('.mask').find('img').show();
+        }
+
+        $('.mask').on('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault()
+            $(this).hide();
+            $('.mask').find('img').hide();
+        })
+
+        $('.mask').on('touchmove',function(e){
+            e.stopPropagation();
+            e.preventDefault()
+        })
+
+
+
+        var preview_id = '{$preview}';
+
+        var uid = '{$uid}';
+
+        var id = '{$sid}'
+
+        console.log(edit)
+        console.log(preview_id)
+        var formdata = new FormData();
+
+        var url_modify;
+        if (edit == 0) {
+            url_modify = '/index.php?s=/Api/IndexApi/get_album_list'; //模板的预览
+            formdata.append('id', id);
+            formdata.append('model_id', preview_id);
+            preview(formdata, url_modify)
+        } else {
+            url_modify = '/index.php?s=/Api/IndexApi/get_album_list'; //编辑过后的
+            formdata.append('unionid', uid);
+            formdata.append('my_id', preview_id);
+            preview(formdata, url_modify)
+        }
+
+        // 音乐播放
+        $('.music_box').on('click', function () {
+            $(this).toggleClass('play');
+            if ($(this).hasClass('play')) {
+                var audio = document.getElementById('audio');
+                $(this).find('img').attr('src', '__HOME_IMAGES__/wh/preview_icon_music_shut@2x.png')
+                audio.pause()
+            } else {
+                var audio = document.getElementById('audio');
+                $(this).find('img').attr('src', '__HOME_IMAGES__/wh/preview_icon_music@2x.png')
+                audio.play()
+            }
+        })
+
+
+
+
+        function preview(formview, url_view) {
+            $.ajax({
+                url: url_view,
+                type: 'post',
+                data: formview,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res)
+                    var data = res.AppendData;
+                  
+                    if (res.ResultType == 0) {
+                        $('#audio').attr('src', data.music_url);
+                        var bigheight = $(document).height()
+                        var bigwidth = $(document).width()
+                        console.log(bigheight)
+                        console.log(bigwidth)
+                        var data_x = res.AppendData.content_detail[0].edit_width
+                        var data_h = res.AppendData.content_detail[0].edit_height
+                        var bili_x = (bigwidth / data_x).toFixed(2);
+                        var bili_h = (bigheight / data_h).toFixed(2);
+                       
+                        var showphoto = '';
+                        $.each(data.content_detail, function (k, v) {
+                            showphoto += '<div class="swiper-slide item' + k + '" style=" background-image:url(' + v.img + ')">'
+                            showphoto += '<div class="edit animated" style="color:' + v.font_color + ';font-size:'+(v.font_size/100)+'rem; " data-x="' + (v.font_x * bili_x) + '"data-y="' + (v.font_y * bili_h) + '" data-zoom="' + v.font_zoom + '" data-deg="' + v.font_angle + '" > ' + v.content + '</div>'
+                            showphoto += '</div>'
+
+                        })
+                        $('.swiper-wrapper').html(showphoto);
+                        wx.ready(function () {
+                            $("#audio")[0].play()
+                        })
+
+                        function randomnum() {
+                            var arr = ['rotateIn', 'flip', 'bounceInDown', 'bounce', 'zoomIn',
+                                'jackInTheBox', 'flipInX',
+                                'rubberBand', 'swing', 'tada', 'slideInUp', 'slideInDown',
+                                'zoomInDown', 'fadeInDown',
+                                'rotateInDownLeft', 'rotateInUpRight', 'lightSpeedIn'
+                            ];
+
+                            var random = Math.floor(Math.random() * arr.length + 1) - 1;
+                            return arr[random];
+
+                        }
+
+
+                        var mySwiper = new Swiper('.swiper-container', {
+                            direction: 'vertical',
+                            resistanceRatio: 0,
+                            observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                            observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                            onInit: function (swiper) {
+                                var cl = randomnum()
+                                var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+                                $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(cl).animate({
+                                    top: y,
+                                    left: x
+                                }, 800, function () {
+
+                                    $(this).removeClass().addClass('edit animated').css({
+                                        'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                        'transition': 'all 1s'
+                                    })
+                                })
+
+
+                            },
+                            onSlideNextEnd: function (swiper) {  //下一页
+                                var cl = randomnum();
+                                var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+                                $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(cl).animate({
+                                    top: y,
+                                    left: x
+                                }, 800, function () {
+
+                                    $(this).removeClass().addClass('edit animated').css({
+                                        'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                        'transition': 'all 1s'
+                                    })
+                                })
+
+
+
+                                var len = $('.swiper-slide').length - 1;
+                                if ($('.swiper-slide-active').index() == len) {
+                                    $('.up').hide()
+                                } else {
+                                    $('.up').show()
+                                }
+                            },
+                            onSlidePrevEnd: function (swiper) {
+                                var cl = randomnum();
+                                var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+                                $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(cl).animate({
+                                    top: y,
+                                    left: x
+                                }, 800, function () {
+
+                                    $(this).removeClass().addClass('edit animated').css({
+                                        'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                        'transition': 'all 1s'
+                                    })
+                                })
+
+                       
+                                var len = $('.swiper-slide').length - 1;
+                                if ($('.swiper-slide-active').index() == len) {
+                                    $('.up').hide()
+                                } else {
+                                    $('.up').show()
+                                }
+                            }
+
+                        })
+
+                    }
+
+                  
+                }
+
+
+            })
+        }
+
+
+        var share_url = "{$share_url}";
+
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "/index.php?s=/Api/WeShare/getSignPackage", //url
+            data: { share_url: share_url },
+            async: true,
+
+            // async: false,
+            success: function (result) {
+
+
+                var linksrc =  "{:'http://'.$_SERVER['HTTP_HOST'].url('Home/Nologin/share_photo/modify/1/id/'.$sid.'/preview/'.$preview.'/uid/'.$uid)}"
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+
+                wx.ready(function () {
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: linksrc,
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: linksrc,
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ
+                    wx.onMenuShareQQ({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link:linksrc, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到腾讯微博
+                    wx.onMenuShareWeibo({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: linksrc,
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ空间
+                    wx.onMenuShareQZone({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: linksrc,
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                });
+
+
+            },
+            error: function () {
+                console.log("服务器繁忙，请稍后再试！");
+            }
+        });
+
+
+    })
+</script>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>充值中心</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+        }
+
+        .content {
+            width: 100%;
+        }
+
+        .content .header {
+            width: 100%;
+            background: #fff;
+            height: .845rem;
+            margin-top: .1rem;
+        }
+
+        .content .header .img_box {
+            width: 20%;
+            height: 100%;
+        }
+
+        .content .header .img_box img {
+            width: .52rem;
+            height: .52rem;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+            margin-top: .16rem;
+        }
+
+        .content .header .balance {
+            width: 78%;
+            height: 100%;
+            padding-left: 2%;
+        }
+
+        .content .header .balance p:first-child {
+            font-size: .17rem;
+            margin-top: .225rem;
+            margin-bottom: .05rem;
+        }
+
+        .content .header .balance p:last-child {
+            color: #999;
+        }
+        .amount{
+            width: 100%;
+            height: .97rem;
+            background: #fff;
+            margin-top: .05rem;
+            padding: .15rem .15rem;
+            box-sizing: border-box;
+        }
+        .amount input{
+            color: #F7892E;
+            height: .3rem;
+            border: 0;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="header clearfix">
+            <div class="img_box fl">
+                <img src="/Public/Home/images/userico.jpg" alt="">
+            </div>
+            <div class="fl balance">
+                <p>小秘币余额</p>
+                <p>250.20</p>
+            </div>
+        </div>
+        <div class="amount">
+            <p style="font-size:.2rem;margin-bottom: .1rem;">充值金额</p>
+            <p>
+                <span style="color:#F7892E;font-size: .21rem;">￥</span>
+                <input type="text" placeholder="请输入充值金额">
+            </p>
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+</body>
+
+</html>

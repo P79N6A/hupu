@@ -1,0 +1,197 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.zzc_heka_nav {
+			overflow: hidden;
+			width: 100%;
+			position: relative;
+			padding: 10px 5%;
+			margin: 10px auto 0px auto;
+		}
+		
+		.zzc_heka_nav_li {
+			width: 20%;
+			float: left;
+			list-style: none;
+			text-align: center;
+		}
+		
+		.zzc_heka_nav_li img {
+			border-radius: 50%;
+			width: 70%;
+			margin: auto;
+			font-size: 13px;
+		}
+		
+		.zzc_heka_nav_li_title {
+			font-size: 13px;
+			color: #333333;
+		}
+		
+		.zzc_heka_nav_textarea {
+			width: 90%;
+			margin: auto;
+		}
+		
+		.zzc_heka_nav_textarea textarea {
+			font-size: 14px;
+			border: none;
+			background: #f6f6f7;
+			color: #333333;
+			border-radius: 0px;
+		}
+		
+		.zzc_heka_nav_textarea input {
+			background: #AAAAAA;
+			color: #FFFFFF;
+			font-size: 14px;
+			border-radius: 5px;
+			padding: 3px 15px;
+		}
+		
+		.zzc_heka_title {
+			width: 90%;
+			margin: 0px auto;
+			padding: 10px 0px;
+			border-bottom: 1px solid #EEEEEE;
+		}
+		
+		.zzc_heka_nav_bottom {
+			border-top: 1px solid #EEEEEE;
+			margin-top: 10px;
+		}
+		
+		.zzc_heka_beijing {
+			width: 90%;
+			overflow: hidden;
+			border-bottom: 1px solid #EEEEEE;
+			padding: 10px 0px;
+			margin: auto;
+		}
+		
+		.zzc_heka_beijing_img {
+			width: 50%;
+			float: left;
+			overflow: hidden;
+		}
+		
+		.zzc_heka_beijing_img img {
+			width: 80%;
+		}
+		
+		.zzc_heka_beijing_ico {
+			margin: 10px 10px 0px 0px;
+		}
+		
+		.zzc_heka_beijing_ico_img {
+			width: 50px;
+			border-radius: 50%;
+			height: 50px;
+			border: 1px solid #CCCCCC;
+			margin: 5px auto;
+		}
+		
+		.zzc_heka_beijing_ico div.on {
+			background: #696d6f;
+		}
+		
+		.zzc_heka_beijing_sub {
+			width: 90%;
+			margin: auto;
+			margin-bottom: 20px;
+			overflow: hidden;
+		}
+		
+		.feedback .zzc_heka_subimg {
+			border-radius: none;
+			width: 30%;
+			float: left;
+			height: 100px;
+			background-size: 100%;
+		}
+		
+		.zzc_heka_subimg_right {
+			float: left;
+			width: 70%;
+			overflow: hidden;
+			height: 100px;
+			font-size: 14px;
+			color: #666;
+		}
+		
+		.zzc_heka_subimg_right textarea {
+			background: #f6f6f7;
+			width: 100%;
+			border-radius: 0px;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+
+		<div class="mui-content ">
+			<include file="Public/hekaNav" />
+
+			<form action="{:url('Home/Greeting/editUsersGcard')}" method="post" id="form" enctype="multipart/form-data">
+				<input type="hidden" name="do" value="{$Think.get.do}">
+				<input type="hidden" name="id" value="{$Think.get.id}">
+				<input type="hidden" name="type" value="{$Think.get.do}">
+				<input type="hidden" name="jump_url" value="">
+
+				<div class="zzc_heka_nav_bottom">
+					<div class="zzc_heka_title">分享设置</div>
+					<div><input type="text" name="share_title" class="zzc_guanggao_editinput" id="" value="{$data.share_title}" placeholder="输入分享标题" /> </div>
+					<div class="zzc_heka_beijing_sub feedback">
+						<div id='image-list' class="row image-list zzc_heka_subimg" style="background-image:url({$data.share_thumb})">
+							<input type="hidden" name="share_thumb" value="{$data.share_thumb}">
+						</div>
+						<div class="zzc_heka_subimg_right">
+							<textarea name="share_content" rows="" cols="" placeholder="输入描述">{$data.share_content}</textarea>
+						</div>
+					</div>
+
+					<div class="zzc_heka_beijing" style="border: none; border-top:1px solid #EEEEEE">
+						<div class="zzc_heka_beijing_img" style="font-size:14px;color: #666;">
+							您将贺卡分享给别人时<br/> 对方看到的封面
+							<br/>
+							<span style="color: #2FB3D3;margin-top: 10px;display: inline-block;">右侧为示例</span>
+
+						</div>
+						<div class="zzc_heka_beijing_img">
+							<img src="__HOME_IMAGES__/test.png" alt="" />
+						</div>
+
+						<input id="fileUpload0" name="share_thumb" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="opacity: 0;">
+					</div>
+
+				</div>
+			</form>
+
+		</div>
+	</body>
+
+</block>
+
+<block name="js_extend">
+	<script>
+		$("#image-list").on("touchend", function() {
+			$("#fileUpload0").click();
+		});
+		$("#fileUpload0").on("change", function() {
+			var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+			if(objUrl) {
+				$("#image-list").css("background-image", "url('" + objUrl + "')");
+			}
+		});
+		mui('.mui-scroll-wrapper').scroll();
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

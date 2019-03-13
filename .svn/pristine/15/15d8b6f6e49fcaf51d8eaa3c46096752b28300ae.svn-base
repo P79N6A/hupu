@@ -1,0 +1,30 @@
+<?php
+/** 新V网首页*/
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+class Vmake extends HomeBase 
+{
+
+    /**
+     *新V网
+     */
+    public function vmakee()
+    {
+        // $this->title="V网首页";
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    public function editmake()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    public function changexmb()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+}

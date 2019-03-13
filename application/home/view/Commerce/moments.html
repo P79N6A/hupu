@@ -1,0 +1,66 @@
+<extend name="./base" />
+
+<block name="css_extend">
+</block>
+<block name="body">
+
+	<body>
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">我的</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="{:url('Home/Commerce/moments')}">
+				<span class="mui-icon mui-icon-pengyouquan"></span>
+				<span class="mui-tab-label">动态</span>
+			</a>
+			<a class="mui-tab-item" href="{:url('Home/Commerce/message')}">
+				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+				<span class="mui-tab-label">消息</span>
+			</a>
+			<a class="mui-tab-item" href="{:url('Home/Commerce/commerceList')}">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">商会</span>
+			</a>
+			<a class="mui-tab-item" href="{:url('Home/Commerce/mine')}">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<div class="mui-content">
+			<div class="zzc_myranwen_search">
+				<span class="mui-icon mui-icon-home"></span>
+				<div class="zzc_myranwen_search_input">
+					<input type="text" class="zzc_seach_input" placeholder="按商会名称或地区搜索">
+				</div>
+				<span class="mui-icon mui-icon-contact zzc_right"></span>
+			</div>
+			<div class="zzc_wode_title">
+				选择商会
+			</div>
+			<div class="zzc_wode_shanghui_li">
+				<a href="" class="zzc_wode_shanghui_li_a zzc_wode_shanghui_a"><img src="__HOME_IMAGES__/60x60.gif" alt="" /></a>
+				<div class="zzc_wode_shanghui_li_right">
+					这里是商会名称
+				</div>
+			</div>
+			<div class="zzc_wode_shanghui_li">
+				<a href="" class="zzc_wode_shanghui_li_a zzc_wode_shanghui_a"><img src="__HOME_IMAGES__/60x60.gif" alt="" /></a>
+				<div class="zzc_wode_shanghui_li_right">
+					这里是商会名称
+				</div>
+			</div>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

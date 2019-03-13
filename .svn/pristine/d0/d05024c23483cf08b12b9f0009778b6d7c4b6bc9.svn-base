@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<link rel="stylesheet" href="__HOME_CSS__/dist/css/swiper.min.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<title>明鑫商学院官网</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			html {
+				width: 100%;
+				height: auto;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #f9f9f9;
+			}
+			
+			.big_two {
+				width: 100%;
+				height: auto;
+				background: #fff;
+			}
+			
+			.iphone_top {
+				width: 100%;
+				height: 2.4rem;
+				line-height: 2.4rem;
+				background-color: #85AEFF;
+				display: flex;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 99999;
+			}
+			
+			.iphone_top_img {
+				width: 20%;
+				height: 100%;
+				padding-left: 5%;
+				text-align: left;
+			}
+			
+			.iphone_top_img>img {
+				width: 0.9rem;
+				height: 0.75rem;
+				margin: 0.75rem 0;
+			}
+			
+			.iphone_tit {
+				width: 60%;
+				height: 100%;
+				color: #fff;
+				font-size: 0.9rem;
+				text-align: center;
+				font-weight: 550;
+			}
+			
+			.iphone_login {
+				width: 20%;
+				height: 100%;
+				font-size: 0.5rem;
+			}
+			
+			.iphone_login>a {
+				display: block;
+				width: 100%;
+				height: 1rem;
+				line-height: 1rem;
+				text-align: center;
+				color: #fff;
+				border: 1px solid #fff;
+				margin: 0.7rem 0;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: 8.575rem;
+				cursor: pointer;
+				margin-top: 2.4rem;
+			}
+			
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				position: relative;
+			}
+			
+			.swiper-slide>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-pagination-bullet {
+				width: 0.45rem;
+				height: 0.45rem;
+				background: #000;
+				opacity: 0.5;
+				margin: 0 0.275rem !important;
+			}
+			
+			.swiper-pagination-bullet-active {
+				border: 0.05rem solid rgba(255, 255, 255, 1) !important;
+				z-index: 999;
+			}
+			/*侧边栏*/
+			
+			.side {
+				width: 12rem;
+				height: 100%;
+				background: #595959;
+				position: fixed;
+				left: -12rem;
+				top: 2.4rem;
+				z-index: 100;
+			}
+			
+			.side_bot {
+				margin-top: 1rem;
+				display: flex;
+			}
+			
+			.side_bot_left {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.fun {
+				width: 80%;
+				height: 2rem;
+				border: 1px solid #fff;
+				line-height: 2rem;
+				color: #fff;
+				font-size: 0.6rem;
+				margin: 0 auto;
+				text-align: center;
+				margin-bottom: 1.5rem;
+			}
+			
+			.side_bot_right {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.fun>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #fff;
+			}
+			
+			.click {
+				background: #fff;
+				color: #595959 !important;
+			}
+			
+			.public_tit {
+				width: 100%;
+				height: auto;
+				text-align: center;
+			}
+			
+			.public_tit_top {
+				width: auto;
+				height: 3rem;
+				display: inline-block;
+				margin: 0 auto;
+				/*text-align: center;*/
+			}
+			
+			.public_tit_left,
+			.public_tit_right {
+				width: 1.2rem;
+				height: 0.05rem;
+				background: #000;
+				margin-top: 2rem;
+				float: left;
+				/*display: inline-block;*/
+			}
+			
+			.dian {
+				width: 0.3rem;
+				height: 0.2rem;
+				float: left;
+				background: #000;
+				margin-top: 1.925rem;
+				margin-left: 0.275rem;
+			}
+			
+			.public_tit_cen {
+				width: auto;
+				height: 100%;
+				font-size: 1rem;
+				color: #333;
+				text-align: center;
+				font-weight: 600;
+				margin: 0 0.55rem 0 0.325rem;
+				/*display: inline-block;*/
+				line-height: 4rem;
+				float: left;
+			}
+			
+			.public_tit_englist {
+				width: 100%;
+				height: 2rem;
+				color: #000;
+				text-align: center;
+				font-size: 0.5rem;
+			}
+			
+			.move {
+				width: 90%;
+				height: 10rem;
+				margin: 0 auto;
+			}
+			
+			.move>video {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.desc {
+				width: 100%;
+				height: 7.5rem;
+				background: #fff;
+			}
+			
+			.company_intro {
+				width: 90%;
+				height: 4rem;
+				margin: 1rem auto 0;
+				line-height: 1rem;
+				color: #6F6F6F;
+				font-size: 0.625rem;
+				letter-spacing: 0.04rem;
+				text-align: center;
+				font-weight: 525;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 4;
+				overflow: hidden;
+			}
+			
+			.m_bg {
+				width: 100%;
+				height: auto;
+				background: #fff;
+			}
+			
+			.culture {
+				width: 85.5%;
+				height: 4.475rem;
+				margin: 0 auto 1.175rem;
+				position: relative;
+			}
+			
+			.c_cen {
+				width: 89.15%;
+				height: 3.025rem;
+				margin: 0 auto;
+				border: 0.05rem solid rgba(249, 187, 62, 1);
+				padding: 0.5rem 0;
+				padding-left: 6%;
+			}
+			
+			.c_left {
+				width: 70%;
+				height: 100%;
+			}
+			
+			.c_tit {
+				width: 100%;
+				height: 1.375rem;
+				font-size: 0.7rem;
+				color: #0F0F0F;
+				font-weight: 550;
+			}
+			
+			.c_word {
+				color: #929292;
+				font-size: 0.575rem;
+			}
+			
+			.c_img {
+				width: 4.35rem;
+				height: 3.025rem;
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+			
+			.c_img>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.cen {
+				float: right;
+			}
+			
+			.z_img {
+				width: 4.35rem;
+				height: 3.025rem;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+			}
+			
+			.con {
+				width: 80%;
+				height: 3rem;
+				font-size: 0.6rem;
+				color: #97BAFF;
+				margin: 0.425rem auto 0;
+				font-weight: 600;
+				text-align: center;
+				line-height: 1.5rem;
+			}
+			
+			.architect {
+				width: 90%;
+				height: 8rem;
+				margin: 0 auto;
+				padding-bottom: 2.05rem;
+			}
+			
+			.architect>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.join {
+				font-size: 0.75rem;
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				text-align: center;
+				font-size: 0.55rem;
+			}
+			
+			.join_lb {
+				width: 90%;
+				height: 20rem;
+				position: relative;
+				margin: 0 auto 1rem;
+				overflow: hidden;
+			}
+			
+			.swiper-slide_top {
+				width: 100% !important;
+				height: 47.5% !important;
+				margin-bottom: 5%;
+				overflow: hidden;
+			}
+			
+			.swiper-slide>div {
+				float: none;
+			}
+			
+			.swiper-slide_top_left {
+				position: relative;
+				width: 47.5% !important;
+				height: 7.5rem !important;
+				margin-right: 5%;
+				float: left;
+				border-radius: 4px;
+			}
+			
+			.swiper-slide_top_left>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide_top_left>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide_top_right {
+				position: relative;
+				width: 47.5% !important;
+				height: 7.5rem !important;
+				float: left;
+				border-radius: 4px;
+			}
+			
+			.swiper-slide_top_right>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide_top_right>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide_bot {
+				width: 100% !important;
+				height: 47.5% !important;
+				overflow: hidden;
+			}
+			
+			.swiper-containerB .swiper-button-prev {
+				top: 18rem;
+				left: 6.5rem;
+				width: 1.25rem;
+				height: 1.5rem;
+			}
+			
+			.swiper-containerB .swiper-button-next {
+				top: 18rem;
+				left: 9rem;
+				width: 1.25rem;
+				height: 1.5rem;
+			}
+			
+			.join_con {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 90%;
+				height: 2rem;
+				padding: 0 5%;
+				background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+				border-radius: 0px 0px 4px 4px;
+			}
+			
+			.join_name {
+				width: 100%;
+				height: 1rem;
+				font-size: 0.7rem;
+				color: #fff;
+				line-height: 1rem;
+				text-align: left;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-weight: 550;
+			}
+			
+			.join_rank {
+				width: 100%;
+				height: 1rem;
+				font-size: 0.5rem;
+				color: #fff;
+				text-align: left;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.lecturer {
+				height: 1.5rem;
+			}
+			
+			.more {
+				width: 4.8rem;
+				height: 1.5rem;
+				border: 0.05rem solid #979797;
+				margin: 1rem auto 0;
+				font-size: 0.6rem;
+				text-align: center;
+				line-height: 1.5rem;
+			}
+			
+			.m_link {
+				display: block;
+				width: 100%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #333;
+				text-decoration: none;
+			}
+			
+			.swiper-containerB {
+				width: 100%;
+				height: 80%;
+			}
+			
+			.swiper-containerB .swiper-button-next {
+				top: 18rem;
+				left: 9rem;
+				width: 1.35rem;
+				height: 1.35rem;
+				-webkit-background-size: 30%;
+				background-size: 30%;
+				text-align: center;
+				background-image: none;
+			}
+			
+			.swiper-containerB .swiper-button-next>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-containerB .swiper-button-prev {
+				top: 18rem;
+				left: 6.5rem;
+				width: 1.35rem;
+				height: 1.35rem;
+				-webkit-background-size: 30%;
+				background-size: 30%;
+				text-align: center;
+				background-image: none;
+			}
+			
+			.swiper-containerB .swiper-button-prev>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-containerB .swiper-slide {
+				overflow: hidden;
+			}
+			
+			.swiper-containerB .swiper-slide>div {
+				width: 33.3%;
+				height: 100%;
+				float: left;
+			}
+			
+			.swiper-containerB .swiper-button-next.swiper-button-disabled,
+			.swiper-button-prev.swiper-button-disabled {
+				opacity: .75;
+				cursor: auto;
+				pointer-events: none;
+			}
+			
+			.out_two {
+				width: 100%;
+				height: auto;
+				background: #2D3038;
+			}
+			
+			.out_two .foot {
+				width: 100%;
+				height: auto;
+				padding: 3% 0 2% 0;
+			}
+			
+			.out_two .foot_cen_top {
+				width: 72%;
+				height: auto;
+				line-height: 0.7rem;
+				font-size: 0.4rem;
+				color: #fff;
+				margin: 0 auto;
+				text-align: center;
+			}
+			
+			.out_two .foot_cen_bot {
+				width: 80%;
+				height: 0.75rem;
+				line-height: 0.75rem;
+				font-size: 0.4rem;
+				color: #fff;
+				margin: 0 auto;
+				text-align: center;
+			}
+			
+			.avt {
+				width: 100%;
+				height: auto;
+				margin-bottom: 0.25rem;
+				background: #fff;
+			}
+			
+			.act {
+				width: 90%;
+				height: 11.65rem;
+				margin: 0 auto;
+			}
+			
+			.act>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.act_img {
+				width: 100%;
+				height: 8.175rem;
+			}
+			
+			.act_img>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.act_tit {
+				width: 100%;
+				height: 3.475rem;
+			}
+			
+			.act_h {
+				width: 100%;
+				height: 2rem;
+				line-height: 2.5rem;
+				color: #333;
+				font-size: 0.85rem;
+			}
+			
+			.act_con {
+				width: 100%;
+				height: 1.475rem;
+				font-size: 0.6rem;
+				color: #5F5F5F;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.d_img {
+				width: 90%;
+				height: 8.175rem;
+				margin: 0 auto 1.225rem;
+				position: relative;
+			}
+			
+			.d_img>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.d_img>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.d_fot {
+				width: 100%;
+				height: 2.1rem;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.d_time {
+				width: 95%;
+				height: 2.1rem;
+				line-height: 2.1rem;
+				font-size: 0.75rem;
+				color: #fff;
+				padding: 0 2.5%;
+				background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+			}
+			
+			.d_play {
+				width: 100%;
+				height: auto;
+			}
+			
+			.x_tit {
+				width: 90%;
+				height: 1.75rem;
+				line-height: 1.5rem;
+				font-size: 0.85rem;
+				color: #333;
+				margin: 0 auto;
+				font-weight: 550;
+			}
+			
+			.p_img {
+				width: 90%;
+				height: 7.525rem;
+				margin: 0 auto;
+			}
+			
+			.p_img>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.p_img>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.h_bg {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				padding-bottom: 2.775rem;
+			}
+			
+			.big {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.big img {
+				width: 100%;
+				height: auto;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				-webkit-user-drag: none;
+				-moz-user-drag: none;
+				-ms-user-drag: none;
+				user-drag: none;
+			}
+			
+			.pinch-zoom-container {
+				position: fixed !important;
+				top: 0;
+				left: 0;
+				background: rgba(0, 0, 0, 0.5);
+				width: 100%;
+				height: 100% !important;
+				z-index: 999999;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="m_bg">
+			<div class="iphone_top">
+				<div class="iphone_top_img">
+					<img src="__HOME_IMAGES__/uccn/inco_lanhmu@3x.png" alt="" />
+				</div>
+				<div class="iphone_tit">明鑫商学院</div>
+			</div>
+			<div class="swiper-container">
+				<div class="swiper-wrapper head">
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/911022407879342987.jpg" alt="" />
+					</div>
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/711304307280358401.jpg" alt="" />
+					</div>
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/880142500562599552.jpg" alt="" />
+					</div>
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/782644769596283595.jpg" alt="" />
+					</div>
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/626197891049374939.jpg" alt="" />
+					</div>
+					<div class="swiper-slide">
+						<img src="__HOME_IMAGES__/uccn/139576333083528519.jpg" alt="" />
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			<div class="side">
+				<div class="side_bot">
+					<div class="side_bot_left">
+						<div class="fun">
+							<a data-id="1" href="#a">简介</a>
+						</div>
+						<div class="fun">
+							<a data-id="2" href="#b">文化</a>
+						</div>
+						<div class="fun">
+							<a data-id="3" href="#c">架构</a>
+						</div>
+						<div class="fun">
+							<a data-id="4" href="#g">活动预告</a>
+						</div>
+					</div>
+					<div class="side_bot_right">
+						<div class="fun">
+							<a data-id="5" href="#e">课程活动</a>
+						</div>
+						<div class="fun">
+							<a data-id="6" href="#f">直播间</a>
+						</div>
+						<div class="fun">
+							<a data-id="7" href="#d">讲师团</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="public_tit" id="a">
+				<div class="public_tit_top">
+					<div class="public_tit_left"></div>
+					<div class="dian"></div>
+					<div class="public_tit_cen">关于明鑫商学院</div>
+					<div class="public_tit_right"></div>
+				</div>
+				<div class="public_tit_englist">ABOUT MINGXIN BUSINESS SCHOOL</div>
+			</div>
+			<div class="move">
+				<video src="__HOME_IMAGES__/uccn/3.0yxm.mp4" poster="__HOME_IMAGES__/uccn/747605776094739704.png" controls="controls"></video>
+			</div>
+			<div class="desc">
+				<div class="company_intro">
+					明鑫商学院是上海明鑫集团旗下的商业教育平台，致力于对内服务团队，对外提升和服务各地代理合作商。平台汇聚专家学者、商界领袖、名师大咖等智慧结合体，通过特有创新的体验式教育模式，从家国情怀到社会责任，从客户价值到人才价值，全方位提升世界观、人生观，成为有远大抱负有强烈使命感的商界精英，为助推集团公司走向世界而努力而奋斗！
+				</div>
+				<div class="more">
+					<a class="m_link" href="https://mp.weixin.qq.com/s/ZptXVwpZ_ZNusRT5Pgir8Q">
+						查看更多
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="public_tit" id="b">
+			<div class="public_tit_top">
+				<div class="public_tit_left"></div>
+				<div class="dian"></div>
+				<div class="public_tit_cen">文化</div>
+				<div class="public_tit_right"></div>
+			</div>
+			<div class="public_tit_englist">CULTURE</div>
+		</div>
+		<div class="culture">
+			<div class="c_cen">
+				<div class="c_left">
+					<div class="c_tit">愿景</div>
+					<div class="c_word">成为全球最具价值的商业教育平台。</div>
+				</div>
+
+			</div>
+			<div class="c_img">
+				<img src="__HOME_IMAGES__/uccn/Rectangle@2x.png" alt="" />
+			</div>
+		</div>
+		<div class="culture">
+			<div class="c_cen">
+				<div class="c_left cen">
+					<div class="c_tit">使命</div>
+					<div class="c_word">树立行业标杆，推动平台引领时代。</div>
+				</div>
+			</div>
+			<div class="c_img z_img">
+				<img src="__HOME_IMAGES__/uccn/Rectangle Copy@2x.png" alt="" />
+			</div>
+		</div>
+		<div class="culture">
+			<div class="c_cen">
+				<div class="c_left">
+					<div class="c_tit">价值观</div>
+					<div class="c_word">践行真孝文化，践行社会主义核心价值观。</div>
+				</div>
+			</div>
+			<div class="c_img">
+				<img src="__HOME_IMAGES__/uccn/Rectangle Copy 2@2x.png" alt="" />
+			</div>
+		</div>
+		<!--<div class="con">明鑫商学院，致力于打造全球最有价值的明星平台。</div>-->
+		<div class="m_bg">
+			<div class="public_tit" id="c">
+				<div class="public_tit_top">
+					<div class="public_tit_left"></div>
+					<div class="dian"></div>
+					<div class="public_tit_cen">学院架构</div>
+					<div class="public_tit_right"></div>
+				</div>
+				<div class="public_tit_englist">COLLEGE ARCHITECTURE</div>
+			</div>
+			<div class="architect">
+				<img class="pimg" src="__HOME_IMAGES__/uccn/WechatIMG21.png" alt="" />
+			</div>
+		</div>
+		<div class="public_tit" id="d">
+			<div class="public_tit_top">
+				<div class="public_tit_left"></div>
+				<div class="dian"></div>
+				<div class="public_tit_cen">优秀讲师团</div>
+				<div class="public_tit_right"></div>
+			</div>
+			<div class="public_tit_englist lecturer">EXCELLENT LECTURERS</div>
+		</div>
+		<div class="join">加入洋小秘，你也可以和他们一样成功</div>
+		<div class="join_lb">
+			<div class="swiper-containerB">
+				<div class="swiper-wrapper d_iagent">
+
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/yh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">雨华</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/fdl.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">符东林</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zxj.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张宪军</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zyw.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张译文</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/gh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">管华</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/fxl.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">范新令</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/dzg.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">丁中国</div>
+										<div class="join_rank">首席讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/hjx.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">回佳心</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/hss.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">侯莎莎</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/jyq.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">蒋吟秋</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lhy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">李红岩</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lhs.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">李会升</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lnn.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">李楠楠</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lp.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">李鹏</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/ljf.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">刘金凤</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lq.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">刘庆</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/jcs.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">亓春生</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/syp.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">孙燕平</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/wp.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">王平</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/wxy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">王晓宇</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/ywh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">杨文惠</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/dmy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">殷铭悦</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zjz.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张居正</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zmh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张美华</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/yjw.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">杨洁汶</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张懿</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zym.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">张志明</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zm.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">赵明</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zs.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">周莎</div>
+										<div class="join_rank">专业讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/cjf.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">初君风</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/dsh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">董珊华</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/dsj.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">段淑娟</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/hcm.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">何灿美</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/ht.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">何婷</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/hyy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">黄勇玉</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lmy.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">黎明艳</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lgl.jpg" alt="" />
+									<div class="join_con">
+										<div class="join_name">李国林</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/lyj.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">罗跃健</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/mzl.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">马连专</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/qwx.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">钱旺兴</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/tyz.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">汤玉柱</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/wf.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">王飞</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/wh.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">王慧</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/xgl.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">向光龙</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/ygy.jpg" alt="" />
+									<div class="join_con">
+										<div class="join_name">杨广玉</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/yzx.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">叶兆霞</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zj.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">赵娟</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zch.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">钟濋红</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide">
+						<div class="swiper-slide_top">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+									<img src="__HOME_IMAGES__/uccn/zkd.jpeg" alt="" />
+									<div class="join_con">
+										<div class="join_name">周楷迪</div>
+										<div class="join_rank">助理讲师</div>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+								</a>
+							</div>
+						</div>
+						<div class="swiper-slide_bot">
+							<div class="swiper-slide_top_left">
+								<a href="javascript:;">
+								</a>
+							</div>
+							<div class="swiper-slide_top_right">
+								<a href="javascript:;">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-button-next s_right">
+					<img class="rg" src="__HOME_IMAGES__/uccn/inco_zixun_rihht copy@2x.png" alt="" />
+				</div>
+				<div class="swiper-button-prev s_left">
+					<img class="lf" src="__HOME_IMAGES__/uccn/inco_zixun_left copy@2x.png" alt="" />
+				</div>
+			</div>
+		</div>
+
+		<div class="avt">
+			<div class="public_tit" id="e">
+				<div class="public_tit_top">
+					<div class="public_tit_left"></div>
+					<div class="dian"></div>
+					<div class="public_tit_cen">课程活动</div>
+					<div class="public_tit_right"></div>
+				</div>
+				<div class="public_tit_englist">CURRICULUM ACTIVITIES</div>
+			</div>
+			<div class="act">
+				<a href="https://mp.weixin.qq.com/s/lVP14GoB3hVPhuhri3_0Lw">
+					<div class="act_img">
+						<img src="__HOME_IMAGES__/uccn/yxm/56674098993610769.png" alt="" />
+					</div>
+					<div class="act_tit">
+						<div class="act_h">洋小秘第八届全球合伙人特训营</div>
+						<div class="act_con">胸怀天下并肩同行——第八届洋小秘合伙人特训营圆满落幕</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="avt">
+			<div class="public_tit">
+				<div class="public_tit_top">
+					<div class="public_tit_left"></div>
+					<div class="dian"></div>
+					<div class="public_tit_cen">课程活动</div>
+					<div class="public_tit_right"></div>
+				</div>
+				<div class="public_tit_englist">AURRICULUM ACTIVITIES</div>
+			</div>
+			<div class="act">
+				<a href="https://mp.weixin.qq.com/s/ey5RPu3QL9CaUTDn1XgxzA">
+					<div class="act_img">
+						<img src="__HOME_IMAGES__/uccn/648625058219012037.jpg" alt="" />
+					</div>
+					<div class="act_tit">
+						<div class="act_h">洋小秘第九届全球合伙人特训营</div>
+						<div class="act_con">走进韶山丨《洋小秘第九届全球合伙人特训营》8月27日开课！</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="public_tit" id="f">
+			<div class="public_tit_top">
+				<div class="public_tit_left"></div>
+				<div class="dian"></div>
+				<div class="public_tit_cen">小秘直播间</div>
+				<div class="public_tit_right"></div>
+			</div>
+			<div class="public_tit_englist">XIAO MI DIRECT BROADCASTING ROOM</div>
+		</div>
+		<div class="d_play">
+			<div class="d_img">
+				<a href="https://vzan.com/live/livedetail-740961?shareuid=4432773&ver=636562141543134720&from=singlemessage&isappinstalled=0&stamp=636760971579944484&shareuserId=4432773">
+					<img src="__HOME_IMAGES__/uccn/853821651412500367.png" alt="" />
+					<div class="d_fot">
+						<div class="d_time">
+							《如何销售198及销售流程七步曲》——王晓宇
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="h_bg">
+			<div class="public_tit" id="g">
+				<div class="public_tit_top">
+					<div class="public_tit_left"></div>
+					<div class="dian"></div>
+					<div class="public_tit_cen">活动预告</div>
+					<div class="public_tit_right"></div>
+				</div>
+				<div class="public_tit_englist">UPCOMING EVENTS</div>
+			</div>
+			<div class="x_tit">洋小秘全球合伙人年终大会</div>
+			<div class="p_img">
+				<a href="https://mp.weixin.qq.com/s/__SsJVUUuR0DzBGddEAPTw">
+					<img src="__HOME_IMAGES__/uccn/236725593940436577.jpg" alt="" />
+				</a>
+			</div>
+		</div>
+
+		<div class="out_two">
+			<div class="foot">
+				<p class="foot_cen_top">Copyright © 2018 上海互浦科技,All Reserved.More Templates 互浦科技 - Collect from 互浦科技</p>
+				<p class="foot_cen_bot">沪ICP备17042511</p>
+			</div>
+		</div>
+
+		<div class="big">
+			<img class="fimg" src="__HOME_IMAGES__/uccn/WechatIMG21.png" alt="" />
+		</div>
+		<script src="__HOME_JS__/scale.js"></script>
+		<script src="__HOME_CSS__/dist/js/swiper.min.js"></script>
+		<script>
+			$(".s_left").on("click", function() {
+				$(".lf").attr("src", "__HOME_IMAGES__/uccn/inco_zixun_rihht copy 2@2x.png")
+				$(".rg").attr("src", "__HOME_IMAGES__/uccn/inco_zixun_left copy 2@2x.png")
+			})
+			$(".s_right").on("click", function() {
+				$(".lf").attr("src", "__HOME_IMAGES__/uccn/inco_zixun_left copy@2x.png")
+				$(".rg").attr("src", "__HOME_IMAGES__/uccn/inco_zixun_rihht copy@2x.png")
+			})
+
+			$(".tab").click(function() {
+				$(".tab").find("a").removeClass("ative");
+				$(this).find("a").addClass("ative");
+			})
+			var myswiper = new Swiper('.swiper-container', {
+				autoplay: true,
+				observer: true, //修改swiper自己或子元素时，自动初始化swiper 
+				observeParents: false, //修改swiper的父元素时，自动初始化swiper 
+				autoplay: {
+					delay: 2000,
+					disableOnInteraction: false,
+				},
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+				},
+			});
+
+			var swiper = new Swiper('.swiper-containerB', {
+				autoplay: true,
+				slidesPerView: 1,
+				spaceBetween: 0,
+				observer: true, //修改swiper自己或子元素时，自动初始化swiper 
+				observeParents: false, //修改swiper的父元素时，自动初始化swiper 
+				loop: true,
+				pagination: {
+					clickable: true,
+				},
+				autoplay: {
+					delay: 2000,
+					disableOnInteraction: false,
+				},
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+			});
+
+			var move = true;
+			$(".iphone_top_img").on('click', function() {
+				if(move) {
+					$(".side").css({
+						"transform": 'translateX(12rem)',
+						"transition": 'transform 0.2s'
+					});
+					move = false;
+				} else {
+					$(".side").css({
+						"transform": 'translateX(-12rem)',
+						"transition": 'transform 0.2s'
+					});
+					move = true;
+				}
+			});
+
+			$(".fun").click(function() {
+				$(".fun").find("a").removeClass("click");
+				$(this).find("a").addClass("click");
+				$(".side").css({
+					"transform": 'translateX(-12rem)',
+					"transition": 'transform 0.2s'
+				});
+			})
+			$(".architect").on("click", function() {
+				$(".pinch-zoom-container").show()
+			})
+			$(".big").on("click", function() {
+				$(".pinch-zoom-container").hide()
+			})
+			$(".fimg").on("click", function(e) {
+				e.stopPropagation();
+			})
+
+			$('.big').each(function() {
+				new RTP.PinchZoom($(this), {});
+			});
+			</script>
+            <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+		<script>
+
+			//分享
+			$(function() {
+				var share_url = "{$share_url}";
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/WeShare/getSignPackage", //url
+					data: {
+						share_url: share_url
+					},
+					async: true,
+
+					// async: false,
+					success: function(result) {
+
+						var title = "明鑫商学院";
+						var desc = "明鑫商学院是上海明鑫集团旗下的商业教育平台，致力于对内服务团队，对外提升和服务各地代理合作商。";
+						var link = "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/Uccns/uccn')}";
+						var img_url = "http://wx.yxm360.com/Public/Home/images/mplogo.jpg";
+
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+							appId: result.AppendData.appId,
+							timestamp: result.AppendData.timestamp,
+							nonceStr: result.AppendData.nonceStr,
+							signature: result.AppendData.signature,
+							jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+								'checkJsApi',
+								'onMenuShareTimeline', //
+								'onMenuShareAppMessage',
+								'onMenuShareQQ',
+								'onMenuShareWeibo',
+								'getLocation'
+							]
+						});		
+						wx.ready(function() {
+							//分享到朋友圈
+							wx.onMenuShareTimeline({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享给朋友
+							wx.onMenuShareAppMessage({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								type: '', // 分享类型,music、video或link，不填默认为link
+								dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ
+							wx.onMenuShareQQ({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到腾讯微博
+							wx.onMenuShareWeibo({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ空间
+							wx.onMenuShareQZone({
+                                title: title, // 分享标题
+                                desc: desc, // 分享简介
+                                link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+
+						});
+
+					},
+					error: function() {
+						console.log("走了错误")
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

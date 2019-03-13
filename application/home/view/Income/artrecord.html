@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>文章打赏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .top {
+            width: 100%;
+            height: .46rem;
+            background: #fff;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+        }
+
+        .topdao li {
+            float: left;
+            width: 33.3%;
+            height: .46rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 400;
+            color: #A1A1A1;
+            line-height: .46rem;
+            text-align: center;
+        }
+
+        .pingz {
+            width: 5rem;
+            height: .46rem;
+            padding: .12rem 0;
+            color: #2B2B2B;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            border-bottom: .03rem solid #2B2B2B;
+        }
+
+        .first {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .secend {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .three {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .massage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+
+        .masage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+		.name{
+			width: 50%;
+			height: 0.4rem;
+			line-height:0.46rem ;
+			font-size: 0.16rem;
+			font-weight: 550;
+			color:#333;
+			margin-left: 0.19rem;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+		}
+        .prep {
+             width: 50%; 
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .2rem;
+            position: absolute;
+            top: .4rem;
+            left: .19rem;
+            overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+        }
+
+        .time {
+            position: absolute;
+            left: .19rem;
+            bottom: .08rem;
+        }
+
+        .time li {
+            float: left;
+            width: .9rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #9b9b9b;
+
+        }
+
+        .dell {
+            height: .21rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #32CEA0;
+            line-height: .21rem;
+            position: absolute;
+            right: .5rem;
+            top: .25rem;
+            font-weight: 550;
+        }
+
+        .ball {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #32CEA0;
+            line-height: .21rem;
+            position: absolute;
+            right: .5rem;
+            top: .31rem;
+        }
+
+        .massage img {
+            width: .08rem;
+            height: .13rem;
+            top: .36rem;
+            right: .15rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .masage img {
+            width: .08rem;
+            height: .13rem;
+            top: .36rem;
+            right: .15rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .onetop {
+            width: 3.51rem;
+            height: .92rem;
+            background: #fff;
+            margin: .11rem auto;
+        }
+
+        .yzb li {
+            text-align: center;
+            margin-top: .06rem;
+        }
+
+        .yzb {
+            width: 100%;
+            height: .5rem;
+        }
+
+        .deone {
+            height: .37rem;
+            line-height: .57rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(50, 206, 160, 1);
+        }
+
+        .detwo {
+            height: .2rem;
+            line-height: .2rem;
+            font-size: .3rem;
+            font-family: DFZongYiW7;
+            color: rgba(50, 206, 160, 1);
+        }
+
+        .qs {
+            width: auto;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: rgba(0,0,0,0.6);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+    		transform: translate(-50%, -50%);
+            border-radius: .04rem;
+            padding: 0 0.2rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="onetop">
+            <!-- <ul class="yzb">
+                <li class="deone">文章打赏总额</li>
+                <li class="detwo">19960419</li>
+            </ul> -->
+        </div>
+
+        <div class="top">
+            <ul class="topdao">
+                <li class="fone"><span>全部</span></li>
+                <li class="sone"><span>近七天</span></li>
+                <li class="tone"><span>上月</span></li>
+            </ul>
+        </div>
+        <div class="first">
+            <!-- <div class="massage">
+                <span class="prep">转出</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+
+        </div>
+        <div class="secend">
+            <!-- <div class="massage">
+                <span class="prep">转1</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+
+        </div>
+        <div class="three">
+            <!-- <div class="massage">
+                <span class="prep">转2</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+
+        </div>
+        <div class="qs">
+            <p>暂无文章打赏记录</p>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var user_id = '{$unionid}';
+        var yjfl = '2';
+        // 时间戳转换
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000            
+            var Y = date.getFullYear() + '/';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() +
+                    1) :
+                date.getMonth() + 1) + '/';
+            var D = (date.getDate() < 10 ? '0' + date.getDate() +
+                ' ' : date.getDate() +
+                ' ');
+            var h = (date.getHours() < 10 ? '0' + date.getHours() +
+                ':' : date.getHours() +
+                ':');
+            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() +
+                ':' :
+                date.getMinutes() + ':');
+            var s = date.getSeconds();
+            return Y + M + D + h + m + s;
+        }
+        $.ajax({
+            url: '/index.php?s=/Api/Profit/GetDetail',
+            type: 'post',
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                list = '';
+                list += '<div class="onetop">'
+                list += '<ul class="yzb">'
+                list += '<li class="deone">文章打赏总额</li>'
+                list += '<li class="detwo">' + res.AppendData.article + '</li>'
+                list += '</ul>'
+                list += '</div>'
+                $('.onetop').html(list)
+            }
+        })
+
+        // 点击显示全部0
+        $('.topdao').on('click', '.fone', function () {
+            var type = '0';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: yjfl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var lot = '';
+                    $.each(res.AppendData, function (k, v) {
+                        var time = timestampToTime(v.add_time);
+                        lot += '<div class="massage" data-id=\"' + v.id + '\">'
+                        lot += '<div class="name">'+v.nick_name+'</div>'
+                        lot += '<span class="prep">' + time + '</span>'
+//                      lot +='<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+						lot += '<span class="dell">+' + v.money + '</span>'
+                        lot += '</div>'
+                        
+                    })
+                    $('.first').html(lot);
+                    if ($(".first .massage").length == 0) {
+                    	$(".qs").show();
+						setTimeout(function() {
+							$(".qs").hide();
+						}, 1500)
+						$(".qs").html("暂无文章打赏记录");
+						return false;
+                    }
+
+
+                }
+            })
+
+            $(".fone span").addClass("pingz");
+            $(".sone span").removeClass("pingz");
+            $(".tone span").removeClass("pingz");
+            $('.first').show();
+            $('.secend').hide();
+            $('.three').hide();
+        })
+        // 七天1
+        $('.topdao').on('click', '.sone', function () {
+            var type = '1';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: yjfl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var seven = '';
+                    $.each(res.AppendData, function (k, v) {
+
+                        var time = timestampToTime(v.add_time);
+
+                        seven += '<div class="massage" data-id=\"' + v.id + '\">'
+                        seven += '<div class="name">'+v.nick_name+'</div>'
+                        seven += '<span class="prep">' + time + '</span>'
+                        seven += '<span class="dell">+' + v.money + '</span>'
+//                      seven +='<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+                        seven += '</div>'
+                    })
+                    $('.secend').html(seven);
+                    if ($(".secend .massage").length == 0) {
+                        $(".qs").show();
+						setTimeout(function() {
+							$(".qs").hide();
+						}, 1500)
+						$(".qs").html("暂无文章打赏记录");
+						return false;
+                    }
+
+
+                }
+            })
+
+
+            $(".sone span").addClass("pingz");
+            $(".fone span").removeClass("pingz");
+            $(".tone span").removeClass("pingz");
+            $('.first').hide();
+            $('.secend').show();
+            $('.three').hide();
+        })
+        // 全部2
+        $('.topdao').on('click', '.tone', function () {
+
+            var type = '2';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: yjfl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var math = '';
+                    $.each(res.AppendData, function (k, v) {
+                        var time = timestampToTime(v.add_time);
+
+                        math += '<div class="massage" data-id=\"' + v.id + '\">'
+                        math += '<div class="name">'+v.nick_name+'</div>'
+                        math += '<span class="prep">' + time + '</span>'
+                        math += '<span class="dell">+' + v.money + '</span>'
+//                      math +='<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+                        math += '</div>'
+                    })
+                    $('.three').html(math);
+                    if ($(".three .massage").length == 0) {
+                        $(".qs").show();
+						setTimeout(function() {
+							$(".qs").hide();
+						}, 1500)
+						$(".qs").html("暂无文章打赏记录");
+						return false;
+                    }
+                }
+            })
+
+
+            $(".fone span").removeClass("pingz");
+            $(".sone span").removeClass("pingz");
+            $(".tone span").addClass("pingz");
+            $('.first').hide();
+            $('.secend').hide();
+            $('.three').show();
+        })
+        //点击查看每条赠送记录的详情massage 
+//      $('.first,.secend,.three').on('click', ".massage", function () {
+//          console.log(1)
+//          window.location.href = "/index.php?s=/Home/income/verdetails&unionid=" + user_id + "&id=" +
+//              $(this).attr("data-id");
+//      })
+
+        $('.fone').click();
+    })
+</script>
+
+</html>

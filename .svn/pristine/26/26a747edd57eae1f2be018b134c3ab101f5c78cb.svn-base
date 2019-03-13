@@ -1,0 +1,55 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style type="text/css">
+		.zzc_myruanwen_from_input {
+			height: auto;
+		}
+	</style>
+
+</block>
+<block name="body">
+
+	<body>
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">成员管理</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content">
+			<div class="zzc_wode_title_div" style="padding:15px 5%; border: none;">
+				加入商会 <span class="zzc_right">共0个</span>
+			</div>
+			<div class="zzc_wode_title_div" style="padding:15px 5%; border:none;border-top: 1px solid #CCCCCC;">
+				<span class="zzc_dian"></span>加入商会 <span class="zzc_right">共0个</span>
+			</div>
+			<div class="zzc_wode_shanghui_li" style="border:none;border-top: 1px solid #CCCCCC;">
+				<a href="" class="zzc_wode_shanghui_li_a zzc_wode_shanghui_a"><img src="images/60x60.gif" alt="" /></a>
+				<div class="zzc_wode_shanghui_li_right zzc_wode_shanghui">
+					这里是商会名称<br/>
+					<span>简介：</span>
+				</div>
+			</div>
+			<div class="zzc_wode_title_div" style="padding:15px 5%; border:none;border-top: 1px solid #CCCCCC;">
+				<span class="zzc_dian"></span>加入商会 <span class="zzc_right">共0个</span>
+			</div>
+			<div class="zzc_wode_shanghui_li" style="border-top: 1px solid #CCCCCC;">
+				<a href="" class="zzc_wode_shanghui_li_a zzc_wode_shanghui_a"><img src="images/60x60.gif" alt="" /></a>
+				<div class="zzc_wode_shanghui_li_right zzc_wode_shanghui">
+					这里是商会名称<br/>
+					<span>简介：</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

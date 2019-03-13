@@ -1,0 +1,330 @@
+<extend name="./base" />
+<block name="css_extend">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <script src="__HOME_JS__/rem.js"></script>
+        <link rel="stylesheet" href="__HOME_CSS__/rjl/Fullpreview.css">
+        <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <title>添加活动</title>
+    </head>
+</block>
+<block name="body">
+
+    <body>
+        <div class="conrjl">
+            <div class="conter">
+                <div class="ylfst">
+                    <div class="yltp">
+                    </div>
+                </div>
+                <div class="tiact"></div>
+            </div>
+            <div class="seccondr">
+                <div class="sec_tit">
+                    已报名
+                </div>
+                <div class="crjl">
+                    <div class="sec_one">
+                    </div>
+                </div>
+            </div>
+            <!-- 点击弹出 -->
+            <div class="chakxq">
+                <div class="guan"></div>
+                <div class="crjle">
+                    <div class="secctit">
+                        <span>已报名</span>
+                    </div>
+                    <div class="seccone">
+
+                    </div>
+                </div>
+            </div>
+            <!-- 结束 -->
+
+
+
+        </div>
+        <!-- <div class="rjl_thir">
+            <a href="/index.php?s=/Home/Activity/Coactivities.html">我也要参与</a>
+        </div> -->
+        <script>
+            $(function () {
+
+
+
+                $('#videoForm').remove();
+                $('#sendBefore').remove();
+                $('.updata').remove();
+
+
+
+                var is_my = 1;
+                var user_id = '{$unionid}';
+                console.log(user_id)
+
+
+                function GetQueryString(name) {
+                    if (window.location.href.indexOf('?') > -1) {
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                        var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                        if (r != null) return unescape(r[2]);
+                    }
+                    return ''; //便于容错处理
+                }
+
+                $('.crjl').on('click', '.sec_one', function () {
+                    console.log(111)
+                    $('.chakxq').show();
+                    var user_id = '{$unionid}';
+                    var getid = GetQueryString("id");
+                    var is_my = 1;
+                    var index = $(this).index();
+                    console.log(index + "这是下标")
+
+                    $.ajax({
+                        type: "post",
+                        url: "index.php?s=/Api/SignUpApi/sign_detail",
+                        data: {
+                            unionid: user_id,
+                            sign_id: getid,
+                            is_my: is_my,
+                        },
+                        success: function (res) {
+                            console.log(res)
+
+
+                            var xiangq = '';
+                            $.each(res.AppendData.detail, function (k, v) {
+                                if (k == index) {
+                                    console.log($(v))
+                                    xiangq += '<div class="seccone">'
+                                    xiangq += '<div class="secconet">' + v.content[
+                                        0] + '</div>'
+                                    xiangq += '<div class="secctwo">' + v.content[1] +
+                                        '</div>'
+                                    xiangq += '<div class="secctwot">' + v.content[
+                                        2] + '</div>'
+                                    xiangq += '<div class="secctwott">' + v.content[
+                                        3] + '</div>'
+                                    xiangq += '<div class="secctwott">' + v.content[
+                                        4] + '</div>'
+                                    xiangq += '<div class="secctwotr">' + v.content[
+                                        5] + '</div>'
+                                    xiangq += '<div class="secctwotr">' + v.content[
+                                        6] + '</div>'
+                                    xiangq += '<div class="secctwotra">' + v.content[
+                                        7] + '</div>'
+                                    xiangq += '<div class="secctwotrb">' + v.content[
+                                        8] + '</div>'
+                                    xiangq += '<div class="secctwotrc">' + v.content[
+                                        9] + '</div>'
+                                    xiangq += '<div class="secctwotrd">' + v.content[
+                                        10] + '</div>'
+                                    xiangq += '<div class="secctwotre">' + v.content[
+                                        11] + '</div>'
+                                    xiangq += '<div class="secctwotrf">' + v.content[
+                                        12] + '</div>'
+                                    xiangq += '</div>'
+                                }
+
+                            })
+                            $(".seccone").html(xiangq);
+                            $(".seccone div").each(function (i, e) {
+                                if ($(e).text() == 'undefined') {
+                                    $(this).remove();
+                                }
+                            })
+                        }
+                    })
+
+
+                })
+
+                var getid = GetQueryString("id");
+                var shareid;
+                var bt;
+                $(".rjl_thir a").attr("href", "/index.php?s=/Home/Activity/Coactivities.html&id=" + getid + "");
+
+                $.ajax({
+                    type: 'post',
+                    url: "index.php?s=/Api/SignUpApi/sign_detail",
+                    async:false,
+                    data: {
+                        unionid: user_id,
+                        sign_id: getid,
+                        is_my: is_my,
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        bt = res.AppendData.title;
+                        shareid = res.AppendData.id;
+                        var detail = res.AppendData.detail;
+                        console.log(detail)
+                        var list = '';
+                        list += '<div class="ylfst">'
+                        list += '<div class="yltp">'
+                        list += '<img src="' + res.AppendData.cover_img + '" class="zhuq">'
+                        list += '<div class="fstdan">'
+                        list += '<img src="' + res.AppendData.headimg + '" class="quest">'
+                        list += '</div>'
+                        list += '<div class="yltit">'
+                        list += '<div class="rjl_text">' + res.AppendData.title + '</div>'
+                        list += '<div class="rjl_time">' + res.AppendData.addtime + '</div>'
+                        list += '</div>'
+                        list += '</div>'
+
+                        list += '<span CLASS="fad">' + res.AppendData.nick_name + '</span>'
+                        list += '<span class="cany">' + res.AppendData.join_count + '人参与</span>'
+                        list += '<span class="chak">' + res.AppendData.look + '人查看</span>'
+                        list += '</div>'
+                        list += '<div class="tiact">'
+                        list += '<div class="rjl_wz">'
+                        list += '<span>' + res.AppendData.content + '</span>'
+                        list += '</div>'
+                        list += '</div>'
+
+                        $(".conter").html(list);
+
+                        $(".add_parameter").each(function (i, e) {
+                            $(e).remove();
+                        })
+
+                        $(".ryc").each(function (i, e) {
+                            if ($(e).attr("src") == '__HOME_IMAGES__/home_moren.png') {
+                                $(e).remove();
+                            }
+
+
+                            $('.add_timg').remove();
+                        })
+                        $(".cookerl").each(function () {
+                            $(this).remove();
+                        })
+
+                        var baoming = '';
+                        $.each(detail, function (k, v) {
+                            baoming += '<div class="sec_one">'
+                            baoming += '<div class="sec_onet">' + v.content[0] + '</div>'
+                            baoming += '<div class="sec_two">' + v.content[1] + '</div>'
+                            baoming += '<div class="sec_twot">点击查看详情</div>'
+                            baoming += '</div>'
+                        })
+                        $(".crjl").html(baoming)
+
+                        imgurl = $(".yltp").find("img").attr("src");
+                        console.log(imgurl)
+
+
+                    },
+                    error: function () {
+                        mui.alert("异常！")
+                    },
+                })
+
+
+                $('.conrjl').on('click', '.chakxq', function () {
+                    console.log(111)
+                    $('.chakxq').hide();
+                })
+
+
+
+                var share_url = "{$share_url}";
+                var imgurl;
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                    data: {
+                        share_url: share_url
+                    },
+                    async: true,
+
+                    // async: false,
+                    success: function (result) {
+                        console.log(result);
+                  
+                        
+
+
+                        var url = "{:'http://'.$share_host.url('Home/Nologin/card_jump/id/'.$user_id)}";
+
+                        console.log(url);
+
+                        console.log(result.AppendData.appId);
+                        console.log(result.AppendData.timestamp);
+                        console.log(result.AppendData.nonceStr);
+                        console.log(result.AppendData.signature);
+
+
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                            appId: result.AppendData.appId,
+                            timestamp: result.AppendData.timestamp,
+                            nonceStr: result.AppendData.nonceStr,
+                            signature: result.AppendData.signature,
+                            jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                'checkJsApi',
+                                'onMenuShareTimeline', //
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'getLocation'
+                            ]
+                        });
+
+                        
+
+
+                        wx.ready(function () {
+                            //分享到朋友圈
+                            wx.onMenuShareTimeline({
+                                title: ""+bt+"", // 分享链接
+                                desc: "报名描述", // 分享链接
+                                link: "http://wx.yxm360.com/index.php?s=/Home/Nologin/enterfor/id/" + shareid + "/unionid/"+user_id, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+
+                                    // 用户确认分享后执行的回调函数
+                                    sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: ""+bt+"", // 分享链接
+                                desc: "报名描述", // 分享链接
+                                link: "http://wx.yxm360.com/index.php?s=/Home/Nologin/enterfor/id/" + shareid + "/unionid/"+user_id, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "" + imgurl + "", // 分享链接
+                                type: '', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+
+                        });
+
+
+                    },
+                    error: function () {
+                        // console.log("走了错误")
+                    }
+                });
+
+
+            })
+        </script>
+    </body>
+</block>

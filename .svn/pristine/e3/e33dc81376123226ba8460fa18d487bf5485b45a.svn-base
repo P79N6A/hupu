@@ -1,0 +1,177 @@
+<extend name="./base" />
+
+<block name="css_extend">
+    <style type="text/css">
+        .zzc_myruanwen_from_input {
+            height: auto;
+        }
+
+        .zzc_xiaoxia_li {
+            border-radius: 0px;
+            box-shadow: none;
+            margin: 10px auto;
+        }
+
+        .zzc_header_fan {
+            width: 20%;
+            height: 100%;
+            line-height: 60px;
+            font-size: 17px !important;
+            color: #666;
+            padding-top: 0px !important;
+            text-align: right;
+        }
+
+        .zzc_header,
+        .zzc_xiaoxijh_top {
+            background: #fff !important;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.14);
+        }
+
+        .zzc_xiaoxijh_top a {
+            width: 20%;
+            height: 100%;
+            line-height: 60px;
+            font-size: 17px !important;
+            color: #666;
+            padding-top: 0px !important;
+            text-align: right;
+        }
+
+        .mui-bar-nav~.mui-content {
+            padding-top: 60px;
+        }
+
+        .kong {
+
+            width: 100%;
+            height: 60px;
+        }
+
+        .zzc_ico_phone {
+            color: #32CEA0 !important;
+        }
+
+        .zzc_blue_bg {
+            background: #32CEA0 !important;
+            color: #FFFFFF !important;
+        }
+
+        .mui-checkbox input[type=checkbox]:checked:before,
+        .mui-radio input[type=radio]:checked:before {
+            color: #32CEA0;
+        }
+    </style>
+</block>
+
+<block name="body">
+
+    <body class="zzc_body_bg">
+
+        <if condition="$regulate eq 0">
+            <header class="mui-bar mui-bar-nav zzc_header" style="background: #6c6c6c">
+                <!--<a class="mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan" href="{:url('Home/User/myInfo')}" onclick="window.location.href=this.href">返回</a>-->
+                <!--<h1 class="mui-title zzc_header_title">我的留言</h1>-->
+                <a href="{:url('Home/Chat/myMessage',array('id'=>I('get.id'),'regulate'=>'regulate'))}"><span class="zzc_right zzc_header_fan">管理</span></a>
+            </header>
+        </if>
+        <div class="mui-content zzc_mui_content_bg">
+            <if condition="$regulate eq 1">
+                <div class="zzc_xiaoxijh_top">
+                    <a href="{:url('Home/Chat/myMessage',array('id'=>I('get.id')))}">取消</a>
+                </div>
+            </if>
+            <form method="post" action="">
+                <input type="hidden" name="type" value="{$type}" />
+                <foreach name="result" item="vo">
+                    <div class="zzc_xiaoxia_li">
+                        <div class="zzc_xiaoxia_li_top">
+                            <p>{$vo.user_info.nick_name}</p>
+                            <p style="color: #999;">{$vo.add_time|date="Y-m-d H:i",###}</p>
+                            <p>{$vo.content}</p>
+                        </div>
+                        <if condition="$regulate eq 1">
+                            <ul class="mui-table-view mui-table-view-chevron zzc_xiaoxi_li_ul">
+                                <li class="mui-table-view-cell mui-checkbox" style="height:45px;">
+                                    <input type="checkbox" name="ids[]" value="{$vo.id}" />
+                                </li>
+                            </ul>
+                            <else />
+                            <ul class="mui-table-view mui-table-view-chevron zzc_xiaoxi_li_ul">
+                                <li class="mui-table-view-cell">
+                                    <a href="{:url('Home/Chat/messageInfo',array('id'=>$vo['id'],'user_id'=>I('get.id')))}"
+                                        class="mui-navigate-right zzc_ico_phone">
+                                        <if condition="$vo.is_read eq 0">待查看
+                                            <else />已查看</if>
+                                    </a>
+                                </li>
+                            </ul>
+                        </if>
+                    </div>
+                </foreach>
+                <!--<div class="zzc_xiaoxia_li">-->
+                <!--<div class="zzc_xiaoxia_li_top">-->
+                <!--<p>V网交换</p>-->
+                <!--<p style="color: #999;">20177-09-89</p>-->
+                <!--<p>您请求的V网谁谁谁同意</p>-->
+                <!--</div>-->
+                <!--<ul class="mui-table-view mui-table-view-chevron zzc_xiaoxi_li_ul">-->
+                <!--<li class="mui-table-view-cell mui-checkbox" style="height:45px;">-->
+                <!--<input type="checkbox" checked />-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
+
+                <div class="kong"></div>
+                <if condition="$regulate eq 1">
+                    <div class="zzc_myranwen_bottom">
+                        <input type="button" name="删除" id="" value="删除" class="zzc_myruanwen_bottom_button" style="background:#FFFFFF!important;"
+                            onclick="deleteClick()" />
+                        <if condition=" ($userInfo['id']!=I('get.id')) and (I('get.id') gt 0) ">
+                            <a type="button" name="增加" id="" value="增加" class="zzc_myruanwen_bottom_button zzc_blue_bg"
+                                href="{:url('Home/Chat/addMessage?id='.I('get.id'))}">增加</a>
+                            <else />
+                            <input type="button" name="已读" id="" value="已读" class="zzc_myruanwen_bottom_button zzc_blue_bg"
+                                onclick="readClick()" />
+                        </if>
+                    </div>
+                </if>
+            </form>
+        </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script>
+        var postUrl = '';
+
+        function deleteClick() {
+            postUrl = "{:url('Home/Chat/delete')}";
+            mui.confirm("确认删除？", "系统提示", function (e) {
+                if (e.index == 1)
+                    $('form').attr('action', postUrl).submit();
+            });
+            return false;
+        }
+
+
+        function readClick() {
+            postUrl = "{:url('Home/Chat/setStatus')}";
+            mui.confirm("确认标记为已读？", "系统提示", function (e) {
+                if (e.index == 1)
+                    $('form').attr('action', postUrl).submit();
+            });
+            return false;
+        }
+    </script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮hideOptionMenu
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+    </script>
+</block>

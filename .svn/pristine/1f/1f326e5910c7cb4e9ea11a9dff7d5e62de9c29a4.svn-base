@@ -1,0 +1,339 @@
+<?php
+
+/**
+
+ * Created by PhpStorm.
+
+ * User: 邱明振
+
+ * Date: 2017/8/27
+
+ * Time: 22:20
+
+ */
+
+
+
+namespace Admin\Controller;
+
+use Common\Controller\AdminBaseController;
+
+
+
+/**
+
+ * 订单管理
+
+ *
+
+ * Class UsersController
+
+ * @package Admin\Controller
+
+ */
+
+class OrderController extends  AdminBaseController
+
+{
+
+
+
+    /**
+
+     * 订单列表
+
+     */
+
+    public function index() {
+
+        $data = I('request.');
+
+        unset($data['PHPSESSID']);
+
+        $map = array();
+
+        if($data['province_id']){$map['u.province_id'] = $data['province_id'];$this->assign('province_id', $data['province_id']);}
+
+        if($data['city_id']){$map['u.city_id'] = $data['city_id'];$this->assign('city_id', $data['city_id']);}
+
+        if ( $data['start_at'] ) {$map['vo.add_time'] = array('egt',  strtotime($data['start_at']));$this->assign('start_at', strtotime($data['start_at']));}
+
+        if ( $data['end_at'] ) {$map['vo.add_time'] = array('elt',  strtotime($data['end_at']));$this->assign('end_at', strtotime($data['end_at']));}
+
+        if ( $data['start_at'] && $data['end_at']){$map['vo.add_time'] = array('between', array(strtotime($data['start_at']),strtotime($data['end_at'])));$this->assign('start_at',  strtotime($data['start_at']));$this->assign('end_at', strtotime($data['end_at']));}
+
+        if($data['nick_name']){$map['u.nick_name'] = $data['nick_name'];$this->assign('nick_name', $data['nick_name']);}
+
+        if($data['phone']){$map['m.phone'] = $data['phone'];$this->assign('phone', $data['phone']);}
+
+        if($data['order_no']){
+
+            $pay = M('capital_log')->where(array('pay_sn'=>$data['order_no']))->getField('order_sn');
+
+            $map['vo.order_no'] = $pay;
+
+            $this->assign('order_no', $data['order_no']);
+
+        }
+
+        if($data['price'] != ''){
+
+            $map['vo.price'] = $data['price'];
+
+            $this->assign('price', $data['price']);
+
+        }
+
+        $map['vo.pay_status'] =1;
+
+        $map['vo.vip_list_id'] =array('lt',4);
+
+        $total_num = M('vip_order')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->where($map)
+
+            ->count();
+
+        $Page       = new \Think\Page( $total_num,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        //分页跳转的时候保证查询条件
+
+        foreach($data as $key=>$val) {
+
+            $Page->parameter[$key]   =   $val;
+
+        }
+
+        $show       = $Page->show();// 分页显示输出
+
+        $list = M('vip_order')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->join('left join s_region a ON u.province_id = a.region_id')
+
+            ->join('left join s_region b ON u.city_id = b.region_id')
+
+            ->join('left join s_region c ON u.district_id = c.region_id')
+
+            ->field('vo.*,u.nick_name,vg.vip_name,a.region_name as province_name,b.region_name as city_name,c.region_name as district_name,m.phone')
+
+            ->where($map)->order('vo.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();//
+
+        foreach ($list as &$li){
+
+            $li['pay_sn'] = M('capital_log')->where(array('user_id'=>$li['user_id'],'type'=>3,'pay_sn'=>array('gt',0)))->group('pay_sn')->getField('pay_sn');
+
+        }
+
+        $total_money = M('vip_order')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->where($map)
+
+            ->sum('vo.price');
+
+
+
+        //地区
+
+        $province_list = M('region')->where(array('level'=>1))->field('region_id,region_name')->select();
+
+        $price_list = M('vip_order')->where(array('pay_status'=>1,'vip_list_id'=>array('lt',4)))->field('price')->group('price')->select();
+
+//        var_dump($price_list);die;
+
+//        var_dump($list);die;
+
+        $this->province_list = $province_list;
+
+        $this->price_list = $price_list;
+
+        $this->_list = $list;
+
+        $this->show = $show;
+
+        $this->total_money = $total_money;
+
+        $this->total_num = $total_num;
+
+        $this->display();
+
+
+
+    }
+
+    /**
+
+     * 订单列表
+
+     */
+
+    public function user_index() {
+
+//        var_dump($_SESSION['uid']);die;
+
+        $data = I('request.');
+
+        unset($data['PHPSESSID']);
+
+        $map = array();
+
+        if($data['province_id']){$map['u.province_id'] = $data['province_id'];$this->assign('province_id', $data['province_id']);}
+
+        if($data['city_id']){$map['u.city_id'] = $data['city_id'];$this->assign('city_id', $data['city_id']);}
+
+        if ( $data['start_at'] ) {$map['vo.add_time'] = array('egt',  strtotime($data['start_at']));$this->assign('start_at', strtotime($data['start_at']));}
+
+        if ( $data['end_at'] ) {$map['vo.add_time'] = array('elt',  strtotime($data['end_at']));$this->assign('end_at', strtotime($data['end_at']));}
+
+        if ( $data['start_at'] && $data['end_at']){$map['vo.add_time'] = array('between', array(strtotime($data['start_at']),strtotime($data['end_at'])));$this->assign('start_at',  strtotime($data['start_at']));$this->assign('end_at', strtotime($data['end_at']));}
+
+        if($data['nick_name']){$map['u.nick_name'] = $data['nick_name'];$this->assign('nick_name', $data['nick_name']);}
+
+        if($data['phone']){$map['m.phone'] = $data['phone'];$this->assign('phone', $data['phone']);}
+
+        if($data['order_no']){
+
+            $pay = M('capital_log')->where(array('pay_sn'=>$data['order_no']))->getField('order_sn');
+
+            $map['vo.order_no'] = $pay;
+
+            $this->assign('order_no', $data['order_no']);
+
+        }
+
+        if($data['price'] != ''){
+
+            $map['vo.price'] = $data['price'];
+
+            $this->assign('price', $data['price']);
+
+        }
+
+        $map['vo.pay_status'] =1;
+
+        $map['vo.vip_list_id'] =array('lt',4);
+
+        $total_num = M('vip_order_copy')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->where($map)
+
+            ->count();
+
+        $Page       = new \Think\Page( $total_num,20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+        //分页跳转的时候保证查询条件
+
+        foreach($data as $key=>$val) {
+
+            $Page->parameter[$key]   =   $val;
+
+        }
+
+        $show       = $Page->show();// 分页显示输出
+
+        $list = M('vip_order_copy')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->join('left join s_region a ON u.province_id = a.region_id')
+
+            ->join('left join s_region b ON u.city_id = b.region_id')
+
+            ->join('left join s_region c ON u.district_id = c.region_id')
+
+            ->field('vo.*,u.nick_name,vg.vip_name,a.region_name as province_name,b.region_name as city_name,c.region_name as district_name,m.phone')
+
+            ->where($map)->order('vo.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();//
+
+        foreach ($list as &$li){
+
+            $li['pay_sn'] = M('capital_log')->where(array('user_id'=>$li['user_id'],'type'=>3,'pay_sn'=>array('gt',0)))->group('pay_sn')->getField('pay_sn');
+
+        }
+
+        $total_money = M('vip_order_copy')->alias('vo')
+
+            ->join('join s_user_info u on u.id = vo.user_id')
+
+            ->join('join s_member m on m.id = u.member_id')
+
+            ->join('left join s_vip_list vl on vl.id = vo.vip_list_id')
+
+            ->join('left join s_vip_group vg on vg.id = vl.vip_group_id')
+
+            ->where($map)
+
+            ->sum('vo.price');
+
+
+
+        //地区
+
+        $province_list = M('region')->where(array('level'=>1))->field('region_id,region_name')->select();
+
+        $price_list = M('vip_order')->where(array('pay_status'=>1,'vip_list_id'=>array('lt',4)))->field('price')->group('price')->select();
+
+//        var_dump($price_list);die;
+
+//        var_dump($list);die;
+
+        $this->province_list = $province_list;
+
+        $this->price_list = $price_list;
+
+        $this->_list = $list;
+
+        $this->show = $show;
+
+        $this->total_money = $total_money;
+
+        $this->total_num = $total_num;
+
+        $this->display();
+
+
+
+    }
+
+
+
+
+
+}

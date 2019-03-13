@@ -1,0 +1,65 @@
+<?php
+namespace app\admin\controller;
+
+use app\admin\model\Age;
+use think\Db;
+
+class Index extends Base
+{
+    public function index()
+    {
+//        $info = array(
+//            'web_server' => $_SERVER['SERVER_SOFTWARE'],
+//            'onload'     => ini_get('upload_max_filesize'),
+//            'phpversion' => phpversion(),
+//            'think_v' => $this->app::VERSION,
+//        );
+//
+//        $this->assign('info',$info);
+//        return $this->fetch('index');
+        return $this->fetch();
+
+    }
+
+    /**
+     * 首页
+     *
+     * @return \think\Response
+     */
+    public function console()
+    {
+        return $this->fetch();
+    }
+    /**
+     * 首页
+     *
+     * @return \think\Response
+     */
+    public function homepage1()
+    {
+        return $this->fetch();
+    }
+    /**
+     * 首页
+     *
+     * @return \think\Response
+     */
+    public function homepage2()
+    {
+        return $this->fetch();
+    }
+
+    public function test(){
+
+        $ages = Db::name('age')->limit(2)->select();
+        $ages = Age::limit(2)->select();
+
+
+        foreach ($ages as $age) {
+            var_dump($age->age_group);
+            $age->save();
+            echo "<br>";
+        }
+
+    }
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title></title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			.title {
+				width: 90%;
+				height: auto;
+				font-size: 0.8rem;
+				color: #333;
+				font-weight: 600;
+				margin: 1.2rem auto 0.7rem;
+			}
+			
+			.con {
+				width: 90%;
+				height: auto;
+				margin: 0 auto 3.5rem;
+				font-size: 0.8rem;
+				font-weight: 400;
+				color: #333;
+				line-height: 1.3rem;
+				letter-spacing: 0.08rem;
+				text-align: left;
+			}
+			
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+				margin: 0.6rem 0;
+			}
+			video{
+				display: block;
+				width: 100%;
+				height: auto;
+				margin: 0.6rem 0;
+			}
+			.complete{
+				width: 100%;
+				height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color:#fff;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom:0;
+				left:0;
+				background: #fff;
+				border-top: 0.05rem solid #F6F6F6;
+			}
+			.com_cen{
+				width: 90%;
+				height: 2rem;
+				line-height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				border-radius: 0.2rem;
+				color:#fff;
+				letter-spacing: 0.25rem;
+			}
+			.com_cen>a{
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+				color:#fff;
+			}
+			.del{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="title">
+			
+		</div>
+		<div class="con">
+			
+		</div>
+		<div class="complete">
+			<div class="com_cen">
+				<a href="/index.php?s=/Home/User/register/share_id/{$user_id}">
+					我也要注册V网
+				</a>
+			</div>
+		</div>
+		<script>
+			var unionid = "{$unionid}";
+			var show_id = "{$show_id}";
+			var type_id = "{$type_id}";
+			var title = "{$title}"
+			var list = "";
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					show_id: show_id
+				},
+				success: function(res) {
+					console.log(res)
+					if(res.ResultType == 0) {
+						$(".title").html(res.AppendData.title)
+						$("title").html(res.AppendData.title)
+						if(res.AppendData.content==undefined){
+							$(".con").html("")
+						}else{
+						    var ii = res.AppendData.content.replace(/contenteditable="true"/g,'');
+                            list+='<div class="txt">'
+                            list+='<div class="txt_cen">'
+							list+='<div placeholder="请输入内容">' + ii + '</div> '
+                            list+='<div class="del">'
+                            list+='<div class="del_img">'
+                            list+='<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />'
+                            list+='</div>'
+                            list+='<div class="words">文字</div>'
+                            list+='</div>'
+                            list+='</div>'
+                            list+='</div>'
+                            $(".con").html(list);
+						}
+						
+
+						if(res.AppendData.detail.length == ""||res.AppendData.detail.length ==null||res.AppendData.detail.length == undefined) {
+							return false;
+						};
+						$.each(res.AppendData.detail, function(x, y) {
+							if(y.type == 1) {
+									list+='<div class="txt">' 
+									list+='<div class="txt_cen">' 
+									list+='<div class="txt_left">' 
+									list+='<img src="' + y.data_url + '" alt="" />' 
+									list+='</div>' 
+									list+='<div class="del">' 
+									list+='<div class="del_img">' 
+									list+='<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' 
+									list+='</div>' 
+									list+='<div class="words words_img">图片</div>'
+									list+='</div>' 
+									list+='</div>' 
+									list+='</div>'
+							} else if(y.type == 2) {
+									list+='<div class="txt">' 
+									list+='<div class="txt_cen">' 
+									list+='<div class="txt_left">' 
+									list+='<video src="' +y.data_url + '"  controls="true" poster="'+y.thumb+'"></video>' 
+									list+='</div>' 
+									list+='<div class="del">' 
+									list+='<div class="del_img">' 
+									list+='<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' 
+									list+='</div>' 
+									list+='<div class="words words_vdo">视频</div>' 
+									list+='</div>' 
+									list+='</div>' 
+									list+='</div>'
+								
+							}
+						})
+					}
+					$(".con").html(list);
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+		</script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+            $(function() {
+                var share_url = "{$share_url}";
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "/index.php?s=/Api/WeShare/getSignPackage", //url
+                    data:{share_url:share_url},
+                    async: true,
+                    success: function(result) {
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                            appId: result.AppendData.appId,
+                            timestamp: result.AppendData.timestamp,
+                            nonceStr: result.AppendData.nonceStr,
+                            signature: result.AppendData.signature,
+                            jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                'checkJsApi',
+                                'onMenuShareTimeline', //
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'getLocation'
+                            ]
+                        });
+
+                        wx.ready(function() {
+                            //分享到朋友圈
+                            wx.onMenuShareTimeline({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: '{$desc}', // 分享链接
+                                link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: '{$desc}', // 分享链接
+                                link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                type: '', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ
+                            wx.onMenuShareQQ({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: '{$desc}', // 分享链接
+                                link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            /* 分享到腾讯微博 */
+                            wx.onMenuShareWeibo({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: '{$desc}', // 分享链接
+                                link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ空间
+                            wx.onMenuShareQZone({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: '{$desc}', // 分享链接
+                                link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                        });
+
+
+
+                    },
+                    error: function() {
+                        //alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+
+            });
+			
+		</script>
+	</body>
+
+</html>

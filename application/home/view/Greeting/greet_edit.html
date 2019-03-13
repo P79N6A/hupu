@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css">
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <title>贺卡编辑</title>
+    <style>
+
+        body,
+        html {
+            padding-bottom: .7rem;
+            height: 100%;
+            width: 100%;
+            background: #333333;
+        }
+
+        .header {
+            width: 100%;
+            height: .32rem;
+            background: #F8C85E;
+            padding: 0 .16rem;
+            box-sizing: border-box;
+        }
+
+        .header button {
+            width: .64rem;
+            font-size: .16rem;
+            margin-top: .025rem;
+            border-radius: .01rem;
+            border: 0;
+            outline: none;
+            padding: .02rem 0;
+        }
+
+        .header button:nth-child(1) {
+            color: #fff;
+            background: transparent;
+        }
+
+        .header button:nth-child(1) {
+            background: #fff;
+            color: #F8C85E;
+        }
+
+        .footer {
+            width: 100%;
+            height: .5rem;
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: #fff;
+            z-index: 1005;
+        }
+
+        .item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .item #up_dataimg{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        .item img {
+            width: .24rem;
+            height: .22rem;
+            display: block;
+            margin: .04rem auto;
+
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            background: #333333;
+        }
+
+
+        .swiper-container{
+            height: 90%;
+            width: 100%;
+            padding: .08rem .42rem;
+            box-sizing: border-box;
+        }
+
+        .swiper-slide {
+            background-size: 100% 100% !important;
+            background: skyblue;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+
+        textarea{
+            resize: none;
+            border: 0;
+            outline: none;
+            background: transparent;
+        }
+
+        .edit_box{
+            width: 1.56rem;
+            height: .6rem;
+            position: absolute;
+            z-index: 1000;
+            border: 1px dashed #eee;
+            left:23%;
+            top:20%;
+            transform: scale(1) rotate(0deg) translateZ(0);
+            backface-visibility: hidden;
+        }
+
+         .edit_box textarea{
+             padding: .05rem .05rem;
+             width: 100%;
+             height: 100% ;
+             box-sizing: border-box;
+         }
+
+         .swiper-pagination-fraction{
+             width: .4rem;
+             height: .24rem;
+             background: skyblue;
+             line-height: .24rem;
+             bottom: .07rem !important;
+             left:inherit;
+             right: .17rem !important;
+             color: #fff;
+             background:rgba(0,0,0,0.6);
+             border-radius: .12rem; 
+             font-size: .13rem;
+             
+         }
+
+
+         /* 编辑框 */
+         #edit{
+             width: 100%;
+             height: 100%;
+             position: fixed;
+             top: 0;
+             left: 0;
+             background: #eee;
+             z-index: 1006;
+             display: none;
+         }
+
+         #edit .box{
+             width: 100%;
+             height: 100%;
+             position: relative;
+         }
+
+        #edit .box .text_box{
+            width: 100%;
+            height: 100%;
+            padding: .1rem .1rem;
+            box-sizing: border-box;
+        }
+
+          #edit .box .text_box .content_edit{
+              width: 100%;
+              height: 2rem;
+              max-height: 2rem;
+              font-size: .16rem;
+          }
+
+          #edit .box .bottom_box{
+              width: 100%;
+              /* height: .44rem; */
+              position: absolute;
+              bottom: 0;
+            
+          }
+
+          .bottom_box .it{
+            display: flex;
+              padding: .05rem .1rem;
+              width: 100%;
+              height: 100%;
+               background: #fff;
+          }
+ 
+           #edit .box .bottom_box .item_edit{
+               flex: 1;
+               font-size: .12rem;
+               position: relative;
+           }
+
+           .bottom_box .item_edit .color{
+               width: .24rem;
+               height: .24rem;
+               top: 50%;
+               margin-top: -.12rem;
+               position: absolute;
+           }
+
+           .bottom_box .item_edit .color_text{
+               left: 40%;
+           }
+
+           .bottom_box .item_edit .zi{
+               width: .13rem;
+               height: .15rem;
+               position: absolute;
+               top: 50%;
+               margin-top: -0.075rem;
+           }
+
+           .bottom_box .item_edit span{
+               position: absolute;
+               top: 50%;
+               margin-top: -.07rem;
+               left: 25%;
+           }
+
+           #edit .box .bottom_box .confirm{
+               flex: 1.5;
+               padding: .05rem 0;
+           }
+
+            #edit .box .bottom_box .confirm button{
+                width: 100%;
+                height: 100%;
+                background: #32CEA0;
+                color: #fff;
+                text-align: center;
+                border: 0;
+                outline: none;
+                padding: .05rem 0;
+
+            }
+
+            .colorlist{
+                width: 100%;
+                background: #fff;
+                padding: .1rem .1rem;
+                box-sizing: border-box;
+                margin-top: .1rem;
+                display: flex;
+                flex-wrap: wrap;
+                display: none;
+            }
+
+            .colorlist li{
+                width: .4rem;
+                height: .4rem;
+                background: #32CEA0; 
+                margin: 0.05rem 0.05rem;   
+                
+            }
+
+        .mask {
+            width: 150px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -75px;
+            display: none;
+            z-index: 1003;
+        }
+
+        .mask img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .mask p {
+            color: #fff;
+            text-align: center;
+            line-height: 0;
+            height: auto;
+        }
+
+        .text_box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .text_box .item_img{
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            z-index: 1003;
+            /* display: none; */
+        }
+
+         .text_box .del{
+             top: 0;
+             left: 0;
+             margin-left: -.1rem;   
+             margin-top: -.1rem;
+         }
+         .text_box .edit{
+             top: 0;
+             right: 0;
+             margin-right: -.1rem;
+             margin-top: -.1rem;
+         }
+
+         .text_box .rote{
+             bottom: 0;
+             left: 0;
+             margin-left: -.1rem;
+             margin-bottom: -.1rem;
+         }
+
+         .text_box .scle{
+             bottom: 0;
+             right: 0;
+             margin-right: -.1rem;
+             margin-bottom: -.1rem;
+         }
+
+         .small_up{
+             width: 100%;
+             height: 100%;
+             opacity: 0;
+             position: absolute;
+             top: 0;
+             left: 0;
+         }
+
+         .small_box{
+             position: absolute;
+             width: .8rem /* 80/100 */;
+             height: .8rem /* 80/100 */;
+             top: 10px;
+             left: 10px;
+             transform: scale(1) rotate(0deg) translateZ(0);
+
+         }
+
+         .small_box .box{
+             width: 100%;
+             height: 100%;
+             position: relative;
+             border: 1px dashed #fff;
+         }
+
+         .small_box .box .map{
+             width: 100%;
+             height: 100%;
+         }
+
+         .small_box .box .dels,.edits,.rotas,.zoom{
+             width: .2rem /* 20/100 */;
+             height: .2rem /* 20/100 */;
+             position: absolute;
+         }
+
+            .small_box .box .dels {
+                left: -.1rem /* 10/100 */;
+                top: -.1rem;
+            }
+            .small_box .box .edits {
+                right: -.1rem /* 10/100 */;
+                top: -.1rem;
+            }
+            .small_box .box .rotas {
+                left: -.1rem /* 10/100 */;
+                bottom: -.1rem;
+            }
+            .small_box .box .zoom {
+                right: -.1rem /* 10/100 */;
+                bottom: -.1rem;
+            }
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <!-- 顶部 -->
+    <div class="header clearfix">
+        <!-- <button class="fl">下一页</button> -->
+        <button class="fr sure">保存</button>
+    </div>
+    <!-- 编辑中心 -->
+    <div class="main">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- 贺卡信息 -->
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="javascript:;" class="item font">
+            <img src="__HOME_IMAGES__/wh/geeting_icon_words@2x.png" alt="">
+            <p>文字</p>
+        </a>
+        <a href="javascript:;" class="item ">
+            <img src="__HOME_IMAGES__/wh/geeting_icon_photo@2x.png" alt="">
+            <input type="file" accept="image/*" class="small_up">
+            <p>照片</p>
+        </a>
+        <a href="javascript:;" class="item music">
+            <img src="__HOME_IMAGES__/wh/geeting_icon_music@2x.png" alt="">
+            <p>音乐</p>
+        </a>
+        <a href="javascript:;" class="item add_bg">
+            <input class="" id="up_dataimg" type="file" accept="image/*">
+            <img src="__HOME_IMAGES__/wh/geeting_icon_background@2x.png" alt="">
+            <p>背景</p>
+        </a>
+        <a class="share item" href="javascript:;">
+            <img src="__HOME_IMAGES__/wh/geeting_icon_share@2x.png" alt="">
+            <p>场景</p>
+        </a>
+    </div>
+
+    <!-- 文字编辑框 -->
+    <div id="edit">
+        <div class="box">
+            <div class="text_box">
+                <textarea class="content_edit" placeholder="请输入文字..."></textarea>
+            </div>
+            <div class="bottom_box">
+                <div class="it">
+                    <div class="item_edit edit_color">
+                        <img class="color" src="__HOME_IMAGES__/wh/word_icon_color@2x.png" alt="">
+                        <span class="color_text">颜色</span>
+                    </div>
+                    <div class="item_edit add_size">
+                        <img class="zi" src="__HOME_IMAGES__/wh/word_icon_plus@2x.png" alt="">
+                        <span>字号 +</span>
+                    </div>
+                    <div class="item_edit reduce">
+                        <img class="zi" src="__HOME_IMAGES__/wh/word_icon_reduce@2x.png" alt="">
+                        <span>字号 -</span>
+                    </div>
+                    <div class="item_edit confirm">
+                        <button class="con">确定</button>
+                    </div>
+                </div>
+                <ul class="colorlist">
+                    <!-- 颜色 -->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="mask" style="display: none;">
+        <img src="__HOME_IMAGES__/loadad.gif" alt="">
+        <p>图片上传中</p>
+    </div>
+    <!-- 插入的小图 -->
+    <!-- <div class="small_box">
+        <div class="box">
+            <img class="map" src="__HOME_IMAGES__/wh/make_entrance_copy@2x.png" alt="">
+            <img class="dels" src="__HOME_IMAGES__/wh/greeting_icon_shut@2x.png" alt="">
+            <img class="edits" src="__HOME_IMAGES__/wh/geeting_icon_edit@2x.png" alt="">
+            <img class="rotas" src="__HOME_IMAGES__/wh/geeting_icon_rotate@2x.png" alt="">
+            <img class="zoom" src="__HOME_IMAGES__/wh/geeting_icon_zoom@2x.png" alt="">
+        </div>
+    </div> -->
+
+</body>
+
+</html>
+<script>
+    $(function () {
+        var uid = '{$unionid}';
+        var userid = '{$id}';
+        // 上传小图片
+        var smallflag = 0;
+        var colorss = [
+            '#222222', '#002766', '#254000', '#613400', '#5C0011', '#254000', '#002329', '#520339',
+            '#120338', '#5A5A5A', '#0050B3', '#5B8C00', '#AD6800', '#A8071A', '#5B8C00', '#006D75',
+            '#9E1068', '#391085', '#BFBFBF', '#1890FF', '#A0D911', '#FAAD14', '#F5222D', '#A0D911',
+            '#13C2C2', '#EB2F96', '#722ED1', '#E9E9E9', '#69C0FF', '#D3F261', '#FFD666', '#FF7875',
+            '#D3F261', '#5CDBD3', '#FF85C0', '#B37FEB', '#FBFBFB', '#BAE7FF', '#F4FFB8', '#FFF1B8',
+            '#FFCCC7', '#F4FFB8', '#B5F5EC', '#FFD6E7', '#EFDBFF'
+
+        ]
+        var list = '';
+        var size = 16; //初始化字体
+        var color;
+        $.each(colorss, function (k, v) {
+            list += '<li class="i" data-color="' + v + '" style="background:' + v + '" ></li>'
+        })
+        $('.colorlist').html(list);
+
+        $('.add_size').on('click', function () {
+            size++;
+            $('.content_edit').css('font-size', (size / 100) + 'rem');
+        })
+        $('.reduce').on('click', function () {
+            size--;
+            $('.content_edit').css('font-size', (size / 100) + 'rem');
+        })
+
+        $('.edit_color').on('click', function () {
+            $(this).toggleClass('switch');
+            if ($(this).hasClass('switch')) {
+                $('.colorlist').css('display', 'flex')
+            } else {
+                $('.colorlist').css('display', 'none')
+            }
+
+        })
+        $('.colorlist li').on('click', function () {
+            color = $(this).attr('data-color');
+            $('.content_edit').css('color', color);
+            $('#content').attr('data-color', color);
+        })
+
+        $('.con').on('click', function () {
+            $('#edit').hide();
+            var text = $('.content_edit').val();
+            $('#content').val(text);
+            $('#content').css({
+                'color': color,
+                'font-size': '' + (size / 100) + 'rem'
+            })
+
+        })
+
+
+        $('.font').on('click', function () {
+            var val = $('.edit_box').find('textarea').val();
+            var font_color = $('.edit_box').find('textarea').css('color');
+            $('#edit').show();
+            $('.content_edit').val(val).css('color', font_color);
+        })
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+
+        var gid = GetQueryString('gid');
+
+        // 选择分享详情
+        $('.share').on('click', function () {
+
+            var pic = $('.swiper_item').attr('data-pic');
+            var content = $('#content').val();
+            var yanse = $('#content').attr('data-color');
+            var con_x = $('.edit_box').css('left');
+            var con_y = $('.edit_box').css('top');
+            var deg = $('.edit_box').attr('data-deg');
+            var zoom = $('.edit_box').attr('data-zoom');
+
+
+            var small_box_img = $('.small_box').find('.map').attr('src');
+            var small_x = $('.small_box').css('left');
+            var small_y = $('.small_box').css('top');
+            var small_deg = $('.small_box').attr('data-deg');
+            var small_zoom = $('.small_box').attr('data-zoom');
+
+            if (small_box_img == '' || small_box_img == undefined || small_box_img == null) {
+                small_box_img = '';
+                small_x = '';
+                small_y = '';
+                small_deg = '';
+                small_zoom = '';
+
+            }
+
+            var edit_width = $('.swiper_item').width();
+            var edit_height = $('.swiper_item').height();
+
+
+            $.ajax({
+                type: 'post',
+                url: 'index.php?s=/Api/IndexApi/addGcard',
+                data: {
+                    id: userid,
+                    card_id: gid,
+                    pic: pic,
+                    font_color: yanse,
+                    content: content,
+                    content_x: con_x,
+                    content_y: con_y,
+                    content_angle: deg,
+                    content_zoom: zoom,
+
+                    small_img: small_box_img, //小图
+                    small_img_angle: small_deg,
+                    small_img_x: small_x,
+                    small_img_y: small_y,
+                    small_img_zoom: small_zoom,
+                    edit_width: edit_width,
+                    edit_height: edit_height
+
+                },
+                success: function (res) {
+                    console.log(res)
+                    mui.toast('保存成功');
+                    location.href = '/index.php?s=/Home/Greeting/greet_share&gid=' + gid +
+                        '&simg=' + small_box_img + '&sdeg=' + small_deg + '&simgx=' +
+                        small_x + '&simgy=' + small_y + '&simgzoom=' + small_zoom + ''
+                }
+            })
+
+            //  $('.share').attr('href', 'index.php?s=/Home/Greeting/greet_share&gid=' + gid + ''); //分享的页面
+        })
+
+
+        // 选择音乐
+        $('.music').on('click', function () {
+            var pic = $('.swiper_item').attr('data-pic');
+            var content = $('#content').val();
+            var yanse = $('#content').attr('data-color');
+            var con_x = $('.edit_box').css('left');
+            var con_y = $('.edit_box').css('top');
+            var deg = $('.edit_box').attr('data-deg');
+            var zoom = $('.edit_box').attr('data-zoom');
+
+
+            var small_box_img = $('.small_box').find('.map').attr('src');
+            var small_x = $('.small_box').css('left');
+            var small_y = $('.small_box').css('top');
+            var small_deg = $('.small_box').attr('data-deg');
+            var small_zoom = $('.small_box').attr('data-zoom');
+
+            if (small_box_img == '' || small_box_img == undefined || small_box_img == null) {
+                small_box_img = '';
+                small_x = '';
+                small_y = '';
+                small_deg = '';
+                small_zoom = '';
+
+            }
+
+            var edit_width = $('.swiper_item').width();
+            var edit_height = $('.swiper_item').height();
+
+
+            $.ajax({
+                type: 'post',
+                url: 'index.php?s=/Api/IndexApi/addGcard',
+                data: {
+                    id: userid,
+                    card_id: gid,
+                    pic: pic,
+                    font_color: yanse,
+                    content: content,
+                    content_x: con_x,
+                    content_y: con_y,
+                    content_angle: deg,
+                    content_zoom: zoom,
+
+                    small_img: small_box_img, //小图
+                    small_img_angle: small_deg,
+                    small_img_x: small_x,
+                    small_img_y: small_y,
+                    small_img_zoom: small_zoom,
+                    edit_width: edit_width,
+                    edit_height: edit_height
+
+                },
+                success: function (res) {
+                    console.log(res)
+                    mui.toast('保存成功');
+                    location.href = '/index.php?s=/Home/Greeting/greet_music&gid=' + gid + '&simg=' + small_box_img + '&sdeg=' + small_deg + '&simgx=' +
+                        small_x + '&simgy=' + small_y + '&simgzoom=' + small_zoom + ''
+                }
+            })
+            // $('.music').attr('href', 'index.php?s=/Home/Greeting/greet_music&gid=' + gid + '') //选择音乐
+        })
+
+
+
+
+
+        var mySwiper;
+        var touchflag = true;
+        var edit_id;
+        $.ajax({
+            url: 'index.php?s=/Api/IndexApi/get_gcard',
+            type: 'post',
+            data: {
+                id: userid,
+                cardid: gid
+
+            },
+            success: function (res) {
+                console.log(res)
+                var data = res.AppendData[0];
+                edit_id = data.gcard_id;
+                var list = '';
+                list += '<div class="swiper-slide swiper_item" style="background:url(' + data.pic +
+                    ');position:relative;" data-id="' + data.id + '" data-pic="' + data.pic + '">'
+                list += '<div class="edit_box" data-deg=' + data.content_angle + ' data-zoom=' +
+                    data.content_zoom + ' style="top:' + data.content_y + 'px;left:' + data.content_x +
+                    'px;transform:scale(' + data.content_zoom + ')rotate(' + data.content_angle +
+                    'deg)translateZ(0) ; backface-visibility:hidden;">'
+                list += '<div class="text_box">'
+                list += '<textarea data-color="' + data.font_color +
+                    '" style="font-size:0.13rem;color:' + data.font_color +
+                    '" id="content" disabled>' + data.content + '</textarea>'
+                // list += '<img class="item_img del" src="__HOME_IMAGES__/wh/greeting_icon_shut@2x.png" alt="">'
+                list +=
+                    '<img class="item_img edit" src="__HOME_IMAGES__/wh/geeting_icon_edit@2x.png" alt="">'
+                list +=
+                    '<img class="item_img rote" src="__HOME_IMAGES__/wh/geeting_icon_rotate@2x.png" alt="">'
+                list +=
+                    '<img class="item_img scle" src="__HOME_IMAGES__/wh/geeting_icon_zoom@2x.png" alt="">'
+                list += '</div>'
+                list += '</div>'
+                list += '</div>'
+
+
+                $(".swiper-wrapper").html(list);
+                rotedeg = $('.edit_box').attr('data-deg');
+                scale = data.content_zoom;
+
+                smalldeg = data.small_img_angle;
+                if (!data.small_img == '') {
+                    smallflag = 1;
+                    var small = '';
+                    small += '<div class="small_box" data-deg="' + data.small_img_angle +
+                        '" data-zoom="' + data.small_img_zoom + '" style="left:' + data.small_img_x +
+                        'px;top:' + data.small_img_y + 'px;transform:scale(' + data.small_img_zoom +
+                        ') rotate(' + data.small_img_angle + 'deg)" >'
+                    small += '<div class="box">'
+                    small += '<img class="map" src="' + data.small_img + '" alt="">'
+                    small +=
+                        '<img class="dels" src="__HOME_IMAGES__/wh/greeting_icon_shut@2x.png" alt="">'
+                    small +=
+                        '<img class="edits" src="__HOME_IMAGES__/wh/geeting_icon_edit@2x.png" alt="">'
+                    small +=
+                        ' <img class="rotas" src="__HOME_IMAGES__/wh/geeting_icon_rotate@2x.png" alt="">'
+                    small +=
+                        '<img class="zoom" src="__HOME_IMAGES__/wh/geeting_icon_zoom@2x.png" alt="">'
+                    small += '</div>'
+                    small += '</div>'
+                    $('.swiper-wrapper').append(small)
+                }
+
+                var bigwidth = $('.swiper-slide').width();
+                var bigheight = $('.swiper-slide').height();
+                var touchwidth = $('.edit_box').width();
+                var touchheight = $('.edit_box').height();
+
+                //拖动
+                $('.swiper-wrapper').on('touchmove', '.edit_box', function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    if (!touchflag) {
+                        console.log('阻止触发了')
+                        return false;
+                    }
+                    var move_x = event.originalEvent.changedTouches[0].pageX;
+                    var move_y = event.originalEvent.changedTouches[0].pageY;
+
+                    var end_x = (move_x - $(this).width() / 1.5)
+                    var end_y = (move_y - $(this).height());
+
+                    if (end_x <= 10) {
+                        end_x = 10;
+                    }
+                    if (end_y <= 10) {
+                        end_y = 10;
+                    }
+
+                    if (end_x >= (bigwidth - $(this).width() - ($('.rote').width() / 2 *
+                            scale))) {
+                        end_x = (bigwidth - $(this).width() - ($('.rote').width() / 2 *
+                            scale));
+                    }
+
+                    if (end_y >= (bigheight - $(this).height() - ($('.rote').height() / 2 *
+                            scale))) {
+                        end_y = (bigheight - $(this).height() - ($('.rote').height() / 2 *
+                            scale));
+                    }
+
+
+                    $(this).css({
+                        left: end_x + 'px',
+                        top: end_y + 'px'
+                    })
+
+
+
+                })
+
+
+                mySwiper = new Swiper('.swiper-container', {
+                    direction: 'horizontal',
+                    resistanceRatio: 0,
+                    pagination: '.swiper-pagination',
+                    paginationType: 'fraction',
+                })
+            }
+        })
+
+
+        // 添加背景
+        $('#up_dataimg').on('change', function () {
+            if (window.FileReader) {
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    var imgsrc = res.target.result;
+                    $.ajax({
+                        url: "/index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: uid,
+                            img: imgsrc,
+                            start_name: "greeting"
+                        },
+                        beforeSend: function () {
+                            $('.mask').show()
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            var pic = res.AppendData;
+                            $('.swiper_item').css('background', 'url(' + pic + ')');
+                            $('.swiper_item').attr('data-pic', pic);
+                            $('.mask').hide()
+                        },
+                        error: function () {
+                            $('.mask').hide()
+                        }
+                    })
+                }
+
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+            }
+        })
+
+
+        //保存
+        $('.sure').on('click', function () {
+            var pic = $('.swiper_item').attr('data-pic');
+            var content = $('#content').val();
+            var yanse = $('#content').attr('data-color');
+            var con_x = $('.edit_box').css('left');
+            var con_y = $('.edit_box').css('top');
+            var deg = $('.edit_box').attr('data-deg');
+            var zoom = $('.edit_box').attr('data-zoom');
+
+
+            var small_box_img = $('.small_box').find('.map').attr('src');
+            var small_x = $('.small_box').css('left');
+            var small_y = $('.small_box').css('top');
+            var small_deg = $('.small_box').attr('data-deg');
+            var small_zoom = $('.small_box').attr('data-zoom');
+            if (small_box_img == '' || small_box_img == undefined || small_box_img == null) {
+                small_box_img = '';
+                small_x = '';
+                small_y = '';
+                small_deg = '';
+                small_zoom = '';
+
+            }
+
+
+            console.log(small_box_img)
+            console.log(small_x)
+            console.log(small_y)
+            console.log(small_deg)
+            console.log(small_zoom)
+
+            var edit_width = $('.swiper_item').width();
+            var edit_height = $('.swiper_item').height();
+
+            console.log(edit_width)
+            console.log(edit_height)
+
+
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/IndexApi/addGcard',
+                data: {
+                    id: userid,
+                    card_id: gid,
+                    pic: pic,
+                    font_color: yanse,
+                    content: content,
+                    content_x: con_x,
+                    content_y: con_y,
+                    content_angle: deg,
+                    content_zoom: zoom,
+
+                    small_img: small_box_img, //小图
+                    small_img_angle: small_deg,
+                    small_img_x: small_x,
+                    small_img_y: small_y,
+                    small_img_zoom: small_zoom,
+                    edit_width: edit_width,
+                    edit_height: edit_height
+
+                },
+                success: function (res) {
+                    console.log(res)
+                    mui.toast('保存成功');
+                    location.href = '/index.php?s=/Home/Holidaycard/showview/gid/' + gid +
+                        '/id/' + userid + ''
+                }
+            })
+
+        })
+
+        // 四个编辑按钮
+        $('.swiper-wrapper').on('click', '.edit', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var val = $(".text_box").find('textarea').val();
+            var font_yanse = $(".text_box").find('textarea').css('color');
+            var font_size = $(".text_box").find('textarea').css('font-size');
+            var hs = (font_size / 100);
+            $('.content_edit').val(val).css({
+                'color': font_yanse,
+                'font-size': hs + 'rem'
+            })
+            $('#edit').show();
+
+
+        })
+
+        // 缩放
+        var init_x, init_y;
+        var scale;
+        $('.swiper-wrapper').on('touchstart', '.scle', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            console.log('触发了这是缩放的')
+            touchflag = false;
+            init_x = event.originalEvent.changedTouches[0].pageX;
+            init_y = event.originalEvent.changedTouches[0].pageY;
+
+
+        })
+        var fan_x, fan_y;
+        $('.swiper-wrapper').on('touchmove', '.scle', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var moves_x = event.originalEvent.changedTouches[0].pageX;
+            var moves_y = event.originalEvent.changedTouches[0].pageY;
+
+            var new_x = moves_x - init_x;
+            var new_y = moves_y - init_y;
+
+
+            if (new_x > 0 && new_y > 0) {
+                if (scale >= 1.68) {
+                    return false;
+                }
+                scale = (scale - 0) + 0.01;
+                var rotas = $('.edit_box').attr('data-deg');
+                $('.edit_box').css('transform', 'scale(' + scale + ') rotate(' + rotas + 'deg)');
+                $('.edit_box').attr('data-zoom', scale.toFixed(2));
+            } else {
+                if (scale <= 1) {
+                    return false;
+                }
+                scale = (scale - 0) - 0.01;
+                var rotas = $('.edit_box').attr('data-deg');
+                $('.edit_box').css('transform', 'scale(' + scale + ') rotate(' + rotas + 'deg)');
+                $('.edit_box').attr('data-zoom', scale.toFixed(2));
+            }
+
+        })
+
+        $('.swiper-wrapper').on('touchend', '.scle', function (event) {
+            touchflag = true;
+            console.log(touchflag)
+        })
+
+        // 旋转
+        var rotedeg;
+        $('.swiper-wrapper').on('click', '.rote', function (event) {
+            console.log("1111")
+            event.stopPropagation();
+            event.preventDefault();
+            rotedeg = (rotedeg - 0) + 20;
+
+            var zoom = $('.edit_box').attr('data-zoom');
+            $('.edit_box').css('transform', 'rotate(' + rotedeg + 'deg) scale(' + zoom +
+                ') translateZ(0)');
+            $('.edit_box').attr('data-deg', rotedeg);
+        })
+
+
+        $('.small_up').on('change', function () {
+            if (window.FileReader) {
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    var imgsrc = res.target.result;
+                    $.ajax({
+                        url: "/index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: uid,
+                            img: imgsrc,
+                            start_name: "greeting"
+                        },
+                        beforeSend: function () {
+                            $('.mask').show()
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            var pic = res.AppendData;
+                            if (smallflag == 0) {
+                                console.log('走了没有图片新建一个小图')
+                                smallflag = 1;
+                                var small_img = '';
+                                small_img +=
+                                    '<div class="small_box" data-deg="0" data-zoom="1">'
+                                small_img += '<div class="box">'
+                                small_img += '<img class="map" src="' + pic +
+                                    '" alt="">'
+                                small_img +=
+                                    '<img class="dels" src="__HOME_IMAGES__/wh/greeting_icon_shut@2x.png" alt="">'
+                                small_img +=
+                                    '<img class="edits" src="__HOME_IMAGES__/wh/geeting_icon_edit@2x.png" alt="">'
+                                small_img +=
+                                    ' <img class="rotas" src="__HOME_IMAGES__/wh/geeting_icon_rotate@2x.png" alt="">'
+                                small_img +=
+                                    '<img class="zoom" src="__HOME_IMAGES__/wh/geeting_icon_zoom@2x.png" alt="">'
+                                small_img += '</div>'
+                                small_img += '</div>'
+
+                                $('.swiper-wrapper').append(small_img)
+                            }
+                            if (smallflag == 1) {
+                                $('.map').attr('src', pic)
+                                console.log('已经有图片了更换')
+                            }
+                            $('.mask').hide()
+
+
+                        },
+                        error: function () {
+                            $('.mask').hide()
+                        }
+                    })
+                }
+
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+            }
+        })
+
+
+
+
+        // 小图片的移动
+        var smalltouchflag = true;
+        $('.swiper-wrapper').on('touchmove', '.small_box', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            var bigwidth = $('.swiper-slide').width();
+            var bigheight = $('.swiper-slide').height();
+            if (!smalltouchflag) {
+                return false;
+            }
+
+            var move_x = event.originalEvent.changedTouches[0].pageX;
+            var move_y = event.originalEvent.changedTouches[0].pageY;
+
+            var end_x = (move_x - $(this).width())
+            var end_y = (move_y - $(this).height());
+
+            if (end_x <= 10) {
+                end_x = 10;
+            }
+            if (end_y <= 10) {
+                end_y = 10;
+            }
+
+            if (end_x >= (bigwidth - $(this).width() - ($('.rotas').width() / 2))) {
+                end_x = (bigwidth - $(this).width() - ($('.rotas').width() / 2));
+            }
+
+            if (end_y >= (bigheight - $(this).height() - ($('.rotas').height() / 2))) {
+                end_y = (bigheight - $(this).height() - ($('.rotas').height() / 2));
+            }
+
+
+            $(this).css({
+                left: end_x + 'px',
+                top: end_y + 'px'
+            })
+
+
+
+
+        })
+        // 小图片的重新编辑
+        $('.swiper-wrapper').on('click', '.edits', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            $('.small_up').click()
+        })
+        //小图片的旋转
+        var smalldeg;
+        $('.swiper-wrapper').on('click', '.rotas', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            smalldeg = (smalldeg - 0) + 10;
+            $('.small_box').css('transform', 'rotate(' + smalldeg + 'deg) scale(' + smallscale +
+                ') translateZ(0)');
+            $('.small_box').attr('data-deg', smalldeg)
+
+        })
+
+        // 小图片的缩放
+        var smallscale = 1;
+        var init_sm_x, init_sm_y;
+        $('.swiper-wrapper').on('touchstart', '.zoom', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            smalltouchflag = false;
+            init_sm_x = event.originalEvent.changedTouches[0].pageX;
+            init_sm_y = event.originalEvent.changedTouches[0].pageY;
+        })
+
+        $('.swiper-wrapper').on('touchmove', '.zoom', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            console.log('1111')
+
+            var moves_x = event.originalEvent.changedTouches[0].pageX;
+            var moves_y = event.originalEvent.changedTouches[0].pageY;
+
+            var new_x = moves_x - init_sm_x;
+            var new_y = moves_y - init_sm_y;
+
+
+            if (new_x > 0 && new_y > 0) {
+                if (smallscale >= 1.68) {
+                    return false;
+                }
+                smallscale += 0.01;
+                $('.small_box').css('transform', 'scale(' + smallscale.toFixed(2) + ') rotate(' +
+                    smalldeg + 'deg)');
+                $('.small_box').attr('data-zoom', smallscale.toFixed(2))
+            } else {
+                if (smallscale <= 1) {
+                    return false;
+                }
+                smallscale -= 0.01;
+                $('.small_box').css('transform', 'scale(' + smallscale.toFixed(2) + ') rotate(' +
+                    smalldeg + 'deg)');
+                $('.small_box').attr('data-zoom', smallscale.toFixed(2))
+            }
+
+        })
+
+        $('.swiper-wrapper').on('touchend', '.zoom', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            smalltouchflag = true;
+        })
+
+        // 删除小图
+        $('.swiper-wrapper').on('click', '.dels', function () {
+            $('.small_box').remove();
+            smallflag = 0;
+
+        })
+
+
+
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

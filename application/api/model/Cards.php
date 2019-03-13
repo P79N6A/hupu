@@ -1,0 +1,1 @@
+<?php//V网夹表 数据层namespace app\api\model;use think\Model;class Cards extends Model{    protected $table = 's_cards';	public function cards()    {        return $this->hasOne('cards','id','object_id')->field('id','headimg','background_img','shareimg','qrcodeimg','wx_ewm_url');    }    }

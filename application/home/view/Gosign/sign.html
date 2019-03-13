@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>全球移动互联网大会在线报名系统</title>
+    <style>
+        body,html{
+        background: #fff;
+        padding-bottom: .64rem;
+        }
+        .header{
+        width: 100%;
+        height: .62rem;
+        background: #fff;
+        padding: 0 .16rem;
+        box-sizing: border-box;
+        border-bottom: 1px solid rgba(238,238,238,1);
+        position: relative;
+        overflow: hidden;
+
+        }
+
+        .two p{
+        position: absolute;
+        color: #A9A9A9;
+        right: 1.04rem;
+        top: 50%;
+        margin-top: -.1rem;
+        }
+
+        .two img{
+        width: .52rem;
+        height: .52rem;
+        position: absolute;
+        display: block;
+        border-radius: 50%;
+        right: .4rem;
+        top: 50%;
+        margin-top: -.26rem;
+        }
+        .two input{
+        width: .52rem;
+        height: .52rem;
+        position: absolute;
+        right: .4rem;
+        top: 50%;
+        margin-top: -.26rem;
+        z-index: 10;
+        opacity: 0;
+        }
+
+        .header .user{
+        width: 30%;
+        height: 100%;
+        line-height: .62rem;
+        font-size: .14rem;
+        }
+
+        .header .search-input{
+        width: 70%;
+        border: 0;
+        outline: none;
+        font-size: .14rem;
+        height: .4rem;
+        margin-top: .11rem;
+        text-align: center;
+        }
+
+        input[type="search"]{
+        -webkit-appearance:none;
+        }
+
+        input::-webkit-search-cancel-button {
+        display: none;
+        }
+
+        .upload{
+        width: 100%;
+
+        }
+
+        .upload .id-card{
+        width: 100%;
+        height: 100%;
+        padding: .22rem 0;
+        padding-bottom: .3rem;
+        margin-bottom: .06rem;
+        background: #fff;
+        border-bottom: 1px solid #EEEEEE;
+        }
+
+        .id-card .tip{
+        font-size: .15rem;
+        padding-left: .16rem;
+        box-sizing: border-box;
+        }
+
+        .id-card .sma-tip{
+        font-size: .12rem;
+        padding-left: .16rem;
+        box-sizing: border-box;
+        color: #A5A5A5;
+        margin-top: .05rem;
+        }
+
+
+        .id-card .up-box{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        }
+
+        .id-card .up-box li{
+        width: 1.6rem;
+        height: 1.05rem;
+        margin: .24rem 0 .14rem 0;
+        }
+
+        .up-box li .box{
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        }
+        .up-box li p{
+        text-align: center;
+        margin-top: .14rem;
+        }
+
+        .up-box li .box input{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: 10;
+        }
+
+        .up-box li .box img{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        }
+
+        .msg{
+        width: 100%;
+        padding: .24rem .14rem 0 .14rem;
+        box-sizing: border-box;
+
+        }
+
+        .msg .msg-box{
+        display: flex;
+
+        }
+
+        .msg .msg-box .item{
+        flex: 0.8;
+        margin-bottom: .32rem;
+        }
+
+        .msg .msg-box .item:nth-child(1){
+        font-weight: bold;
+        }
+
+        .msg .msg-box .item:nth-child(2){
+        flex: 1.2;
+        color: #5E5E5E;
+        }
+
+        .Continue{
+        width: 100%;
+        height: .64rem;
+        box-shadow:1px 2px 4px 4px rgba(242,242,242,0.5);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        }
+
+        .Continue .con{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        }
+
+        .Continue .con button{
+        width: 1.15rem;
+        height: .44rem;
+        line-height: .44rem;
+        background: #86ADFF;
+        color: #fff;
+        text-align: left;
+        text-indent: .15rem;
+        position: absolute;
+        right: .28rem;
+        top: .1rem;
+        border: 0;
+        outline: none;
+        border-radius: .04rem;
+        }
+
+        .Continue .con img{
+        width: .09rem;
+        height: .15rem;
+        position: absolute;
+        right: .4rem;
+        top: .25rem;
+        }
+
+        .tip-box{
+        width: 2.92rem;
+        height: 3.12rem;
+        background: #fff;
+        border-radius: .06rem;
+        text-align: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -1.56rem;
+        margin-left: -1.46rem;
+        z-index: 999;
+        display: none;
+        }
+
+        .tip-box .tp{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        }
+
+        .tip-box .tp img{
+        width: .14rem;
+        height: .14rem;
+        position: absolute;
+        right: .12rem;
+        top: .12rem;
+        }
+
+        .tip-box .tp p{
+        padding-top: .4rem;
+        font-weight: bold;
+        padding-bottom: .62rem;
+        font-size: .16rem;
+        }
+
+        .tip-box .tp .t1{
+        font-size: .13rem;
+        color: #5E5E5E;
+        }
+
+        .tip-box .tp .t2{
+        font-size: .12rem;
+        color: #8CADFF;
+        padding-top: .05rem;
+        padding-bottom: .9rem;
+        }
+
+        .tip-box .tp button{
+            width: 2.4rem;
+            height: .4rem;
+            line-height: .4rem;
+            color: #fff;
+            text-align: center;
+            margin: 0 auto;
+            background: #8CADFF;
+            border: 0;
+            outline: none;
+            border-radius: .04rem;
+        }
+
+        .sbxx{
+            width: 2.92rem;
+            height: 4.12rem;
+            background: #fff;
+            border-radius: .06rem;
+            text-align: center;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            margin-top: -1.56rem;
+            margin-left: -1.46rem;
+            z-index: 999;
+            display: none;
+        }
+
+         .sbxx .tp p{
+            padding-top: .4rem;
+            font-weight: bold;
+            padding-bottom: .22rem;
+            font-size: .16rem;
+         }
+
+         .sbxx .tp img{
+            width: .14rem;
+            height: .14rem;
+            position: absolute;
+            right: .12rem;
+            top: .12rem;
+         }
+
+         .msg-user{
+             width: 100%;
+             text-align: left;
+             margin-bottom: .15rem;
+             padding: 0 .2rem;
+             box-sizing: border-box;
+             font-size: .12rem;
+         }
+
+         .msg-user div:nth-child(1){
+            width: 30%;
+            color: #7E818A;
+         }
+         .msg-user div:nth-child(2){
+            width: 70%;
+            color: #000;
+         }
+
+        .msg-user input{
+            width: 70%;
+            font-weight: bold;
+            box-sizing: border-box;
+            border: 0;
+            outline: none;
+            height: .21rem;
+            line-height: .21rem;
+            color: #7E818A;
+            background: #fff;
+        }
+
+         .sbxx .tp button{
+            width: 2.4rem;
+            height: .4rem;
+            line-height: .4rem;
+            color: #fff;
+            text-align: center;
+            margin: 0 auto;
+            background: #8CADFF;
+            border: 0;
+            outline: none;
+            border-radius: .04rem;
+            margin-top: .2rem;
+         }
+
+         #dx{
+             width: 2.92rem;
+             height: 3.12rem;
+             position: fixed;
+             top: 50%;
+             left: 50%;
+             margin-top: -1.56rem;
+             margin-left: -1.46rem;
+             display: none;
+             z-index: 999;
+             background: #fff;
+             border-radius: .04rem;
+         }
+          #dx .dx-box{
+              width: 100%;
+              height: 100%;
+              position: relative;
+              text-align: center;
+              overflow: hidden;
+          }
+
+             #dx .dx-box .ddd{
+                 width: 1rem;
+                 height: 1rem;
+                 position: absolute;
+                 top: 40%;
+                 left: 50%;
+                 margin-left: -.5rem;
+                 margin-top: -.5rem;
+             }
+
+            #dx .dx-box .del{
+                width: .14rem;
+                height: .14rem;
+                position: absolute;
+                right: .12rem;
+                top: .12rem;
+            }
+
+            #dx .dx-box p{
+                position: absolute;
+                bottom: .5rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .mess-msg{
+                width: 100%;
+                height: 2.5rem;
+                max-height: 2.5rem;
+                overflow: scroll;
+            }
+
+            #tip{
+                width: 1.6rem;
+                /* height: .3rem; */
+                padding: .05rem .1rem;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                text-align: center;
+                border-radius: .04rem;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                margin-left: -1rem;
+                z-index: 1000;
+                display: none;
+            }
+
+            .Belong{
+                width: 70%;
+                height: 100%;
+                outline: none;
+                appearance:none;
+                -moz-appearance:none;
+                -webkit-appearance:none;
+                border: 0;
+                padding-left: .6rem;
+                box-sizing: border-box;
+                font-size: .14rem;
+                background: #fff;
+                
+            }
+
+            .down{
+                width: .24rem;
+                height: .12rem;
+                position: absolute;
+                top: 50%;
+                right: .1rem;
+                margin-top: -0.06rem;
+            }
+
+            .go_sign{
+                width: 1rem;
+                height: .2rem;
+                line-height: .2rem;
+                text-align: center;
+                border-radius: .15rem 0 0 .15rem;
+                background: #fff;
+                z-index: 10;
+                right: 0;
+                bottom: 1.4rem;
+                position: fixed;
+                box-shadow:0px 2px 10px 0px rgba(191,191,191,0.25);
+                padding: .05rem 0;
+                color: #86ADFF !important;
+            }
+
+
+ 
+    
+    </style>
+</head>
+
+<body>
+    <div class="header-box">
+        <div class="header clearfix two">
+            <div class="fl user">我的头像</div>
+            <p>点击上传头像</p>
+            <img id="my_img" src="__HOME_IMAGES__/wh/Group3@2x.png" alt="">
+            <input id="user_img" class="fl userimg" type="file" accept="image/*">
+        </div>
+        <div class="header clearfix">
+            <div class="fl user">用户手机号</div>
+            <input class="search-input fl user_phone" type="number" placeholder="请输入用户手机号码">
+        </div>
+        <div class="header clearfix">
+            <div class="fl user">用户所属分公司</div>
+            <select class="Belong fl">
+                <!-- 选择公司 -->
+            </select>
+            <img class="down" src="__HOME_IMAGES__/inco_down.png" alt="">
+        </div>
+
+    </div>
+
+    <div class="upload">
+        <div class="id-card">
+            <p class="tip">请拍摄并上传你的身份证照片</p>
+            <p class="sma-tip">请保证上传证件字迹清晰，边框完整，避免反光</p>
+            <ul class="up-box">
+                <li>
+                    <div class="box">
+                        <input id="pic" class="up-data" type="file" accept="image/*" data-upid="1">
+                        <img id="just" src="__HOME_IMAGES__/wh/icon_shenfenzheng@2x.png" alt="">
+                    </div>
+                    <p>拍摄正面</p>
+                </li>
+                <li>
+                    <div class="box">
+                        <input class="up-data" type="file" accept="image/*" data-upid="2">
+                        <img id="fan" src="__HOME_IMAGES__/wh/icon_sfz@2x.png" alt="">
+                    </div>
+                    <p>拍摄反面</p>
+                </li>
+            </ul>
+        </div>
+        <!-- 信息 -->
+        <div class="msg">
+            <!-- 信息 -->
+        </div>
+
+    </div>
+    <!-- 继续报名 -->
+    <div class="Continue">
+        <div class="con">
+            <button class="jxbm" disabled style="background:#eee;">继续报名</button>
+            <img src="__HOME_IMAGES__/right.png" alt="">
+        </div>
+    </div>
+    <div class="mask"></div>
+    <!-- 提示框失败 -->
+    <div class="tip-box">
+        <div class="tp">
+            <img src="__HOME_IMAGES__/inco_bianji_de@2x.png" alt="">
+            <p>抱歉，信息识别失败</p>
+            <div class="t1">为了识别信息精准，请保证上传证件</div>
+            <div class="t2">字迹清晰，边框完整，避免反光。</div>
+            <button id="reset">重新上传</button>
+        </div>
+    </div>
+    <!-- 成功 -->
+    <div class="sbxx">
+        <div class="tp">
+            <!-- <img src="__HOME_IMAGES__/inco_bianji_de@2x.png" alt=""> -->
+            <p>信息识别成功</p>
+            <div class="mess_msg mess-msg">
+                <!-- 识别成功 -->
+            </div>
+            <button id="qd">确定</button>
+        </div>
+    </div>
+    <!-- 动画 -->
+    <div id="dx">
+        <div class="dx-box">
+            <!-- <img class="del" src="__HOME_IMAGES__/inco_bianji_de@2x.png" alt=""> -->
+            <img class="ddd" src="__HOME_IMAGES__/wh/dx.gif" alt="">
+            <p>信息正在努力识别中...</p>
+        </div>
+    </div>
+    <!-- 提示填写信息 -->
+    <div id="tip">请填写推荐人姓名</div>
+
+    <!--<a class="go_sign" href="javascript:;">我的报名</a>-->
+</body>
+
+</html>
+<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
+<!--<script>-->
+<!--eruda.init();-->
+<!--</script>-->
+
+
+
+
+<script>
+    $(function () {
+        var openid = '{$yxmuseropenid}';
+        var superior_phone = '{$superior_phone}';
+        var uuidss='{$uuid}';
+        $(".tip-box img").on("click", function () {
+            $(".mask").hide();
+            $(".tip-box").hide();
+        })
+
+        $(".userimg").on("change", function () {
+            var that = $(this);
+            var file = this.files[0];
+            var render = new FileReader();
+            render.readAsDataURL(file);
+
+            render.onload = function (res) {
+                console.log(res)
+                var imsrc = res.target.result;
+                console.log(imsrc.length)
+                $.ajax({
+                    url: "/index.php?s=/Api/IndexApi/uploads_img",
+                    type: "post",
+                    data: {
+                        unionid: 'EkcIHDJhjog',
+                        img: imsrc,
+                        start_name: 'sign'
+                    },
+                    beforeSend: function () {
+                        $("#dx .dx-box p").text("正在努力上传头像中...");
+                        $("#dx").show();
+                        $(".mask").show();
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#dx").hide();
+                        $(".mask").hide();
+                        console.log(res)
+                        var srcimg = res.AppendData
+                        that.prev().attr("src", srcimg);
+                    },
+                    error: function () {
+                        $("#dx").hide();
+                        $(".mask").hide();
+                    }
+                })
+            }
+        })
+
+
+
+        // 获取分公司信息
+        $.ajax({
+            type: "POST",
+            url: "/index.php?s=/Api/CustomerService/selectcompany",
+            data: {},
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function (res) {
+                console.log(res)
+                companyList = res.AppendData
+                var s = '';
+                for (var a in companyList) {
+                    if (a == 0) {
+                        s += " <option value=\"-1\" selected>请选择</option>"
+
+                    }
+                    s += " <option value=\"" + companyList[a].value + "\">" + companyList[a].label +
+                        "</option>"
+                }
+
+                $(".Belong ").html(s)
+
+            },
+            error: function () {
+                console.log("走了错误")
+            }
+        })
+
+
+        //识别成功
+        function uish(list, data) {
+
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">姓名</div>'
+            if (data.name.words == '') {
+                list += '<input class="fl user_name" type="text" value="" placeholder="未识别出请手动输入">'
+            } else {
+                list += '<div class="fl">' + data.name.words + '</div>'
+            }
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">性别</div>'
+            if (data.sex.words == '') {
+                list += '<input class="fl sex_sex" type="text" value="" placeholder="未识别出请手动输入">'
+            } else {
+                //   list+= '<input disabled class="fl" type="text" value="'+data.sex.words+'">'
+                list += '<div class="fl">' + data.sex.words + '</div>'
+            }
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">身份证号</div>'
+            if (data.card.words == '') {
+                list += '<input class="fl sf_card" type="text" value="" placeholder="未识别出请手动输入">'
+            } else {
+                list += '<div class="fl">' + data.card.words + '</div>'
+            }
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">民族</div>'
+            if (data.mz.words == '') {
+                list += '<input class="fl mz_mz" type="text" value="" placeholder="未识别出请手动输入">'
+            } else {
+                list += '<div class="fl">' + data.mz.words + '</div>'
+
+            }
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">年龄</div>'
+            list += '<div class="fl">' + data.age + '</div>'
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">出生年月</div>'
+            list += '<div class="fl">' + data.cs + '</div>'
+            list += '</div>'
+            list += '<div class="msg-user clearfix">'
+            list += '<div class="fl">地址</div>'
+            list += '<div class="fl">' + data.adress.words + '</div>'
+            list += '</div>'
+
+            return list;
+        }
+         // $("a.go_sign").on("click",function () {
+         //     var openid = '{$yxmuseropenid}';
+         //     var superior_phone = '{$superior_phone}';
+         //     var uuid='{$uuid}';
+         //     window.location.href="/index.php?s=/Home/Gosign/orderlist.html&superior_phone="+$.cookie('superior_phone')+
+         //         "&yxmuseropenid="+$.cookie('yxmuseropenid');
+         // })
+        $(".up-data").on("change", function () {
+            var upid = $(this).attr("data-upid");
+            var that = $(this);
+            var data;
+            var srcimg;
+            if (upid == 1) {
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    var fileimg = res.target.result;
+
+                    var newfile = fileimg.toString();
+                    var zhimg = newfile.substring(newfile.indexOf(',') + 1);
+
+                    var formObj = new FormData();
+                    formObj.append('image', zhimg);
+                    formObj.append('detect_direction', true);
+                    formObj.append('id_card_side', "front");
+                    formObj.append("access_token",
+                        "24.59544f9bc4083dce124b70f34a744df0.2592000.1544772210.282335-14464974"
+                    )
+                    $.ajax({
+                        url: 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard',
+                        data: formObj,
+                        type: 'POST',
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function () {
+                            console.log("识别身份中")
+                            $(".mask").show();
+                            $("#dx .dx-box p").text("信息正在努力识别中...")
+                            $("#dx").show();
+
+                        },
+                        success: function (res) {
+                            $("#dx").hide();
+                            console.log("识别完成")
+                            flag_one = 1;
+                            data = res.words_result;
+                            if (!data.hasOwnProperty('住址')) {
+                                data.adress = '';
+                            } else if (!data.hasOwnProperty('公民身份号码')) {
+                                data.card = '';
+                            } else if (!data.hasOwnProperty('出生')) {
+                                data.cs = '';
+                            } else if (!data.hasOwnProperty('姓名')) {
+                                data.name = '';
+                            } else if (!data.hasOwnProperty('性别')) {
+                                data.sex = '';
+                            } else if (!data.hasOwnProperty('民族')) {
+                                data.mz = '';
+                            }
+                            data['name'] = data['姓名'];
+                            delete data['姓名'];
+                            data['adress'] = data['住址'];
+                            delete data['住址'];
+                            data['sex'] = data['性别'];
+                            delete data['性别'];
+                            data['cs'] = data['出生'];
+                            delete data['出生'];
+                            data['card'] = data['公民身份号码'];
+                            delete data['公民身份号码'];
+                            data['mz'] = data['民族'];
+                            delete data['民族'];
+                            if (data.cs == undefined || data.cs == '') {
+
+                            } else {
+                                var age = data.cs.words;
+                                var Newyead = insertStr(insertStr(data.cs.words, 4, "-"),
+                                    7, "-");
+                                console.log(Newyead)
+                                data.cs = Newyead;
+                                var get_age = jsGetAge(Newyead);
+                                data.age = get_age;
+
+                            }
+                            console.log(res)
+
+                            console.log(data)
+                            if (data.adress == undefined || data.adress == '' || data.cs ==
+                                '' || data.cs == undefined) {
+                                $(".tip-box").show(); // 识别失败
+                                $(".mask").show();
+                            } else {
+                                that.parent().next().text("重新上传");
+                                var list = '';
+                                var ht = '';
+                                var content = uish(list, data);
+                                var con = httemplate(ht, data)
+                                $(".mess_msg").html(content);
+                                $(".msg").html(con);
+                                $(".mask").show();
+                                $(".sbxx").show();
+                            }
+
+
+                        },
+                        fail: function (res) {
+                            console.log(res)
+                            $("#dx").hide();
+                            $(".mask").hide();
+                        }
+                    });
+
+                    $.ajax({
+                        url: "/index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: 'EkcIHDJhjog',
+                            img: fileimg,
+                            start_name: 'sign'
+                        },
+                        beforeSend: function () {
+                            that.next().attr("src", "__HOME_IMAGES__/wh/timg2.gif")
+                                .css("transform", "scale(0.5)");
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            srcimg = res.AppendData;
+                            that.next().attr("src", srcimg).css("transform", "scale(1)");
+                            that.parent().next().text("重新上传")
+
+
+                        }
+                    })
+
+                }
+
+            } else if (upid == 2) {
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    var imsrc = res.target.result;
+                    $.ajax({
+                        url: "/index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: 'EkcIHDJhjog',
+                            img: imsrc,
+                            start_name: 'sign'
+                        },
+                        beforeSend: function () {
+                            $("#dx .dx-box p").text("正在努力上传图片...");
+                            $("#dx").show();
+                            $(".mask").show();
+                        },
+                        success: function (res) {
+                            $(".mask").hide();
+                            $("#dx").hide();
+                            console.log(res)
+                            var srcimg = res.AppendData
+                            that.next().attr("src", srcimg).css("transform", "scale(1)");
+                            that.parent().next().text("重新上传")
+                        }
+                    })
+                }
+
+            }
+
+
+
+
+        })
+
+        // 继续报名
+        var company = -1;
+        $(".jxbm").on("click", function (data) {
+            console.log('1111')
+            var tips = $("#tip");
+
+            var tjr_name = '洋小秘'; //$(".search-input").val();  //我的推荐人
+            var my_img = $("#my_img").attr("src"); //我的头像
+            var user = $("#user_name").text(); //用户
+            var card_just = $("#just").attr("src"); //身份正面
+            var card_fan = $("#fan").attr("src"); //身份反面
+            var card_number = $("#id_card").text(); //身份证号码
+            var id_sex = $("#sex_sex").text(); //性别
+            var id_nation = $("#mz_mz").text(); //民族
+            var id_birth = $("#birth").text(); //身份证日期
+            var id_adress = $("#adress_s").text(); //身份地址
+            var age = $("#age").text(); //年龄
+            var newage = age.slice(0, -1);
+            var user_phone = $('.user_phone').val(); //用户手机号
+            company = $('.Belong option:selected').val(); //选中的分公司
+
+            // if (tjr_name == '') {
+            //     tips.text("请填写推荐人姓名").stop(true, false).fadeIn(500).fadeOut(3000);
+            //     return false;
+            // } else 
+            if (my_img == '__HOME_IMAGES__/wh/Group3@2x.png') {
+                tips.text("请上传我的头像").stop(true, false).fadeIn(500).fadeOut(3000);
+                return false;
+            } else if (user_phone == '') {
+                tips.text("请填写用户手机号").stop(true, false).fadeIn(500).fadeOut(3000);
+                return false;
+             //} else if (company == -1) {
+            //     tips.text("请选择所属分公司").stop(true, false).fadeIn(500).fadeOut(3000);
+            //     return false;
+             } else if (card_just == '__HOME_IMAGES__/wh/icon_shenfenzheng@2x.png' || card_fan =='__HOME_IMAGES__/wh/icon_sfz@2x.png') {
+                tips.text("请上传身份证的正反面").stop(true, false).fadeIn(500).fadeOut(3000);
+                return false;
+            }
+
+            // console.log(tjr_name + "--->推荐人姓名")
+            // console.log(my_img + "--->我的头像地址")
+            // console.log(user + "--->用户名")
+            // console.log(card_just + "--->身份正面")
+            // console.log(card_fan + "--->身份反面")
+            // console.log(card_number + "--->身份证账号")
+            // console.log(id_sex + "--->性别")
+            // console.log(id_nation + "--->民族")
+            // console.log(id_birth + "--->身份证日期")
+            // console.log(id_adress + "--->身份证地址")
+            // console.log(newage + "--->年龄")
+            // console.log(user_phone + "--->手机号码")
+            // console.log(company + "--->公司id")
+
+
+
+            $.ajax({
+                url: "/index.php?s=/Api/HK/hk_user_one",
+                type: "post",
+                dataType: 'json',
+                xhrFields: {
+                    witchCredentials: true
+                },
+                crossDomain: true,
+                data: {
+                    id_adress: id_adress,
+                    referee_name: tjr_name,
+                    user_top_imgurl: my_img,
+                    id_username: user,
+                    user_idimgurl_fan: card_fan,
+                    user_idimgurl_just: card_just,
+                    id_number: card_number,
+                    id_sex: id_sex,
+                    id_nation: id_nation,
+                    id_dateofbirth: id_birth,
+                    age: newage,
+                    yxmuseropenid: openid,
+                    superior_phone: superior_phone,
+                    user_phone:user_phone,
+                    company_id: company,
+                    uuid:uuidss
+
+                },
+                beforeSend: function () {
+                    console.log("发送请求了")
+                },
+                success: function (res) {
+                    console.log(res);
+                    if (res.ResultType == 0) {
+                        window.location.href = "/index.php?s=/Home/Gosign/signtwo&uuid="+res.AppendData.uuid + "&yxmuseropenid="+res.AppendData.yxmuseropenid;
+
+                    } else {
+                        alert("提交失败");;
+                    }
+
+
+
+                },
+                error: function () {
+                    console.log("走了错误");
+                }
+
+            })
+
+        })
+
+        // 识别成功关闭
+        $(".sbxx .tp img").on("click", function () {
+            $(".mask").hide();
+            $(".sbxx").hide();
+        })
+        $(".sbxx .tp button").on("click", function () {
+            $(".mask").hide();
+            $(".sbxx").hide();
+        })
+
+
+        // 识别失败重新上传
+        $("#reset").on("click", function () {
+            $("#pic").click();
+            $(".tip-box").hide();
+        })
+
+
+        function insertStr(soure, start, newStr) {
+            return soure.slice(0, start) + newStr + soure.slice(start);
+        }
+
+        function httemplate(ht, data) {
+
+
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">姓名</div>'
+            if (data.name.words == '') {
+                ht += '<div id="user_name" class="item"></div>'
+            } else {
+                ht += '<div id="user_name" class="item">' + data.name.words + '</div>'
+            }
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">性别</div>'
+            if (data.sex.words == '') {
+                ht += '<div id="sex_sex" class="item"></div>'
+            } else {
+                ht += '<div id="sex_sex" class="item">' + data.sex.words + '</div>'
+            }
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">身份证号</div>'
+            if (data.sex.words == '') {
+                ht += '<div id="id_card" class="item"></div>'
+            } else {
+                ht += '<div id="id_card" class="item">' + data.card.words + '</div>'
+            }
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">民族</div>'
+            if (data.mz.words == '') {
+                ht += '<div id="mz_mz" class="item"></div>'
+            } else {
+                ht += '<div id="mz_mz" class="item">' + data.mz.words + '</div>'
+            }
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">年龄</div>'
+            ht += ' <div id="age" class="item">' + data.age + '岁</div>'
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">出生年月</div>'
+            ht += ' <div id="birth" class="item">' + data.cs + '</div>'
+            ht += '</div>'
+            ht += '<div class="msg-box">'
+            ht += '<div class="item">地址</div>'
+            ht += '<div id="adress_s" class="item">' + data.adress.words + '</div>'
+            ht += '</div>'
+
+            return ht;
+
+        }
+
+        // 识别完成修改部分信息
+        $(".sbxx").on("click", "#qd", function () {
+            console.log()
+            var user_name = $(".user_name").val(); //用户修改的姓名
+            var sex = $(".sex_sex").val(); //性别
+            var card = $(".sf_card").val(); // 身份证
+            var mz = $(".mz_mz").val(); //民族
+
+            $("#user_name").text(user_name); //修改用户姓名
+            $("#sex_sex").text(sex); //修改用户的性别
+            $("#id_card").text(card); //修改用户身份证
+            $("#mz_mz").text(mz) //修改民族
+        })
+
+
+    })
+
+
+
+
+
+    function jsGetAge(strBirthday) {
+        var returnAge;
+        var thisofdate = new Date(strBirthday).getTime()
+        var thisdate = new Date().getTime();
+        return parseInt((thisdate - thisofdate) / (1000 * 60 * 60 * 24 * 365));
+        //     var strBirthdayArr=strBirthday.split("-");  
+        //     var birthYear = strBirthdayArr[0];  
+        //     var birthMonth = strBirthdayArr[1];  
+        //     var birthDay = strBirthdayArr[2];  
+        //       
+        //     d = new Date();  
+        //     var nowYear = d.getFullYear();  
+        //     var nowMonth = d.getMonth() + 1;  
+        //     var nowDay = d.getDate();  
+        //       
+        //     if(nowYear == birthYear){  
+        //         returnAge = 0;//同年 则为0岁  
+        //     }  
+        //     else{  
+        //         var ageDiff = nowYear - birthYear ; //年之差  
+        //         if(ageDiff > 0){  
+        //             if(nowMonth == birthMonth) {  
+        //                 var dayDiff = nowDay - birthDay;//日之差  
+        //                 if(dayDiff < 0)  
+        //                 {  
+        //                     returnAge = ageDiff - 1;  
+        //                 }  
+        //                 else  
+        //                 {  
+        //                     returnAge = ageDiff ;  
+        //                 }  
+        //             }  
+        //             else  
+        //             {  
+        //                 var monthDiff = nowMonth - birthMonth;//月之差  
+        //                 if(monthDiff < 0)  
+        //                 {  
+        //                     returnAge = ageDiff - 1;  
+        //                 }  
+        //                 else  
+        //                 {  
+        //                     returnAge = ageDiff ;  
+        //                 }  
+        //             }  
+        //         }  
+        //         else  
+        //         {  
+        //             returnAge = -1;//返回-1 表示出生日期输入错误 晚于今天  
+        //         }  
+        //     }  
+        //       
+        //     return returnAge;//返回周岁年龄  
+
+    }
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

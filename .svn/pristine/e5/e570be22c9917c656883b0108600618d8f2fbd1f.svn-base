@@ -1,0 +1,37 @@
+<?php
+
+namespace app\admin\controller;
+
+use think\App;
+use think\Controller;
+use think\Request;
+use think\Session;
+
+class Base extends Controller
+{
+
+    public function __construct(App $app = null)
+    {
+        parent::__construct($app);
+
+        $module     = strtolower(request()->module());
+        $controller = strtolower(request()->controller());
+        $action     = strtolower(request()->action());
+        $url        = $module."/".$controller."/".$action;
+
+
+//        $app->log('1212');
+
+
+    }
+
+
+    public function del(Request $request)
+    {
+        $id = input('id');
+
+        $controller = $request->controller();
+        $flag = deletes($controller, $id);
+        return $flag;
+    }
+}

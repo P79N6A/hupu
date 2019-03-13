@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <title>粉丝详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 3.75rem;
+            height: .64rem;
+            background: #fff;
+        }
+
+        .fist {
+            /* width: .7rem; */
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(118, 118, 118, 1);
+            line-height: .2rem;
+            position: absolute;
+            top: .22rem;
+            left: .19rem;
+        }
+
+        .fist span {
+            width: .47rem;
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(50, 206, 160, 1);
+            line-height: .21rem;
+            margin-left:.1rem;
+        }
+
+        .secd {
+            width: 100%;
+            height: .47rem;
+            background: #F9F9F9;
+        }
+
+        .secd span {
+            width: .6rem;
+            height: .17rem;
+            font-size: .12rem;
+            left: .17rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(160, 160, 160, 1);
+            line-height: .47rem;
+            position: absolute;
+        }
+
+        .one {
+            width: 100%;
+            height: .54rem;
+            /* background: pink; */
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+        .left {
+            width: .9rem;
+            height: .54rem;
+            left: .19rem;
+            color: #767676;
+            line-height: .54rem;
+            /* background: plum; */
+            position: absolute;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .right {
+            /*width: 1.5rem;*/
+            height: .54rem;
+            left: 1.03rem;
+            color: #2b2b2b;
+            line-height: .54rem;
+            /* background: yellow; */
+            position: absolute;
+            font-size: 15px;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top">
+            <div class="fist">获得小秘币<span class="money"></span></div>
+        </div>
+        <div class="secd">
+            <span>粉丝信息</span>
+        </div>
+        <div class="three">
+            <!--<div class="one">-->
+                <!--<div class="left">等级</div>-->
+                <!--<div class="right type" ></div>-->
+            <!--</div>-->
+            <div class="one">
+                <div class="left">账号</div>
+                <div class="right mobile" ></div>
+            </div>
+            <div class="one">
+                <div class="left">姓名</div>
+                <div class="right nick_name" ></div>
+            </div>
+            <div class="one">
+                <div class="left">推荐人</div>
+                <div class="right su_nick_name" ></div>
+            </div>
+            <!--<div class="one">-->
+                <!--<div class="left">消费方式</div>-->
+                <!--<div class="right pay_type" ></div>-->
+            <!--</div>-->
+            <div class="one">
+                <div class="left">消费时间</div>
+                <div class="right add_time" ></div>
+            </div>
+            <div class="one">
+                <div class="left">消费金额</div>
+                <div class="right all_money" ></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+    var thisid="{$thisid}";
+    var unionid="{$unionid}";
+    $(function () {
+        // 时间戳转换
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '/';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() +
+                1) :
+                date.getMonth() + 1) + '/';
+            var D = (date.getDate() < 10 ? '0' + date.getDate() +
+                ' ' : date.getDate() +
+                ' ');
+            var h = (date.getHours() < 10 ? '0' + date.getHours() +
+                ':' : date.getHours() +
+                ':');
+            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() +
+                ':' :
+                date.getMinutes() + ':');
+            var s = date.getSeconds();
+            return Y + M + D + h + m + s;
+        }
+        $.ajax({
+            type: "POST",
+            url: '/index.php?s=/Api/AppApi/yxm_fx_gx',
+            data: {
+                thisid: thisid,
+                unionid:unionid
+            },
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function(res) {
+                console.log(res);
+                if(res.ResultType==0){
+                    $(".add_time").text(timestampToTime(res.AppendData.add_time));
+                    $(".all_money").text(res.AppendData.consumption+"元");
+                    $(".mobile").text(res.AppendData.phone);
+                    $(".money").text(res.AppendData.money);
+                    $(".nick_name").text(res.AppendData.username);
+                    $(".order_sn").text(res.AppendData.order_sn);
+                    $(".pay_type").text(res.AppendData.consume);
+                    $(".su_nick_name").text(res.AppendData.rec_user);
+                }
+
+            },
+            error: function() {}
+        })
+
+    })
+    
+</script>
+</html>

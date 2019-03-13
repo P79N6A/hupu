@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <title>活动说明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.73rem;
+            background: url(__HOME_IMAGES__/meeting/ydb1.png) no-repeat;
+            background-size: 100% 100%;
+            padding-top: .3rem;
+        }
+
+        .logo {
+            width: .625rem;
+            height: .7rem;
+            margin: 0 auto;
+        }
+
+        .logo>img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title {
+            width: 90%;
+            height: .55rem;
+            line-height: .65rem;
+            font-size: .25rem;
+            color: #fff;
+            margin: 0 auto;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .date {
+            width: 100%;
+            height: .5rem;
+            color: #fff;
+            font-size: 0.14rem;
+            text-align: center;
+            line-height: 0.3rem;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 0.03rem;
+            height: 0.03rem;
+            background: #fff;
+            border-radius: 0.075rem;
+            margin: 0.03rem 0rem;
+        }
+
+        .here {
+            margin-right: 0.12rem;
+        }
+
+        .shuom {
+            width: 1rem;
+            height: .2rem;
+            color: #3A3A3A;
+            font-size: .14rem;
+            padding: .15rem .16rem;
+        }
+
+        .tinmer {
+            width: 100%;
+            height: .225rem;
+        }
+
+        .tinmer img {
+            width: .16rem;
+            height: .16rem;
+            padding: 0 0.05rem 0 .15rem;
+            background-size: 100% 100%;
+        }
+
+        .riqr {
+            font-size: .16rem;
+            color: #1A1A1A;
+            padding: 0 .05rem;
+            font-weight: 400;
+        }
+
+        .tiimer {
+            width: 100%;
+            height: .225rem;
+        }
+
+        .tiimer img {
+            width: .16rem;
+            height: .16rem;
+            padding: 0 0.05rem 0 .15rem;
+            background-size: 100% 100%;
+        }
+
+        .riiqr {
+            font-size: .16rem;
+            color: #FF9702;
+            padding: 0 .05rem;
+            font-weight: 400;
+        }
+
+        .tiemer {
+            width: 100%;
+            height: .225rem;
+            margin: .315rem 0;
+        }
+
+        .tiemer img {
+            width: .16rem;
+            height: .16rem;
+            padding: 0 0.05rem 0 .15rem;
+            background-size: 100% 100%;
+        }
+
+        .beiz {
+            color: #989898;
+            font-size: .12rem;
+            text-align: left;
+            padding: 0 .52rem;
+        }
+
+        .middle {
+            width: 100%;
+            padding: .1rem 0;
+            border-bottom: 2px solid rgba(151, 151, 151, 0.16);
+        }
+
+        .huiyi {
+            color: #3A3A3A;
+            font-weight: 400;
+            font-size: .14rem;
+            padding: .2rem .12rem;
+        }
+
+        .hycont {
+            width: 95%;
+            font-weight: 400;
+            margin: 0 auto;
+            color: #1A1A1A;
+            height: 1.25rem;
+            overflow: scroll;
+
+        }
+
+        .dban {
+            bottom: 0;
+            width: 100%;
+            height: .58rem;
+            position: fixed;
+            background: #FAFAFA;
+        }
+        .dban span{
+            font-size:.2rem;
+            color:#FF9702;
+            line-height: .58rem;
+            padding:.28rem;
+        }
+        .surezf{
+            border:0;
+            color:#fff;
+            width:2.13rem;
+            height:.44rem;
+            outline:none;
+            font-size: .16rem;
+            text-align: center;
+            background:#33B7DA;
+            border-radius: .44rem;
+            float: right;
+            right: .2rem;
+            position: absolute;
+            top: .07rem;
+			
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="logo">
+            <img src="__HOME_IMAGES__/meeting/logo.png" alt="" />
+        </div>
+        <div class="title">洋小秘全球合伙人年终大会</div>
+        <div class="date">
+            <span>中国</span>
+            <span class="dot"></span>
+            <span class="here">亨通凯莱度假酒店</span>
+            <span> 2019年1月14日—16日</span>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="shuom">活动说明</div>
+        <div class="tinmer">
+            <img src="/Public/Home/images/meeting/shijian.png" alt="">
+            <span class="riqr"> 2019年1月14日—16日</span>
+        </div>
+        <div class="tiemer">
+            <img src="/Public/Home/images/meeting/dizhi.png" alt="">
+            <span class="riqr"></span>
+        </div>
+        <div class="tiimer">
+            <img src="/Public/Home/images/meeting/qian.png" alt="">
+            <span class="riiqr"></span>
+        </div>
+        <div class="beiz">费用详情说明请见下方。</div>
+    </div>
+    <div class="botm">
+        <div class="huiyi">费用介绍</div>
+        <div class="hycont">
+
+        </div>
+    </div>
+    <div class="dban">
+        <span>￥***</span>
+        <button class="surezf" onclick="callpay()">确定支付</button>
+    </div>
+    <script type="text/javascript">
+        function iusub() {
+            $.ajax({
+                type: "POST",
+                url: "/index.php?s=/Api/ActivityCheck/get_activity_max",
+                data: {
+
+                },
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (res) {
+                    console.log(res.AppendData.a_price);
+                    $("div.tiemer span.riqr").text(res.AppendData.s_activityadress);
+                    $("div.botm > div.hycont").text(res.AppendData.a_price_dis);
+
+                },
+                error: function () {
+
+                }
+            })
+
+        }
+
+        $(function () {
+            var price='{$price}';
+            $("div.dban span").text("￥" +price);
+            $("div.tiimer span.riiqr").text("￥"+price);
+            iusub();
+        })
+    </script>
+    <script type="text/javascript">
+        function jsApiCall() {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {$pay_info.pra},
+                function (res) {
+                    WeixinJSBridge.log(res.err_msg);
+                    if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                        window.location.href = "/index.php?s=/Home/Conference/photograph.html&nameid={$nameid}";
+                        $.cookie('type','2', { expires: 7 });
+                    } else if (res.err_msg == "get_brand_wcpay_requeset:cance") {
+                        alert("您已经支付成功");
+                    }
+                }
+            );
+        }
+
+        function callpay() {
+            jsApiCall();
+        }
+    </script>
+
+
+</body>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>
+</html>

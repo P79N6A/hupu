@@ -1,0 +1,71 @@
+<?php
+/** 卡片管理 */
+namespace app\home\controller;
+
+use app\api\logic\User  as userLogic;
+
+class NewCard extends Controller {
+
+    /**
+     *新的我的V网
+     */
+    public function myCard()
+    {
+        $this->assign('isshare',1);
+        if(input('get.unionid')){
+            $user_id = Db::table('s_user_info')->where(array('unionid'=>input('get.unionid')))->getField('id');
+        }else{
+            $user_id = input('get.id');
+        }
+        if (!$user_id) {
+            header("location:".url("Home/Mycenter/login"));die;
+        }
+
+        $this->assign("user_id",$user_id);
+        $this->no_my = 1;
+        //添加浏览量
+        $user_logic = new userLogic();
+        $style = Db::table('s_user_info')->where(array('id'=>$user_id))->getField('style');
+        $data= $user_logic->getData($user_id,'',5);
+
+        $this->title = $data['nick_name'] . "的V网";
+        $this->isdisplay = 0;
+        //新版V网
+        $user_img = Db::table('s_user_img')->where(array('user_id'=>$data['id']))->order('sort asc')->select();
+        if($user_img){
+        	$data['background_img'] = $user_img;
+        }
+        
+        $data['img_num'] = count($data['background_img']);
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $this->assign('share_url', $url);
+
+        $this->assign('sharetitle', $data['nick_name']);
+        $contents = cutstr_html($data['share_my_introduct']);
+        $contents =str_replace('"', '\'', $contents);
+        $this->assign('desc', preg_replace('/\s/is','', $contents));
+
+        if(substr($data['headimg'],0,4) == 'http'){
+            $imgUrl = $data['headimg'];
+        }else{
+            $imgUrl = 'http://'.$_SERVER['HTTP_HOST'].$data['headimg'];
+        }
+
+        $this->popularity = Db::table('s_visit_log')->where(array('object_id'=>$user_id,'add_time'=>array('egt',strtotime(date('Y-m-d',time())))))->count();
+        $this->all_popularity = Db::table('s_visit_log')->where(array('object_id'=>$user_id))->count();
+        $this->assign('imgUrl', $imgUrl);
+        $this->data_count = count($data['UserContentList'])/3;//三个一排
+        $data['share_my_introduct'] = str_replace("\n","<br/>",$data['share_my_introduct']);
+        $this->data = $data;
+        $this->assign('userInfo', array());
+        //首页产品
+        $product = Db::table('s_product')->field('id,cover_img,title')->where(array('is_home'=>1,'user_id'=>$user_id))->select();
+        $product_num = Db::table('s_product')->field('id,cover_img,title')->where(array('is_home'=>1,'user_id'=>$user_id))->count();
+        $this->product = $product;
+        $this->product_num = $product_num;
+        $this->assign('share_host', config('SHARE_HOST'));
+        return  $this->fetch('Card/NewMyCard');
+    }
+}

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>V网夹</title>
+		<link rel="stylesheet" href="__HOME_CSS__/vhome/vwebclip/style_v.css">
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="__HOME_JS__/jquery.charfirst.pinyin.js"></script>
+		<script type="text/javascript" src="__HOME_JS__/vhome/vwebclip/sort.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #f2f2f2;
+			}
+			
+			.top {
+				width: 100%;
+				height: 2rem;
+				display: flex;
+				color: #666;
+				font-size: 0.65rem;
+				margin: 0 auto;
+				position: fixed;
+				top:0;
+				left:0;
+				background: #fff;
+			}
+			
+			.t_left {
+				width: 22%;
+				height: 100%;
+				line-height: 2rem;
+				font-weight: 600;
+				text-align: center;
+			}
+			
+			.t_left>a{
+				display: block;
+				width: 100%;
+				height: 100%;
+				color:#666;
+			}
+			
+			.t_cen {
+				width: 63.5%;
+				height: 1.15rem;
+				margin: 0.425rem 0;
+				background: #F6F6F6;
+				overflow: hidden;
+			}
+			
+			.t_right {
+				width: 14.5%;
+				height: 100%;
+				line-height: 2rem;
+				text-align: center;
+			}
+			
+			.sort_box{
+				width: 100%;
+				margin-top: 2rem;
+				margin-bottom: 2.9rem;
+			}
+			
+			.c_left {
+				display: block;
+				width: 12%;
+				height: 100%;
+				text-align: right;
+				float: left;
+				line-height: 1.15rem;
+			}
+			
+			.c_left>img {
+				width: 0.8rem;
+				height: 0.8rem;
+				margin: 0.175rem 0;
+			}
+			
+			.c_right {
+				display: block;
+				width: 67%;
+				height: 100%;
+				float: left;
+				margin-left: 5%;
+			}
+			
+			.c_right>input {
+				width: 100%;
+				height: 1.15rem;
+				border: none;
+				outline: none;
+				background: none;
+				line-height: 1.15rem;
+				font-size: 0.6rem;
+				color: #333;
+			}
+			
+			input::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #C5C5C5;
+				/* placeholder字体大小  */
+				font-size: 0.6rem;
+			}
+			
+			.sort_letter {
+				width: 90%;
+				padding-left: 0rem;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #666;
+				font-size: 0.7rem;
+				border-bottom: 0.025rem solid #E7E7E7;
+				margin: 0 auto;
+				background: #fff;
+			}
+			/*.sort_letter {
+				width: 85%;
+				padding-left: 0rem;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				color: #666;
+				font-size: 0.7rem;
+				border-bottom: 0.025rem solid #E7E7E7;
+				float:left;
+				background: #fff;
+			}*/
+			
+			.sort_letter:first-child {
+				margin-top: 0rem;
+			}
+			/*.chat {
+				width: 25%;
+				height: 100%;
+				float: left;
+			}*/
+			
+			.chat {
+				width: 24%;
+				height: 100%;
+				float: left;
+			}
+			
+			.c_a {
+				display: block;
+				width: 3.2rem;
+				height: 1.3rem;
+				border-radius: 0.65rem;
+				font-size: 0.6rem;
+				color: #fff;
+				text-align: center;
+				line-height: 1.3rem;
+				background: #32CEA0;
+				margin: 1.525rem 0;
+			}
+			
+			.ope {
+				width: 31%;
+				height: 100%;
+				float: left;
+				display: flex;
+				background: #f2f2f2;
+			}
+			
+			.notes {
+				width: 50%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.del {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.notes>img {
+				width: 1.05rem;
+				height: 1.05rem;
+				margin: 1.65rem 0;
+			}
+			
+			.del>img {
+				width: 1.05rem;
+				height: 1.05rem;
+				margin: 1.65rem 0;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 301;
+				display: none;
+			}
+			
+			.boxs {
+				width: 85%;
+				height: auto;
+				border-radius: 0.2rem;
+				background: #fff;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-moz-transform: translateX(-50%) translateY(-50%);
+				-ms-transform: translateX(-50%) translateY(-50%);
+				transform: translateX(-50%) translateY(-50%);
+				z-index: 302;
+				display: none;
+			}
+			
+			.btn {
+				width: 100%;
+				height: 2.625rem;
+				display: flex;
+				border-top: 0.05rem solid #f0f0f0;
+			}
+			
+			.bs_left {
+				width: 49%;
+				height: 100%;
+				border-right: 0.05rem solid #f0f0f0;
+				text-align: center;
+				line-height: 2.625rem;
+				color: #5F5F5F;
+				font-size: 0.8rem;
+			}
+			
+			.bs_right {
+				width: 50%;
+				height: 100%;
+				text-align: center;
+				line-height: 2.625rem;
+				color: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 550;
+			}
+			
+			.san {
+				width: 100%;
+				height: 4.5rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #333;
+				line-height: 4.5rem;
+			}
+			/*选中按钮*/
+			
+			.xz {
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 0.05rem solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				margin-top: 1.725rem;
+				/*display: none;*/
+			}
+			
+			.xz:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			/*选中按钮*/
+			
+			.save {
+				width: 100%;
+				height: 2.9rem;
+				background: #f8f8f8;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				z-index: 301;
+				display: none;
+			}
+			
+			.s_cen {
+				width: 90%;
+				height: 2rem;
+				background: #32CEA0;
+				border-radius: 0.2rem;
+				margin: 0.45rem auto;
+				line-height: 2rem;
+				color: #fff;
+				font-size: 0.7rem;
+				font-weight: 600;
+				text-align: center;
+			}
+			
+			.links {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+			}
+			
+			.box_cen {
+				width: 100%;
+				height: 4.35rem;
+				overflow: hidden;
+			}
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			.long{
+				display: block;
+				width: 0.025rem;
+				height: 1rem;
+				background: #e2e2e2;
+				float:left;
+				margin: 0.075rem 0;
+			}
+			.sou{
+				display: block;
+				width: 1.875rem;
+				height: 100%;
+				text-align: center;
+				font-size:0.55rem;
+				color:#32CEA0;
+				float:left;
+				line-height: 1.15rem;
+			}
+			.box_big{
+				width: 100%;
+				height: 100%;
+				background: #fff;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="bgc">
+			<div class="top">
+				<div class="t_left"><a href="{:U('Home/Vwebclip/discern')}">拍照收纳</a></div>
+				<div class="t_cen">
+					<span class="c_left"><img src="__HOME_IMAGES__/newvnet/vweb/copy@2x.png" alt="" /></span>
+					<span class="c_right"><input class="words" type="text" value="" placeholder="请输入关键词"/></span>
+					<span class="long"></span>
+					<span class="sou">搜索</span>
+				</div>
+				<div class="t_right">管理</div>
+			</div>
+		</div>
+		<div id="letter"></div>
+		<div class="sort_box">
+
+		</div>
+		<div class="initials">
+			<ul>
+
+			</ul>
+		</div>
+		<div class="mask"></div>
+		<div class="model"></div>
+		<div class="boxs">
+			<div class="san">是否确认删除好友？</div>
+			<div class="btn">
+				<div class="bs_left">取消</div>
+				<div class="bs_right">确定</div>
+			</div>
+		</div>
+		<div class="save">
+			<div class="s_cen">删除</div>
+		</div>
+		<script>
+			//uname 我的手机号
+			//friend 我想要聊天的手机号
+			var keyword='{$keyword}';
+            var unionid = "{$unionid}";
+            var myphone='{$myphone}'
+			$("span.sou").on("click",function () {
+				keyword=$("input.words").val();
+				init_ele();
+
+            })
+            init_ele();
+			$("div.chat").on("click",document,function () {
+				console.log(1);
+              var   phone=$(this).attr("data-phone");
+            //  alert("http://mingxin365.com:2001/webdemo/h5/login.html?uname="+myphone+"&friend="+);
+                window.location.href="http://mingxin365.com:2001/webdemo/h5/login.html?uname="+myphone+"&friend="+phone;
+                if(window.event){
+                    event.cancelBubble  = true;
+                }else{
+                    event.stopPropagation();
+                }
+            })
+            $(".sort_box").on("click","div.sort_list",function () {
+                console.log(1);
+                var   id=$(this).attr("data-id");
+                var   unionid=$(this).attr("data-unionid");
+                //  alert("http://mingxin365.com:2001/webdemo/h5/login.html?uname="+myphone+"&friend="+);
+                //
+				if($(this).attr("data-unionid")=="" || $(this).attr("data-unionid")==null || $(this).attr("data-unionid")==undefined || $(this).attr("data-unionid")=="null"){
+                    window.location.href="/index.php?s=Home/Vwebclip/discern&card_id="+id;
+                    return;
+				}else{
+				  //  alert("功能开发中");
+                    //window.location.href="/index.php?s=/Home/Vhome/card_jump";
+				}
+                if(window.event){
+                    event.cancelBubble  = true;
+                }else{
+                    event.stopPropagation();
+                }
+            })
+
+            function init_ele() {
+                var list = "";
+                $.ajax({
+                    type: 'post',
+                    url: '/index.php?s=/Api/Card/get_card_wallet',
+                    dataType: 'json',
+                    data: {
+                        unionid: unionid,
+                        keyword:keyword
+                    },
+                    async: false,
+                    success: function(res) {
+                        console.log(res)
+                        if(res.ResultType == 0) {
+                            var img='';
+                            $(res.AppendData).each(function(v, i) {
+                                img=  i.headimg==null? 'https://wap.yxm360.com/Public/Home/images/headimg/girl_2.png':i.headimg
+                                list += '<div class="box_cen">'
+                                list += '<div class="box_big" >'
+                                list += '<div class="num">'
+                                list += '<label class="checkBox"><input class="xz" did="' + i.id + '"  type="checkbox"></label>'
+                                list += '</div>'
+
+                                list += '<div class="sort_list" data-id="' + i.id + '" data-unionid="' + i.unionid + '">'
+                                list += '<div class="num_logo">'
+                                list += '<img src="' +img + '" alt="">'
+                                list += '</div>'
+                                list += '<div class="m_name">'
+                                list += '<div class="num_name">' + i.realname + '</div>'
+                                list += '<div class="phone">' + i.phone + '</div>'
+                                list += '</div>'
+                                if(i.unionid!=""&&i.unionid!=null){
+                                    list += '<div class="chat" data-phone=\"' + i.phone + '\">'
+                                    list += '<div class="c_a">聊天</div>'
+                                    list += '</div>'
+                                }
+                                list += '</div>'
+                                list += '</div>'
+                                list += '</div>'
+                            })
+                        }
+                        $(".sort_box").html(list);
+                    },
+                    error: function() {
+                        console.log("错误")
+                    }
+                });
+
+            }
+            //http://mingxin365.com:2001/webdemo/h5/login.html?uname=13524161046&friend=15859729766
+			$(".bs_left").on("click", function() {
+				$(".mask").hide();
+				$(".boxs").hide();
+			})
+			$(".mask").on("click", function() {
+				$(".mask").hide();
+				$(".boxs").hide();
+			})
+			$(".save").on("click", function() {
+				$(".mask").show();
+				$(".boxs").show();
+			})
+			$(".del").on("click", function() {
+				$(".mask").show();
+				$(".boxs").show();
+			});
+
+			var flag = true;
+			$(".t_right").on("click", function() {
+				if(flag) {
+					$(".num").show();
+					$(".t_right").html('取消');
+					$(".sort_list").css({
+						"width": "85%",
+						"margin": "none",
+						"float": "left",
+					})
+					$(".sort_letter").css({
+						"width": "85%",
+						"margin": "0 0 0 15%",
+					})
+					$(".sort_box").css("margin-bottom", "3rem")
+					$(".save").show();
+
+					flag = false;
+				} else {
+					$(".num").hide();
+					$(".sort_list").css({
+						"width": "90%",
+						"margin": "0 auto",
+						"float": "none",
+					})
+					$(".sort_letter").css({
+						"width": "90%",
+						"margin": "0 auto",
+						"float": "none",
+					})
+					$(".save").hide();
+					$(".sort_box").css("margin-bottom", "0rem")
+					flag = true;
+					$(".t_right").html('管理')
+				}
+
+			})
+
+
+
+			var c_id='';
+			$(".bs_right").on("click", function() {
+				//				$(".mask").hide();
+				//				$(".boxs").hide();
+				$(".xz:checked").each(function(m,n) {
+					c_id += $(this).attr("did")+',';
+				})
+				//var unionid = "{$unionid}";
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/Card/del_card_linkman',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						card_id:c_id
+					},
+					async: false,
+					success: function(res) {
+//						console.log(res)
+						if(res.ResultType == 0) {
+							$(".mask").hide();
+							$(".boxs").hide();
+							$(".model").show();
+							$(".model").html("删除成功");
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							setTimeout(function() {
+								window.location.reload()
+							}, 1800)
+						}
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+
+			
+			
+			//			$(document).ready(function() {
+			//				var txt = $(".words");
+			//				$(this).keyup(function(e) {
+			//					if(e.keyCode == 13) {
+			//						txt.focus();
+			//					}
+			//
+			//				});
+			//				txt.keyup(function(e) {
+			//					if(e.keyCode == 13) {
+			//						var unionid = "{$unionid}";
+			//						var keyword = $(".words").val();
+			//						var lists = "";
+			//						$.ajax({
+			//							type: 'post',
+			//							url: 'index.php?s=/Api/Card/get_card_wallet',
+			//							dataType: 'json',
+			//							data: {
+			//								unionid: unionid,
+			//								keyword: keyword
+			//							},
+			//							async: false,
+			//							success: function(res) {
+			//								if(res.ResultType == 0) {
+			//									$(res.AppendData).each(function(k, n) {
+			//										lists += '<div class="box_cen">'
+			//										lists += '<div class="num">'
+			//										lists += '<label class="checkBox"><input class="xz" type="checkbox"></label>'
+			//										lists += '</div>'
+			//										lists += '<div class="sort_list">'
+			//										lists += '<div class="num_logo">'
+			//										lists += '<img src="' + n.headimg + '" alt="">'
+			//										lists += '</div>'
+			//										lists += '<div class="m_name">'
+			//										lists += '<div class="num_name">' + n.realname + '</div>'
+			//										lists += '<div class="phone">' + n.phone + '</div>'
+			//										lists += '</div>'
+			//										lists += '<div class="chat">'
+			//										lists += '<a href="javascript:;">聊天</a>'
+			//										lists += '</div>'
+			//										lists += '</a>'
+			//										lists += '</div>'
+			//										lists += '</div>'
+			//									})
+			//								}
+			//								$(".sort_box").html(lists);
+			//							},
+			//							error: function() {
+			//								console.log("错误")
+			//							}
+			//						});
+			//					}
+			//
+			//				});
+			//			});
+		</script>
+
+	</body>
+
+</html>

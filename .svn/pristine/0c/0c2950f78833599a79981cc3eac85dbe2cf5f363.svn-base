@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="__AGENCY__/wap/public.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link  href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/wap/public.js"></script>
+    <title>申请展示页</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+        }
+        /* 公共类 */
+        .pd {
+            padding: 0 .16rem;
+            box-sizing: border-box;
+            background: #fff;
+        }
+
+        .tip {
+            font-size: .15rem;
+            font-weight: bold;
+            padding: .14rem 0;
+            box-sizing: border-box;
+        }
+        .pl{
+            justify-content: flex-start !important;
+        }
+
+        /* 公共类结束 */
+
+
+        .card_box {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            padding-bottom: .4rem;
+
+        }
+
+        .card_box .item {
+            width: 1.6rem;
+            height: 1rem;
+            text-align: center;
+
+        }
+
+        .card_box .item p {
+            color: #7F7F7F;
+            padding: .05rem 0;
+        }
+
+        .card_box .item img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .dls {
+            margin-top: .08rem;
+        }
+
+        .ht_box {
+            display: flex;
+            justify-content: space-around;
+            padding-bottom: .4rem;
+
+        }
+
+        .ht_box .item {
+            width: 1.05rem;
+            height: .72rem;
+        }
+
+        .ht_box .item img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ht_box .item p {
+            text-align: center;
+            padding: .05rem 0;
+            color: #DDAE59;
+
+        }
+
+        .main{
+            margin-top: .08rem;
+        }
+
+         .user_item{
+             width: 100%;
+             border-bottom: 1px solid rgba(244,244,244,1);
+         }
+
+          .user_item div:nth-child(1){
+              width: 35%;
+              height: .5rem;
+              line-height: .5rem;
+              color: #7E818A;
+          }
+          .user_item div:nth-child(2){
+              width: 65%;
+              height: .5rem;
+              line-height: .5rem;
+              color: #373737;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              font-weight: bold;
+          }
+          .user_item textarea{
+              width: 65%;
+              height: .5rem;
+              max-height: .5rem;
+              border: 0;
+              resize: none;
+              outline: none;
+              font-size: .14rem;
+              padding: .05rem .05rem;
+              box-sizing: border-box;
+          }
+
+          .address{
+              margin-top: .08rem;
+          }
+          .cos{
+              color: #EF5448;
+          }
+
+          .error_tip{
+              padding-bottom: .1rem;
+          }
+        #dx{
+            width: 95%;
+            height: 95%;
+            position: fixed;
+            top: 0;
+            left:0;
+            margin-top: 2.5%;
+            margin-left: 2.5%;
+            z-index: 999;
+            background: #fff;
+            border-radius: .04rem;
+        }
+        #dx .dx-box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #dx .dx-box .ddd{
+            width: 3rem;
+            height: 3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.5rem;
+            margin-top: -1.5rem;
+        }
+
+        #dx .dx-box .del{
+            width: .14rem;
+            height: .14rem;
+            position: absolute;
+            right: .12rem;
+            top: .12rem;
+        }
+
+        #dx .dx-box p{
+            position: absolute;
+            bottom: .5rem;
+            width: 100%;
+            text-align: center;
+        }
+        .mask1{width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 998;
+        }
+        .mint-button--primary {
+            color: #fff;
+            background-color: #26a2ff;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+
+
+    <div class="header pd">
+        <p class="tip">身份证信息</p>
+        <div class="card_box">
+            <div class="item"   v-for="(item,index) in pojo.nagent_idimgs" @click="imgFa(item.url)">
+                <img :src="item.url" alt="">
+                <p v-if="index==0">正面</p>
+                <p v-if="index==1">反面</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="dls pd">
+        <p class="tip">代理商合同</p>
+        <div class="ht_box">
+
+            <div class="item"   v-for="(item,index) in pojo.nagent_contracts" @click="imgFa(item.url)">
+                <img :src="item.url" alt="">
+                <p >合同{{index+1}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="dls pd">
+        <p class="tip">转账记录</p>
+        <div class="ht_box">
+            <div class="item"   v-for="(item,index) in pojo.nagent_transfer_record" @click="imgFa(item.url)">
+                <img :src="item.url" alt="">
+                <p >转账记录{{index+1}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="dls pd">-->
+        <!--<p class="tip">打款凭证</p>-->
+        <!--<div class="ht_box">-->
+            <!--<div class="item"   v-for="(item,index) in pojo.payment_volucher_img" @click="imgFa(item.url)">-->
+                <!--<img :src="item.url" alt="">-->
+                <!--<p >打款凭证{{index+1}}</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="dls pd">
+        <p class="tip">打款凭证</p>
+        <div class="ht_box pl">
+            <div class="item"   v-for="(item,index) in pojo.payment_voucher_img" @click="imgFa(item.url)">
+                <img :src="item.url" alt="">
+                <p >打款凭证{{index+1}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="dls pd">
+        <p class="tip">学习考核</p>
+        <div class="ht_box pl">
+            <div class="item"   v-for="(item,index) in pojo.study_assessment_img" @click="imgFa(item.url)">
+                <img :src="item.url" alt="">
+                <p >考核</p>
+            </div>
+        </div>
+    </div>
+    <!-- 申请人信息 -->
+    <div class="main pd">
+        <p class="tip">申请人信息</p>
+        <div class="user_item clearfix">
+            <div class="fl">申请人姓名</div>
+            <div class="fl" v-text="pojo.nagent_name">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">注册手机号</div>
+            <div class="fl"  v-text="pojo.nagent_phone">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">身份证号</div>
+            <div class="fl" v-text="pojo.nagent_id">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">电子邮箱</div>
+            <div class="fl"  v-text="pojo.nagent_milebox">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">微信号</div>
+            <div class="fl" v-text="pojo.nagent_wechar">*******</div>
+        </div>
+    </div>
+    <!-- 地址 -->
+    <div class="address pd">
+        <div class="user_item clearfix">
+            <div class="fl">代理类型</div>
+            <div class="fl" v-text="pojo.nagent_type">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">合同编号</div>
+            <div class="fl" v-text="pojo.contract_name">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">所在省份</div>
+            <div class="fl" v-text="pojo.nagent_province">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">所在市</div>
+            <div class="fl" v-text="pojo.nagent_city">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">详细地址</div>
+            <textarea class="fl" v-text="pojo.nagent_dis">*******</textarea>
+        </div>
+
+    </div>
+    <!-- 银行 -->
+    <div class="main pd">
+        <div class="user_item clearfix">
+            <div class="fl">银行账户名</div>
+            <div class="fl" v-text="pojo.nagent_back_account_name">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">开户行名称</div>
+            <div class="fl" v-text="pojo.nagent_bank_name">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">开户行账号</div>
+            <div class="fl" v-text="pojo.nagent_bank_account">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">备注</div>
+            <textarea class="fl" style="background:#F2F2F2;height:.66rem !important;max-height:.66rem;margin-bottom: .3rem;margin-top: .17rem;border:1px solid rgba(242,242,242,1)" v-text="pojo.remarks">*****</textarea>
+        </div>
+    </div>
+    <div class="main pd">
+        <p class="tip">推荐人信息</p>
+        <div class="user_item clearfix">
+            <div class="fl">推荐人姓名</div>
+            <div class="fl" v-text="pojo.superior_name">******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">推荐人手机号</div>
+            <div class="fl"  v-text="pojo.superior_phone">*******</div>
+        </div>
+        <div class="user_item clearfix">
+            <div class="fl">推荐人等级</div>
+            <div class="fl" v-text="pojo.superior_type">******</div>
+        </div>
+    </div>
+    <!-- 错误修改 -->
+    <div class="main pd" v-show="isshow">
+        <p class="tip cos">* 错误信息</p>
+        <div class="error_tip" v-for="(item,index) in errorlist">{{item.dis}}</div>
+    </div>
+
+
+
+    <div style="width:100%" >
+        <mt-button type="primary"  v-show="isshow" @click="hrefd">修改</mt-button></div>
+
+    <div class="mask1" v-show="maskisfalg"></div>
+
+    <!-- 动画 -->
+    <div id="dx"  v-show="maskisfalg">
+        <div class="dx-box">
+             <img class="del" src="/Public/Home/images/inco_bianji_de@2x.png"  @click="stopmask">
+            <img class="ddd" :src="maskurl" alt="">
+        </div>
+    </div>
+
+</div>
+<script>
+
+
+
+    var userobj= new Vue({
+        el:"#app",
+        data:{
+            maskisfalg:false,
+            maskurl:'',
+            isshow:false,
+            errorlist:[],
+            pojo:{
+                nid: '',// int(11) NOT NULL,
+                nagent_type_id:'',
+                nagent_name: '',// '代理商姓名',
+                nagent_phone: '',// '代理商申请人手机号',
+                nagent_id: '',// '代理商申请人ID',
+                nagent_wechar: '',// '代理商微信',
+                nagent_type: '',// '代理商类型',
+                nagent_milebox: '',// '代理商邮箱',
+                nagent_province: '',// '代理商所在地区的省份',
+                nagent_area: '',// '代理商地区',
+                nagent_city: '',// '城市',
+                nagent_province_id: '',// '代理商所在地区的省份',
+                nagent_area_id: '',// '代理商地区',
+                nagent_city_id: '',// '城市',
+                nagent_back_account_name: '',// '代理商银行开户名',
+                nagent_bank_name: '',// '开户行名',
+                nagent_bank_account: '',// '银行卡卡号',
+                remarks: '',// '备注',
+                superior_name: '',//,
+                superior_phone: '',// '推荐人手机号',
+                nagent_contracts:[],// '代理商合同图片地址集',
+                nagent_transfer_record: [],// '转账图片记录集',
+                payment_voucher_img:[],
+                nagent_idimgs:[],// '代理商身份证正反面地址',
+                superior_type: '',// '代理商类型',
+                superior_type_id:'',
+                old_starte: '',// '旧状态',
+                nstate: '',// '状态',
+                createTime: '',// '创建时间',
+                two_editTime: '',// '第二次修改时间',
+                one_editTime: '',// '第一次修改状态时间',
+                three_editTime: '',// '第三次修改时间',
+                create_id: '',// DEFAULT NULL,
+                three_id: '',//DEFAULT NULL,
+                two_id: '',// DEFAULT NULL,
+                one_id: '',// DEFAULT NULL COMMENT '第一次修改id',
+                nagent_dateofbirth: '',// '代理商生日',
+                sex: '',// '年龄',
+                study_assessment_img: [],//
+                expiration_of_contract_time: '',// '合同到期时间',
+                contract_number: '',// '合同编号',
+                contract_name:'',
+                payable_amount: '',// '应交金额',
+                sj_payable_amount: '',//
+                uuid: '',//
+                nagent_dis: ''
+            },
+            //身份证图片
+            nagent_idimgs_zhen:'',
+            nagent_idimgs_fan:'',
+            //
+            typelist: [{
+                value: 1,
+                label: '创投'
+            }, {
+                value: 2,
+                label: '创业家'
+            },
+                {
+                    value: 3,
+                    label: '创业导师'
+                }, {
+                    value: 4,
+                    label: '创业领袖'
+                }],
+            contractlist:[],
+            region_id:'',
+            isfalg:true,
+
+        },
+        methods:{
+            imgFa:function(url){
+                var t=this;
+                t.maskisfalg=true;
+                t.maskurl=url;
+
+            },
+            stopmask:function(){
+                var t=this;
+                t.maskisfalg=false;
+            },
+            hrefd:function(){
+                var t=this;
+                window.location.href="/index.php?s=/Home/WapAgent/Agent_open_update&pojouuid="+t.pojo.uuid;
+            },
+            initData:function () {
+                var t=this;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/find_agent_by_uuid",
+                    data: {
+                        "uuid":t.pojo.uuid
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        isRole(res);
+                        if(res.ResultType==0){
+
+                            t.pojo=res.AppendData;
+                            t.pojo.nagent_contracts=JSON.parse(t.pojo.nagent_contracts);
+                            t.pojo.nagent_transfer_record=JSON.parse(t.pojo.nagent_transfer_record);
+                            t.pojo.nagent_idimgs=JSON.parse(t.pojo.nagent_idimgs);
+                            t.pojo.study_assessment_img=JSON.parse(t.pojo.study_assessment_img);
+                            if(t.pojo.hasOwnProperty("payment_voucher_img") && t.pojo.payment_voucher_img!=null && t.pojo.payment_voucher_img!=undefined && t.pojo.payment_voucher_img!="" && t.pojo.payment_voucher_img!=" "){
+                                //console.log(typeof t.pojo.payment_voucher_img);
+                                t.pojo.payment_voucher_img=JSON.parse(t.pojo.payment_voucher_img);
+                            }else{
+                                t.pojo.payment_voucher_img=[];
+                            }
+                            // console.log(t.pojo.payment_voucher_img);
+                            // console.log(typeof t.pojo.payment_voucher_img);
+                            // for (var a in t.pojo.payment_voucher_img) {
+                            //     console.log(t.pojo.payment_voucher_img[a].url)
+                            // }
+                            // t.pojo.study_assessment_img=[];
+                            // t.pojo.nagent_idimgs=[];
+                            // console.log( t.pojo.payment_volucher_img);
+                            // console.log(typeof t.pojo.payment_volucher_img);
+                            // console.log( 1);
+                            // console.log( t.pojo.nagent_idimgs);
+                            // console.log(typeof  t.pojo.nagent_idimgs);
+                            // console.log( 2);
+                            // console.log( t.pojo.study_assessment_img);
+                            // console.log( 3);
+                            // console.log( t.pojo.nagent_idimgs==t.pojo.study_assessment_img);
+                            // console.log( t.pojo.nagent_idimgs==t.pojo.payment_volucher_img);
+                            if(t.pojo.nstate==9){
+                                t.isshow=true;
+                                t.initErrorList();
+                            }
+                        }else{
+                            t.$toast("查询失败");
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            },
+            initErrorList:function () {
+                var t=this;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/init_error_list",
+                    data: {
+                        "uuid":t.pojo.uuid
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+
+                        isRole(res);
+                        if(res.ResultType==0){
+
+                                t.errorlist=res.AppendData;
+                        }else{
+                            t.$toast("查询错误信息失败");
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            }
+        },
+        mounted:function () {
+            var t=this;
+            t.pojo.uuid='{$pojouuid}'
+            t.initData();
+
+
+        }
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>商圈</title>
+    <style>
+        body,html{
+            background: #eee;
+            padding-bottom: .5rem;
+        }
+
+        .header{
+            width: 100%;
+            height: .4rem;
+            background: #fff;
+            padding: .05rem .16rem;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 333;
+        }
+
+         .header_box{
+             width: 100%;
+             height: 100%;
+             z-index: 888;
+         }
+
+         .bbxx{
+            width: 100%;
+            height: 100%;
+            position: relative;
+         }
+
+            input[type="search"]{
+            -webkit-appearance:none;
+            }
+
+            input::-webkit-search-cancel-button {
+            display: none;
+            }
+
+         .header .search{
+             width: 100%;
+             height: 100%;
+             outline: none;
+             border: 0;
+             padding-left: .36rem;
+             box-sizing: border-box;
+             background: #eee;
+             line-height: .3rem;
+             font-size: .13rem;
+
+         }
+
+            .header img{
+                width: .12rem;
+                height: .12rem;
+                position: absolute;
+                left: .1rem;
+                top: 50%;
+                margin-top: -0.06rem;
+            }
+
+            .swiper-container{
+                width: 100%;
+                height: 1.875rem;
+                margin-top: .4rem;
+            }
+
+             .swiper-container .swiper-slide{
+                 width: 100%;
+                 height: 100%;
+             }
+
+              .swiper-container .swiper-slide a{
+                  display: block;
+                  width: 100%;
+                  height: 100%;
+              }
+
+               .swiper-container .swiper-slide a img{
+                   width: 100%;
+                   height: 100%;
+               }
+
+              .swiper-pagination-bullet-active{
+                  background: #32CEA0;
+              }
+
+              .occupation{
+                  padding: .2rem .15rem 0 .15rem;
+                  box-sizing: border-box;
+              }
+
+              .occupation_box{
+                  margin-bottom: .05rem;
+              }
+
+              .occupation_box .title{
+                  width: 100%;
+                  height: .3rem;
+                  line-height: .3rem;
+                  position: relative;
+                  text-indent: .1rem;
+                  margin-bottom: .12rem;
+              }
+
+               .occupation_box .title .line{
+                   height: .2rem;
+                   width: .03rem;
+                   background: #32cea0;
+                   position: absolute;
+                   top: 50%;
+                   left: 0;
+                   margin-top: -.1rem;
+               }
+
+               .list{
+                   width: 100%;
+                   display: flex;
+                   flex-wrap: wrap;
+               }
+
+            .list li{
+                padding: .05rem .15rem;
+                background: #F6F6F6;
+                margin-right: .08rem;
+                margin-bottom: .08rem;
+                color: #777777;
+                border-radius: .04rem;
+            }
+
+            /* 底部选项 */
+              .footer-bar{
+                        width: 100%;
+                        height: .5rem;
+                        background: #fff;
+                        box-shadow:0px 1px 2px 3px rgba(242,242,242,0.5);
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                    }
+
+                    .footer-bar .bar{
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                    }
+
+                    .footer-bar .bar li{
+                        flex: 1.2;
+                    }
+
+                    .footer-bar .bar li a{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .footer-bar .bar li a img{
+                        display: block;
+                        width: .16rem;
+                        height: .2rem;
+                        margin: .06rem auto .02rem auto;
+                    }
+
+                     .footer-bar .bar li a .img2{
+                         width: .21rem;
+                         height: .2rem;
+                     }
+                     .footer-bar .bar li a .img3{
+                         width: .2rem;
+                         height: .2rem;
+                     }
+                     .footer-bar .bar li a .img4{
+                         width: .19rem;
+                         height: .19rem;
+                     }
+
+                     .footer-bar .bar li a p{
+                         text-align: center;
+                         color: #C5C5C5;
+                     }
+
+                    .footer-bar .bar li:nth-child(3){
+                        flex: 1.5;
+                    }
+
+                       #Make{
+                        width: .8rem;
+                        height: .4rem;
+                        line-height: .4rem;
+                        font-size: .18rem;
+                        color: #fff;
+                        background: #32CEA0;
+                        border: 0;
+                        outline: none;
+                        text-align: center;
+                        margin: .05rem auto 0 auto;
+                        display: block;
+                        border-radius: .2rem;
+                    }
+
+                    /*.make{
+                        width: 100%;
+                        height: 100%;
+                        position: fixed;
+                        z-index: 999;
+                        top: 0;
+                        left: 0;
+                        background: rgba(246,246,246,0.2);
+                        display: none;
+                       
+                    }
+
+
+                     .make ul{
+                         display: flex;
+                         flex-wrap: wrap;
+                         justify-content: space-around;
+                         margin-top: 0.8rem;
+
+                     }
+
+                    .make ul li{
+                        width: 1.68rem;
+                        height: 1.2rem;
+                        margin-bottom: .16rem;
+                        
+                    }
+
+                     .make .close{
+                         width: .32rem;
+                         height: .32rem;
+                         margin: 0 auto;
+                         margin-top: .5rem;
+                     }
+
+                    .make .close img{
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .make ul li a{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .make ul li a img{
+                        width: 100%;
+                        height: 100%;
+                    }*/
+
+
+
+
+                .search_box_s{
+                    width: 100%;
+                    height: 100%;
+                    background: #fff;
+                    z-index: 2333;
+                    position: fixed;
+                    top: 0;
+                    display: none;
+                }
+
+                .div_tab{
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    padding-top: .4rem;
+                }
+
+                .search_box{
+                    width: 100%;
+                    height: .4rem;
+                    padding: .05rem .16rem;
+                    box-sizing: border-box;
+                    position: relative;
+                    border-bottom: 1px solid #F6F6F6;
+                    position: absolute;
+                    top: 0;
+                }
+
+                 .search_box input{
+                     width: 100%;
+                     height: 100%;
+                     border: 0;
+                     font-size: .12rem;
+                     background: #F6F6F6;
+                     outline: none;
+                     padding-left: .36rem;
+                     box-sizing: border-box;
+
+                 }
+
+                   .search_box img{
+                       width: .12rem;
+                       height: .12rem;
+                       position: absolute;
+                       top: 50%;
+                       margin-top: -0.06rem;
+                       left: .26rem;
+                   }
+
+                   .hunt{
+                       width: .38rem;
+                       height: .3rem;
+                       right: .16rem;
+                       background: #f6f6f6;
+                       position: absolute;
+                       top:.05rem;
+                       font-size: .13rem;
+                       color: #32cea0;
+                       border: 0;
+                       outline: none;
+                       border-left: 1px solid #E2E2E2;
+                   }
+
+                   .tap_list{
+                       width: 100%;
+                       padding-left: .24rem;
+                       box-sizing: border-box;
+
+                   }
+
+                   .tap_list li{
+                       width: 100%;
+                       height: .45rem;
+                       line-height: .45rem;
+                       border-bottom: 1px solid #F6F6F6;
+                       position: relative;
+                 
+                   }
+
+                   .search_icon{
+                       width: .12rem;
+                       height: .12rem;
+                       position: absolute;
+                       top: 50%;
+                       margin-top: -.06rem;
+                   }
+
+                     .tap_list li .center_box{
+                         width: 80%;
+                         overflow: hidden;
+                         text-overflow:ellipsis;
+                         white-space: nowrap;
+                         padding-left: .18rem;
+                         box-sizing: border-box;
+                         font-size: .17rem;
+                         cursor: pointer;
+                     }
+
+                     .icon_del{
+                         width: .1rem;
+                         height: .1rem;
+                         position: absolute;
+                         top: 50%;
+                         margin-top: -0.05rem;
+                         right: .16rem;
+                     }
+
+                     .active{
+                         color: #fff !important;
+                         background: #32cea0 !important;
+                     }
+
+                     .closes{
+                         width: .4rem;
+                         height: .4rem;
+                         position: absolute;
+                         bottom: 1rem;
+                         right: .5rem;
+                         z-index: 1;
+                     }
+
+                     .closes img{
+                         width: 100%;
+                         height: 100%
+                     }
+
+
+
+
+    
+    </style>
+</head>
+
+<body>
+    <div class="header vague">
+        <div class="header_box">
+            <div class="bbxx">
+                <input type="search" class="search" placeholder="请输入关键词" disabled >
+                <img src="__HOME_IMAGES__/search1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- 轮播图板块 -->
+    <div class="swiper-container vague">
+        <div class="swiper-wrapper">
+
+
+        </div>
+        <div class="swiper-pagination "></div>
+    </div>
+    <!-- 职位 -->
+    <div class="occupation vague">
+
+    </div>
+    <!-- 底部footer -->
+    <div class="footer-bar vague">
+        <ul class="bar">
+            <li>
+                <a href="/index.php?s=/Home/User/square.html">
+                    <img src="__HOME_IMAGES__/wh/wei.png" alt="">
+                    <p>广场</p>
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Trade/trad.html">
+                <img class="img2" src="__HOME_IMAGES__/wh/squan.png" alt="">
+                    <p style="color:#32CEA0;">商圈</p>
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Vmake/vmakee.html">
+                    <button id="Make">制作</button>
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Vhome/card_jump.html">
+                    <img class="img3" src="__HOME_IMAGES__/wh/table_icon_Template_default@2x.png" alt="">
+                    <p>V网</p>
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/User/usercenter.html">
+                    <img class="img4" src="__HOME_IMAGES__/wh/table_icon_my_default@2x.png" alt="">
+                    <p>我的</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 制作 -->
+    <!--<div class="make">
+        <ul>
+            <li>
+                <a href="/index.php?s=/Home/Vmake/vmakee.html">
+                    <img src="__HOME_IMAGES__/wh/Make_Entrance_V@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Copyv/vcopy.html">
+                    <img src="__HOME_IMAGES__/wh/make_entrance_copy@2x.png" alt="">
+                </a>
+            </li>
+            
+            <li>
+                <a href="/index.php?s=/Home/Poster/poster_index.html">
+                    <img src="__HOME_IMAGES__/wh/make_entrance_poster@2x.png" alt="">
+                </a>
+            </li>
+          
+            <li>
+                <a href="/index.php?s=/Home/Greeting/greet_index.html">
+                    <img src="__HOME_IMAGES__/wh/make_entrance_festival@2x.png" alt="">
+                </a>
+            </li>
+           
+            <li>
+                <a href="/index.php?s=/Home/Photo/photo_index">
+                    <img src="__HOME_IMAGES__/wh/make_entrance_album@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Poster/lockwallpaper">
+                    <img src="__HOME_IMAGES__/wh/make_entrace_wallpaper@2x.png" alt="">
+                </a>
+            </li>
+        </ul>
+        <div class="close">
+            <img src="__HOME_IMAGES__/wh/make_icon_close@2x.png" alt="">
+        </div>
+    </div>-->
+
+    <!-- 搜索search -->
+    <div class="search_box_s">
+        <div class="div_tab">
+            <div class="search_box">
+                <input class="solo" type="search" placeholder="请输入年龄/行业/性别查找">
+                <img src="__HOME_IMAGES__/search.png" alt="">
+                <button class="hunt">搜索</button>
+            </div>
+            <ul class="tap_list">
+            
+            </ul>
+            <div class="closes">
+                <img src="__HOME_IMAGES__/wh/make_icon_close@2x.png" alt="">
+            </div>
+
+        </div>
+
+    </div>
+
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    $(function () {
+        // 制作
+
+//      $("#Make").on("click", function () {
+//          $(".vague").css({
+//              "-webkit-filter": "blur(8px)",
+//              "-moz-filter": "blur(8px)",
+//              "-o-filter": "blur(8px)",
+//              "-ms-filter": "blur(8px)"
+//          })
+//
+//          $(".make").show();
+//      })
+//      $(".make .close").on("click", function () {
+//          $(".make").slideUp(500, function () {
+//              $(".vague").removeAttr("style");
+//          });
+//
+//      })
+
+
+        $('.bbxx').on('click', function (event) {
+            event.preventDefault()
+            event.stopPropagation();
+            $('.search_box_s').show();
+        })
+    
+        $('.closes').on('click',function(){
+            $('.search_box_s').hide()
+        })
+
+        var unionid = '{$unionid}';
+        $.ajax({ //行业数据
+            type: 'post',
+            url: '/index.php?s=/Api/IndexApi/industry_list',
+            data: {
+                unionid: unionid
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var hy_data = res.AppendData;
+                    var hy_list = '';
+                    $.each(hy_data, function (k, v) {
+                        hy_list += '<div class="occupation_box">'
+                        hy_list += '<div class="title">'
+                        hy_list += '<div class="line"></div>'
+                        hy_list += '<div class="position" data-oneid=' + v.id + ' >' + v.name +
+                            '</div>'
+                        hy_list += '</div>'
+                        hy_list += '<ul class="list">'
+                        $.each(v.two_list, function (k, e) {
+                            hy_list += '<li data-twoid=' + e.id + '>' + e.name +
+                                '</li>'
+                        })
+                        hy_list += '</ul>'
+                        hy_list += '</div>'
+                    })
+                    $('.occupation').html(hy_list)
+                }
+            }
+        })
+
+
+        $.ajax({
+            type: 'post',
+            url: '/index.php?s=/Api/IndexApi/search_img',
+            data: {
+                unionid: unionid
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var data = res.AppendData;
+                    var swiperr = '';
+                    $.each(data, function (k, v) {
+                        swiperr += '<div class="swiper-slide">'
+                        swiperr += '<a href="' + v.jump_url + '">'
+                        swiperr += '<img src="' + v.img + '" alt="">'
+                        swiperr += '</a>'
+                        swiperr += '</div>'
+
+                    })
+
+                    $('.swiper-wrapper').html(swiperr)
+                    var mySwiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        paginationType: 'bullets',
+                        autoplay: 3000,
+                        loop: true,
+                        observer: true,
+                        observeParents: true,
+                        autoplayDisableOnInteraction: false,
+                    })
+
+                }
+            }
+        })
+
+        var historyarr;
+        var history_list = localStorage.getItem('histoy');
+        if (history_list != null) {
+            historyarr = JSON.parse(history_list)
+        } else {
+            historyarr = [];
+        }
+
+        $('.occupation').on('click', 'li', function () { //点击跳转搜索
+            var id = $(this).attr('data-twoid');
+            var text = $(this).text()
+            console.log(text)
+            $(this).addClass('active').siblings().removeClass('active')
+            setTimeout(function () {
+                location.href = '/index.php?s=/Home/Humancircle/index.html&id=' + id + '';
+            }, 500)
+
+        })
+
+        $('.hunt').on('click', function () {
+            var keycode = $('.solo').val();
+            historyarr.push(keycode)
+            rep2(historyarr)
+            localStorage.setItem('histoy', JSON.stringify(historyarr))
+            location.href = '/index.php?s=/Home/Humancircle/index.html&keyWord=' + keycode + '';
+        })
+
+        var str = '';
+        for (var i = 0; i < historyarr.length; i++) {
+            str += '<li>'
+            str += '<img class="search_icon" src="__HOME_IMAGES__/search.png" alt="">'
+            str += '<div class="center_box">' + historyarr[i] + '</div>'
+            str += '<img class="icon_del" src="__HOME_IMAGES__/inco_bianji_de@2x.png" alt="">'
+            str += '</li>'
+        }
+
+        $('.tap_list').html(str)
+
+        $('.tap_list').on('click', 'li', function () { //点击历史记录跳转
+            var keycode = $(this).find('.center_box').text();
+            console.log(keycode)
+            location.href = '/index.php?s=/Home/Humancircle/index.html&keyWord=' + keycode + ''
+        })
+
+        $('.tap_list').on('click', '.icon_del', function (event) { //删除记录
+            var deltext = $(this).prev().text();
+            event.preventDefault();
+            event.stopPropagation();
+            historyarr.Removetext(deltext);
+            localStorage.setItem('histoy', JSON.stringify(historyarr))
+            $(this).parent().remove();
+
+        })
+
+
+        Array.prototype.Removetext = function (val) {
+            var index;
+            for (var i = 0; i < historyarr.length; i++) {
+                if (val == historyarr[i]) {
+                    index = i;
+                }
+            }
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+
+        }
+
+
+        function rep2(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr.indexOf(arr[i]) != i) {
+                    arr.splice(i, 1); //删除数组元素后数组长度减1后面的元素前移
+                    i--; //数组下标回退
+                }
+            }
+            return arr;
+        }
+
+
+
+
+
+
+
+        var share_url = "{$share_url}";
+        var unionid = "{$unionid}";
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "index.php?s=/Api/WeShare/getSignPackage", //url
+            data: {
+                share_url: share_url
+            },
+            async: true,
+
+            // async: false,
+            success: function (result) {
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+                wx.ready(function () {
+                    wx.checkJsApi({
+                        jsApiList: [
+                            'getLocation'
+                        ],
+                        success: function (res) {
+                            // alert(JSON.stringify(res));
+                            // alert(JSON.stringify(res.checkResult.getLocation));
+                            if (res.checkResult.getLocation == false) {
+                                alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                                return;
+                            }
+                        }
+                    });
+                    wx.getLocation({
+                        success: function (res) {
+                            var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                            var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                            var speed = res.speed; // 速度，以米/每秒计
+                            var accuracy = res.accuracy; // 位置精度
+                            //									
+                            //									alert('纬度位置：'+latitude+'经度位置：'+longitude);//弹出经纬度，就这样就获取到了用户的位置
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST", //方法类型
+                                dataType: "json", //预期服务器返回的数据类型
+                                url: "/index.php?s=/Api/User/uptLocation", //url
+                                data: {
+                                    unionid: unionid,
+                                    latitude: latitude,
+                                    longitude: longitude
+                                },
+                                //										async: true,
+                                // async: false,
+                                success: function (result) {
+                                    console.log(result);
+                                },
+                                error: function () {
+                                    console.log("走了错误")
+                                }
+                            })
+
+                        },
+                        cancel: function (res) {
+                            alert('用户拒绝授权获取地理位置');
+                        }
+                    });
+
+                });
+            },
+            error: function () {
+                console.log("走了错误")
+            }
+        })
+    })
+</script>
+</body>
+
+</html>

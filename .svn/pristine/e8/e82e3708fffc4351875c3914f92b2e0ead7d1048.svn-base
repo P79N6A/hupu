@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <title>相册推广</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+        }
+
+        .content {
+            width: 100%;
+            padding: .2rem .12rem;
+            box-sizing: border-box;
+        }
+
+        .photo {
+            font-size: .2rem;
+            color: #414141;
+            font-weight: bold;
+            margin-bottom: .13rem;
+        }
+
+        .list {
+            width: 100%;
+
+        }
+
+        .list li {
+            width: 1.7rem;
+            height: 2.57rem;
+            overflow: hidden;
+            margin: 0 .02rem;
+            margin-bottom: .05rem;
+        }
+
+        .list li .photo_img {
+            width: 100%;
+            height: 2.17rem;
+            vertical-align: top;
+        }
+
+        .list li .chiose {
+            width: 100%;
+            height: .4rem;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .list li .chiose a {
+            display: block;
+            width: 50%;
+            height: 100%;
+            text-align: center;
+            line-height: .4rem;
+        }
+
+        .list li .chiose a:last-child {
+            background: #32CEA0;
+            color: #fff;
+
+        }
+
+        .loading {
+            width: 100%;
+            height: .5rem;
+            text-align: center;
+            background: #ccc;
+            display: none;
+        }
+
+        .loading p {
+            color: #666;
+        }
+
+        .loading img {
+            width: .2rem;
+            height: .2rem;
+            margin-top: .05rem;
+        }
+
+        .tip {
+            width: 1.2rem;
+            height: .8rem;
+            line-height: .8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: .05rem;
+            color: #fff;
+            font-size: .14rem;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -.4rem;
+            margin-left: -0.6rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <p class="photo">我的相册</p>
+        <ul class="list clearfix">
+            <!-- <li class="fl clearfix">
+                <img class="photo_img" src="__HOME_IMAGES__/llllq.png" alt="">
+                <div class="chiose">
+                    <a class="fl" href="javascript:;">预览</a>
+                    <a class="fl" href="javascript:;">选定</a>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+    <div class="loading">
+        <img src="__HOME_IMAGES__/new_load.gif" alt="">
+        <p>加载中...</p>
+    </div>
+    <div class="tip">没有更多数据了</div>
+    <input type="hidden" name="" id="user_id" value="{$user_id}">
+
+    <input type="hidden" name="" id="unionid" value="{$unionid}">
+</body>
+
+</html>
+<script>
+    $(function () {
+
+        var user_id = $("#user_id").val();
+
+        var unionid = $("#unionid").val();
+
+
+        var length = 10;
+        $.ajax({
+            url: "index.php?s=/Api/IndexApi/get_album_list",
+            type: "post",
+            data: {
+                unionid: unionid,
+                length: length,
+                start: 0
+            },
+            success: function (res) {
+                var list = '';
+                $.each(res.AppendData, function (k, v) {
+                    list += ' <li class="fl clearfix">'
+                    list += ' <img class="photo_img" src="' + v.cover_img + '" alt="">'
+                    list += ' <div class="chiose">'
+list += ' <a class="fl" href="index.php?s=/Home/Share/preview/id/' + v.id + '/mid/1/uid/' + user_id + '/unionid/'+ unionid + '&vid='+v.id+'&userid='+user_id+'">预览</a>'
+                    list += ' <a class="fl choise" href="javascript:;" data-id="'+v.id+'" data-user_id="'+user_id+'" >选定</a>'
+                    list += ' </div>'
+                    list += ' </li>'
+                })
+                console.log(res)
+                $(".list").html(list);
+            }
+        });
+
+
+
+
+        var index = 0;
+        var scrollFlag = true;
+        $(window).scroll(function () {
+
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+            if (!scrollFlag) {
+                return false;
+            }
+            if (scrollTop + windowHeight == scrollHeight) {
+                index += 10;
+                console.log("到底了")
+                scrollFlag = false;
+                var content = $(".Location_search .search").val();
+                $.ajax({
+                    url: "index.php?s=/Api/IndexApi/get_album_list",
+                    type: "post",
+                    data: {
+                        unionid: user_id,
+                        length: length,
+                        start: index
+                    },
+                    beforeSend: function () {
+                        $('.loading').show();
+
+                    },
+                    success: function (res) {
+                        $('.loading').hide();
+                        scrollFlag = true;
+                        if (res.AppendData.length == 0) {
+                            $(".tip").fadeIn(1000).fadeOut(3000);
+                            scrollFlag = false;
+
+                        }
+
+
+
+//                        console.log(res);
+
+
+
+
+                        var list = "";
+                        $.each(res.AppendData, function (k, v) {
+                            list += ' <li class="fl clearfix">'
+                            list += ' <img class="photo_img" src="' + v.cover_img +
+                                '" alt="">'
+                            list += ' <div class="chiose">'
+                            list += ' <a class="fl" href="index.php?s=/Home/Share/preview/id/' + v.id + '/mid/1/uid/' + user_id + '&vid='+ v.id+'&userid='+user_id+'">预览</a>'
+                            list +=' <a class="fl choise" href="javascript:;" data-id="'+v.id+'" data-user_id="'+user_id+'" >选定</a>'
+                            list += ' </div>'
+                            list += ' </li>'
+                        })
+                        $(".list").append(list);
+
+                    },
+                    error: function () {
+                        $('.loading').hide();
+                        scrollFlag = false;
+                        alert("服务器繁忙,请稍候再试");
+
+                    }
+
+                })
+
+            }
+        });
+
+
+        $(".list").on("click", ".choise", function () {
+            var vid = $(this).attr("data-id");
+            var userid = $(this).attr("data-user_id");
+
+            location.href = 'index.php?s=/Home/Sharingplatform/PerfectInformation#&type=2&href=/Home/Share/preview/id/'+vid+'/mid/1/uid/'+userid+' ';
+
+        })
+
+    })
+</script>
+
+
+
+
+
+
+
+

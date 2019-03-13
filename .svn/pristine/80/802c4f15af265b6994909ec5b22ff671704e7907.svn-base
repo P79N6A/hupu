@@ -1,0 +1,38 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/11/30
+ * Time: 22:37
+ */
+namespace app\api\controller;
+
+class Sync
+{
+	private $appid = 'wx64bfaf6271d6cb70'; //微信服务号appid
+	private $secret = '7103ba1edd936645055223ba680a0406'; //微信服务号密钥
+	
+	/*
+	 * 同步微信access_token,保证负载服务器文件一致
+	 */
+    public  function  index()
+    {
+    	$sign = isset($_REQUEST['sign']) ? trim($_REQUEST['sign']) : '';
+    	$json = isset($_REQUEST['data']) ? trim($_REQUEST['data']) : '';
+        $data = array('status'=>0,'msg' => '缺少参数');
+        if (!$sign ||!$json) { 
+            echo json_encode($data);
+            die();
+        }
+        
+    	if ($sign!='yxm1!2@3#2018') { 
+    		$data['msg'] = '参数错误';
+            echo json_encode($data);
+            die();
+        }
+        
+		$filename= EXTEND_PATH."/wxsdkapi/access_token.php";
+        $res = file_put_contents($filename, $json);  
+    }
+ 
+}

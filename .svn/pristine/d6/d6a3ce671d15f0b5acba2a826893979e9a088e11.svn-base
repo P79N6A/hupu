@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/loading.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <title>登录</title>
+
+    <style>
+         body,html{
+          height: 100%;
+          width: 100%;
+          background: -webkit-linear-gradient(#185c9d, #41cca2);
+    }
+
+    .logn_box{
+        width: 3rem;
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        color: #fff;
+        margin-left: -1.5rem;
+        margin-top: -1rem;
+        text-align: center;
+        overflow: hidden;
+    }
+
+     .logn_box h1{
+         font-size: .24rem;
+         padding: .1rem 0;
+     }
+
+      .logn_box .lg_in{
+          width: 100%;
+          height: .34rem;
+          line-height: .34rem;
+          position: relative;
+          padding: .1rem 0;
+      }
+
+       .logn_box .lg_in input{
+           display: block;
+           width: 80%;
+           height: 100%;
+           margin: 0 auto;
+           color: #fff;
+           border-radius: .18rem;
+           outline: none;
+           border: 1px solid #fff;
+           background: rgba(0, 0, 0, 0.1);
+           font-size: .14rem;
+           text-indent: .5rem;
+
+       }
+
+         .logn_box .lg_in img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             top: 50%;
+             left: .45rem;
+             margin-top: -.1rem;
+         }
+
+        ::-webkit-input-placeholder{/*Webkit browsers*/
+             color:#fff;
+             font-size: .14rem;
+             
+        }
+
+        .logn_box #Logn{
+            width: 82%;
+            height: .4rem;
+            line-height: .4rem;
+            text-align: center;
+            color: #fff;
+            outline: none;
+            border: 0;
+            margin: 0 auto;
+            border-radius: .2rem;
+            margin-top: .2rem;
+            /* background: -webkit-linear-gradient(#e7faff,rgba(65, 140, 204, 0.54)); */
+            background: #41cca2;
+            
+        }
+        .retrieve{
+            display: block;
+            font-size: .18rem;
+            color: #fff !important;
+            height: .2rem;
+            line-height: .2rem;
+            float:right;
+            margin-right: .15rem;
+            margin-top: .1rem;
+
+        }
+
+
+    
+        .hide{
+            display: none;
+        }
+
+
+    </style>
+   
+</head>
+<body class="hide">
+    <div class="logn_box" >
+            <h1>代理商登录</h1>
+            <div class="lg_in">
+                <input type="text" placeholder="请输入用户名" v-model="username">
+                <img src="__HOME_IMAGES__/wh/user_icon.png" alt="">
+            </div>
+            <div class="lg_in">
+                <input type="password" placeholder="请输入登录密码" v-model="pwd">
+                <img src="__HOME_IMAGES__/wh/password.png" alt="">
+            </div>
+             <a class="retrieve" href="/index.php?s=/Home/WapAgent/retrievepass">找回密码?</a>
+             <button id="Logn" @click="login">登录</button>
+    </div>
+    <div class="loading_box">
+        <div id="colorfulPulse">
+            <span class="item-1"></span>
+            <span class="item-2"></span>
+            <span class="item-3"></span>
+            <span class="item-4"></span>
+            <span class="item-5"></span>
+            <span class="item-6"></span>
+            <span class="item-7"></span>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    new Vue({
+        el:".logn_box",
+        data:{
+            username:'',
+            pwd:'',
+            isfalg:true
+        },
+        methods:{
+            login:function () {
+                console.log(1);
+                var t=this;
+
+                if(t.username==""){
+                    t.$toast('登录账号不能为空');
+                    return;
+                }
+                if(t.pwd==""){
+                    t.$toast('登录密码不能为空');
+                    return;
+                }
+                if(!t.isfalg){
+                    t.$toast('亲歇息一下在点吧...');
+                    return;
+                }
+                t.isfalg=false;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/agency_login",
+                    data: {
+                        account:t.username,
+                        pwd:t.pwd
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        t.isfalg=true;
+                        if(res.ResultType==0){
+                            if((typeof res.AppendData)=="string"){
+
+                                t.$toast(res.AppendData);
+                            }else{
+                                $.cookie('wapuuid', res.AppendData.uuid, { expires: 7 });
+                                $.cookie('waptoken', res.AppendData.token, { expires: 7 });
+                                window.location.href="/index.php?s=/Home/WapAgent/vip_center.html";
+                                t.$toast("登录成功");
+                            }
+                            return;
+                        }else{
+                            t.$toast("登录失败");
+
+                        }
+                    },
+                    error: function () {
+                        t.isfalg=true;
+                    t.$toast("登录失败");
+                        //console.log(313)
+                    }
+                })
+            }
+        },
+        mounted:function () {
+            console.log(1);
+            var t=this;
+            if($.cookie("wapuuid")!="" && $.cookie("wapuuid")!=null ){
+                if(confirm("系统检测到您近期登录过系统，是否快捷登录")){
+                    window.location.href="/index.php?s=/Home/WapAgent/vip_center.html";
+                }
+            //     t.$messagebox({
+            //         title: '温馨提示',
+            //         message: '系统检测到您近期登录过系统，是否快捷登录',
+            //         showCancelButton: true,
+            //         confirmButtonText:"取消",
+            //         cancelButtonText:"确定"
+            //     }).then(action => {
+            //
+            //         if(action != 'confirm'){
+            //         window.location.href="/index.php?s=/Home/WapAgent/vip_center.html";
+            //     }
+            //
+            // })
+
+            }
+
+
+        }
+    })
+</script>
+
+
+<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
+<!--<script>eruda.init();</script>-->
+<script>
+    $(window).load(function(){
+          $("body").removeClass("hide");
+          $(".loading_box").show().delay(1000).fadeOut(1000);
+    })
+</script>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/Advertise.js?id=123"></script>
+    <title>发布广告</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+        }
+
+        .content {
+            width: 100%;
+        }
+
+        .user_info {
+            width: 100%;
+            height: 1.26rem;
+            background: #fff;
+            position: relative;
+            margin-top: .1rem;
+        }
+
+
+        .user_info img {
+            display: block;
+            width: .52rem;
+            height: .52rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            margin-left: -.26rem;
+            margin-top: -.26rem;
+
+        }
+
+        .user_info p {
+            width: 3.2rem;
+            font-size: .16rem;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            position: absolute;
+            bottom: .18rem;
+            left: 50%;
+            margin-left: -1.6rem;
+
+        }
+
+        .user_info .time {
+            width: 1.28rem;
+            height: .235rem;
+            line-height: .235rem;
+            background: #FFECDB;
+            position: absolute;
+            top: -2px;
+            right: .15rem;
+            font-size: .12rem;
+            text-align: center;
+            color: #767676;
+            border-radius: .02rem;
+        }
+
+        .Choice {
+            margin-top: .075rem;
+        }
+
+        .item {
+            width: 100%;
+            height: .5rem;
+            background: #fff;
+            margin-bottom: .05rem;
+            line-height: .5rem;
+            padding-left: .15rem;
+            font-size: .16rem;
+            box-sizing: border-box;
+
+        }
+
+        .item .one {
+            width: 25%;
+            height: 100%;
+        }
+
+        .item .two {
+            width: 75%;
+            height: 100%;
+            position: relative;
+        }
+
+        .item input {
+            height: 100%;
+            width: 100%;
+            border: 0;
+            box-sizing: border-box;
+            font-size: .14rem;
+            outline: none;
+            padding-left: .05rem;
+            color: #F7892E;
+            background: #fff;
+
+        }
+
+        .choice_img {
+            width: .1rem;
+            height: .2rem;
+            position: absolute;
+            right: .25rem;
+            top: 50%;
+            margin-top: -.1rem;
+        }
+
+        .sure {
+            width: 90%;
+            height: .5rem;
+            line-height: .5rem;
+            background: #32CEA0;
+            color: #fff;
+            border: 0;
+            outline: none;
+            position: fixed;
+            left: 5%;
+            bottom: .585rem;
+            border-radius: 0.04rem;
+            font-weight: 550;
+            font-size:0.16rem;
+        }
+
+        .show_tips{
+            padding: .1rem .1rem;
+            background: rgba(0,0,0,.7);
+            text-align: center;
+            color: #fff;
+            border-radius: .05rem;
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            margin-left: -.66rem;
+            margin-top: -.2rem;
+            display: none;
+        }
+        
+        .tips{
+            padding: .1rem .1rem;
+            width: 2rem;
+            background: rgba(0,0,0,.7);
+            text-align: center;
+            color: #fff;
+            border-radius: .05rem;
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            margin-left: -1.1rem;
+            margin-top: -.2rem;
+            display: none;
+        }
+
+           /* 提示框 */
+            .tip_msg{
+                background: #fff;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -0.66rem;
+                margin-left: -1.2rem;
+                border-radius: .1rem;
+                text-align: center;
+                z-index: 999;
+                width: 2.4rem;
+                height: 1.32rem;
+                border: 1px solid #000;
+                display: none;
+            }
+
+            .tip_msg p:nth-child(1)
+            {
+                font-size: .18rem;
+                margin: .1rem 0;
+                
+            }
+            .tip_msg p:nth-child(2){
+                font-size: .16rem;
+                 margin: .15rem 0;
+                
+            }
+
+            .tip_msg .check{
+                width: 100%;
+                display: flex;
+                justify-content:space-around;
+            }
+            .tip_msg .check .cancel{
+                color: #666666;
+                border: 1px solid #eee;
+            }
+
+            .tip_msg .check .confirm{
+                color: #fff;
+                border: 1px solid #34B1D3;
+                background: #34B1D3;
+            }
+
+            .tip_msg .check .cancel,.confirm{
+                width: .74rem;
+                height: .28rem;
+                line-height: .28rem;
+                border-radius: .14rem;
+                text-align: center;
+               
+                
+            }
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <!-- 发布者的信息 -->
+        <div class="user_info">
+            <img src="{$headimg}" alt="">
+            <p>{$nick_name}</p>
+        </div>
+        <!-- 选择 -->
+        <div class="Choice">
+            <div class="hd_type item clearfix">
+                <div class="fl one">活动类型</div>
+                <div class="fl two">
+                    <input class="fl typelx" type="text" placeholder="请点击选择类型" disabled style="background: #fff">
+                    <img class="choice_img" src="__HOME_IMAGES__/Group 3 Copy 24@2x.png" alt="">
+                </div>
+            </div>
+            <div class="item">
+                <div class="fl one">广告费</div>
+                <div class="fl two">
+                    <input class="fl cost" type="number" placeholder="请输入您的小秘币金额不少于50元" value="50">
+                </div>
+            </div>
+            <div class="item">
+                <div class="fl one">单次佣金</div>
+                <div class="fl two">
+                    <input class="fl onemoney" type="number" value="0.05" placeholder="请输入单次点击的佣金不少于0.05元">
+                </div>
+            </div>
+            <div class="item">
+                <div class="fl one">曝光量</div>
+                <div class="fl two">
+                    <input class="fl count" disabled value="1000次" type="text" placeholder="请输点击量">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="show_tips">请选择活动类型</div>
+    <div class="tips">您输入的小秘币小于50元</div>
+    <button class="sure">确定</button>
+    <input type="hidden" id="small_money" value="{$money}">
+    <input id="user_id" type="hidden" value="{$id}">
+    <div class="mask"></div>
+    <!-- 提示框 -->
+    <div class="tip_msg">
+        <p>提示</p>
+        <p>发布之后不能修改与删除哦</p>
+        <div class="check">
+            <div class="cancel">取消</div>
+            <div class="confirm">确定</div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+$(function(){
+    $(".check .cancel").on("click",function(){
+        $(".mask").hide();
+        $(".tip_msg").hide();
+    })
+})
+
+
+
+</script>

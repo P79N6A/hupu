@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>接待记录</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="__AGENCY__/js/vue/index.css">
+    <!-- 引入组件库 -->
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="接待录入">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+    </mt-header>
+    <div>
+        <mt-field label="客户姓名" placeholder="请输入客户姓名" v-model="pojo.username"></mt-field>
+        <a class="mint-cell mint-field">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title">
+                    <span class="mint-cell-text">客户等级</span>
+
+                </div>
+                <div class="mint-cell-value">
+
+                    <el-select v-model="pojo.usertype" clearable placeholder="请选择">
+
+                        <el-option v-for="item in gradeList" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div>
+
+            </div>
+            <div class="mint-cell-right"></div>
+        </a>
+        <mt-field label="客户手机号" placeholder="请输入客户手机号" type="tel" v-model="pojo.userphone"></mt-field>
+
+        <mt-field label="预约人" placeholder="请输入预约人" v-model="pojo.usersubscribeid"></mt-field>
+        <mt-field label="推荐人" placeholder="请输入推荐人" v-model="pojo.userreferee"></mt-field>
+        <a class="mint-cell mint-field">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title">
+                    <span class="mint-cell-text">接待人</span>
+
+                </div>
+                <div class="mint-cell-value">
+
+                    <el-select v-model="pojo.lr_customer_id" clearable placeholder="请选择接待人">
+
+                        <el-option v-for="item in nameList" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <!--<el-autocomplete-->
+                            <!--v-model="pojo.lr_customer_name"-->
+                            <!--:fetch-suggestions="remoteMethod"-->
+                            <!--placeholder="请输入接待客服名"-->
+                            <!--@select="handleSelect"-->
+                    <!--&gt;</el-autocomplete>-->
+
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div>
+
+            </div>
+            <div class="mint-cell-right"></div>
+        </a>
+        <a class="mint-cell mint-field">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title">
+                    <span class="mint-cell-text">所属公司</span>
+
+                </div>
+                <div class="mint-cell-value">
+
+                    <el-select v-model="pojo.companyid" clearable placeholder="请选择所属公司">
+
+                        <el-option v-for="item in companyList" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <!--<el-autocomplete-->
+                    <!--v-model="pojo.lr_customer_name"-->
+                    <!--:fetch-suggestions="remoteMethod"-->
+                    <!--placeholder="请输入接待客服名"-->
+                    <!--@select="handleSelect"-->
+                    <!--&gt;</el-autocomplete>-->
+
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div>
+
+            </div>
+            <div class="mint-cell-right"></div>
+        </a>
+        <!--<mt-field label="接待地址" placeholder="请输入接待地址" v-model="pojo.one_re_adess"></mt-field>-->
+        <a class="mint-cell mint-field">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title">
+                    <span class="mint-cell-text">接待地址</span>
+
+                </div>
+                <div class="mint-cell-value">
+
+                    <el-select v-model="pojo.one_re_adess" clearable placeholder="请选择接待地址">
+
+                        <el-option v-for="item in adressList" :key="item.value" :label="item.label" :value="item.value">
+                        </el-option>
+                    </el-select>
+                    <!--<el-autocomplete-->
+                    <!--v-model="pojo.lr_customer_name"-->
+                    <!--:fetch-suggestions="remoteMethod"-->
+                    <!--placeholder="请输入接待客服名"-->
+                    <!--@select="handleSelect"-->
+                    <!--&gt;</el-autocomplete>-->
+
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div>
+
+            </div>
+            <div class="mint-cell-right"></div>
+        </a>
+
+        <mt-field label="来访事由" placeholder="请输入来访事由" type="textarea" rows="4" v-model="pojo.usercause"> </mt-field>
+        <a class="mint-cell mint-field is-textarea">
+            <!---->
+            <div class="mint-cell-left"></div>
+            <div class="mint-cell-wrapper">
+                <div class="mint-cell-title"><!----><span class="mint-cell-text">上传登记图</span><!----></div>
+                <div class="mint-cell-value myi" >
+                    <el-upload
+                        :on-success="uploadimgsuccess"
+                        :data="uploadpojo"
+                        class="avatar-uploader"
+                        :action="uploadaction"
+                        :show-file-list="false"
+                         name="img"
+                        :before-upload="beforeAvatarUpload"
+                >
+                    <img v-if="pojo.one_job_img" :src="pojo.one_job_img" class="avatar">
+                    <i  v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+                    <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                    <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                    <div class="mint-field-other"></div>
+                </div><!----></div>
+            <div class="mint-cell-right"></div>
+        </a>
+        <mt-button type="primary" @click="i_reception" size="large" style="margin-top: 20px">提交</mt-button>
+    </div>
+</div>
+<script type="text/javascript">
+    //create table s_k_reception(
+    //rid int not null primary key auto_increment comment '接待记录id',
+    //one_customer_id int comment '接待人id',
+    //one_time datetime comment '接待时间',
+    //one_re_adess varchar(100) comment '接待地址',
+    //username varchar(20),
+    //usertype varchar(20),
+    //userphone varchar(20),
+    //usersubscribeid varchar(20) comment '预约人',
+    //usercauseid int comment '事由id',
+    //usercause varchar(100) comment '事由varchar',
+    //userreferee varchar(20) comment '推荐人',
+    //one_job_img varchar(150) comment '接待工作记录',
+    //two_customer_id int comment '送出客服id',
+    //two_dis varchar(250) comment '接待详情',
+    //two_job_img varchar(150),
+    //two_result varchar(250) comment '接待结果',
+    //two_time datetime comment '送出时间',
+    //createtime datetime  comment '创建时间',
+    //    int comment '状态'
+    //);
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            //动态数据
+            pojo:{
+            one_customer_id: '',
+                lr_customer_name:'',
+                lr_customer_id:'',
+                one_re_adess:'',
+                rid: '',
+            username: '',
+            usertype: '',
+            userphone: '',
+            usersubscribeid: '',
+            usercauseid: '',
+            usercause: '',
+            userreferee: '',
+            one_job_img: '',
+                companyid:''
+            },
+            paylist: [],
+            loading: false,
+            nameList:[],
+            adressList:[{
+                value: 'V1',
+                label: 'V1'
+            },{
+                value: 'V2',
+                label: 'V2'
+            },{
+                value: 'V3',
+                label: 'V3'
+            },{
+                value: 'CEO办公室',
+                label: 'CEO办公室'
+            },{
+                value: '郭老师办公室',
+                label: '郭老师办公室'
+            }],
+            gradeList: [{
+                value: '创客',
+                label: '创客'
+            },
+                {
+                    value: '创投',
+                    label: '创投'
+                },
+                {
+                    value: '创业家',
+                    label: '创业家'
+                },
+                {
+                    value: '创业导师',
+                    label: '创业导师'
+                }, {
+                    value: '创业领袖',
+                    label: '创业领袖'
+                }
+            ],
+            uploadpojo:{
+                "start_name": 'customer',
+                "id":'468'
+            },
+            uploadaction:'{:url("/Api/IndexApi/uploads_img")}',
+            companyList:[]
+
+        },
+        methods: {
+            handlePictureCardPreview:function(){
+
+            },
+            handleSelect:function(item) {
+                var t=this;
+                t.pojo.lr_customer_id=item.label;
+               //console.log(item);
+            },
+            uploadimgsuccess:function(response, file, fileList){
+                console.log(response,file,fileList)
+                var t=this;
+                t.pojo.one_job_img=response.AppendData;
+                t.$indicator.close();
+            },
+            beforeAvatarUpload(file) {
+                var t=this;
+                t.$indicator.open({
+                    text: '上传中....',
+                    spinnerType: 'fading-circle'
+                });
+                var isLt2M = file.size / 1024 / 1024 < 10;
+                if (!isLt2M) {
+                    t.$message.error('上传图片大小不能超过 10MB!');
+                    t.$indicator.close();
+                }
+
+                return isLt2M;
+            },
+            i_reception:function(){
+                var t=this;
+                if(t.pojo.username==''){
+                    t.$toast('客户姓名未填写')
+                    return;
+                  // Toast('提示信息')
+                }
+                if(t.pojo.usertype==''){
+                    t.$toast('客户身份类型未填写')
+                    return;
+                    // Toast('提示信息')
+                }
+                if(t.pojo.one_job_img==''){
+                    t.$toast('请上传工作记录')
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/i_reception",
+                    data: t.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                 //   console.log(res);
+                        if(res.ResultType==1){
+                            t.$toast('上传成功');
+                            window.location.href="/index.php?s=/Home/Customer/center.html";
+                            return;
+                        }
+                    },
+                    error: function () {
+                        console.log(313)
+                    }
+                })
+            },
+
+            initName: function () {
+                var t=this;
+                $.ajax({
+                type: "POST",
+                url: "/index.php?s=/Api/CustomerService/find_customer_servive",
+                data: {
+                },
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (res) {
+                   t.nameList=res.AppendData
+                },
+                error: function () {
+
+                }
+            })
+
+
+         },
+            initCompany: function () {
+                var t=this;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/selectcompany",
+                    data: {
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        t.companyList=res.AppendData
+                    },
+                    error: function () {
+
+                    }
+                })
+
+
+            }
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+
+            t.cuuid = $.cookie('k_cuuid');
+            t.initName();
+            t.initCompany();
+        },
+
+    })
+</script>
+</body>
+
+</html>

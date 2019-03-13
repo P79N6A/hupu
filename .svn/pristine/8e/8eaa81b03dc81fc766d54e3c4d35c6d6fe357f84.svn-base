@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>转赠详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color:transparent;
+            -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
+            -webkit-user-select:none; /*webkit浏览器*/
+            -khtml-user-select:none; /*早期浏览器*/
+            -moz-user-select:none;/*火狐*/
+            -ms-user-select:none; /*IE10*/
+            user-select:none;
+        }
+        input,textarea {
+            -webkit-user-select:auto; /*webkit浏览器*/
+            margin: 0px;
+            padding: 0px;
+            outline: none;
+        }
+
+        body {
+            background: #f6f6f6;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.74rem;
+            background: #fff;
+            position: relative;
+        }
+
+        .top img {
+            width: .64rem;
+            height: .64rem;
+            top: .32rem;
+            left: 1.56rem;
+            border-radius: 50%;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .fist {
+            width: .97rem;
+            height: .22rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: .22rem;
+            position: absolute;
+            text-align: center;
+            bottom: .44rem;
+            left: 1.39rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .one {
+            width: .97rem;
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(119, 119, 119, 1);
+            line-height: .2rem;
+            position: absolute;
+            text-align: center;
+            bottom: .2rem;
+            left: 1.39rem;
+        }
+
+        .secd {
+            width: 100%;
+            height: .82rem;
+            position: relative;
+        }
+
+        .secdone {
+            width: .03rem;
+            height: .14rem;
+            left: .16rem;
+            top: .2rem;
+            position: absolute;
+            background: rgba(50, 206, 160, 1);
+        }
+
+        .secdtwo {
+            width: .64rem;
+            height: .22rem;
+            top: .16rem;
+            left: .23rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            position: absolute;
+            color: rgba(51, 51, 51, 1);
+            line-height: .22rem;
+        }
+
+        .ten {
+            height: .16rem;
+            font-size: .11rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(254, 95, 95, 1);
+            line-height: .16rem;
+            position: absolute;
+            left: .23rem;
+            top: .46rem;
+        }
+
+        .three {
+            width: 3.35rem;
+            height: .45rem;
+            background:#fff ;
+            margin:0 auto;
+            position: relative;
+        }
+        .ssnum{
+            /* width:1.32rem; */
+            height:.17rem;
+            font-size:.12rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(197,197,197,1);
+            line-height:.17rem;
+            position: absolute;
+            border:none;
+            top:.14rem;
+            left:.16rem;
+            outline: none;
+        }
+        .four{
+            width:3.35rem;
+            height:1.6rem;
+            left:.2rem;
+            margin-top:.12rem;
+            background:#fff;
+            position: relative;
+        }
+        .field{
+            width: 95%;
+            height: 90%;
+            position: absolute;
+            left: .1rem;
+            top: .1rem;
+            border:none;
+            outline: none;
+        }
+        .bzhu{
+            /* position: relative; */
+            left:.2rem;
+            font-size:.12rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(119,119,119,1);
+            line-height:.17rem;
+            position: absolute;
+            margin-top:.08rem;
+        }
+        .inhaler{
+            width:1.63rem;
+            height:.17rem;
+            left:.2rem;
+            font-size:.12rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(119,119,119,1);
+            line-height:.17rem;
+            position: absolute;
+        }
+        .miniso{
+            width:3.26rem;
+            height:.4rem;
+            background:rgba(50,206,160,1);
+            border-radius:.04rem;
+            border:0;
+            outline: none;
+            position: fixed;
+            bottom:.19rem;
+            left:.26rem;
+            font-size:16px;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#fff;
+            text-align: center;
+            line-height: .4rem;
+        }
+        .licavter{
+            width:1.2rem !important;
+            height:.44rem !important;
+            border-radius:22px !important; 
+            float: left !important;
+            line-height:.44rem !important;
+            font-size:.16rem !important;
+            font-family:PingFangSC-Medium !important;
+            font-weight:500 !important;
+            color:#fff !important;
+            background:#32CEA0 !important;
+            text-align: center !important;
+            margin-left:.32rem !important;
+            border:none !important;
+        }
+         /* 未搜索到好友提示 */
+         .privacy {
+	        width: 3rem;
+	        height: 1.5rem;
+	        background: #fff;
+	        border-radius: 0.25rem;
+	        font-size: 0.75rem;
+	        text-align: center;
+	        background: #fff;
+	        color: #000;
+	        margin-bottom: 3rem;
+	        position: fixed;
+	        top: 50%;
+	        left: 50%;
+	        margin: -1rem 0 0 -1.5rem;
+	        z-index: 101;
+	        display: none;
+        }
+
+        .up {
+	        width: 100%;
+	        height: 2rem;
+	        line-height: 1rem;
+	        text-align: center;
+	        font-size: .14rem;
+        }
+
+        .down {
+	        width: 100%;
+	        height: .6rem;
+	        line-height: 1rem;
+	        text-align: center;
+	        font-size: .12rem;
+            color: #000;
+            position: absolute;
+            top: .5rem;
+        }
+          .allcity-masks{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            width: 100%;
+            z-index: 100;
+            cursor: pointer;
+            height: 244.5%;
+        }
+        .tipmoney{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 999;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            text-align: center;
+            width: 1.8rem;
+            font-size: .12rem;
+            padding: 0.05rem 0 ;
+            margin-left: -0.9rem;
+            border-radius: .05rem;
+            display: none;
+        }
+        a{
+            color:#777;
+            list-style: none;
+            text-decoration:none;
+        }
+        .secczz{
+            top: 0;
+            left:0;
+            width:100%;
+            height:100%;
+            position: absolute;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+.tkts{
+    width:100%;
+    height:3.15rem;
+    background: #fff;
+}
+.hecai img{
+    width:1.56rem;
+    height:1.6rem;
+    top:10%;
+    left:50%;
+    position: absolute;
+    margin-left: -.8rem;
+    margin-top: -.2rem;
+}
+        ul li{
+    list-style: none;
+}
+.fight{
+    position: absolute;
+    top: 2.35rem;
+}
+.fight li{
+    width:1.2rem;
+    height:.44rem;
+    border:1px solid #979797;
+    font-size:.16rem;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    line-height: .44rem;
+    text-align: center;
+    color:#777;
+    float: left;
+    border-radius: .22rem;
+    margin-left:.5rem;
+}
+.fightatv{
+    color:#fff !important;
+    background:#32CEA0;
+    border:1px solid #32CEA0 !important;
+}
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top">
+            <!-- <img src="Public/Home/images/slicesrjl/share_iconrjl.png" alt=""> -->
+            <img src="{$user.headimg}" alt="" />
+            <span class="fist">{$user.nick_name}</span>
+            <span class="one">{$user.phone}</span>
+        </div>
+        <div class="secd">
+            <span class="secdone"></span>
+            <span class="secdtwo">积分转赠</span>
+            <span class="ten">每次转赠的积分数必须为100的整倍数，如100、200、300</span>
+        </div>
+        <div class="three">
+            <input type="text" class="ssnum" placeholder="请输入你要转赠的积分数" name="nums">
+        </div>
+        <div class="four">
+            <textarea name="" id="" cols="30" rows="10" class="field" placeholder="添加备注(50字内)" name="field"></textarea>
+        </div>
+        <div class="bzhu">
+            *积分转入对方账户后无法退换
+        </div>
+        <button class="miniso">确认转赠</button>
+        <!-- <div class="suress">
+            <div class="dior">
+                <div class="come">
+                    <img src="Public/Home/images/slicesrjl/uccess_icon@2x.png" alt="">
+                </div>
+                <ul class="diornum">
+                    <li>回到积分</li>
+                    <li>再次转赠</li>
+                </ul>
+            </div>
+        </div> -->
+        <!-- 弹出提示词 -->
+        <div class="privacy">
+            <div class="up">温馨提示</div>
+            <div class="down">您还没有选择赠送好友哦！</div>
+        </div>
+        <div class="tipmoney"></div>
+
+        <!-- 转赠成功 -->
+        <div class="secczz">
+            <div class="tkts">
+                <div class="hecai">
+                    <img src="Public/Home/images/slicesrjl/uccess_icon@2x.png" alt="">
+                </div>
+                <ul class="fight">
+                    <li>
+                        <span class="back">
+                            <a href="/index.php?s=/Home/income/mypoints.html">回到积分</a>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="again">
+                            <a href="/index.php?s=/Home/income/intransfer.html">再次转赠</a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    $(function () {
+
+        //点击确定按钮
+        var id = '{$unionid}';
+        var uid = '{$user.id}';
+        $(".miniso").click(function () {
+            var nums = $("input[name=nums]").val();
+            var grant_user_phone = '{$grant_user_phone}';
+            var grant_user_info_id = '{$grant_user_info_id}';
+            var type = 6;
+
+            if (nums.length == 0) {
+                $(".tipmoney").text("请输入转赠积分").stop(true).fadeIn(1000).fadeOut(2000);
+                // alert("请输入转赠积分")
+                return;
+            }
+
+            if (nums % 100 != 0) {
+                $(".tipmoney").text("转赠积分必须是100的整数倍").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            var contents = $("input[name=nums]").val();
+            console.log(contents)
+            var infor = $(".field").val()
+            console.log(infor);
+            if (!isNaN(contents)) {
+                contents = 1 * contents;
+                if (contents > 0 && contents % 100 == 0) {
+                    $.ajax({
+                        type: "post",
+                        dataType: "json",
+                        url: "index.php?s=/Api/IntegralApi/give_inte",
+                        data: {
+                            unionid: id,
+                            user_id: uid,
+                            inte: contents,
+                            msg: infor
+                        },
+                        success: function (result) {
+                            console.log(result);
+                            if (result.ResultType == 2) {
+                                $("div.down").html(result.Message);
+                                $('.allcity-masks').show();
+                                $(".privacy").show();
+                                setTimeout(function () {
+                                    $('.privacy').hide();
+                                    $('.allcity-masks').hide();
+                                }, 1500);
+                                return false;
+                            }
+                            if (result.ResultType == 0) {
+                                $(".secczz").show();
+                                // setTimeout(function () {
+                                //     window.location.href =
+                                //         "index.php?s=/Home/income/income.html"
+                                // }, 1000);
+                            }
+                        },
+                        error: function () {}
+                    });
+                } else {
+                    $(".tipmoney").text("请输入100的整倍数").stop(true).fadeIn(1000).fadeOut(2000);
+                }
+            }
+        });
+        $(".fight li").on('click', document, function () {
+            console.log(111);
+            // 选择样式
+            $(this).addClass("fightatv").siblings().removeClass("fightatv");
+
+        });
+    })
+</script>
+
+</html>

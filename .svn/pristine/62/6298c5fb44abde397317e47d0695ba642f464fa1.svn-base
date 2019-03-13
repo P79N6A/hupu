@@ -1,0 +1,193 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>{$title}</h4>
+            <a href="{:U('Luck/index')}">
+                <button class="btn btn-default"><i class="fa fa-level-up"></i>返回</button>
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="table-margin">
+        <form action="{:U('Luck/addLuckType')}" class="form-horizontal" method="post">
+            <input type="hidden" name="id" value="{$res.id}" />
+            <table class="table table-hover contact-template-form">
+                <tbody>
+                <tr>
+                    <td width="20%" align="right">活动名称：</td>
+                    <td>
+                        <input type="text" name="name" value="{$res.title}" class="form-control w-300" placeholder="">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%"></td>
+                    <td>
+                        <button class="btn btn-primary">提 交</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</block>
+
+
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>订单管理</h4>
+        </div>
+        <!-- {:U('Poster/addPosters')} -->
+        <!-- <a href="{:U('Luck/addLuckAddress')}" class="btn btn-primary pull-right margin-top">添加地址</a> -->
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">内容查询</div>
+        <div class="panel-body">
+            <form method="post" action="{:U('')}">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">名称</label>
+                            <select name="type" class="form-control">
+                                <option value="-1"<eq name="type" value="-1"> selected</eq>>全部</option>
+                                <option value="0"<eq name="type" value="0"> selected</eq>>积分</option>
+                                <option value="1"<eq name="type" value="1"> selected</eq>>实物</option>
+                                <option value="2"<eq name="type" value="2"> selected</eq>>体验卡</option>
+                                <option value="3"<eq name="type" value="3"> selected</eq>>油卡</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">开始时间</label>
+                            <if condition="$start_at neq 0">
+                                <input type="text" name="start_at" value="{$start_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="start_at"  class="form-control"  placeholder="开始时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">结束时间</label>
+                            <if condition="$end_at neq 0">
+                                <input type="text" name="end_at" value="{$end_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="end_at"  class="form-control"  placeholder="结束时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-info" type="submit">查询</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>用户昵称</td>
+                <td>联系电话</td>
+                <td>奖品名称</td>
+                <td>图片</td>
+                <td>物流公司</td>
+                <td>物流单号</td>
+                <td>添加时间</td>
+                <td>是否发货</td>
+                <td>是否通过</td>
+                <!-- <td>操作</td> -->
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.nick_name}</td>
+                    <td>{$vo.mobile}</td>
+                    <td>{$vo.jname}</td>
+                    <td><img src="{$vo.url}" alt=""  style="width:80px;height:60px"></td>
+                    <td>
+                        {$vo.logistics_company}
+                    </td>
+                    <td>
+                        <if condition="$vo[is_true] eq 1">
+                            {$vo.order_number}
+                            <else/>
+                            <span style="color:red">{$vo.order_number}</span>
+                        </if>
+                    </td>
+                    <td> {$vo.addtime|date='Y-m-d H:i:s', ###}</td>
+                    <!-- <td><a href="{:U('Luck/luckAddressDetail', array('id' => $vo['aid'],'uid'=>$vo['uid']))}" style="text-decoration: none;">详情</a></td> -->
+                    <!-- <td>
+                        <if condition="$vo['aid'] neq 0">
+                            <a href="{:U('Luck/luckAddressDetail', array('uid'=>$vo['uid'],'aid'=>$vo['aid']))}" style="text-decoration: none;">详情</a>
+                        <else/>
+                            <span style="color:red">未填地址</span>
+                        </if>-->
+                    <!-- <a href="{:U('Luck/luckAddressDetail', array('uid'=>$vo['uid'],'aid'=>$vo['aid']))}" style="text-decoration: none;">详情</a> -->
+                    <!--</td> -->
+                    <td>
+                        <if condition="$vo[is_true] eq 0">
+                            未完善地址
+                            <elseif condition="$vo[is_true] eq 2"/>
+                            待审核
+                            <else/>
+                            已发货
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo[is_true] eq 1">
+                            已通过
+                            <else/>
+                            <a href="{:U('Luck/examine', array('id' => $vo['id'],'aid'=>$vo['aid'],'type'=>$type))}" style="text-decoration: none;"><span style="color:red">待处理</span></a>
+                        </if>
+                    </td>
+                    <!--<td>
+                     {:U('Poster/addPosters', array('id' => $vo['id']))} -->
+                    <!-- <a href="javascript:void(0)">编辑</a> -->
+                    <!-- <span class="text-explode">|</span> -->
+                    <!-- {:U('Greeting/delGreetings', array('id' => $vo['id']))} -->
+                    <!-- <a href="javascript:void (0)" onclick=del("javascript:void (0)")>删除</a>
+                    <a href="{:U('Album/albumTail', array('id' => $vo['id']))}">详情</a>
+                </td>-->
+                </tr>
+            </foreach>
+            <!--<tr><td colspan="9">没有数据</td></tr>-->
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_page}</div>
+    <script>
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+    </script>
+    <script src="__PUBLIC__/Admin/js/My97DatePicker/WdatePicker.js"></script>
+
+</block>
+
+

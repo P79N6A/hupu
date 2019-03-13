@@ -1,0 +1,697 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>{$title}</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="/Public/Home/css/mui.min.css" rel="stylesheet">
+	<script src="/Public/Home/js/mui.min.js"></script>
+	<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_JS__/whjs/js/rem.js"></script>
+	<script src="__HOME_JS__/whjs/js/Sortableone.js"></script>
+
+	<style type="text/css">
+		body,
+		html {
+			background: #f0eff6;
+			max-width: 750px;
+			min-width: 320px;
+			margin: 0 auto;
+		}
+
+		.in {
+			width: 90%;
+			margin: 0 auto;
+			height: 2.5rem;
+			background: #fff;
+			margin-top: 0.5rem;
+			line-height: 2.5rem;
+		}
+
+		.in span {
+			margin-left: 0.3rem;
+			color: #4e4b4b;
+			font-size: 0.6rem;
+		}
+
+		.in2 span {
+			margin-left: 0.3rem;
+			color: #909389;
+		}
+
+		.in1 input {
+			width: 3rem;
+			height: 1.5rem;
+			float: right;
+			outline: none;
+			margin-right: 0.5rem;
+			margin-top: 0.6rem;
+			border-radius: 2px;
+			border: 0;
+			background: #2FB3D3;
+			color: #fff;
+		}
+
+		.in2 span:nth-child(2) {
+			float: right;
+			margin-right: 0.5rem;
+		}
+
+		.in1 input::placeholder,
+		.in2 input::placeholder {
+			color: #C8C7CC;
+			font-size: 0.22rem
+		}
+
+		.content {
+			width: 90%;
+			position: absolute;
+			/*margin: 0 auto;*/
+			margin-top: 0.3rem;
+			margin-left: 5%;
+			line-height: 2rem;
+			padding-bottom: 2rem;
+		}
+
+
+		.btnbom {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+
+		.btnbom input {
+			width: 50%;
+			float: left;
+			text-align: center;
+			height: 2.5rem;
+			border: none;
+		}
+
+		.btnbom input:nth-child(1) {
+			background: #fff;
+			color: #4e4b4b;
+		}
+
+		.btnbom input:nth-child(2) {
+			background: #2FB3D3;
+			color: #fff;
+		}
+
+		body {
+			margin: 0;
+			max-width: 100%;
+			display: block;
+			height: auto;
+		}
+
+		#clipArea {
+			margin: 10px;
+			height: 87%;
+		}
+
+		#file {
+			margin: 20px;
+		}
+
+		input {
+			-webkit-appearance: none;
+			border-radius: 0;
+		}
+
+		.clip {
+			background-color: #000;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			z-index: 900;
+		}
+
+		.photo-clip-view {
+			background-color: #fff;
+		}
+
+		.btun {
+			width: 100%;
+			height: 10%;
+			margin: 0 auto;
+			padding: 0.5rem 3rem;
+			box-sizing: border-box;
+			position: relative;
+			z-index: 9999;
+		}
+
+		#clipBtn {
+			width: 4rem;
+			height: 1.8rem;
+			line-height: 1.8rem;
+			background-color: #2FB3D3;
+			color: #fff;
+			text-align: center;
+			border: none;
+			position: relative;
+			z-index: 999;
+			border-radius: 5px;
+
+		}
+
+		#cancel {
+			background-color: #fff;
+			color: #000;
+			width: 4rem;
+			height: 1.8rem;
+			line-height: 1.8rem;
+			border-radius: 5px;
+			border: none;
+			position: relative;
+			z-index: 999;
+		}
+
+		.gif {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 900;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			display: none;
+		}
+
+		.gif>img {
+			width: 20%;
+			position: absolute;
+			left: 40%;
+			top: 36%;
+		}
+
+		.mui-popup-backdrop {
+			position: fixed;
+			z-index: 998;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			-webkit-transition-duration: 400ms;
+			transition-duration: 400ms;
+			background: rgba(0, 0, 0, .4);
+			display: none;
+		}
+
+		.mui-popup {
+			position: fixed;
+			z-index: 10000;
+			top: 50%;
+			left: 50%;
+			display: none;
+			overflow: hidden;
+			width: 12.5rem;
+			-webkit-transition-property: -webkit-transform, opacity;
+			transition-property: transform, opacity;
+			-webkit-transform: translate3d(-50%, -50%, 0) scale(1.185);
+			transform: translate3d(-50%, -50%, 0) scale(1.185);
+			text-align: center;
+			color: #000;
+			border-radius: 13px;
+			opacity: 1;
+		}
+
+		.mui-popup-inner {
+			position: relative;
+			padding: 0.2rem;
+			border-radius: 13px 13px 0 0;
+			background: rgba(255, 255, 255, .95);
+		}
+
+		.mui-popup-title {
+			font-size: 18px;
+			font-weight: 500;
+			text-align: center;
+		}
+
+		.mui-popup-title+.mui-popup-text {
+			font-family: inherit;
+			font-size: 14px;
+			margin: 5px 0 0;
+		}
+
+		.mui-popup-buttons {
+			position: relative;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			height: 44px;
+			-webkit-box-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+		}
+
+		.mui-popup-button:first-child {
+			border-radius: 0 0 0 13px;
+		}
+
+		.mui-popup-button {
+			font-size: 17px;
+			line-height: 44px;
+			position: relative;
+			display: block;
+			overflow: hidden;
+			box-sizing: border-box;
+			width: 100%;
+			height: 44px;
+			padding: 0 5px;
+			cursor: pointer;
+			text-align: center;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #007aff;
+			background: rgba(255, 255, 255, .95);
+			-webkit-box-flex: 1;
+		}
+
+		.mui-popup-button.mui-popup-button-bold {
+			font-weight: 600;
+		}
+
+		.mui-popup-button:last-child {
+			border-radius: 0 0 13px;
+		}
+
+		.mui-popup-button {
+			font-size: 17px;
+			line-height: 44px;
+			position: relative;
+			display: block;
+			overflow: hidden;
+			box-sizing: border-box;
+			width: 100%;
+			height: 44px;
+			padding: 0 5px;
+			cursor: pointer;
+			text-align: center;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #007aff;
+			background: rgba(255, 255, 255, .95);
+			-webkit-box-flex: 1;
+		}
+
+		.clearfix:after {
+			clear: both;
+			content: ' ';
+			display: block;
+		}
+
+		.fl {
+			float: left;
+		}
+
+		.fr {
+			float: right;
+		}
+
+		.content>span {
+			display: block;
+			width: 31%;
+			height: 4rem;
+			position: relative;
+			margin-top: 0.2rem;
+			margin-left: 0.25rem;
+		}
+
+		.mask {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			opacity: 0;
+			z-index: 199;
+		}
+
+		.content img {
+			width: 100%;
+			height: 100%;
+
+		}
+
+		.xx {
+			width: 0.7rem !important;
+			height: 0.7rem !important;
+			position: absolute;
+			top: 0.1rem;
+			right: 0.1rem;
+			z-index: 200;
+		}
+	</style>
+</head>
+
+<body ontouchstart="">
+	<div class="mui-popup">
+		<div class="mui-popup-inner">
+			<div class="mui-popup-title">提示</div>
+			<div class="mui-popup-text">正在编写状态，是否要返回?</div>
+		</div>
+		<div class="mui-popup-buttons">
+			<span class="mui-popup-button">否</span>
+			<span class="mui-popup-button mui-popup-button-bold">是</span>
+		</div>
+	</div>
+	<div class="mui-popup-backdrop"></div>
+
+	<div class="clip">
+		<div class="gif">
+			<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+		</div>
+		<div id="clipArea"></div>
+		<div class="btun clearfix">
+			<button class="fl" id="cancel" style="padding:0">取消</button>
+			<button class="fr" id="clipBtn" style="padding:0">截取</button>
+		</div>
+	</div>
+
+	<div class="in in1">
+		<span>产品轮播图</span>
+		<input type="button" name="" id="" value="添加" onclick="add()" />
+		<input type="file" id="file" class="file1" name="file1" style="display: none" accept="image/*" />
+	</div>
+	<!-- {:U('Home/Chat/group')} -->
+	<form action="" id="form" method="post" enctype="multipart/form-data">
+		<div id="content" class="content clearfix">
+			<!-- <volist name="_list" id="vo" key="k">
+					<span class="pic_77{$k}" style="margin: 0;">
+            			<img src="{$vo.img_url}" class='preview' alt="">
+           				<input type="hidden" name="pic_77{$k}" value="{$vo.img_url}">
+            			<img src="__HOME_IMAGES__/x.png" alt="" class="xx" onclick="del_img(this)">
+        			</span>
+				</volist> -->
+			<!-- <input type="hidden" id="pid" value="" name="pid"/> -->
+		</div>
+	</form>
+	<input type="hidden" name="num" id="num" value="" />
+	<div class="btnbom">
+		<input class="back" type="button" name="" id="" value="取消" />
+		<input type="button" name="" id="submit" value="保存" />
+		<!-- onclick="submit();" -->
+		<!-- <input type="button" onclick="sub();" name="" id="" value="确认" /> -->
+	</div>
+	<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
+	<!--<script>eruda.init();</script>-->
+
+	<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+	<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+	<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+	<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+
+	<script>
+		$(function () {
+			Sortable.create(content, {
+				group: "words",
+				animation: 100,
+				filter: '.xx',
+				onFilter: function (evt) {
+					evt.item.parentNode.removeChild(evt.item);
+				},
+				store: {
+					get: function (Sortable) {
+						var order = localStorage.getItem(Sortable.group);
+						return order ? order.split('|') : [];
+						console.log(2)
+					},
+					set: function (Sortable) {
+						var order = Sortable.toArray();
+						console.log(1)
+						localStorage.setItem(Sortable.group, order.join('|'));
+					}
+				}
+			});
+
+			$(".back").on("click", function () {
+				$(".mui-popup").css("display", "block");
+				$(".mui-popup-backdrop").css("display", "block")
+			})
+			$(".mui-popup-button").on("click", function () {
+				$(".mui-popup").css("display", "none");
+				$(".mui-popup-backdrop").css("display", "none")
+			})
+
+			$(".mui-popup-button-bold").on("click", function () {
+				top.location.href = "{:U('Home/Card/NewcreateCard')}";
+			})
+
+
+
+
+			var id = '{$id}';
+			var pid = '{$pid}';
+			// $("#pid").val(pid);
+			// alert(pid);
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "index.php?s=/Api/IndexApi/product_detail", //url 
+				data: {
+					"id": id,
+					"product_id": pid
+				},
+				// async: false,
+				success: function (result) {
+					if (result.ResultType == 0) {
+						console.log(result)
+						// alert(result.AppendData.img);
+						//         	var str='';
+
+						// str+='<span id="is_map" class="mui-switch  <if condition="'+result.AppendData.is_home==1+'">mui-active</if> muguanggao_but ">';
+						// alert(result.AppendData.img);
+
+						// $("#show").append(str);
+						//         	$("#title").val(result.AppendData.title);
+						//         	if(result.AppendData.cover_img){
+						//         		$("#cover_img").attr("src",result.AppendData.cover_img);
+						//         	}else{
+						//         		$("#cover_img").attr("src","__HOME_IMAGES__/h_icon_2_on.png");
+						//         	}
+						//         	$("#address").val(result.AppendData.address);
+						//         	$("#price").val(result.AppendData.price);
+						//         	$("#is_home").val(result.AppendData.is_home);
+						// alert(result.AppendData.is_home==1);
+						var str = " ";
+						$.each(result.AppendData.img, function (idx, item) {
+
+							str += "<span data-id='" + idx + "' class='item fl pic_" + idx +
+								"'><div class='mask'></div><img id='preview_" + idx + "' src='" + item.img +
+								"' class='preview' ><img src='__HOME_IMAGES__/x.png' class='xx' ><input type='hidden' name='img[pic_" +
+								idx + "]' value='" + item.img + "'/></span>";
+						});
+
+						$('.content').append(str);
+					}
+				},
+				error: function () {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		});
+		var w = $(window).width();
+		var num = 99;
+		var clipArea = new PhotoClip("#clipArea", {
+			size: [w, w * 0.587],
+			outputSize: [750, 440],
+			file: "#file",
+			ok: "#clipBtn",
+			loadStart: function () {
+				$('.gif').show();
+			},
+			loadComplete: function () {
+				$('.gif').hide();
+			},
+			done: function (dataURL) {
+				console.log(11112222)
+				$('.gif').hide();
+				var imgsize = document.getElementById('file').files[0].size;
+				if (imgsize > 1024 * 1024 * 10) {
+					mui.toast("请上传小于10M的图片");
+					return false;
+				} else {
+
+					$('.content').append("<span class='fl item pic_" + num + "'><div class='mask'></div><img id='preview_" + num +
+						"' class='preview' ><img src='__HOME_IMAGES__/x.png' class='xx' ></span>");
+
+					var id = '{$id}';
+					var img = dataURL;
+					var arr = [];
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/uploads_img", //url 
+						data: {
+							"id": id,
+							"img": img,
+							"start_name": "product"
+						},
+						success: function (result) {
+							if (result.ResultType == 0) {
+								//获取图片dom
+								var img = document.getElementById("preview_" + num);
+								//图片路径设置为读取的图片
+								$('.pic_' + num).append("<input type='hidden' name='img[pic_" + num + "]' value='" + result.AppendData +
+									"'>");
+								$("#num").val(num);
+								img.src = dataURL;
+								//					img.src = e.target.result;
+
+								num++;
+							}
+						},
+						error: function () {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+
+
+			}
+		});
+		$("#cancel,#clipBtn").click(function () {
+			$(".clip").hide();
+		})
+
+		// function sub(){
+		// 	var num=$('#num').val(); 
+		// 	var pid='{$pid}';
+		// 	var arr='';
+		// 	for(i=1;i<=num;i++){					
+		// 		if(i==num){
+		// 			arr+=$("input[name='pic_"+i+"']").val();
+		// 		}else{
+		// 			arr+=$("input[name='pic_"+i+"']").val()+',';
+		// 		}
+		// 	}
+		// 	// window.location.href='__ROOT__/index.php?s=/Home/Chat/group/id/'+pid+'/img/'+arr+'';
+		// 	// alert(arr);
+
+		// }
+
+		// checkSubmitFlg = 1;
+
+
+		// function submit() {
+		// 	if(checkSubmitFlg == 1) {
+		// 		$("#form").submit();
+		// 		checkSubmitFlg = 0;
+		// 	} else {
+		// 		mui.toast("请勿重复提交");
+		// 	}
+		// }
+
+		$('#submit').click(function () {
+			var d = {};
+			var t = $('#form').serializeArray();
+			$.each(t, function () {
+				d[this.name] = this.value;
+			});
+			var id = '{$id}';
+			var pid = '{$pid}';
+			// var product_detail=JSON.stringify(d);
+			// var jsonObj=JSON.parse(JSON.stringify(d));
+			// var product_detail=jsonObj;
+			var jsonArr = jsonToArray(JSON.stringify(d));
+
+			console.log(jsonArr);
+			var product_banner = jsonArr;
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "index.php?s=/Api/IndexApi/add_edit_product_img", //url 
+				data: {
+					"id": id,
+					"product_id": pid,
+					"product_banner": product_banner
+				},
+				success: function (result) {
+					if (result.ResultType == 0) {
+
+						top.location.href = '__ROOT__/index.php?s=/Home/Chat/group/id/' + pid;
+					}
+				},
+				error: function () {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		});
+
+		function jsonToArray(str) {
+			const obj = JSON.parse(str);
+			const result = [];
+			for (var he in obj) {
+				// result.push(key);
+				result.push(obj[he]);
+			}
+			return result;
+		}
+
+		function add() {
+			$('.file1').click();
+			$('.clip').show();
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//			function imgPreview(fileDom) {
+		//				//判断是否支持FileReader
+		//				if(window.FileReader) {
+		//					var reader = new FileReader();
+		//				} else {
+		//					alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+		//				}
+		//				//获取文件
+		//				var file = fileDom.files[0];
+		//				// console.log();return;
+		//				var imageType = /^image\//;
+		//				//是否是图片
+		//				if(!imageType.test(file.type)) {
+		//					alert("请选择图片！");
+		//					return;
+		//				}
+		//				//读取完成
+		//				reader.onload = function(e) {
+		//					var num = $('.content').children().length;
+		//					$('.content').append("<span class='pic_" + num + "'><img id='preview_" + num + "' class='preview' style='margin-left:0.1rem'/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''></span>");
+		//					//获取图片dom
+		//					var img = document.getElementById("preview_" + num);
+		//					//图片路径设置为读取的图片
+		//					$('.pic_' + num).append("<input type='hidden' name='pic_" + num + "' value='" + e.target.result + "'>");
+		//
+		//					img.src = e.target.result;
+		//				};
+		//				reader.readAsDataURL(file);
+		//			}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</body>
+
+</html>

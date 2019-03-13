@@ -1,0 +1,541 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的收货地址</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.css">
+
+    <style type="text/css">
+        body {
+            background: #fff;
+        }
+
+        #content {
+            width: 90%;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.16);
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+        }
+        p{
+            margin-bottom: 0;
+        }
+
+        #content:last-child {
+            margin-bottom: 3.3rem;
+        }
+
+          #content:first-child {
+            margin-top: 1rem;
+        }
+
+
+        #big_box {
+            overflow-y: scroll;
+        }
+
+        .user_box {
+            width: 100%;
+            height: 3.6rem;
+            font-size: 0.6rem;
+            transition: all 0.5s;
+
+        }
+
+        .user_box .dress {
+            margin-left: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 16rem;
+            color: #999999;
+            position: absolute;
+            bottom: -25px;
+        }
+
+        .user_box .user_msg {
+            position: relative;
+            height: 2rem;
+            ;
+            line-height: 2rem;
+        }
+
+        .user_box .user_msg .n_name {
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            width: 4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #000;
+        }
+
+        .user_box .user_msg .number {
+            margin-right: 0.5rem;
+            color: #000;
+        }
+
+        .user_box .btn {
+            height: 3.8rem;
+            width: 7rem;
+            position: absolute;
+            top: 0;
+            right: -7rem;
+            z-index: 5;
+
+        }
+
+        .user_box .btn div {
+            width: 50%;
+            height: 100%;
+            line-height: 3.8rem;
+            background-color: #B7B7B7;
+            text-align: center;
+            color: #fff;
+        }
+
+        .user_box .btn div:last-child {
+            background-color: #DD5144;
+        }
+
+        .href {
+            height: 2.5rem;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        .href a {
+            display: block;
+            height: 2.5rem;
+            width: 100%;
+            background: #2AB7CF;
+            color: #fff;
+            text-align: center;
+            line-height: 2.5rem;
+            font-size: 0.75rem;
+            font-family: PingFangSC-Regular;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        #dels {
+            display: none;
+        }
+
+        #mask {
+            display: none;
+        }
+
+        .bai {
+            width: 9.2rem;
+            height: 11.025rem;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            margin-top: -5.5rem;
+            margin-left: -4.6rem;
+            display: block;
+        }
+
+        .bai img {
+            width: 9.2rem;
+            height: 11.025rem;
+        }
+
+        .back {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            position: fixed;
+            bottom: 5rem;
+            right: 1.5rem;
+            text-align: center;
+            z-index: 900;
+            display: none;
+        }
+
+        .back a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .back img {
+            display: block;
+            width: 100%;
+            height: 100%;
+           
+      
+
+        }
+
+        .check {
+            width: 100%;
+            height: 2..5rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            display: none;
+        }
+
+        .check button {
+            width: 100%;
+            height: 2.5rem;
+            background-color: #2AB7CF;
+            color: #fff;
+            border: 0;
+        }
+
+        #ts {
+            height: 0.8rem;
+            width: 1.8rem;
+            line-height: 0.8rem;
+            margin-left: 0.5rem;
+            margin-top: 0.5rem;
+            background: rgb(255, 158, 109);
+            color:#fff ;
+            text-align: center;
+            border-radius: 1rem;
+        }
+
+        .actived {
+            background-color: #2AB7CF;
+            color: #fff !important;
+        }
+
+        .a {
+            color: #fff;
+        }
+
+        .b {
+            color: #fff !important;
+        }
+
+        .modify a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+        }
+
+        .Default_dress {
+            width: 90%;
+            margin: 0 auto;
+            height: 2rem;
+            line-height: 2rem;
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <div class="bai">
+        <img src="__HOME_IMAGES__/Group.png" alt="">
+    </div>
+    <div class="back">
+        <a href="{:U('Home/Lottery/dress')}">
+            <img src="/Public/Home/images/blue_add.png" alt="">
+        </a>
+    </div>
+    <div id="big_box">
+
+        <!-- 地址数据 -->
+    </div>
+    <div class="href">
+        <a href="{:U('Home/Lottery/dress')}">添加新地址</a>
+    </div>
+    <div class="check">
+        <button id="ischeck">确定</button>
+    </div>
+    <div class="mui-popup mui-popup-in" id="dels">
+        <div class="mui-popup-inner">
+            <div class="mui-popup-title">提示</div>
+            <div class="mui-popup-text">是否删除？</div>
+        </div>
+        <div class="mui-popup-buttons">
+            <span id="btn1" class="mui-popup-button">否</span>
+            <span id="btn2" class="mui-popup-button mui-popup-button-bold">是</span>
+        </div>
+    </div>
+    <div class="mui-popup-backdrop mui-active" id="mask"></div>
+</body>
+
+</html>
+<!-- 我的收货地址数据 -->
+<script type="text/html" id="dress">
+    {{each AppendData v i}}
+    <div id="content" class="content" isCheck="{{v.is_enabled}}">
+        <div class="user_box">
+            <div class="user_msg clearfix" data-id="{{v.id}}">
+                <p class="fl n_name">{{v.collect_people}}</p>
+                <p class="fr number">{{v.telephone}}</p>
+                <div class="btn clearfix">
+                    <div class="modify fl">
+                        <a class="edit" style="background-color:#CDCDCD" href="/index.php?s=/Home/Lottery/editdress/id&{{v.id}}/p/{{v.link}}">修改</a>
+                    </div>
+                    <div class="del fl">删除</div>
+                </div>
+                 <p class="dress">{{v.detailed_address}}</p>
+            </div>
+           
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script>
+    $(function () {
+        var id = '{$id}';
+        var Delivery_id;
+        var Default;
+
+        var losearch = location.search;
+        console.log(losearch)
+
+        function getCaption(obj) {
+            var index = obj.lastIndexOf("/");
+            obj = obj.substring(index + 1, obj.length);
+            //  console.log(obj);
+            return obj;
+        }
+        losearch = getCaption(losearch);
+        console.log(losearch);
+
+
+        var checkcolor;
+        $.ajax({
+            url: "index.php?s=/Api/LuckApi/luck_list",
+            type: "post",
+            data: {
+                unionid: id,
+                type: 1
+            },
+            success: function (res) {
+                console.log(res)
+                $.each(res.AppendData, function (k, v) {
+                    if (losearch == v.id) {
+                        checkcolor = v.aid;
+                    }
+                })
+
+            }
+        });
+
+        console.log(id)
+
+        // 渲染地址数据
+        $.ajax({
+            url: "index.php?s=/Api/LuckApi/get_address",
+            type: "post",
+            data: {
+                unionid: id
+            },
+            success: function (res) {
+                console.log(res);
+
+                $.each(res.AppendData, function (k, v) {
+                    v.link = losearch;
+                    if (v.is_enabled == 1) {
+                        console.log(v.id)
+                        Default = v.id;
+
+                    }
+                    if (res.AppendData <= 0) {
+                        $(".href").css("display", "block");
+                        $(".check").css("display", "none");
+                        $(".back").css("display", "none");
+                    } else {
+                        $(".href").css("display", "none");
+                        $(".check").css("display", "block");
+                        $(".back").css("display", "block");
+                    }
+
+                })
+                $("#big_box").html(template('dress', res));
+                $(".content").each(function (i, e) {
+                    if ($(e).attr("ischeck") == 1) {
+                        $(e).prependTo($("#big_box"));
+                    }
+                })
+                if ($(".content").length > 0) {
+                    $(".bai").css("display", "none");
+                } else {
+                    $(".bai").css("display", "block");
+                }
+                var startX;
+                var moveX;
+                $(".user_box").each(function (i, e) {
+                    $(this).on("touchstart", function (e) {
+                        startX = event.touches[0].clientX;
+                        // console.log(startX)
+                    });
+
+                    $(this).on("touchmove", function (e) {
+                        moveX = event.touches[0].clientX;
+                        // console.log(moveX)
+                    });
+
+                    $(this).on("touchend", function (e) {
+                        if (startX - moveX > 120) {
+                            $(this).css("transform", "translateX(-7rem)");
+                        } else {
+                            $(this).css("transform", "translateX(0px)");
+                        }
+                    });
+                });
+
+                $(".content").each(function (i, e) {
+                    if ($(e).attr("isCheck") == 1) {
+                        $(this).find(".n_name").before('<div id="ts" class="fl">默认</div>')
+                        // $(this).css("background","#2AB7CF");
+                        // $(this).find("p").css("color","#fff");
+                        // $(this).find("div").css("color", "#fff");
+                    }
+                })
+
+
+
+                $(".content").each(function (i, e) {
+                    if ($(e).find(".user_msg").attr("data-id") == checkcolor) {
+                        $(this).addClass("actived").find("p").css("color", "#fff");
+                    }
+                })
+
+                // $("#content").before('<div class="Default_dress">默认地址:</div>')
+
+            }
+
+
+
+        });
+        var delid
+        var that
+        // 、、删除地址
+        $("#big_box").on("click", ".del", function (e) {
+            // e.preventDefault()
+            e.stopPropagation();
+
+            delid = $(this).parent().parent().attr("data-id");
+            $("#dels").css("display", "block");
+            $("#mask").css("display", "block");
+            that = $(this);
+
+            $("#btn2").on("click", function () {
+                $("#dels").css("display", "none");
+                $("#mask").css("display", "none");
+                $.ajax({
+                    url: "index.php?s=/Api/LuckApi/del_address",
+                    type: "post",
+                    data: {
+                        unionid: id,
+                        aid: delid
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        that.parent().parent().parent().parent().remove();
+                        if ($(".content").length > 0) {
+                            $(".bai").css("display", "none");
+                            $(".check").css("display", "block");
+                            $(".back").css("display", "block");
+                        } else {
+                            $(".bai").css("display", "block");
+                            $(".check").css("display", "none");
+                            $(".href").css("display", "block");
+                            $(".back").css("display", "none");
+                        }
+                    }
+                })
+            })
+        })
+
+        $("#btn1").on("click", function () {
+            delid = '';
+            that = '';
+        })
+
+        $("#btn1").on("click", function () {
+            $("#dels").css("display", "none");
+            $("#mask").css("display", "none");
+
+        })
+
+        $("#big_box").on("click", ".edit", function (e) {
+            e.stopPropagation()
+        })
+
+
+        $(".back a").attr("href", "/index.php?s=/Home/Lottery/dress/p/" + losearch + "");
+        $(".href a").attr("href", "/index.php?s=/Home/Lottery/dress/p/" + losearch + "");
+
+        // 获取id
+        $("#big_box").on("click", ".content", function (e) {
+            e.stopPropagation()
+            Delivery_id = $(this).find(".user_msg").attr("data-id");
+            $(this).addClass("actived").siblings().removeClass("actived");
+            // #8f8f94
+            $(this).find(".n_name,.number").css("color", "#fff").parents(".content").siblings().find(".n_name,.number").css("color","#000");
+            $(this).find(".dress").css("color","#fff").parents(".content").siblings().find(".dress").css("color","#999");
+           
+
+        
+            console.log(Delivery_id)
+        });
+
+
+        $("#ischeck").on("click", function () {
+            
+                if ($(".content").hasClass("actived")) {
+                    $.ajax({
+                        url: "index.php?s=/Api/LuckApi/luck_edit",
+                        type: "post",
+                        data: {
+                            unionid: id,
+                            lucks: losearch,
+                            aid: Delivery_id
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            location.href = '/index.php?s=/Home/lottery/turntable.html';
+                        }
+                    })
+                } else {
+                    $.ajax({
+                        url: "index.php?s=/Api/LuckApi/luck_edit",
+                        type: "post",
+                        data: {
+                            unionid: id,
+                            lucks: losearch,
+                            aid: Default
+                        },
+                        success: function (res) {
+                            console.log(res)
+                            location.href = '/index.php?s=/Home/lottery/turntable.html';
+                        }
+                    })
+
+                }
+
+
+
+
+
+
+})
+
+    })
+</script>

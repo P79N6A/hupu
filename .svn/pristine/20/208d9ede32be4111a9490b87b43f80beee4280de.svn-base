@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>充值</title>
+    <style>
+        body,html{
+            height: 100%;
+            overflow: hidden;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <img src="/Public/Home/images/chongzhi.jpg" alt="">
+</body>
+
+</html>

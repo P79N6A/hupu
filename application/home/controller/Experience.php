@@ -1,0 +1,1 @@
+<?phpnamespace app\home\controller;use app\common\controller\HomeBase;class Experience extends HomeBase{   //体验卡    public function experience()    {        $this->title = "体验卡";        $this->id = $this->userInfo['unionid'];        return $this->fetch();    }}

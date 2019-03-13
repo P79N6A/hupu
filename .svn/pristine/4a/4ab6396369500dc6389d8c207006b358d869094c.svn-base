@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>收藏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 90%;
+            height: 1.22rem;
+            margin: 0 auto;
+            position: relative;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .top img {
+            width: .37rem;
+            height: .37rem;
+            border-radius: 50%;
+            margin: .4rem 0;
+            top: -.2rem;
+            position: absolute;
+        }
+
+        .one {
+            width: 1rem;
+            height: .2rem;
+            font-size: .14rem;
+            color: #2b2b2b;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            line-height: .2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            top: .2rem;
+            left: .45rem;
+            position: absolute;
+        }
+
+        .heed {
+            width: 2.9rem;
+            height: .4rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #2b2b2b;
+            line-height: .2rem;
+            position: absolute;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            top: .44rem;
+            left: .45rem;
+        }
+
+        .yokod {
+            /* width: 1.64rem; */
+            height: .13rem;
+            font-size: .09rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(155, 155, 155, 1);
+            line-height: .13rem;
+            position: absolute;
+            bottom: .13rem;
+            left: .45rem;
+        }
+
+        .qs {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: rgba(0,0,0,0.7);
+            position: fixed;
+            top: 50%;
+            left: 25%;
+            z-index:99;
+            border-radius: .04rem;
+            display: none;
+        }
+
+        .dx {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: #00000085;
+            position: fixed;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="qs"></div>
+        <div class="collect">
+
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var user_id = "{$unionid}";
+        console.log(user_id);
+        // var notice = '';
+        $.ajax({
+            url: '/index.php?s=/Api/User/collection',
+            type: 'post',
+            data: {
+                unionid: user_id,
+                object_unionid: user_id,
+                // notice:'',
+            },
+            success: function (res) {
+                // console.log(res)
+                var list = '';
+                $.each(res.AppendData.data, function (k, v) {
+
+                    function timestampToTime(timestamp) {
+                        var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000            
+                        var Y = date.getFullYear() + '年';
+                        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) :
+                            date.getMonth() + 1) + '月';
+                        var D = (date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() +
+                            '日 ');
+                        var h = (date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() +
+                            ':');
+                        var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' :
+                            date.getMinutes() + ':');
+                        var s = date.getSeconds();
+                        return Y + M + D + h + m + s;
+                    }
+                    timestampToTime(v.add_time);
+
+                    var time = timestampToTime(v.add_time);
+
+
+                    list += '<div class="top">'
+                    list += '<img src="' + v.headimg + '" alt="">'
+                    list += '<span class="one">' + v.nick_name + '</span>'
+                    list +=
+                        '<span class="heed">' + v.nick_name + '收藏了你的V网</span>'
+                    list += '<span class="yokod">' + time + '</span>'
+                    list += '</div>'
+                })
+
+                $(".collect").html(list);
+            }
+        })
+
+
+        //下拉刷新
+
+        // 下拉加载
+        var index = 0;
+        var scrollFlag = true;
+        $(window).scroll(function () {
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if (!scrollFlag) {
+                return false;
+            }
+            if (scrollTop + windowHeight == scrollHeight) {
+                index += 10;
+                // console.log("到底了");
+                $(".qs").text("我是有底线的喔").stop(true).fadeIn(500).fadeOut(3000);
+                scrollFlag = false;
+
+                $.ajax({
+                    url: '/index.php?s=/Api/User/collection',
+                    type: 'post',
+                    data: {
+                        unionid: user_id,
+                        object_unionid: user_id,
+                    },
+                    beforeSend: function () {
+                        $(".loading").show()
+                    },
+                    success: function (res) {
+                        $(".loading").hide()
+                        console.log(res);
+                        scrollFlag = true;
+                        if (res.AppendData.length == 0) {
+                            scrollFlag = false;
+                            $(".loading").show().html("没有更多数据了").css({
+                                color: "#fff",
+                                "line-height": "4.5rem"
+                            }).fadeOut(2000)
+                        }
+                        var list = '';
+                        $.each(res.AppendData.data, function (k, v) {
+
+                            function timestampToTime(timestamp) {
+                                var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000            
+                                var Y = date.getFullYear() + '年';
+                                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() +
+                                        1) :
+                                    date.getMonth() + 1) + '月';
+                                var D = (date.getDate() < 10 ? '0' + date.getDate() +
+                                    ' ' : date.getDate() +
+                                    '日 ');
+                                var h = (date.getHours() < 10 ? '0' + date.getHours() +
+                                    ':' : date.getHours() +
+                                    ':');
+                                var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() +
+                                    ':' :
+                                    date.getMinutes() + ':');
+                                var s = date.getSeconds();
+                                return Y + M + D + h + m + s;
+                            }
+                            timestampToTime(v.add_time);
+
+                            var time = timestampToTime(v.add_time);
+
+
+                            list += '<div class="top">'
+                            list += '<img src="' + v.headimg + '" alt="">'
+                            list += '<span class="one">' + v.nick_name + '</span>'
+                            list +=
+                                '<span class="heed">' + v.nick_name +
+                                '收藏了你的V网</span>'
+                            list += '<span class="yokod">' + time + '</span>'
+                            list += '</div>'
+                        })
+
+                        $(".collect").html(list);
+                    },
+
+                });
+            }
+
+        });
+
+    })
+</script>
+
+</html>

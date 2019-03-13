@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Public/Home/css/add/css/mui.min.css">
+    <script src="/Public/Home/css/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+    <title>相册编辑</title>
+    <style>
+        body,
+        html {
+            padding-bottom: .5rem;
+            /* height: 100%; */
+            width: 100%;
+            background: #333333;
+        }
+
+        .header {
+            width: 100%;
+            height: .32rem;
+            background: #F8C85E;
+            padding: 0 .16rem;
+            box-sizing: border-box;
+        }
+
+        .header button {
+            width: .64rem;
+            font-size: .16rem;
+            margin-top: .025rem;
+            border-radius: .01rem;
+            border: 0;
+            outline: none;
+            padding: .02rem 0;
+        }
+
+        .header button:nth-child(1) {
+            color: #fff;
+            background: transparent;
+        }
+
+        .header button:nth-child(2) {
+            background: #fff;
+            color: #F8C85E;
+        }
+
+        .edit {
+            width: 100%;
+            height: .5rem;
+            display: flex;
+        }
+
+        .edit a {
+            flex: 1;
+            background: #333333;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .edit a img {
+            width: .16rem;
+            height: .16rem;
+            position: absolute;
+            top: 50%;
+            left: .3rem;
+            margin-top: -0.08rem;
+        }
+
+        .edit a p {
+            height: .2rem;
+            line-height: .22rem;
+            position: absolute;
+            top: 50%;
+            left: .5rem;
+            margin-top: -.1rem;
+        }
+
+        .footer {
+            width: 100%;
+            height: .5rem;
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: #fff;
+            z-index: 1005;
+        }
+
+        .item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .item #up_dataimg{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        .item img {
+            width: .24rem;
+            height: .22rem;
+            display: block;
+            margin: .03rem auto;
+
+        }
+
+        .main {
+            width: 100%;
+            height: 100%;
+            background: #333333;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .swiper-container {
+            margin-top: 20px;
+            height: 4.54rem;
+            overflow: visible !important;
+            /* overflow: hidden !important; */
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide {
+            /* width: 620px; */
+            width: 2.38rem;
+            border-radius: 2px;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide img {
+            width: 100%;
+            height: 320px;
+            border-radius: 20px;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-prev {
+            /* margin-top: 18px; */
+            height: 100% !important;
+        }
+
+        /* .swiper-container .swiper-wrapper .swiper-slide-prev img {
+            height: 284px !important;
+        } */
+
+        .swiper-container .swiper-wrapper .swiper-slide-next {
+            /* margin-top: 18px; */
+            height: 100% !important;
+        }
+
+        /* .swiper-container .swiper-wrapper .swiper-slide-next img {
+            height: 284px !important;
+        } */
+
+        .swiper-container .swiper-wrapper .swiper-slide-active {
+            /* width: 620px; */
+            width: 2.8rem;
+            height: 100%;
+        }
+
+        .swiper-wrapper{
+            margin-left: -.1rem;
+        }
+
+
+        .swiper-pagination {
+            bottom: -30px !important;
+        }
+
+        .swiper-pagination .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: #ff1e1e;
+        }
+
+        .swiper-pagination .swiper-pagination-bullet-active {
+            width: 21px;
+            height: 12px;
+            background: #e75230;
+            border-radius: 6px;
+        }
+
+        .swiper-slide {
+            background-size: 100% 100% !important;
+        }
+
+        textarea{
+            resize: none;
+            border: 0;
+            outline: none;
+            background: transparent;
+        }
+
+        .edit_box{
+            width: 70%;
+            height: .8rem;
+            position: absolute;
+            z-index: 1000;
+            border: 1px dashed #eee;
+        }
+
+         .edit_box textarea{
+             padding: .05rem .05rem;
+             width: 100%;
+             height: 100% ;
+             box-sizing: border-box;
+         }
+
+         .swiper-pagination-fraction{
+             width: .4rem;
+             height: .24rem;
+             background: skyblue;
+             line-height: .24rem;
+             bottom: .07rem !important;
+             left:inherit;
+             right: .57rem !important;
+             color: #fff;
+             background:rgba(0,0,0,0.6);
+             border-radius: .12rem; 
+             font-size: .13rem;
+             
+         }
+
+            /* 编辑框 */
+         #edit{
+             width: 100%;
+             height: 100%;
+             position: fixed;
+             top: 0;
+             left: 0;
+             background: #eee;
+             z-index: 1006;
+             display: none;
+         }
+
+         #edit .box{
+             width: 100%;
+             height: 100%;
+             position: relative;
+         }
+
+        #edit .box .text_box{
+            width: 100%;
+            height: 100%;
+            padding: .1rem .1rem;
+            box-sizing: border-box;
+        }
+
+          #edit .box .text_box .content_edit{
+              width: 100%;
+              height: 2rem;
+              max-height: 2rem;
+              font-size: .16rem;
+          }
+
+          #edit .box .bottom_box{
+              width: 100%;
+              /* height: .44rem; */
+              position: absolute;
+              bottom: 0;
+            
+          }
+
+          .bottom_box .it{
+            display: flex;
+              padding: .05rem .1rem;
+              width: 100%;
+              height: 100%;
+               background: #fff;
+          }
+ 
+           #edit .box .bottom_box .item_edit{
+               flex: 1;
+               font-size: .12rem;
+               position: relative;
+           }
+
+           .bottom_box .item_edit .color{
+               width: .24rem;
+               height: .24rem;
+               top: 50%;
+               margin-top: -.12rem;
+               position: absolute;
+           }
+
+           .bottom_box .item_edit .color_text{
+               left: 40%;
+           }
+
+           .bottom_box .item_edit .zi{
+               width: .13rem;
+               height: .15rem;
+               position: absolute;
+               top: 50%;
+               margin-top: -0.075rem;
+           }
+
+           .bottom_box .item_edit span{
+               position: absolute;
+               top: 50%;
+               margin-top: -.07rem;
+               left: 25%;
+           }
+
+           #edit .box .bottom_box .confirm{
+               flex: 1.5;
+               padding: .05rem 0;
+           }
+
+            #edit .box .bottom_box .confirm button{
+                width: 100%;
+                height: 100%;
+                background: #32CEA0;
+                color: #fff;
+                text-align: center;
+                border: 0;
+                outline: none;
+                padding: .05rem 0;
+
+            }
+
+             .colorlist{
+                width: 100%;
+                background: #fff;
+                padding: .1rem .1rem;
+                box-sizing: border-box;
+                margin-top: .1rem;
+                display: flex;
+                flex-wrap: wrap;
+                display: none;
+            }
+
+            .colorlist li{
+                width: .4rem;
+                height: .4rem;
+                background: #32CEA0; 
+                margin: 0.05rem 0.05rem;   
+                
+            }
+
+        .mask {
+            width: 150px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -75px;
+            display: none;
+            z-index: 1003;
+        }
+
+        .mask img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .mask p {
+            color: #fff;
+            text-align: center;
+            line-height: 0;
+            height: auto;
+        }
+
+        .boxx{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+          .boxx img{
+              width: .2rem !important;
+              height: .2rem !important;
+              position: absolute;
+              z-index:999;
+          }
+
+        .boxx .del{
+            top: -.1rem;
+            left: -.1rem;
+        }
+
+        .boxx .edit{
+            right: -.1rem;
+            top: -.1rem;
+        }
+
+        .boxx .rote{
+            left: -.1rem;
+            bottom: -.1rem;
+        }
+
+        .boxx .scle{
+            right: -.1rem;
+            bottom: -.1rem;
+            z-index: 1199;
+        }
+
+        .mask {
+            width: 150px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -75px;
+            display: none;
+            z-index: 1003;
+        }
+
+        .mask img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .mask p {
+            color: #fff;
+            text-align: center;
+            line-height: 0;
+            height: auto;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <!-- 顶部 -->
+    <div class="header clearfix">
+        <button class="fl next_btn">下一页</button>
+        <button class="fr Preservation">保存</button>
+    </div>
+    <!-- 编辑 -->
+    <div class="edit">
+        <a href="javascript:;" class="edit_item insert">
+            <img src="/Public/Home/images/wh/Album_icon_plus@2x.png" alt="">
+            <p>插页</p>
+        </a>
+        <a href="javascript:;" class="edit_item del">
+            <img src="/Public/Home/images/wh/Album_icon_delete@2x.png" alt="">
+            <p>删除</p>
+        </a>
+        <a href="javascript:;" class="edit_item sort">
+            <img src="/Public/Home/images/wh/Album_icon_sort@2x.png" alt="">
+            <p>排序</p>
+        </a>
+    </div>
+    <!-- 编辑中心 -->
+    <div class="main">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- <div class="swiper-slide">slider1</div> -->
+
+            </div>
+            <div class="swiper-pagination swiper-pagination-fraction"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="javascript:;" class="item Preservation">
+            <img src="/Public/Home/images/wh/Album_icon_preview@2x.png" alt="">
+            <p>预览</p>
+        </a>
+        <a href="javascript:;" class="item font">
+            <img src="/Public/Home/images/wh/geeting_icon_words@2x.png" alt="">
+            <p>文字</p>
+        </a>
+        <a href="javascript:;" class="item music">
+            <img src="/Public/Home/images/wh/geeting_icon_music@2x.png" alt="">
+            <p>音乐</p>
+        </a>
+        <a href="javascript:;" class="item add_bg">
+             <input class="" id="up_dataimg" type="file" accept="image/*">
+            <img src="/Public/Home/images/wh/geeting_icon_background@2x.png" alt="">
+            <p>背景</p>
+        </a>
+        <a class="share item" href="javascript:;">
+            <img src="/Public/Home/images/wh/geeting_icon_share@2x.png" alt="">
+            <p>场景</p>
+        </a>
+    </div>
+    <!-- 文字编辑框 -->
+    <div id="edit">
+        <div class="box">
+            <div class="text_box">
+                <textarea class="content_edit" placeholder="请输入文字..."></textarea>
+            </div>
+            <div class="bottom_box">
+                <div class="it">
+                    <div class="item_edit edit_color">
+                        <img class="color" src="/Public/Home/images/wh/word_icon_color@2x.png" alt="">
+                        <span class="color_text">颜色</span>
+                    </div>
+                    <div class="item_edit add_size">
+                        <img class="zi" src="/Public/Home/images/wh/word_icon_plus@2x.png" alt="">
+                        <span>字号 +</span>
+                    </div>
+                    <div class="item_edit reduce">
+                        <img class="zi" src="/Public/Home/images/wh/word_icon_reduce@2x.png" alt="">
+                        <span>字号 -</span>
+                    </div>
+                    <div class="item_edit confirm">
+                        <button class="con">确定</button>
+                    </div>
+                </div>
+                <ul class="colorlist">
+                    <!-- 颜色 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mask" style="display: none;">
+        <img src="/Public/Home/images/loadad.gif" alt="">
+        <p>图片上传中</p>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        var uid = '{$unionid}';
+        var userid = '{$userid}';
+        console.log(userid);
+        var model;
+        var yulan;
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+
+        var myid = GetQueryString('preview');
+        var cids = GetQueryString('cids');
+        console.log(cids)
+        console.log(myid)
+
+        // $('.share').attr('href','index.php?s=/Home/Photo/share_msg&id='+myid+'&cids='+cids+''); //分享的页面
+
+        $('.share').on('click',function(){  //分享
+            
+                var content_id = $('.swiper-slide-active').attr('data-id');
+                var text = $('.swiper-slide-active').find('textarea').val();
+                var imgsrc = $('.swiper-slide-active').attr('data-pic');
+                var newcolor = $('.swiper-slide-active').find('textarea').attr('data-color');
+                var top_y = $('.swiper-slide-active').find('.edit_box').css('top');
+                var top_x = $('.swiper-slide-active').find('.edit_box').css('left');
+
+                var font_deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                var font_zoom = $('.swiper-slide-active .edit_box').attr('data-zoom');
+
+                var edit_w = $('.swiper-slide-active').width();
+                var edit_h = $('.swiper-slide-active').height();
+            
+               $.ajax({
+                    type: "post",
+                     url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                    data: {
+                        unionid: uid,
+                        user_content_id: content_id,
+                        img: imgsrc,
+                        content: text,
+                        font_color: newcolor,
+                        font_x: top_x,
+                        font_y: top_y,
+
+                        font_angle:font_deg,
+                        font_zoom:font_zoom,
+                        edit_width:edit_w,
+                        edit_height:edit_h
+
+                    },
+                    success: function (res) {
+                        // mui.toast('保存成功')
+                        console.log(res)
+                        location.href = '/index.php?s=/Home/Photo/share_msg&id='+myid+'&cids='+cids+''
+                    }
+                })
+
+
+
+
+
+
+        })
+
+        // $('.music').attr('href','index.php?s=/Home/Photo/photo_music&preview='+myid+'&cids='+cids+'') //选择音乐
+
+        $('.music').on('click',function(){   //音乐
+           
+                var content_id = $('.swiper-slide-active').attr('data-id');
+                var text = $('.swiper-slide-active').find('textarea').val();
+                var imgsrc = $('.swiper-slide-active').attr('data-pic');
+                var newcolor = $('.swiper-slide-active').find('textarea').attr('data-color');
+                var top_y = $('.swiper-slide-active').find('.edit_box').css('top');
+                var top_x = $('.swiper-slide-active').find('.edit_box').css('left');
+
+                var font_deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                var font_zoom = $('.swiper-slide-active .edit_box').attr('data-zoom');
+
+                var edit_w = $('.swiper-slide-active').width();
+                var edit_h = $('.swiper-slide-active').height();
+            
+               $.ajax({
+                    type: "post",
+                     url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                    data: {
+                        unionid: uid,
+                        user_content_id: content_id,
+                        img: imgsrc,
+                        content: text,
+                        font_color: newcolor,
+                        font_x: top_x,
+                        font_y: top_y,
+
+                        font_angle:font_deg,
+                        font_zoom:font_zoom,
+                        edit_width:edit_w,
+                        edit_height:edit_h
+
+                    },
+                    success: function (res) {
+                        // mui.toast('保存成功')
+                        console.log(res)
+                        location.href = '/index.php?s=/Home/Photo/photo_music&preview='+myid+'&cids='+cids+''
+                    }
+                })
+
+
+
+
+
+
+
+
+        })
+
+
+        $('.sort').attr('href','index.php?s=/Home/Photo/photo_sort&id='+myid+'&cids='+cids+'') //选择排序
+
+        var colorss = [
+            '#222222', '#002766', '#254000', '#613400', '#5C0011', '#254000', '#002329', '#520339',
+            '#120338', '#5A5A5A', '#0050B3', '#5B8C00', '#AD6800', '#A8071A', '#5B8C00', '#006D75',
+            '#9E1068', '#391085', '#BFBFBF', '#1890FF', '#A0D911', '#FAAD14', '#F5222D', '#A0D911',
+            '#13C2C2', '#EB2F96', '#722ED1', '#E9E9E9', '#69C0FF', '#D3F261', '#FFD666', '#FF7875',
+            '#D3F261', '#5CDBD3', '#FF85C0', '#B37FEB', '#FBFBFB', '#BAE7FF', '#F4FFB8', '#FFF1B8',
+            '#FFCCC7', '#F4FFB8', '#B5F5EC', '#FFD6E7', '#EFDBFF'
+        ]
+        var list = '';
+        var size = 16; //初始化字体
+        var color;
+        $.each(colorss, function (k, v) {
+            list += '<li class="i" data-color="' + v + '" style="background:' + v + '" ></li>'
+        })
+        $('.colorlist').html(list);
+
+         $('.add_size').on('click', function () {
+            size++;
+            $('.content_edit').css('font-size', (size/100) + 'rem');
+        })
+        $('.reduce').on('click', function () {
+            size--;
+            $('.content_edit').css('font-size', (size/100) + 'rem');
+        })
+
+        $('.edit_color').on('click', function () {
+            $(this).toggleClass('switch');
+            if ($(this).hasClass('switch')) {
+                $('.colorlist').css('display', 'flex')
+            } else {
+                $('.colorlist').css('display', 'none')
+            }
+
+        })
+        $('.colorlist li').on('click', function () {
+            color = $(this).attr('data-color');
+            $('.content_edit').css('color', color);
+            $('#content').attr('data-color',color);
+        })
+
+        $('.con').on('click', function () {
+            $('#edit').hide();
+            var text = $('.content_edit').val();
+            $('.swiper-slide-active').find('textarea').css({
+                'color':color,
+                'font-size':''+(size/100)+'rem'
+            }).attr('data-color',color).val(text)
+            
+           $('.swiper-slide-active').find('textarea').attr('data-size',size)
+
+        })
+
+        //修改字体
+        $('.font').on('click', function () {
+            var val = $('.swiper-slide-active').find('textarea').val();
+            var font_color = $('.swiper-slide-active').find('textarea').css('color');
+            var font_size = $('.swiper-slide-active').find('textarea').css('font-size');
+            $('#edit').show();
+            $('.content_edit').val(val).css('color', font_color);
+            $('.content_edit').val(val).css('font-size', font_size/100);
+        })
+
+
+
+  var touchflag = true;
+  var mySwiper;
+        $.ajax({
+            url: 'index.php?s=/Api/IndexApi/get_album_list',
+            type: 'post',
+            data: {
+                unionid: uid,
+                my_id: myid
+            },
+            success: function (res) {
+                model = res.AppendData.album_id;
+                yulan = res.AppendData.id
+                $('.insert').on('click',function(){
+                    if ($(".swiper-slide").length >= 9) {
+                             mui.toast("最多添加9张相册哦")
+                    } else {
+                     $('.insert').attr('href','index.php?s=/Home/Photo/all/&model_id='+model+'&cids='+cids+'&id='+myid+''); //添加模板
+                    }
+                })
+               
+                console.log(res)
+                var data = res.AppendData.content_detail;
+                var list = '';
+                $.each(data, function (k, v) {
+                    list += '<div class="swiper-slide" style="background:url(' + v.img +')" data-id="'+v.id+'" data-pic="'+v.img+'">'
+                    list += '<div class="edit_box" data-deg='+v.font_angle+' data-zoom='+v.font_zoom+' style="top:'+v.font_y+'px;left:'+v.font_x+'px; transform: scale('+v.font_zoom+')rotate('+v.font_angle+'deg)translateZ(0);">'
+                    list +=  '<div class="boxx">'
+                    if(v.font_size == null || v.font_size == ''){
+                          list += '<textarea data-size = "'+ v.font_size +'" data-color="'+v.font_color+'" style="color:' + v.font_color + ';font-size:0.13rem;">' + v.content + '</textarea>'
+                    }else{
+                          list += '<textarea data-size = "'+ v.font_size +'"  data-color="'+v.font_color+'" style="color:' + v.font_color + ';font-size:' + (v.font_size/100) +'rem;">' + v.content + '</textarea>'
+                    }   
+                    // list+= '<img class="del"  src="/Public/Home/images/wh/greeting_icon_shut@2x.png" alt="">'
+                    list+= '<img class="edit" src="/Public/Home/images/wh/geeting_icon_edit@2x.png" alt="">'
+                    list+=' <img class="rote" src="/Public/Home/images/wh/geeting_icon_rotate@2x.png" alt="">'
+                    list+=' <img class="scle" src="/Public/Home/images/wh/geeting_icon_zoom@2x.png" alt="">'
+                    list+= '</div>'
+                    list += '</div>'
+                    list += '</div>'
+                })
+
+                $(".swiper-wrapper").html(list);
+                mySwiper = new Swiper('.swiper-container', {
+                    direction: 'horizontal',
+                    slidesPerView: "auto",
+                    centeredSlides: true,
+                    spaceBetween: 20,
+                    resistanceRatio: 0,
+                    pagination: '.swiper-pagination',
+                    paginationType: 'fraction',
+                    onSlideNextStart: function(swiper){
+                        var content_id = $('.swiper-slide-prev').attr('data-id'); 
+                        var text = $('.swiper-slide-prev').find('textarea').val();
+                        var imgsrc = $('.swiper-slide-prev').attr('data-pic');
+                        var newcolor = $('.swiper-slide-prev').find('textarea').attr('data-color');
+                        var font_size = $('.swiper-slide-prev').find('textarea').attr('data-size');
+                        var top_y = $('.swiper-slide-prev').find('.edit_box').css('top');
+                        var top_x = $('.swiper-slide-prev').find('.edit_box').css('left');
+
+                        var font_deg = $('.swiper-slide-prev .edit_box').attr('data-deg');
+                        var font_zoom = $('.swiper-slide-prev .edit_box').attr('data-zoom');
+
+                        var edit_w = $('.swiper-slide-active').width();
+                        var edit_h = $('.swiper-slide-active').height();
+
+
+
+                        $.ajax({
+                            type: "post",
+                            url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                            data: {
+                                unionid: uid,
+                                user_content_id: content_id,
+                                img: imgsrc,
+                                content: text,
+                                font_color: newcolor,
+                                font_size:font_size,
+                                font_x: top_x,
+                                font_y: top_y,
+                                font_angle:font_deg,
+                                font_zoom:font_zoom,
+                                edit_width:edit_w,
+                                edit_height:edit_h
+                            },
+                            success: function (res) {
+                                console.log(res)
+                            }
+                        })
+
+
+
+
+
+
+                    }
+
+                })
+
+                // 旋转
+                $('.swiper-wrapper').on('click','.swiper-slide-active .rote',function(event){
+                    event.stopPropagation();
+                    event.preventDefault();
+                    var deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                    var zoom = $('.swiper-slide-active .edit_box').attr('data-zoom');
+                    deg = (deg-0) + 10;
+                    console.log(deg)
+
+                    $('.swiper-slide-active .edit_box').css({
+                        'transform':'rotate('+deg+'deg) scale('+zoom+') translateZ(0)',
+                    })
+                    $('.swiper-slide-active .edit_box').attr('data-deg',deg);
+                    
+                })
+
+                // 修改文字
+                $('.swiper-wrapper').on('click','.swiper-slide-active .edit',function(){
+                        var val = $('.swiper-slide-active').find('textarea').val();
+                        var font_color = $('.swiper-slide-active').find('textarea').css('color');
+                        var font_size = $('.swiper-slide-active').find('textarea').css('font-size');
+                        $('#edit').show();
+                        $('.content_edit').val(val).css('color', font_color);
+                        $('.content_edit').val(val).css('font-size', font_size/100);
+                })
+
+
+
+                var mt_x;
+                var mt_y;
+
+                var big_w = $(".swiper-slide-active").width();
+                var big_h = $(".swiper-slide-active").height();
+
+
+                var touch_w = $(".edit_box").width(); //要拖动的div的宽度
+                var touch_h = $(".edit_box").height(); //长度
+
+
+                $(".swiper-wrapper").on("touchmove",'.edit_box', function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                      if(!touchflag){
+                        console.log('阻止触发了')
+                        return false;
+                    }
+                    var touch = event.originalEvent.touches[0];
+                    mt_x = touch.pageX - touch_w / 2;
+                    mt_y = touch.pageY - touch_h *1.5
+
+                    if (mt_x < 0) {
+                        mt_x = 0;
+                    }
+
+                    if (mt_x >= big_w - touch_w) {
+                        mt_x = big_w - touch_w + "px"
+                    }
+
+                    if (mt_y < 0) {
+                        mt_y = 0;
+                    }
+
+                    if (mt_y >= big_h - touch_h) {
+                        mt_y = big_h - touch_h + "px"
+                    }
+
+
+                    $(this).css("left", "" + mt_x + "px");
+                    $(this).css("top", "" + mt_y + "px");
+
+                })
+
+
+                
+                //缩放
+                var init_zoom_x,init_zoom_y;
+                var smallscale = 1;
+                $('.swiper-wrapper').on('touchstart','.scle',function(event){
+                    console.log('缩放开始')
+                    event.stopPropagation();
+                    event.preventDefault();
+                      touchflag = false;
+                    // smallscale = $('.swiper-wrapper .edit_box').attr('data-zoom');
+                    // smallscale = smallscale - 0;
+                    // console.log(smallscale)
+                    init_zoom_x = event.originalEvent.changedTouches[0].pageX;
+                    init_zoom_y = event.originalEvent.changedTouches[0].pageY;
+                })
+
+                $('.swiper-wrapper').on('touchmove','.scle',function(event){
+                      console.log('缩放中123123')
+                    event.stopPropagation();
+                    event.preventDefault();
+                    var moves_x = event.originalEvent.changedTouches[0].pageX;
+                    var moves_y = event.originalEvent.changedTouches[0].pageY;
+                    
+                    var new_x = moves_x - init_zoom_x;
+                    var new_y = moves_y - init_zoom_y;
+                   
+
+                if(new_x > 0 && new_y > 0){
+                    if(smallscale >= 1.32){
+                        return false;
+                    }
+                    smallscale+= 0.01;
+                    var edit_deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                    $('.swiper-slide-active .edit_box').css('transform','scale('+smallscale.toFixed(2)+') rotate('+edit_deg+'deg) translateZ(0)');
+                    $('.swiper-slide-active .edit_box').attr('data-zoom',smallscale.toFixed(2))
+                }else{
+                    if(smallscale <= 1){
+                        return false;
+                    }
+                    smallscale -= 0.01;
+                      var edit_deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                    $('.swiper-slide-active .edit_box').css('transform','scale('+smallscale.toFixed(2)+') rotate('+edit_deg+'deg) translateZ(0)');
+                    $('.swiper-slide-active .edit_box').attr('data-zoom',smallscale.toFixed(2))
+                }
+
+                })
+
+                $('.swiper-wrapper').on('touchend','.scle',function(event){
+                     console.log('缩放结束')
+                    event.stopPropagation();
+                    event.preventDefault();
+                     touchflag = true;
+                })
+
+
+            }
+        })
+
+        //删除模板
+        $('.del').on('click',function(){
+            var del_id = $(".swiper-slide-active").attr("data-id");
+               mui.confirm("提示", "是否删除", ["否", "是"], function (res) {
+                if (res.index == 1) {
+                    $.ajax({
+                        type: "post",
+                        url: "index.php?s=/Api/IndexApi/del_user_album_detail",
+                        data: {
+                            unionid: uid,
+                            user_content_id: del_id
+                        },
+                        success: function (res) {
+                            console.log(res); 
+                            $(".swiper-slide-active").remove();
+                            mui.toast("删除成功");
+                            // mySwiper.updateSlidesSize();
+                            // mySwiper.updatePagination();
+                            // mySwiper.updateClasses();
+                            mySwiper.update()
+                       
+                        },
+                        error: function (res) { 
+                            mui.toast("删除失败");
+                        }
+                    })
+                }
+            });
+        })
+        // 添加背景
+        $('#up_dataimg').on('change',function(){
+             if (window.FileReader) {
+                var filepath = $(this).val();
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function(res){
+                     var imgsrc = res.target.result;
+                     $.ajax({
+                          url: "index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: uid,
+                            img: imgsrc,
+                            start_name: "photo"
+                        },
+                        beforeSend:function(){
+                            $('.mask').show()
+                        },
+                        success:function(res){
+                            console.log(res)
+                            var pic = res.AppendData;
+                            $('.swiper-slide-active').css('background','url('+pic+')');
+                            $('.swiper-slide-active').attr('data-pic',pic);
+                             $('.mask').hide()
+                        },
+                        error:function(){
+                             $('.mask').hide()
+                        }
+                     })
+                }
+
+             }else{
+                  alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+             }
+        })
+        // 下一页
+        $('.next_btn').on('click',function(){
+            mySwiper.slideNext();
+        })
+
+
+        //保存
+        $('.Preservation').on('click',function(){
+
+                var content_id = $('.swiper-slide-active').attr('data-id');
+                var text = $('.swiper-slide-active').find('textarea').val();
+                var imgsrc = $('.swiper-slide-active').attr('data-pic');
+                var newcolor = $('.swiper-slide-active').find('textarea').attr('data-color');
+                var top_y = $('.swiper-slide-active').find('.edit_box').css('top');
+                var top_x = $('.swiper-slide-active').find('.edit_box').css('left');
+
+                var font_deg = $('.swiper-slide-active .edit_box').attr('data-deg');
+                var font_zoom = $('.swiper-slide-active .edit_box').attr('data-zoom');
+
+                var edit_w = $('.swiper-slide-active').width();
+                var edit_h = $('.swiper-slide-active').height();
+                var font_size = $('.swiper-slide-active').find('textarea').attr('data-size');
+                console.log(font_size)
+            
+               $.ajax({
+                    type: "post",
+                     url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                    data: {
+                        unionid: uid,
+                        user_content_id: content_id,
+                        img: imgsrc,
+                        content: text,
+                        font_color: newcolor,
+                        font_x: top_x,
+                        font_y: top_y,
+						font_size:font_size,
+                        font_angle:font_deg,
+                        font_zoom:font_zoom,
+                        edit_width:edit_w,
+                        edit_height:edit_h
+
+                    },
+                    success: function (res) {
+                        // mui.toast('保存成功')
+                        console.log(res)
+                        // location.href = '/index.php?s=/Home/Nologin/share_photo/id/'+yulan+'/uid/'+uid+'/mid/1'
+                        location.href = '/index.php?s=/Home/Nologin/share_photo/preview/'+yulan+'/uid/'+uid+'/share/1/modify/1/id/'+userid+''
+                    }
+                })
+
+
+
+        })
+
+        
+
+    })
+</script>

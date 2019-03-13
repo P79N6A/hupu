@@ -1,0 +1,567 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+	<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+	<link rel="stylesheet" href="__HOME_CSS__/dist/css/swiper.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+	<style>
+		html,
+		body {
+			position: relative;
+			/*height: 100%;*/
+			background-color: #f1f1f1;
+		}
+		
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		p {
+			margin-bottom: 0;
+		}
+		
+		a {
+			display: block;
+			width: 100%;
+			height: 100%
+		}
+		
+		.top {
+			width: 100%;
+			margin: 0 auto;
+			height: 2.5rem;
+			margin-bottom: 17px;
+			background-color: #fff;
+			box-shadow: 0rem 0.05rem 0.2rem 0rem rgba(0, 0, 0, 0.08);
+			color: #666;
+			font-size: 0;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 100;
+		}
+		
+		.art {
+			display: inline-block;
+			float: left;
+			width: 50%;
+			height: 100%;
+			font-size: 16px;
+			line-height: 2.5rem;
+			text-align: center;
+		}
+		
+		.sel {
+			font-size: 16px;
+			display: inline-block;
+			float: left;
+			width: 50%;
+			height: 100%;
+			line-height: 2.5rem;
+			text-align: center;
+		}
+		
+		.swiper-container {
+			width: 90%;
+			margin: 60px auto 0;
+			height: 100%;
+		}
+		
+		.swiper-wrapper {
+			transform: none;
+			overflow-y: auto
+		}
+		
+		.swiper-slide {
+			width: 100%;
+			font-size: 18px;
+			background: #fff;
+			height: 5rem;
+			padding: 0.8rem;
+			box-shadow: 0px 3px 9px 0px rgba(0, 0, 0, 0.14);
+			margin-bottom: 20px;
+		}
+		
+		.refresh {
+			position: absolute;
+			line-height: 100px;
+			bottom: 100%;
+			text-align: center;
+			width: 100%;
+		}
+		
+		.loadmore {
+			/* position: absolute; */
+			line-height: 20px;
+			top: 97%;
+			text-align: center;
+			width: 100%;
+			font-size: 20px;
+			display: none;
+		}
+		
+		.sub {
+			margin-right: 0.25rem;
+		}
+		
+		.date {
+			margin-left: 1rem;
+		}
+		
+		.cover {
+			display: inline-block;
+			margin: 0 0.425rem 0 0;
+			padding: 0;
+			float: left;
+			width: 3.4rem;
+			height: 3.4rem;
+			border-radius: 4px;
+		}
+		
+		.cover>img {
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			border-radius: 4px;
+		}
+		
+		.cover_con {
+			display: inline-block;
+			padding: 0;
+			float: left;
+			width: 71%;
+			height: 100%;
+		}
+		
+		.topic {
+			width: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			color: #414141;
+			font-size: 18px;
+			margin: 0;
+			padding: 0;
+			height: 40%;
+		}
+		
+		.con {
+			font-size: 16px;
+			color: #bababa;
+			width: 100%;
+			height: 35%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		
+		.icon>img {
+			width: 15px;
+			height: 10px;
+		}
+		
+		.icons>img {
+			width: 12px;
+			height: 10px;
+		}
+		
+		.art_img>img {
+			width: 15px;
+			height: 8px;
+		}
+		
+		.sel_img>img {
+			width: 21px;
+			height: 21px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		
+		.big {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 100;
+			display: none;
+		}
+		
+		.popup {
+			width: 100%;
+			height: auto;
+			background-color: #fff;
+			position: fixed;
+			top: 50px;
+			left: 0;
+			z-index: 111;
+			display: none;
+		}
+		
+		.popup>ul>li {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			border: 1px dashed #999;
+			z-index: 111;
+			font-size: 18px;
+		}
+		
+		.sel_a {
+			color: #666;
+		}
+		
+		#type {
+			overflow: scroll;
+		}
+		
+		.popup {
+			height: 92%;
+			overflow: scroll;
+		}
+		
+		.load {
+			margin-top: 3rem;
+		}
+		
+		.loadmore_bt {
+			text-align: center;
+			display: none;
+			font-size: 14px;
+		}
+		
+		.loadmore {
+			font-size: 14px;
+		}
+		
+		.swiper-slide:last-child {
+			margin-bottom: 10px;
+		}
+		
+		.active {
+			color: #2FB3D3;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+		<div class="top">
+			<span class="art">
+					<span>分类</span>
+			<span class="art_img">
+						<img src="__HOME_IMAGES__/inco_down.png" alt="" />
+					</span>
+			</span>
+			<span class="sel">
+					<a class="sel_a" href="{:url('Home/Article/personal')}">
+						<span>个人</span>
+			<span class="sel_img">
+							<img src="__HOME_IMAGES__/copyinco_geren.png" alt="" />
+						</span>
+			</a>
+
+			</span>
+		</div>
+		<div class="big"></div>
+		<div class="popup">
+			<ul id="type">
+				<!-- 分类的数据 -->
+			</ul>
+		</div>
+
+		<input type="hidden" class="type" value="">
+		<div class="load">
+			<!-- load的具体内容 -->
+		</div>
+		<div class="loadmore">加载更多</div>
+		<div class="loadmore_bt" id="myussl">亲，已经到底了哦！</div>
+		<script src="__HOME_JS__/rem.js"></script>
+
+		<script src="__HOME_JS__/jquery.min.js"></script>
+		<!-- 分类的数据 -->
+		<script type="text/html" id="fenlei">
+			<li id="all_fl">全部分类</li>
+			{{each AppendData v i}}
+			<li data-id="{{v.id}}">{{v.name}}</li>
+			{{/each}}
+		</script>
+
+		<!-- load的具体内容 -->
+		<script type="text/html" id="content">
+			{{each AppendData v i}}
+			<div class="swiper-slide">
+				<a href="/index.php?s=/Home/Article/detail/id/{{v.id}}/kid/1">
+					<span class="cover">
+						<img src="{{v.cover_img}}" alt="" />
+					</span>
+					<span class="cover_con">
+						<h3 class="topic">{{v.title}}</h3>
+						<p class="con">{{v.content}}</p>
+						<p>
+							<span class="sub">
+								<span class="icon">
+									<img src="__HOME_IMAGES__/inco_yanjing.png" alt="" />
+								</span>
+								<span>{{v.visit}}</span>
+							</span>
+							<span class="sub">
+								<span class="icons">
+									<img src="__HOME_IMAGES__/inco_tuiguang.png" alt="" />
+								</span>
+								<span>{{v.extend}}</span>
+							</span>
+							<span class="date">{{v.addtime}}</span>
+						</p>
+					</span>
+				</a>
+			</div>
+			{{/each}}
+
+		</script>
+
+		<script>
+			var id = '{$id}';
+			var tid = window.sessionStorage.getItem("type_id");
+			var index = 0;
+			var flid;
+			var scrollFlag = true;
+			$(window).scroll(function() {
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+				//页面高度
+				var scrollHeight = $(document).height();
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				if(!scrollFlag) {
+					return false;
+				}
+				if(scrollTop + windowHeight == scrollHeight) {
+					scrollFlag = false;
+					index += 5;
+					$.ajax({
+						url: "index.php?s=/Api/IndexApi/system_article_list",
+						type: "post",
+						data: {
+							start: index,
+							id: id,
+							type_id: flid,
+							end: 7
+						},
+						beforeSend: function() {
+							$('.loadmore').css("display", "block");
+						},
+						success: function(res) {
+							if(res.AppendData.length <= '0') {
+								scrollFlag = false;
+								$(".loadmore_bt").show();
+								$('.loadmore').css("display", "none");
+							} else {
+								scrollFlag = true;
+								$('.loadmore').hide();
+								var htmlstr = '';
+								$.each(res.AppendData, function(idx, item) {
+									htmlstr += '<div class="swiper-slide">';
+									htmlstr += '<a href="__ROOT__/index.php?s=/Home/Article/detail/id/' + item.id + '/kid/1">';
+									htmlstr += '		<span class="cover">';
+									htmlstr += '			<img src="' + item.cover_img + '" alt="" />';
+									htmlstr += '		</span>';
+									htmlstr += '		<span class="cover_con">';
+									htmlstr += '		<h3 class="topic">' + item.title + '</h3>';
+									htmlstr += '			<p class="con">' + item.content + '</p>';
+									htmlstr += '			<p>';
+									htmlstr += '				<span class="sub">';
+									htmlstr += '					<span class="icon">';
+									htmlstr += '						<img src="__HOME_IMAGES__/inco_yanjing.png" alt="" />';
+									htmlstr += '					</span>';
+									htmlstr += '		<span>' + item.visit + '</span>';
+									htmlstr += '		</span>';
+									htmlstr += '		<span class="sub">';
+									htmlstr += '					<span class="icons">';
+									htmlstr += '						<img src="__HOME_IMAGES__/inco_tuiguang.png" alt="" />';
+									htmlstr += '					</span>';
+									htmlstr += '		<span>' + item.extend + '</span>';
+									htmlstr += '		</span>';
+									htmlstr += '		<span class="date">' + item.addtime + '</span>';
+									htmlstr += '		</p>';
+									htmlstr += '		</span>';
+									htmlstr += '</a>';
+									htmlstr += '</div>';
+
+								});
+								$(".load").append(htmlstr);
+							}
+
+						}
+
+					})
+				}
+			});
+
+			var page = 0;
+			var thisPage = 5;
+			var isflag = true;
+			$(function() {
+				var id = '{$id}';
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/system_article_type", //url
+					data: {
+						"id": id
+					},
+					success: function(result) {
+						// console.log(result)
+						if(result.ResultType == 0) {
+							$("#type").html(template("fenlei", result));
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+
+				if(tid) {
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/system_article_list", //url
+						data: {
+							"id": id,
+							"type_id": tid,
+							"start": 0,
+							"end": 10
+						},
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$(".load").html(template("content", result));
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				} else {
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/system_article_list", //url
+						data: {
+							"id": id,
+							"start": 0,
+							"end": 10
+						},
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$(".load").html(template("content", result));
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+			});
+
+			// 点击分类展示相应分类内容
+			$("#type").on("click", "li", function() {
+				index = 0;
+				scrollFlag = true;
+				flid = $(this).attr("data-id");
+				$(this).addClass("active").siblings().removeClass("active");
+				$("#myussl").hide();
+				$('body, html').animate({
+					scrollTop: 0 + 'px'
+				});
+				$(".art").css("color", "#fff")
+				$(".art img").attr("src", "__HOME_IMAGES__/inco_down.png");
+				window.sessionStorage.setItem("type_id", flid);
+				console.log(flid);
+				$.ajax({
+					type: "post",
+					url: "index.php?s=/Api/IndexApi/system_article_list",
+					data: {
+						"id": id,
+						"type_id": flid,
+						"start": 0,
+						"end": 10
+					},
+					success: function(res) {
+						$(".load").html(template("content", res));
+						$(".big").hide();
+						$(".popup").hide();
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+			});
+
+			$("#type").on("click", "#all_fl", function() {
+				window.sessionStorage.removeItem('type_id');
+			})
+
+			$(".art").click(function() {
+				$(".art").css("color", "#2FB3D3")
+				$(".big").show();
+				$(".popup").show();
+				$(this).find('img').attr("src", "__HOME_IMAGES__/upimg.png");
+			})
+			$(".big").click(function() {
+				$(".big").hide();
+				$(".popup").hide();
+				$(".art").css("color", "#000")
+				$(".art").css("color", "#666")
+				$(".art img").attr("src", "__HOME_IMAGES__/inco_down.png");
+			})
+			$(".popup").click(function() {
+				$(".popup").css("overflow-y", "auto")
+				//				 	$(".big").hide();
+				//				 	$(".popup").hide();
+				//				 	window.location.reload();
+			})
+		</script>
+		<script>
+			function mypost() {
+				$.ajax({
+					url: "https://wap.yxm360.com/Api/IndexApi/system_article_list",
+					data: {
+
+						"Method": "selectAdmin"
+
+					},
+					type: 'post',
+					cache: false,
+					dataType: 'json',
+					xhrFields: {
+						withCredentials: true
+					},
+					crossDomain: true,
+					success: function(data) {
+//						alert(JSON.stringify(data))
+					},
+					error: function() {
+
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			}
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+</block>

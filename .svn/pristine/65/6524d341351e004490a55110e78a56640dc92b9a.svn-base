@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+	<meta name="x5-orientation" content="portrait">
+	<link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+	<script src="/Public/Home/js/whjs/js/jquery-2.1.1.min.js"></script>
+	<script src="/Public/Home/js/whjs/js/copyHome.js"></script>
+	<script src="/Public/Home/js/whjs/js/newrem.js"></script>
+	<script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+	<script src="/Public/Home/js/whjs/js/template-web.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		/* 去除点击时的背影 */
+
+		a:active {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+
+		ul li {
+			list-style: none;
+		}
+
+		p {
+			font-size: 14px;
+		}
+
+		.clearfix:after {
+			clear: both;
+			content: ' ';
+			display: block;
+		}
+
+		.fl {
+			float: left;
+		}
+
+		.fr {
+			float: right;
+		}
+
+		body,
+		div,
+		ul,
+		li,
+		ol,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		input,
+		textarea,
+		select,
+		p,
+		dl,
+		dt,
+		dd,
+		a,
+		img,
+		button,
+		form,
+		table,
+		th,
+		tr,
+		td,
+		tbody,
+		article,
+		aside,
+		details,
+		figcaption,
+		figure,
+		footer,
+		header,
+		menu,
+		nav,
+		section {
+			margin: 0;
+			padding: 0;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		a:link {
+			color: black;
+		}
+
+		a:visited {
+			color: black;
+		}
+
+		/* 遮罩 */
+
+		.mask {
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.7);
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 998;
+			display: none;
+		}
+
+		/* base结束*/
+
+		body,
+		html {
+			max-width: 750px;
+			min-width: 320px;
+			margin: 0 auto;
+			background: #eee;
+			padding-bottom: .5rem;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+
+		.header {
+			width: 100%;
+			overflow: hidden;
+			position: relative;
+			margin-bottom: .2rem;
+		}
+
+		.header .swiper-container {
+			width: 100%;
+			height: 4.51rem;
+		}
+
+		.header .swiper-container .swiper_img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.core {
+			width: .4rem;
+			height: .4rem;
+			position: absolute;
+			top: .1rem;
+			left: .1rem;
+			z-index: 999;
+		}
+
+		.core>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.core img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.Popularity_box {
+			width: 1.2rem;
+			height: .4rem;
+			position: absolute;
+			top: .615rem;
+			z-index: 999;
+			right: -.82rem;
+		}
+
+		.Popularity {
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(to right, #F76B1C, #FAD961);
+			border-top-left-radius: .2rem;
+			border-bottom-left-radius: .2rem;
+			color: #fff;
+			overflow: hidden;
+		}
+
+		.Popularity .left_img {
+			width: 30%;
+			height: 100%;
+			position: relative;
+		}
+
+		.Popularity img {
+			display: block;
+			width: .21rem;
+			height: .19rem;
+			position: absolute;
+			top: 50%;
+			right: 0.05rem;
+			margin-top: -0.095rem;
+		}
+
+		.Popularity .right_tips {
+			width: 70%;
+			height: 100%;
+			padding: .04rem .03rem .04rem 0;
+			box-sizing: border-box;
+		}
+
+		.Popularity .right_tips p {
+			width: 100%;
+			font-size: .12rem;
+			transform: scale(0.9);
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		/* 用户信息 */
+
+		.user_box {
+			width: 100%;
+			height: .98rem;
+			background: rgba(0, 0, 0, 0.57);
+			position: absolute;
+			z-index: 999;
+			left: 0;
+			bottom: 0;
+			color: #fff;
+			border-radius: 0.1rem 0.1rem 0 0;
+			padding: .2rem .2rem .1rem .2rem;
+			box-sizing: border-box;
+		}
+
+		.user_box .left_box {
+			width: 60%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.user_box .left_box .name {
+			font-size: .20rem;
+			height: 100%;
+			width: 60%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.user_box .left_box .position {
+			width: 40%;
+			height: 100%;
+			float: left;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.user_box .left_box .left_box_content {
+			height: .4rem;
+			width: 2.01rem;
+			line-height: .4rem;
+			overflow: hidden;
+		}
+
+		.user_box .addres {
+			width: 100%;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.user_box .right_box {
+			width: 40%;
+			height: 100%;
+		}
+
+		.right_box ul {
+			width: 100%;
+			height: 100%;
+		}
+
+		.right_box ul li {
+			width: 33%;
+			height: 100%;
+		}
+
+		.right_box ul li a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+			text-align: center;
+		}
+
+		.right_box ul li a img {
+			display: block;
+			width: .36rem;
+			height: .36rem;
+			margin: 0 auto;
+		}
+
+		.right_box ul li a p {
+			margin-top: 0.02rem;
+		}
+
+		/* 导航 */
+
+		.nav {
+			width: 90%;
+			height: 2.39rem;
+			margin: 0 auto;
+			padding: .2rem .2rem;
+			box-sizing: border-box;
+			box-shadow: 0 0 0.2rem rgba(9, 9, 9, .35);
+			border-radius: .1rem;
+			position: relative;
+			background: #fff;
+		}
+
+		.nav ul {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+		}
+
+		.nav ul li {
+			width: 50%;
+			height: 50%;
+			box-sizing: border-box;
+			text-align: center;
+			position: relative;
+		}
+
+		.nav ul li:nth-child(1) {
+			border-right: 1px solid rgba(0, 0, 0, 0.2);
+			border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		}
+
+		.nav ul li:nth-child(2) {
+			border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		}
+
+		.nav ul li:nth-child(3) {
+			border-right: 1px solid rgba(0, 0, 0, 0.2);
+		}
+
+		.nav ul li .nav_box {
+			width: 1.2rem;
+			height: .8rem;
+			position: absolute;
+		}
+
+		.nav ul li .item_call {
+			left: 0;
+			top: 0;
+		}
+
+		.nav ul li .item_add {
+			right: 0;
+			top: 0;
+		}
+
+		.nav ul li .item_import {
+			top: .2rem;
+			left: 0;
+		}
+
+		.nav ul li .Navigation {
+			right: 0;
+			top: .2rem;
+		}
+
+		@keyframes up {
+			0%,
+			100%,
+			20%,
+			50%,
+			80% {
+				transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+				transform: translate3d(0, 0, 0);
+				/*设置只在Z轴上移动*/
+			}
+			40%,
+			43% {
+				transition-timing-function: cubic-bezier(0.755, 0.50, 0.855, 0.060);
+				transform: translate3d(0, -15px, 0);
+			}
+			70% {
+				transition-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+				transform: translate3d(0, -5px, 0);
+			}
+			90% {
+				transform: translate3d(0, -1px, 0);
+			}
+		}
+
+		.nav ul li .nav_box img {
+			display: block;
+			width: .15rem;
+			height: .15rem;
+			margin: 0 auto;
+			animation-duration: 1s;
+			/*动画时间*/
+			animation-fill-mode: both;
+			/*播放后的状态*/
+			animation-name: up;
+			animation-iteration-count: 8;
+			/*动作循环的次数：infinite 无限循环*/
+			transform-origin: center bottom;
+			/*设置动画旋转元素的基点为：居中靠下*/
+			cursor: pointer;
+		}
+
+		.nav ul li a img {
+			display: block;
+			width: .15rem;
+			height: .15rem;
+			margin: 0.1rem auto !important;
+		}
+
+		.nav ul li p {
+			width: 1.2rem;
+			text-align: center;
+			font-size: .12rem;
+		}
+
+		.user-heading {
+			width: .74rem;
+			height: .74rem;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -.37rem;
+			margin-left: -.37rem;
+			z-index: 10;
+		}
+
+		.user-heading img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+
+		@keyframes rotate {
+			0% {
+				transform: rotate(0deg)
+			}
+			25% {
+				transform: rotate(180deg)
+			}
+			50% {
+				transform: rotate(270deg)
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.rotate {
+			width: .78rem;
+			height: .78rem;
+			border-radius: 50%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -.39rem;
+			margin-left: -.39rem;
+			z-index: 2;
+			animation: rotate 3s linear infinite;
+		}
+
+		.rotate img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+
+		/* 链接一切 */
+
+		.link {
+			width: 90%;
+			margin: 0 auto;
+			margin-top: .2rem;
+		}
+
+		.link a {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.link .clearfix {
+			width: 100%;
+			height: .355rem;
+			line-height: .355rem;
+		}
+
+		.link .item {
+			width: 33%;
+			height: 100%;
+			position: relative;
+			text-align: center;
+		}
+
+		.link .lj {
+			font-size: .20rem;
+			font-weight: bold;
+		}
+
+		.link .item img {
+			display: block;
+			position: absolute;
+			top: 50%;
+			margin-top: .015rem;
+			left: 50%;
+			margin-left: -.435rem;
+		}
+
+		.link .tip {
+			font-size: .12rem;
+			text-align: center;
+			letter-spacing: 0.055rem;
+		}
+
+		/* 链接一切轮播图 */
+
+		.swiper_box {
+			margin: 0 .1rem;
+			margin-top: .15rem;
+		}
+
+		.swiper_box .swiper-slide {
+			height: 1.09rem;
+		}
+
+		.swiper_box .swiper-slide a {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.swiper_box .swiper-slide img {
+			display: block;
+			height: .84rem;
+			width: 100%;
+			border-radius: .1rem;
+			margin-bottom: 0.05rem;
+		}
+
+		.swiper_box .swiper-slide p {
+			text-align: center;
+		}
+
+		/* 产品轮播图 */
+
+		#swiper-product img {
+			height: .6739rem !important;
+		}
+
+		#swiper-product .swiper-slide-active img {
+			height: .85rem !important;
+			margin-top: -.09rem !important;
+			transition: all 0.2s linear;
+		}
+
+		/* 展示一切 */
+
+		.footer_content {
+			width: 100%;
+			overflow: hidden;
+			margin-top: .15rem;
+		}
+
+		.footer_content ul {
+			width: 100%;
+		}
+
+		.footer_content ul li {
+			width: 33.33%;
+			height: 1.27rem;
+			box-sizing: border-box;
+			padding: 0 0.015rem;
+			margin-bottom: 0.03rem;
+		}
+
+		.footer_content ul li a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.footer_content ul li a p {
+			height: .3rem;
+			line-height: .3rem;
+			width: 100%;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			text-align: center;
+			background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.footer_content ul li a img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		/* 底部注册 */
+
+		.register {
+			width: 100%;
+			height: .52rem;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			z-index: 1003;
+		}
+
+		.register a {
+			display: block;
+			width: 100%;
+			height: 100%;
+            font-size: .18rem;
+            color: #fff;
+            background: #32CEA0;
+            line-height: .52rem;
+            text-align: center;
+		}
+
+        .register button{
+			width: 100%;
+			height: 100%;
+            font-size: .18rem;
+            color: #fff;
+            background: #32CEA0;
+            line-height: .52rem;
+            text-align: center;
+            border: 0 ;
+            outline: none;
+            display: none;
+        }
+
+
+		/* 温馨提示 */
+
+		.tips {
+			width: 2rem;
+			height: 1rem;
+			background: #ffffff;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-left: -1rem;
+			margin-top: -0.5rem;
+			z-index: 999;
+			border-radius: .05rem;
+			text-align: center;
+			display: none;
+		}
+
+		.tips p:first-child {
+			width: 100%;
+			height: .4rem;
+			line-height: .5rem;
+			font-size: .15rem;
+		}
+
+		.tips p:last-child {
+			width: 100%;
+			height: .6rem;
+			line-height: .5rem;
+			font-size: .15rem;
+		}
+
+		/* 一键加我 */
+
+		.one_add {
+			width: 3rem;
+			height: 4rem;
+			background: #fff;
+			font-size: .14rem;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-top: -2rem;
+			margin-left: -1.5rem;
+			z-index: 999;
+			border-radius: .15rem;
+			text-align: center;
+			display: none;
+		}
+
+		.one_add .img_box {
+			width: 100%;
+		}
+
+		.one_add .img_box .touch {
+			color: #999999;
+			font-size: .14rem;
+			margin: .1rem auto;
+		}
+
+		.one_add .img_box img {
+			width: 1.5rem;
+			height: 1.5rem;
+			display: block;
+			margin: 0 auto;
+			margin-top: .25rem;
+		}
+
+		.one_add .img_box li {
+			display: none;
+		}
+
+		.show {
+			display: block !important;
+		}
+
+		.active {
+			background: #fff !important;
+			color: #000000 !important;
+			border: 1px solid #2AB7CF;
+		}
+
+		.navtab {
+			width: 100%;
+		}
+
+		.navtab li {
+			width: 1.62rem;
+			height: .42rem;
+			line-height: .42rem;
+			margin: 0 auto;
+			background: #2AB7CF;
+			border-radius: .5rem;
+			margin-bottom: .12rem;
+			color: #fff;
+		}
+
+		/* 一键导入 */
+
+		.one_import {
+			width: 3rem;
+			height: 4rem;
+			background: #fff;
+			border-radius: 0.15rem;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-top: -2rem;
+			margin-left: -1.5rem;
+			z-index: 999;
+			text-align: center;
+			display: none;
+		}
+
+		.one_import p:first-child {
+			width: 100%;
+			font-size: .20rem;
+			height: .5rem;
+			line-height: .5rem;
+			margin-top: .5rem;
+		}
+
+		.one_import p:nth-child(2) {
+			color: #999999;
+			height: .5rem;
+		}
+
+		.one_import img {
+			display: block;
+			width: 1.6rem;
+			height: 1.6rem;
+			margin: 0 auto;
+			margin-top: .2rem;
+		}
+
+		/* 用户信息 */
+
+		.user_msg {
+			width: 3rem;
+			height: 4.2rem;
+			background-color: #fff;
+			text-align: center;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-top: -2.1rem;
+			margin-left: -1.5rem;
+			z-index: 999;
+			border-radius: .15rem;
+			display: none;
+		}
+
+		.user_msg .user_img_box {
+			width: 100%;
+			height: 1.3rem;
+			background: #33BAC2;
+			position: relative;
+			border-radius: .15rem .15rem 0 0;
+		}
+
+		.user_msg .user_img_box .u_msg {
+			width: .575rem;
+			height: .575rem;
+			border-radius: 50%;
+			position: absolute;
+			top: 0;
+			left: 50%;
+			margin-left: -0.2875rem;
+			margin-top: -0.2875rem;
+		}
+
+		.user_msg .user_img_box .k_div {
+			display: block;
+			width: .6rem;
+			height: .6rem;
+			border-radius: 50%;
+			position: absolute;
+			top: 0;
+			left: 50%;
+			margin-top: -0.3rem;
+			margin-left: -0.3rem;
+			animation: rotate 3s linear infinite;
+		}
+
+		.nick_name_box {
+			width: 100%;
+			color: #fff;
+		}
+
+		.nick_name_box p:nth-child(1) {
+			font-size: .18rem;
+			width: 3rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			text-align: center;
+			padding-top: .5rem;
+			padding-bottom: .1rem;
+			margin: 0 auto;
+		}
+
+		.set_sign {
+			width: 100%;
+			font-size: .15rem;
+		}
+
+		.set_sign .set_sign_ul li:first-child {
+			margin-top: .2rem;
+		}
+
+		.set_sign .set_sign_ul li {
+			width: 3rem;
+			height: .2rem;
+			line-height: .2rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.set_sign .sign {
+			width: 2.21rem;
+			height: 1.3rem;
+			max-height: 1.5rem;
+			color: #666;
+			margin: 0 auto;
+			text-align: left;
+			margin-top: .25rem;
+			font-size: .14rem;
+			overflow: auto;
+			border: 0;
+			resize: none;
+			background: #fff;
+			opacity: 1;
+		}
+
+		textarea[disabled],
+		textarea:disabled,
+		textarea.disabled {
+			color: #666;
+			-webkit-text-fill-color: #666;
+			-webkit-opacity: 1;
+			opacity: 1;
+		}
+
+		.loading {
+			height: 1.2rem;
+			width: 1.4rem;
+			font-size: .14rem;
+			text-align: center;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			z-index: 999;
+			margin-top: -0.6rem;
+			margin-left: -0.7rem;
+			background: rgba(0, 0, 0, .5);
+			border-radius: .1rem;
+			display: none;
+		}
+
+		@-webkit-keyframes rotate {
+			from {
+				-webkit-transform: rotate(0deg)
+			}
+			to {
+				-webkit-transform: rotate(360deg)
+			}
+		}
+
+		.loading img {
+			animation: rotate 3s linear infinite;
+			width: .5rem;
+			height: .5rem;
+			margin: .1rem auto;
+		}
+
+		.loading span {
+			display: block;
+			height: 0.3rem;
+			line-height: 0.3rem;
+			width: 100%;
+			color: #fff;
+		}
+
+		.show_tip {
+			height: 0.4rem;
+			line-height: 0.4rem;
+			width: 1.4rem;
+			font-size: .14rem;
+			text-align: center;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			z-index: 999;
+			margin-top: -0.6rem;
+			margin-left: -0.7rem;
+			background: rgba(0, 0, 0, .5);
+			border-radius: .1rem;
+			color: #fff;
+			display: none;
+		}
+
+		.link_forall {
+			width: 1.15rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.product_name {
+			width: 1.15rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+        .copy_choise{
+            font-size: .18rem;
+            text-align: center;
+            width: 100%;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: .11rem;
+            left: 0;
+            z-index: 1003;
+            display: none;
+        }
+
+        .copy_choise div:nth-child(1){
+            color: #34B1D3;
+            height:.475rem;
+            line-height: .475rem;
+            background: #fff;
+            border-radius: .1rem .1rem 0 0;
+            border-bottom: 1px solid rgba(151,151,151,0.48);
+        }
+
+        .copy_choise div:nth-child(2){
+            color: #34B1D3;
+            height:.475rem;
+            line-height: .475rem;
+            background: #fff;
+            border-radius: 0 0 .1rem .1rem;
+            margin-bottom: .05rem;
+        }
+
+        .copy_choise div:nth-child(3){
+            height: .49rem;
+            line-height: .49rem;
+            background: #fff;
+            border-radius: .1rem;
+            color: #999999;
+        }
+
+            /* 顶部轮播的选择 */
+            .header_box{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: none;
+            }
+
+            .header_box .content{
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+
+            #top-content .header_mask{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1000;
+            }
+
+            #top-content .header_copy{
+                background: #fff;
+                color: #000;
+                position: absolute;
+                width: 1.18rem;
+                height: .45rem;
+                line-height: .45rem;
+                top: 50%;
+                left: 50%;
+                z-index: 1001;
+                border: 0;
+                outline: none;
+                border-radius: .25rem;
+                margin-left: -0.59rem;
+                margin-top: -0.225rem;
+            }
+
+            /* 链接一切的 */
+            .link_all_box{
+                position: relative;
+                
+            }
+            .link_all_box .header_box{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                display: none;
+            }
+
+            .link_all_box .header_box .content{
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+            }
+
+
+            .link_all_box .header_box .link_mask{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    background: rgba(0, 0, 0, .5);
+                    z-index: 1000;
+            }
+
+            .link_all_box .header_box .link_copy{
+                background: #fff;
+                color: #000;
+                position: absolute;
+                width: 1.18rem;
+                height: .45rem;
+                line-height: .45rem;
+                top: 50%;
+                left: 50%;
+                z-index: 1001;
+                border: 0;
+                outline: none;
+                border-radius: .25rem;
+                margin-left: -0.59rem;
+                margin-top: -0.225rem;
+            }
+
+            /* 产品中心的选择 */
+            .prodouct_choise{
+                    position: relative;
+            }
+
+                .prodouct_choise .header_box{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                display: none;
+                }
+
+            .prodouct_choise .header_box .content{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            }
+
+            .prodouct_choise .header_box .content .prodouct_mask{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1000;
+            }
+
+            .prodouct_choise .header_box .content .prodouct_copy{
+            background: #fff;
+            color: #000;
+            position: absolute;
+            width: 1.18rem;
+            height: .45rem;
+            line-height: .45rem;
+            top: 50%;
+            left: 50%;
+            z-index: 1001;
+            border: 0;
+            outline: none;
+            border-radius: .25rem;
+            margin-left: -0.59rem;
+            margin-top: -0.225rem;
+            }
+
+            /* 展示一切的选择 */
+            .show_everything{
+            position: relative;
+            }
+
+            .show_everything .header_box{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: none;
+            }
+            .show_everything .header_box .content{
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+
+            .show_everything .header_box .content .show_mask{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, .5);
+                z-index: 1000;
+            }
+
+            .show_everything .header_box .content .show_copy{
+            background: #fff;
+            color: #000;
+            position: absolute;
+            width: 1.18rem;
+            height: .45rem;
+            line-height: .45rem;
+            top: 50%;
+            left: 50%;
+            z-index: 1001;
+            border: 0;
+            outline: none;
+            border-radius: .25rem;
+            margin-left: -0.59rem;
+            margin-top: -0.225rem;
+            }
+
+			.copy_tip{
+				width: 1rem;
+				padding: .1rem 0;
+				text-align: center;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-left: -0.5rem;
+				background: rgba(0, 0, 0, 0.7);
+				border-radius: .05rem;
+				font-size: .16rem;
+				color: #fff;
+				display: none;
+				z-index: 1005;
+			}
+
+
+
+	</style>
+
+	<title>{$title}</title>
+</head>
+
+<body>
+	<div class="header">
+		<!-- 顶部轮播区域 -->
+		<div class="swiper-container" id="top-content">
+			<div class="swiper-wrapper">
+				<!-- 顶部轮播图 -->
+			</div>
+			<div class="header_box">
+				<div class="content">
+					<div class="header_mask"></div>
+					<button class="header_copy" data-name="banner">复制</button>
+				</div>
+			</div>
+		</div>
+
+		<!--<div class="core">-->
+			<!--<a href="/index.php?s=/Home/User/myInfo.html">-->
+				<!--<img src="/Public/Home/images/new_4.png" alt="">-->
+			<!--</a>-->
+		<!--</div>-->
+		<!-- 人气 -->
+		<div class="Popularity_box">
+			<div class="Popularity clearfix">
+				<div class="left_img fl">
+					<img src="/Public/Home/images/new_1.png" alt="">
+				</div>
+				<div class="right_tips fl">
+					<!-- 人气 -->
+				</div>
+			</div>
+		</div>
+		<!-- 用户信息 -->
+		<div class="user_box clearfix">
+			<!-- 用户信息 -->
+			<div class="left_box fl">
+				<div class="clearfix left_box_content">
+					<p class="fl name"></p>
+					<p class="fr position"></p>
+				</div>
+				<p class="addres"></p>
+			</div>
+			<div class="right_box fl">
+				<ul class="clearfix">
+					<li class="fl">
+						<a href="javascript:;">
+							<img src="/Public/Home/images/new_collect.png" alt="">
+							<p>收藏</p>
+						</a>
+					</li>
+					<li class="fl">
+						<a href="">
+							<img src="/Public/Home/images/new_msg.png" alt="">
+							<p>留言</p>
+						</a>
+
+					</li>
+					<li class="fl">
+						<a href="javascript:;" id="music">
+							<img src="/Public/Home/images/new_music.png" alt="">
+							<p>音乐</p>
+						</a>
+
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- 导航 -->
+	<div class="nav">
+		<!-- 一键导航 -->
+		<ul class="clearfix">
+			<li class="fl">
+				<a id="callmobile" href="javascript:;">
+					<div class="nav_box item_call">
+						<img src="/Public/Home/images/news_phone.png" alt="">
+						<p>一键拨号</p>
+					</div>
+				</a>
+			</li>
+			<li class="fl">
+				<a href="javascript:;">
+					<div class="nav_box item_add">
+						<img src="/Public/Home/images/news_men.png" alt="" style="width: .18rem;height: .14rem;">
+						<p>一键加我</p>
+					</div>
+				</a>
+			</li>
+			<li class="fl">
+				<div class="nav_box item_import">
+					<a href="javascript:;">
+						<img src="/Public/Home/images/news_tx.png" alt="">
+						<p>一键导入</p>
+					</a>
+				</div>
+			</li>
+			<li class="fl">
+				<a id="hidemap" href="javascript:;">
+					<div class="nav_box Navigation">
+						<img src="/Public/Home/images/new_copy.png" alt="">
+						<p>一键导航</p>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 链接一切 -->
+	<div class="link_all_box">
+		<div class=" link">
+			<div class="clearfix">
+				<div class="fl item">
+					<img src="/Public/Home/images/new-RecCopy2.png" alt="">
+				</div>
+				<div class="fl item">
+					<p class="lj">链接一切</p>
+				</div>
+				<div class="fl item">
+					<img src="/Public/Home/images/new-RecCopy3.png" alt="">
+				</div>
+			</div>
+			<div class="tip">LINK EVERYTHING</div>
+		</div>
+		<!-- 链接一切轮播图 -->
+		<div class="swiper_box" id="link_jump">
+			<div class="swiper-link">
+				<div class="swiper-wrapper">
+					<!-- 链接一切轮播图 -->
+				</div>
+			</div>
+		</div>
+		<!-- 连接一切的选择 -->
+		<div class="header_box">
+			<div class="content">
+				<div class="link_mask"></div>
+				<button class="link_copy" data-name="link">复制</button>
+			</div>
+		</div>
+	</div>
+	<!-- 产品中心 -->
+	<div class="prodouct_choise">
+		<div class="link show_all_show">
+			<a class="product_center" href="javascript:;">
+				<div class="clearfix">
+					<div class="fl item">
+						<img src="/Public/Home/images/new-RecCopy2.png" alt="">
+					</div>
+					<div class="fl item">
+						<p class="lj">产品中心</p>
+					</div>
+					<div class="fl item">
+						<img src="/Public/Home/images/new-RecCopy3.png" alt="">
+					</div>
+				</div>
+				<div class="tip">PRODUCT CENTER </div>
+			</a>
+		</div>
+		<!-- 产品中心轮播图 -->
+		<div class="swiper_box">
+			<div class="swiper-product" id="swiper-product">
+				<div class="swiper-wrapper">
+					<!-- 产品中心轮播图数据 -->
+				</div>
+			</div>
+		</div>
+		<!-- 产品中心的选择 -->
+		<div class="header_box">
+			<div class="content">
+				<div class="prodouct_mask"></div>
+				<button class="prodouct_copy" data-name="product">复制</button>
+			</div>
+		</div>
+	</div>
+	<!-- 展示一切 -->
+	<div class="show_everything">
+		<div class="link">
+			<a class="show_link" href="javascript:;">
+				<div class="clearfix">
+					<div class="fl item">
+						<img src="/Public/Home/images/new-RecCopy2.png" alt="">
+					</div>
+					<div class="fl item">
+						<p class="lj">展示一切</p>
+					</div>
+					<div class="fl item">
+						<img src="/Public/Home/images/new-RecCopy3.png" alt="">
+					</div>
+				</div>
+				<div class="tip">SHOW EVERYTHING </div>
+			</a>
+		</div>
+		<!-- 展示一切的内容 -->
+		<div class="footer_content">
+			<ul class="clearfix">
+				<!-- 展示一切数据 -->
+			</ul>
+		</div>
+		<!-- 展示一切的选择 -->
+		<div class="header_box">
+			<div class="content">
+				<div class="show_mask"></div>
+				<button class="show_copy" data-name="show_list">复制</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- v网复制 -->
+	<div class="register">
+		<a class="register_href" href="javascript:;">
+			复制
+		</a>
+		<button>保存</button>
+	</div>
+
+	<!-- 遮罩 -->
+	<div class="mask"></div>
+	<!-- 温馨提示 -->
+	<div class="tips">
+		<p>温馨提示</p>
+		<p>该项已被设置为隐私项</p>
+	</div>
+	<!-- 一键加我 -->
+	<div class="one_add">
+		<div class="img_box">
+			<ul class="show_img">
+				<li class="show">
+					<img class="v_erwei" src="" alt="">
+				</li>
+				<li>
+					<img src="/Public/Home/images/8.jpg" alt="">
+				</li>
+				<li>
+					<img class="er_wei" src="" alt="">
+				</li>
+			</ul>
+			<p class="touch">长按识别二维码</p>
+		</div>
+		<ul class="navtab">
+			<li class="item active">V网二维码</li>
+			<li class="item">洋小秘公众号</li>
+			<li class="item">微信二维码</li>
+		</ul>
+	</div>
+	<!-- 一键导入 -->
+	<div class="one_import">
+		<p>长按识别二维码</p>
+		<p>识别二维码，保存到本机通讯录</p>
+		<img class="one_touch" src="" alt="">
+	</div>
+	<!-- usermsg -->
+	<div class="user_msg">
+		<!-- user-弹框 -->
+	</div>
+	<input id="userid" type="hidden" value="{$id}">
+	<div class="loading">
+		<img src="/Public/Home/images/loadad.gif" alt="">
+		<span>加载中...</span>
+	</div>
+	<div class="show_tip">
+		没有更多数据了
+	</div>
+	<!-- 复制选项 -->
+	<div class="copy_choise">
+		<div class="cover" data-id="2">覆盖</div>
+		<div class="add_to" data-id="1">追加</div>
+		<div class="cel">取消</div>
+	</div>
+	<!-- 复制成功提示框 -->
+	<div class="copy_tip">覆盖成功</div>
+
+</body>
+
+</html>
+<!-- 广告轮播 -->
+<script type="text/html" id="advert">
+	{{each AppendData v i}}
+	<div class="swiper-slide" data-id="{{v.id}}" data-sort="{{v.sort}}">
+		<img class="swiper_img item_img" src="/Public/Home/images/loadimg.gif" data-src="{{v.img_url}}" alt="">
+	</div>
+	{{/each}}
+</script>
+
+<!-- 链接一切轮播 -->
+<script type="text/html" id="link_all">
+	{{each AppendData v i}}
+	<div class="swiper-slide" data-sort="{{v.sort}}" data-id="{{v.id}}">
+		<a href="{{v.jump_url}}">
+			<img class="item_img" src="/Public/Home/images/loadimg.gif" data-src="{{v.icon_url}}" alt="">
+			<p class="link_forall">{{v.name}}</p>
+		</a>
+	</div>
+	{{/each}}
+
+</script>
+
+<!-- 展示一切 -->
+<script type="text/html" id="show_all">
+	{{each AppendData v i}}
+	<li class="fl">
+		<a href="/index.php?s=/Home/Nologin/contentDetail/card_content_id/{{v.id}}.html">
+			<img class="item_img" src="/Public/Home/images/loadimg.gif" data-src="{{v.thumb}}" alt="">
+			<p>{{v.title}}</p>
+		</a>
+	</li>
+	{{/each}}
+
+</script>
+<!-- 产品轮播 -->
+<script type="text/html" id="prodouct">
+	{{each AppendData v i}}
+	<div class="swiper-slide">
+		<a href="/index.php?s=/Home/Nologin/product_detail/product_id/{{v.id}}/user_id/{{v.user_id}}.html">
+			<img class="item_img" src="/Public/Home/images/loadimg.gif" data-src="{{v.cover_img}}" alt="">
+			<p class="product_name">{{v.title}}</p>
+		</a>
+	</div>
+	{{/each}}
+
+</script>
+
+<!-- 用户信息 -->
+<script type="text/html" id="user_msg">
+
+	<div class="left_box fl">
+		<div class="clearfix left_box_content">
+			<p class="fl name">{{nick_name}}</p>
+			<p class="fr position">{{position}}</p>
+		</div>
+		<p class="addres">{{company}}</p>
+	</div>
+	<div class="right_box fl">
+		<ul class="clearfix">
+			<li class="fl">
+				<a href="/index.php?s=/Home/User/addCard/id/{{id}}/mycard_type/1.html">
+					<img src="/Public/Home/images/new_collect.png" alt="">
+					<p>收藏</p>
+				</a>
+			</li>
+			<li class="fl">
+				<if condition="$userInfo['id']==I('get.id')">
+					<a href="{:U('Home/Chat/myMessage?id='.I('get.id'))}">
+						<img src="/Public/Home/images/new_msg.png" alt="">
+						<p>留言</p>
+					</a>
+				</if>
+				<if condition="$userInfo['id']!=I('get.id')">
+					<a href="{:U('Home/Chat/addMessage?id='.I('get.id'))}">
+						<img src="/Public/Home/images/new_msg.png" alt="">
+						<p>留言</p>
+					</a>
+				</if>
+
+			</li>
+			<li class="fl">
+				<a href="javascript:;" id="music" data-auto="{{auto_music}}">
+					<img src="/Public/Home/images/new_music.png" alt="">
+					<p>音乐</p>
+				</a>
+
+			</li>
+		</ul>
+	</div>
+	<audio id="audio" src="{{music_url}}"></audio>
+</script>
+
+<!-- nav -->
+<script type="text/html" id="navs">
+
+	<ul class="clearfix">
+		<li class="fl">
+			<a id="callmobile" href="tel:{{mobile}}">
+				<div class="nav_box item_call">
+					<img src="/Public/Home/images/news_phone.png" alt="">
+					<p>一键拨号</p>
+				</div>
+			</a>
+		</li>
+		<li class="fl">
+			<a href="javascript:;">
+				<div class="nav_box item_add">
+					<img src="/Public/Home/images/news_men.png" alt="" style="width: .18rem;height: .14rem;">
+					<p>一键加我</p>
+				</div>
+			</a>
+		</li>
+		<li class="fl">
+			<div class="nav_box item_import">
+				<a href="javascript:;">
+					<img src="/Public/Home/images/news_tx.png" alt="">
+					<p>一键导入</p>
+				</a>
+			</div>
+		</li>
+		<li class="fl">
+			<a id="hidemap" href="/index.php?s=/Home/Nologin/diTu/address/{{address}}.html">
+				<div class="nav_box Navigation">
+					<img src="/Public/Home/images/new_copy.png" alt="">
+					<p>一键导航</p>
+				</div>
+			</a>
+		</li>
+	</ul>
+	<!-- 用户头像 -->
+	<div class="user-heading">
+		<img src="{{headimg}}" alt="">
+	</div>
+	<!-- 旋转特效 -->
+	<div class="rotate">
+		<img src="/Public/Home/images/new_box.png" alt="">
+	</div>
+
+</script>
+
+<!-- user_弹框 -->
+<script type="text/html" id="user_kuang">
+
+	<div class="user_img_box">
+		<img class="u_msg" src="{{headimg}}" alt="">
+		<img class="k_div" src="/Public/Home/images/new_box.png" alt="">
+		<div class="nick_name_box">
+			<p>{{nick_name}}</p>
+			<p>{{company}}|{{position}}</p>
+		</div>
+	</div>
+	<div class="set_sign">
+		<ul class="set_sign_ul">
+			<li>{{position}}</li>
+			<li>{{industry_tag}}</li>
+			<li>{{company}}</li>
+		</ul>
+		<textarea disabled class="sign">{{share_my_introduct}}</textarea>
+	</div>
+
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script>
+	$(function () {
+
+		$(".register_href").on("click", function () {
+			$(this).hide().next().css("display", "block");
+			//展开选项
+			$("#top-content .header_box").show(); //顶部轮播的
+			$(".link_all_box .header_box").show(); //连接一切
+			$(".prodouct_choise .header_box").show(); //产品中心
+			$(".show_everything .header_box").show(); //展示一切
+		})
+
+
+		function GetQueryString(name) {
+			if (window.location.href.indexOf('?') > -1) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+				if (r != null) return unescape(r[2]);
+			}
+			return ''; //便于容错处理
+		}
+
+		var geturl_userid = GetQueryString("user_id");
+		console.log(geturl_userid)
+
+
+		var id = '{$id}';
+
+		//banner的复制
+		$(".header_copy").on("click", function () {
+			swit(true);
+			var banner = $(this).attr("data-name");
+			$(".copy_choise .cover").attr("data-name", banner);
+			$(".copy_choise .add_to").attr("data-name", banner);
+		})
+
+		//链接一切的复制
+		$(".link_copy").on("click", function () {
+			swit(true);
+			var link = $(this).attr("data-name");
+			$(".copy_choise .cover").attr("data-name", link);
+			$(".copy_choise .add_to").attr("data-name", link);
+		})
+
+		//Product的复制
+		$(".prodouct_copy").on("click", function () {
+			swit(true);
+			var product = $(this).attr("data-name");
+			$(".copy_choise .cover").attr("data-name", product);
+			$(".copy_choise .add_to").attr("data-name", product);
+		})
+
+		//Show_list的复制
+		$(".show_copy").on("click", function () {
+			swit(true);
+			var Show_list = $(this).attr("data-name");
+			$(".copy_choise .cover").attr("data-name", Show_list);
+			$(".copy_choise .add_to").attr("data-name", Show_list);
+		})
+
+
+
+		$(".copy_choise .cel").on("click", function () {
+			swit(false);
+		})
+
+		$(".mask").on("click", function () {
+			swit(false);
+		})
+
+
+
+		//覆盖
+		$(".copy_choise .cover").on("click", function () {
+			var be_copy_id = $(this).attr("data-id");
+			var region_block = $(this).attr("data-name");
+			request(region_block, be_copy_id, geturl_userid);
+		})
+
+		//追加
+		$(".copy_choise .add_to").on("click", function () {
+			var be_copy_id = $(this).attr("data-id");
+			var region_block = $(this).attr("data-name");
+			request(region_block, be_copy_id, geturl_userid);
+		})
+
+
+
+
+		function request(region, num, copy_id) {
+		    console.log(region)
+		    console.log(num)
+		    console.log(copy_id)
+			$.ajax({
+				url: "index.php?s=/Api/VcardApi/copy_card",
+				type: "post",
+				data: {
+					unionid: id,
+					[region]: num,
+					user_id: copy_id
+				},
+				success: function (res) {
+					console.log(res)
+					var data = res.ResultType;
+					if (data == 0 && num == '2') {
+						swit(false);
+						$(".copy_tip").text("覆盖成功").fadeIn(1000).fadeOut(2000).css({
+							'width': '1rem',
+							'margin-left': '-0.5rem'
+						});
+						console.log("走了覆盖")
+					}
+					if (data == 0 && num == '1') {
+						swit(false);
+						$(".copy_tip").text("追加成功").fadeIn(1000).fadeOut(2000).css({
+							'width': '1rem',
+							'margin-left': '-0.5rem'
+						});
+						console.log("走了追加")
+					}
+				},
+				error: function () {
+					$(".copy_tip").text("服务器繁忙,请稍后重试").fadeIn(1000).fadeOut(2000).css({
+						'width': '2rem',
+						'margin-left': '-1rem'
+					});
+					swit(false);
+				}
+			})
+		}
+
+
+		function swit(flag) {
+			flag == true ? $(".copy_choise").show() : $(".copy_choise").hide();
+			flag == true ? $(".register").hide() : $(".register").show();
+			flag == true ? $(".mask").show() : $(".mask").hide();
+			flag == true ? $("body").css("padding-bottom", "0") : $("body").css("padding-bottom", "0.5rem");
+
+		}
+
+		$(".register button").on("click", function () {
+			console.log("111111")
+			window.location.href = '/index.php?s=/Home/Vhome/card_jump';
+		})
+
+
+
+
+	})
+</script>

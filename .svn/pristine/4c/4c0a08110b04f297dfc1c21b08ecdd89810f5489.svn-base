@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+    <title>{$title}</title>
+    <style>
+        body,html{
+            background: rgba(242, 240, 245, 0.781);
+            height: 100%;
+        }
+      
+        #swiper_con{
+            overflow: hidden;
+            padding-top: .4rem;
+            background: url(/Public/Home/images/wh/Template1_background@2x.png) no-repeat;
+            height: 72%;
+           
+        }
+        .swiper-container {
+            /* margin-top: 20px; */
+            width: 90%;
+            margin-bottom: 53px;
+            overflow: visible !important;
+            /* overflow: hidden !important; */
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide {
+            width: 2.25rem;
+            height: 4.09rem;
+
+
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide img {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-prev {
+            margin-top: 18px;
+            height: 3.27rem !important;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-prev img {
+            height: 100% !important;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-next {
+            margin-top: 18px;
+            height: 3.27rem !important;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-next img {
+            height: 100% !important;
+        }
+
+        .swiper-container .swiper-wrapper .swiper-slide-active {
+                width: 2.25rem;
+                height: 4.09rem;
+        }
+
+        .use_box {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            padding: 0 .2rem;
+            box-sizing: border-box;
+        }
+
+         .use_box .clearfix{
+             padding-bottom: .2rem;
+         }
+
+         .use_box .clearfix li:nth-child(1){
+             font-size: .18rem;
+             padding-top: .1rem;
+         }
+
+          .use_box .clearfix li:nth-child(2){
+              font-size: .12rem;
+              margin-top: .13rem;
+              margin-left: .05rem;
+              background: #32CEA0;
+              color: #fff;
+              padding: .01rem .03rem;
+              border-radius: .02rem;
+          }
+
+           .use_box .btn{
+               width:100%;
+               height: .4rem;
+               margin: 0 auto;
+               text-align: center;
+               color: #fff;
+               border: 0;
+               outline: none;
+               margin-bottom: .1rem;
+               background: #32CEA0;
+               border-radius:.04rem;
+           }
+
+           .tips{
+               width: 1.2rem;
+               background: rgba(0, 0, 0, 0.7);
+               color: #fff;
+               text-align: center;
+               font-size: .14rem;
+               padding: .04rem .01rem;
+               border-radius: 4px;
+               position: fixed;
+               bottom: .7rem;
+               left: 50%;
+               margin-left: -0.6rem;
+               z-index: 1;
+               display: none;
+           }
+    </style>
+</head>
+
+<body>
+    <div id="swiper_con">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+              
+              
+            </div>
+        </div>
+    </div>
+    <!-- 模版的使用 -->
+    <div class="use_box">
+        <ul class="clearfix">
+            <li class="fl title"></li>
+            <li class="fl deafu"></li>
+        </ul>
+        <button class="btn">开始使用</button>
+    </div>
+    <div class="tips">设置成功</div>
+
+
+
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+        var detail_id = GetQueryString('id');
+        console.log(detail_id)
+
+
+     
+
+        $.ajax({
+            type:'post',
+            url:'/index.php?s=/Api/NewCardApi/style_list',
+            data:{
+                unionid:unionid,
+                style_id:detail_id
+            },
+            success:function(res){
+                if(res.ResultType == 0){
+                    var data = res.AppendData;
+                    console.log(res)
+                    var list = '';
+                    $.each(data.detail,function(k,v){
+                        list+='<div class="swiper-slide">'
+                        list+='<img src="'+v.img+'" alt="">'
+                        list+='</div>'
+                    })
+                   $('#swiper_con').css('background','url('+data.background+') no-repeat')
+                   $('.swiper-wrapper').html(list)
+                   $('.title').text(data.title);
+                   if(data.type == 1){
+                       $('.deafu').text('免费').css({
+                           'color':'#fff',
+                           'background':'#4E95FB'
+                       })
+                   }
+
+                   $('.deafu').text()
+                   if(data.type)
+                    var mySwiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        speed:100,
+                        slidesPerView: "auto",
+                        centeredSlides: true,
+                        spaceBetween: 30, //20\
+                        observer: true,
+                        observeParents: true,
+                    })
+                }
+            }
+        })
+
+
+        $('.btn').on('click',function(){
+            
+            $.ajax({
+                type:'post',
+                url:'/index.php?s=/Api/NewCardApi/edit_style',
+                data:{
+                    unionid:unionid,
+                    style_id:detail_id
+                },
+                success:function(res){
+                    $('.tips').stop(true).fadeIn(500).fadeOut(2000);
+                    location.href = '/index.php?s=/Home/Vmake/vmakee.html'
+                }
+            })
+        })
+
+
+
+
+
+
+
+
+
+
+
+    })
+</script>

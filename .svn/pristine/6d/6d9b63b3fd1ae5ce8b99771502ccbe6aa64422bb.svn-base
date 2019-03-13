@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			footer ul li:nth-child(4) p {
+				background: url(__HOME_CSS__/add/image/wode_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div class="dong">
+			<a href="{:url('Home/User/usercenter')}">
+				<div class="home"></div>
+			</a>
+			<div class="sou">
+				<input type="text" id="" value="" onclick="search()" placeholder="按商会名称或者地区搜索" />
+				<span></span>
+			</div>
+			<a href="{:url('Home/Vhome/card_jump')}">
+				<div class="ren"></div>
+			</a>
+		</div>
+
+		<div class="myshang" style="background:url(../../{$myTrade.logo})no-repeat;">
+			<p>我的商会</p>
+			<a href="{:url('Home/Trade/tradeManager')}">
+				<div class="my_guan my_guan1">管理</div>
+			</a>
+			<a href="__APP__/Home/Trade/tradeDetail/id/{$myTrade.id}">
+				<div class="my_guan my_guan2">查看</div>
+			</a>
+			<div class="my_tou">
+				<a href="__APP__/Home/Trade/joinTrades/">
+					<div class="my_guan" style="position: absolute;top: 1.05rem;left:0.55rem;">加入商会</div>
+				</a>
+				<br />
+				<p>{$myTrade.name}</p>
+			</div>
+		</div>
+
+		<div class="cont">
+			<p class="kls">加入的商会<span>共{$joinCount}个</span></p>
+
+			<volist name="joinTrade" id="vo">
+				<div class="neir">
+					<img src="../../{$vo.logo}" alt="" />
+					<p>{$vo.name}</p>
+					<if condition="($vo.status eq 1) ">
+						<a href="__APP__/Home/Trade/tradeDetail/id/{$vo.trade_id}">
+							<div class="my_guan">查看</div>
+						</a>
+						<elseif condition="$vo.status eq 2" />
+						<a href="__APP__/Home/Trade/tradeDetail/id/{$vo.trade_id}">
+							<div class="my_guan">拒绝</div>
+						</a>
+						<else />
+						<a href="__APP__/Home/Trade/tradeDetail/id/{$vo.trade_id}">
+							<div class="my_guan">审核中</div>
+						</a>
+					</if>
+
+				</div>
+			</volist>
+
+		</div>
+
+		<footer>
+			<ul>
+				<li>
+					<a href="{:url('Home/Trade/article')}">
+						<p></p>
+						<span>动态</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="{:url('Home/Trade/message')}">
+						<p></p>
+						<span>消息</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="{:url('Home/Trade/trades')}">
+						<p></p>
+						<span>商会</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="{:url('Home/Trade/myTrades')}">
+						<p></p>
+						<span>我的</span>
+					</a>
+				</li>
+			</ul>
+		</footer>
+
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function search() {
+				top.location.href = "/Home/Trade/joinTrades";
+			}
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

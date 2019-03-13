@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="referrer" content="never">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>我的软文</title>
+		<link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+		<link rel="stylesheet" href="__HOME_CSS__/wh/mytext.css">
+		<script src="__HOME_JS__/whjs/js/rem.js"></script>
+		<script src="__HOME_JS__/whjs/js/jquery-3.2.1.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<script src="__HOME_JS__/whjs/js/mytext.js"></script>
+		<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+		<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+		<script src="__HOME_CSS__/bs3/sea.js"></script>
+		<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+		<script src="__HOME_JS__/mui.min.js"></script>
+		<link rel="stylesheet" href="__HOME_CSS__/mui.min.css" />
+		<style type="text/css">
+			.ck:visited{
+				color:#666!important;
+			}
+			.ck:active {color: #2FB3D3 !important ;text-decoration: none !important;}
+		</style>
+	</head>
+
+	<body>
+		<div id="content">
+			<div class="fl_box clearfix">
+				<div class="fl item fk">分类<img class="down" src="__HOME_IMAGES__/inco_down.png" alt=""></div>
+				<a class="fl item ck" href="{:U('Home/Article/catchArticle')}" style="color: #666;"> <span>文章抓取</span> <img class="zhua" src="__HOME_IMAGES__/inco_shou.png" alt=""></a>
+				<a class="fl item ck" href="{:U('Home/Eleditor/index')}" style="color: #666;"> <span>文章编辑</span> <img class="xie" src="__HOME_IMAGES__/inco_draw.png" alt=""></a>
+			</div>
+
+			<div id="Article">
+				<div class="hint">温馨提示：软文列表左滑修改、预览和删除哦！！！</div> 
+				<notempty name="list">
+					<foreach name="list" item="vo">
+						<div class="art_cen">
+							<div class="art_big">
+								<a class="Article_box clearfix" href="{:U('Home/Article/previewArticle?id='.$vo['id'])}">
+									<div class="title fl">
+										<p class="nick_name">{$vo.title}</p>
+										<p class="text">{$vo.content}</p>
+										<div class="img_tips clearfix">
+											<div class="fl box">
+												<img class="img_item fl" src="__HOME_IMAGES__/liulan.png" alt="">
+												<div class="bk fr">{$vo.visit}次</div>
+											</div>
+											<!-- <div class="fl box">
+												<span class="img_item fl"></span>
+												<div class="bk fr"></div>
+											</div> -->
+											<div class="fl box">
+												<img class="img_item fl" src="__HOME_IMAGES__/inco_time.png" alt="">
+												<div class="bk fr">{$vo.add_time}</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="fr right">
+										<img src="{$vo.thumb}" alt="">
+										<!-- __HOME_IMAGES__/timg.jpg -->
+										<!-- <p>分类</p> -->
+									</div>
+
+								</a>
+								<div class="tit_right">
+									<a href="{:U('Home/Article/addArticle', ['id' => $vo['id']])}" class="xiu_gai">修改</a>
+									<a href="{:U('Home/Article/previewArticle?id='.$vo['id'])}" class="yu_lan">预览</a>
+									<a href="javascript:;" onclick="zzc_dialog_title({$vo.id})" class="san_chu">删除</a>
+								</div>
+							</div>
+						</div>
+					</foreach>
+				</notempty>
+			</div>
+			<!-- 分类弹框 -->
+			<div id="classification">
+				<div class="title_name clearfix">
+					<p class="fl">分类夹</p>
+					<p class="fr">
+						<!-- <a href="__HOME_IMAGES__/addArticleCategory.html"> 管理</a> -->
+						<a href="{:U('Home/Article/addArticleCategory')}"> 管理</a>
+					</p>
+				</div>
+				<ul class="ul_box clearfix">
+					<foreach name="article_type" item="type">
+						<li class="fl mui-table-view-cell">
+							<a href="{:U('Home/Article/myListArticle',array('type_id'=>$type['id']))}">
+								<p>{$type.name}</p>
+							</a>
+						</li>
+					</foreach>
+
+					<!-- < img id="add_li" src="__HOME_IMAGES__/inco_add.png" alt=""> -->
+				</ul>
+				<div class="close">
+					<img src="__HOME_IMAGES__/inco_det.png" alt="">
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script>
+		// $(function(){
+
+		// 	var type_id='{$type_id}';
+		// 	alert(type_id);
+		// })
+
+		$(".Article_box .right").each(function() {
+			var src = $(this).find("img").attr("src"); //获取图片路径
+			if(src == '') {
+//				console.log($(this));
+				$(this).css("display", "none");
+				$(this).prev().css("width", "100%");
+			} else {
+				$(this).prev().css("width", "70%");
+			}
+		});
+
+		function goto(id) {
+			// window.location.href = "/Home/Article/myListArticle?type_id=" + id;
+			window.location.href = "index.php?s=/Home/Article/myListArticle/type_id=" + id;
+		}
+
+		function addArticleType() {
+			window.location.href = "/index.php?s=/Home/Article/addArticleCategory";
+		}
+
+		function zzc_dialog_title(id) {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '确定要删除么?',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+								var _url = "/index.php?s=/Home/Article/delArticle";
+								$.post(_url, {
+									"id": id
+								}, function(res) {
+									if(res.status == 1) {
+										mui.toast(res.msg);
+										setTimeout(function() {
+											top.location.href = "/index.php?s=/Home/Article/myListArticle";
+										}, 1000);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						}
+					]
+				});
+			});
+		}
+
+		//侧滑
+		var x1, x2, bl;
+		var p = 0;
+		$(".art_big").on("touchstart", function() {
+			x1 = event.targetTouches[0].pageX;
+			// console.log(x1)
+			bl = true;
+		})
+		$(".art_big").on("touchmove", function() {
+			// console.log(event.targetTouches[0].pageX);
+			if(bl) {
+				x2 = event.targetTouches[0].pageX;
+				if(x2 - x1 < -20) {
+					$(this).css({
+						"transform": 'translateX(-10rem)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+
+				if(x2 - x1 > 20) {
+					$(this).css({
+						"transform": 'translateX(0rem)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+</html>

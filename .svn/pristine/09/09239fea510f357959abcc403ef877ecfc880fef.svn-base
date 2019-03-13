@@ -1,0 +1,1050 @@
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>大转盘抽奖</title>
+    <script src="__HOME_JS__/whjs/js/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/rjl/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/style.css?ver=1">
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/bootstrap.css">
+    <!-- <script src="__HOME_JS__/whjs/js/jquery-1.10.2.js"></script> -->
+    <script src="__HOME_JS__/whjs/js/bootstrap.js"></script>
+
+    <script src="__HOME_JS__/whjs/js/awardRotate.js"></script>
+    <script src="__HOME_JS__/rjljs/swiper-3.4.2.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            var id = '{$id}';
+            // console.log(id)
+            var shopid;
+            var flag = true;
+            // console.log(id +"用户id")
+            var turnplate = {
+                restaraunts: [], //大转盘奖品名称
+                colors: [], //大转盘奖品区块对应背景颜色
+                outsideRadius: 192, //大转盘外圆的半径
+                textRadius: 155, //大转盘奖品位置距离圆心的距离
+                insideRadius: 68, //大转盘内圆的半径
+                startAngle: 0, //开始角度
+                randomRate: [],
+                bRotate: false, //false:停止;ture:旋转
+
+            };
+            turnplate.colors = ["#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF", "#FFF4D6",
+                "#FFFFFF"
+            ];
+            $(function () {
+                var isPageHide = false;
+                window.addEventListener('pageshow', function () {
+                    if (isPageHide) {
+                        window.location.reload();
+                    }
+                });
+                window.addEventListener('pagehide', function () {
+                    isPageHide = true;
+                });
+            });
+
+
+
+
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: "index.php?s=/Api/LuckApi/get_luckparam",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        // console.log(res);
+                        $.each(res.AppendData, function (k, v) {
+                            turnplate.restaraunts.push(v.name);
+                        })
+                        drawRouletteWheel();
+
+                    },
+                    error: function () {
+                        window.location.reload();
+
+                    }
+                })
+
+                $("#ischeck").on("click", function () {
+                    if (!flag) {
+                        return false;
+                    }
+                    console.log(11111111);
+                    var inte = $("#jf").val();
+                    inte = parseInt(inte);
+                    if (inte < 200) {
+                        $("#mask").css("display", "block");
+                        $(".jfbg").css("display", "block");
+                        return false;
+                    }
+                    flag = false;
+                    $.ajax({
+                        url: "index.php?s=/Api/LuckApi/get_lucklist",
+                        type: "post",
+                        data: {
+                            id: id
+                        },
+                        success: function (res) {
+                            if (res.ResultType != 0) {
+                              
+                                location.reload();
+                            }
+                            // console.log(ResultType)
+                            console.log(res);
+                            var index;
+                            $("#jfen").html(res.AppendData
+                                .inte);
+                            $("#fen").html(res.AppendData
+                                .inte);
+                            $("#integral").html(res.AppendData
+                                .inte);
+                            $("#jf").val(res.AppendData
+                                .inte);
+                            for (var i = 0; i <
+                                turnplate.restaraunts
+                                .length; i++) {
+                                turnplate.randomRate[i] =
+                                    '0%';
+                            }
+                            //  console.log(turnplate.randomRate);
+                            $.each(turnplate.restaraunts,
+                                function (i, e) {
+                                    // console.log(e)
+                                    if (res.AppendData
+                                        .yes.name ==
+                                        e) {
+                                        index = i
+                                    }
+                                })
+                            turnplate.randomRate[index] =
+                                '100%';
+                            //  console.log(turnplate.restaraunts)
+                            //  console.log(turnplate.randomRate)  
+                            var priez = '';
+                            var jkid;
+                            $.each(res.AppendData,
+                                function (k, v) {
+                                    if (k == 'yes') {
+                                        priez += '<li class="" jpid = "' + v.oid +
+                                            '" status="' + v.status + '">';
+                                        priez += '<div class="img_box">'
+                                        priez += '<img src="' + v.url +
+                                            '" alt="">';
+                                        priez += '</div>'
+                                        priez += '<p class="gb">' + v.name +
+                                            '</p>';
+                                        priez += '</li>'
+                                        jkid = v.id;
+                                    }
+                                })
+
+                            $("#Prize").html(priez);
+                            $(".pointer").click();
+                            var status = $("#Prize").find("li").attr("status");
+                            if (status == 0 || status == 2 || status == 3) {
+                                $('#goaddress').css("display", "none");
+                                $('#again').css('display', "block");
+                            } else {
+                                $('#goaddress').css("display", "block");
+                                $('#again').css('display', "none");
+                            }
+
+                        },
+                        error: function () {
+                          
+                            window.location.reload();
+
+                        }
+                    })
+
+                })
+
+                // console.log(112323)
+                // 渲染中奖者名单
+                $.ajax({
+                    url: "index.php?s=/Api/LuckApi/luck_font",
+                    type: "post",
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        hdp();
+
+                        function hdp() {
+                            var mySwiper = new Swiper('.swiper-container', {
+                                autoplay: true, //可选选项，自动滑动
+                                speed: 1000, //速度
+                                direction: 'vertical', //垂直
+                                loop: true, //循环
+                                autoplayDisableOnInteraction: false, //用户拖动后还能自动轮播
+                                observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                                observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                                slidesPerView :5,
+                                onSlideChangeEnd: function (swiper) {
+                                    swiper.update();
+                                    mySwiper.startAutoplay();
+                                    mySwiper.reLoop();
+                                }
+                            });
+
+                        }
+                        $.each(res.AppendData, function (k, v) {
+                            v.mobile = v.mobile.substr(0, 3) + "****" + v.mobile.substr(
+                                7);
+                        })
+                        // console.log(res);
+                        $(".swiper-wrapper").html(template('zjz', res));
+
+                    },
+                    error: function () {
+                       
+                        window.location.reload();
+
+                    }
+
+                })
+
+                //动态添加大转盘的奖品与奖品区域背景颜色
+                // turnplate.restaraunts = ["一等奖", "10猫币", "谢谢参与", "5猫币", "10元免费流量包", "20元免费流量包", "20猫币 ", "30元免费流量包","100元免费流量包", "2猫币"];
+                var rotateTimeOut = function () {
+                    $('#wheelcanvas').rotate({
+                        angle: 0,
+                        animateTo: 2160, //2160
+                        duration: 8000, //8000
+                        callback: function () {
+                           
+                        }
+                    });
+                };
+
+                //旋转转盘 item:奖品位置; txt：提示语;
+                var rotateFn = function (item, txt) {
+                    var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts
+                        .length *
+                        2));
+                    if (angles < 270) {
+                        angles = 270 - angles;
+                    } else {
+                        angles = 360 - angles + 270;
+                    }
+                    $('#wheelcanvas').stopRotate();
+                    $('#wheelcanvas').rotate({
+                        angle: 0,
+                        animateTo: angles + 1800,
+                        duration: 8000,
+                        callback: function () {
+                            // console.log(txt)
+                            // alert(txt);
+
+                            if (txt == "谢谢参与") {
+                                $("#mask").css("display", "block")
+                                $(".xxcy").css("display", "block");
+                            }
+                            if (txt != "谢谢参与") {
+                                $("#mask").css("display", "block")
+                                $(".txzl").css("display", "block");
+
+                            }
+                            flag = true;
+                            turnplate.bRotate = !turnplate.bRotate;
+                        }
+                    });
+                };
+
+
+                $('.pointer').click(function () {
+                    if (turnplate.bRotate) return;
+                    turnplate.bRotate = !turnplate.bRotate;
+                    //获取随机数(奖品个数范围内)
+                    var item = rnd(turnplate.randomRate);
+                    //奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+                    rotateFn(item, turnplate.restaraunts[item - 1]);
+                });
+
+
+
+
+            });
+
+            function rnd(rate) {
+                var random = Math.floor(Math.random() * 100);
+                var myRandom = [];
+                var randomList = [];
+                var randomParent = [];
+                for (var i = 0; i < 100; i++) {
+                    myRandom.push(parseInt([i]) + 1);
+                }
+                for (var i = 0; i < rate.length; i++) {
+                    var temp = [];
+                    var start = 0;
+                    var end = 0;
+                    randomList.push(parseInt(rate[i].split('%')[0]));
+                    for (var j = 0; j < randomList.length; j++) {
+                        start += randomList[j - 1] || 0
+                        end += randomList[j]
+                    }
+                    temp = myRandom.slice(start, end);
+                    randomParent.push(temp)
+                }
+                for (var i = 0; i < randomParent.length; i++) {
+                    if ($.inArray(random, randomParent[i]) > 0) {
+                        return (i + 1)
+                    }
+                }
+
+            }
+
+
+
+            function drawRouletteWheel() {
+                var canvas = document.getElementById("wheelcanvas");
+                if (canvas.getContext) {
+                    //根据奖品个数计算圆周角度
+                    var arc = Math.PI / (turnplate.restaraunts.length / 2);
+                    var ctx = canvas.getContext("2d");
+                    //在给定矩形内清空一个矩形
+                    ctx.clearRect(0, 0, 422, 422);
+                    //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式  
+                    ctx.strokeStyle = "#FFBE04";
+                    //font 属性设置或返回画布上文本内容的当前字体属性
+                    ctx.font = '16px Microsoft YaHei';
+                    for (var i = 0; i < turnplate.restaraunts.length; i++) {
+                        var angle = turnplate.startAngle + i * arc;
+                        ctx.fillStyle = turnplate.colors[i];
+                        ctx.beginPath();
+                        //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）    
+                        ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+                        ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+                        ctx.stroke();
+                        ctx.fill();
+                        //锁画布(为了保存之前的画布状态)
+                        ctx.save();
+
+                        //----绘制奖品开始----
+                        ctx.fillStyle = "#000"; //奖品颜色
+                        var text = turnplate.restaraunts[i];
+                        var line_height = 17; //17
+                        //translate方法重新映射画布上的 (0,0) 位置
+                        ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 +
+                            Math.sin(
+                                angle + arc /
+                                2) * turnplate.textRadius);
+
+                        //rotate方法旋转当前的绘图
+                        ctx.rotate(angle + arc / 2 + Math.PI / 2);
+
+                        /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+                        if (text.indexOf("M") > 0) { //流量包
+                            var texts = text.split("M");
+                            for (var j = 0; j < texts.length; j++) {
+                                ctx.font = j == 0 ? 'bold 20px Microsoft YaHei' :
+                                    '16px Microsoft YaHei';
+                                if (j == 0) {
+                                    ctx.fillText(texts[j] + "M", -ctx.measureText(texts[j] + "M").width /
+                                        2, j *
+                                        line_height);
+                                } else {
+                                    ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j *
+                                        line_height);
+                                }
+                            }
+                        } else if (text.indexOf("M") == -1 && text.length > 6) { //奖品名称长度超过一定范围 
+                            text = text.substring(0, 6) + "||" + text.substring(6);
+                            var texts = text.split("||");
+                            for (var j = 0; j < texts.length; j++) {
+                                ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j *
+                                    line_height);
+                            }
+                        } else {
+                            //在画布上绘制填色的文本。文本的默认颜色是黑色
+                            //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+                            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                        }
+
+                        //添加对应图标
+                        if (text.indexOf("500元红包") >= 0) {
+                            var img = document.getElementById("shan-img");
+                            img.onload = function () {
+                                ctx.drawImage(img, -15, 10);
+                            };
+                            ctx.drawImage(img, -15, 10);
+                        } else if (text.indexOf("谢谢参与") >= 0) {
+                            var img = document.getElementById("sorry-img");
+                            img.onload = function () {
+                                ctx.drawImage(img, -15, 10);
+                            };
+                            ctx.drawImage(img, -15, 10);
+                        }
+                        //把当前画布返回（调整）到上一个save()状态之前 
+                        ctx.restore();
+                        //----绘制奖品结束----
+                    }
+                }
+            }
+
+
+
+            $("#tz").on("click", function () {
+                if ($("#poss li").length == 0) {
+                    $(".t").css("display", "block").find("p").text("您没有可查看填写的奖品");
+                    $(".t").fadeOut(3000);
+                }
+            })
+
+            var jp = '';
+            var is_turea = '';
+            $("#poss").on("click", "li", function () {
+                $(this).find(".check_red").show().parents("li").siblings().find(".check_red").hide();
+                jp = $(this).attr("jpid");
+                is_turea = $(this).attr("istrue");
+            })
+
+
+            //   tab栏切换
+            var type;
+            var fasleflag = true;
+            $("#tabbar li").on("click", function () {
+                index = 0;
+                scrollFlag = true;
+                $(".loading").hide().html('<img src="/Public/Home/images/white_loading.png" alt=""><span>正在加载中</span>');
+                $("#box").animate({
+                    scrollTop: 0 + "px"
+                })
+                $(this).addClass("active").siblings().removeClass("active");
+                jp = '';
+                if (fasleflag) {
+                    type = $(this).attr("data-type");
+                    // $(this).addClass("color").siblings().removeClass("color");
+                    fasleflag = false;
+                    // 获取用户的奖品
+                    $.ajax({
+                        url: "index.php?s=/Api/LuckApi/luck_list",
+                        type: "post",
+                        data: {
+                            id: id,
+                            type: type,
+                            start: index,
+                            length: 10
+
+                        },
+                        success: function (res) {
+                            // console.log(res)
+                            fasleflag = true;
+                            var list = '';
+                            $.each(res.AppendData, function (k, v) {
+                                list += '<li class="fl" jpid=' + v.id + ' istrue="' +
+                                    v.is_true + '">';
+                                list += '<div class="box">'
+                                list += '<img class="prize_img" src="' + v.url +
+                                    '" alt="">';
+                                list +=
+                                    '<img class="check_red"  src="/Public/Home/images/red_check.png" alt="">'
+                                list += '</div>'
+                                list += '<p>' + v.name + '</p>';
+                                list += '</li>';
+                            })
+                            $("#poss").html(list);
+                        },
+                        error: function () {
+                           
+                            window.location.reload();
+
+                        }
+                    })
+                }
+
+                if ($("#tabbar li").eq(1).hasClass("active")) {
+                    $("#tz").css("display", "block").text("查看详情");
+                    $("#gogo").css("display", "none")
+                    $(".txrjl .bbl").css("display", "block");
+                }
+                if ($("#tabbar li").eq(0).hasClass("active")) {
+                    $(".txrjl .bbl").css("display", "none");
+                    $("#gogo").css("display", "none")
+                }
+                if ($("#tabbar li").eq(2).hasClass("active")) {
+                    $("#tz").css("display", "none");
+                    $(".txrjl .bbl").css("display", "block");
+                    $("#gogo").css("display", "block")
+                }
+            })
+
+            var index = 0;
+            var scrollFlag = true;
+            $("#box").scroll(function () {
+                var scrollHeight = $(this)[0].scrollHeight;
+                var scrollTop = $(this).scrollTop();
+                var clientHeight = $(this)[0].clientHeight;
+                if (!scrollFlag) {
+                    return false;
+                }
+                if (scrollHeight - clientHeight == scrollTop) {
+                    console.log("到底了");
+                    index += 10;
+                    scrollFlag = false;
+                    $.ajax({
+                        type: "post",
+                        url: "index.php?s=/Api/LuckApi/luck_list",
+                        data: {
+                            id: id,
+                            type: type,
+                            start: index,
+                            length: 10
+
+                        },
+                        beforeSend:function(){
+                            $(".loading").show();
+                        },
+                        success: function (res) {
+                             $(".loading").hide();
+                            scrollFlag = true;
+                            console.log(res)
+                            if(res.AppendData.length == 0){
+                                 scrollFlag = false;
+                                 $(".loading").show().html('<p style="color:#fff;">暂无更多奖品信息</p>');
+                            }
+                            var jplist = '';
+                            $.each(res.AppendData, function (k, v) {
+                                jplist += '<li class="fl" jpid=' + v.id +
+                                    ' istrue="' + v.is_true + '">';
+                                jplist += '<div class="box">'
+                                jplist += '<img class="prize_img" src="' + v.url +
+                                    '" alt="">';
+                                jplist +=
+                                    '<img class="check_red"  src="/Public/Home/images/red_check.png" alt="">'
+                                jplist += '</div>'
+                                jplist += '<p>' + v.name + '</p>';
+                                jplist += '</li>';
+
+                            });
+                            $("#poss").append(jplist);
+                        },
+                        error: function (res) {
+                           
+                            window.location.reload();
+                        }
+                    })
+                }
+
+            })
+
+
+
+            $("#gogo").on("click", function () {
+                if ($("#poss li").length < 1) {
+                    $(".t").css("display", "block").find("p").text("您没有可查看填写的奖品");
+                    //  $(".t").fadeOut(3000);
+                }
+                if (jp == '') {
+                    $(".t").css("display", "block").find("p").text("请点击选择一个奖品填写地址");
+                    $(".t").fadeOut(3000);
+                    return false;
+                }
+                if (is_turea == 1) {
+                    $("#set_out").fadeIn(1000);
+                    return false;
+                } else {
+                    location.href = '/index.php?s=/Home/lottery/addgoods/p/' + jp + '';
+                }
+            })
+
+            $("#confirm").on("click", function () {
+                $("#set_out").fadeOut(1000);
+            })
+
+
+            $("#tz").on("click", function () {
+                $.ajax({
+                    url: "index.php?s=/Api/LuckApi/luck_list",
+                    type: "post",
+                    data: {
+                        id: id,
+                        type: 2
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $.each(res.AppendData, function (k, v) {
+                            if (jp == v.id && v.type == 3) {
+                                // console.log(v);
+                                $("#mask").css("display", "block");
+                                $("#Redeem_Code .val").text('账号: ' + v.content).css({
+                                    "text-align": "left",
+                                    "padding": "0 10px 0 10px "
+                                });
+                                $("#Redeem_Code .val_pwd").text('密码: ' + v.content_pwd)
+                                    .show();
+                                $("#Redeem_Code").css("display", "block");
+                                $(".exchange").css("display", "block");
+                                $("#Redeem_Code .touch").css({
+                                    "height": "1.5rem",
+                                    "line-height": "1.5rem"
+                                })
+                            }
+
+                            if (jp == v.id && v.type == 2) {
+                                $("#mask").css("display", "block");
+                                $("#Redeem_Code .val").text(v.content).css({
+                                    "text-align": "center",
+                                    "padding": "10px 10px "
+                                });
+                                $("#Redeem_Code .val_pwd").text('').hide();
+                                $(".exchange").css("display", "none");
+                                $("#Redeem_Code").css("display", "block");
+                                $("#Redeem_Code .touch").css({
+                                    "height": "2.5rem",
+                                    "line-height": "2.5rem"
+                                })
+                            }
+                        })
+                    },
+                    error: function () {
+                       
+                        window.location.reload();
+
+                    }
+                })
+
+            })
+
+            $("#mask").on("click", function () {
+                if ($("#Redeem_Code").css("display") == "block") {
+                    $("#mask").fadeOut(1000);
+                    $("#Redeem_Code").fadeOut(1000);
+                }
+
+            })
+
+
+            // 隐藏谢谢参与弹出框
+            $(".xxcy .dsk").on("click", function () {
+                $(".xxcy").css("display", "none");
+                $("#mask").css("display", "none");
+            });
+
+            $(".xxcy .bbt").on("click", function () {
+                $(".xxcy").css("display", "none");
+                $("#mask").css("display", "none");
+            })
+
+
+            // 隐藏积分窗口
+            $(".jfbg .dsk").on("click", function () {
+                $(".jfbg").css("display", "none");
+                $("#mask").css("display", "none")
+
+            })
+
+            // 奖品窗口
+            $(".renjl").on("click", function () {
+                $("#tabbar .active").click();
+                $(".txrjl").css("display", "block");
+                $("#mask").css("display", "block");
+
+            })
+
+            //获取积分窗口
+            $(".jfbg .bbt").on("click", function () {
+                $(".cy").css("display", "block");
+                $("#mask").css("display", "block");
+                $(".jfbg").css("display", "none");
+            })
+            $(".cy .cl").on("click", function () {
+                $(".cy").css("display", "none");
+                $("#mask").css("display", "none");
+            })
+
+
+            //隐藏抽奖的窗口
+            $("#again").on("click", function () {
+                $(".txzl").css("display", "none");
+                $("#mask").css("display", "none");
+                $("#ischeck").click();
+            })
+
+            $(".txzl .cdel").on("click", function () {
+                $(".txzl").css("display", "none");
+                $("#mask").css("display", "none");
+                // location.href = '/index.php?s=/Home/lottery/turntable.html&' + (new Date().getTime());
+            })
+
+
+            $(".txzl .bbt").on("click", function () {
+                var lpid = $(this).parent().find("li").attr("jpid");
+                // console.log(lpid)
+                $(".txzl").css("display", "none");
+                $("#mask").css("display", "none");
+                location.href = '/index.php?s=/Home/lottery/addgoods/p/' + lpid + '';
+            })
+
+            //隐藏我的奖品窗口
+            $(".txrjl .ddel").on("click", function () {
+                $(".txrjl").css("display", "none");
+                $("#mask").css("display", "none");
+                $(".loading").hide();
+            })
+
+            $(".txrjl .bbl").on("click", function () {
+                $(".txrjl").css("display", "none");
+                $("#mask").css("display", "none");
+            })
+
+            $(".zyd .lele").on("click", function () {
+                $("#mask").css("display", "none");
+            })
+
+        })
+    </script>
+    <style>
+        .active {
+            color: skyblue;
+        }
+
+        #ischeck {
+            width: 4.1rem;
+            height: 6rem;
+            z-index: 200;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            margin-top: -3rem;
+            margin-left: -2.05rem;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            cursor: pointer;
+        }
+
+        .fl {
+            list-style: none;
+        }
+
+        .gb {
+            text-align: center;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .show {
+            display: block !important;
+        }
+
+        .color {
+            color: #fff;
+        }
+
+        #gogo {
+            display: none;
+        }
+
+        #set_out {
+            width: 14rem;
+            height: 5rem;
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            margin-top: -2.5rem;
+            margin-left: -7rem;
+            z-index: 999;
+            background-color: rgba(255, 255, 255, .95);
+            text-align: center;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            padding: 0.2rem 0.2rem;
+            display: none;
+        }
+
+        #set_out p {
+            height: 2rem;
+            line-height: 2rem;
+            width: 100%;
+            background: rgba(255, 255, 255, .95);
+            border-top: 1px solid #ccc;
+            color: #2AB7CF;
+            margin-top: 0.5rem;
+        }
+
+        #Redeem_Code {
+            width: 14rem;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            margin-top: -1.5rem;
+            margin-left: -7rem;
+            z-index: 999;
+            background-color: rgba(255, 255, 255, .95);
+            border-radius: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        #Redeem_Code input {
+            border: 0;
+            background: #ccc;
+            width: 100%;
+            height: 2rem;
+            text-align: center;
+        }
+
+        #home {
+            display: block;
+            width: 2rem;
+            height: 2rem;
+            position: relative;
+            z-index: 999;
+            margin: 0.6rem 0.5rem;
+        }
+
+        #home img {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .nav-tabs {
+            border-bottom: 1px solid #fff !important;
+            width: 13rem;
+            margin: 0 auto;
+        }
+
+        #tabbar li {
+            width: 33.33%;
+            box-sizing: border-box;
+        }
+
+        #tabbar li a {
+            color: #000;
+            text-align: center;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .nav-tabs>li.active>a {
+            background-color: #FAC900 !important;
+            color: #fff !important;
+            border: 1px solid #fff !important;
+            border-bottom-color: transparent !important;
+        }
+
+        .nav>li>a {
+            padding: 10px 10px;
+        }
+
+        .rule {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        #poss .box {
+            width: 4.4rem;
+            height: 4rem;
+            position: relative;
+        }
+
+        #Redeem_Code .exchange {
+            display: block;
+            width: 100%;
+            height: 2.5rem;
+            color: #2AB7CF;
+            text-align: left;
+        }
+
+        .exchange .tip {
+            padding: 0.2rem 0.2rem;
+            word-break: break-all;
+        }
+
+        #Redeem_Code .touch {
+            height: 1.5rem;
+            line-height: 1.5rem;
+            width: 100%;
+        }
+
+        #Prize li {
+            width: 5.15rem;
+            height: 4.075rem;
+            list-style: none;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="Redeem_Code">
+        <div class="val"></div>
+        <div class="val_pwd"></div>
+        <a class="exchange" href="http://youcikaishi.com/Wap/index.aspx?referrerCode=5806065">
+            <div class="tip">兑换网址:http://youcikaishi.com/Wap/index.aspx?referrerCode=5806065 </div>
+        </a>
+        <div class="touch">长按上方文字复制兑换码</div>
+    </div>
+    <div id="set_out">
+        您选择的奖品已经发货啦，如果想修改收货地址请联系快递公司
+        <p id="confirm">确定</p>
+    </div>
+    <div class="t">
+        <p>您没有可查看填写的奖品</p>
+    </div>
+    <div id="bigimg">
+        <a id="home" href="/index.php?s=/Home/User/usercenter.html">
+            <img src="/Public/Home/images/new_4.png" alt="">
+        </a>
+        <img src="__HOME_IMAGES__/1.png" id="shan-img" style="display:none;" />
+        <img src="__HOME_IMAGES__/2.png" id="sorry-img" style="display:none;" />
+        <div class="banner" style="max-width:640px;">
+            <div class="turnplate" style="background-image:url(__HOME_IMAGES__/turnplate-bg.png);background-size:100% 100%;">
+                <canvas class="item" id="wheelcanvas" width="422" height="422"></canvas>
+                <!-- width="422" height="422" -->
+                <img class="pointer" src="__HOME_IMAGES__/turnplate-pointer.png" />
+                <div id="ischeck"></div>
+            </div>
+        </div>
+    </div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <!-- 中奖者 -->
+    </div>
+</div>
+<div class="renjl">我的奖品</div>
+<div class="rule">
+    <div class="rjl">——抽奖规则——</div>
+    <div class="ljr">
+        <p>1.点击转盘进行抽奖，抽奖一次消耗200积分。</p>
+        <p>2.奖项将会以快递形式进行送达。</p>
+    </div>
+</div>
+
+    <!-- 遮罩 -->
+    <div id="mask"></div>
+    <!-- 未中奖谢谢惠顾 -->
+    <div class="xxcy">
+        <h3>很遗憾！</h3>
+        <p class="yh">很遗憾你没有中奖！</p>
+        <p class="sy">剩余积分
+            <span id="jfen">{$inte}</span>
+        </p>
+        <div class="bbt"> 再抽一次</div>
+        <img class="dsk" src="/Public/Home/images/close_122.png">
+    </div>
+    <!-- 积分不够了 -->
+    <div class="jfbg">
+        <h3>很遗憾！</h3>
+        <p class="yh">您的积分不够了！</p>
+        <p class="sy">剩余积分
+            <span id="fen">{$inte}</span>
+        </p>
+        <div class="bbt">获取积分</div>
+        <img class="dsk" src="/Public/Home/images/close_122.png">
+    </div>
+    <!-- 如何获取积分 -->
+    <div class="cy">
+        <h3>怎样获取积分？</h3>
+        <div class="duan">
+            <div class="zyd clearfix">
+                <p class="fl">1.每日签到</p>
+                <div class="lele fr">
+                    <a href="/index.php?s=/Home/Chat/sign.html">去签到</a>
+                </div>
+            </div>
+            <div class="zyd clearfix">
+                <p class="fl">2.发表文章</p>
+                <div class="lele fr">
+                    <a href="/index.php?s=/Home/Articlegrab/articlelist">去发表</a>
+                </div>
+            </div>
+            <div class="zyd clearfix">
+                <p class="fl">3.制作相册</p>
+                <div class="lele fr">
+                    <a href="/index.php?s=/Home/Photo/photo_index">去制作</a>
+                </div>
+            </div>
+        </div>
+        <img class="cl" src="/Public/Home/images/close_122.png">
+    </div>
+    <!-- 抽中奖品了 -->
+    <div class="txzl">
+        <h1>恭喜你中奖啦！</h1>
+        <div class="trp" id="Prize">
+            <!-- 奖品 -->
+        </div>
+        <h4>当前剩余积分：
+            <span id="integral">{$inte}</span>
+        </h4>
+        <div id="goaddress" class="bbt">去填写地址</div>
+        <div id="again">再抽一次</div>
+        <img class="cdel" src="/Public/Home/images/close_122.png">
+    </div>
+    <!-- 我的奖品 -->
+    <div class="txrjl">
+        <h1>我的奖品</h1>
+        <!-- <ul id="tab" class="clearfix"> 
+            <li class="fl color" data-type="0">积分</li>
+            <li class="fl" data-type="2">月卡</li>
+            <li class="fl" data-type="1">奖品</li>
+        </ul> -->
+        <ul class="nav nav-tabs" id="tabbar">
+            <li role="presentation" class="active" data-type="0">
+                <a href="javascript:;">积分</a>
+            </li>
+            <li role="presentation" data-type="2">
+                <a href="javascript:;">电子卡</a>
+            </li>
+            <li role="presentation" data-type="1">
+                <a href="javascript:;">奖品</a>
+            </li>
+        </ul>
+
+        <div id="box" class="bbk">
+            <ul class="clearfix item show" id="poss">
+                <!-- 我的奖品 -->
+            </ul>
+        </div>
+        <!-- <div class="drrjl">请填写地址，奖品不日将会送到哦！</div> -->
+        <p id="jy">点击选中奖品可查看详情或修改收货地址,注:
+            <span style="color:red">已发货奖品将无法修改地址</span>
+        </p>
+        <div class="bbl">
+            <!-- <a id="tz" href="/index.php?s=/Home/lottery/addgoods">填写地址</a> -->
+            <div id="tz">填写地址</div>
+            <div id="gogo">填写地址</div>
+        </div>
+        <img class="ddel" src="/Public/Home/images/close_122.png">
+    </div>
+    <input id="jf" type="hidden" value="{$inte}">
+    <div class="loading">
+        <img src="/Public/Home/images/white_loading.png" alt="">
+        <span>正在加载中</span>
+    </div>
+</body>
+
+</html>
+<!-- 奖品图片 -->
+<script type="text/html" id="jpimg">
+    <img data-id="{{id}}" src="{{url}}" alt="">
+</script>
+<!-- 中奖者 -->
+<script type="text/html" id="zjz">
+    {{each AppendData v i}}
+    <div class="swiper-slide" data-id="{{v.id}}">恭喜
+        <i>{{v.mobile}}</i>用户获得
+        <span style="color:yellow;">{{v.name}}</span>
+    </div>
+    {{/each}}
+</script>
+
+
+<script type="text/html" id="jpid">
+    <a href="/index.php?s=/Home/lottery/addgoods&{{v.id}}">填写地址</a>
+</script>

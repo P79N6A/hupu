@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>下载中心</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #fff;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.max {
+				width: 100%;
+				height: auto;
+			}
+			
+			.list {
+				margin-top: 0.6rem;
+				background: #f6f6f6;
+				width: 90%;
+				height: 3.55rem;
+				margin: 0.6rem auto 0;
+			}
+			
+			.list>a {
+				display: block;
+				width: 92%;
+				height: 100%;
+				padding: 0 4%;
+				display: flex;
+			}
+			
+			.l_left {
+				width: 85%;
+				height: 100%;
+			}
+			
+			.l_up {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				color: #333;
+				font-weight: 550;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap
+			}
+			
+			.l_down {
+				width: 100%;
+				height: 1.55rem;
+				font-size: 0.6rem;
+				color: #777;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap
+			}
+			
+			.l_right {
+				width: 15%;
+				height: 100%;
+				text-align: right;
+			}
+			
+			.l_right>img {
+				width: 0.45rem;
+				height: 0.7rem;
+				margin: 1.425rem 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="max">
+			
+		</div>
+		<script>
+			var unionid = "{$unionid}";
+			var list = ""
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/DownloadApi/download_type',
+				dataType: 'json',
+				data: {
+					unionid: unionid
+				},
+				success: function(res) {
+					console.log(res)
+					if(res.ResultType == 0) {
+						$.each(res.AppendData, function(v, k) {
+							list += '<div class="list">'
+							list += '<a href="/index.php?s=/Home/Downloadcenter/download/id/'+k.id+'">'
+							list += '<div class="l_left">'
+							list += '<div class="l_up">' + k.title + '</div>'
+							list += '<div class="l_down">' + k.addtime + '</div>'
+							list += '</div>'
+							list += '<div class="l_right">'
+							list += '<img src="__HOME_IMAGES__/style/Jump_icon@2x.png" alt="" />'
+							list += '</div>'
+							list += '</a>'
+							list += '</div>'
+						})
+					}
+					$(".max").html(list);
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			
+		</script>
+	</body>
+
+</html>

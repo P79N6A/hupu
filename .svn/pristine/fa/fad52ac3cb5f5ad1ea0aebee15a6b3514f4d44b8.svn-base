@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" type="text/css" href="/Public/Home/css/add/css/mui.min.css">
+    <script src="/Public/Home/css/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/album_edit.css">
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>相册编辑</title>
+    <style>
+        .mask {
+            width: 150px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -75px;
+            display: none;
+            z-index: 20;
+        }
+
+        .mask img {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        .mask p {
+            color: #fff;
+            text-align: center;
+            line-height: 0;
+            height: auto;
+        }
+
+        .bgpic {
+            width: 100%;
+            position: absolute;
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <div class="share_boxlist">
+            <div class="yu_lan clearfix">
+                <a id="set" class="href" href="javascript:;">
+                    <img class="yu_img" src="/Public/Home/images/share_2x.png" alt="">
+                    <p class="yu_text" style="color:#fff">标题</p>
+                </a>
+            </div>
+
+            <div class="save clearfix">
+                <a id="preview" class="href" href="javascript:;">
+                    <img class="yu_img" src="/Public/Home/images/inco_xiangce_yulan@2x.png" alt="">
+                    <p class="yu_text" style="color:#fff">预览</p>
+                </a>
+            </div>
+
+            <div class="look clearfix">
+                <a class="href" href="javascript:;">
+                    <img class="yu_img" src="/Public/Home/images/inco_xiangce_yulan copy@2x.png" alt="">
+                    <p class="yu_text" style="color:#fff">保存</p>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="swiper-container">
+            <div class="swiper-wrapper swiper-items">
+                <!-- <div class="swiper-slide">
+                    <div class="album_text">
+                        <textarea disabled class="edit_text">然而当你无计可施， 驻足不前之时，当失去可能性，黑暗将你覆盖，快要被绝望淹没之时，就让我成为你的照明灯吧。</textarea>
+                    </div>
+                </div> -->
+            </div>
+            <div class="swiper-pagination swiper-pagination-fraction">
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 页面管理 -->
+        <div class="page_management">
+            <a href="javascript:;">页面管理</a>
+        </div>
+        <!-- 底部footer -->
+        <div class="footer clearfix">
+            <div class="fl">
+                <input class="" id="up_dataimg" type="file" accept="image/*">
+                <img class="ditu" src="/Public/Home/images/inco_xiangce_ditu@2x.png" alt="">
+                <p class="edit_ditu">更改底图</p>
+            </div>
+            <div class="fr">
+                <a id="check_music" class="a_box" href="javascript:;">
+                    <img class="music" src="/Public/Home/images/inco_music@2x.png" alt="">
+                    <p>+音乐</p>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- 底部footer编辑 -->
+        <div class="footer_edit">
+            <div class="clearfix">
+                <div class="fl item edit_content">
+                    <img src="/Public/Home/images/inco_xiangce_bianji@2x.png" alt="">
+                    <p>编辑文字</p>
+                </div>
+                <div class="fl item clear_text">
+                    <img src="/Public/Home/images/inco_xiangce_shanchu@2x.png" alt="">
+                    <p>清空文字</p>
+                </div>
+                <div class="fl item text_style">
+                    <img src="/Public/Home/images/inco_xiangce_yang@2x.png" alt="">
+                    <p>文字样式</p>
+                </div>
+            </div>
+            <div class="back">返回</div>
+            <div class="color_box">
+                <ul class="clearfix" id="colorpic">
+
+                </ul>
+            </div>
+        </div>
+
+        <!-- 底部对页面进行调整 -->
+        <div class="footer_sort">
+            <div class="clearfix">
+                <div class="fl insert_page">
+                    <img src="/Public/Home/images/inco_xiang_add@2x.png" alt="">
+                    <p>插入新页</p>
+                </div>
+                <div class="fl delpage">
+                    <img src="/Public/Home/images/inco_xiang_shna@2x.png" alt="">
+                    <p>删除本页</p>
+                </div>
+                <div class="fl">
+                    <a class="sort" href="/index.php?s=/Home/photo/photo_sort" style="display: block;color: #fff;width:100%;height: 100%;">
+                        <img src="/Public/Home/images/inco_xiang_xu@2x.png" alt="">
+                        <p>页面排序</p>
+                    </a>
+                </div>
+            </div>
+            <div class="re_back">返回</div>
+        </div>
+
+        <div class="mask">
+            <img src="/Public/Home/images/loadad.gif" alt="">
+            <p>图片上传中</p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+<script type="text/html" id="album_list">
+    {{each content_detail v i}}
+    <div class="swiper-slide" data-id="{{v.id}}">
+        <textarea class="addtext" id="addtext" placeholder="请输入文字200字以内"></textarea>
+        <button class="sure" id="sure">确定</button>
+        <img class="bgpic" src="{{v.img}}" alt="">
+        <div class="album_text touch" id="touchdiv" style="left:{{v.font_x}}px;top:{{v.font_y}}px">
+            <textarea class="edit_text" disabled style="color:{{v.font_color}};">{{v.content}}</textarea>
+        </div>
+    </div>
+    {{/each}}
+
+
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<!-- <script src="http://eruda.liriliri.io/eruda.min.js"></script>
+<script>
+    eruda.init();
+</script> -->
+<script>
+    $(function () {
+        $('body').height($('body')[0].clientHeight);
+
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationType: 'fraction',
+            observer: true, //修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true, //修改swiper的父元素时，自动初始化swiper
+            resistanceRatio: 0,
+
+            onSlideNextStart: function (swiper) {
+
+                var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                /*RGB颜色转换为16进制*/
+                String.prototype.colorHex = function () {
+                    var that = this;
+                    if (/^(rgb|RGB)/.test(that)) {
+                        var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                        var strHex = "#";
+                        for (var i = 0; i < aColor.length; i++) {
+                            var hex = Number(aColor[i]).toString(16);
+                            if (hex === "0") {
+                                hex += hex;
+                            }
+                            strHex += hex;
+                        }
+                        if (strHex.length !== 7) {
+                            strHex = that;
+                        }
+                        return strHex;
+                    } else if (reg.test(that)) {
+                        var aNum = that.replace(/#/, "").split("");
+                        if (aNum.length === 6) {
+                            return that;
+                        } else if (aNum.length === 3) {
+                            var numHex = "#";
+                            for (var i = 0; i < aNum.length; i += 1) {
+                                numHex += (aNum[i] + aNum[i]);
+                            }
+                            return numHex;
+                        }
+                    } else {
+                        return that;
+                    }
+                };
+                var textcolor = $(".swiper-slide-prev").find(".edit_text").css("color");
+                var newcolor = textcolor.colorHex(); //调用方转换成16进制颜色
+
+
+
+                var text = $(".swiper-slide-prev").find(".edit_text").val();
+                var content_id = $(".swiper-slide-prev").attr("data-id");
+                var imgsrc = $(".swiper-slide-prev").find(".bgpic").attr("src");
+
+                var top_y = $(".swiper-slide-prev .album_text").css("top");
+                var top_x = $(".swiper-slide-prev .album_text").css("left")
+                console.log(top_y)
+                console.log(top_x)
+
+
+                console.log(newcolor)
+                console.log(imgsrc)
+                // console.log(content_id)
+
+
+                $.ajax({
+                    type: "post",
+                    url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                    data: {
+                        unionid: userid,
+                        user_content_id: content_id,
+                        img: imgsrc,
+                        content: text,
+                        font_color: newcolor,
+                        font_x: top_x,
+                        font_y: top_y
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+            }
+        });
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+        var id = GetQueryString("id");
+        var cids = GetQueryString("cids");
+        var userid = '{$id}';
+        console.log(userid)
+        console.log(id)
+        console.log(cids)
+        var use;
+
+        // var typeid = GetQueryString("typeid");
+        // var musicid = GetQueryString("musicid");
+
+        // console.log(typeid)
+        // console.log(musicid)
+        //渲染颜色
+        var color = ["#fff", "#000", "#d54700", "#e54c00", "#ff5500", "#ff7632", "#ff9e6d", "#d58000",
+            "#e58900", "#ff9900",
+            "#ffad32", "#ffc56d", "#d5ab00", "#e5b700", "#ffcc00", "#ffd632", "#ffe26d", "#e4d300",
+            "#f4e300", "#f4e300", "#ffee11", "#fff246", "#fff686", "#abb91c", "#b7c71f", "#ccdd22",
+            "#d6e44d", "#e2ec81", "#72b331", "#7ac034", "#88cc44", "#a3d76e", "#c2e5a0", "#008072",
+            "#00897a", "#009988", "#00b7a3", "#00dbc2", "#009cb9", "#00a8c7", "#00bbdd", "#09d9ff",
+            "#3de1ff", "#2b399c", "#2e3da8", "#3344bb", "#4e5ecf", "#7986db", "#800e9c", "#890fa8",
+            "#9911bb", "#b714e0", "#c837ed", "#c70e55", "#d60f5c", "#ee1166", "#f13f84", "#f577a8",
+            "#f22500", "#ff2b05", "#ff4422", "#ff745a", "#ffad9e", "#393939", "#3d3d3d", "#444", "#515151",
+            "#616161", "#808080", "#898989", "#999999", "#b7b7b7", "#dbdbdb"
+        ]
+
+        var item = '';
+        $.each(color, function (k, v) {
+            item += ' <li style="background-color:' + v + '"></li>';
+        })
+        $("#colorpic").html(item);
+
+        //点击选择颜色
+        $("#colorpic").on("click", "li", function (e) {
+            e.stopPropagation();
+            var color = $(this).css("background-color");
+            $(".swiper-slide-active").find(".edit_text").css("color", "" + color + "");
+            $(".swiper-slide-active .addtext").css("color", "" + color + "");
+        })
+
+         
+        var model_id;
+        //渲染要修改的相册数据
+        $.ajax({
+            url: "index.php?s=/Api/IndexApi/get_album_list",
+            type: "post",
+            data: {
+                unionid: userid,
+                my_id: id
+            },
+
+            success: function (res) {
+                console.log(res)
+                use = res.AppendData.user_id;
+                model_id = res.AppendData.album_id
+
+
+                $(".swiper-items").html(template("album_list", res.AppendData));
+
+                var t_width = $(".swiper-container").width();
+                var t_height = $(".swiper-container").height();
+                window.sessionStorage.setItem('touchdiv', t_width);
+                window.sessionStorage.setItem('touchdiv_h',t_height)
+                var mt_x;
+                var mt_y;
+
+                var st_x = 0;
+                var st_y = 0;
+
+                var big_w = $(".bgpic").width();
+                var big_h = $(".swiper-items").height();
+
+
+                var touch_w = $(".touch").width(); //要拖动的div的宽度
+                var touch_h = $(".touch").height(); //长度
+
+
+                $(".swiper-wrapper .touch").on("touchmove", function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var touch = e.originalEvent.touches[0];
+                    mt_x = touch.pageX - touch_w / 2;
+                    mt_y = touch.pageY - touch_h / 1;
+
+                    if (mt_x < 0) {
+                        mt_x = 0;
+                    }
+
+                    if (mt_x >= big_w - touch_w) {
+                        mt_x = big_w - touch_w + "px"
+                    }
+
+                    if (mt_y < 0) {
+                        mt_y = 0;
+                    }
+
+                    if (mt_y >= big_h - touch_h) {
+                        mt_y = big_h - touch_h + "px"
+                    }
+
+
+                    $(this).css("left", "" + mt_x + "px");
+                    $(this).css("top", "" + mt_y + "px");
+
+
+                })
+
+                $(".sure").on("click", function () {
+                    var edit = $(".swiper-slide-active .addtext").val();
+                    console.log(edit.length)
+                    if (edit.length >= 250) {
+                        alert("请输入小于200字以内的文字")
+                        return false;
+                    } else {
+                        $(".swiper-slide-active .edit_text").val(edit);
+                        $(this).hide();
+                        $(".addtext").hide();
+                        $(".footer_edit").hide();
+                        $(".swiper-pagination").show();
+                        $(".footer").show();
+                        $(".page_management").show();
+
+                    }
+
+
+
+                })
+
+            }
+        })
+
+        //选择音乐
+        $("#check_music").on("click", function () {
+            $(this).attr("href", "/index.php?s=/Home/Photo/music/pid/" + use + "/sid/1&id=" + id +
+                "&cids=" + cids + "");
+        })
+
+
+        // 点击返回编辑框消失
+        $(".back").on("click", function () {
+            $(".footer_edit").hide();
+            $(".footer").show();
+            $(".page_management").show();
+            $(".share_boxlist").show();
+
+            $(".sure").hide();
+            $(".addtext").hide();
+            $(".swiper-pagination").show();
+        })
+
+        //点击排序插入消失
+        $(".re_back").on("click", function () {
+            $(".footer_sort").hide();
+            $(".page_management").show();
+            $(".footer").show();
+            $(".share_boxlist").show();
+        })
+
+
+        //管理页面的点击
+        $(".page_management").on("click", function (e) {
+            e.stopPropagation();
+            $(this).hide();
+            $(".share_boxlist").hide();
+            $(".footer").hide();
+            $(".footer_sort").show();
+
+        })
+
+
+        //管理页面的排序点击
+        window.onload = function () {
+            $(".sort").attr("href", "/index.php?s=/Home/photo/photo_sort&id=" + id + "&cids=" + cids + "");
+            $("#set").attr("href", "/index.php?s=/Home/Photo/share_msg&id=" + id + "&cids=" + cids + "");
+
+        }
+
+        //预览
+        $("#preview").on("click", function () {
+
+            var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+            /*RGB颜色转换为16进制*/
+            String.prototype.colorHex = function () {
+                var that = this;
+                if (/^(rgb|RGB)/.test(that)) {
+                    var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        var hex = Number(aColor[i]).toString(16);
+                        if (hex === "0") {
+                            hex += hex;
+                        }
+                        strHex += hex;
+                    }
+                    if (strHex.length !== 7) {
+                        strHex = that;
+                    }
+                    return strHex;
+                } else if (reg.test(that)) {
+                    var aNum = that.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return that;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return that;
+                }
+            };
+            var textcolor = $(".swiper-slide-active").find(".edit_text").css("color");
+            var newcolor = textcolor.colorHex(); //调用方转换成16进制颜色
+
+            var text = $(".swiper-slide-active").find(".edit_text").val();
+            var content_id = $(".swiper-slide-active").attr("data-id");
+            var imgsrc = $(".swiper-slide-active").find(".bgpic").attr("src");
+
+            var top_y = $(".swiper-slide-active .album_text").css("top");
+            var top_x = $(".swiper-slide-active .album_text").css("left")
+
+
+            console.log(newcolor)
+            console.log(content_id)
+            console.log(imgsrc)
+            console.log(text)
+
+
+
+            $.ajax({
+                type: "post",
+                url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                data: {
+                    unionid: userid,
+                    user_content_id: content_id,
+                    img: imgsrc,
+                    content: text,
+                    font_color: newcolor,
+                    font_x: top_x,
+                    font_y: top_y
+                },
+                success: function (res) {
+                    mui.toast("保存成功");
+                    top.location.href = "/index.php?s=/Home/Nologin/share_photo/id/" + id +
+                        "/mid/1/cids/" + cids + "/uid/" + userid + "";
+
+                }
+            })
+
+        })
+
+
+
+        //点击编辑
+        $(".swiper-wrapper").on("click", ".album_text", function (e) {
+            e.stopPropagation();
+            var text = $(this).find(".edit_text").val();
+            var color = $(this).find(".edit_text").css("color");
+            $(".swiper-slide-active .addtext").val(text).css("color", color);
+            $(".footer").hide();
+            $(".page_management").hide();
+            $(".footer_sort").hide();
+            $(".footer_edit").show();
+
+            $(".swiper-slide-active .sure").show();
+            $(".swiper-slide-active .addtext").show();
+            $(".swiper-pagination").hide();
+        })
+
+        $(".clear_text").on("click", function (e) {
+            e.stopPropagation();
+            $(".color_box").hide();
+            $(".footer_edit .back").show();
+            // $(".swiper-slide-active").find("textarea").val("");
+            $(".swiper-slide-active .addtext").val("");
+
+        })
+
+        //文字样式的点击
+        $(".text_style").on("click", function (e) {
+            e.stopPropagation();
+            console.log(111)
+            $(".footer_edit .back").hide();
+            $(".color_box").show();
+        })
+
+        //退出编辑
+        // $("#content").on("click",function(){
+        //     // console.log(1111)
+        //     $(".color_box").hide();
+        //     $(".footer_edit .back").show();
+        //     $(".page_management").show();
+        //     $(".footer").show();
+        //     $(".footer_edit").hide();
+        // })
+
+        //点击编辑文字
+        $(".edit_content").on("click", function (e) {
+            e.stopPropagation();
+            $(".color_box").hide();
+            $(".footer_edit .back").show();
+            $(".addtext").focus();
+            console.log(1111);
+        })
+
+
+        //点击上传本地的图片 
+        $("#up_dataimg").on("change", function () {
+            // var userid = '{$id}';
+            if (window.FileReader) {
+                var filepath = $(this).val();
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    var imgsrc = res.target.result;
+                    $.ajax({
+                        url: "index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: userid,
+                            img: imgsrc,
+                            start_name: "photo"
+                        },
+                        beforeSend: function () {
+                            $(".mask").show()
+                        },
+                        success: function (res) {
+                            $(".mask").hide();
+                            var srcaddres = res.AppendData
+                            console.log(res)
+                            $(".swiper-container .swiper-slide-active").find(".bgpic").attr(
+                                "src", srcaddres);
+
+                            var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+                            /*RGB颜色转换为16进制*/
+                            String.prototype.colorHex = function () {
+                                var that = this;
+                                if (/^(rgb|RGB)/.test(that)) {
+                                    var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g,
+                                        "").split(",");
+                                    var strHex = "#";
+                                    for (var i = 0; i < aColor.length; i++) {
+                                        var hex = Number(aColor[i]).toString(16);
+                                        if (hex === "0") {
+                                            hex += hex;
+                                        }
+                                        strHex += hex;
+                                    }
+                                    if (strHex.length !== 7) {
+                                        strHex = that;
+                                    }
+                                    return strHex;
+                                } else if (reg.test(that)) {
+                                    var aNum = that.replace(/#/, "").split("");
+                                    if (aNum.length === 6) {
+                                        return that;
+                                    } else if (aNum.length === 3) {
+                                        var numHex = "#";
+                                        for (var i = 0; i < aNum.length; i += 1) {
+                                            numHex += (aNum[i] + aNum[i]);
+                                        }
+                                        return numHex;
+                                    }
+                                } else {
+                                    return that;
+                                }
+                            };
+                            var textcolor = $(".swiper-slide-active").find(".edit_text")
+                                .css("color");
+                            var newcolor = textcolor.colorHex(); //调用方转换成16进制颜色
+
+                            var text = $(".swiper-slide-active").find(".edit_text").val();
+                            var content_id = $(".swiper-slide-active").attr("data-id");
+                            var imgsrc = $(".swiper-slide-active").find(".bgpic").attr(
+                                "src");
+
+                            var top_y = $(".swiper-slide-active .album_text").css("top");
+                            var top_x = $(".swiper-slide-active .album_text").css(
+                                "left")
+
+
+                            console.log(newcolor)
+                            console.log(content_id)
+                            console.log(imgsrc)
+                            console.log(text)
+
+
+
+                            $.ajax({
+                                type: "post",
+                                url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                                data: {
+                                    unionid: userid,
+                                    user_content_id: content_id,
+                                    img: imgsrc,
+                                    content: text,
+                                    font_color: newcolor,
+                                    font_x: top_x,
+                                    font_y: top_y
+                                },
+                                success: function (res) {
+                                    mui.toast("保存成功");
+                                }
+                            })
+
+                        },
+                        error: function () {
+                            alert("上传失败，请稍后重试");
+                            $(".mask").hide();
+                        }
+                    })
+
+                }
+
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+            }
+        })
+
+
+        // 删除本页
+        $(".delpage").on("click", function (e) {
+            e.stopPropagation();
+            var pageid = $(".swiper-slide-active").attr("data-id");
+            mui.confirm("提示", "是否删除", ["否", "是"], function (res) {
+                if (res.index == 1) {
+                    $(".swiper-slide-active").remove();
+                    $.ajax({
+                        type: "post",
+                        url: "index.php?s=/Api/IndexApi/del_user_album_detail",
+                        data: {
+                            unionid: userid,
+                            user_content_id: pageid
+                        },
+                        success: function (res) {
+                            console.log(res); 
+                            mui.toast("删除成功");
+                        },
+                        error: function (res) { 
+                            mui.toast("删除失败");
+                        }
+                    })
+                }
+            });
+
+        })
+
+        // 插入新页
+        $(".insert_page").on("click", function (e) {
+            e.stopPropagation();
+            if ($(".swiper-slide").length >= 9) {
+                mui.toast("最多添加9张相册哦")
+                return false;
+            } else {
+                myadd();
+            }
+
+        })
+
+         
+        function myadd() {                
+            var sid = '{$sid}';                
+            var mids = $("#mids").val();                
+            window.location.href = "index.php?s=/Home/Photo/all/&model_id=" + model_id + "&cids=" + cids +
+                "&id=" + id + "";            
+            // window.location.href = "index.php?s=/Home/Photo/all/&model_id=" + id + "&cids=" + cids + "&id="+id+"";            
+        }
+
+
+        // 保存
+        $(".look").on("click", function () {
+
+            var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+            /*RGB颜色转换为16进制*/
+            String.prototype.colorHex = function () {
+                var that = this;
+                if (/^(rgb|RGB)/.test(that)) {
+                    var aColor = that.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+                    var strHex = "#";
+                    for (var i = 0; i < aColor.length; i++) {
+                        var hex = Number(aColor[i]).toString(16);
+                        if (hex === "0") {
+                            hex += hex;
+                        }
+                        strHex += hex;
+                    }
+                    if (strHex.length !== 7) {
+                        strHex = that;
+                    }
+                    return strHex;
+                } else if (reg.test(that)) {
+                    var aNum = that.replace(/#/, "").split("");
+                    if (aNum.length === 6) {
+                        return that;
+                    } else if (aNum.length === 3) {
+                        var numHex = "#";
+                        for (var i = 0; i < aNum.length; i += 1) {
+                            numHex += (aNum[i] + aNum[i]);
+                        }
+                        return numHex;
+                    }
+                } else {
+                    return that;
+                }
+            };
+            var textcolor = $(".swiper-slide-active").find(".edit_text").css("color");
+            var newcolor = textcolor.colorHex(); //调用方转换成16进制颜色
+
+            var text = $(".swiper-slide-active").find(".edit_text").val();
+            var content_id = $(".swiper-slide-active").attr("data-id");
+            var imgsrc = $(".swiper-slide-active").find(".bgpic").attr("src");
+
+            var top_y = $(".swiper-slide-active .album_text").css("top");
+            var top_x = $(".swiper-slide-active .album_text").css("left")
+
+
+            console.log(newcolor)
+            console.log(content_id)
+            console.log(imgsrc)
+            console.log(text)
+
+
+
+            $.ajax({
+                type: "post",
+                url: "index.php?s=/Api/IndexApi/edit_user_album_content", //url 
+                data: {
+                    unionid: userid,
+                    user_content_id: content_id,
+                    img: imgsrc,
+                    content: text,
+                    font_color: newcolor,
+                    font_x: top_x,
+                    font_y: top_y
+                },
+                success: function (res) {
+                    mui.toast("保存成功");
+                    top.location.href = "/index.php?s=/Home/Nologin/share_photo/id/" + id +
+                        "/mid/1/cids/" + cids + "/uid/" + userid + "";
+                    console.log(res)
+                }
+            })
+
+
+
+        })
+
+
+        //解决键盘弹起影响布局
+        var h = $(window).height();
+        $(window).resize(function () {
+            if ($(window).height() < h) {
+                $('.footer_edit').hide(); //定位的元素隐藏
+            }
+            if ($(window).height() >= h) {
+                $('.footer_edit').show(); //定位的元素显示
+            }
+        });
+
+
+
+
+    })
+</script>

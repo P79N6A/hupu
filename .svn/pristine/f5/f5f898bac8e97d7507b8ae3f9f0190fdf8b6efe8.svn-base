@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<title>拍照上传</title>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/photograph.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/Sortableone.js"></script>
+		<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+		<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+		<script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+	</head>
+
+	<body>
+		<div class="top">为了确保您本人信息，请上传一张真实露脸照</div>
+		<div class="cen">
+			<div class="cen_left">
+				<img src="__HOME_IMAGES__/icon_left@2x.png" alt="" />
+			</div>
+			<div class="cen_right">
+				<img src="__HOME_IMAGES__/icon_right@2x.png" alt="" />
+			</div>
+			<div class="cen_down">
+				<img src="__HOME_IMAGES__/icon_down@2x.png" alt="" />
+			</div>
+			<div class="cen_bot">
+				<img src="__HOME_IMAGES__/icon_you@2x.png" alt="" />
+			</div>
+			<div class="cen_photo">
+				<div class="cen_img">
+					<img id="head" src="__HOME_IMAGES__/photos.png" alt="" />
+					<input type="file" id="file" class="file1" name="file1" style="display: none;" accept="image/*" />
+				</div>
+				<div class="tit">
+					点击上传
+				</div>
+			</div>
+		</div>
+		<div class="affirm">下一步</div>
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel" style="padding:0">取消</button>
+				<button id="clipBtn" style="padding:0">截取</button>
+			</div>
+		</div>
+		<div class="mask">
+			<img src="/Public/Home/images/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<script>
+			var num = 1;
+			var id = '{$unionid}';
+			var isok=true;
+			var clipArea = new PhotoClip("#clipArea", {
+				size: [516, 516],
+				outputSize: [640, 640],
+				file: "#file",
+				ok: "#clipBtn",
+				loadStart: function() {
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					$('.gif').hide();
+				},
+				done: function(dataURL) {
+					var numid = '{$nameid}';
+					$('.gif').hide();
+					var img = document.getElementById("head");
+					//图片路径设置为读取的图片
+					var id = '{$unionid}';
+					//图片路径设置为读取的图片
+					// console.log("id==>"+id)
+					// console.log(dataURL)
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/uploads_img", //url
+						data: {
+							unionid: id,
+							img: dataURL,
+							start_name: 'activity'
+						},
+						beforeSend: function() {
+							$(".mask").show();
+						},
+						success: function(result) {
+							$(".mask").hide();
+							if(result.ResultType == 0) {
+								img.src = result.AppendData;
+								$('#file').attr('value', result.AppendData);
+								$(".affirm").css("background", "#2fb3d3");
+								$(".tit").html("点击修改")
+								$(".affirm").click(function() {
+									
+									$.ajax({
+										//几个参数需要注意一下
+										type: "POST", //方法类型
+										dataType: "json", //预期服务器返回的数据类型
+										url: "http://py.yxm360.com/index.php?s=/Api/ActivityCheck/save_topimg_and_insert_qr", //url
+										// http://py.yxm360.com/index.php?s=/Api/ActivityCheck/save_topimg_and_insert_qr
+										data: {
+											useruuid: numid,
+											usertopimgurl:result.AppendData,
+										},
+										beforeSend: function() {
+											$(".mask").show();
+											$(".mask>p").html("参会证生成中")
+										},
+										success: function(res) {
+											if(res.ResultType==0||res.AppendData==1){
+												isok=false;
+												$(".mask").hide();
+
+												window.location.href = "/index.php?s=Home/conference/card.html&nameid=" + numid + "";
+                                             //   $.cookie('type',"3", { expires: 7 });
+											}else{
+												isok=true;
+											}
+										},
+										error: function() {
+                                            window.location.href = "/index.php?s=Home/conference/card.html&nameid=" + numid + "";
+                                           // $.cookie('type',"3", { expires: 7 });
+
+										}
+									})
+
+									
+								})
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					})
+
+					//					img.src = dataURL;
+					//					$('#file').attr('value', img.src);
+					//					$(".affirm").css("background","#2fb3d3");
+					//					$(".tit").html("点击修改")
+					//					$(".affirm").click(function(){
+					//						window.location.href="{:U('Home/conference/card')}";
+					//					})
+
+				}
+			})
+
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+			})
+
+			$("#head").on("click", function() {
+				$(".clip").show();
+				$("#file").click();
+			})
+		</script>
+	</body>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮hideOptionMenu
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+	</script>
+</html>

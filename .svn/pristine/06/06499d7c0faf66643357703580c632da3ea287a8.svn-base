@@ -1,0 +1,85 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <style>
+        .feedback .row{background: #999;}
+        .feedback .image-item .image-up{border-color: #fff;  color: #fff!important;}
+    </style>
+</block>
+
+<block name="body">
+    <body class="zzc_body_bg">
+    <div class="mui-content zzc_mui_content_bg" style="margin-top: 60px;">
+        <form action="" method="post">
+            <input type="hidden" name="user_id" value="{$Think.get.user_id}">
+            <volist name="fee" id="r" key="k">
+                <div class="zzc_huiyuanchongzhi_li mui-radio " >
+                    <span id="money" data-money="{$r.fee}">￥{$r.fee}</span>
+                    {$r.msg}
+                    <input name="day" value="{$r.day}" type="radio" <if condition="$k==1">checked</if> >
+                </div>
+            </volist>
+            
+            <div style="padding:10px 5%">支付方式:</div>
+            <div class="zzc_huiyuanchongzhi_li mui-radio ">
+                <span class="mui-icon mui-icon-weixin" style="color: #2AC845;"></span>
+                微信支付
+                <input name="pay_type" value="1" type="radio" checked>
+            </div>
+            <div class="myguanggao_bottom">
+                <if condition="($day['day'] ELT 31) || ($is_pay eq 1)">
+                    <input type="button" name="" onclick="pay()" id="submit" value="确定支付" />
+                <else/>
+                    <input type="button" name="" value="会员还未到期" />
+                </if>
+
+            </div>
+        </form>
+    </div>
+    </body>
+
+</block>
+
+<block name="js_extend">
+<script type="text/javascript">
+    function pay(){
+        var day=$("input[name=day]:checked").val();
+        var data={
+            'day':day,
+            'price':$("#money").attr("data-money")
+        };
+        $.post("{:U('Home/Capital/recharges')}",data,function(res){
+            jsApiCall(res.data);
+        });
+    }
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            {
+               "appId":data.appId,     //公众号名称，由商户传入     
+               "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数     
+               "nonceStr":data.nonceStr, //随机串     
+               "package":data.package,     
+               "signType":data.signType,         //微信签名方式：     
+               "paySign":data.paySign //微信签名 
+            },
+            function(res){
+                WeixinJSBridge.log(res.err_msg);
+                if(res.err_msg=='get_brand_wcpay_request:ok'){
+                	top.location.href="{:U('Home/User/usercenter')}";
+                }
+            }
+        );
+    }
+
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 通过下面这个API隐藏右上角按钮hideOptionMenu
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>
+</block>

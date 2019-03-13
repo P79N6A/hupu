@@ -1,0 +1,438 @@
+<extend name="./base" />
+<block name="css_extend">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <script src="/Public/Home/js/rem.js"></script>
+        <title>添加活动</title>
+    </head>
+    <style>
+        body {
+            background: #faf9f9;
+        }
+
+        .contert {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .liuss {
+            width: 100%;
+            height: 12rem;
+            background: linear-gradient(to top right, #54DCE9 100%, #2AB7CF 0%);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .input[type=button],
+        .input[type=file] {
+            width: 37%;
+            height: 2rem;
+            line-height: 1rem;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            -webkit-transition-duration: .2s;
+            transition-duration: .2s;
+            text-align: right;
+            color: #fff;
+            border: none !important;
+            border-radius: 2rem;
+            position: fixed;
+            z-index: 1;
+            left: 60%;
+            top: 25%;
+            background: #2AB7CF;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        #picture {
+            width: 100%;
+            height: 2rem;
+            background: #0505053d;
+            border-radius: 2rem;
+            line-height: 2rem;
+        }
+
+        .add_parameter {
+            color: #fff;
+            height: 1rem;
+            width: 1rem;
+            line-height: 1rem;
+            border-radius: 50%;
+            margin: 0.2rem auto;
+            background:url(/Public/Home/images/tianj.png);
+            text-align: center;
+            font-size: 1rem;
+            background-size: 100% 100%;
+        }
+
+        .add_parter {
+            color: #fff;
+            height: 1rem;
+            width: 100%;
+            /* background-color: #D8D8D8; */
+            text-align: center;
+            font-size: 1rem;
+            position: absolute;
+            bottom: -21px;
+        }
+
+        .zanku {
+            width: 100%;
+            height: 60px;
+            color: #999;
+            background: #fff;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        input[type=text] {
+            line-height: 2rem;
+            width: 100%;
+            height: 2rem;
+            margin-bottom: 2rem;
+            padding: 2rem 1rem;
+            font-size: 1rem;
+            -webkit-user-select: text;
+            border: none !important;
+            border-radius: none !important;
+            outline: 0;
+            color: #fff;
+            background: transparent;
+            -webkit-appearance: none;
+        }
+
+        .tana {
+            width: 5rem;
+            height: 5rem;
+            padding: 0.5rem;
+        }
+
+        .rjtext {
+            color: #fff;
+        }
+
+        .cooker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: url(/Public/Home/images/inco_neirong_de.png);
+            position: absolute;
+            float: right;
+            right: 5px;
+            top: 5px;
+            background-size: 100% 100%;
+        }
+
+        .cooker img {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .rjlwmen {
+            width: 100%;
+            height: 3rem;
+            background: #2AB7CF;
+            bottom: 0;
+            position: fixed;
+        }
+
+        .mzy {
+            background: #0000003b;
+            color: #fff;
+            width: 5rem;
+            font-size: 15px;
+            height: 2rem;
+            line-height: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .zzc_blue_bg {
+            background: #fff !important;
+            color: #000 !important;
+        }
+
+        .rjl_myruanwen_bottom_button {
+            background: #2AB7CF !important;
+            color: #fff !important;
+            width: 50%;
+            height: 3.5rem;
+            line-height: 3rem;
+            font-size: 2rem;
+        }
+
+        .loz input {
+            width: 100%;
+            height: 1rem;
+        }
+
+        .boianji {
+            width: 95%;
+            height: 50px !important;
+            border: none;
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: auto !important;
+            resize: none !important;
+        }
+
+        .chuan {
+            width: 100%;
+            height: 1rem;
+        }
+
+        .loz {
+            width: 5rem;
+            height: 1.45rem;
+            position: absolute;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 1rem;
+            text-align: center;
+            line-height: 1.45rem;
+            color: #fff;
+            bottom: 12px;
+            right: 22px;
+
+        }
+
+        .loz .contentt {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .loz img {
+            width: 20%;
+            height: 50%;
+            top: 7px;
+            left: 9px;
+            position: absolute;
+        }
+
+        .contentt span {
+            font-size: .55rem;
+            right: 10px;
+            position: absolute;
+        }
+
+        #picture {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        .haed {
+            position: absolute;
+            background: none;
+            width: 80%;
+            height: 3.5rem;
+            top: 10px;
+            line-height: 3.5rem;
+        }
+
+        .shux {
+            width: 5rem;
+            height: 4.2rem !important;
+            margin: 0 -0.9rem;
+            border: none;
+            position: absolute;
+            left: 0px;
+            top: 5px;
+            padding: 0.6rem 1.5rem;
+        }
+
+        .add_pater {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #D8D8D8;
+        }
+
+        /* 开始 */
+
+        .add_box {
+            padding-bottom: 4.5rem;
+        }
+
+        .yuc {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .yulan {
+            font-size: 15px;
+            border: none !important;
+            height: 60px;
+            color: #fff !important;
+            background: #2AB7CF !important;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        a:active {
+            color: #fff;
+        }
+    </style>
+</block>
+<block name="body">
+
+    <body>
+        <div class="contert">
+            <div class="liuss">
+                <img src="" alt="" class="yuc">
+                <div class="haed">
+                    <input class="rjtext" id="text" type="text" placeholder="稿件征集活动" value="" />
+                </div>
+            </div>
+
+            <div class="add_box">
+                <div class="add_parameter"></div>
+            </div>
+
+            <div class="zzc_myranwen_bottom">
+                <input type="button" name="取消" value="取消" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="javascript:window.location.href='/index.php?s=/Home/Activity/Addactivity.html'">
+                <div class="yulan">
+                    <a href="/index.php?s=/Home/Activity/Preform.html">预览</a>
+                </div>
+                <!-- /index.php?s=/Home/Activity/Preform.html javascript:;-->
+            </div>
+        </div>
+
+        <script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            function GetQueryString(name) {
+                if (window.location.href.indexOf('?') > -1) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                    var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                    if (r != null) return unescape(r[2]);
+                }
+                return ''; //便于容错处理
+            }
+            var Renid = GetQueryString("Renid");
+            console.log(Renid)
+            var titlearr = [];
+
+
+            $('.yulan').on('click', function () {
+                // 未填参数 不可跳转
+                if ($(".boianji").val() == '') {
+                    mui.alert("请输入完整信息");
+                    return false;
+                }
+
+                $(".boianji").each(function (i, e) {
+                    titlearr.push($(e).val());
+                })
+
+
+                console.log(titlearr);
+                $.ajax({
+                    type: 'post',
+                    url: "index.php?s=/Api/SignUpApi/sign_up_detail",
+                    data: {
+                        unionid: user_id,
+                        sign_id: Renid,
+                        title: titlearr,
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        location.href = '/index.php?s=/Home/Activity/Preform.html&Renid=' + Renid +
+                            '';
+                    },
+                    error: function () {
+                        alert("异常！");
+                    }
+                })
+            })
+
+
+
+            var length = 10;
+            var user_id = '{$unionid}';
+
+            $.ajax({
+                type: 'post',
+                url: "index.php?s=/Api/SignUpApi/sign_detail",
+                data: {
+                    unionid: user_id,
+                    start: 0,
+                    length: length,
+                    sign_id: Renid,
+                },
+                success: function (res) {
+                    console.log(res)
+                    var deren = res.AppendData;
+                    console.log(deren)
+                    var list = '';
+                    list += '<div class="liuss">'
+                    list += '<img src="' + res.AppendData.cover_img + '" alt="" class="yuc">'
+                    list += '<div class="haed">'
+                    list += '<input class="rjtext" id="text" type="text" placeholder="' + res.AppendData.title +
+                        '" value="" />'
+                    list += '</div>'
+                    list += '</div>'
+
+                    $(".liuss").html(list);
+                },
+
+                error: function () {
+                    mui.alert("异常！")
+                },
+            })
+
+
+
+            var downing;
+            var user_id = '{$unionid}';
+            var imgsrc;
+
+
+            $(function () {
+
+                $('.add_box').on("click", ".add_parameter", function () {
+                    if ($(".zanku").length >= 5) {
+                        mui.alert("最多添加5个")
+                        return false;
+                    } else {
+                        $('.add_box').append(
+                            '<div class="zanku">' +
+                            '<textarea placeholder="请添加报名参数" class="boianji" rows="5" maxlength="100"></textarea>' +
+                            '<div class="cooker">' +
+                            '</div>' +
+                            '<div class="add_parter">' +
+                            '<div class="add_parameter"></div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    }
+                });
+            });
+
+            $(".add_box").on("click", ".cooker", function () {
+                $(this).parent().remove();
+            });
+        </script>
+    </body>
+</block>

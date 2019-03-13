@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/animate.min.css">
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>相册预览</title>
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+        }
+        @keyframes down {
+            0% {
+                transform: translateY(0px);
+            }
+
+            25% {
+                transform: translateY(-5px);
+            }
+
+            35% {
+                transform: translateY(-7px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            75% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(-15px)
+            }
+            
+        }
+
+        .up {
+            width: 25px;
+            height: auto;
+            position: fixed;
+            z-index: 2;
+            bottom: 25px;
+            left: 50%;
+            margin-left: -12.5px;
+            animation: down 0.8s infinite linear;
+        }
+
+        .up img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .swiper-slide {
+            background-size: 100% 100% !important;
+            height: 100%;
+            position: relative;
+        }
+
+        .edit {
+            width: 2.7rem;
+            position: absolute;
+            display: none;
+
+        }
+
+        .swiper-container{
+            width: 100%;
+            height: 100%;
+        }
+
+        .music_box{
+            width: .55rem;
+            height:.55rem;
+            position: fixed;
+            top: .1rem;
+            right: .1rem;
+            z-index: 555;
+        }
+
+          .music_box img{
+              width: 100%;
+              height: 100%;
+          }
+
+
+            .tip{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: none;
+        }
+        .mask{
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none ;
+            
+        }
+
+      
+    </style>
+</head>
+
+<body>
+    <div class="up" style="display: block;">
+        <img src="/Public/Home/images/uptouch.png" alt="">
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- <div class="swiper-slide">
+
+            </div> -->
+        </div>
+    </div>
+    <audio id="audio" src=""></audio>
+    <!-- 音乐播放 -->
+    <div class="music_box">
+        <img src="/Public/Home/images/wh/preview_icon_music@2x.png" alt="">
+    </div>
+
+    <div class="mask">
+        <img class="tip" src="/Public/Home/images/wh/tip.png" alt="">
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+
+    
+
+        var edit ='{$modify}';  //地址栏取的
+
+        var tips = '{$share}'  //判断是是否提示
+
+        if(tips == 1){
+            $('.mask').show();
+            $('.mask').find('img').show();
+        }
+
+        $('.mask').on('click',function(){
+            $(this).hide();
+            $('.mask').find('img').hide();
+        })
+        var preview_id ='{$preview}';
+
+        var uid = '{$uid}';
+
+        var id = '{$id}'
+
+        console.log(edit)
+        console.log(preview_id)
+        var formdata = new FormData();
+
+        var url_modify;
+        if (edit == 0) {
+            url_modify = 'index.php?s=/Api/IndexApi/get_album_list'; //模板的预览
+            formdata.append('id', id);
+            formdata.append('model_id', preview_id);
+            preview(formdata,url_modify)
+        }else{
+            url_modify = 'index.php?s=/Api/IndexApi/get_album_list'; //编辑过后的
+            formdata.append('unionid', uid);
+            formdata.append('my_id', preview_id);
+             preview(formdata,url_modify)
+        }
+
+        // 音乐播放
+        $('.music_box').on('click',function(){
+            $(this).toggleClass('play');
+            if($(this).hasClass('play')){
+                var audio = document.getElementById('audio');
+                $(this).find('img').attr('src','/Public/Home/images/wh/preview_icon_music_shut@2x.png')
+                audio.pause()
+            }else{
+                var audio = document.getElementById('audio');
+                $(this).find('img').attr('src','/Public/Home/images/wh/preview_icon_music@2x.png')
+                audio.play()
+            }
+        })
+
+
+
+
+
+     
+
+        
+        function preview(formview, url_view) {
+            $.ajax({
+                url: url_view,
+                type: 'post',
+                data: formview,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res)
+                    var data = res.AppendData;
+                    if (res.ResultType == 0) {
+                        // if (edit == 0) {
+                            $('#audio').attr('src',data.music_url);
+
+                            var showphoto = '';
+                            var big_w  = $(document).width();
+                            var big_h  = $(document).height();
+                            $.each(data.content_detail, function (k, v) {
+                                  var bili_w = big_w/v.edit_width;
+                                  var bili_h  =big_h/v.edit_height;
+                                showphoto += '<div class="swiper-slide item' + k + '" style="background:url(' + v.img + ') no-repeat">'
+                                showphoto += '<div class="edit animated" style="color:' + v .font_color + ';font-size:0.16rem;transform: scale('+v.font_zoom+') rotate('+v.font_angle+'deg) translateZ(0px) !important;" data-deg='+v.font_angle+' data-zoom='+v.font_zoom+'  data-x="' + v.font_x * bili_w +'"data-y="' + v.font_y * bili_h + '" > ' + v.content + '</div>'
+                                showphoto += '</div>'
+
+                            })
+                            $('.swiper-wrapper').html(showphoto);
+
+                            function randomnum() {
+                                var arr = ['rotateIn', 'flip', 'bounceInDown', 'bounce', 'zoomIn',
+                                    'jackInTheBox', 'flipInX',
+                                    'rubberBand', 'swing', 'tada', 'slideInUp', 'slideInDown',
+                                    'zoomInDown', 'fadeInDown',
+                                    'rotateInDownLeft', 'rotateInUpRight', 'lightSpeedIn'
+                                ];
+                                // var arr = ['zoomIn','flash','fadeIn'];
+                                var random = Math.floor(Math.random() * arr.length + 1) - 1;
+                                return arr[random];
+
+                            }
+
+
+                            var mySwiper = new Swiper('.swiper-container', {
+                                     direction : 'vertical',
+                                     observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                                     observeParents:false,//修改swiper的父元素时，自动初始化swiper
+                                     resistanceRatio : 0,
+                                     onInit: function(swiper){
+                                        var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                        var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                        $('.swiper-slide-active').find('.edit').fadeIn(500).animate({
+                                            top:y,
+                                            left:x
+                                        },800)
+                                        
+
+                                    },
+                                     onSlideNextEnd: function(swiper){  //下一页
+                                        var randomClass = randomnum();
+                                        var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                        var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                        var deg = $('.swiper-slide-active').find('.edit').attr('data-deg')
+                                        var zoom = $('.swiper-slide-active').find('.edit').attr('data-zoom')
+                                        $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(randomClass).animate({
+                                            top:y,
+                                            left:x
+                                        },800)
+
+                                        // $('.swiper-slide-prev').find('.edit').removeClass().addClass('edit animated').css({
+                                        // 'display':'none',
+                                        // 'left':'-100px'
+                                        // });
+
+                                        var len = $('.swiper-slide').length - 1;
+                                        if ($('.swiper-slide-active').index() == len) {
+                                             $('.up').hide()
+                                        } else {
+                                             $('.up').show()
+                                        }
+                                    },
+                                    onSlidePrevEnd: function(swiper){
+                                        var randomClass = randomnum();
+                                        var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                        var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                        $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(randomClass).animate({
+                                            top:y,
+                                            left:x
+                                        },800)
+                                        // $('.swiper-slide-next').find('.edit').removeClass().addClass('edit animated').css({
+                                        // 'display':'none',
+                                        // 'right':'-100px'
+                                        // });
+                                   
+
+                                        var len = $('.swiper-slide').length - 1;
+                                         if ($('.swiper-slide-active').index() == len) {
+                                             $('.up').hide()
+                                        } else {
+                                             $('.up').show()
+                                        }
+                                    }
+
+                            })
+
+
+
+
+                        // }
+
+                            //微信自动加载完  audio 自动播放
+                            document.addEventListener('DOMContentLoaded', function () {
+                                function audioAutoPlay() {
+                                    bofang = document.getElementById('audio');
+                                    bofang.play();
+                                    document.addEventListener("WeixinJSBridgeReady", function () {
+                                        bofang.play();
+                                    }, false);
+                                }
+                                audioAutoPlay();
+                            });
+
+                    }
+                }
+
+            })
+        }
+
+
+          document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮hideOptionMenu
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+
+    })
+</script>

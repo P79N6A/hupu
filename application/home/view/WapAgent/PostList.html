@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>自助问题查询</title>
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <script src="__AGENCY__/wap/public.js"></script>
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .mint-cell .mint-cell-wrapper{
+            background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 0%, transparent 0%);
+            background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 0%, transparent 0%)
+            }
+        ul,li{ padding:0;margin:0;list-style:none}
+        .popup3{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        .serachbnt button{width: 40%;margin-left: 5%;margin-top: 10px}
+        .serachdata input{background: #fff}
+        .mint-header{background-color: #1f6f9e;}
+</style>
+</head>
+
+
+<body>
+<div id="app">
+    <mt-header title="问题列表">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button  slot="right" @click="popupVisible=true">刷选</mt-button>
+    </mt-header>
+    <!--刷选-->
+    <div>
+
+        <mt-popup v-model="popupVisible" position="right" pop-transition="popup-fade" modal="false" class="popup3">
+            <div class="serachdata">
+                <p>时间段查询</p>
+                <mt-field label="开始时间" placeholder="请输入录入时间" type="date" v-model="serachpojo.starttime"></mt-field>
+                <mt-field label="终止时间" placeholder="请输入终止时间" type="date" v-model="serachpojo.endtime"></mt-field>
+
+                <p>标题模糊查询</p>
+                <mt-field label="标题" placeholder="请输入标题" v-model="serachpojo.ptitie"></mt-field>
+                <p>描述模糊查询</p>
+                <mt-field label="描述" placeholder="请输入描述" v-model="serachpojo.pdis"></mt-field>
+                <p>内容模糊查询</p>
+                <mt-field label="内容" placeholder="请输入内容" v-model="serachpojo.psolve"></mt-field>
+            </div>
+            <div class="serachbnt">
+
+                <mt-button type="default" @click="popupVisible=false">取消</mt-button>
+                <mt-button type="primary" @click="serachs">查询</mt-button>
+            </div>
+
+        </mt-popup>
+
+    </div>
+    <div>
+
+        <ul v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+            <li v-for="(item,index) in tableData">
+                <mt-cell :title="item.ptitie" ></mt-cell>
+                <mt-cell title="创建时间" :value="item.createtime"></mt-cell>
+                <mt-cell-swipe
+                        title="录入客服名"
+                        :value="item.bcname + '<<'"
+                        :right="[
+    {
+      content: '详情',
+      style: { background: 'lightgray', color: '#fff' },
+      handler: () => showx(item.pid)
+    },
+     {
+      content: '问题补充',
+      style: { background: 'red', color: '#fff' },
+      handler: () => showb(item.pid)
+    }
+  ]">
+
+                </mt-cell-swipe>
+            </li>
+            <li class="more_loading" v-show="!queryLoading" style="text-align: center;font-size: 12px;margin-top: 10px">
+
+                <mt-spinner type="triple-bounce" color="#00ccff" :size="40" v-show="moreLoading&&!allLoaded"></mt-spinner>
+
+                <span v-show="allLoaded">----我也是有底线的----</span>
+                <span v-show="!allLoaded">加载中...</span>
+            </li>
+
+        </ul>
+        <!--http://localhost:801/index.php?s=/Home/Customer/receptionlist.html-->
+    </div>
+</div>
+<script type="text/javascript">
+
+    new Vue({
+        el: "#app",
+        data: {
+            popupVisible:false,
+            //动态数据
+            //动态数据
+            allLoaded:false,
+            //是否显示提示
+            queryLoading:false,
+            //显示加载特效
+            moreLoading:false,
+
+            dataallLoaded:false,
+
+            tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            pojo:{
+                pid:'',
+                ptitie:'',
+                pdis:'',
+                psolve:'',
+                customer_id:'',
+                createtime:''
+            },
+            paylist: [],
+            loading: false,
+            serachpojo:{
+                starttime:'',
+                endtime:'',
+                ptitie:'',
+                pdis:'',
+                psolve:''
+            },
+            isserach:false,
+
+
+
+
+        },
+        methods: {
+            showx:function(id){
+                console.log(id)
+                var t=this;
+                window.location.href="/index.php?s=/Home/Customer/question.html&postid="+id;
+                // t.$toast('功能开通中');postid
+            },
+            showb:function(id){
+                // console.log(id)
+                window.location.href="/index.php?s=/Home/Customer/postsone.html&pid="+id;
+            },
+            loadBottom:function() {
+
+                var t=this;
+                t.postTableData();
+            },
+            serachs:function(){
+                var t=this;
+                t.allLoaded=false;
+                //是否显示提示
+                t.queryLoading=false;
+                //显示加载特效
+                t.moreLoading=false;
+
+                t.dataallLoaded=false;
+                t.isserach=true;
+                t.popupVisible=false;
+                t.n=1;
+                t.postTableData();
+            },
+            postTableData: function() {
+                var _this = this;
+                if(_this.dataallLoaded){
+                    _this.moreLoading = true;
+                    return;
+                }
+                if(_this.allLoaded){
+                    return;
+                }
+                _this.moreLoading = !_this.allLoaded;
+                $.ajax({
+                    type: "POST",
+                    url: '{:url("/Api/CustomerService/f_posts")}',
+                    data: {
+                        n: _this.n,
+                        pdis:_this.serachpojo.pdis,
+                        psolve:_this.serachpojo.psolve,
+                        ptitie:_this.serachpojo.ptitie,
+                        ismy:_this.serachpojo.ismy
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        var data = res.AppendData;
+                        console.log(res)
+                        var c= _this.tableData;
+                        if(_this.isserach){
+                            _this.tableData = data.list;
+                            _this.isserach=false;
+                        }else{
+                            for( var i in data.list){
+                                c.push(data.list[i]);
+                            }
+                            _this.tableData = c;
+                        }
+
+                        if(data.list.length<10){
+                            _this.allLoaded=true;
+                        }else{
+                            _this.n= _this.n+1;
+                            _this.allLoaded=false;
+                        }
+
+                    },
+                    error: function() {}
+                })
+            },
+
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+            t.postTableData();
+        },
+
+    })
+</script>
+</body>
+
+</html>

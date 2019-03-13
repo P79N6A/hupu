@@ -1,0 +1,84 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+
+    <link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+    <script src="__HOME_CSS__/bs3/sea.js"></script>
+    <script src="http://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+    <style>
+    	.zzc_tixian_li_div{
+    		height: 70px;
+    	}
+    	.not{
+    		padding: 25px 10%;
+    	}
+    </style>
+</block>
+
+<block name="body">
+    <body class="zzc_body_bg">
+        <div class="mui-content zzc_mui_content_bg">
+
+            <div class="zzc_tixian_li_div">
+                <div class="zzc_tixian_li">剩余  <br/><span class="zzc_ico_phone">{$user.money}</span></div>
+                <div class="zzc_tixian_li"><a href="{:U('Home/Capital/change')}" class="zzc_tixian_submit">申请兑换</a></div>
+            </div>
+            <div class="zzc_tixian_li_div">
+                <div class="zzc_tixian_li">兑换中  <br/><span class="zzc_ico_phone">{$user.frozen_money}</span></div>
+                <div class="zzc_tixian_li"><a href="{:U('Home/Capital/carryLog/get_type/2')}" class="zzc_tixian_submit">兑换纪录</a></div>
+            </div>
+            <div class="zzc_tixian_li_div">
+            <div class="zzc_tixian_li">已兑换  <br/><span class="zzc_ico_phone">{$user.already_money}</span></div>
+            <div class="zzc_tixian_li"><a href="{:U('Home/Capital/carryLog/get_type/1')}" class="zzc_tixian_submit">兑换记录</a></div>
+        </div>
+            <div class="zzc_tixian_li_div">
+                <div class="zzc_tixian_li not">未通过 </div>
+                <div class="zzc_tixian_li"><a href="{:U('Home/Capital/carryLog/get_type/3')}" class="zzc_tixian_submit">拒绝记录</a></div>
+            </div>
+            <!--<div class="myguanggao_li zzc_tixian_button">自动提现-->
+                <!--<div class="mui-switch  mui-active muguanggao_but">-->
+                    <!--<div class="mui-switch-handle"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script type="text/javascript">
+        function zzc_dialog_title(){
+            BUI.use('bui/overlay',function(overlay){
+                BUI.Message.Show({
+                    title : '提示',
+                    msg : '切换成功?',
+                    icon : 'question',
+                    buttons : [
+                        {
+                            text:'取消',
+                            elCls : 'button',
+                            handler : function(){
+                                this.close();
+                            }
+                        },
+                        {
+                            text:'确定',
+                            elCls : 'button button-primary',
+                            handler : function(){
+                                this.close();
+                            }
+                        }
+                    ]
+                });
+                show();
+            });
+        }
+    </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

@@ -1,0 +1,114 @@
+<?php
+
+namespace app\admin\model;
+
+use think\Model;
+
+class AdminUser extends Model
+{
+
+    protected $pk = 'user_id';
+
+    public function role()
+    {
+        return $this->belongsTo("role","user_id");
+    }
+    
+    /**
+     * 根据搜索条件获取用户列表信息
+     */
+    public function getMemberByWhere($map, $Nowpage, $limits)
+    {
+        return $this->where($map)->order('user_id desc')
+            ->page($Nowpage, $limits)
+            ->select();
+    }
+
+    /**
+     * 根据搜索条件获取所有的用户数量
+     * @param $where
+     */
+    public function getAllCountByWhere($map)
+    {
+        return $this->where($map)->count();
+    }
+
+    /**
+     * 根据id获取会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOneMember($id)
+    {
+        return $this->where('manid', $id)->find();
+    }
+
+    /**
+     * 根据条件获取单条会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOnesMember($map)
+    {
+        return $this->where($map)->find();
+    }
+
+
+    /**
+     * 插入信息
+     */
+    public function insertMember($param)
+    {
+        try {
+            $result = $this->allowField(true)->save($param);
+            if (false === $result) {
+                return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
+            } else {
+                return ['code' => 1, 'data' => '', 'msg' => '添加成功'];
+            }
+        } catch (\Exception $e) {
+            return ['code' => -1, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+    /**
+     * 编辑信息
+     * @param $param
+     */
+    public function editMember($param)
+    {
+        try {
+//            allowField 过滤post数组中的非数据表字段数据
+//            $result = $this->validate('MemberValidate')->allowField(true)->save($param, ['manid' => $param['id']]);
+            $result = $this->allowField(true)->save($param, ['user_id' => $param['id']]);
+
+
+            if (false === $result) {
+                return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
+            } else {
+                return ['code' => 1, 'data' => '', 'msg' => '编辑成功'];
+            }
+        } catch (\Exception $e) {
+            return ['code' => -1, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * 删除会员信息
+     * @param $id
+     * @return array
+     */
+    public function delMember($id)
+    {
+        try {
+            $map['del'] = 1;
+            $this->save($map, ['user_id' => $id]);
+            return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
+        } catch (\Exception $e) {
+            return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+}

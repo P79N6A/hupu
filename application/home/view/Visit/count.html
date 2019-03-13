@@ -1,0 +1,104 @@
+<extend name="./base" />
+<block name="title">
+	<title>{$title}</title>
+</block>
+<block name="body">
+
+	<body class="zzc_body_bg">
+		<style>
+			.zzc_fangke_tongji {
+				width: 90%!important;
+				margin: 10px auto!important;
+				overflow: hidden;
+				border-radius: 10px!important;
+			}
+			
+			.zzc_fangke_tongji li {
+				background: #FFFFFF!important;
+				width: 50%;
+			}
+			
+			.zzc_fangke_tongji li div.mui-media-body b {
+				color: #2FB3D3;
+				font-size: 18px;
+				margin-left: 10px;
+			}
+			
+			.zzc_fangke_table {
+				background: #FFFFFF;
+				border: none;
+				width: 90%;
+				margin: 0px auto;
+				border-radius: 10px;
+				overflow: hidden;
+				text-align: center;
+			}
+			
+			.zzc_fangke_table tr td,
+			.zzc_fangke_table tr th {
+				border: 1px solid #f0eff6;
+				padding: 10px 0px;
+				font-size: 14px;
+				width: 25%;
+			}
+			
+			.zzc_fangke_table tr th {
+				background: #2FB3D3!important;
+				color: #FFFFFF;
+				font-weight: normal;
+				font-size: 14px;
+			}
+		</style>
+		<div class="mui-content zzc_mui_content_bg">
+
+			<ul class="mui-table-view mui-grid-view mui-grid-9 zzc_fangke_tongji">
+				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+					<a href="#">
+						<div class="mui-media-body">总浏览量 <b>{$data.count}</b></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+					<a href="#">
+						<div class="mui-media-body">今日访问 <b>{$data.today_count}</b></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-8 mui-col-sm-3">
+					<a href="#">
+						<div class="mui-media-body">昨日访问 <b>{$data.yesterday_count}</b></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+					<a href="#">
+						<div class="mui-media-body">转发次数 <b>{$data.share_count}</b></div>
+					</a>
+				</li>
+			</ul>
+
+			<table border="" cellspacing="" cellpadding="" class="zzc_fangke_table">
+				<tr>
+					<th>近一星期</th>
+					<th>浏览次数</th>
+					<th>独立访客</th>
+					<th>关注人数</th>
+				</tr>
+				<volist name="data.data" id="vo">
+					<tr>
+						<td>{$vo.add_time}</td>
+						<td>{$vo.data.count}</td>
+						<td>{$vo.data.count_2}</td>
+						<td>{$vo.data.share_count}</td>
+					</tr>
+				</volist>
+			</table>
+		</div>
+	</body>
+</block>
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

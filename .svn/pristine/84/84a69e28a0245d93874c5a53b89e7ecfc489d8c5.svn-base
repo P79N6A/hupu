@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>壁纸</title>
+    <style>
+        .content{
+            width: 100%;
+        }
+        .content .list{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+
+        .content .list li{
+            width: 1.2rem;
+            margin-bottom: .2rem;
+            margin: 0 0.025rem;
+            margin-bottom: .05rem;
+           
+            
+        }
+
+        .list li a{
+            display: block;
+            width: 100%;
+        }
+
+        .list li a img{
+            width: 100%;
+            height: 1.8rem;
+            display: block;
+        }
+
+        .list li button{
+            width: 100%;
+            color: #fff;
+            background: #32CEA0;
+            text-align: center;
+            outline: none;
+            border: 0;
+            padding: .05rem 0 ;
+
+        }
+        .me{
+			width:0.7rem;
+			height:0.7rem;
+			background:rgba(50,206,160,1);
+			box-shadow:0px 2px 6px 0px rgba(50,206,160,1);
+			position: fixed;
+			bottom:0.6rem;
+			right:0.2rem;
+			font-size: 0.2rem;
+			color:#fff;
+			text-align: center;
+			line-height:0.7rem;
+			border-radius: 50%;
+		}
+		.me>a{
+			display: block;
+			width: 100%;
+			height:100%;
+			font-size: 0.2rem;
+			color:#fff;
+		}
+    
+    </style>
+</head>
+<body>
+    <div class="content">
+        <ul class="list">
+            <!-- 数据模板 -->
+        </ul>
+
+
+    </div>
+    <div class="me"><a href="/index.php?s=/Home/Selecttemplate/all_template&type=2">我的</a></div>
+</body>
+</html>
+<script>
+$(function(){
+    var id = '{$id}';
+    $.ajax({ //渲染模板数据
+        type:'post',
+        url:'/index.php?s=/Api/IndexApi/wallpaper_list',
+        data:{
+            id:id
+        },
+        success:function(res){
+            console.log(res)
+            if(res.ResultType == 0){
+                var data = res.AppendData;
+                var list = '';
+                var newarr = data.filter(function(data){
+                  return data.my == null;
+              })
+                console.log(newarr)
+                console.log(data)
+                $.each(newarr,function(k,v){
+                    list+= '<li>'
+                    list+= '<a href="/index.php?s=/Home/Poster/lockpreview.html&imgsrc='+v.img+'&w_id='+v.id+'">'
+                    list+= '<img src="'+v.img+'" alt="">'
+                    list+= '</a>'
+                    list+= '<button w_id="'+v.id+'">立即使用</button>'
+                    list+= '</li>'
+                })
+
+                $(".list").html(list)
+
+            }
+        }
+    })
+
+
+
+
+   $('.list').on('click','button',function(){
+        var imgsrc = $(this).prev().find('img').attr("src");
+        var w_id = $(this).attr('w_id');
+        console.log(w_id)
+        console.log(imgsrc)
+        location.href = '/index.php?s=/Home/Poster/lockpreview.html&imgsrc='+imgsrc+'&w_id='+w_id+''
+       
+   })
+
+
+
+
+
+
+})
+</script>

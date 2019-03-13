@@ -1,0 +1,1 @@
+<?php//团队职称表 数据层namespace app\api\model;use think\Model;class TeamPosition extends Model{    protected $table = 's_team_position';}

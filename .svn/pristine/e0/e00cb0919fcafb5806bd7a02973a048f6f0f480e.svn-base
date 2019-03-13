@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>参会证</title>
+	<link rel="stylesheet" href="__HOME_JS__/yb/css/card.css" />
+	<script src="__HOME_JS__/yb/js/rem.js"></script>
+	<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+	<style>
+
+
+		body{
+			width: 100%;
+			height: 100%;
+			background-image: url("https://oss.mingxin001.com/Test/2018-12-26/15457972764217.png@!protected");
+			background-size: 100% 100%;
+		}
+	</style>
+</head>
+
+
+<body>
+<div class="max">
+
+	<div class="top">
+		<div class="top_left">
+			<!--<img src="__HOME_IMAGES__/home_logo@2x.png" alt="" />-->
+		</div>
+		<div class="top_right">
+			<div class="num"></div>
+			<div class="word"></div>
+			<!--<div class="word">Ninth Special Training Camp For Yangxiaomi</div>-->
+		</div>
+	</div>
+	<div class="cen_img">
+		<img src="" alt="" />
+	</div>
+	<div class="name"></div>
+	<div class="list">
+		<span class="list_left">身份：</span>
+		<span class="list_right rank"></span>
+	</div>
+
+
+	<div class="list">
+		<span class="list_left">电话：</span>
+		<span class="list_right iphone"></span>
+	</div>
+	<!--<div class="list">-->
+		<!--<span class="list_left">组名：</span>-->
+		<!--<span class="list_right nums"></span>-->
+	<!--</div>-->
+	<!--<div class="list">-->
+		<!--<span class="list_left">推荐人：</span>-->
+		<!--<span class="list_right recommend"></span>-->
+	<!--</div>-->
+	<div class="foot">
+		<div class="foot_left">
+			<img src="" alt="" />
+		</div>
+		<!--<div class="foot_right">-->
+			<!--<span class="title">参会证</span>-->
+			<!--<span class="date">-->
+						<!--<div class="date_num"></div>-->
+						<!--<div class="date_here"></div>-->
+					<!--</span>-->
+		<!--</div>-->
+	</div>
+</div>
+<script>
+    var h = $(window).height();
+    $(".max").css("height", h )
+    var id = '{$nameid}';
+    console.log(id)
+
+    $.ajax({
+        //几个参数需要注意一下
+        type: "POST", //方法类型
+        dataType: "json", //预期服务器返回的数据类型
+        url: "index.php?s=/Api/ActivityCheck/find_user_by_id", //url
+        data: {
+            useruuid: id,
+        },
+
+        success: function(res) {
+            console.log(res.AppendData)
+            $(".cen_img>img").attr("src",res.AppendData.s_usertopimgurl);
+            $(".foot_left>img").attr("src",res.AppendData.s_qr_url);
+            $(".name").html(res.AppendData.s_username);
+            $(".rank").html(res.AppendData.s_grade);
+            $(".iphone").html(res.AppendData.s_userphone);
+            $(".nums").html(res.AppendData.s_name);
+            $(".recommend").html(res.AppendData.s_referee);
+            $(".num").html(res.AppendData.s_activityname);
+            $(".date_num").html(res.AppendData.s_act_datatime);
+
+        },
+        error: function() {
+            alert("服务器繁忙，请稍后再试！");
+        }
+    })
+
+
+
+
+
+</script>
+</body>
+
+</html>

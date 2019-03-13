@@ -1,0 +1,403 @@
+{include file="Public/header"}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+
+        <div class="example-wrap">
+            <div class="example">
+
+                <script type="text/html" id="toolbar">
+                    <div class="layui-btn-container">
+                        <button style="display: none;" class="layui-btn layui-btn-sm layui-btn-danger"
+                                lay-event="delSelected">
+                            <i class="layui-icon">&#xe640;</i>删除
+                        </button>
+                        <button class="layui-btn layui-btn-sm" onclick="add_user()">
+                            <i class="layui-icon">&#xe61f;</i>添加
+                        </button>
+                        <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>-->
+                        <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
+                        <!--<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+                    </div>
+                </script>
+
+
+                <!--搜索框开始-->
+                <form class="layui-form" action="">
+                    <div class="layui-form-item" style="display: inline-block;">
+
+                        <!--<label class="layui-form-label layui-btn-sm" style="width: 96px;-->
+<!--">状态:</label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<select id="pid" class="layui-selecwwwt" lay-filter="pid">-->
+                                <!--<option value="">全部</option>-->
+                                <!--<option value="0">未使用</option>-->
+                                <!--<option value="1">被抽中</option>-->
+                                <!--<option value="2">已使用</option>-->
+
+                            <!--</select>-->
+                        <!--</div>-->
+
+
+                        <label class="layui-form-label layui-btn-sm">名字</label>
+                        <input type="text" name="nick_name"  placeholder="请输入" autocomplete="off" class="layui-input layui-input-inline">
+
+                        <label class="layui-form-label layui-btn-sm">类型</label>
+                        <div class="layui-input-inline">
+                            <select name="type" id="tid" lay-filter="pid">
+                                <option value="0"> 全部</option>
+                                <option value="1"> 直接粉丝收入</option>
+                                <option value="2"> 打赏红包</option>
+                                <option value="3"> 购买会员</option>
+                                <option value="4"> 视频打赏</option>
+                                <option value="5"> 会员续费</option>
+                                <option value="6"> 间接收入</option>
+                                <option value="7"> 招商奖励</option>
+
+                            </select>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <div class=" layui-input-inline  " style="    display: block;margin-bottom: 20px">
+                        <button class="layui-btn  layui-btn-sm" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="reset" class="layui-btn  layui-btn-primary layui-btn-sm">重置</button>
+                    </div>
+
+
+                </form>
+
+                <!--搜索框结束-->
+
+                <table class="layui-hide" id="listTable" lay-filter="listTable"></table>
+
+                <script type="text/html" id="barDemo">
+
+
+                    <a style="display: none" class="layui-btn layui-btn-primary layui-btn-xs type-check"
+                       lay-event="detail">查看</a>
+
+
+                    <!--<a  class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+                    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+                </script>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{include file="Public/footer"}
+
+<script>
+
+    layui.use(['form', 'element', 'table', 'jquery'], function () {
+        var table = layui.table;
+        var $ = layui.$ //重点处
+            , form = layui.form
+            , layer = layui.layer;
+        var urls = '/Admin/{$class}/getList';
+
+        table.render({
+            elem: '#listTable'
+            , url: urls
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , toolbar: '#toolbar' //增加工具栏打印，筛选，导出
+            , cols: [[
+                {type: 'checkbox'}
+                , {field: 'id', title: 'ID', sort: true}
+                , {field: 'nick_name',  title: '账户'}
+                , {field: 'mobile', templet: '#', title: '手机'}
+                , {field: 'money', templet: '#', title: '金额'}
+                , {field: 'type', templet: '#typeTpl', title: '类型'}
+                , {field: 'msg', templet: '#', width:200, title: '说明'}
+                // , {field: 'money', templet: '#', title: '金额'}
+                , {field: 'status', templet: '#statusTpl', title: '状态'}
+                , {width: 150, templet: '#dateFormat', title: '操作时间'}
+                // , {field: 'cover_img',  templet:'#image',  width: 100, height:100, align:'center',  title: '封面'}
+                // , {title: '操作', align: 'center', toolbar: '#barDemo'}
+
+            ]]
+            , page: true
+            , id: 'listReload'//会员列表重载
+
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            table.reload('listReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , where: {
+                    phone: data.field.phone
+                    , res_name: data.field.res_name
+                    , nick_name: data.field.nick_name
+                    , res_phone: data.field.res_phone
+                }
+            });
+            return false;
+        });
+
+        form.on('select(pid)', function (data) {
+            //执行重载
+            table.reload('listReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , where: {
+                    status: $("#pid").val()
+                    , type: $("#tid").val()
+                }
+            });
+        });
+
+
+        //监听行工具事件
+        table.on('tool(listTable)', function (obj) {
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+
+            // console.log(data.user_id);
+
+            if (layEvent === 'detail') {
+
+                location.href = './index?type=1&id=' + obj.data.id;
+
+                // layer.msg('查看操作');
+
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    //向服务端发送删除指令
+                    del_member(data.id, './del');
+                    layer.close(index);
+                });
+            } else if (layEvent === 'edit') {
+                // layer.msg('编辑操作');
+                location.href = './edits/id/' + obj.data.id;
+            }
+
+
+            if (layEvent === 'title') {
+
+                layer.prompt({
+                    formType: 2
+                    , title: '修改title'
+                    , value: data.title
+                }, function (value, index) {
+                    layer.close(index);
+                    //这里一般是发送修改的Ajax请求
+                    $.ajax({
+                        type: 'POST',
+                        url: "./edits", // ajax请求路径
+                        data: {
+                            id: data.id,
+                            title: value
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //调用弹窗显示信息
+                            layer.msg(data['msg']);
+
+                            if (data.code == 1) {
+
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    title: value
+                                });
+
+                            }
+
+                        }
+                    });
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        title: value
+                    });
+                });
+
+
+            }
+
+            if (layEvent === 'inte') {
+
+                layer.prompt({
+                    formType: 2
+                    , title: '修改inte'
+                    , value: data.inte
+                }, function (value, index) {
+                    layer.close(index);
+                    //这里一般是发送修改的Ajax请求
+                    $.ajax({
+                        type: 'POST',
+                        url: "./edits", // ajax请求路径
+                        data: {
+                            id: data.id,
+                            inte: value
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //调用弹窗显示信息
+                            layer.msg(data['msg']);
+
+                            if (data.code == 1) {
+
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    inte: value
+                                });
+
+                            }
+
+                        }
+                    });
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        inte: value
+                    });
+                });
+
+
+            }
+
+
+        });
+
+
+        //工具栏事件
+        table.on('toolbar(listTable)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+
+            switch (obj.event) {
+                case 'getCheckData':
+
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：' + data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                    break;
+                case 'delSelected':
+                    var checkStatus = table.checkStatus('listReload')
+                        , data = checkStatus.data;
+                    var ids = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var val = data[i].id;//注意修改字段  /*zzy*/
+                        if (ids.length > 0) {
+                            ids += ',';
+                        }
+                        ids += val;
+                    }
+                    if (data.length > 0) {
+                        console.log(ids);
+                        lunhui.deletes(ids, '{:url("delSelecteds")}');
+                    } else {
+                        layer.msg('请选中需要删除的数据', {icon: 0, time: 1500}, function (index) {
+                            console.log(obj);
+                            obj.del(); //删除对应行（tr）的DOM结构
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+
+
+    });
+
+
+</script>
+
+
+<!--状态的模板-->
+<script type="text/html" id="statusTpl">
+
+    <!--<a href="javascript:;" onclick="edit_type({{d.id}},'./editStatus?field=type');">-->
+
+    {{# if(d.status==1){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">正常</span></div>
+
+    {{# }else{ }}
+    <div id="zt{{d.id}}"><span class="label label-default ">异常</span></div>
+    {{# } }}
+
+    <!--</a>-->
+
+
+</script>
+<!--状态的模板-->
+
+
+<!--状态的模板-->
+<script type="text/html" id="typeTpl">
+
+
+    {{# if(d.type==1){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">直接粉丝收入</span></div>
+
+    {{# }else if(d.type==2){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">打赏红包</span></div>
+
+    {{# }else if(d.type==3){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">购买会员</span></div>
+
+    {{# }else if(d.type==4){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">视频打赏</span></div>
+
+    {{# }else if(d.type==5){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">会员续费</span></div>
+
+    {{# }else if(d.type==6){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">间接收入</span></div>
+
+    {{# }else if(d.type==7){ }}
+    <div id="zt{{d.id}}"><span class="label label-default">招商奖励</span></div>
+
+    {{# } }}
+
+</script>
+<!--状态的模板-->
+
+
+<script type="text/html" id="is_video">
+
+    {{# if(d.is_video){ }}
+
+    是
+
+    {{# }else{ }}
+
+    否
+
+    {{# } }}
+
+</script>
+
+<script type="text/html" id="image">
+    <img id="img_data" onclick="fangda(this);" style="  width: 90px; height: 90px;"
+         src="{{d.cover_img}}"/>
+
+</script>
+
+
+<script type="text/html" id="dateFormat">
+
+    {{  timetrans(d.add_time) }}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+
+    <title>转赠记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 100%;
+            height: .59rem;
+            position: relative;
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .prep {
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .2rem;
+            position: absolute;
+            top: .08rem;
+            left: .19rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .time {
+            position: absolute;
+            left: .19rem;
+            bottom: .08rem;
+        }
+
+        .time li {
+            float: left;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #9b9b9b;
+        }
+
+        .dell {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            right: .19rem;
+            top: .19rem;
+        }
+
+        .renone {
+            width: 100%;
+            height: .33rem;
+        }
+
+        .firstop li {
+            width: 49%;
+            height: .33rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #616161;
+            line-height: .33rem;
+            border: 1px solid #46D1A9;
+            float: left;
+            line-height: .33rem;
+            text-align: center;
+        }
+
+        .ftive {
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #fff !important;
+            background: #46D1A9 !important;
+            line-height: .33rem;
+        }
+
+        .dname {
+            width: .99rem;
+            height: .21rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #46D1A9;
+            line-height: .2rem;
+            position: absolute;
+            top: .08rem;
+            left: .9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tipmoney {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            width: 1.8rem;
+            font-size: .12rem;
+            padding: 0.05rem 0;
+            margin-left: -0.9rem;
+            border-radius: .05rem;
+            display: none;
+        }
+
+        .first {
+            /* display: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="renone">
+            <ul class="firstop">
+                <li class="lq ftive">领取</li>
+                <li class="zz">转赠</li>
+            </ul>
+        </div>
+        <div class="first">
+            <!-- <div class="top">
+                <span class="prep">转赠给</span>
+                <span class="dname">洋小秘洋小秘</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+            </div> -->
+        </div>
+        <div class="secd">
+            <!-- <div class="top">
+                <span class="prep">转赠给</span>
+                <span class="dname">洋小秘洋小秘</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+            </div> -->
+
+        </div>
+        <div class="tipmoney"></div>
+    </div>
+</body>
+<script>
+    $(function () {
+
+        // 点击改变背景色
+        $(".firstop li").click(function () {
+            $(this).addClass("ftive").siblings().removeClass("ftive");
+        });
+
+        // 领取
+        $('.lq').click(function () {
+
+            var user_id = '{$unionid}';
+            var type = 2; //领取
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/send_money_log',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    length: 10,
+                },
+                success: function (res) {
+                    console.log(res)
+                    var lost = '';
+                    $.each(res.AppendData, function (k, v) {
+                        lost += '<div class="top">'
+                        lost += '<span class="prep">领取来自</span>'
+                        lost += '<span class="dname">' + v.rec_name + '</span>'
+                        lost += '<ul class="time">'
+                        lost += '<li>' + v.create_time + '</li>'
+                        lost += '</ul>'
+                        lost += '<span class="dell">+' + v.money + '</span>'
+                        lost += '</div>'
+                    })
+                    $('.first').html(lost)
+                    if ($(".first .top").length == 0) {
+                        $(".tipmoney").text("暂无记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+        })
+        $('.lq').click();
+
+
+        // 赠送
+        $('.firstop').on('click', '.zz', function () {
+
+            var user_id = '{$unionid}';
+            var type = 1; //赠送
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/send_money_log',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    length: 10,
+                },
+                success: function (res) {
+                    console.log(res)
+                    var list = '';
+                    $.each(res.AppendData, function (k, v) {
+                        list += '<div class="top">'
+                        list += '<span class="prep">转赠给</span>'
+                        list += '<span class="dname">' + v.get_name + '</span>'
+                        list += '<ul class="time">'
+                        list += '<li>' + v.create_time + '</li>'
+                        list += '</ul>'
+                        list += '<span class="dell">-' + v.money + '</span>'
+                        list += '</div>'
+                    })
+                    $('.first').html(list)
+                    if ($(".first .top").length == 0) {
+                        $(".tipmoney").text("暂无记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                    // $('.zz').css('display','block')
+                }
+            })
+        })
+    })
+</script>
+
+</html>

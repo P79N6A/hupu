@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <meta name="x5-orientation" content="portrait">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/experience.css?v=11">
+    <script src="/Public/Home/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/experience.js"></script>
+    <script src="/Public/Home/js/whjs/js/template-web.js"></script>
+    <script src="/Public/Home/js/whjs/js/clipboard.min.js"></script>
+    <title>体验卡</title>
+</head>
+
+<body>
+    <div class="Give">
+        <ul class="clearfix" id="Give_box">
+            <li class="fl active" data-status="0">
+                未使用
+                <div class="line show"></div>
+            </li>
+            <li class="fl" data-status="1">
+                已使用
+                <div class="line"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="data_box">
+        <div class="total clearfix">
+            <div class="fl totalnum"></div>
+            <div class="fl not_use"></div>
+        </div>
+        <div class="user-total-data">
+            <ul>
+                <!-- 数据 -->
+            </ul>
+            <div class="loading">
+                <img src="/Public/Home/images/loading.png" alt="">
+                <span>正在加载中</span>
+            </div>
+        </div>
+    </div>
+    <input id="user_id" type="hidden" value="{$id}">
+</body>
+
+</html>
+<script type="text/html" id="not_use">
+    {{each data v i}}
+    <li>
+        <div class="exper-box fl">
+            <p>体验码</p>
+            <p class="reddem_code">{{v.code}}</p>
+        </div>
+        <div class="go-give fl">
+            <button type="button" class="btn" data-clipboard-text="{{v.code}}">一键复制</button>
+        </div>
+    </li>
+    {{/each}}
+
+</script>
+
+<script type="text/html" id="use">
+
+    {{each data v i}}
+    <div class="clearfix" id="user-box">
+        <div class="user-img-box fl">
+            <img src="{{v.headimg}}" alt="用户图片">
+        </div>
+        <div class="fl user-name-box">
+            <p class="user-name">{{v.nick_name}}</p>
+            <p class="user-use-code">{{v.code}}</p>
+        </div>
+        <div class="fl user-time-box">
+            <p class="used">已使用</p>
+            <p class="time">{{v.adddate}}&nbsp;{{v.addtime}}</p>
+            <!-- <p class="date">{{v.adddate}}</p> -->
+        </div>
+    </div>
+    {{/each}}
+
+
+</script>

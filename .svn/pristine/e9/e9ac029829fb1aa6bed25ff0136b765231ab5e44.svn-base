@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/mui/css/mui.css">
+    <script src="/Public/Home/js/whjs/js/mui/js/mui.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>铃声设置</title>
+    <style>
+        body,
+        html {
+            background: #f6f6f6;
+            padding-top: 1rem;
+            padding-bottom: .55rem;
+
+        }
+
+        #contnet{
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            background: #f6f6f6;
+        }
+
+        .header {
+            width: 100%;
+            height: .54rem;
+            background: #fff;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            margin-bottom: .1rem;
+        }
+
+        .header .fl {
+            width: 35%;
+            height: 100%;
+            line-height: .54rem;
+            font-size: .16rem;
+        }
+
+        .header .fr {
+            width: 65%;
+            height: 100%;
+            line-height: .54rem;
+            text-align: right;
+            font-size: .13rem;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .nav_box {
+            width: 100%;
+            background: #fff;
+        }
+
+        .nav {
+            width: 100%;
+            height: .5rem;
+            position: relative;
+            background: #fff;
+            border-bottom: 1px solid #f6f6f6;
+            z-index: 999;
+        }
+
+        .nav .content {
+            width: 80%;
+            height: 100%;
+            padding: 0 .1rem 0 .1rem;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+
+        .nav .content .item {
+            display: inline-block;
+            height: 100%;
+            padding: 0 .08rem;
+            line-height: .5rem;
+            position: relative;
+            color: #777777;
+            font-size: .13rem;
+            text-align: center;
+        }
+
+        .nav .item .line {
+            width: .32rem;
+            height: .03rem;
+            background: #32CEA0;
+            position: absolute;
+            bottom: 0rem;
+            left: 50%;
+            margin-left: -.16rem;
+            display: none;
+        }
+
+        .active {
+            color: #32CEA0 !important;
+            font-size: .16rem !important;
+        }
+
+        .nav .opton {
+            width: .75rem;
+            height: .5rem;
+            position: absolute;
+            right: 0;
+            top: 0;
+            box-shadow: -2px 0px 2px 0px rgba(225, 225, 225, 0.5);
+        }
+
+        .nav .opton .bg {
+            width: 100%;
+            height: .4rem;
+            margin-top: .05rem;
+            background: #F8C85E;
+            border-top-left-radius: .2rem;
+            border-bottom-left-radius: .2rem;
+            font-size: .14rem;
+            position: relative;
+        }
+
+        .opton .bg span {
+            position: absolute;
+            top: 50%;
+            left: .16rem;
+            margin-top: -.1rem;
+            color: #fff;
+        }
+
+        .opton .bg .sx {
+            width: .14rem;
+            height: .14rem;
+            position: absolute;
+            top: 50%;
+            right: .12rem;
+            margin-top: -0.07rem;
+        }
+
+        .list {
+            width: 100%;
+            background: #fff;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+        }
+
+        .list li {
+            height: .5rem;
+            line-height: .5rem;
+            width: 100%;
+            position: relative;
+            border-bottom: 1px solid #f6f6f6;
+        }
+
+        .list li p {
+            font-size: .16rem;
+        }
+
+        .list li img {
+            width: .2rem;
+            height: .14rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.07rem;
+            right: .16rem;
+            display: none;
+        }
+
+        .active {
+            color: #F3B939;
+        }
+
+        .footer {
+            width: 100%;
+            height: .55rem;
+            padding: .08rem .16rem;
+            box-sizing: border-box;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+
+        }
+
+        .footer button {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #fff;
+            background: #32CEA0;
+            border-radius: .04rem;
+            outline: none;
+            border: 0;
+        }
+
+        .chose_jr {
+            width: 100%;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+            z-index: 1000;
+            border-radius: 6px 6px 0px 0px;
+            display: none;
+        }
+
+        .chose_jr p {
+            width: 100%;
+            text-align: center;
+            font-size: .16rem;
+            height: .54rem;
+            border-bottom: 1px solid #f6f6f6;
+            line-height: .54rem;
+        }
+
+        .chose_jr .jrlist {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .chose_jr .jrlist li {
+            width: .75rem;
+            height: .5rem;
+            text-align: center;
+            line-height: .5rem;
+            border-right: 1px solid #f6f6f6;
+            box-sizing: border-box;
+            border-bottom: 1px solid #f6f6f6;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: .13rem;
+        }
+        .actived{
+            color: #F3B939;
+            font-size: .18rem !important;
+        }
+    </style>
+</head>
+
+<body>
+<div id="contnet">
+    <div class="header clearfix">
+        <div class="fl">已选铃声</div>
+        <div class="fr title"></div>
+    </div>
+    <div class="nav_box">
+        <div class="nav">
+            <div class="content">
+                <!-- 音乐type -->
+            </div>
+            <!-- 选项 -->
+            <div class="opton">
+                <div class="bg">
+                    <span>筛选</span>
+                    <img class="sx" src="/Public/Home/images/wh/screencopy@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <ul class="list">
+      <!-- 音乐列表 -->
+    </ul>
+    <div class="footer">
+        <button class="confirm">确定</button>
+    </div>
+    <div class="mask"></div>
+
+    <div class="chose_jr">
+        <p>选择铃声类型</p>
+        <ul class="jrlist">
+            <!-- 选择铃声 -->
+        </ul>
+    </div>
+    <audio id="audio" src=""></audio>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+        var my_id = GetQueryString('preview');
+        var cids = GetQueryString('cids');
+        var music_typoe ;
+        console.log(my_id)
+        console.log(cids)
+
+        // 更多晒选
+        var tips = $('.mask');
+        $('.opton').on('click', function () {
+            tips.show();
+            $('.chose_jr').show();
+        })
+        tips.on('click', function () {
+            tips.hide();
+            $('.chose_jr').hide();
+        })
+
+
+        $.ajax({
+            url: 'index.php?s=/Api/IndexApi/music_type', //渲染分类音乐分类数据
+            type: 'post',
+            data: {
+                unionid: unionid
+            },
+            success: function (res) {
+                console.log(res)
+                var data = res.AppendData;
+                if (res.ResultType == 0) {
+                    var music_type = '';
+                    var chiose_type = '';
+                    $.each(data, function (k, v) {
+                        if (k == 0) {
+                            music_type += '<div class="item active" data-id="' + v.id + '">' + v.title + ''
+                            music_type += '<div class="line" style="display:block"></div>'
+                            music_type += '</div>'
+                        } else {
+                            music_type += '<div class="item " data-id="' + v.id + '">' + v.title + ''
+                            music_type += '<div class="line"></div>'
+                            music_type += '</div>'
+                        }
+                            chiose_type += '<li data-lsid="' + v.id + '">' + v.title + '</li>'
+                    })
+                    $('.nav .content').html(music_type);
+                    $('.jrlist').html(chiose_type);
+
+
+
+                  
+        	$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					data: {
+						unionid: unionid,
+						my_id: my_id
+					},
+					success: function (result) {
+						console.log(result)
+                        music_tp = result.AppendData.music_id;
+                        
+                    $.ajax({
+                        url:'index.php?s=/Api/IndexApi/music_detail',
+                        type:'post',
+                        data:{
+                            unionid:unionid,
+                            music_id:music_tp
+                            
+                        },
+                        success:function(res){
+                            console.log(res)
+                            var data = res.AppendData;
+                            music_tp = data.type_id;
+                            music_id = data.id;
+                        $('.content .item').each(function(k,v){
+                            if($(v).attr('data-id') == music_tp){
+                               $(this).addClass('active').find('.line').show().parent().siblings().removeClass('active').find('.line').hide();
+
+                            }
+                        })
+                          get_music(music_tp);
+                       
+                        }
+                    })
+
+					},
+					error: function () {
+						console.log('走了错误')
+					}
+				});
+
+
+                }
+            }
+        })
+
+         var music_tp; //音乐分类id
+        $('.content').on('click', '.item', function () {
+            music_tp = $(this).attr('data-id');
+            console.log(music_tp)
+            $(this).addClass('active').find('.line').show().parent().siblings().removeClass('active').find('.line').hide();
+            get_music(music_tp)
+
+        })
+        $('.jrlist').on('click', 'li', function () {
+            music_tp = $(this).attr('data-lsid');
+            $(".content .item").each(function(k,v){
+                if(music_tp == $(v).attr('data-id')){
+                     $(this).addClass('active').find('.line').show().parent().siblings().removeClass('active').find('.line').hide();
+                }
+            })
+            tips.hide();
+            $('.chose_jr').hide();
+            get_music(music_tp)
+        })
+
+        function get_music(music_tp) {
+            console.log(music_tp)
+            $.ajax({
+                type: 'post',
+                url: 'index.php?s=/Api/IndexApi/music_list', //音乐列表
+                data: {
+                    unionid: unionid,
+                    type_id: music_tp
+                },
+                success: function (res) {
+                    console.log(res)
+                    var data_music = res.AppendData;
+                    if (res.ResultType == 0) {
+                        var muisc_list = '';
+                        $.each(data_music, function (k, v) {
+                            muisc_list+= '<li data-music_url="'+v.url+'" data-id="'+v.id+'">'
+                            muisc_list+= '<p class="play">'+v.name+'</p>'
+                            muisc_list+= '<img src="/Public/Home/images/wh/select@2x.png" alt="">'
+                            muisc_list+= '</li>'
+                        })
+                        $('.list').html(muisc_list);
+                            var wu = ''
+                            wu+= '<li data-music_url="" data-id="0">'
+                            wu+= '<p class="play">无</p>'
+                            wu+= '<img src="/Public/Home/images/wh/select@2x.png" alt="">'
+                            wu+= '</li>'
+                           $('.list').prepend(wu);
+
+                            // 第二次保持状态页面渲染完成后便利
+                            $('.list li').each(function(k,v){
+                            if($(v).attr('data-id') == music_id){
+                                console.log(v)
+                                $(this).find('.play').addClass('actived').next().show().parent().siblings().find('.play').removeClass('actived').next().hide();
+                                var title =  $(this).find('.play').text();
+                                $('.title').text(title);
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+
+        var music_id; //音乐id
+        $('.list').on('click','li',function(){
+            var music_url = $(this).attr('data-music_url');
+            var title  = $(this).find('p').text();
+            $('.title').text(title);
+            music_id = $(this).attr('data-id');
+            $(this).find('img').show().parent().siblings().find('img').hide();
+            $(this).find('p').addClass('actived').parent().siblings().find('p').removeClass('actived');
+            if(!music_url == ''){
+                $('#audio').attr('src',music_url);
+                var audio = document.getElementById('audio');
+                setTimeout(function(){
+                    audio.play();
+                    console.log('执行播放音乐')
+                },1500)
+                
+            }
+            
+          
+        })
+
+
+
+        // 保存
+        $('.confirm').on('click',function(){
+
+            if(!$('.play').hasClass('actived')){
+                mui.alert('请选择音乐');
+                return false;
+            }
+            
+            $.ajax({
+                url:'index.php?s=/Api/IndexApi/edit_album_content',
+                type:'post',
+                data:{
+                    unionid:unionid,
+                    my_id:my_id,
+                    music_id:music_id
+                },
+                success:function(res){
+                    console.log(res)
+                    mui.toast('保存成功');
+                    setTimeout(function(){
+                         location.href = 'index.php?s=/Home/Android/photo_edit&preview='+my_id+'&cids='+cids+'&unionid='+unionid;
+                    },1000)
+                   
+                }
+            })
+        })
+
+
+
+
+
+
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

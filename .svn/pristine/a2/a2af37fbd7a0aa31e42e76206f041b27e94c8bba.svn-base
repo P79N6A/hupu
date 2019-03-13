@@ -1,0 +1,1430 @@
+<?php
+//
+//namespace Admin\Controller;
+//
+//use Think\Controller;
+//
+//class AreaController extends Controller {
+//
+//    public function _initialize()
+//
+//    {
+//
+//        // 判断用户是否登录
+//
+//        if (!isset($_SESSION[C('USER_AUTH_KEY')])) {
+//
+//            $this->redirect('public/login');
+//
+//        }
+//
+//    }
+//
+//    /**
+//
+//     * 通用分页列表数据集获取方法
+//
+//     *
+//
+//     *  可以通过url参数传递where条件,例如:  index.html?name=asdfasdfasdfddds
+//
+//     *  可以通过url空值排序字段和方式,例如: index.html?_field=id&_order=asc
+//
+//     *  可以通过url参数r指定每页数据条数,例如: index.html?r=5
+//
+//     *
+//
+//     * @param sting|Model  $model   模型名或模型实例
+//
+//     * @param array        $where   where查询条件(优先级: $where>$_REQUEST>模型设定)
+//
+//     * @param array|string $order   排序条件,传入null时使用sql默认排序或模型属性(优先级最高);
+//
+//     *                              请求参数中如果指定了_order和_field则据此排序(优先级第二);
+//
+//     *                              否则使用$order参数(如果$order参数,且模型也没有设定过order,则取主键降序);
+//
+//     *
+//
+//     * @param array        $base    基本的查询条件
+//
+//     * @param boolean      $field   单表模型用不到该参数,要用在多表join时为field()方法指定参数
+//
+//     * @author 朱亚杰 <xcoolcc@gmail.com>
+//
+//     *
+//
+//     * @return array|false
+//
+//     * 返回数据集
+//
+//     */
+//
+//    protected function lists ($model,$where=array(),$order='',$base = array('status'=>array('egt',0)),$field=true,$count=''){
+//
+//        $options    =   array();
+//
+//        $REQUEST    =   (array)I('request.');
+//
+//
+//
+//        if(is_string($model)){
+//
+//            // 没走
+//
+//            $model  =   M($model);
+//
+//        }
+//
+//        $OPT = new \ReflectionProperty($model,'options');
+//
+//        $OPT->setAccessible(true);
+//
+//
+//
+//        // 获取主键 id
+//
+//        $pk = $model->getPk();
+//
+//        if($order===null){
+//
+//            //order置空
+//
+//        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
+//
+//            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
+//
+//        }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
+//
+//            $options['order'] = $pk.' desc';
+//
+//        }elseif($order){
+//
+//            // 走了
+//
+//            $options['order'] = $order;
+//
+//        }
+//
+//        unset($REQUEST['_order'],$REQUEST['_field']);
+//
+//        $options['where'] = array_filter(array_merge((array)$base, /*$REQUEST,*/ (array)$where),function($val){
+//
+//
+//
+//            if($val===''||$val===null){
+//
+//                return false;
+//
+//            }else{
+//
+//                return true;
+//
+//            }
+//
+//        });
+//
+//
+//
+//
+//
+//
+//
+//        if( empty($options['where'])){
+//
+//            unset($options['where']);
+//
+//        }
+//
+//
+//
+//        $options = array_merge( (array)$OPT->getValue($model), $options );
+//
+//
+//
+////		var_dump($options);
+//
+////		exit();
+//
+////		$total = $model->where($options['where'])->count();
+//
+//
+//
+//
+//
+//
+//
+//        $total = $count;
+//
+//
+//
+//
+//
+//
+//
+//        // 377
+//
+//        if( isset($REQUEST['r']) ){
+//
+//            $listRows = (int)$REQUEST['r'];
+//
+//        }else{
+//
+//            $listRows = C('LIST_ROWS') > 0 ? C('LIST_ROWS') : 10;
+//
+//        }
+//
+//
+//
+//
+//
+//        $page = new \Think\Page($total, $listRows, $REQUEST);
+//
+//
+//
+//
+//
+//
+//
+//        if($total>$listRows){
+//
+//            $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
+//
+//        }
+//
+//
+//
+//
+//
+//        $p =$page->show();
+//
+//        $this->assign('_page', $p? $p: '');
+//
+//        $this->assign('_total',$total);
+//
+//        $options['limit'] = $page->firstRow.','.$page->listRows;
+//
+//        $model->setProperty('options',$options);
+//
+//        return $model->field($field)->select();
+//
+//    }
+//
+//
+//
+//    /**
+//
+//     * 通用分页列表数据集获取方法
+//
+//     *
+//
+//     *  可以通过url参数传递where条件,例如:  index.html?name=asdfasdfasdfddds
+//
+//     *  可以通过url空值排序字段和方式,例如: index.html?_field=id&_order=asc
+//
+//     *  可以通过url参数r指定每页数据条数,例如: index.html?r=5
+//
+//     *
+//
+//     * @param sting|Model  $model   模型名或模型实例
+//
+//     * @param array        $where   where查询条件(优先级: $where>$_REQUEST>模型设定)
+//
+//     * @param array|string $order   排序条件,传入null时使用sql默认排序或模型属性(优先级最高);
+//
+//     *                              请求参数中如果指定了_order和_field则据此排序(优先级第二);
+//
+//     *                              否则使用$order参数(如果$order参数,且模型也没有设定过order,则取主键降序);
+//
+//     *
+//
+//     * @param array        $base    基本的查询条件
+//
+//     * @param boolean      $field   单表模型用不到该参数,要用在多表join时为field()方法指定参数
+//
+//     * @author 朱亚杰 <xcoolcc@gmail.com>
+//
+//     *
+//
+//     * @return array|false
+//
+//     * 返回数据集
+//
+//     */
+//
+//    protected function listss ($model,$where=array(),$order='',$base = array('status'=>array('egt',0)),$field=true){
+//
+//        $options    =   array();
+//
+//        $REQUEST    =   (array)I('request.');
+//
+//
+//
+//        if(is_string($model)){
+//
+//            $model  =   M($model);
+//
+//        }
+//
+//
+//
+//        $OPT        =   new \ReflectionProperty($model,'options');
+//
+//        $OPT->setAccessible(true);
+//
+//
+//
+//        $pk         =   $model->getPk();
+//
+//        if($order===null){
+//
+//            //order置空
+//
+//        }else if ( isset($REQUEST['_order']) && isset($REQUEST['_field']) && in_array(strtolower($REQUEST['_order']),array('desc','asc')) ) {
+//
+//            $options['order'] = '`'.$REQUEST['_field'].'` '.$REQUEST['_order'];
+//
+//        }elseif( $order==='' && empty($options['order']) && !empty($pk) ){
+//
+//            $options['order'] = $pk.' desc';
+//
+//        }elseif($order){
+//
+//            $options['order'] = $order;
+//
+//        }
+//
+//        unset($REQUEST['_order'],$REQUEST['_field']);
+//
+//
+//
+//        $options['where'] = array_filter(array_merge( (array)$base, /*$REQUEST,*/ (array)$where ),function($val){
+//
+//            if($val===''||$val===null){
+//
+//                return false;
+//
+//            }else{
+//
+//                return true;
+//
+//            }
+//
+//        });
+//
+//        if( empty($options['where'])){
+//
+//            unset($options['where']);
+//
+//        }
+//
+//        $options      =   array_merge( (array)$OPT->getValue($model), $options );
+//
+//
+//
+//        $total        =   $model->where($options['where'])->count();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//        if( isset($REQUEST['r']) ){
+//
+//            $listRows = (int)$REQUEST['r'];
+//
+//        }else{
+//
+//            $listRows = C('LIST_ROWS') > 0 ? C('LIST_ROWS') : 10;
+//
+//        }
+//
+//        $page = new \Think\Page($total, $listRows, $REQUEST);
+//
+//        if($total>$listRows){
+//
+//            $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
+//
+//        }
+//
+//        $p =$page->show();
+//
+//        //$this->assign('_page', $p? $p: '');
+//
+//        $this->assign('_page', $p? $p: '');
+//
+//        $this->assign('_total',$total);
+//
+//        // $options['limit'] = $page->firstRow.','.$page->listRows;
+//
+//        $model->setProperty('options',$options);
+//
+//
+//
+//        return $model->field($field)->select();
+//
+//    }
+//
+//
+//
+//
+//
+//    public function agentList(){
+//  $admin=$_SESSION['admin'];
+//  // $grade 为5
+//
+//        $grade = $admin['vip_group_id'];
+//
+//
+//
+//        // $province 为9
+//
+//        $province=$admin['province_id'];
+//
+//
+//
+//        // $city 为0
+//
+//        $city=$admin['city_id'];
+//
+//
+//
+//        $address=$_SESSION['address'];
+//
+//        $aid = $address['address_id'];
+//
+//        // 为何能取得SESSIONID
+//
+//        $data = I('request.');
+//
+//        unset($data['PHPSESSID']);
+//  $vips = $data['viplist']=='' ? -1 : $data['viplist'];
+//
+//        $is_give = $data['is_give'];
+//
+//
+//        $search = "";
+//
+//        if($address['vip'] == 1){
+//
+//            $where['u.city_id'] = $aid;
+//
+//            $search = "u.city_id=".$aid;
+//   }
+//
+//        if($address['vip'] == 2){
+//
+//            $where['u.province_id'] = $aid;
+//
+//            $search = "u.province_id=".$aid;
+//
+//        }
+//   if($vips > 0 || $vips == 0){
+//
+//            $where['u.vip_group_id'] = $vips;
+//
+//            $search = $search." AND u.vip_group_id=".$vips;
+//
+//        }
+//   if($vips == -1){
+//
+//            $where['u.vip_group_id'] = array('gt',0);
+//
+//            $search = $search." AND u.vip_group_id>0";
+//
+//        }
+//   if($data['startDate']&&$data['overDate']&&strtotime($data['startDate'])<strtotime($data['overDate'])){
+//
+//            $where['u.add_time'] = array('between',array(strtotime($data['startDate']),strtotime($data['overDate'])));
+//
+//            $search = $search." AND u.add_time between ".strtotime($data['startDate'])." AND ".strtotime($data['overDate']);
+//
+//        }
+//   $fields = ['u.*,u.mobile as phone','ui.nick_name as rec_name','vg.vip_name', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name'];
+//  if($is_give == 1){
+//
+//            $where['cl.is_give'] = 0;
+//
+//            // 自连接，主要是获取ui.nick_name
+//      $gcardMod = M('user_info')->distinct(true)->field('u.id')->where($where)->alias('u')->join('left join s_user_info ui ON ui.id = u.rec_user_id')->join('left join s_vip_group vg ON vg.id = u.vip_group_id')->join('left join s_region a ON u.province_id = a.region_id')->join('left join s_region b ON u.city_id = b.region_id')->join('left join s_region c ON u.district_id = c.region_id')->join('left join s_capital_log cl ON u.id = cl.object_id');
+//
+//            $Model = new \Think\Model(); // 实例化一个model对象 没有对应任何数据表
+//
+//            $sql = "SELECT DISTINCT u.id FROM s_user_info u left join s_capital_log cl ON u.id = cl.object_id  WHERE cl.is_give = 0 AND ".$search;
+//
+//            $result = $Model->query($sql);
+//
+//            $model_count = count($result);
+//   }elseif ($is_give == 2){
+//
+//
+//
+//            $where['cl.is_give'] = 1;
+//
+//            $gcardMod = M('user_info')->where($where)->alias('u')
+//                ->join('left join s_user_info ui ON ui.id = u.rec_user_id')
+//                ->join('left join s_vip_group vg ON vg.id = u.vip_group_id')
+//                ->join('left join s_region a ON u.province_id = a.region_id')
+//                ->join('left join s_region b ON u.city_id = b.region_id')
+//                ->join('left join s_region c ON u.district_id = c.region_id')
+//                ->join('left join s_capital_log cl ON u.id = cl.object_id');
+//
+////            $Model = new \Think\Model(); // 实例化一个model对象 没有对应任何数据表
+//
+//            $sql = "SELECT DISTINCT u.id FROM s_user_info u left join s_capital_log cl ON u.id = cl.object_id  WHERE cl.is_give = 1 AND ".$search;
+//
+//            $result = $Model->query($sql);
+//
+//            $model_count = count($result);
+//
+//        }else{
+//
+//            $gcardMod = M('user_info')->where($where)->alias('u')->join('left join s_user_info ui ON ui.id = u.rec_user_id')->join('left join s_vip_group vg ON vg.id = u.vip_group_id')->join('left join s_region a ON u.province_id = a.region_id')->join('left join s_region b ON u.city_id = b.region_id')->join('left join s_region c ON u.district_id = c.region_id');
+//
+//            $Model = new \Think\Model(); // 实例化一个model对象 没有对应任何数据表
+//
+//            $sql = "SELECT DISTINCT u.id FROM s_user_info u  WHERE ".$search;
+//
+//            $result = $Model->query($sql);
+//
+//            $model_count = count($result);
+//
+//        }
+//   $list = $this->lists($gcardMod, $where, 'u.id DESC', null, $fields,$model_count);
+//
+//        foreach($list as $k=>$v){
+//
+//            $inco =M ("users_fans")->where(array('user_id'=>$v['id'],'level'=>'1'))->count();
+//
+//            $list[$k]['con']=$inco;
+//
+//        }
+//
+//
+//  $viplist = M('vip_group')->select();
+//
+//        $listprovince = M('region')->where(array('parent_id'=>0))->select();
+//
+//        $this->assign("province_list",$listprovince);
+//
+//        $this->assign("viplist",$viplist);
+//
+//        $this->assign('data', $list);
+//
+//        $this->assign('total_count',$model_count);
+//
+//        $this->assign('search',$data);// 赋值分页输出
+//  $this->display();
+//  }
+//
+//
+//
+//
+//
+//    public function agentChart(){
+//
+//
+//
+//        $address=$_SESSION['address'];
+//
+//
+//
+//        $aid = $address['address_id'];
+//
+//
+//
+//        // 为何能取得SESSIONID
+//
+//        $data = I('request.');
+//
+//
+//
+//        unset($data['PHPSESSID']);
+//
+//
+//
+//        list ($thirty_array, $thirty_array_data, $thirty_array_vip) =$this->getThirtyMessage($address['vip'],$aid);
+//
+//        $this->assign("thirty_array",$thirty_array);
+//
+//        $this->assign("thirty_array_data",$thirty_array_data);
+//
+//        $this->assign("thirty_array_vip",$thirty_array_vip);
+//
+//
+//
+//        list ($month_array, $month_user_array, $month_vip_array) =$this->getMonthMessage($address['vip'],$aid);
+//
+//        $this->assign("month_array",$month_array);
+//
+//        $this->assign("month_user_array",$month_user_array);
+//
+//        $this->assign("month_vip_array",$month_vip_array);
+//
+//
+//
+//        $this->display();
+//
+//
+//
+//    }
+//
+//
+//
+//
+//
+//
+//
+//    public function alterMessage(){
+//
+//
+//
+//        $array_return=array("status"=>1,"msg"=>"success","data"=>array());
+//
+//        $address=$_SESSION['address'];
+//
+//
+//
+//        if(IS_POST){
+//
+//            $res=I("post.");
+//
+//            $old_password = $res['old_password'];
+//
+//            $password = $res['password'];
+//
+//            $re_password = $res['re_password'];
+//
+//
+//
+//            if ( $address['password'] != md5(sha1(md5($old_password)))){
+//
+//                $this->ajaxReturn(array('status'=>1, 'msg'=>'原来的密码输入错误'));
+//
+//            }
+//
+//
+//
+//            if ( $password != $re_password){
+//
+//                $this->ajaxReturn(array('status'=>2, 'msg'=>'两次输入密码不一致!'));
+//
+//            }
+//
+//
+//
+//            M('adminUser')->where(array('user_id'=>$address['user_id']))->save(['password'=>md5(sha1(md5($re_password)))]);
+//
+//            $result = M("admin_user")->where(array('user_id'=>$address['user_id']))->find();
+//
+//            session('address', $result);
+//
+//
+//
+//            $this->ajaxReturn(array('status'=>3, 'msg'=>'修改成功!'));
+//
+//            $this->ajaxReturn($array_return);
+//
+//
+//
+//        }else{
+//
+//
+//
+//            $this->assign("username",$address['username']);
+//
+//            $this->display();
+//
+//        }
+//
+//    }
+//
+//
+//
+//
+//
+//    public function getThirtyMessage($vip,$aid){
+//
+//
+//
+//        $thirty_array = array();
+//
+//        $thirty_array_data = array();
+//
+//        $thirty_array_vip = array();
+//
+//
+//
+//        $thirty_before_time = strtotime("-30 day");
+//
+//
+//
+//        for($i=0;$i<30;$i++){
+//
+//            $thirty_array[] = date('Y-m-d',$thirty_before_time+$i*86400); //每隔一天赋值给数组
+//
+//            $map_all['add_time']  = array('lt',$thirty_before_time+$i*86400);
+//
+////            $map_all['add_time'] = array('between','1,8');
+//
+//            $map_all['add_time'] = array('between',array($thirty_before_time+$i*86400,$thirty_before_time+($i+1)*86400));
+//
+//
+//
+//            $all_Users=0;
+//
+//            if ($vip == 1){
+//
+//                $all_Users = M('user_info')->where(['city_id' => $aid])->where($map_all)->count();
+//
+//            }
+//
+//            if ($vip == 2){
+//
+//                $all_Users = M('user_info')->where(['province_id' => $aid])->where($map_all)->count();
+//
+//            }
+//
+//            $thirty_array_data[] = $all_Users;
+//
+//            $vip_Users=0;
+//
+////            $map_vip['add_time']  = array('lt',$thirty_before_time+$i*86400);
+//
+//            $map_vip['add_time'] = array('between',array($thirty_before_time+$i*86400,$thirty_before_time+($i+1)*86400));
+//
+//            $map_vip['vip_group_id'] = array('gt',0);
+//
+//            if ($vip == 1){
+//
+//                $vip_Users = M('user_info')->where(['city_id' => $aid])->where($map_vip)->count();
+//
+//            }
+//
+//            if ($vip == 2){
+//
+//                $vip_Users = M('user_info')->where(['city_id' => $aid])->where($map_vip)->count();
+//
+//            }
+//
+//            $thirty_array_vip[] = $vip_Users;
+//
+//        }
+//
+//
+//
+//        return array($thirty_array,$thirty_array_data,$thirty_array_vip);
+//
+//    }
+//
+//
+//
+//
+//
+//    public function getMonthMessage($vip,$aid){
+//
+//
+//
+//        $min_Users = M('user_info')->where(['city_id' => $aid])->field('min(add_time) as first_time')->find();
+//
+//        if ($vip == 1){
+//
+//            $min_Users = M('user_info')->where(['city_id' => $aid])->field('min(add_time) as first_time')->find();
+//
+//        }
+//
+//        if ($vip == 2){
+//
+//            $min_Users = M('user_info')->where(['province_id' => $aid])->field('min(add_time) as first_time')->find();
+//
+//        }
+//
+//        $first_time = $min_Users['first_time'];
+//
+//        $month_first = date('Y-m-01', $first_time);
+//
+//        $first_month_day = date('Y-m-d', $first_time);
+//
+//        $now_day = date('Y-m-d', time());
+//
+//        $months = $this->diffDate($first_month_day,$now_day);
+//
+//
+//
+//        $month_array = array();
+//
+//        $month_user_array = array();
+//
+//        $month_vip_array = array();
+//
+//
+//
+//        for ($i=1;$i<$months+1;$i++){
+//
+//            $i_begin = $i-1;
+//
+//            $start_day_time = strtotime("$month_first +$i_begin month -1 day");
+//
+//
+//
+//            $last_day_time = strtotime("$month_first +$i month -1 day");
+//
+//            $month_array[] = date('Y-m', $last_day_time);
+//
+//            $map_all['add_time'] = array('between',array($start_day_time,$last_day_time));
+//
+//
+//
+//            $month_all_users = 0;
+//
+//            if ($vip == 1){
+//
+//                $month_all_users = M('user_info')->where(['city_id' => $aid])->where($map_all)->count();
+//
+//            }
+//
+//            if ($vip == 2){
+//
+//                $month_all_users = M('user_info')->where(['city_id' => $aid])->where($map_all)->count();;
+//
+//            }
+//
+//
+//
+//            $month_user_array[] = $month_all_users;
+//
+////            $map_vip['add_time']  = array('lt',$last_day_time);
+//
+//            $map_vip['add_time'] = array('between',array($start_day_time,$last_day_time));
+//
+//            $map_vip['vip_group_id'] = array('gt',0);
+//
+//
+//
+//            $month_vip_users = 0;
+//
+//            if ($vip == 1){
+//
+//                $month_vip_users = M('user_info')->where(['city_id' => $aid])->where($map_vip)->count();
+//
+//            }
+//
+//            if ($vip == 2){
+//
+//                $month_vip_users = M('user_info')->where(['city_id' => $aid])->where($map_vip)->count();
+//
+//            }
+//
+//            $month_vip_array[] = $month_vip_users;
+//
+//        }
+//
+//
+//
+//        return array($month_array,$month_user_array,$month_vip_array);
+//
+//    }
+//
+//
+//
+//    function diffDate($date1,$date2){
+//
+//        if(strtotime($date1)>strtotime($date2)){
+//
+//            $tmp=$date2;
+//
+//            $date2=$date1;
+//
+//            $date1=$tmp;
+//
+//        }
+//
+//        list($Y1,$m1,$d1)=explode('-',$date1);
+//
+//        list($Y2,$m2,$d2)=explode('-',$date2);
+//
+//        $Y=$Y2-$Y1;
+//
+//        $m=$m2-$m1;
+//
+//        if($m<0){
+//
+//            $m+=13;
+//
+//            $Y--;
+//
+//        }
+//
+//        return $Y*12+$m;
+//
+//    }
+//
+//
+//
+//
+//
+//    /**
+//
+//     * 导出Excel
+//
+//     */
+//
+//    public function excel(){
+//
+//        set_time_limit(0);
+//
+//
+//
+//        $admin=$_SESSION['admin'];
+//
+//        $grade=$admin['vip_group_id'];
+//
+//        $province=$admin['province_id'];
+//
+//        $city=$admin['city_id'];
+//
+//        $address=$_SESSION['address'];
+//
+//        $aid=$address['address_id'];
+//
+//        $data = I('request.');
+//
+//        // $data = $_GET;
+//
+//        // var_dump($data);die;
+//
+//        unset($data['PHPSESSID']);
+//
+//        $vips=$data['viplist'];
+//
+//
+//
+//        $where = array();
+//
+//
+//
+//        if($address['vip']==1)
+//
+//            $where['u.city_id'] = $aid;
+//
+//        if($address['vip']==2)
+//
+//            $where['u.province_id'] = $aid;
+//
+//        if($vips==0)
+//
+//            $where['u.vip_group_id'] = array('eq',0);
+//
+//        if($vips!=0)
+//
+//            $where['u.vip_group_id'] = $vips;
+//
+//        if($vips==-1)
+//
+//            $where['u.vip_group_id'] = array('gt',0);
+//
+//
+//
+//        if($data['startDate'])
+//
+//            $where['u.add_time'] = array('between',array(strtotime($data['startDate']),strtotime($data['overDate'])));
+//
+//
+//
+//        $fields = ['u.*,u.mobile as phone','ui.nick_name as rec_name','vg.vip_name', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name'];
+//
+//        $gcardMod = M('user_info')->where($where)->alias('u')->join('left join s_user_info ui ON ui.id = u.rec_user_id')->join('left join s_vip_group vg ON vg.id = u.vip_group_id')->join('left join s_region a ON u.province_id = a.region_id')->join('left join s_region b ON u.city_id = b.region_id')->join('left join s_region c ON u.district_id = c.region_id');
+//
+//        $list = $this->listss($gcardMod, $where, 'u.id DESC', null, $fields);
+//
+//
+//
+//        foreach($list as $k=>$v){
+//
+//            $inco=M("users_fans")->where(array('user_id'=>$v['id'],'level'=>'1'))->count();
+//
+//            $list[$k]['con']=$inco;
+//
+//        }
+//
+//
+//
+////        $viplist = M('vip_group')->select();
+//
+////        $listprovince = M('region')->where(array('parent_id'=>0))->select();
+//
+//        //  echo "<pre>";
+//
+//        // print_r($list);
+//
+//        // exit;
+//
+//        $data = array();
+//
+//        $headArr[]='账户id';
+//
+//        $headArr[]='用户名';
+//
+//        $headArr[]='地区';
+//
+////        $headArr[]='注册时间';
+//
+//        $headArr[]='推荐人';
+//
+//        $headArr[]='vip等级';
+//
+//        $data[] = $headArr;
+//
+//        foreach ($list as $k=>$v){
+//
+//            $tmp = array();
+//
+//            $tmp['id'] = $v['id'];
+//
+//            $tmp['nick_name'] = $v['nick_name'];
+//
+//            // $tmp['mobile'] = $v['mobile'];
+//
+//            $tmp['address'] = $v['province_name'].'-'.$v['city_name'];
+//
+////            $tmp['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
+//
+//            $tmp['name'] = $v['rec_name'];
+//
+//            $tmp['vip'] = $v['vip_name'];
+//
+//            $data[] = $tmp;
+//
+//        }
+//
+//
+//
+//
+//
+//        $filename="代理商地区列表";
+//
+//        create_xls($data, $filename);
+//
+//    }
+//
+//
+//
+//}
+//
+//
+//
+//<?php
+//
+//// +----------------------------------------------------------------------
+//
+//// | 登录控制器
+//
+//// +----------------------------------------------------------------------
+//
+//// | Copyright (c) 2016 http://www.zenghao.cc All rights reserved.
+//
+//// +----------------------------------------------------------------------
+//
+//// | Author: isum <http://www.zenghao.cc>
+//
+//// +----------------------------------------------------------------------
+//
+//namespace Admin\Controller;
+//
+//
+//
+//use Think\Controller;
+//
+//
+//
+//use Common\Service\MAC;
+//
+//
+//
+//
+//
+//class PublicController extends Controller{
+//
+//
+//
+//
+//
+//    public function login(){
+//
+//
+//
+//        if(IS_POST){
+//
+//            $post = I('post.');
+//
+//
+//
+//            if(empty($post['username'])) {
+//
+//                $this->ajaxReturn(array('status' => 1, 'msg' => '用户名不能为空'));
+//
+//            }
+//
+//            if(empty($post['password'])){
+//
+//                $this->ajaxReturn(array('status'=>1, 'msg'=>'密码不能为空'));
+//
+//            }
+//            $adminUser = M('adminUser');
+//
+//            if ($post['type'] == 1){
+//                管理员！
+//                $map['username'] = $post['username'];
+//
+//                $map['vip']  = array('gt',0);
+//
+//                $map['lock'] = 0;
+//
+//                $_result = M("admin_user")->where($map)->find();
+//
+//            }else{
+//
+//                $map['username'] = $post['username'];
+//
+//                $map['vip'] = array('eq',0);
+//
+//                $map['lock'] = 0;
+//
+//
+//
+//                $_result = M("admin_user")->where($map)->find();
+//
+//            }
+//
+//
+//
+//            if($_result){
+//
+//
+//
+//                if($_result['password'] == md5(sha1(md5($post['password'])))){
+//
+//                    $_result['last_login'] = time();
+//
+//                    $_result['last_ip'] = get_client_ip();
+//
+//                    session('admin', $_result);
+//
+//                    $adminUser->save($_result);
+//
+//                    session(C('USER_AUTH_KEY'), $_result['user_id']);
+//
+//                    session('username', $_result['username']);
+//
+//
+//
+//                    // 超级管理员识别
+//
+//                    //   C('RBAC_SUPERADMIN') 为admin
+//
+//                    if($_result['username'] == C('RBAC_SUPERADMIN')){
+//
+//                        session(C('ADMIN_AUTH_KEY'), true);
+//
+//                    }else
+//
+//                    {
+//
+//                        session(C('ADMIN_AUTH_KEY'), false);
+//
+//                    }
+//
+//                    $_SESSION[C('USER_AUTH_KEY')];
+//
+//                    $rbac=new \Org\Util\Rbac();
+//
+//
+//
+//                    //取出用户权限信息
+//
+//                    $rbac::saveAccessList($_result['user_id']);
+//
+//
+//
+//                    if($_result['vip']==1 || $_result['vip']==2){
+//
+//
+//
+////                        $group = $info->where(array('id'=>$result['user_info_id']))->field("id,vip_group_id,nick_name,province_id,city_id")->find();
+//
+////                        if($group['vip_group_id'] == 5 || $group['vip_group_id'] == 6){
+//
+//                        session('address', $_result);
+//
+//                        $this->ajaxReturn(array('status'=>2, 'msg'=>'登录成功'));
+//
+////                        }
+//
+//                    }
+//
+//                    if($_result['vip'] == 9){
+//
+//                        $this->ajaxReturn(array('status'=>3, 'msg'=>'登录成功'));
+//
+//                    }
+//
+//                    $this->ajaxReturn(array('status'=>0, 'msg'=>'登录成功'));
+//
+//                }else{
+//
+//                    $this->ajaxReturn(array('status'=>1, 'msg'=>'用户名或密码不正确'));
+//
+//                    // $this->ajaxReturn(array('status'=>3, 'msg'=>md5(sha1(md5($post['password'])))));
+//
+//                }
+//
+//            }else{
+//
+//                $this->ajaxReturn(array('status'=>1, 'msg'=>'会员不存在'));
+//
+//            }
+//
+//        }else{
+//
+//
+//
+//            $cookie_value = cookie('addr_cookie');
+//
+//            if ($cookie_value){
+//
+//                $is_equal = 1;
+//
+//            }else{
+//
+//                $is_equal = 2;
+//
+//            }
+//
+//            $this->assign('is_equal',$is_equal);
+//
+//
+//
+//            $this->display();
+//
+//        }
+//
+//    }
+//
+//
+//
+//    public function admin_login(){
+//
+//
+//
+//        $post = I('post.');
+//
+//        $where['phone']=$post['phone'];
+//
+//        $where['type']=$post['type'];
+//
+//        $where['code']=$post['code'];
+//
+//        $is = D('Api/MobileCode')->where($where)->order('id desc')->find();
+//
+//
+//
+//        $time=time();
+//
+//
+//
+//        if(!$is || ($is['expire_time']) < $time){
+//
+//            $this->ajaxReturn(array('status'=>4, 'msg'=>"验证码错误或过期"));
+//
+//        }
+//
+//
+//
+//        $_result = M("admin_user")->where(['phone'=>$post['phone'],'lock'=>0])->find();
+//
+//
+//
+//        if($_result){
+//
+//
+//
+//            $_result['last_login'] = time();
+//
+//            $_result['last_ip'] = get_client_ip();
+//
+//            session('admin', $_result);
+//
+//            M("admin_user")->save($_result);
+//
+//            session(C('USER_AUTH_KEY'), $_result['user_id']);
+//
+//            session('username', $_result['username']);
+//
+//
+//
+//            // 登录成功，存储客户端的cookie，过期时间一天。
+//
+//            cookie('addr_cookie',1,array('expire'=>3600*24));
+//
+//
+//
+//            // 超级管理员识别
+//
+//            //   C('RBAC_SUPERADMIN') 为admin
+//
+//            if($_result['username'] == C('RBAC_SUPERADMIN')){
+//
+//                session(C('ADMIN_AUTH_KEY'), true);
+//
+//            }else
+//
+//            {
+//
+//                session(C('ADMIN_AUTH_KEY'), false);
+//
+//            }
+//
+//            $_SESSION[C('USER_AUTH_KEY')];
+//
+//            $rbac=new \Org\Util\Rbac();
+//
+//
+//
+//            //取出用户权限信息
+//
+//            $rbac::saveAccessList($_result['user_id']);
+//
+//
+//
+//            if($_result['vip']==1 || $_result['vip']==2){
+//
+//                session('address', $_result);
+//
+//                $this->ajaxReturn(array('status'=>2, 'msg'=>'登录成功'));
+//
+//            }
+//
+//
+//
+//            if($_result['vip'] == 9){
+//
+//                $this->ajaxReturn(array('status'=>3, 'msg'=>'登录成功'));
+//
+//            }
+//
+//
+//
+//            $this->ajaxReturn(array('status'=>0, 'msg'=>'登录成功'));
+//
+//
+//
+//        }else{
+//
+//            $this->ajaxReturn(array('status'=>1, 'msg'=>'会员不存在'));
+//
+//        }
+//
+//
+//
+//
+//
+//    }
+//  public function logout(){
+//
+//        //session('admin', null);
+//
+//        session('[destroy]');
+//
+//        $this->redirect('public/login');
+//
+//    }
+//  public function getPhone(){
+//
+//        $admin_user = I('post.admin_user');
+//
+//        if(empty($admin_user)){
+//
+//            $this->ajaxReturn(array('status'=>2, 'msg'=>'用户名不能为空'));
+//
+//        }
+//
+//        $user = M("admin_user")->where(['username'=>$admin_user,'vip'=>0])->find();
+//
+//        if ($user){
+//
+//            $this->ajaxReturn(array('status'=>1, 'msg'=>'获取手机号成功','data'=>$user['phone']));
+//
+//        }else{
+//
+//            $this->ajaxReturn(array('status'=>3, 'msg'=>'该用户不存在'));
+//
+//        }
+//
+//    }
+//  public function sendCodeForLogin(){
+//
+//        //发送手机验证码
+//
+//        if(IS_POST){
+//
+//            $res=I("post.");
+//
+//            $data=D("Api/Member",'Logic')->sendAdminLoginCode($res);
+//
+//            $this->ajaxReturn($data);
+//
+//        }
+//
+//    }
+// //获取地级市
+//
+//    public function get_citys(){
+//
+//        $listObj = M('region');
+//
+//        $where['top_parentid'] = I('province_id');
+//
+//        $where['level'] = 2;
+//
+//        if (in_array(I('province_id'),array(1,2,9,22))) {
+//
+//            $where['level'] = 3;
+//
+//        }
+//
+//        $list = $listObj->where($where)->select();
+//
+//        $data=array('status'=>0,'city'=>$list);
+//
+//        header("Content-type: application/json");
+//
+//        exit(json_encode($data));
+//
+//    }
+//  //获取地级县
+//
+//    public function get_district(){
+//
+//        $listObj = M('region');
+//
+//        $where['parent_id'] = I('city_id');
+//
+//        $where['level'] = 3;
+//
+//        $list = $listObj->where($where)->select();
+//
+//        $data=array('status'=>0,'district'=>$list);
+//
+//        header("Content-type: application/json");
+//
+//        exit(json_encode($data));
+//
+//    }
+//}
+//
+//
+//
+//?>

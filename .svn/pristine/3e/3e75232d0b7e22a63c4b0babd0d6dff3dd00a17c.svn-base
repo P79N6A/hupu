@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/clipboard.min.js"></script>
+
+    <title>我的奖品</title>
+    <style>
+        body,html{
+            padding-top: .4rem;
+        }
+        .header {
+            width: 100%;
+            height: .44rem;
+            background: #F6F6F6;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .header ul {
+            width: 100%;
+        }
+
+        .header .nav li {
+            text-align: center;
+            width: 50%;
+            line-height: .44rem;
+            position: relative;
+        }
+
+        .header .nav li .line {
+            width: .21rem;
+            height: .02rem;
+            background: #AC90F7;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -.105rem;
+        }
+
+        .main {
+            width: 100%;
+            margin-top: .16rem;
+            padding-bottom: .5rem;
+        }
+
+        .main .list {
+            width: 100%;
+        }
+
+        .main .list li {
+            width: 50%;
+            text-align: center;
+        }
+
+        .main .list li img {
+            display: block;
+            margin: 0 auto;
+            width: 1.64rem;
+            height: 1.4rem;
+            border-radius: .02rem;
+        }
+
+        .main .list li p {
+            padding-top: .13rem;
+            padding-bottom: .18rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #cll_me {
+            width: 100%;
+            height: .5rem;
+            line-height: .5rem;
+            text-align: center;
+            background: #AC90F7;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .tryout {
+            width: 100%;
+            padding: 0 .12rem .5rem .12rem;
+            box-sizing: border-box;
+        }
+
+        .tryout li {
+            width: 100%;
+            height: .74rem;
+            border-radius: .05rem;
+            background: url(/Public/Home/images/tryout.png);
+            background-size: 100% 100%;
+            box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.12);
+            margin-bottom: .1rem;
+        }
+
+        .tryout li .left_box {
+            width: 25%;
+            height: 100%;
+            position: relative;
+        }
+
+        .tryout li .left_box img {
+            width: .69rem;
+            height: .63rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -.315rem;
+            margin-left: -.345rem;
+        }
+
+        .tryout li .right_box{
+            width: 75%;
+            height: 100%;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+         .tryout li .right_box p{
+                width: 1.6rem;
+                font-size: .14rem;
+                height: .2rem;
+                position: absolute;
+                top: 50%;
+                margin-top: -.1rem;
+                left: .35rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: #fff;
+         }
+
+           .tryout li .right_box button{
+               padding: .02rem .1rem;
+               height: .24rem;
+               border: 0;
+               font-size: .12rem;
+               position: absolute;
+               top: 50%;
+               margin-top: -.12rem;
+               right: .05rem;
+               border-radius: .2rem;
+               border: 1px  solid #fff;
+               background: transparent;
+               color: #fff;
+               outline: none;
+               
+           }
+        .isshow{display: none;}
+
+        .call_cus {
+            width: 2.95rem;
+            height: 3.29rem;
+            background: #fff;
+            position: fixed;
+            z-index: 999;
+            border-radius: .08rem;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.475rem;
+            margin-top: -1.645rem;
+            text-align: center;
+            display: none;
+            text-align: center;
+        }
+
+        .call_cus .del_box {
+            width: 100%;
+            height: .3rem;
+            position: relative;
+            margin-bottom: .2rem;
+        }
+
+        .call_cus .del_box img {
+            display: block;
+            width: .12rem;
+            height: .12rem;
+            position: absolute;
+            top: .13rem;
+            right: .14rem;
+        }
+
+        .call_cus .cus_box {
+            width: 1.84rem;
+            height: 1.84rem;
+            background: #AC90F7;
+            margin: .12rem auto;
+        }
+
+        .call_cus .cus_box img {
+        width: 100%;
+        height: 100%;
+        }
+
+        .call_cus .tip {
+        font-size: .12rem;
+        color: #9E9E9E;
+        text-align: center;
+        }
+
+        .dh{
+            width: 2.6rem;
+            height: 1.6rem;
+            background: #fff;
+            border-radius: .05rem;
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            z-index: 999;
+            margin-left: -1.3rem;
+            text-align: center;
+            display: none;
+        }
+
+        .dh .dh_box{
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+       .dh .dh_box .title{
+           padding-top: .3rem;
+       }
+
+         .dh .dh_box img{
+             width: .12rem;
+             height: .12rem;
+             display: block;
+             position: absolute;
+             top: .09rem;
+             right: .09rem;
+         }
+
+          .dh .dh_box .exchange{
+              position: absolute;
+              width: 2.5rem;
+              top: 50%;
+              left:50%;
+              /* margin-top: -.2rem; */
+              margin-left: -1.25rem;
+          }
+
+          .experience{
+              width: 1rem;
+              position: fixed;
+              right: 0;
+              bottom: .89rem;
+              z-index: 222;
+              
+          }
+          .experience a{
+              display: block;
+              width: 100%;
+              font-size: .12rem;
+              color: #DE5448;
+              text-align:center;
+              padding: .05rem 0;
+              border-radius: .15rem 0 0 .15rem;
+              box-shadow:0px 2px 10px 0px rgba(191,191,191,0.25);
+          }
+
+        
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <ul class="clearfix nav">
+            <li class="active fl">
+                <p style="font-size:.16rem"> 奖品</p>
+                <div class="line"></div>
+            </li>
+            <li class="fl">
+                <p>体验卡</p>
+                <div class="line" style="display:none"></div>
+            </li>
+        </ul>
+
+    </div>
+    <div class="main">
+        <ul class="clearfix list">
+
+            <!--<li class="fl">-->
+                <!--<img src="/Public/Home/images/yuantiao.jpg" alt="">-->
+                <!--<p>奖品名称</p>-->
+            <!--</li>-->
+            <!--<li class="fl">-->
+                <!--<img src="/Public/Home/images/yuantiao.jpg" alt="">-->
+                <!--<p>奖品名称</p>-->
+            <!--</li>-->
+            <!--<li class="fl">-->
+                <!--<img src="/Public/Home/images/yuantiao.jpg" alt="">-->
+                <!--<p>奖品名称</p>-->
+            <!--</li>-->
+        </ul>
+
+         <ul class="tryout isshow">
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li class="clearfix">-->
+                <!--<div class="fl left_box">-->
+                    <!--<img src="https://wap.yxm360.com/Public/Home/images/lock_img/experience_card.png" alt="">-->
+                <!--</div>-->
+                <!--<div class="fl right_box">-->
+                    <!--<div class="clearfix">-->
+                        <!--<p class="fl">卡号:17621714354</p>-->
+                        <!--<button class="fr">点击激活</button>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+
+    </div>
+    <a id="cll_me" href="javascript:;">获取奖品,联系我</a>
+    <!-- 联系客服 -->
+    <div class="call_cus">
+        <div class="del_box">
+            <img src="/Public/Home/images/inco_bianji_de@2x.png" alt="">
+        </div>
+        <p>获取奖品，添加洋小秘客服</p>
+        <div class="cus_box">
+            <img src="/Public/Home/images/yxmkf.jpg" alt="">
+        </div>
+        <p class="tip">扫一扫，添加客服</p>
+    </div>
+    <div class="mask"></div>
+    <!-- 兑换的 -->
+    <div class="dh">
+        <div class="dh_box">
+            <p class="title">pc电脑</p>
+            <img src="/Public/Home/images/inco_bianji_de@2x.png" alt="">
+            <p class="exchange">洋小秘兑奖id: <span></span> </p>
+        </div>
+    </div>
+    <!-- 体验卡使用 -->
+    <div class="experience">
+        <a href="index.php?s=/Home/Vote/explain.html">如何使用体验卡</a>
+    </div>
+</body>
+
+</html>
+<script>
+
+    var openid = '{$openid}';
+    $(function () {
+        $.ajax({
+            url: "/index.php?s=/Api/Vote/get_my_prize",
+            type: "post",
+            data: {
+                openid: openid
+            },
+            success: function (res) {
+                console.log(res)
+                var list = res.AppendData;
+                var str1="";
+                var str2="";
+                for( var a in list){
+
+                    if(list[a].ptype==1){
+
+                        str1+="<li class=\"fl\" data-lid="+list[a]["lid"]+">";
+                        str1+="<img src=\""+list[a]["pimgurl"]+"\" >";
+                        str1+="<p id='title'>"+list[a]["pname"]+"</p>";
+                        str1+="</li>";
+                    }else{
+                        str2+="<li class=\"clearfix\">";
+                        str2+="<div class=\"fl left_box\">";
+                        str2+="<img src=\""+list[a]["pimgurl"]+"\">";
+                        str2+="</div>";
+                        str2+="<div class=\"fl right_box\">";
+                        str2+="<div class=\"clearfix\">";
+                        str2+="<p class=\"fl\">卡号:"+list[a]["code"]+"</p>";
+                        str2+="<button class=\"fr btn\" data-clipboard-text="+list[a]["code"]+" >复制</button>";
+                        str2+="</div>";
+                        str2+="</div>";
+                        str2+="</li> ";
+                    }
+
+                }
+
+                $("ul.clearfix.list").html(str1);
+                $("ul.tryout").html(str2)
+
+                if($(".list li").length == 0){
+                    $(".list").html('<p style="text-align: center;margin-top:2rem;">您还没有获得奖品哦!!</p>');
+                    $("#cll_me").attr("href","index.php?s=/Home/Vote/draw&openid="+openid+"").text("想要获得奖品，请前去抽奖");
+                }else{
+                     $("#cll_me").attr("href","javascript:;").text("获取奖品,联系我");
+                     $("#cll_me").on("click",function(){
+                         $(".call_cus").show();
+                         $(".mask").show();
+                     })
+                }
+
+                if($(".isshow li").length == 0){
+                    $(".isshow").html('<p style="text-align: center;margin-top:2rem;">您还没有获得奖品哦!!</p>');
+                    $("#cll_me").attr("href","index.php?s=/Home/Vote/draw&openid="+openid+"").text("想要获得奖品，请前去抽奖");
+                }else{
+                     $("#cll_me").attr("href","javascript:;").text("获取奖品,联系我");
+                     $("#cll_me").on("click",function(){
+                         $(".call_cus").show();
+                         $(".mask").show();
+                     })
+                }
+
+            }
+
+
+        })
+    })
+
+    var isshow=true;
+    $(".nav li").on("click", function () {
+        if(isshow){
+            $("ul.clearfix.list").addClass("isshow");
+            $("ul.tryout").removeClass("isshow");
+            isshow=false;
+        }else{
+            $("ul.clearfix.list").removeClass("isshow");
+            $("ul.tryout").addClass("isshow");
+            isshow=true;
+        }
+        $(this).find(".line").show().parent().siblings().find(".line").hide();
+        $(this).find("p").css({
+            "font-weight": "blod",
+            "font-size": ".16rem"
+        }).parent().siblings().find("p").css({
+            "font-weight": "normal",
+            "font-size": ".14rem"
+        })
+
+    })
+
+        //点击复制兑换码
+        var clipboard = new ClipboardJS('.btn');
+        clipboard.on('success', function (e) {
+        console.log(e);
+        alert("复制成功")
+        });
+        clipboard.on('error', function (e) {
+        console.log(e);
+        alert("复制失败请手动复制")
+        });
+
+        //关闭客服
+        $(".call_cus .del_box").on("click","img",function(){
+        $(".call_cus").hide();
+        $(".mask").hide();
+        })
+
+        //兑奖的点击
+        $(".list").on("click","li",function(){
+            var lid = $(this).attr("data-lid");
+            var title = $(this).find("#title").text();
+           $(".dh_box").find(".title").text(title);
+           $(".exchange").find("span").text(lid);
+           $(".dh").show();
+           $(".mask").show();
+        })
+
+        $(".dh .dh_box").on("click","img",function(){
+           $(".dh").hide();
+           $(".mask").hide();
+        })
+        
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

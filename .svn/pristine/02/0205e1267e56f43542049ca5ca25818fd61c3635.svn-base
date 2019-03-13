@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/Sortableone.js"></script>
+
+    <script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+    <script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+    <script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+    <title>编辑页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /*overflow: hidden;*/
+            /* overflow-y:auto;
+            -webkit-overflow-scrolling : touch;  */
+        }
+        body{
+            background:#f6f6f6;
+            overflow-x: hidden;
+        }
+        .content {
+            width: 100%;
+            height: auto;
+            position: relative;
+            background: #fff;
+            margin:.05rem 0;
+            padding-bottom: 0.1rem;
+            overflow: hidden;
+        }
+        .lubg {
+            width: .9rem;
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(50, 206, 160, 1);
+            line-height: .2rem;
+            margin: 0 .12rem;
+            padding: .16rem 0;
+        }
+
+        .cats {
+            width: 1rem;
+            height: .14rem;
+            font-size: .1rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(155, 155, 155, 1);
+            line-height: .14rem;
+            position: absolute;
+            right: .13rem;
+            top: .19rem;
+            text-align: right;
+        }
+
+        .secdig {
+            width: .845rem;
+            height: .845rem;
+            background: #F8F8F8;
+            border-radius: 2px;
+            float: left;
+            margin-top: .06rem;
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .secdig img {
+            width: .845rem;
+            height: .845rem;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 2px;
+        }
+        
+        .secdig video {
+            width: .845rem;
+            height: .845rem;
+            background-size: 100% 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 2px;
+            object-fit: fill;
+        }
+        
+        .turing{
+            width: .845rem;
+            height: .845rem;
+            background: rgba(0, 0, 0, .1);
+            border-radius: 2px;
+            float: left;
+            position: absolute;
+            z-index:9999;
+        }
+        .secdig:nth-child(4n-2){
+        	margin-left:0.06rem;
+        }
+        .secdig:nth-child(4n-1){
+        	margin-left:0.06rem;
+        	margin-right:0.06rem;
+        }
+        .closer{
+            width:.17rem;
+            height:.17rem;
+            top:0;
+            right:0;
+            position: absolute;
+            background-size:100% 100%;
+        }
+        .closer img{
+            width:.16rem;
+            height:.16rem;
+            background-size: 100% 100%;
+        }
+        .tjttp{
+            width: 45%;
+            height: .8rem;
+            background: #F8F8F8;
+            border-radius: 2px;
+            float: left;
+            position: relative;
+        }
+        
+        .tjttps{
+            width: 45%;
+            height: .8rem;
+            background: #F8F8F8;
+            border-radius: 2px;
+            float: left;
+            margin-left: 10%;
+            position: relative;
+        }
+        
+        .tjttps img{
+        	display: block;
+            width:.48rem;
+            height:.36rem;
+            margin: 0.22rem 0.16rem;
+        }
+        
+        .tjttp img{
+        	display: block;
+            width:.48rem;
+            height:.36rem;
+            margin: 0.22rem 0.16rem;
+        }
+        .chuantp{
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            top:0;
+            left:0;
+            display: block;
+        }
+        
+        .v_vdo{
+        	width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            top:0;
+            left:0;
+            display: block;
+        }
+        .secd{
+        	display: block;
+            width: 95%;
+            margin: 0 auto;
+            height: auto;
+            overflow: hidden;
+        }
+        .middle{
+            width:100%;
+            height:4.46rem;
+            margin:.08rem 0;
+            background:#fff;
+        }
+        .pert{
+            width:96%;
+            height:.48rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:rgba(50,206,160,1);
+            line-height:.48rem;
+           margin:0 .16rem;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .toux{
+            width:96%;
+            height:.55rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.55rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .toux img{
+            width:.4rem;
+            height:.4rem;
+            right:.16rem;
+            top:0.07rem;
+            position: absolute;
+            border-radius: 50%;
+            background-size:100% 100%;
+        }
+        .tximg{
+            width: .4rem;
+            height: .4rem;
+            position: absolute;
+            right: .16rem;
+            top: .07rem;
+            opacity: 0;
+        }
+        .xming{
+            width:96%;
+            height:.55rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.55rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .srxm{
+            width:1rem;
+            height:.2rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(119,119,119,1);
+            line-height:.2rem;
+            right:.16rem;
+            top:.16rem;
+            position: absolute;
+            border: none;
+            outline:none;
+            text-align: right;
+        }
+        .sex{
+            width:96%;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.54rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .sage{
+            width:96%;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.54rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .nannv{
+            height:.3rem;
+            right:.16rem;
+            top:.15rem;
+            position: absolute;
+        }
+        .nannv li{
+            width:.54rem;
+            height:.22rem;
+            float:left;
+            color:#C5C5C5;
+            text-align: center;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            line-height:.22rem;
+            margin-left:.24rem;
+            border-radius:.11rem;
+            border:1px solid #C5C5C5;
+        }
+        .nannv input{
+            display: none;
+        }
+        .changeli{
+            width:.54rem;
+            height:.22rem;
+            float:left;
+            color:#32CEA0 !important;
+            text-align: center;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            line-height:.2rem;
+            margin-left:.24rem;
+            border-radius:.11rem;
+            border:1px solid #32CEA0 !important;
+        }
+        ul li{
+            list-style: none;
+        }
+        .phone{
+            width:96%;
+            height:.59rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.59rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .phenum{
+            width:1rem;
+            height:.2rem;
+            right:.16rem;
+            top:.17rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777777;
+            line-height:.2rem;
+            position: absolute;
+            border: none;
+            outline:none;
+            text-align: right;
+        }
+        .rmail{
+            width:96%;
+            height:.54rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            line-height:.48rem;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .emnum{
+            width:2rem;
+            height:.2rem;
+            right:.16rem;
+            top:.16rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777777;
+            position: absolute;
+            line-height:.2rem;
+            border: none;
+            outline:none;
+            text-align: right;
+        }
+        .tjwx{
+            width:96%;
+            height:.56rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            position: relative;
+            line-height:.56rem;
+           margin:0 .16rem;
+        }
+        .tjwx img{
+            width:.4rem;
+            height:.4rem;
+            top:0.07rem;
+            right:.16rem;
+            position: absolute;
+            background-size:100% 100%;
+        }
+        .wximg{
+            width:.4rem;
+            height:.4rem;
+            top:0.07rem;
+            right:.16rem;
+            position: absolute;
+            opacity: 0;
+        }
+        .three{
+            width:100%;
+            height:2.64rem;
+            background:#fff;
+            margin:8px 0;
+        }
+        .trtop{
+            width:96%;
+            height:.47rem;
+            /* background:palevioletred; */
+            line-height: .47rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:rgba(50,206,160,1);;
+            margin:0 .16rem;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .hangye{
+            width:96%;
+            height:.54rem;
+            position: relative;
+            line-height: .54rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            margin:0 .16rem;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .hangye span{
+            right:.27rem;
+            top:.16rem;
+            width:1.6rem;
+            height:.20rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            line-height:.20rem;
+            position: absolute;
+        }
+        .hangye img{
+            width:.06rem;
+            height:.11rem;
+            top: 0.04rem;
+            right: -.1rem;
+            position: absolute;
+            background-size:100% 100%;
+        }
+        .sompan{
+            width:96%;
+            height:.53rem;
+            /* background:palevioletred; */
+            line-height: .53rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .comname{
+            width:3rem;
+            height:.20rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            line-height:.20rem;
+            position: absolute;
+            outline: none;
+            border:none;
+            right:.16rem;
+            top:.16rem;
+            text-align: right;
+            position: absolute;
+        }
+        .zhiwu{
+            width:96%;
+            height:.53rem;
+            /* background:palevioletred; */
+            line-height: .53rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            margin:0 .16rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .zwname{
+            height:.20rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            line-height:.20rem;
+            position: absolute;
+            outline: none;
+            border:none;
+            right:.16rem;
+            top:.16rem;
+            text-align: right;
+            position: absolute;
+        }
+        .qitzw{
+            width:96%;
+            height:.53rem;
+            /* background:palevioletred; */
+            line-height: .53rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#333;
+            margin:0 .16rem;
+            position: relative;
+        }
+        .qtzwname{
+            width:1.6rem;
+            height:.20rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            line-height:.20rem;
+            position: absolute;
+            outline: none;
+            border:none;
+            right:.16rem;
+            top:.16rem;
+            text-align: right;
+            position: absolute;
+        }
+        .four{
+            width:100%;
+            height:1.86rem;
+            background:#fff;
+            position: relative;
+            margin-bottom: .08rem;
+        }
+        .four span{
+            height:.22rem;
+            top:.16rem;
+            left:.16rem;
+            font-size:.16rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#32CEA0;
+            line-height:.22rem;
+            position: absolute;
+        }
+        .person{
+            width:90%;
+            height:1.2rem;
+            top:.5rem;
+            left:.16rem;
+            /* background:palevioletred; */
+            position: absolute;
+        }
+        .prejs{
+            width: 100%;
+            height: 1.2rem;
+            /* background: palegoldenrod; */
+            /* position: absolute; */
+            border: none;
+            outline: none;
+            padding-top:5px;
+            overflow: hidden;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#9B9B9B;
+            line-height:.2rem;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 6;
+        }
+        .five{
+            width:100%;
+            height:5.26rem;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+        .fivetop{
+            width: 96%;
+            height: .54rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #32CEA0;
+            line-height: .54rem;
+            position: absolute;
+            background: #fff;
+            padding-left: .16rem;
+           
+        }
+        .fivedress{
+            width:100%;
+            height:2.4rem;
+            /* background:paleturquoise; */
+            position: relative;
+            top:.54rem;
+        }
+        .dressl{
+            width:.78rem;
+            height:.4rem;
+            background:rgba(255,255,255,1);
+            box-shadow:0px 5px 12px 0px rgba(198,192,192,0.5);
+            border-radius:6px;
+            border:1px solid rgba(197,197,197,1);
+            position: absolute;
+            left:.13rem;
+            top:.12rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(51,51,51,1);
+            line-height:.4rem;
+            text-align: center;
+            z-index:999;
+        }
+        .dressl img{
+            width:.12rem;
+            height:.07rem;
+            background-size:100% 100%;
+        }
+        .darry{
+            width:.28rem;
+            height:.2rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#333;
+            line-height:.2rem;
+            /* background:pink; */
+        }
+        .dressr{
+            width:3.5rem;
+            height:.4rem;
+            background:#FFF;
+            box-shadow:0px 5px 12px 0px rgba(198,192,192,0.5);
+            border-radius:6px;
+            border:1px solid rgba(197,197,197,1);
+            position: absolute;
+            right:.13rem;
+            top:.12rem;
+            z-index:999;
+        }
+        .desrw{
+            width: 3.3rem;
+            height: .39rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            line-height: .4rem;
+            background: #FFF;
+            border-radius: 6px;
+            border: 0;
+            outline: none;
+            position: absolute;
+            padding-left: .15rem;
+
+        }
+        .threedress{
+            width:100%;
+            height:2.16rem;
+            bottom:0;
+            position: absolute;
+            /* background:purple; */
+        }
+        .menu{
+            width:96%;
+            height:1.55rem;
+            position: absolute;
+            right:0;
+            overflow: hidden;
+            border-bottom: 1px solid #f6f6f6;
+        }
+        .menu li{
+            width:100%;
+            color:#777;
+            height:.51rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            line-height:.51rem;
+            position: relative;
+            border-top:1px solid #F6F6F6;
+            cursor: pointer;
+        }
+        .menu span{
+            left: .16rem;
+            position: absolute;
+            overflow: hidden;
+            width: 3rem;
+            overflow: hidden;
+            height:.45rem;
+            top:0;
+            /* background: pink; */
+        }
+        .drefist{
+            width:100%;
+            height:.51rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            border-top:1px solid #F6F6F6;
+            line-height: .51rem;
+        }
+        .dressact{
+            width:100% !important;
+            height:.51rem !important;
+            font-size:.14rem !important;
+            font-family:PingFangSC-Regular !important;
+            font-weight:400 !important;
+            color:#333 !important;
+            line-height: .51rem !important;
+        }
+        .drefist span{
+            left:.37rem;
+            position: absolute;
+        }
+        .choose{
+            width:.2rem;
+            height:.17rem;
+            top:.17rem;
+            right:.16rem;
+            position: absolute;
+            display: none;
+            background-size: 100% 100%;
+        
+        }
+        .chooseo{
+            width:.2rem;
+            height:.17rem;
+            top:.17rem;
+            right:.16rem;
+            position: absolute;
+            display: none;
+            background-size: 100% 100%;
+        }
+        .chooses{
+            width:.2rem;
+            height:.17rem;
+            top:.17rem;
+            right:.16rem;
+            position: absolute;
+            display: none;
+            background-size: 100% 100%;
+        }
+        .dresed{
+            width:100%;
+            height:.51rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            border:1px solid #F6F6F6;
+            line-height: .51rem;
+            position: relative;
+        }
+        .dresed span{
+            left:.37rem;
+            position: absolute;
+        }
+        .drethree{
+            width:100%;
+            height:.51rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            line-height: .51rem;
+            position: relative;
+            border-bottom:1px solid #F6F6F6;
+        }
+        .drethree span{
+            left:.37rem;
+            position: absolute;
+        }
+        .dessimg{
+            width:.09rem;
+            height:.14rem;
+            top:.18rem;
+            left:.16rem;
+            position: absolute;
+            background-size:100% 100%; 
+        }
+        .dressimg{
+            width:.09rem;
+            height:.14rem;
+            top:.18rem;
+            left:.16rem;
+            position: absolute;
+            background-size:100% 100%; 
+        }
+        .dresimg{
+            width:.09rem;
+            height:.14rem;
+            top:.18rem;
+            left:0;
+            position: absolute;
+            background-size:100% 100%; 
+        }
+        .dressgx{
+            width:95%;
+            height:.6rem;
+            line-height: .6rem;
+            font-size:.16rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#333;
+            position: relative;
+            padding-left:.16rem;
+            position: absolute;
+            bottom: 0;
+            /* background: palevioletred; */
+        }
+        .dressgx img{
+            width:.52rem;
+            height:.28rem;
+            right:.32rem;
+            top:.16rem;
+            position: absolute;
+            background-size:100% 100%;
+        }
+        .butan{
+            width:100%;
+            height:.72rem;
+            background:#fff;
+            position: fixed;
+            bottom: 0;
+            z-index:999;
+        }
+        .baocun{
+            width:90%;
+            height:.4rem;
+            line-height:.4rem;
+            outline: none;
+            border:0;
+            bottom:.16rem;
+            left:.17rem;
+            color:#fff;
+            font-size:.16rem;
+            position: absolute;
+            background:#32CEA0;
+            border-radius:4px;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            letter-spacing: .05rem;
+            -webkit-appearance: none;
+        }
+
+        /* 开关按钮 */
+            .foot_left,
+			.foot_right {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.foot_right {
+				width: 100%;
+				height: 100%;
+				text-align: right;
+			}
+			/*开关按钮*/
+			
+			#radio,
+			.text {
+				display: none;
+			}
+			
+			.on {
+				color: #fff;
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.off {
+				color: #999;
+				position: absolute;
+				top: 0;
+				right: 0;
+				display: inline-block;
+			}
+			
+			#radio~label {
+				background-color: #fff;
+				border: 0.02rem solid #ddd;
+				display: inline-block;
+				position: relative;
+				height: .28rem;
+				width:.52rem;
+                border-radius: 0.7rem;
+                position: absolute;
+                left: 0;
+                top: 0;
+			}
+			
+			#radio:checked~label {
+				background: #32CEA0;
+				border: 0.025rem solid #32CEA0;
+			}
+			
+			#radio:checked~label .circle {
+				left: .26rem;
+			}
+			
+			#radio:checked~label .on {
+				display: inline-block;
+			}
+			
+			#radio:checked~label .off {
+				display: none;
+			}
+			
+			label .circle {
+				display: inline-block;
+				height: .28rem;
+				width: .28rem;
+				border-radius: 50%;
+				box-shadow: 0 0.02rem 0.1rem rgba(0, 0, 0, .4);
+				z-index: 10;
+				background: #fff;
+				position: absolute;
+				left: 0;
+				transition: all 0.3s;
+				-webkit-transition: all 0.3s;
+			}
+			
+			label .text {
+				width:.52rem;
+				height:.28rem;
+				line-height:.28rem;
+				font-size: .11rem;
+				text-align: center;
+			}
+
+            .foot {
+				width:.65rem;
+                height:.4rem;
+                line-height:.3rem;
+                margin: 0 auto;
+                font-size: 0.8rem;
+                color: #333;
+                position: absolute;
+                right:.10rem;
+                top:.16rem;
+                z-index: 9;
+			}
+            .on_ipt{
+                /* width: 0.7rem; */
+                height: .20rem;
+                font-size:.14rem;
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                line-height: 20px;
+                position: absolute;
+                right: .01rem;
+                border: 0;
+                text-align: right;
+            }
+        
+           .zhezhao {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			display: none;
+			background-color: #00000057;
+		}
+        .privacy {
+			width: 80%;
+			height: 22%;
+			background: #fff;
+			border-radius: 0.25rem;
+			font-size: 0.75rem;
+			text-align: center;
+			background: #fff;
+			color: #000;
+			margin-bottom: 3rem;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin: -11% 0 0 -40%;
+			z-index: 999;
+            overflow: hidden;
+		}
+
+		.up {
+			width: 100%;
+			height: 20%;
+			padding: 7.5% 0;
+			text-align: center;
+			font-size: 17px;
+			color: #000;
+		}
+
+		.down {
+			width: 100%;
+			height: 50%;
+			text-align: center;
+			font-size: 16px;
+			color: #666;
+		}
+        .one{
+            display: block;
+        }
+        /* 提示弹框样式 */
+        .tipmoney{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 999;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            text-align: center;
+            width: 1.8rem;
+            font-size: .12rem;
+            padding: 0.05rem 0 ;
+            margin-left: -0.9rem;
+            border-radius: .05rem;
+            display: none;
+        }
+        .tkts{
+            position: absolute;
+            text-align: center;
+            background: #00000057;
+            color:#fff;
+            font-size:.14rem;
+            top:50%;
+            left:35%;
+            padding:.05rem;
+            display: none;
+            z-index: 10000;
+        }
+        /* 编辑页面 */
+        .detail {
+            position: absolute;
+            right:.16rem;
+            z-index: 9;
+            top: 0;
+        }
+
+        .detail img {
+            width: .11rem;
+            height: .14rem;
+            position: absolute;
+            background-size: 100% 100%;
+            top: .05rem;
+            right: .1rem;
+        }
+
+        .detail li {
+            height: .16rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #fff;
+            position: absolute;
+            top: .03rem;
+            right: .25rem;
+        }
+        .sele{
+            border:0;
+            outline: none;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#777;
+            background:#fff; 
+			direction: rtl;
+        }
+        select{
+            -webkit-appearance: none;  
+            background-size: 0.3rem;
+            background-position-x: 96%;
+        }
+        .tipmoney{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 999;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            text-align: center;
+            width: 1.8rem;
+            font-size: .12rem;
+            padding: 0.05rem 0 ;
+            margin-left: -0.9rem;
+            border-radius: .05rem;
+            display: none;
+        }
+        .renjl{
+            width: 100%;
+            height: .6rem;
+            position: absolute;
+            top: .5rem;
+        }
+        .renfist{
+            padding-bottom: 80px;
+        }
+        /*  */
+       
+.dressgx button {
+    width: .44rem;
+    height: .24rem;
+    outline: none;
+    border: 0;
+    border-radius: .12rem;
+    background: #c6c6cc;
+    position: absolute;
+    top: 50%;
+    right: .16rem;
+    margin-top: -.12rem;
+    padding: .005rem 0 .005rem .01rem;
+    box-sizing: border-box;
+}
+.dressgx button span {
+    width: .2rem !important;
+    height: .2rem !important;
+    background: #fff;
+    display: block;
+    border-radius: 50%;
+    margin-left: .02rem;
+    margin-top: 0.005rem;
+}
+.gif {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+}
+			
+.gif>img {
+	width: 20%;
+	position: absolute;
+	left: 40%;
+	top: 36%;
+}
+.gifr {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	display: none;
+}
+			
+.gifr>img {
+	width: 20%;
+	position: absolute;
+	left: 40%;
+	top: 36%;
+}
+
+      /* 截图的 */
+
+.btun {
+	width: 274px;
+	height: 10%;
+	margin: 0 auto;
+    position: relative;
+}
+			
+#clipBtn {
+	width: 35%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #32CEA0;
+    color: #fff;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 999;
+    border-radius: 5px;
+    right: 0px;
+    top: 10px;
+    font-size: 0.16rem;
+}
+			
+#cancel {
+	background-color: #fff;
+    color: #000;
+    width: 35%;
+    height: .4rem;
+    line-height: .4rem;
+    border-radius: .05rem;
+    border: none;
+    margin-right: 26%;
+    position: absolute;
+    z-index: 999;
+    top: .1rem;
+    font-size: 0.16rem;
+}
+			
+#clipArea {
+	height: 85%;
+    width: 100%;
+}
+
+.clip {
+	background-color: #000;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 10000;
+}
+			
+.photo-clip-view {
+	background-color: #fff;
+}
+*{ -webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color: transparent; /* For some Androids */ }
+
+/* 裁剪头像 */
+ /* 截图的 */
+
+ .btunr {
+	width: 274px;
+	height: 10%;
+	margin: 0 auto;
+    position: relative;
+}
+			
+#clipBtnr {
+	width: 35%;
+    height: 40px;
+    line-height: 40px;
+    background-color: #32CEA0;
+    color: #fff;
+    text-align: center;
+    border: none;
+    position: absolute;
+    z-index: 999;
+    border-radius: 5px;
+    right: 0px;
+    top: 10px;
+    font-size: 0.16rem;
+}
+			
+#cancelr {
+	background-color: #fff;
+    color: #000;
+    width: 35%;
+    height: .4rem;
+    line-height: .4rem;
+    border-radius: .05rem;
+    border: none;
+    margin-right: 26%;
+    position: absolute;
+    z-index: 999;
+    top: .1rem;
+    font-size: 0.16rem;
+}
+			
+#clipArear {
+	height: 85%;
+    width: 100%;
+}
+
+.clipr {
+	background-color: #000;
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 10000;
+}
+			
+.photo-clip-view {
+	background-color: #fff;
+}
+.photo-clip-layer{
+	background: #fff;
+}
+
+
+
+.tab_btn{
+	width: 95%;
+	height: 0.8rem;
+	margin: 0 auto 0.06rem;
+}
+.t_left{
+	width: 50%;
+	height: 100%;
+	float:left;
+	text-align: center;
+	margin: ;
+}
+.t_right{
+	width: 50%;
+	height: 100%;
+	font-size: 0.16rem;
+	color:#111;
+	line-height: 0.8rem;
+	float:left;
+}
+
+
+.mesk {
+	width: 1.5rem;
+	height: 1.2rem;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 0.025rem;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -0.75rem;
+	margin-left: -0.6rem;
+	display: none;
+	z-index: 10000;
+}
+
+.mesk img {
+	width: 0.4rem;
+	height: 0.4rem;
+	display: block;
+	margin: 0 auto;
+	margin-top: 0.2rem;
+	margin-bottom: 0.2rem;
+	animation: rotate 3s linear infinite;
+}
+
+.mesk p {
+	color: #fff;
+	text-align: center;
+	font-size: 0.15rem;
+}
+.mask {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 999;
+	display: none;
+}
+
+.tip_mssg {
+	background: #fff;
+	position: fixed;
+	width: 2.4rem;
+	height: 1.3rem;
+	top: 50%;
+	left: 50%;
+	margin-top: -0.65rem;
+	margin-left: -1.24rem;
+	border-radius: .1rem;
+	text-align: center;
+	z-index: 1001;
+}
+
+.tip_mssg p:nth-child(1) {
+	font-size: .18rem;
+	text-align: center;
+	height: 0.6rem;
+	line-height: 0.7rem;
+	color:#000;
+}
+
+.texts {
+	font-size: .16rem;
+	text-align: center;
+	width: 100%;
+	height: 0.7rem;
+	line-height:0.4rem;
+	color:#000;
+}
+				
+</style>
+</head>
+
+<body>
+    <div class="renfist">
+        <div class="content">
+            <div class="top">
+                <div class="lubg">背景轮播封面</div>
+                <div class="cats">拖动图片可排序</div>
+            </div>
+            <!-- 点击添加轮播图 -->
+            <div class="tab_btn">
+            	<span class="tjttp">
+            		<div class="t_left">
+            			<img src="Public/Home/images/newvnet/icon/Path 13@2x.png" alt="">
+            		</div>
+               		<div class="t_right">上传图片</div>
+                	<input type="file" class="chuantp" id="fileimg" accept="image/*">
+            	</span>
+            	
+            	<span class="tjttps">
+            		<div class="t_left">
+            			<img src="Public/Home/images/newvnet/icon/Group 70@2x.png" alt="">
+            		</div>
+               		<div class="t_right">上传视频</div>
+                	<input type="file" class="v_vdo" id="v_file" accept="video/*">
+            	</span>
+            </div>
+            
+            <span class="secd" id="content">
+                <!-- <div class="secdig">
+	                <img src="Public/Home/images/vwzz/icon_code.png" alt="" class="secrjl">
+	                <div class="closer">
+	                    <img src="Public/Home/images/wh/icon_de@2x.png" alt="">
+	                </div>/
+            	</div> -->
+            </span>
+        </div>
+        <div class="middle">
+            <div class="pert">个人基本资料</div>
+            <div class="toux">头像
+                <img src="Public/Home/images/vwzz/personal.png" alt="" class="sung" id="peoplet">
+                <input type="file" class="tximg" id="headg">
+            </div>
+            <div class="xming">姓名
+                <input type="text" class="srxm" placeholder="请输入您的姓名" name="srxm" value="">
+            </div>
+            <div class="sex">性别
+                <ul class="nannv">
+                    <li>
+                        <input name="sex" type="radio" value="0" class="nan" />男性
+                    </li>
+                    <li>
+                    	<input name="sex" type="radio" value="1" class="nv" />女性
+                    </li>
+                </ul>
+            </div>
+            <div class="sage">年龄
+                <div class="detail">
+                    <span class="sel">
+                        <select name="bankname" class="sele" id="yeage">
+
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div class="phone">手机
+                <input type="text" class="phenum" placeholder="请输入手机号" name="phenum" value="">
+            </div>
+            <div class="rmail">邮箱
+            	<input type="text" class="emnum" placeholder="请输入邮箱号" name="emnum" value="">
+            </div>
+            <div class="tjwx">微信二维码
+                <img src="Public/Home/images/vwzz/icon_code.png" alt="" class="dior" name="" value="">
+                <input type="file" class="wximg" id="shangcwx">
+            </div>
+        </div>
+        <div class="three">
+            <div class="trtop">行业资料</div>
+            <div class="hangye" onclick='setting()'>行业
+                <span>
+                    <input type="text" class="on_ipt" style="color:#000" name="sq_type_id" value="" placeholder="请点击选择"
+                        readonly="readonly" />
+                    <img src="Public/Home/images/vwzz/Shaperjl.png" alt=""> </span>
+            </div>
+            <div class="sompan">公司
+                <input type="text" class="comname" placeholder="输入所在公司" name="comname" value="">
+            </div>
+            <div class="zhiwu">职务
+                <input type="text" class="zwname" placeholder="输入所在公司职务" name="zwname" value="">
+            </div>
+            <div class="qitzw">其他职务
+                <input type="text" class="qtzwname" placeholder="输入所在公司的其他职务" name="qtzwname" value="">
+            </div>
+        </div>
+        <div class="four">
+            <span>自我介绍</span>
+            <div class="person">
+                <!-- <input type="text" placeholder="请输入个人介绍" class="prejs" value="5" > -->
+                <textarea cols="4" rows="4" class="prejs" id="textmsg" placeholder="点击添加文字内容" name="prejs" value=""></textarea>
+            </div>
+        </div>
+        <div class="five">
+            <div class="fivetop">我的位置</div>
+            <div class="fivedress" id="fivedre">
+                <div style="width:100%;height:2.55rem" id="dituContent"></div>
+            </div>
+            <div class="dresswall renjl">
+                <!-- <div class="dressl">
+                    <span class="darry">地址</span>
+                    <img src="Public/Home/images/vwzz/drop-down.png" alt="">
+                </div> -->
+                <div class="dressr">
+                    <input type="text" class="desrw" placeholder="请输入位置" value="" id="address" name="address">
+                </div>
+            </div>
+            <div class="threedress" id="threedress">
+                <ul class="menu">
+                    <li>
+                        <img src="Public/Home/images/vwzz/position.png" class="dresimg" alt="">
+                        <span>请先输入搜索地址</span>
+                        <img src="Public/Home/images/vwzz/icon_gou.png" alt="" class="choose ont" id="onei">
+                    </li>
+                    <li>
+                        <img src="Public/Home/images/vwzz/position.png" class="dresimg" alt="">
+                        <span>请先输入搜索地址</span>
+                        <img src="Public/Home/images/vwzz/icon_gou.png" alt="" class="chooseo ont" id="onei">
+                    </li>
+                    <li>
+                        <img src="Public/Home/images/vwzz/position.png" class="dresimg" alt="">
+                        <span>请先输入搜索地址</span>
+                        <img src="Public/Home/images/vwzz/icon_gou.png" alt="" class="chooses ont" id="onei">
+                    </li>
+                </ul>
+                <div class="dressgx">
+                    位置共享开关
+                    <button value='0' class="switch" name="sq_is_search">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tipmoney"></div>
+    </div>
+    <div class="butan">
+        <input type="button" class="baocun" value="保存" onclick="baocun()">
+    </div>
+    <div class="tkts"></div>
+    <!-- 裁剪图片 -->
+    <div class="clip">
+        <div class="gif">
+            <img src="__HOME_IMAGES__/new_load.gif" alt="" />
+        </div>
+        <div id="clipArea"></div>
+        <div class="btun">
+            <button id="cancel">取消</button>
+            <button id="clipBtn">截取</button>
+        </div>
+    </div>
+    <!--裁剪头像 -->
+    <div class="clipr">
+        <div class="gifr">
+            <img src="__HOME_IMAGES__/new_load.gif" alt="" />
+        </div>
+        <div id="clipArear"></div>
+        <div class="btunr">
+            <button id="cancelr">取消</button>
+            <button id="clipBtnr">截取</button>
+        </div>
+    </div>
+    <!-- 结束 -->
+    <div class="mesk">
+		<img src="/Public/Home/images/loadad.gif" alt="">
+		<p>图片上传中</p>
+	</div>
+	<div class="mask">
+		<div class="tip_mssg">
+			<p>提示</p>
+			<p class="texts">请上传小于30M的视频</p>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=0mowWq56hycvTM5TVxXMHytZmx0ksywG&s=1；"></script>
+<!-- 历史数据 -->
+<script type="text/javascript">
+    var age_arr = [{
+            "id": -1,
+            value: '请选择年龄段'
+        }, {
+            "id": 1,
+            value: '10岁以下'
+        },
+        {
+            "id": 2,
+            value: '11-20岁'
+        },
+        {
+            "id": 3,
+            value: '21-25岁'
+        },
+        {
+            "id": 4,
+            value: '26-30岁'
+        },
+        {
+            "id": 5,
+            value: '31-35岁'
+        },
+        {
+            "id": 6,
+            value: '36-40岁'
+        },
+        {
+            "id": 7,
+            value: '41-45岁'
+        },
+        {
+            "id": 8,
+            value: '46-50岁'
+        },
+        {
+            "id": 9,
+            value: '50岁以上'
+        },
+    ];
+    var user_id = '{$unionid}';
+    // console.log(user_id);
+
+
+
+    $.ajax({
+        url: '/index.php?s=/Api/AppApi/banner_list',
+        type: 'post',
+        data: {
+            unionid: user_id,
+        },
+        success: function (res) {
+            console.log(res);
+            var lbaner = '';
+            $.each(res.AppendData, function (k, v) {
+            	var img_id = v.img_url;  //根据id得到值
+				var index = img_id.lastIndexOf(".");  //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+				img_id = img_id.substring(index);
+				  //截断"."之前的，得到后缀
+					
+				
+              	if(img_id == ".mp4" || img_id == ".rmvb" || img_id == ".avi" || img_id == ".ts" || img_id == ".3GP" || img_id == ".MOV") {
+              		lbaner += '<div class="secdig">'
+	                lbaner += '<div class="turing">'
+	                lbaner += '<video src="' + v.img_url + '" class="secrjl" poster="'+v.img_url+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast" controls="controls" ></video>'
+	                lbaner += '<div class="closer">'
+	                lbaner += '<img src="Public/Home/images/wh/icon_de@2x.png" alt="">'
+	                lbaner += '</div>'
+	                lbaner += '</div>'
+	                lbaner += '</div>'
+              	}else{
+					lbaner += '<div class="secdig">'
+	                lbaner += '<div class="turing">'
+	                lbaner += '<img src="' + v.img_url + '" alt="" class="secrjl">'
+	                lbaner += '<div class="closer">'
+	                lbaner += '<img src="Public/Home/images/wh/icon_de@2x.png" alt="">'
+	                lbaner += '</div>'
+	                lbaner += '</div>'
+	                lbaner += '</div>'
+              	}
+            })
+            $('.secd').html(lbaner);
+        }
+    })
+
+
+    $.ajax({
+        url: '/index.php?s=/Api/AppApi/user_detail',
+        type: 'post',
+        data: {
+            unionid: user_id,
+        },
+        success: function (res) {
+            console.log(res);
+            if (res.ResultType == 0) {
+                //头像
+                $("div.toux img").attr("src", res.AppendData.headimg);
+                //姓名
+                $("div.xming input[name=srxm]").val(res.AppendData.nick_name);
+				//位置
+				$("#address").val(res.AppendData.address);
+				//邮箱
+				$(".emnum").val(res.AppendData.email)
+                //性别
+                var rediolist = $(".nannv li");
+                for (var a in rediolist) {
+                    if ($(rediolist[a]).find("input").val() == res.AppendData.sex) {
+                        $(rediolist[a]).addClass("changeli");
+                        $(rediolist[a]).find("input").attr("checked", true);
+                        break;
+                    }
+                }
+
+                //年龄
+                var selectstr = "";
+                for (var a in age_arr) {
+                    if (age_arr[a].id == res.AppendData.age_id) {
+                        selectstr += '<option value=\"' + age_arr[a].id + '\"  selected=\"true\" >' +
+                            age_arr[a].value + '</option>';
+                    } else {
+                        selectstr += '<option value=\"' + age_arr[a].id + '\" >' + age_arr[a].value +
+                            '</option>'
+                    }
+
+                }
+                $("select.sele").html(selectstr);
+
+                //手机
+                $("div.phone input[name=phenum]").val(res.AppendData.mobile);
+                //微信二维码
+                $("div.tjwx img").attr("src", res.AppendData.wx_ewm_url);
+                //行业资料
+                var hy = '';
+                for (var i = 0; i < res.AppendData.sq_type_id.length; i++) {
+                    hy += res.AppendData.sq_type_id[i].name + ',';
+                }
+                hy = hy.substring(0, hy.lastIndexOf(','));
+                $("input.on_ipt").val(hy);
+                //公司
+                $("input.comname").val(res.AppendData.company);
+                //职务
+                $("input.zwname").val(res.AppendData.position);
+                //其他职务
+                $("input.qtzwname").val(res.AppendData.industry_tag);
+                //自我介绍
+                $("textarea.prejs").val(res.AppendData.share_my_introduct);
+                if (res.AppendData.is_map == 1) {
+                    $("button.switch").find("span").css({
+                        'transition': 'all 0.3s',
+                        'transform': 'translateX(0.19rem)'
+                    }).end().delay(300).css('background', '#32CEA0');
+                    $("button.switch").addClass("active");
+                }
+                
+            }
+        }
+    })
+    // 地图选择
+    $(function () {
+        function G(id) {
+            return document.getElementById(id);
+        }
+        var thisMap = "{$data.address}";
+        var map = new BMap.Map("dituContent");
+        var myGeo = new BMap.Geocoder();
+
+
+        if (thisMap != '' && thisMap != "" && thisMap != "null") {
+
+            myGeo.getPoint(thisMap, function (point) {
+                if (point) {
+                    map.centerAndZoom(point, 16);
+                    map.addOverlay(new BMap.Marker(point));
+                } else {
+                    // alert("您选择地址没有解析到结果!");
+                }
+            }, "北京市");
+        } else {
+
+            function myFun(result) {
+                console.log(result)
+                var cityName = result.name;
+                map.centerAndZoom(cityName, 12);
+
+            }
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+        }
+        var local = new BMap.LocalSearch(map, {
+            renderOptions: {
+                map: map
+            }
+        });
+        var ac = new BMap.Autocomplete({
+            "input": "address",
+            "location": map,
+            "onSearchComplete": function (result) {
+                //处理结果
+                if (document.getElementsByClassName("tangram-suggestion-main") != undefined) {
+                    document.getElementsByClassName("tangram-suggestion-main")[0].style.display =
+                        'none';
+                }
+                var html = '';
+                if (result.Ar.length > 0) {
+
+                }
+                local.search(result.Ar[0].business, 18);
+
+                myGeo.getPoint(result.Ar[0].city + result.Ar[0].business, function (point) {
+                    if (point) {
+                        map.centerAndZoom(point, 18);
+                        map.addOverlay(new BMap.Marker(point));
+                    } else {
+                        // alert("您选择地址没有解析到结果!");
+                    }
+                }, result.Ar[0].city);
+
+                for (var a in result.Ar) {
+                    html += "<li class='mysss' data-address='" + result.Ar[a].business +
+                        "'  data-city='" + result.Ar[a].city + "'>";
+                    html +=
+                        "<img src=\"Public/Home/images/vwzz/position.png\" class=\"dresimg\" alt=\"\">";
+                    html += "<span>" + result.Ar[a].business + "|" + result.Ar[a].city + "</span>";
+                    html +=
+                        "<img src=\"Public/Home/images/vwzz/icon_gou.png\" alt=\"\" class=\"choose ont\" >";
+                    html += "</li>";
+                    if (a == 2) {
+                        break;
+                    }
+                }
+
+                $("ul.menu").html(html);
+            }
+        });
+
+        ac.hide();
+        //单击获取点击的经纬度
+        map.addEventListener("click", function (e) {
+            map.clearOverlays();
+            map.centerAndZoom(e.point, 17);
+            var marker = new BMap.Marker(e.point);
+            map.addOverlay(marker); // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        });
+        $(document).on("click", ".menu li", function () {
+            var t = this;
+            $("img.one").removeClass("one");
+            $(t).find("img").addClass("one");
+            $(t).addClass("dressact").siblings().removeClass("dressact");
+            $("#address").val($(t).attr("data-city") + $(t).attr("data-address"));
+            myGeo.getPoint($(t).attr("data-city") + $(t).attr("data-address"), function (point) {
+
+
+                if (point) {
+                    console.log(point.lat);
+                    map.clearOverlays();
+                    var point1 = new BMap.Point(point.lng, point.lat);
+                    map.centerAndZoom(point1, 18);
+                    var marker = new BMap.Marker(point1); // 创建标注
+                    map.addOverlay(marker); // 将标注添加到地图中
+                } else {
+                    // alert("无效地址");
+                }
+            }, $(t).attr("data-city"));
+
+        })
+
+    })
+
+    $(function () {
+        // 点击选择男女
+
+        $(".nannv li").on('click', document, function () {
+            //获取到性别的value值
+            sexc = $(this).find("input").val();
+            console.log(sexc)
+
+            // 选择性别样式
+            $(this).addClass("changeli").siblings().removeClass("changeli");
+            var type = parseInt($(this).val());
+        });
+    });
+
+    function baocun() {
+        var user_id = '{$unionid}';
+        var nkname = $("input[name=srxm]").val();
+        var mobile = $("input[name=phenum]").val();
+        var hangye = $("input[name=sq_type_id]").val();
+        var emill = $("input[name=emnum]").val();
+        var company = $("input[name=comname]").val();
+        var industry = $("input[name=zwname]").val();
+        var otherzw = $("input[name=qtzwname]").val();
+        var myintro = $("#textmsg").val();
+        var dresswz = $("#address").val();
+        var txsrc = $('.sung').attr('src');
+        var wxsrc = $('.dior').attr('src');
+        var sexc = 0;
+        var alllist = $(".nannv li");
+        if ($(alllist[1]).hasClass("changeli")) {
+            sexc = 1;
+        }
+        var age_id = $("select.sele").val();
+        console.log(sexc);
+        var is_map = $("button.switch").hasClass("active") ? '1' : '0';
+        var sq_type_id = $("sq_type_id").val();
+
+        var select = document.getElementById("yeage");
+        var options = select.options;
+        console.log(options)
+
+
+        //提示空白跳转||
+        if ($("#peoplet").attr("src") == '') {
+            $(".tipmoney").text("请选择上传头像").stop(true).fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+        if ($(".srxm").val() == "") {
+            $(".tipmoney").text("请输入完整姓名").stop(true).fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+
+        if ($(".phenum").val() == "") {
+            $(".tipmoney").text("请输入完整手机号").stop(true).fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+
+        if ($(".nannv li").find("input").val() == '') {
+            $(".tipmoney").text("请选择性别").stop(true).fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+
+
+        $.ajax({
+            url: '/index.php?s=/Api/AppApi/edit_my_card',
+            type: 'post',
+            data: {
+                unionid: user_id, //必传
+                nick_name: nkname,
+                sex: sexc,
+                headimg: txsrc,
+                age_id: age_id,
+                mobile: mobile,
+                wx_ewm_url: wxsrc,
+                company: company,
+                position: industry,
+                industry_tag: otherzw,
+                address: dresswz,
+                share_my_introduct: myintro,
+                is_map: is_map,
+                email:emill
+            },
+            success: function (res) {
+                console.log(res)
+                window.location.href = "/index.php?s=/Home/Vmake/vmakee.html";
+            },
+        })
+
+        // 保存轮播图
+        var user_id = '{$unionid}';
+        var arr = [];
+        var imgs = $(".secrjl");
+        for (var i = 0; i < imgs.length; i++) {
+            arr.push(imgs[i].src);
+        }
+        $.ajax({
+            url: '/index.php?s=/Api/AppApi/save_banner',
+            type: 'post',
+            data: {
+                unionid: user_id,
+                imgs: arr,
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    }
+
+
+    // 选择行业
+    function setting() {
+        top.location.href = '{:U("Home/Trade/select",array("channel"=>2,"type1"=>1))}';
+    }
+    $('.closer').on('click', '.closer', function () {
+        $(this), ('.secdig').remove();
+    })
+
+    var user_id = '{$unionid}';
+
+
+
+    $('.tjttp').on('click', function () {
+        $('.clip').show()
+    })
+    var clipArea = new PhotoClip("#clipArea", {
+        size: [350, 350],
+        outputSize: [640, 640],
+        file: "#fileimg",
+        ok: "#clipBtn",
+        loadStart: function () {
+            $('.gif').show();
+        },
+        loadComplete: function () {
+            $('.gif').hide();
+        },
+        done: function (dataURL) {
+            var imgsrc = dataURL;
+            
+            var imlength = $(".secdig").length;
+	        if (imlength >= 12) {
+	            $(".tkts").text("图片/视频最多上传12个").stop(true).fadeIn(1000).fadeOut(2000);
+	            return false;
+	        }
+            $.ajax({
+                url: "/index.php?s=/Api/IndexApi/uploads_img",
+                type: "post",
+                data: {
+                    unionid: user_id,
+                    img: imgsrc,
+                    start_name: "banner"
+                },
+                beforeSend: function () {
+                    $(".mesk").show();
+                    $(".mesk").show().find('p').text("图片上传中");
+                },
+                success: function (res) {
+                    var dataimg = res.AppendData;
+                    $(".mesk").hide();
+		        	// 点击上传的图片数组呈现出来
+                    $('#content').append("<div class='secdig'><div class='turing'><img src='" +
+                        dataimg +
+                        "' class='secrjl'><div class='closer'><img src='Public/Home/images/wh/icon_de@2x.png' alt=''></div></div></div> "
+                    );
+   
+                },
+                error: function () {
+                    console.log('走了错误')
+                    $(".mesk").hide();
+                    $(".loading").hide();
+                }
+            })
+
+        }
+    });
+
+    $('#fileup').on('click', function () {
+        $('.clip').show();
+    })
+
+    $('#clipBtn,#cancel').on('click', function () {
+        //截取 取消
+        $('.clip').hide();
+
+    })
+    $('#clipBtnr,#cancelr').on('click', function () {
+        //截取 取消
+        $('.clipr').hide();
+
+    })
+    
+    //视频上传
+	$('.v_vdo').change(function() {
+		var videosize = document.getElementById("v_file").files[0].size;
+	//	var unionid = '{$unionid}';
+		var files = this.files[0];
+		var v_size=this.files[0].size/1024;
+		if(v_size>30720){
+			$(".mask").show();
+			setTimeout(function() {
+				$(".mask").hide();
+			}, 1500);
+			return false;
+		}
+		var imlength = $(".secdig").length;
+        if (imlength >= 12) {
+            $(".tkts").text("图片/视频最多上传12个").stop(true).fadeIn(1000).fadeOut(2000);
+            return false;
+        }
+		var formdata = new FormData();
+		formdata.append("img", files);
+		formdata.append("start_name", 'Cards');
+		formdata.append("unionid", user_id);
+		
+		
+		$.ajax({
+			type: "post",
+			url: "/index.php?s=/Api/IndexApi/upload_video",
+			data: formdata,
+			processData: false,
+			contentType: false,
+			beforeSend: function() {
+				$(".mesk").show();
+				$(".mesk").show().find('p').text("视频上传中");
+			},
+			success: function(res) {
+				//						console.log(res)
+				$(".mesk").hide();
+				
+                $('#content').append("<div class='secdig'><div class='turing'><video src='" +
+                    res.AppendData +
+                    "' class='secrjl' poster='"+res.AppendData+"?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast' controls='controls'></video><div class='closer'><img src='Public/Home/images/wh/icon_de@2x.png' alt=''></div></div></div> "
+                );
+			}
+		})
+	});
+
+    // 点击拖拽
+    Sortable.create(content, {
+        group: "words",
+        draggable: ".item",
+        animation: 100,
+        filter: '.closer',
+        onFilter: function (evt) {
+            evt.item.parentNode.removeChild(evt.item);
+        }
+    });
+
+    // // 点击拖拽
+    Sortable.create(content, {
+        group: "words",
+        draggable: ".secdig",
+        animation: 100,
+        filter: '.closer',
+        onFilter: function (evt) {
+            evt.item.parentNode.removeChild(evt.item);
+        }
+    });
+
+    $("#fileimg").click(function () {
+        var imlength = $(".secdig").length;
+        var file = this.files[0];
+        var render = new FileReader();
+        if (imlength >= 12) {
+            $(".tkts").text("图片/视频最多上传12个").stop(true).fadeIn(1000).fadeOut(2000);
+            return;
+        } else {
+            $(".zhezhao").css("display", "none");
+            $('.file1').click();
+            $('.clip').show();
+        }
+    })
+
+
+    // //点击上传头像
+    $("#headg").on("click", function () {
+        $('.clipr').show();
+    })
+
+    var clipArear = new PhotoClip("#clipArear", {
+        size: [350, 350],
+        outputSize: [640, 640],
+        file: "#headg",
+        ok: "#clipBtnr",
+        loadStart: function () {
+            $('.gifr').show();
+        },
+        loadComplete: function () {
+            $('.gifr').hide();
+        },
+        done: function (dataURL) {
+            var imgsrc = dataURL;
+            $.ajax({
+                url: "/index.php?s=/Api/IndexApi/uploads_img",
+                type: "post",
+                data: {
+                    unionid: user_id,
+                    img: imgsrc,
+                    start_name: "head"
+                },
+                beforeSend: function () {
+                    $(".mesk").show();
+                    $(".mesk").show().find('p').text("图片上传中");
+                },
+                success: function (res) {
+                    var dataimg = res.AppendData;
+                    $(".mesk").hide();
+                    // 点击上传的图片数组呈现出来
+                    downing = res.AppendData;
+                    $(".toux .sung").attr("src", downing);
+                    img.src = res.AppendData;
+                    //图片路径设置为读取的图片
+                    downing = res.AppendData;
+                    $(".toux .sung").attr("src", downing);
+                },
+                error: function () {
+                    console.log('走了错误')
+                    $(".mesk").hide();
+                    $(".loading").hide();
+                }
+            })
+
+        }
+    });
+
+
+    $("#shangcwx").on("change", function () {
+        var current_pic = this.files[0];
+        if (window.FileReader) {
+            var render = new FileReader();
+            render.readAsDataURL(current_pic);
+            render.onload = function (res) {
+                console.log(res)
+                imgsrc = res.target.result;
+                $.ajax({
+                    url: "/index.php?s=/Api/IndexApi/uploads_img",
+                    type: "post",
+                    data: {
+                        unionid: user_id,
+                        img: imgsrc,
+                        start_name: "head",
+                    },
+                    beforeSend: function () {},
+                    success: function (res) {
+
+                        console.log(res)
+                        downing = res.AppendData;
+                        $(".tjwx .dior").attr("src", downing);
+                    },
+
+                })
+            }
+        }
+    })
+    Sortable.create(content, {
+        group: "words",
+        draggable: ".secdig",
+        animation: 300,
+        filter: '.closer',
+        onFilter: function (evt) {
+            evt.item.remove()
+
+        },
+        onEnd: function (res) {
+
+        }
+    });
+    //点击设置隐私保护
+    $(function () {
+        var that;
+        $(".switch").on("click", function () {
+            that = $(this);
+            that.toggleClass('active');
+            toggle(that);
+        })
+
+        function toggle(that) {
+            if (that.hasClass('active')) {
+                $(that).attr('value', '1');
+                that.find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0.19rem)'
+                }).end().delay(300).css('background', '#32CEA0');
+            } else {
+                // $(that).attr('value', '0');
+                that.find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0px)'
+                }).end().delay(300).css('background', '#c6c6c6');
+            }
+        }
+    })
+</script>
+
+</html>

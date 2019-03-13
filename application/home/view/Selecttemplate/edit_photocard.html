@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.min.css">
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/animate.min.css">
+    <script src="__HOME_JS__/whjs/js/mui/js/mui.min.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+
+    <title>编辑模板</title>
+    <style>
+        body,
+        html {
+            /* width: 100%; */
+            height: 100%;
+        }
+
+        .header {
+            width: 100%;
+            height: 92%;
+            position: relative;
+        }
+
+        .header img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer {
+            width: 100%;
+            height: 8%;
+        }
+
+        .footer button {
+            width: 50%;
+            height: 100%;
+            border: 0;
+            outline: none;
+            background: #fff;
+            box-sizing: border-box;
+            position: relative;
+            border-radius: 0;
+        }
+
+        .footer button img {
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -.1rem;
+            left: .66rem;
+        }
+
+        .footer button span {
+            width: .36rem;
+            height: .2rem;
+            line-height: .2rem;
+            display: block;
+            position: absolute;
+            top: 50%;
+            margin-top: -.09rem;
+            left: .94rem;
+        }
+
+        .footer button:nth-child(1) {
+            color: #777777;
+            font-size: .16rem;
+        }
+
+        .footer button:nth-child(2) {
+            color: #fff;
+            font-size: .16rem;
+            background: #32CEA0;
+        }
+
+        .share {
+            width: 0.8rem;
+            height: .3rem;
+            line-height: .3rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: .15rem;
+            display: block;
+            position: fixed;
+            top: .1rem;
+            right: .1rem;
+            color: #fff !important;
+            z-index: 999;
+        }
+
+        @keyframes downs {
+            0% {
+                transform: translateY(0px);
+            }
+
+            25% {
+                transform: translateY(-5px);
+            }
+
+            35% {
+                transform: translateY(-7px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            75% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(-15px)
+            }
+
+        }
+
+        .up {
+            width: 25px;
+            height:25px;
+            position: absolute;
+            z-index: 2;
+            bottom: 25px;
+            left: 50%;
+            margin-left: -12.5px;
+            animation: downs 0.8s infinite linear;
+        }
+
+        .up img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .swiper-slide {
+            background-size: 100% 100% !important;
+            height: 100%;
+            position: relative;
+        }
+
+        .edit {
+            width: 2.5rem;
+            position: absolute;
+            display: none;
+
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .greet_box{
+            width: 2rem;
+            position: absolute;
+
+        }
+
+        .con_text{
+            width: 100%;
+            background: transparent;
+            resize: none;
+            border: 0;
+            outline: none;
+        }
+
+        .small_box{
+            width: .8rem /* 80/100 */;
+            height: .8rem /* 80/100 */;
+            position: absolute;
+        }
+
+        .small_box img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <a class="share" href="javascript:;">分享</a>
+    <div class="header">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+
+            </div>
+        </div>
+        <div class="up" style="display: block;">
+            <img src="__HOME_IMAGES__/uptouch.png" alt="">
+        </div>
+    </div>
+    <div class="footer clearfix">
+        <button class="fl del_button">
+            <img src="__HOME_IMAGES__/wh/icon_delete@2x.png" alt="">
+            <span>删除</span>
+        </button>
+        <button class="fl edit_go">
+            <img src="__HOME_IMAGES__/wh/edit_icon@2x.png" alt="">
+            <span>编辑</span>
+        </button>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var id = '{$id}'
+        var unionid = '{$unionid}';
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+
+        var edit = GetQueryString('edit');
+        var del_id = GetQueryString('photocard');
+        var gid = GetQueryString('gid')
+
+        console.log(del_id)
+        console.log(edit)
+
+
+        var formdata = new FormData();
+        var formview = new FormData();
+        var url_go;
+        var url_view;
+
+        if (edit == 1) {
+            url_go = '/index.php?s=/Api/IndexApi/del_user_album'; //删除
+            url_view = 'index.php?s=/Api/IndexApi/get_album_list'; //预览
+            formdata.append('unionid', unionid);
+            formdata.append('my_id', del_id);
+
+            formview.append('unionid', unionid)
+            formview.append('my_id', del_id)
+            preview();
+
+        } else {                //贺卡
+            $('.up').hide()
+            $('.edit_go').empty().text('编辑')
+            url_view = '/index.php?s=/Api/IndexApi/get_gcard';
+            formview.append('id', id);
+            formview.append('cardid', del_id);
+            preview();
+            url_go = '/index.php?s=/Api/IndexApi/del_gcard'; //删除贺卡
+            formdata.append('id', id);
+            formdata.append('cardid', del_id);
+        }
+
+        $('.del_button').on('click', function () {
+            delete_template(url_go, formdata)
+
+        })
+
+
+
+        function delete_template(url_go, formdata) {
+
+            mui.confirm("确认删除吗？", "提示", ["否", "是"], function (res) {
+                if (res.index == 1) {
+                    $.ajax({
+                        url: url_go,
+                        type: 'post',
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (res) {
+                            location.href = '/index.php?s=/Home/Selecttemplate/all_template.html';
+                        }
+                    })
+                }
+            })
+
+
+        }
+
+
+
+        function preview() {
+            $.ajax({
+                url: url_view,
+                type: 'post',
+                data: formview,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res)
+                    var data = res.AppendData;
+                    var dta_small = res.AppendData[0];
+                    if (res.ResultType == 0) {
+                        if (edit == 1) {
+                            var bigheight = $('.header').height()
+                            var bigwidth = $('.header').width()
+                            console.log(bigheight)
+                            console.log(bigwidth)
+                            var data_x = res.AppendData.content_detail[0].edit_width
+                            var data_h = res.AppendData.content_detail[0].edit_height
+                            var bili_x = (bigwidth / data_x).toFixed(2);
+                            var bili_h = (bigheight / data_h).toFixed(2);
+                            console.log(bili_x)
+                            console.log(bili_h)
+                            // var bili_x = 
+                            var showphoto = '';
+                            $.each(data.content_detail, function (k, v) {
+                                showphoto += '<div class="swiper-slide item' + k + '" style="background-image:url(' + v.img + ')">'
+                                showphoto += '<div class="edit animated" style="color:' + v.font_color + ';font-size:0.13rem; " data-x="' + (v.font_x * bili_x) + '"data-y="' + (v.font_y * bili_h) + '" data-zoom="' + v.font_zoom + '" data-deg="' + v.font_angle + '" > ' + v.content + '</div>'
+                                showphoto += '</div>'
+
+                            })
+                            $('.swiper-wrapper').html(showphoto);
+
+                            function randomnum() {
+                                var arr = ['rotateIn', 'flip', 'bounceInDown', 'bounce', 'zoomIn',
+                                    'jackInTheBox', 'flipInX',
+                                    'rubberBand', 'swing', 'tada', 'slideInUp', 'slideInDown',
+                                    'zoomInDown', 'fadeInDown',
+                                    'rotateInDownLeft', 'rotateInUpRight', 'lightSpeedIn'
+                                ];
+                                // var arr = ['zoomIn','flash','bouncein','fadeIn'];
+                                var random = Math.floor(Math.random() * arr.length + 1) - 1;
+                                return arr[random];
+
+                            }
+                            var view_id = data.id;
+                            console.log(view_id)
+                            $('.share').attr('href', '/index.php?s=/Home/Nologin/share_photo/preview/' + del_id + '/uid/' + unionid + '/share/1/modify/1/id/' + id + '');
+                            //  $('.share').attr('href', 'index.php?s=/Home/photo/photo_preview/preview/'+view_id+'/modify/1/uid/'+unionid+'/id/'+id+'/share/1');
+                            var preview = data.type_id;
+
+                            $('.edit_go').on('click', function () {
+                                if (edit == 1) {
+                                    location.href = '/index.php?s=/Home/Photo/photo_edit.html&preview=' + del_id + '&cids=' + preview + ''
+                                }
+                                if (edit == 2) {
+                                    location.href = '/index.php?s=/Home/Greeting/greet_edit&gid=' + del_id + ''
+                                }
+
+                            })
+
+
+                            var mySwiper = new Swiper('.swiper-container', {
+                                direction: 'vertical',
+                                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+                                observeParents: false,//修改swiper的父元素时，自动初始化swiper
+                                resistanceRatio: 0,
+                                onInit: function (swiper) {
+                                    var cl = randomnum()
+                                    var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                    var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                    var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                    var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+                                    $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(cl).animate({
+                                        top: y,
+                                        left: x
+                                    }, 800, function () {
+                                        $(this).removeClass().addClass('edit animated').css({
+                                            'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                            'transition': 'all 1s'
+                                        })
+
+                                    })
+
+
+
+
+                                },
+                                onSlideNextEnd: function (swiper) {  //下一页
+                                    var randomClass = randomnum();
+
+                                    var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                    var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+                                    var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                    var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+                                    $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(randomClass).animate({
+                                        top: y,
+                                        left: x
+                                    }, 800, function () {
+                                        $(this).removeClass().addClass('edit animated').css({
+                                            'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                            'transition': 'all 1s'
+                                        })
+                                        console.log('动画结束了')
+                                    })
+
+
+                                    var len = $('.swiper-slide').length - 1;
+                                    if ($('.swiper-slide-active').index() == len) {
+                                        $('.up').hide()
+                                    } else {
+                                        $('.up').show()
+                                    }
+                                },
+                                onSlidePrevEnd: function (swiper) {
+                                    var randomClass = randomnum();
+
+                                    var x = $('.swiper-slide-active').find('.edit').attr('data-x')
+                                    var y = $('.swiper-slide-active').find('.edit').attr('data-y')
+
+                                    var scal = $('.swiper-slide-active').find('.edit').attr('data-zoom');
+                                    var deg = $('.swiper-slide-active').find('.edit').attr('data-deg');
+
+                                    $('.swiper-slide-active').find('.edit').fadeIn(500).addClass(randomClass).animate({
+                                        top: y,
+                                        left: x
+                                    }, 800, function () {
+
+                                        $(this).removeClass().addClass('edit animated').css({
+                                            'transform': 'scale(' + scal + ') rotate(' + deg + 'deg)',
+                                            'transition': 'all 1s'
+                                        })
+                                        //  console.log('动画结束了')
+
+
+                                    })
+
+
+                                    var len = $('.swiper-slide').length - 1;
+                                    if ($('.swiper-slide-active').index() == len) {
+                                        $('.up').hide()
+                                    } else {
+                                        $('.up').show()
+                                    }
+                                }
+
+                            })
+
+
+                        }
+                        if (edit == 2) {
+                            var greet = '';
+                            var big_w = $(document).width();
+                            var big_h = $(document).height();
+                            $.each(data, function (k, v) {
+                                var bili_w = big_w / v.edit_width;
+                                var bili_h = big_h / v.edit_height;
+                                console.log(v.content_zoom)
+                                greet += '<div class="swiper-slide item' + k + '" style="background:url(' + v.pic + ')">'
+                                greet += '<div class="greet_box" style="top:' + (v.content_y * bili_h) + 'px;left:' + (v.content_x * bili_w) + 'px;transform: scale(' + v.content_zoom + ') rotate(' + v.content_angle + 'deg) translateZ(0px) !important ">'
+                                greet += '<textarea class="con_text" disabled style="color:' + v.font_color + ';font-size:0.13rem;letter-spacing:2px;">' + v.content + '</textarea>'
+                                greet += '</div>'
+                                greet += '</div>'
+                            })
+                            $('.swiper-wrapper').html(greet);
+                            if (dta_small.small_img != '') {
+
+                                var small = '';
+                                small += '<div class="small_box"  style="left:' + dta_small.small_img_x + 'px;top:' + dta_small.small_img_y + 'px;transform:scale(' + dta_small.small_img_zoom + ') rotate(' + dta_small.small_img_angle + 'deg)" >'
+                                small += '<img src="' + dta_small.small_img + '" alt="">'
+                                small += '</div>'
+                                $('.swiper-wrapper').append(small);
+                            }
+
+
+                            $('.share').attr('href', '/index.php?s=/Home/Holidaycard/showview/gid/' + del_id + '/id/' + id + '&share=1')
+                            $('.edit_go').on('click', function () {
+                                location.href = '/index.php?s=/Home/Greeting/greet_edit&gid=' + del_id + ''
+                            })
+                        }
+                    }
+                }
+
+            })
+        }
+
+
+
+
+
+
+
+
+
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

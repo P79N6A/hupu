@@ -1,0 +1,40 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+</block>
+<block name="body">
+
+	<body>
+		<header class="mui-bar mui-bar-nav zzc_header">
+
+			<h1 class="mui-title zzc_header_title">这里是商会名称</h1>
+
+		</header>
+
+		<div class="mui-content">
+
+			<div class="zzc_wode_title zzc_wode_shanghuijieshao">
+				成立时间 <span class="zzc_right">2017年09月29日 2898</span>
+			</div>
+			<div class="zzc_wode_title zzc_wode_shanghuijieshao">
+				成员人数 <span class="zzc_right">8988</span>
+			</div>
+			<div class="zzc_wode_shanghuijieshaojianjie">
+				<p style="text-align: center;">简介</p>
+				成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数成员人数
+			</div>
+
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

@@ -1,0 +1,149 @@
+<?php
+
+namespace app\admin\model;
+
+use think\Model;
+
+/**
+ * Created by PhpStorm.
+ * User: darren
+ * Date: 2019-01-15
+ * Time: 15:35
+ */
+
+class Common extends Model{
+
+    /**
+     * 根据搜索条件获取用户列表信息
+     */
+    public function getMemberByWhere($map, $Nowpage, $limits)
+    {
+        $pk = $this->pk;
+        return $this->where($map)->order($pk.' desc')
+            ->page($Nowpage, $limits)
+            ->select();
+    }
+
+    /**
+     * 根据搜索条件获取所有的用户数量
+     * @param $where
+     */
+    public function getAllCountByWhere($map)
+    {
+        return $this->where($map)->count();
+    }
+
+
+    /**
+     * 根据id获取会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOneMember($id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * 根据条件获取单条会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOnesMember($map)
+    {
+        return $this->where($map)->find();
+    }
+
+
+    public function getMembers($map)
+    {
+        return $this->where($map)->select();
+    }
+
+    /**
+     * 插入信息
+     */
+    public function insertMember($param)
+    {
+        try {
+            if(!is_array($param)){
+                $param = json_decode($param,true);
+            }
+            $result = $this->allowField(true)->save($param);
+            if (false === $result) {
+                return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
+            } else {
+                return ['code' => 1, 'data' => '', 'msg' => '添加成功'];
+            }
+        } catch (\Exception $e) {
+            return ['code' => -1, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+
+
+    /**
+     * 删除会员信息
+     * @param $id
+     * @return array
+     */
+    public function delMember($id,$field='',$val=1)
+    {
+        //注意这里是假删
+        try {
+            $pk = $this->pk;
+            if($field){
+                $map[$field] = $val; //隐藏
+            }else{
+                $map['del'] = 1;
+
+            }
+            $this->save($map, [$pk => $id]);
+            return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
+        } catch (\Exception $e) {
+            return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+    /**
+     * 这里是真删除
+     * @param $ids
+     * @param $class
+     * @return \think\response\Json
+     */
+    public function del($ids,$class){
+        $table = getClass($class);
+        $pk = $this->pk;
+        return deletes($table,$ids,$pk);
+    }
+
+
+    /**
+     * 编辑信息
+     * @param $param
+     */
+    public function editMember($param)
+    {
+        try {
+//            allowField 过滤post数组中的非数据表字段数据
+//            $result = $this->validate('MemberValidate')->allowField(true)->save($param, ['manid' => $param['id']]);
+            $pk = $this->pk;
+            $result = $this->allowField(true)->save($param, [$pk => $param['id']]);
+
+
+            if (false === $result) {
+                return ['code' => 0, 'data' => $result, 'msg' => $this->getError()];
+            } else {
+                return ['code' => 1, 'data' => $result, 'msg' => '编辑成功'];
+            }
+        } catch (\Exception $e) {
+            return ['code' => -1, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+
+
+}

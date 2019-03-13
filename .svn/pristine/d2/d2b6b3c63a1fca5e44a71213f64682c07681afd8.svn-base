@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/swiper.min.css">
+    <title>手动排序</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* html {
+            background: #ccc;
+        } */
+
+        #content {
+            width: 100%;
+        }
+
+        .jia {
+            width: 90%;
+            height: .4rem;
+            margin: 24px 20px;
+            background: #F8C85E;
+            border-radius: .04rem;
+        }
+
+        .ziti {
+            color: #fff;
+            font-size: .16rem;
+            text-align: center;
+            display: block;
+            line-height: .4rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+        }
+
+        .moren {
+            width: 90%;
+            height: 1.04rem;
+            margin: 0 auto;
+            background: #fff;
+            position: relative;
+            margin-top: .24rem;
+            box-shadow: 0px 2px 10px 0px rgba(191, 191, 191, 0.25);
+        }
+        .morenl {
+            width: 90%;
+            height: 1.04rem;
+            margin: 0 auto;
+            background: #fff;
+            position: relative;
+            margin-top: .24rem;
+            box-shadow: 0px 2px 10px 0px rgba(191, 191, 191, 0.25);
+        }
+
+        .leftop {
+            width: .5rem;
+            height: .18rem;
+            top: .16rem;
+            position: absolute;
+        }
+        .leftop img {
+            position: absolute;
+            width: .5rem;
+            height: .18rem;
+            background: 100% 100%;
+        }
+        .leftzzzt {
+            width: .22rem;
+            height: .16rem;
+            font-size: .11rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: .18rem;
+            position: absolute;
+            left: .06rem;
+        }
+        .leftrt {
+            width: .22rem;
+            height: .16rem;
+            font-size: .11rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: .18rem;
+            position: absolute;
+            left: .06rem;
+        }
+        .leftopp {
+            width: .5rem;
+            height: .18rem;
+            top: .16rem;
+            position: absolute;
+        }
+        .titlemr {
+            width: 2.2rem;
+            height: .22rem;
+            left: .5rem;
+            top: .26rem;
+            text-align: center;
+            position: absolute;
+            font-size: 16px;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            line-height: .22rem;
+        }
+        .leftopp img {
+            width: .5rem;
+            height: .18rem;
+            position: absolute;
+            background: 100% 100%;
+        }
+        .titlem {
+            width: 2.2rem;
+            height: .22rem;
+            left: .5rem;
+            top: .41rem;
+            text-align: center;
+            position: absolute;
+            font-size: 16px;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            line-height: .22rem;
+        }
+
+        .xiugai {
+            width: .80rem;
+            height: .66rem;
+            right:0;
+            top: .19rem;
+            position: absolute;
+        }
+        .xiugai img{
+            width:.11rem;
+            height:.15rem;
+            left:.35rem;
+            top:.26rem;
+            position: absolute;
+        }
+        .leftdt {
+    height: .16rem;
+    font-size: .11rem;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: .18rem;
+    position: absolute;
+    left: .06rem;
+}
+
+        #submit {
+            width: 3.05rem;
+            height: .4rem;
+            background: #32CEA0;
+            border-radius: .04rem;
+            margin: 0 auto;
+            left: 10%;
+            color: #fff;
+            font-size: .14rem;
+            text-align: center;
+            position: absolute;
+            border: none;
+            outline: none;
+            bottom: .32rem;
+            cursor: pointer;
+            -webkit-appearance: none;
+            position:fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <!--<div class="moren">
+            <div class="leftop">
+                <img src="Public/Home/images/vwzz/lable_mo.png" alt="">
+                <span class="leftzzzt">默认</span>
+            </div>
+            <div class="titlem">可修改的文1</div>
+            <div class="xiugai">
+                <img src="Public/Home/images/vwzz/icon_paixu.png" alt="">
+            </div>
+        </div>
+        </div>
+        <div id="contren">
+        <div class="morenl">
+            <div class="leftopp">
+                <img src="Public/Home/images/vwzz/lable_zidingyi.png" alt="">
+                <span class="leftdt">自定义</span>
+            </div>
+            <div class="titlem">可修改的文2</div>
+            <div class="xiugai">
+                <img src="Public/Home/images/vwzz/icon_paixu.png" alt="">
+            </div>
+        </div>
+
+        <div class="morenl">
+            <div class="leftopp">
+                <img src="Public/Home/images/vwzz/lable_zidingyi.png" alt="">
+                <span class="leftdt">自定义</span>
+            </div>
+            <div class="titlem">可修改的文3</div>
+            <div class="xiugai">
+                <img src="Public/Home/images/vwzz/icon_paixu.png" alt="">
+            </div>
+        </div>
+
+        <div class="morenl">
+            <div class="leftopp">
+                <img src="Public/Home/images/vwzz/lable_zidingyi.png" alt="">
+                <span class="leftdt">自定义</span>
+            </div>
+            <div class="titlem">可修改的文4</div>
+            <div class="xiugai">
+                <img src="Public/Home/images/vwzz/icon_paixu.png" alt="">
+            </div>
+        </div>-->
+
+    </div>
+    <input type="submit" name="" id="submit" value="确定">
+</body>
+<script src="__HOME_JS__/yb/js/sortable.js"></script>
+<script>
+    Sortable.create(content, {});
+    var unionid = '{$unionid}';
+    var arr = [];
+    $.ajax({
+        url: "/index.php?s=/Api/NewShowListApi/show_list_type",
+        typr: 'post',
+        data: {
+            unionid: unionid,
+        },
+
+        success: function (res) {
+            console.log(res);
+
+            var detail = res.AppendData;
+
+            var list = '';
+            $.each(detail, function (k, v) {
+                list += '<div class="moren" data-id="'+v.id+'">'
+                list += '<div class="leftop">'
+                if(k==0){
+                	list += '<img src="Public/Home/images/vwzz/lable_mo.png" alt="">'
+                	list += '<span class="leftzzzt">默认</span>'
+                }else{
+                	list += '<img src="Public/Home/images/vwzz/lable_zidingyi.png" alt="">'
+               		list += '<span class="leftdt">自定义</span>'
+                }
+                list += '</div>'
+                list += '<div class="titlem">'+v.title+'</div>'
+                list += '<div class="xiugai">'
+                list += '<img src="Public/Home/images/vwzz/icon_paixu.png" alt="">'
+                list += '</div>'
+                list += '</div>'
+            })
+            
+            $("#content").html(list)
+        },
+    })
+
+
+
+
+
+    //点击确定
+    $("#submit").on("click", function () {
+        var listarr = [];
+        $(".moren").each(function (i, e) {
+        	arr.push($(this).attr("data-id"));
+            listarr.push(i+1);
+        });
+        var a = arr[0]
+	    var b = arr[1]
+	    var c = arr[2]
+	    var d = arr[3]
+        var content= ""+a+"="+listarr[0]+","+b+"="+listarr[1]+","+c+"="+listarr[2]+","+d+"="+listarr[3]+""
+        console.log(content)
+        $.ajax({
+            url: "index.php?s=/Api/NewShowListApi/show_list_type_sort",
+            type: 'post',
+            data: {
+                unionid: unionid,
+                content: content,
+            },
+            success: function (res) {
+                window.location.reload();
+            },
+        })
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 通过下面这个API隐藏右上角按钮hideOptionMenu
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>
+</html>

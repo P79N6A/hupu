@@ -1,0 +1,286 @@
+<?php
+/** 新V网首页*/
+namespace app\home\controller;
+use think\Db;
+use app\common\controller\HomeBase;
+use app\api\logic\CapitalLog  as capitalLogic;
+use app\api\logic\Member  as memberLogic;
+use app\api\logic\UsersFans  as fansLogic;
+
+class Income extends HomeBase 
+{
+    /**
+     *新V网
+     */
+    public function income()
+    {
+        $this->assign('vip_id',$this->userInfo['vip_id']);
+        return  $this->fetch();
+    }  
+    
+    public function changexmb()
+    {
+        $money = Db::table('s_user_info')->where(array('id'=>$this->userInfo['id']))->column('money');
+        $this->assign('money',$money);
+        return  $this->fetch();
+    }  
+    
+    public function conversion()
+    {
+        return  $this->fetch();
+    }  
+    
+    public function fantion()
+    {
+        $get_type = Input("get.get_type");
+        $user_info=session("user_info");
+        $type=!Input("get.type")?0:Input("get.type");
+        
+        switch ($get_type) {
+            case 1:
+                 $this->title="销售贡献";
+                 break;
+            case 2:
+                 $this->title="打赏贡献";
+                 break;
+            case 3:
+                 $this->title="赠送用户贡献";
+                 break;
+            case 4:
+                 $this->title="赠送小创投贡献";
+                 break;
+            case 8:
+            	$this->title="用户贡献";
+                break;
+            case 9:
+                $this->title="粉丝贡献";
+                break;
+            case 10:
+                $this->title="年费贡献";
+                break;
+            default:
+                $this->title="流水记录";
+                break;
+         }
+
+         $capt_logic = new capitalLogic();
+         $data= $capt_logic->getHistoryLog(array("type"=>$type,"get_type"=>$get_type,"user_id"=>$user_info['id']));
+         $this->data=$data;
+         $this->get_type=$get_type;
+         $this->type=$type;
+    
+         return  $this->fetch();
+    }  
+    
+    public function recharge()
+    {
+        $openid = Db::table("s_member")->where(array("id"=>$this->userInfo['member_id']))->column("openid");
+        $this->assign('openid',$openid?$openid:session('openid'));
+        return  $this->fetch();
+    } 
+    
+    public function reoutward()
+    {
+        return  $this->fetch();
+    } 
+    
+    public function given()
+    {
+        $user_info = session("user_info");
+        if (!$user_info){
+            header("location:".url("Home/Mycenter/login"));
+            exit;
+        }
+
+        $user = Db::table('s_user_info')->where(array('id'=>$user_info['id']))->field('money')->find();
+        $member = Db::table('s_member')->where(array('id'=>$user_info['member_id']))->field('id,phone')->find();
+        $this->assign('grant_user_phone',$member['phone']);
+        $this->assign('grant_user_info_id',$user_info['id']);
+        $this->assign('money',$user['money']);
+    	return  $this->fetch();
+    }    
+
+    // 我的积分
+    public function mypoints()
+    {
+        $this->assign('completion',$this->userInfo['completion']);
+        return  $this->fetch();
+    }    
+
+    // 粉丝贡献流水详情
+    public function verdetails()
+    {
+        $id = Input("get.id");
+        $unionid = Input("get.unionid");
+        $this->assign('thisid',$id);
+        $this->assign('unionid',$unionid);
+        return  $this->fetch();
+    }
+
+    // 业绩贡献
+    public function yjrecord()
+    {
+        return  $this->fetch();
+    }  
+
+	// 年费贡献
+    public function nfrecord()
+    {
+        return  $this->fetch();
+    }  
+
+    // 用户贡献
+    public function userrecord()
+    {
+        return  $this->fetch();
+    }  
+
+    // 积分转赠详情页面
+    public function intransfer()
+    {
+     	return  $this->fetch();
+ 	}
+ 	
+    //  流水记录
+    public function flowrecord()
+    {
+        return  $this->fetch();
+    }  
+
+    // 充值
+    public function chongzhi()
+    {
+        return  $this->fetch();
+    }  
+
+    // 转赠记录
+    public function czsuccess()
+    {
+        return  $this->fetch();
+    }  
+
+ 	//  积分赠送数值
+ 	public function transess()
+ 	{
+	   $user = Db::table('s_user_info')->alias('u')->leftJoin(' s_member m','m.id = u.member_id')
+	       		->where(array('u.id'=>Input('get.nameid')))->field('u.id,u.nick_name,u.headimg,m.phone')->find();
+	   if(substr($user['headimg'],0,4) != 'http'){
+	   		$user['headimg'] = 'http://'.$_SERVER['HTTP_HOST'].$user['headimg'];
+	   }
+	
+	   $this->user = $user;
+	   return  $this->fetch();
+	}
+
+	//  银行卡
+	public function addbank()
+	{
+	    $phone = Db::table('s_member')->where(array('id'=>$this->userInfo['member_id']))->column('phone');
+	    $this->assign('phone',$phone);	
+	    return  $this->fetch();
+	}
+
+	//  积分兑换
+	public function recordcion()
+	{
+	    return  $this->fetch();
+	}
+
+	//获取粉丝
+	public function myfans()
+	{
+	    $myFans = array();
+	    $myFans['level_1_count'] = Db::table('s_users_fans')->where(array('user_id'=>$this->userInfo['id'],'level'=>1))->count();
+	    $myFans['level_2_count'] = Db::table('s_users_fans')->where(array('user_id'=>$this->userInfo['id'],'level'=>2))->count();
+	    
+	    $fans_logic = new fansLogic();
+	    $RecUser = $fans_logic->getRecUser(array('user_id'=>$this->userInfo['id']));
+	 
+	    $this->assign('MyFans',$myFans);
+	    $this->assign('RecUser',$RecUser);
+	    return  $this->fetch();
+	}
+
+ 	/**
+     *银行卡列表
+     */
+    public function banks()
+    {
+        if($this->request->isPost()){
+            $post = Input("post.");
+            $data['id']=$post['id'];
+            $data['name']=$post['name'];
+            $data['bank_name']=$post['bankname'];
+            $data['branch_name']=$post['branchname'];
+            $data['number']=$post['banknumber'];
+            $type=$post['type'];//公众号值为1
+
+            $res['type']=5;
+            $res['phone']=$post['phone'];
+            $res['code']=$post['code'];
+            
+            $member_logic = new memberLogic();
+            $result = $member_logic->CheckUserPinCode($res);
+            if(!$result && $type == 1){
+                $array_return['status']=0;
+                $array_return['msg']="验证码错误";
+                return json($array_return);
+            }
+
+            if(!$data['name']){
+                $array_return['status']=0;
+                $array_return['msg']="请输入开户名！！";
+                return json($array_return);
+            }
+            if(!$data['bank_name']){
+                $array_return['status']=0;
+                $array_return['msg']="请输入银行名！！";
+                return json($array_return);
+            }
+            if(!$data['id']){
+                unset($data['id']);
+                $data['user_id']=$this->userInfo['id'];
+                $result = Db::table('s_users_bank')->insert($data);
+                if($result){
+                    $array_return['status']=1;
+                    $array_return['msg']="银行卡资料绑定成功，您可以使用提现功能了！";
+
+                }else{
+                    $array_return['status']=0;
+                    $array_return['msg']="银行卡资料绑定失败，请联系管理员！";
+                }
+            }else{
+                $result = Db::table('s_users_bank')->update($data);
+                if($result!==false){
+                    $array_return['status']=1;
+                    $array_return['msg']="银行卡资料修改成功，您可以使用提现功能了！";
+                }else{
+                    $array_return['status']=0;
+                    $array_return['msg']="银行卡资料修改失败，请联系管理员！";
+                }
+            }
+            return json($array_return);
+        } else {
+            if($this->userInfo['id'] == 1){
+                $this->error('您不能绑定银行卡');
+            }
+            $this->title = '绑定银行卡';
+            //获取注册手机号
+            $banks = Db::table('s_users_bank')->where(array('user_id'=>$this->userInfo['id'],'status'=>1))->order('id desc')->find();
+            $banks['zc_phone'] = Db::table('s_member')->where(array('id'=>$this->user_info['member_id']))->column('phone');
+            $this->assign('banks', $banks);
+            return  $this->fetch();
+        }
+    }
+    
+    // 文章打赏
+    public function artrecord()
+    {
+        return  $this->fetch();
+    } 
+     // 共享平台
+    public function share()
+    {
+        return  $this->fetch();
+    } 
+}

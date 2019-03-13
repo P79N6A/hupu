@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/tool.js"></script>
+    <title>{$title}</title>
+    <style>
+    
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #f6f6f6;
+            width: 100%;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            position:fixed;
+            z-index: 1000;
+
+
+        }
+
+
+        .header .list {
+            height: 100%;
+            width: 100%;
+            height: .46rem;
+            white-space: nowrap;
+            display: block;
+            overflow-x: scroll;
+            position: relative;
+            font-size: 0;
+
+
+
+        }
+
+
+            .header .list li {
+            width: 100px;
+            height: 100%;
+            line-height: .46rem;
+            color: #777777;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 5px;
+            font-size: .13rem;
+
+        }
+
+        .line {
+            width: 100px;
+            height: .03rem;
+            /* background: #32CEA0; */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            background: linear-gradient(80deg, transparent 30%, #32CEA1 20%, #32CEA0 70%, transparent 40%) !important;
+
+        }
+
+        .active {
+            color: #32CEA0 !important;
+            font-size: .16rem !important;
+        }
+
+        .main{
+            width: 90%;
+            margin: 0 auto;
+            padding-top: .5rem;
+        }   
+        .main .item{
+            width: 100%;
+            height: 1.8rem;
+            padding-bottom: .12rem;
+        }
+
+          .main .item video{
+              width: 100%;
+              height: 100%;
+              object-fit: fill;
+              
+          }
+
+        /* 加载中 */
+        .loading{
+            width: 100%;
+            height: .4rem;
+            display: none;
+
+        }
+
+        .loading .load_box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+         .load_box img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             top: 50%;
+             margin-top: -.1rem;
+             margin-left: -.1rem;
+             left: 40%;
+         }
+
+        .load_box p{
+            font-size: .16rem;
+            height: .2rem;
+            width: .6rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.1rem;
+            left: 50%;
+            margin-left: -0.1rem;
+
+        }
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <ul class="list">
+            <li class="active">
+                旅行游玩
+            </li>
+            <li>精彩视频</li>
+            <li>剪辑视频</li>
+            <li>游玩视频</li>
+           
+            <div class="line"></div>
+        </ul>
+    </div>
+    <div class="main">
+        <!-- item视频 -->
+    </div>
+    <div class="loading">
+        <div class="load_box">
+            <img src="__HOME_IMAGES__/loadad.gif" alt="">
+            <p>加载中...</p>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function(){
+        var unionid = '{$unionid}';
+        var id = '{$id}';
+        var i = 0;
+        var video_id;
+   
+    $(".list").on("click", "li", function () {
+        var index = $(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        var li_width = ($(this).width() + 5);
+        $(".list .line").stop(false, true).animate({
+            'left': index * li_width + "px",
+            'bottom': '0px'
+        }, 100);
+        
+        var tip = '';
+        tip+= '<div class="load_box">'
+        tip+= '<img src="__HOME_IMAGES__/loadad.gif" alt="">'
+        tip+= '<p>加载中...</p>'
+        tip+= '</div>'
+        $('.loading').html(tip).hide();
+        $('body,html').scrollTop('0px');
+
+        video_id = $(this).attr('data-tyid');
+        i = 0;
+        scrollFlag = true;
+        render(video_id,i)
+    })
+
+    var type = 1;//视频分类;
+    var type_video;
+    function callback(res){
+        type_video = res[0].id;
+        render(type_video,i)
+    }
+    tools.render_type(unionid,type,callback);
+
+
+    function　render(type,index){
+        $.ajax({
+            url:'/index.php?s=/Api/AppApi/video_list',
+            type:'post',
+            data:{
+                unionid:unionid,
+                start:index,
+                length:5,
+                type_id:type
+            },
+            beforeSend:function(){
+                $('.loading').show()
+            },
+            success:function(res){
+                $('.loading').hide()
+                scrollFlag = true;
+                console.log(res)
+                if(res.AppendData.length == 0 && index == 0){
+                        $('.main').html('<p style="text-align:center;margin-top: 50px;">您的当前分类下暂时没有数据哦</p>')
+                    }else if(res.AppendData.length == 0 && index > 0) {
+                        scrollFlag = false;
+                        $('.loading').html('<p style="text-align:center;line-height:0.4rem;">没有更多数据了</p>').show();
+                    }
+                if(res.ResultType == 0){
+                    var data = res.AppendData;
+                    var video_ = '';
+                    $.each(data,function(k,v){
+                        video_+='<div class="item">'
+                        video_+='<video src="'+v.video+'" controls poster="'+v.video_cover+'"></video>'
+                        video_+='</div>'
+                    })
+
+                    if(!i == 0){
+                    $('.main').append(video_);
+                    }else{
+                    $('.main').html(video_)
+                    }
+                }
+            },
+            error:function(){
+                $('.loading').hide()
+            }
+        })
+    }
+
+
+        var scrollFlag = true;
+        $(window).scroll(function () {
+
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if(!scrollFlag){
+                return false
+            }
+            if(scrollTop + windowHeight >= scrollHeight){
+                 i += 5;
+                 scrollFlag = false;
+                 render(video_id,i)
+            }
+
+            
+        })
+
+
+
+
+
+
+
+
+
+})
+</script>

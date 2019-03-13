@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/perfectfor.js"></script>
+    <title>完善信息</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+        }
+
+        .content {
+            width: 90%;
+            margin: 0 auto;
+
+        }
+
+        .set_tip {
+            width: 100%;
+            height: .45rem;
+            line-height: .45rem;
+            font-size: .12rem;
+            color: #666;
+        }
+
+        .item {
+            width: 100%;
+            height: .505rem;
+            line-height: .505rem;
+            background: #fff;
+            margin-bottom: .115rem;
+            border-radius: .02rem;
+        }
+
+        .item p:first-child {
+            width: 20%;
+            height: 100%;
+            text-align: center;
+            font-size: .15rem;
+        }
+
+        .item p:last-child {
+            width: 80%;
+            height: 100%;
+            text-indent: .1rem;
+            overflow: hidden;
+        }
+
+        .item .text {
+            width: 80%;
+            height: 100%;
+            border: 0;
+            font-size: .14rem;
+            outline: none;
+            text-indent: .1rem;
+        }
+
+        .share_content {
+            background: #fff;
+            height: 1.06rem;
+            padding: .135rem .17rem;
+            position: relative;
+        }
+
+        .share_content textarea {
+            width: 50%;
+            height: .9rem;
+            max-height: .9rem;
+            resize: none;
+            outline: none;
+            border: 0;
+            font-size: .14rem;
+            padding: .1rem .1rem;
+            box-sizing: border-box;
+        }
+
+        .share_content .right_box {
+            width: 40%;
+            height: 1rem;
+            overflow: hidden;
+            position: absolute;
+            top: .135rem;
+            right: .14rem;
+            background: #eee;
+            border-radius: .05rem;
+        }
+
+        .share_content .right_box p {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            width: 100%;
+            height: .205rem;
+            line-height: .205rem;
+            font-size: .13rem;
+        }
+
+        .share_content .right_box .updata {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .share_content .right_box .show_img {
+            width: 100%;
+            height: 100%;
+        }
+        .up{
+            width: 1.4rem;
+            height: 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: .05rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -0.5rem;
+            margin-left: -0.7rem;
+            z-index: 999;
+            display: none;
+        }
+
+        .up img{
+            display: block;
+            width: .4rem;
+            height: .4rem;
+            margin:  0.1rem auto;
+        }
+
+        .up p{
+            width: 100%;
+            color: #fff;
+            text-align: center;
+        }
+
+        .sure{
+            width: 90%;
+            height: .5rem;
+            line-height: .5rem;
+            border-radius: .04rem;
+            background: #32CEA0;
+            color: #fff;
+            border: 0 ;
+            outline: none;
+            font-size: .2rem;
+            position: fixed;
+            bottom: .81rem;
+            left: 5%;
+        }
+        .tip{
+            height: .8rem;
+            line-height: .8rem;
+            padding: .1rem .1rem;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            border-radius: .05rem;
+            font-size: .14rem;
+            color: #fff;
+            position: fixed;
+            top: 50%;
+            margin-top: -.4rem;
+            left: 50%;
+            margin-left: -.81rem;
+            display: none;
+        }
+
+        .url{
+            height: .6rem;
+            line-height: .6rem;
+        }
+        .choiseurl textarea{
+            width: 100%;
+            height: 100%;
+            border: 0;
+            outline: none;
+            resize: none;
+            background: #fff;
+            padding: 10px 10px;
+            box-sizing: border-box;
+            font-size: .14rem;
+            word-break: break-all;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="content">
+        <div class="set_tip">请设置标题、描述和封面</div>
+        <div class="item clearfix">
+            <p class="fl">类型</p>
+            <p class="fl typechoise" style="color:#FF9D49;font-size: .17rem;" ></p>
+        </div>
+        <div class="item clearfix url">
+            <p class="fl">链接</p>
+            <p class="fl choiseurl" style="color: #666666;">
+                <textarea disabled></textarea>
+            </p>
+        </div>
+        <div class="item clearfix">
+            <p class="fl">标题</p>
+            <input class="fl text inputtext" type="text" placeholder="请输入分享标题">
+        </div>
+        <div class="share_content">
+            <p style="font-size: .15rem;color: #333333;width: 1rem;text-indent: .1rem;">内容</p>
+            <textarea class="contenttext" placeholder="请输入分享内容"></textarea>
+            <div class="right_box">
+                <div style="position: relative;width: 100%;height: 100%;">
+                    <input type="file" accept="image/*" class="updata" multiple>
+                    <img class="show_img" src="" alt="">
+                    <p>点击更换封面</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" id="user_id" value="{$id}">
+    <div class="mask"></div>
+    <div class="up">
+        <img src="__HOME_IMAGES__/new_load.gif" alt="">
+        <p>上传中...</p>
+    </div>
+    <div class="tip">请上传小于10M的图片</div>
+    <button class="sure">确定</button>
+</body>
+
+</html>

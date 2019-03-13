@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css">
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/share_msg.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>分享信息</title>
+</head>
+
+<body>
+    <div class="content">
+        <div class="render_box">
+            <!-- 分享的box -->
+        </div>
+
+        <div class="share">确定</div>
+
+        <div class="mask">
+            <img src="__HOME_IMAGES__/loadad.gif" alt="">
+            <p>图片上传中</p>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script type="text/html" id="user_msg">
+
+    <div class="title clearfix">
+        <p class="tit">标题</p>
+        <input class="inpt" type="text" id="title_text" placeholder="请输入标题..." value="{{AppendData
+.share_title}}">
+    </div>
+    <div class="text_content clearfix">
+        <div class="up_img fr" data-img="{{AppendData.cover_img}}" style="background-image:url({{AppendData
+.cover_img}})">
+            <input id="updata_img" type="file" accept="image/*">
+            <p>点击更换封面</p>
+        </div>
+        <p class="cover">封面</p>
+    </div>
+
+    <div class="box_text fl">
+        <p class="">内容</p>
+        <textarea id="msg_content" placeholder="请输入您的分享内容">{{AppendData .share_content}}</textarea>
+    </div>
+
+
+
+</script>
+<script>
+    $(function () {
+        var userid = '{$id}';
+        var downimg;
+
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        var id = GetQueryString("id");
+        var cids = GetQueryString("cids");
+        var typeid = GetQueryString("typeid");
+        var musicid = GetQueryString("musicid");
+
+        console.log(id)
+        console.log(cids)
+        // console.log(typeid)
+        // console.log(musicid)
+
+
+        //渲染的分享的数据
+        $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IndexApi/get_album_list",
+            data: {
+                unionid: userid,
+                my_id: id
+            },
+            success: function (res) {
+                console.log(res)
+                $(".render_box").html(template("user_msg", res));
+                downimg = $(".up_img").attr("data-img");
+            }
+        })
+
+
+
+
+
+        $(".render_box").on("change", '#updata_img', function () {
+            if (window.FileReader) {
+                var filepath = $(this).val();
+                var file = this.files[0];
+                var render = new FileReader();
+                render.readAsDataURL(file);
+                render.onload = function (res) {
+                    console.log(res)
+                    var imgsrc = res.target.result;
+                    // $(".up_img").css("background-image", "url(" + imgsrc + ")");
+
+                    $.ajax({
+                        url: "index.php?s=/Api/IndexApi/uploads_img",
+                        type: "post",
+                        data: {
+                            unionid: userid,
+                            img: imgsrc,
+                            start_name: "photo"
+                        },
+                        beforeSend: function () {
+                            $(".mask").show().find("p").text("图片上传中");
+                        },
+                        success: function (res) {
+                            $(".mask").hide();
+                            downimg = res.AppendData;
+                            $(".up_img").css("background-image", "url(" + downimg + ")");
+                        },
+                        error: function () {
+                            alert("服务器繁忙，请稍后再试。")
+                            $(".mask").hide();
+                        }
+                    })
+                }
+
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+            }
+
+        })
+
+
+        $(".share").on("click", function () {
+            var title = $("#title_text").val().trim();
+            var content = $("#msg_content").val().trim();
+
+
+            $.ajax({
+                type: "post",
+                url: "index.php?s=/Api/IndexApi/edit_album_content",
+                data: {
+                    unionid: userid,
+                    my_id: id,
+                    cover_img: downimg,
+                    share_title: title,
+                    share_content: content
+                    // music_id:
+                },
+                success: function (res) {
+                    console.log(res)
+                    mui.toast("保存成功");
+                    setTimeout(function () {
+                        window.location.href = "/index.php?s=/Home/Photo/photo_edit&preview="+id+"&cids="+cids+""
+                    }, 1000)
+
+                },
+                error: function () {
+                    alert("保存失败，请稍后重试")
+                }
+            })
+
+        })
+
+
+
+        //解决键盘弹起影响布局
+        var h = $(window).height();
+        $(window).resize(function () {
+            if ($(window).height() < h) {
+                $('.share').hide(); //定位的元素隐藏
+            }
+            if ($(window).height() >= h) {
+                $('.share').show(); //定位的元素显示
+            }
+        });
+
+
+
+
+
+
+
+
+
+    })
+</script>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<title>隔空传</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #f6f6f6;
+			}
+			
+			.max {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				padding-top: 2.65rem;
+			}
+			
+			.top {
+				width: 13.55rem;
+				height: 7rem;
+				margin: 0 auto 1.15rem;
+			}
+			
+			.top>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.tit {
+				width: 100%;
+				height: 4rem;
+				font-size: 0.9rem;
+				color: #333;
+				text-align: center;
+				font-weight: 550;
+			}
+			
+			.iphone {
+				width: 90%;
+				height: 2.2rem;
+				background: #fff;
+				margin: 1.2rem auto 0.5rem;
+				overflow: hidden;
+			}
+			
+			.icon {
+				float: left;
+				display: block;
+				width: 12%;
+				height: 100%;
+				text-align: right;
+			}
+			
+			.icon>img {
+				width: 0.975rem;
+				height: 1.025rem;
+				margin: 0.5875rem 0;
+			}
+			
+			.ipt {
+				float: left;
+				display: block;
+				width: 85%;
+				height: 100%;
+				margin-left: 3%;
+				line-height: 2.2rem;
+			}
+			
+			.ipt>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				background: #fff;
+				border: none;
+				outline: none;
+				color: #333;
+				font-size: 0.65rem;
+			}
+			
+			
+			
+			.hint {
+				width: 90%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				color: #F8C85E;
+				margin: 0 auto;
+				font-size: 0.6rem;
+			}
+			
+			.save {
+				width: 90%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				color: #fff;
+				text-align: center;
+				font-weight: 600;
+				border-radius: 0.2rem;
+				background: #32CEA0;
+				margin: 6rem auto 0;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				display: none;
+				white-space: nowrap;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="max">
+			<div class="top">
+				<img src="__HOME_IMAGES__/newvnet/mycenter/message_icon@2x.png" alt="" />
+			</div>
+			<div class="tit">
+				将V网以短信方式发送给好友
+			</div>
+		</div>
+		<div class="iphone">
+			<span class="icon"><img src="__HOME_IMAGES__/newvnet/mycenter/Telephone_icon@2x.png" alt="" /></span>
+			<span class="ipt"><input class="phone" type="text" placeholder="输入要发送的手机号" /></span>
+		</div>
+		<div class="hint">*每天最多隔空传10次</div>
+		<div class="hint">*如果发送成功，对方未接收到，请您去更改V网姓名再次发送</div>
+		<div class="save">确定</div>
+		<div class="model" disabled="true"></div>
+		<script>
+			$(".save").on("click", function() {
+				var unionid = "{$unionid}";
+				var phone = $(".phone").val();
+				if($(".phone").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入要发送的手机号");
+					return false;
+				}
+				$.ajax({
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/Code/frimessage", //url 
+					data: {
+						"unionid": unionid,
+						"phone": phone
+					},
+					success: function(res) {
+//						console.log(res)
+						if(res.code == 0) {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							$(".model").html(res.msg);
+						}else {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							$(".model").html(res.msg);
+						}
+						if(res.ResultType == 1) {
+
+							window.location.reload();
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

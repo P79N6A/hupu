@@ -1,0 +1,1 @@
+<?php//团队用户表 数据层namespace app\api\model;use think\Model;class TeamUsers extends Model{    protected $table = 's_team_users';}

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>个人中心</title>
+	<script src="__HOME_JS__/yb/js/rem.js"></script>
+	<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+	<script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+	<script src="__AGENCY__/js/vue/vue"></script>
+
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		.login_dl {
+			width: 90%;
+			height: 3rem;
+			text-align: center;
+			font-size: 1.25rem;
+			line-height: 3rem;
+			color:#fff;
+			background: #e67997;
+			margin: 0 auto;
+			border-radius: 1.5rem;
+		}
+		body{
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background: #fff;
+		}
+		a{
+			text-decoration: none;
+		}
+		.top{
+			width: 100%;
+			height:9.5rem;
+			background: url(__HOME_IMAGES__/meeting/top.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		.top_cen{
+			width: 5rem;
+			height: 6.5rem;
+			margin: 0 auto;
+			padding-top: 1.75rem;
+		}
+		.top_img{
+			width: 4.5rem;
+			height: 4.5rem;
+			border-radius: 50%;
+			border:0.025rem solid #fff;
+			margin: 0 auto;
+		}
+		.top_img>img{
+			width: 4.3rem;
+			height: 4.3rem;
+			border-radius: 50%;
+			margin: 0.1rem;
+		}
+		.top_name{
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			font-size: 1.2rem;
+			text-align: center;
+			color:#fff;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+		}
+		.bot{
+			width: 100%;
+			height: auto;
+			display: flex;
+			margin-top: 1.5rem;
+		}
+		.bot>div{
+			width: 50%;
+			height: 5rem;
+			text-align: center;
+		}
+		.bot>div>a{
+			width: 100%;
+			height: 100%;
+			text-decoration: none;
+		}
+		.botd_img{
+			width: 2.1rem;
+			height: 1.75rem;
+			margin: 0 auto;
+		}
+		.botd_img>img{
+			width: 100%;
+			height: 100%;
+		}
+
+		.bot_img{
+			width: 1.5rem;
+			height: 1.75rem;
+			margin: 0 auto;
+		}
+		.bot_img>img{
+			width: 100%;
+			height: 100%;
+		}
+
+
+		.bot_name{
+			width: 100%;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			font-size: 0.75rem;
+			color:#391705;
+		}
+		.geli{
+			background: #f3f3f3;
+			width: 100%;
+			height: 0.4rem;
+		}
+		.issue{
+			width: 100%;
+			height: auto;
+			padding: 1.5rem 0;
+		}
+		.issue_div{
+			width: 100%;
+			height: 5.5rem;
+			display: flex;
+		}
+		.issue_left,.issue_right{
+			width: 50%;
+			height: 100%;
+			text-align: center;
+		}
+		.iss_img{
+			width: 1.5rem;
+			height: 1.625rem;
+			margin: 0 auto;
+		}
+		.ziss_img{
+			width: 1.75rem;
+			height: 1.625rem;
+			margin: 0 auto;
+		}
+		.iss_img>img{
+			width: 100%;
+			height: 100%;
+		}
+		.ziss_img>img{
+			width: 100%;
+			height: 100%;
+		}
+		.iss_name{
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			font-size: 0.75rem;
+			color:#333;
+		}
+		.ziss_name{
+			width: 100%;
+			height: 2rem;
+			line-height: 2rem;
+			font-size: 0.75rem;
+			color:#333;
+		}
+
+	</style>
+</head>
+<body >
+<div id="app">
+<div class="top">
+	<div class="top_cen">
+		<div class="top_img">
+			<img :src="ctopimgurl" alt="" />
+		</div>
+		<div class="top_name">{{cname}}</div>
+
+	</div>
+</div>
+<div class="bot">
+	<div>
+		<a href="/index.php?s=/Home/Customer/reception.html">
+			<div class="botd_img">
+				<img src="__HOME_IMAGES__/meeting/icon_jiedai@2x.png" alt="" />
+			</div>
+			<div class="bot_name">接待记录</div>
+		</a>
+	</div>
+	<div>
+		<a href="/index.php?s=/Home/Customer/receptionlist2.html">
+			<div class="bot_img">
+				<img src="__HOME_IMAGES__/meeting/icon_queren@2x.png" alt="" />
+			</div>
+			<div class="bot_name">接待结果确认</div>
+		</a>
+	</div>
+	<div>
+		<a href="/index.php?s=/Home/Customer/myreceptionlist.html&isstr=true">
+			<div class="bot_img">
+				<img src="__HOME_IMAGES__/meeting/811569754306490453.png" alt="" />
+			</div>
+			<div class="bot_name">我的接待记录</div>
+		</a>
+	</div>
+</div>
+<div class="geli"></div>
+<div class="issue">
+	<div class="issue_div">
+		<div class="issue_left">
+			<a href="/index.php?s=/Home/Customer/posts2.html">
+				<div class="iss_img">
+					<img src="__HOME_IMAGES__/meeting/icon_1_add@2x.png" alt="" />
+				</div>
+				<div class="iss_name">问题录入</div>
+			</a>
+		</div>
+		<div class="issue_right">
+			<a href="/index.php?s=/Home/Customer/call.html">
+				<div class="ziss_img">
+					<img src="__HOME_IMAGES__/meeting/icon_2_add@2x.png" alt="" />
+				</div>
+				<div class="iss_name">咨询录入</div>
+			</a>
+		</div>
+	</div>
+	<div class="issue_div">
+		<div class="issue_left">
+			<a href="/index.php?s=/Home/Customer/postslist.html">
+				<div class="iss_img">
+					<img src="__HOME_IMAGES__/meeting/icon_1_search@2x.png" alt="" />
+				</div>
+				<div class="iss_name">问题查询</div>
+			</a>
+		</div>
+		<div class="issue_right">
+			<a href="/index.php?s=/Home/Customer/calllist.html">
+				<div class="ziss_img">
+					<img src="__HOME_IMAGES__/meeting/icon_2_search@2x.png" alt="" />
+				</div>
+				<div class="iss_name">咨询查询</div>
+			</a>
+		</div>
+	</div>
+	<div class="issue_div">
+		<div class="issue_left">
+			<div class="login_dl" @click="outlogin">退出登录</div>
+		</div>
+		<div class="issue_right">
+			<div class="login_dl" @click="usepass">更改密码</div>
+		</div>
+	</div>
+
+
+</div>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            cname:'',
+            cpwd:'',
+            ctopimgurl:'',
+            cuuid:'',
+            logintime:''
+        },
+        methods: {
+            outlogin:function () {
+                var _this=this;
+                $.cookie('k_cname','');
+                $.cookie('k_ctopimgurl','');
+                $.cookie('k_cuuid','');
+
+                setTimeout(function(){ window.location.href="/index.php?s=/Home/Customer/att_login.html";},2000);
+            },
+			usepass:function () {
+                var _this=this;
+                window.location.href="/index.php?s=/Home/Customer/userpass.html";
+
+            }
+
+        },
+
+        mounted: function() {
+            var t = this //很重要！！
+            t.cname=  $.cookie('k_cname');
+            t.ctopimgurl=$.cookie('k_ctopimgurl');
+            t.cuuid=$.cookie('k_cuuid')
+
+            if( t.cuuid ==null ||  t.cuuid =='' ){
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+        },
+
+    })
+</script>
+</body>
+</html>

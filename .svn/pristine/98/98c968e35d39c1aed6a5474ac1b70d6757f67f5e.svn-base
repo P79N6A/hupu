@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <title>移动</title>
+    <style>
+        .list {
+            width: 100%;
+            padding: .12rem .12rem .56rem .16rem;
+            box-sizing: border-box;
+        }
+
+        .list li {
+            width: 100%;
+            height: .74rem;
+            border-bottom: 1px solid #ECECEC;
+            padding: .06rem 0 .06rem 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        li .left_box {
+            width: 20%;
+            height: 100%;
+        }
+
+        li .left_box img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 2px;
+        }
+
+        li .right_box {
+            width: 80%;
+            height: 100%;
+            padding: .06rem 0 .06rem .12rem;
+            box-sizing: border-box;
+        }
+
+        li .right_box p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        li .right_box p:nth-child(1) {
+            width: 80%;
+            font-size: .18rem;
+            margin-bottom: .05rem;
+        }
+
+        .bq .item {
+            width: .32rem;
+            height: .14rem;
+            font-size: .12rem;
+            text-align: center;
+            padding: .01rem .03rem 0.03rem 0.03rem;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            margin-right: .05rem;
+        }
+
+        .chiose {
+            width: .12rem;
+            height: .12rem;
+            border-radius: 50%;
+            border: 1px solid #979797;
+            top: 50%;
+            margin-top: -0.06rem;
+            right: .12rem;
+            position: absolute;
+        }
+
+        .chiose .div_box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .chiose .div_box img {
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -.1rem;
+            margin-left: -.1rem;
+        }
+
+        .box_button {
+            width: 100%;
+            height: .56rem;
+            padding: .08rem .16rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            border-top: 1px solid #f6f6f6;
+            background: #fff;
+        }
+
+        .box_button button {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #32CEA0;
+            outline: none;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        
+        .tips{
+            width: 1.8rem;
+            padding: .05rem 0.05rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            position: fixed;
+            bottom: .6rem;
+            left: 50%;
+            margin-left: -0.9rem;
+            z-index: 999;
+            font-size: .14rem;
+            display: none;
+
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="list">
+        <!-- 移动的数据 -->
+    </ul>
+    <div class="box_button">
+        <button>移动</button>
+    </div>
+    <div class="tips">请至少选择一个进行移动</div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+
+        $('.list').on('click', '.div_box', function () {
+            $(this).toggleClass('switch');
+            if ($(this).hasClass('switch')) {
+                $(this).html('<img src="/Public/Home/images/wh/Select_icon@2x.png" alt="">')
+            } else {
+                $(this).html('')
+            }
+
+
+        })
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        var move_id = GetQueryString('video_type');
+        console.log(move_id)
+
+        $.ajax({
+            type: 'post',
+            url: '/index.php?s=/Api/IndexApi/product_list',
+            data: {
+                unionid: unionid,
+                new_type: move_id,
+                start: 0,
+                length: 999
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var data_list = '';
+                    var renderdata = res.AppendData;
+                    $.each(renderdata, function (k, v) {
+                        data_list += '<li class="clearfix">'
+                        data_list += '<div class="left_box fl">'
+                        data_list += '<img src="' + v.cover_img + '" alt="">'
+                        data_list += '</div>'
+                        data_list += '<div class="right_box fl">'
+                        data_list += '<p>' + v.title + '</p>'
+                        data_list += '<div class="bq clearfix">'
+
+                        data_list += '</div>'
+                        data_list += '</div>'
+                        data_list += '<div class="chiose">'
+                        data_list += '<div class="div_box" move-id="' + v.id + '" >'
+                        data_list += '</div>'
+                        data_list += '</div>'
+                        data_list += '</li>'
+                    })
+
+                    $('.list').html(data_list)
+                }
+            }
+        })
+
+
+        $('.box_button button').on('click', function () {
+            var movearr = [];
+            $('.chiose .div_box').each(function (i, e) {
+                if ($(e).hasClass('switch')) {
+                    movearr.push($(e).attr('move-id'));
+                }
+            })
+              if(movearr.length == 0){
+                 $('.tips').stop(true).fadeIn(500).fadeOut(2000);
+                 return false;
+             }
+            var strarr = movearr.join(',');
+            location.href = '/index.php?s=/Home/Newnetwork/sure_con&str='+strarr+''
+
+        })
+
+
+
+
+
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 通过下面这个API隐藏右上角按钮hideOptionMenu
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >  
+    <title>贺词</title>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <style>
+        body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #fff;
+             height: 100%;
+        }
+
+        #content{
+            width: 100%;
+            margin: 0 auto;
+            background: #fff;
+             height: 100%;
+        }
+
+        .title{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 1rem;
+        }
+
+        .ulbox li{
+            width: 20%;
+            height: 3rem;
+            text-align: center;
+        }
+
+        .ulbox li p{
+            font-size: 0.6rem;
+        }
+
+        .ulbox li img{
+            width: 70%;
+            
+            
+        }
+
+        .entry{
+            background-color: #f6f6f7;
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry .item{
+            outline: none;
+            -webkit-appearance: none;
+            border-radius: 0;
+            border: 0;
+            background: #f6f6f7;
+            border-bottom: 1px solid #ccc;
+            text-indent: 0.5rem;
+            height: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .entry textarea{
+            width: 100%;
+            height: auto;
+            resize:none;
+            outline:none;
+            border:0;
+            background: #f6f6f7;
+            margin-bottom: 3rem;
+            padding: 0.5rem 0.5rem;
+            box-sizing: border-box;
+        }
+
+       .entry .reset{
+           border: 0;
+           width: 2.5rem;
+           height: 1.2rem;
+           position: absolute;
+           bottom: 1rem;
+           left: 0.5rem;
+           border-radius: 3px;
+           /* outline: none; */
+       }
+
+         .entry .date{
+             position: absolute;
+             bottom: 1rem;
+             right: 0.5rem;
+         }
+
+         .moban{
+             width: 90%;
+             margin: 0 auto;
+             margin-top: 0.5rem;
+             border-top: 1px solid #ccc;
+         }
+         .moban p {
+            font-size: 0.8rem;
+            text-indent: 1rem;
+            padding-top: 0.5rem;
+            height: 2rem;
+            line-height: 2rem;
+            border-bottom: 1px solid #eee;
+         }
+
+            .fx{
+              width: 100%;
+              position: fixed;
+              bottom: 0;
+              left: 0;
+              
+          }
+
+           .fx button{
+               width: 50%;
+               height: 2.5rem;
+               border: 0;
+           }
+
+            .fx .yl{
+               background: #eee;
+           }
+            .fx .confirm{
+                color: #fff;
+                background: #2FB3D3;
+            }
+
+            .hcmb{
+                overflow: hidden;
+                overflow-y: scroll;
+                height: 11rem;
+            }
+
+            .hcmb li{
+                border-bottom: 1px solid #eee;
+                width: 100%;
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                padding: 0 0.3rem 0.3rem 0.3rem;
+            }
+
+             .hcmb li:last-child{
+                 margin-bottom: 1rem;
+             }
+
+             .save_check{
+                 width: 8rem;
+                 height: 1.8rem;
+                 line-height: 1.8rem;
+                 color: #fff;
+                 font-size: 0.9rem;
+                 background:rgba(0,0,0,.5);
+                 position: fixed;
+                 bottom: 4rem;
+                 left: 50%;
+                 margin-left: -4rem;
+                 text-align: center;
+                 border-radius: 3px;
+                 display: none;
+             }
+    
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="title">
+            <ul class="ulbox clearfix">
+                <li class="fl">
+                    <a id="href_one" href="index.php?s=/Home/Holidaycard/grats">
+                        <img src="__HOME_IMAGES__/h_icon_1_on.png" alt="">
+                        <p>贺词</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_two" href="index.php?s=/Home/Holidaycard/beijing">
+                        <img src="__HOME_IMAGES__/h_icon_2.png" alt="">
+                        <p>背景</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_three" href="index.php?s=/Home/Holidaycard/music">
+                        <img src="__HOME_IMAGES__/h_icon_3.png" alt="">
+                        <p>音乐</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_four" href="index.php?s=/Home/Holidaycard/share">
+                        <img src="__HOME_IMAGES__/h_icon_4.png" alt="">
+                        <p>分享</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_five" href="index.php?s=/Home/Holidaycard/layout">
+                        <img src="__HOME_IMAGES__/h_icon_5.png" alt="">
+                        <p>布局</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    <div class="entry">
+        <!-- usermsg -->
+    </div>
+
+    <!-- <div class="moban">
+        <p>贺词模板</p>
+        <ul class="clearfix hcmb">
+       
+        
+        </ul>
+    </div> -->
+    <div class="fx clearfix">
+        <button class="yl fl">预览</button>
+        <button class="confirm fl">保存</button>
+    </div>
+</div>
+<div class="save_check">保存成功</div>
+
+
+</body>
+</html>
+
+<script type="text/html" id="usermsg">
+    {{each AppendData v i}}
+        <input class="item nick" type="text" value="{{v.title}}" placeholder="请输入标题">
+        <textarea rows="10" cols placeholder="请输入正文内容">{{v.content}}</textarea>
+        <input class="reset" type="reset" value="清空"></input>
+        <input class="item date" type="text" value="{{v.phone}}" placeholder="请输入手机号">
+        <input id="h_id" type="hidden" value="{{v.gcard_id}}">
+    {{/each }}
+</script>
+
+
+<script>
+    var id = '{$id}';
+    var hkcontent;
+    var hc_id; //拿到贺词的id
+
+    $('body').height($('body')[0].clientHeight);
+    function GetQueryString(name) {
+        if (window.location.href.indexOf('?') > -1) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            console.log(reg)
+            var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+            if (r != null) return unescape(r[2]);
+        }
+        return '';//便于容错处理
+    }
+
+    var gid = GetQueryString("gid");
+    console.log(gid)
+ 
+        $("#href_one").attr("href", "index.php?s=/Home/Holidaycard/grats&gid="+ gid+"");
+        $("#href_two").attr("href", "index.php?s=/Home/Holidaycard/beijing&gid=" + gid + "");
+        $("#href_three").attr("href", "index.php?s=/Home/Holidaycard/music&gid=" + gid + "");
+        $("#href_four").attr("href", "index.php?s=/Home/Holidaycard/share&gid=" + gid + "");
+        $("#href_five").attr("href", "index.php?s=/Home/Holidaycard/layout&gid=" + gid + "");
+   
+
+    //获取贺卡信息
+    $.ajax({
+        type:"post",
+        url:"index.php?s=/Api/IndexApi/get_gcard",
+        data:{
+            id:id,
+            cardid: gid, //贺卡id
+        },
+        success:function(res){
+            console.log(res)
+            $(".entry").html(template("usermsg",res));
+            hc_id = $("#h_id").val();
+        }
+    });
+
+
+
+
+    $(".entry").on("click",".reset",function(){
+        $("textarea").val("");
+    });
+
+
+    $(".confirm").on("click",function(){
+        var hk_title = $(".nick").val();
+        var hk_content = $("textarea").val();
+         var hk_date = $(".date").val();
+        if(hk_title == ''){
+            hk_title = -1;
+        }
+        if(hk_content == ''){
+            hk_content = -1;
+        }
+        if(hk_date == ''){
+            hk_date = -1;
+        }
+       $.ajax({
+           type:"post",
+           url:"index.php?s=/Api/IndexApi/addGcard",
+           data:{
+                id:id,
+                card_id: gid,
+                title: hk_title,
+                phone: hk_date,
+                content: hk_content
+
+           },
+           success:function(res){
+               console.log(res);
+                   $(".save_check").text("保存成功").stop(true).fadeIn(500);
+                   $(".save_check").fadeOut(2000);
+                // location.href = ''
+                // location.reload();
+           }
+       })
+    });
+
+
+    $(".yl").on("click",function(){
+        location.href = "index.php?s=/Home/Holidaycard/showview/gid/" + gid + "/id/"+id+"";
+    })
+
+
+
+      
+       
+
+
+      
+
+
+
+
+</script>

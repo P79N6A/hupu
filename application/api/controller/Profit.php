@@ -1,0 +1,447 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/12/7
+ * Time: 0:16
+ */
+namespace app\api\controller;
+use app\common\controller\ApiBase;
+use app\api\logic\User  as userLogic;
+use app\api\logic\Withdraw  as withdrawLogic;
+use app\api\logic\UsersFans  as fansLogic;
+use app\api\logic\CapitalLog  as capitalLogic;
+use app\api\model\MobileCode  as codeModel;
+use app\api\model\Grant  as grantModel;
+
+class ProfitController extends ApiBase 
+{
+	private $code_mod = null;
+	private $grant_mod = null;
+	private $user_logic = null;
+	private $withdraw = null;
+	private $capital_logic = null;
+	
+    public function initialize()
+    {
+        parent::initialize();
+        
+        $this->user_logic = new userLogic();
+        $this->withdraw = new withdrawLogic();
+        $this->capital_logic = new capitalLogic();
+        
+        $this->code_mod = new codeModel();
+        $this->grant_mod = new grantModel();
+        
+        $actionName = strtolower($this->request->action());
+        $noLogin = array();
+        if (!in_array($actionName, $noLogin)) {
+            if ($this->_reqparam['spopenid']) {
+                $this->userInfo = $this->user_logic->getUserInfoOption(array('spopenid' => $this->_reqparam['spopenid']));
+            } elseif ($this->_reqparam['unionid']) {
+                $this->userInfo = Db::table('s_user_detail')->where(array('unionid' => $this->_reqparam['unionid']))->find();
+            } else {
+                $this->array_return['ResultType'] = self::__ERROR__;
+                $this->array_return['Message'] = "非法访问";
+                $this->array_return['data'] = null;
+                return json($this->array_return);
+            }
+            if (!$this->userInfo) {
+                $this->array_return['ResultType'] = self::__ERROR__;
+                $this->array_return['Message'] = "没有该用户或登录失败";
+                $this->array_return['data'] = null;
+                return json($this->array_return);
+            } else {
+                $this->_reqparam['userInfo'] = $this->userInfo;
+                $level = $this->user_logic->getVipLevl($this->userInfo['member_id']);
+                if ($level['vip_group_id'] <= 0 && $actionName != 'newviporder') {
+                    $this->array_return['ResultType'] = self::__ERROR2__; //ERROR2，没有充值
+                    $this->array_return['Message'] = "您的账号尚未开通创客服务!";
+                    return json($this->array_return);
+                }
+            }
+        }
+    }
+    
+    public function GetDetail()
+    {
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $result = $this->capital->getLogData(array("user_id" => $this->userInfo['id']));
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取收益成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取收益失败";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    public function GetLiuShui() 
+    {
+        if (empty($this->_reqparam['type'])) {
+            $this->_reqparam['type'] = '0'; //默认获取所有的，获取的时间范围：0：所有纪录 1：7天内的 2、上个月的1日至月底
+            
+        }
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $result = $this->capital_logic->getHistoryLog(array(
+            "type" => $this->_reqparam['type'],
+            "get_type" => $this->_reqparam['get_type'],
+            "user_id" => $this->_reqparam['user_id']
+        ));
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取流水成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取流水失败，或列表为空";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    public function GetTiXian() 
+    {
+        if (empty($this->_reqparam['get_type'])) {
+            $this->_reqparam['get_type'] = '1'; //默认获取1的.类型可为：1已审核 2审核中 3不通过
+        }
+        if (empty($this->_reqparam['type'])) {
+            $this->_reqparam['type'] = '0'; //默认获取所有的，获取的时间范围：0：所有纪录 1：7天内的 2、上个月的1日至月底
+        }
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $result = $this->withdraw->getLog(array(
+            "type" => $this->_reqparam['type'],
+            "user_id" => $this->userInfo['id'],
+            "get_type" => $this->_reqparam['get_type']
+        ));
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取提现成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取提现失败，或列表为空";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    public function GetTiXianSum() 
+    {
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $result = $this->withdraw->getSumInfo(array("user_id" => $this->userInfo['id']));
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取提现成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取提现失败，或列表为空";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    public function GetUserBank() 
+    {
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $result = Db::table('s_users_bank')->where(array('user_id' => $this->userInfo['id'],'status' => 1))->order('id desc')->select();
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取银行卡成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取银行卡失败，或客户没有绑定银行卡";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    /**
+     * 获取单个银行卡信息
+     */
+    public function GetUserOneBank() 
+    {
+        $bank_id = $this->_reqparam['bank_id'];
+        $result = $banks = Db::table('s_users_bank')->where(array(
+            'user_id' => $this->userInfo['id'],
+            'id' => $bank_id,
+            'status' => 1
+        ))->find();
+        if (!empty($result)) {
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = '获取银行卡成功！';
+            $this->array_return['AppendData'] = $result;
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "获取银行卡失败，或客户没有绑定银行卡";
+            $this->array_return['data'] = null;
+            return json($this->array_return);
+        }
+        
+        return json($this->array_return);
+    }
+    
+    /**
+     * 不显示银行卡
+     */
+    public function del_bank() 
+    {
+        $user_id = $this->userInfo['id'];
+        $bank_id = $this->_reqparam['bank_id'];
+        if ($bank_id) {
+            $res = Db::table('s_users_bank')->where(array(
+                'id' => $bank_id,
+                'user_id' => $user_id
+            ))->update(array(
+                'status' => 0
+            ));
+            if ($res) {
+                $this->array_return['ResultType'] = self::__OK__;
+                $this->array_return['Message'] = '操作成功！';
+            } else {
+                $this->array_return['ResultType'] = self::__ERROR2__;
+                $this->array_return['Message'] = "操作失败";
+                $this->array_return['data'] = null;
+            }
+        } else {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "缺少参数";
+            $array_return['data'] = null;
+        }
+        
+        return json($this->array_return);
+    }
+    
+    public function CreateUserBank()
+    {
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $data['id'] = $this->_reqparam['id'];
+        $data['name'] = $this->_reqparam['name'];
+        $data['bank_name'] = $this->_reqparam['bankname'];
+        $data['branch_name'] = $this->_reqparam['branchname'];
+        $data['number'] = $this->_reqparam['banknumber'];
+        $data['user_id'] = $this->userInfo['id'];
+        if (!$data['name']) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请输入开户名！！";
+            return json($array_return);
+        }
+        if (!$data['bank_name']) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请输入银行名！！";
+            return json($array_return);
+        }
+        if (!$data['number']) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请输入银行卡号！！";
+            return json($array_return);
+        }
+        if (!$data['id']) {
+            unset($data['id']);
+            $result = Db::table('s_users_bank')->insert($data);
+            if ($result) {
+                $array_return['ResultType'] = self::__OK__;
+                $array_return['Message'] = "银行卡资料绑定成功，您可以使用提现功能了！";
+                $array_return['AppendData'] = $result;
+            } else {
+                $array_return['ResultType'] = self::__ERROR__;
+                $array_return['Message'] = "银行卡资料绑定失败，请联系管理员！";
+                $array_return['data'] = null;
+            }
+        } else {
+            $result = Db::table('s_users_bank')->update($data);
+            if ($result !== false) {
+                $array_return['ResultType'] = self::__OK__;
+                $array_return['Message'] = "银行卡资料修改成功，您可以使用提现功能了！";
+                $array_return['AppendData'] = $result;
+            } else {
+                $array_return['ResultType'] = self::__ERROR__;
+                $array_return['Message'] = "银行卡资料修改失败，请联系管理员！";
+                $array_return['data'] = null;
+            }
+        }
+        
+        return json($array_return);
+    }
+    
+    public function ApplyCarry() 
+    {
+        $this->_reqparam['user_id'] = $this->userInfo['id'];
+        $data['user_id'] = $this->userInfo['id'];
+        if ($this->_reqparam['type'] != 2 || $this->userInfo['id'] == 1) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请勿非法调用";
+            return json($array_return);
+        }
+        if (empty($this->_reqparam['bank_id'])) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请添加银行卡信息";
+            return json($array_return);
+        }
+        if (empty($this->_reqparam['money'])) {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "请填写提现金额！";
+            return json($array_return);
+        }
+        $this->_reqparam['ip'] = get_client_ip();
+        $flag = $this->withdraw->addData($this->request);
+        if ($flag) {
+            $array_return['ResultType'] = self::__OK__;
+            $array_return['Message'] = "提现申请己提交";
+        } else {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "提现失败，余额不足";
+        }
+        
+        return json($array_return);
+    }
+    
+    public function GetMyFans() 
+    {
+        $where['user_id'] = $this->userInfo['id'];
+        $start = $this->_reqparam['start'] ? $this->_reqparam['start'] : 0;
+        $length = $this->_reqparam['length'] ? $this->_reqparam['length'] : 9999;
+        if ($this->_reqparam['vip_group_id'] >= 0) {
+            $where['vip_group_id'] = $this->_reqparam['vip_group_id'];
+        }
+        
+        $fans_Logic = new fansLogic();
+        $MyFans = $fans_Logic->getFans($where, $start, $length);
+        $RecUser = $fans_Logic->getRecUser($where, $start, $length);
+        $result = array();
+        $result['FirstCount'] = $MyFans['level_1_count'];
+        $result['SecondCount'] = $MyFans['level_2_count'];
+        $result['Firsts'] = $MyFans['level_1'];
+        $result['Seconds'] = $MyFans['level_2'];
+        $result['MyLeader'] = $RecUser;
+        if ($result) {
+            $array_return['ResultType'] = self::__OK__;
+            $array_return['Message'] = "获取粉数据成功";
+            $array_return['AppendData'] = $result;
+        } else {
+            $array_return['ResultType'] = self::__ERROR__;
+            $array_return['Message'] = "获取粉丝数据失败";
+        }
+        
+        return json($array_return);
+    }
+    
+    /**
+     * 转赠记录
+     */
+    public function send_money_log() 
+    {
+        $type = $this->_reqparam['type']; //1:赠送  2:领取
+        $start = $this->_reqparam['start'] ? $this->_reqparam['start'] : 0;
+        $length = $this->_reqparam['length'] ? $this->_reqparam['length'] : 10;
+        if ($type) {
+            $where['g.status'] = 2;
+            if ($type == 1) {
+                $where['g.grant_user_id'] = $this->userInfo['id'];
+            } else {
+                $where['g.receiver_user_id'] = $this->userInfo['id'];
+            }
+            $list = Db::table('s_grant')->alias('g')->leftJoin(' s_user_detail u','u.id = g.grant_user_id')->leftJoin(' s_user_detail ru','ru.id = g.receiver_user_id')->field('u.nick_name as rec_name,ru.nick_name as get_name,g.money,g.create_time')->where($where)->order('create_time desc')->limit($start, $length)->select();
+            if ($list) {
+                foreach ($list as $k => $v) {
+                    $list[$k]['create_time'] = date('Y-m-d H:i', $v['create_time']);
+                }
+                $this->array_return['ResultType'] = self::__OK__;
+                $this->array_return['Message'] = "操作成功";
+                $this->array_return['AppendData'] = $list;
+            } else {
+                $this->array_return['ResultType'] = self::__ERROR2__;
+                $this->array_return['Message'] = "操作失败";
+            }
+        } else {
+            $this->array_return['ResultType'] = self::__ERROR__;
+            $this->array_return['Message'] = "缺少参数";
+        }
+        
+        return json($this->array_return);
+    }
+    
+    /**
+     * 转赠小秘币
+     */
+	public function send_money()
+    {
+    	$phone = $this->_reqparam['phone'];
+        $money = $this->_reqparam['money'];
+        $code = $this->_reqparam['code'];
+        $grant_user_phone = Db::table('s_member')->where(array('id' => $this->userInfo['member_id']))->column('phone');
+        $grant_user_info_id = $this->userInfo['id'];
+        $type = $this->_reqparam['type'];
+        $receiver_member = Db::table('s_member')->where(array('phone' => $phone))->field("id")->find();
+        if (!$receiver_member) {
+            return json(array(
+                'status' => 1,
+                'msg' => '此用户不存在'
+            ));
+        }
+        $receiver_user_info = Db::table('s_user_detail')->where(array('member_id' => $receiver_member['id']))->field("id")->find();
+        $user_info = Db::table('s_user_detail')->where(array('id' => $grant_user_info_id))->field("id,money")->find();
+        if ($money > $user_info['money']) {
+            return json(array(
+                'status' => 2,
+                'msg' => '转赠金额不能大于余额'
+            ));
+        }
+        //判断验证码
+        $where['phone'] = $grant_user_phone;
+        $where['type'] = $type;
+        $where['code'] = $code;
+        $where['expire_time'] = array(
+            'gt',
+            time()
+        );
+        $is = $this->code_mod->where($where)->order('id desc')->find();
+        if (!$is) {
+            return json(array(
+                'status' => 3,
+                'msg' => '验证码错误或过期'
+            ));
+        }
+        $data['grant_user_id'] = $grant_user_info_id; //转赠人id
+        $data['receiver_user_id'] = $receiver_user_info['id']; //被转赠人
+        $data['money'] = $money;
+        $data['create_time'] = time();
+        $data['status'] = 1;
+        $grant_id = $this->grant_mod->insert($data);
+        
+        $flag = false;
+        Db::startTrans();
+		try {
+	        $grant_res = Db::table('s_user_detail')->where(array('id' => $grant_user_info_id))->setDec('money', $money);
+	        $receiver_res = Db::table('s_user_detail')->where(array('id' => $receiver_user_info['id']))->setInc('money', $money);
+	        $this->grant_mod->where(['id' => $grant_id])->update(['status' => 2]);
+		  	Db::commit();
+		  	$flag = true;
+		} catch (\Exception $e) {
+		    Db::rollback(); // 回滚事务
+		}    
+		
+		$data = array('status' => 5,'msg' => '转赠失败');
+        if ($flag) {
+            $data = array('status' => 4,'msg' => '转赠成功');
+        }
+             
+        return json($data);
+    }
+}
+

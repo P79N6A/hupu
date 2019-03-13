@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>撰写</title>
+		<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+		<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+		<script src="__HOME_JS__/summernote.js"></script>
+		<script src="__HOME_JS__/summernote-zh-CN.js"></script>
+		<script>
+			//设置rem
+			(function(win) {
+				var doc = win.document;
+				var docEl = doc.documentElement;
+				var tid;
+				//动态设置像素比
+				var iScale = 1 / window.devicePixelRatio;
+				document.write('<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=' + iScale + ',minimum-scale=' + iScale + ',maximum-scale=' + iScale + '">');
+
+				//动态设置body字体大小
+				var dpr = window.devicePixelRatio || 1
+				console.log(dpr);
+
+				function setBodyFontSize() {
+					if(document.body) {
+						document.body.style.fontSize = (12 * dpr) + 'px' //改12为6
+					} else {
+						document.addEventListener('DOMContentLoaded', setBodyFontSize)
+					}
+				}
+				setBodyFontSize();
+
+				//为html设置font-size大小
+				function refreshRem() {
+					//获取可视区
+					var width = docEl.getBoundingClientRect().width;
+					var rem = width / 18.75;
+
+					docEl.style.fontSize = rem + 'px';
+					//rem基准以font-size:40px来进行换算
+				}
+				//onresize事件页面改变大小时
+				win.addEventListener('resize', function() {
+					clearTimeout(tid);
+					tid = setTimeout(refreshRem, 1);
+				}, false);
+				//onpageshow事件,有缓存时不会加载缓存数据,会加载实时数据
+				win.addEventListener('pageshow', function(e) {
+					if(e.persisted) {
+						clearTimeout(tid);
+						tid = setTimeout(refreshRem, 1);
+					}
+				}, false);
+				refreshRem();
+			})(window);
+		</script>
+
+		<style>
+			.top {
+				width: 100%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				background-color: #1B1B1F;
+				opacity: 0.8;
+			}
+			
+			.top_cen {
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.top_left {
+				width: 6rem;
+				height: 100%;
+				float: left;
+			}
+			
+			.sel {
+				display: inline-block;
+				width: 4.5rem;
+				height: 100%;
+				font-size: 0.75rem;
+				color: #fff;
+			}
+			
+			.acc {
+				float: right;
+				width: 2.5rem;
+				height: 100%;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+				color: #2FB3D3;
+				text-align: right;
+			}
+			
+			#classification {
+				height: 100%;
+				z-index: 501;
+				width: 100%;
+				position: fixed;
+				background: #fff;
+				top: 2.5rem;
+				display: none;
+			}
+			
+			#classification .title_name {
+				width: 90%;
+				margin: 0 auto;
+				height: 3rem;
+				line-height: 3rem;
+			}
+			
+			p {
+				margin-bottom: 0 !important;
+			}
+			
+			.down {
+				margin-top: -10px;
+			}
+			
+			#classification .title_name p:first-child {
+				font-size: 0.9rem;
+				color: #333;
+			}
+			
+			#classification .title_name a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				;
+				font-size: .75rem;
+				color: #999999;
+			}
+			
+			#classification .ul_box {
+				padding-left: .55rem;
+				padding-right: .65rem;
+			}
+			
+			.ul_box li {
+				width: 31.8%;
+				text-align: center;
+				background: #E8E8E8;
+				border-radius: .125rem;
+				height: 2.1rem;
+				margin-left: .25rem;
+				margin-top: .25rem;
+				color: #000;
+				line-height: 2.1rem;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.ul_box li p:first-child {
+				font-size: .75rem;
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+				line-height: 2.1rem;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.mui-table-view-cell>a:not(.mui-btn) {
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+			
+			.mui-table-view-cell {
+				padding: 0 !important;
+			}
+			
+			.ul_box li p:last-child {
+				font-size: 0.75rem;
+				overflow: hidden;
+			}
+			
+			.fl {
+				width: 80%;
+				float: left;
+			}
+			
+			.fr {
+				width: 20%;
+				float: left;
+				text-align: right;
+			}
+			
+			#add_li {
+				width: 1.5rem;
+				height: 1.475rem;
+				margin-top: .6rem;
+				margin-left: .8rem;
+				cursor: pointer;
+			}
+			
+			.close {
+				width: 2.25rem;
+				height: 2.25rem;
+				border-radius: 50%;
+				position: fixed;
+				bottom: 4.9rem;
+				right: 1.7rem;
+				box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.16);
+				text-align: center;
+				line-height: 2.25rem;
+				opacity: 1;
+			}
+			
+			.max_sr {
+				background-color: #fff;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				position: fixed;
+				bottom: 0px;
+				left: 0;
+				font-size: 0;
+				z-index: 510;
+				display: none;
+				padding-top: 0.15rem;
+				border-top: 1px solid #f2f2f2;
+			}
+			
+			.sr_fl {
+				width: 90%;
+				margin: 0 auto;
+				height: 2.5rem;
+				line-height: 2.5rem;
+			}
+			
+			.sr {
+				display: inline-block;
+				width: 80%;
+				height: 2.5rem;
+				border-radius: 0.625rem;
+			}
+			
+			.sr>input {
+				width: 100%;
+				height: 2rem;
+				border-radius: 1rem;
+				font-size: 0.8rem;
+				border 1px solid #999;
+			}
+			
+			input:focus {
+				border-color: #ccc !important;
+				outline: none !important;
+				border 1px;
+				box-shadow: none !important;
+			}
+			
+			.sr_qx {
+				display: inline-block;
+				width: 20%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.tit {
+				width: 90%;
+				height: 2.5rem;
+				margin: 0 auto;
+			}
+			
+			.tit>input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				font-size: 0.875rem;
+			}
+			
+			.tit_txt {
+				min-height: 7.5rem;
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.tit_txt>textarea {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.ipt {
+				width: 100% !important;
+				height: 100% !important;
+				border-top: none !important;
+				border-left: none !important;
+				border-right: none !important;
+				border-bottom: 1px solid #ECECEC !important;
+				font-size: 1.1rem;
+				padding: 0 !important;
+				margin-bottom: 0 !important;
+				line-height: 3rem !important;
+			}
+			
+			.cont {
+				margin-bottom: 2.5rem;
+			}
+			
+			.title {
+				width: 90%;
+				margin: 0 auto;
+				height: 3rem;
+				z-index: 100;
+			}
+			
+			.note-btn {
+				font-size: 0.75rem;
+			}
+			
+			.note-frame {
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-toggle,
+			.panel-heading.note-toolbar .note-color .dropdown-toggle {
+				width: 1.125rem;
+				padding-left: 0.35rem;
+			}
+			
+			.note-fontname {
+				display: none;
+			}
+			
+			.note-table {
+				display: none;
+			}
+			
+			.note-view {
+				display: none;
+			}
+			
+			.note-style {
+				display: none;
+			}
+			
+			p {
+				font-size: 0.75rem !important;
+			}
+			
+			.note-placeholder {
+				font-size: 0.75rem !important;
+			}
+			
+			.panel-default {
+				height: auto !important;
+			}
+			
+			.foot {
+				width: 100%;
+				height: 2.5rem;
+				font-size: 0.75rem;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+			}
+			
+			.zx_qx {
+				width: 50%;
+				height: 100%;
+				background-color: #fff;
+				color: #000;
+				float: left;
+				border: none;
+			}
+			
+			.zx_bc {
+				width: 50%;
+				height: 100%;
+				background-color: #2FB3D3;
+				color: #fff;
+				float: left;
+				border: none;
+			}
+			
+			.modal-title {
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			.note-input {
+				width: 100% !important;
+				height: 2rem !important;
+				line-height: 2rem !important;
+			}
+			
+			.modal-dialog {
+				width: 15rem !important;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -7.5rem;
+				margin-top: -5.1rem;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu,
+			.panel-heading.note-toolbar .note-color .dropdown-menu {
+				min-width: 12.5rem;
+				min-height: 8.5rem;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette:first-child,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette:first-child {
+				width: 48%;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-palette-title,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette .note-palette-title {
+				font-size: 0.75rem;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-color-reset,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette .note-color-reset {
+				font-size: 0.6rem;
+			}
+			
+			.note-popover .popover-content .note-color-palette div .note-color-btn,
+			.panel-heading.note-toolbar .note-color-palette div .note-color-btn {
+				width: 12.5%;
+				height: 100%;
+			}
+			
+			.note-color-row {
+				width: 100%;
+				height: 0.8rem !important;
+			}
+			
+			.note-palette {
+				width: 48% !important;
+			}
+			
+			#sn-checkbox-open-in-new-window {
+				width: 50px;
+				height: 50px;
+				float: right;
+			}
+			
+			.active {
+				background-color: #2FB3D3 !important;
+				color: #fff !important;
+			}
+		</style>
+
+		</heade>
+
+		<body>
+			<div class="top">
+				<div class="top_cen">
+					<div class="top_left">
+						<span class="sel">请选择分类</span>
+						<span class="sel_jt">
+						<img class="down" src="__HOME_IMAGES__/inco_down.png" alt="">
+					</span>
+					</div>
+					<div class="acc">完成</div>
+				</div>
+			</div>
+			<div id="classification">
+				<div class="title_name">
+					<p class="fl">分类夹</p>
+					<p class="fr">
+						<!-- <a href="__HOME_IMAGES__/addArticleCategory.html"> 管理</a> -->
+						<a href="/index.php?s=/Home/Article/addArticleCategory.html">管理</a>
+					</p>
+				</div>
+				<ul class="ul_box clearfix">
+					<li class="fl mui-table-view-cell">
+						123
+					</li>
+					<li class="fl mui-table-view-cell">
+						456
+					</li>
+					<li class="fl mui-table-view-cell">
+						789
+					</li>
+					<li class="fl mui-table-view-cell">
+						101112
+					</li>
+					<li class="fl mui-table-view-cell">
+						131415
+					</li>
+					<li class="fl mui-table-view-cell">
+						161718
+					</li>
+					<li class="fl mui-table-view-cell">
+						181920
+					</li>
+					<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">
+				</ul>
+				<div class="close">
+					<img src="__HOME_IMAGES__/inco_det.png" alt="">
+				</div>
+			</div>
+			<div class="max_sr">
+				<div class="sr_fl">
+					<span class="sr">
+				<input type="text" id="sr_k" placeholder="请输入分类名称" value=""/>
+			</span>
+					<span class="sr_qx">确定</span>
+				</div>
+			</div>
+			<div class="title">
+				<input type="text" class="ipt" placeholder="请输入标题" />
+			</div>
+			<div class="cont">
+				<div id="summernote"></div>
+			</div>
+			<div class="foot">
+				<button class="zx_qx">取消</button>
+				<button class="zx_bc">保存</button>
+			</div>
+		</body>
+		<script>
+			$(document).on('click', '.fl', function(e) {
+				$(this).addClass("active").siblings().removeClass("active")
+			})
+			//分类点击事件
+			$(function() {
+				$(".top_left").on("click", function() {
+					$("#classification").show();
+					$(".sel").css("color", "#2FB3D3");
+					$(this).find('img').attr("src", "__HOME_IMAGES__/upimg.png");
+				});
+				$(".close").on("click", function() {
+					$("#classification").hide();
+					$(".sel").css("color", "#fff");
+					$(".sel_jt").find('img').attr("src", "__HOME_IMAGES__/inco_down.png");
+					$(".max_sr").hide();
+
+				});
+			})
+			//分类添加
+
+			$(".sr_qx").on("click", function() {
+				var val = $("#sr_k").val();
+				$(".ul_box li:last").after("<li class='fl'>" + val + "</li>");
+				if($(".ul_box li").length >= 12) {
+					$(".add_lis").hide();
+				}
+				$(".max_sr").hide();
+			})
+			$(document).on('click', '#add_li', function(e) {
+				$(".max_sr").show();
+				$("#sr_k").focus();
+			})
+		</script>
+		<script>
+			$('#summernote').summernote({
+				placeholder: '请输入内容',
+				lang: 'zh-CN',
+				focus: true,
+				minHeight: 500
+			});
+		</script>
+		<script>
+			function onBridgeReady() {
+				WeixinJSBridge.call('hideOptionMenu');
+			}
+			if(typeof WeixinJSBridge == "undefined") {
+				if(document.addEventListener) {
+					document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+				} else if(document.attachEvent) {
+					document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+					document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+				}
+			} else {
+				onBridgeReady();
+			}
+		</script>
+
+</html>

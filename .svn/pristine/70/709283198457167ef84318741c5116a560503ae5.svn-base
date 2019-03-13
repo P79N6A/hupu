@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>成员管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			.klss,
+			.klss2 {
+				line-height: 0.8rem;
+				height: 0.8rem;
+				color: #000;
+				border-bottom: 1px solid #ccc;
+				font-size: 0.3rem
+			}
+			
+			.klss span {
+				margin-left: 4rem;
+			}
+			
+			.klss2 span {
+				margin-left: 3.3rem;
+			}
+			
+			.klss2 i {
+				display: inline-block;
+				width: 0.2rem;
+				height: 0.2rem;
+				background: #2FB3D3;
+				border-radius: 50%;
+				margin-right: 0.2rem;
+			}
+			
+			footer ul li:nth-child(2) p {
+				background: url(image/xiaoxii_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+			
+			.mingc {
+				/*float: left;*/
+				/*width: 3rem;*/
+				position: relative;
+			}
+			
+			.ming {
+				display: inline-block;
+				width: 1.1rem;
+				height: 0.35rem;
+				line-height: .35rem;
+				text-align: center;
+				color: #fff;
+				z-index: 2;
+			}
+			
+			.huizhang {
+				position: absolute;
+				left: 3rem;
+				top: 0.2rem;
+				background: #2FB3D3;
+			}
+			
+			.guanli {
+				position: absolute;
+				left: 4.2rem;
+				top: 0.2rem;
+				background: #ed7133;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<!--<div class="dong">
+			<div class="home"></div>
+			<div class="sou">
+				<input type="text" id="" value=""  placeholder="按商会名称或者地区搜索"/>
+				<span></span>
+			</div>
+			<div class="ren"></div>
+		</div>-->
+
+		<div class="cont">
+			<p class="klss">商会成员<span>{$count}</span></p>
+
+			<p class="klss2"><i></i>重要展示位<span>1</span></p>
+			<div class="neir2">
+				<img src="../../{$trade.logo}" alt="" />
+				<p>{$trade.name}
+					<br />
+					<span>完成</span></p>
+				<div class="mingc">
+					<span class="ming huizhang" style="color: #fff;">会长</span>
+					<span class="ming guanli" style="color: #fff;">管理者</span>
+				</div>
+			</div>
+			<p class="klss2"><i></i>会员展示位<span>1</span></p>
+			<volist name="members" id="vo">
+				<div class="neir2">
+					<img src="../../{$trade.logo}" alt="" />
+					<if condition="($vo.status eq 1) ">
+						<p>{$vo.nick_name}
+							<br />
+							<span>完成</span></p>
+						<elseif condition="$vo.status eq 2" />
+						<p>{$vo.nick_name}
+							<br />
+							<span>拒绝</span></p>
+						<else />
+						<p>{$vo.nick_name}
+							<br />
+							<span>请等待验证</span></p>
+						<div class="mingc">
+							<span class="ming huizhang" onclick="agree({$vo.id})" style="color: #fff;">同意</span>
+							<span class="ming guanli" onclick="reject({$vo.id})" style="color: #fff;">拒绝</span>
+						</div>
+					</if>
+				</div>
+		</div>
+		</volist>
+
+		</div>
+		<!--<footer>
+			<ul>
+				<li>
+					<p></p>
+					<span>动态</span>
+				</li>
+				<li>
+					<p></p>
+					<span>消息</span>
+				</li>
+				<li>
+					<p></p>
+					<span>商会</span>
+				</li>
+				<li>
+					<p></p>
+					<span>我的</span>
+				</li>
+			</ul>
+		</footer>-->
+
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function agree(id) {
+				$.post("{:U('Home/Trade/agree')}", {
+					"id": id
+				}, function(res) {
+					console.log(res);
+					if(res.status == 1) {
+						mui.toast(res.msg);
+						top.location.href = "__APP__/Home/Trade/memberManager/id/{$trade.id}";
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+			}
+
+			function reject(id) {
+				$.post("{:U('Home/Trade/reject')}", {
+					"id": id
+				}, function(res) {
+					console.log(res);
+					if(res.status == 1) {
+						mui.toast(res.msg);
+						top.location.href = "__APP__/Home/Trade/memberManager/id/{$trade.id}";
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+			}
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

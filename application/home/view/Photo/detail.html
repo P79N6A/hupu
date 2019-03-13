@@ -1,0 +1,36 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.Img{
+			width: 100%;
+			height:100%;
+		}
+		.Img>img{
+			width: 100%;
+			height:100%;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+		<div class="Img">
+			<img src="" alt="" />
+		</div>
+		<script type="text/javascript">
+		$(function(){
+			var tid='{$tid}';
+			var pid='{$pid}';
+			alert(pid);	
+		})
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+</block>

@@ -1,0 +1,162 @@
+{include file="Public/header"}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑</h5>
+                    {include file="Public/toolbar"}
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="userAdd" id="edit" method="post" action="{:url('edits')}">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">奖项名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="name" type="text" name="name" value="{$data.name}"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">中奖率：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="true_prize" type="text" name="true_prize" value="{$data.true_prize}"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">内容：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="content" type="text" name="content" value="{$data.content}"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">库存量：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="inventory" type="text" name="inventory" value="{$data.inventory}"  class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图片：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="hidden" id="service_pic" name="url" value="{$data.url}">
+                                <div id="fileList" class="uploader-list" style="float:right"></div>
+                                <button type="button" class="layui-btn" id="picname" style="float:left">
+                                    上传图片
+                                </button>
+                                <div style="width:50%;color: #999;margin-left:115px;margin-top:-15px;">
+                                    建议图片尺寸为20*25
+                                </div>
+                                <img id="img_data" style="float:left;    width: 301px;margin-left: 120px;margin-top:
+                                 0px;" src="{$data.url}"/>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="input-group col-sm-4">
+
+                                <input name="status" type="radio" value="0" {if condition="$data.status eq 0"}
+                                       checked {/if} />积分
+                                <input name="status" type="radio" value="1" {if condition="$data.status eq 1"}
+                                       checked {/if}/>实物
+                                <input name="status" type="radio" value="2"  {if condition="$data.status eq 2"}
+                                       checked {/if}>月卡
+                                <input name="status" type="radio" value="3"  {if condition="$data.status eq 3"}
+                                       checked {/if}/>油卡
+
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+
+                        <input name="id" value="{$data.id}" type="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="Public/footer"}
+
+
+<script type="text/javascript">
+    layui.use(['upload', 'laydate'], function () {
+        var upload = layui.upload
+            , laydate = layui.laydate;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#picname' //绑定元素
+            , url: "{:url('admin/Upload/uploadImage')}" //上传接口
+            // , data: {'position':'images'}
+            // , data: {'position': '/images'}
+            , before: function (obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                console.log(obj);
+                layer.load(); //上传loading
+            }
+            , done: function (res) {
+                console.log(res);
+                $("#service_pic").val(res);
+                $("#img_data").attr('src', res).show();
+                layer.closeAll('loading'); //关闭loading
+            }
+            , error: function (index, upload) {
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        laydate.render({
+            elem: '#datetime' //指定元素
+        });
+    });
+
+    $(function(){
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            // if( '' == $.trim($('#title').val())){
+            //     layer.msg('请输入宜居人数',{icon:2,time:1500,shade: 0.1}, function(index){
+            //         layer.close(index);
+            //     });
+            //     return false;
+            // }
+        }
+
+
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    window.location.href="{:url('index')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1},function (index) {
+                    window.location.href="{:url('add')}";
+
+                });
+                return false;
+            }
+        }
+
+    });
+
+</script>
+
+
+
+</body>
+</html>

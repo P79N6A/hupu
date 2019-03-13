@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>音乐设置</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				background: #f6f6f6;
+			}
+			
+			.max {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				margin-bottom: 0.4rem;
+				overflow: hidden;
+			}
+			
+			.maxs {
+				width: 100%;
+				height: 22.3rem;
+				background: #fff;
+				/*margin-bottom: 2.8rem;*/
+			}
+			
+			.m_list {
+				width: 100%;
+				height: 16.825rem;
+				background: #fff;
+				overflow: auto;
+				padding-bottom: 2.8rem;
+			}
+			
+			.top {
+				width: 90%;
+				height: 3rem;
+				line-height: 3rem;
+				border-bottom: 0.025rem solid #f6f6f6;
+				margin: 0 auto;
+				display: flex;
+				font-size: 0.8rem;
+				color: #333;
+			}
+			
+			.top_left,
+			.top_right {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.top_right {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+			}
+			/*开关按钮*/
+			
+			#radio,
+			.text {
+				display: none;
+			}
+			
+			.on {
+				color: #fff;
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.off {
+				color: #999;
+				position: absolute;
+				top: 0;
+				right: 0;
+				display: inline-block;
+			}
+			
+			#radio~label {
+				background-color: #fff;
+				border: 0.025rem solid #ddd;
+				margin: 0.775rem 0;
+				display: inline-block;
+				position: relative;
+				height: 1.4rem;
+				width: 3rem;
+				border-radius: 0.7rem;
+			}
+			
+			#radio:checked~label {
+				background: #32CEA0;
+				border: 0.025rem solid #32CEA0;
+			}
+			
+			#radio:checked~label .circle {
+				left: 1.7rem;
+			}
+			
+			#radio:checked~label .on {
+				display: inline-block;
+			}
+			
+			#radio:checked~label .off {
+				display: none;
+			}
+			
+			label .circle {
+				display: inline-block;
+				height: 1.3rem;
+				width: 1.3rem;
+				margin: 0.05rem 0;
+				border-radius: 50%;
+				box-shadow: 0 0.05rem 0.125rem rgba(0, 0, 0, .4);
+				z-index: 10;
+				background: #fff;
+				position: absolute;
+				left: 0;
+				transition: all 0.3s;
+				-webkit-transition: all 0.3s;
+			}
+			
+			label .text {
+				width: 50%;
+				height: 100%;
+				line-height: 1.4rem;
+				font-size: 0.5rem;
+				text-align: center;
+			}
+			/*开关按钮*/
+			
+			.s_music {
+				width: 90%;
+				height: 2.675rem;
+				line-height: 2.675rem;
+				font-size: 0.8rem;
+				color: #333;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.m_left {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.m_right {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #999;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.wai {
+				width: 95%;
+				height: 2.675rem;
+				margin-left: 5%;
+				border-bottom: 0.025rem solid #F6F6F6;
+			}
+			
+			.tab {
+				width: 80%;
+				height: 2.675rem;
+				line-height: 2.675rem;
+				/*display: flex;*/
+				font-size: 0.8rem;
+				color: #9B9B9B;
+				overflow-x: auto;
+				white-space: nowrap;
+				float: left;
+			}
+			
+			.tab_title {
+				width: auto;
+				height: 100%;
+				margin-left: 0.7rem;
+				margin-right: 0.7rem;
+				position: relative;
+				letter-spacing: 0.1rem;
+				text-align: center;
+				white-space: nowrap;
+				cursor: pointer;
+				display: inline-block;
+				zoom: 1;
+			}
+			
+			.tab_title:nth-of-type(1) {
+				margin-left: 0;
+			}
+			
+			.tab_title:last-child {
+				margin-right: 0;
+				margin-right: 0.7rem;
+			}
+			
+			.tab_tit {
+				width: auto;
+				height: 100%;
+			}
+			
+			.line {
+				background: #32CEA0;
+				width: 0.8rem;
+				height: 0.15rem;
+				border-radius: 0.075rem;
+				position: absolute;
+				left: 50%;
+				bottom: 0;
+				margin-left: -0.4rem;
+				display: none;
+			}
+			
+			.screen {
+				width: 19%;
+				height: 2rem;
+				border-left:0.05rem solid rgba(3,3,3,0.1) ;
+				float: left;
+				margin: 0.3375rem 0;
+			}
+			
+			.s_cen {
+				width: 95%;
+				height: 1.5rem;
+				line-height: 1.5rem;
+				background: #F8C85E;
+				margin: 0.25rem 0 0.5875rem 5%;
+				border-bottom-left-radius: 0.75rem;
+				border-top-left-radius: 0.75rem;
+				color: #fff;
+				overflow: hidden;
+			}
+			
+			.s_left {
+				display: inline-block;
+				width: 52%;
+				height: 100%;
+				text-align: right;
+				float: left;
+				font-size: 0.6rem;
+			}
+			
+			.s_right {
+				display: inline-block;
+				width: 38%;
+				height: 100%;
+				text-align: left;
+				margin-left: 10%;
+				float: left;
+			}
+			
+			.s_right>img {
+				width: 0.6rem;
+				height: 0.5rem;
+				margin: 0.5rem 0;
+			}
+			
+			.list {
+				width: 95%;
+				height: 2.625rem;
+				line-height: 2.625rem;
+				font-size: 0.7rem;
+				color: #333;
+				margin-left: 5%;
+				border-bottom: 0.025rem solid #F6F6F6;
+				display: flex;
+				cursor: pointer;
+			}
+			
+			.l_left {
+				width: 85%;
+				height: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.pitch {
+				width: 10%;
+				height: 100%;
+				margin-right: 5%;
+				text-align: right;
+				display: none;
+			}
+			
+			.pitch>img {
+				width: 1rem;
+				height: 0.75rem;
+			}
+			
+			.show {
+				display: block;
+			}
+			
+			.is {
+				font-size: 0.8rem;
+				color: #F3B939;
+				font-weight: 500;
+			}
+			
+			.lei {
+				width: 100%;
+				height: 20.15rem;
+				background: #fff;
+				border-radius: 0.3rem 0.3rem 0rem 0rem;
+				position: fixed;
+				left: 0;
+				bottom: -20.15rem;
+				z-index: 2;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: rgba(0, 0, 0, 0.3);
+				z-index: 1;
+				display: none;
+			}
+			
+			.ti {
+				width: 100%;
+				height: 2.7rem;
+				line-height: 2.7rem;
+				font-size: 0.8rem;
+				color: #333;
+				text-align: center;
+			}
+			
+			.all {
+				width: 100%;
+				height: auto;
+				border-top: 0.025rem solid #F6F6F6;
+				border-bottom: 0.025rem solid #F6F6F6;
+				overflow: hidden;
+			}
+			
+			.all_list {
+				width: 19.86%;
+				height: 100%;
+				text-align: center;
+				font-size: 0.6rem;
+				color: #333;
+				line-height: 2.45rem;
+				float: left;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				border-right: 0.025rem solid #F6F6F6;
+				border-bottom: 0.025rem solid #F6F6F6;
+			}
+			
+			.all_list>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #333;
+				text-decoration: none;
+			}
+			
+			.all_list:nth-child(5n) {
+				border-right: none;
+			}
+			
+			.act {
+				color: #32CEA0 !important;
+				font-weight: 600;
+			}
+			
+			.complete {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-top: 0.05rem solid #F6F6F6;
+			}
+			
+			.comp_cen {
+				width: 90%;
+				height: 100%;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.preview {
+				width: 36%;
+				height: 100%:
+			}
+			
+			.preview>a {
+				display: block;
+				text-decoration: none;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				color: #333;
+			}
+			
+			.com_cen {
+				width: 64%;
+				height: 100%;
+				border-radius: 0.2rem;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+				letter-spacing: 0.25rem;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="max">
+			<div class="top">
+				<div class="top_left">自动播放</div>
+				<div class="top_right">
+					<input type="checkbox" id="radio" name="switch">
+					<label for="radio" class="radio">
+					<span class="circle"></span>
+					<span class="text on">ON</span>
+					<span class="text off">OFF</span>
+				</label>
+				</div>
+			</div>
+			<div class="s_music">
+				<div class="m_left">已选铃声</div>
+				<div class="m_right">无</div>
+			</div>
+		</div>
+		<div class="maxs">
+			<div class="wai">
+				<div class="tab">
+
+				</div>
+				<div class="screen">
+					<div class="s_cen">
+						<span class="s_left">筛选</span>
+						<span class="s_right">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/screen@2x.png" alt="" />
+					</span>
+					</div>
+				</div>
+			</div>
+			<div class="m_list">
+
+			</div>
+		</div>
+
+		<audio src="" id="audio" loop="loop" autoplay="autoplay"></audio>
+		<div class="complete">
+			<div class="comp_cen">
+				<div class="preview">
+					<a href="/index.php?s=/Home/vmake/vmakee.html">取消</a>
+				</div>
+				<div class="com_cen">
+					保存
+				</div>
+			</div>
+		</div>
+		<div class="lei">
+			<div class="ti">选择音乐类型</div>
+			<div class="all">
+
+			</div>
+		</div>
+		<div class="mask"></div>
+		<div class="model"></div>
+		<script>
+			function GetQueryString(name) {
+				if(window.location.href.indexOf('?') > -1) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+					var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+					if(r != null) return unescape(r[2]);
+				}
+				return ''; //便于容错处理
+			}
+
+			var getid = GetQueryString("musicid");
+//			console.log(getid);
+
+			var unionid = "{$unionid}";
+			//音乐分类
+			var list = "";
+			var lis = ""
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/IndexApi/music_type',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+				},
+				success: function(res) {
+					if(res.ResultType == 0) {
+						
+						$.each(res.AppendData, function(k, v) {
+							list += '<div id="a' + v.id + '" class="tab_title" data-id="' + v.id + '">'
+							list += '<div class="tab_tit">' + v.title + '</div>'
+							list += '<div class="line"></div>'
+							list += '</div>'
+							lis += '<div class="all_list" data-id="' + v.id + '">'
+							lis += '<a href="#a' + v.id + '" >' + v.title + '</a>'
+							lis += '</div>'
+						})
+						
+						$(".tab").html(list)
+						$(".all").html(lis)
+						
+						//音乐详情
+			var ff = 1
+			$.ajax({
+				type: 'post',
+				url: "index.php?s=/Api/AppApi/user_detail",
+				dataType: 'json',
+				data: {
+					unionid: unionid
+				},
+				async:true, 
+				success: function(res) {
+					console.log(res)
+					
+					$(".m_right").html(res.AppendData.music_name)
+					var bb  = res.AppendData.music_type_id;
+					var vv = res.AppendData.music_id;
+					console.log(vv)
+					
+					if(bb==0){
+						$(".tab_title:first").addClass("act")
+						$(".tab_title:first").find(".line").addClass("show")
+						$(".all_list:first").find("a").addClass("show")
+						ff = 1
+					}else{
+						$(".tab_title").each(function(a,b){
+							var aa = $(this).attr('data-id');
+							if(aa == bb){
+								$(this).addClass("act")
+								$(this).find(".line").addClass("show");
+								var n = $(this).index()
+								var f = $(".tab_title").width()+80;
+								console.log(f)
+								$(".tab").scrollLeft(n*f)
+							}
+						})
+						$(".all_list").each(function(o,p){
+							var pp = $(this).attr('data-id');
+							if(pp == bb){
+								$(this).find("a").addClass("act")
+							}
+						})
+						
+						
+						ff = res.AppendData.music_type_id
+					}
+					
+					//音乐列表
+					var lists = ""
+					$.ajax({
+						type: 'post',
+						url: 'index.php?s=/Api/IndexApi/music_list',
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							type_id: ff
+						},
+						success: function(res) {
+							console.log(res)
+							if(res.ResultType == 0) {
+		
+								$.each(res.AppendData, function(a, i) {
+									lists += '<div class="list" id="m'+i.id+'" data-url="' + i.url + '" m-id="' + i.id + '">'
+									lists += '<div class="l_left">' + i.name + '</div>'
+									lists += '<div class="pitch">'
+									lists += '<img src="__HOME_IMAGES__/newvnet/imgtxt/select@2x.png" alt="" />'
+									lists += '</div>'
+									lists += '</div>'
+								})
+							}
+							$(".m_list").html(lists)
+							$(".list").each(function(h,v){
+								var hh = $(this).attr('m-id');
+								var mm =$(this).index();
+//								console.log(hh)
+								if(hh == vv){
+									$(this).addClass("is")
+									$(this).find(".pitch").addClass("show")
+									$(".m_list").scrollTop(mm*105)
+								}
+							})
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+					
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+						
+						
+						$(document).on("click", ".tab_title", function() {
+
+							$(".line").removeClass("show");
+
+							$(".tab_title").eq($(this).index()).find(".line").addClass("show");
+
+							$(".tab_title").removeClass("act");
+
+							$(".tab_title").eq($(this).index()).addClass("act");
+
+							$(".all_list").find('a').removeClass("act");
+
+							$(".all_list").find('a').eq($(this).index()).addClass("act");
+
+							//$(".list").eq($(".tab_title").index(this)).addClass("in").siblings().removeClass('in');
+							type_id = $(this).attr("data-id");
+							$("#audio").attr("src", "");
+							var lst = ""
+							$.ajax({
+								type: 'post',
+								url: 'index.php?s=/Api/IndexApi/music_list',
+								dataType: 'json',
+								data: {
+									unionid: unionid,
+									type_id: type_id
+								},
+								success: function(res) {
+									//									console.log(res)
+									if(res.ResultType == 0) {
+										$.each(res.AppendData, function(c, o) {
+											lst += '<div class="list" id="m'+o.id+'" data-url="' + o.url + '" m-id="' + o.id + '">'
+											lst += '<div class="l_left">' + o.name + '</div>'
+											lst += '<div class="pitch">'
+											lst += '<img src="__HOME_IMAGES__/newvnet/imgtxt/select@2x.png" alt="" />'
+											lst += '</div>'
+											lst += '</div>'
+										})
+									}
+									$(".m_list").html(lst);
+								},
+								error: function() {
+									console.log("错误")
+								}
+							});
+						})
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			})
+			//音乐列表
+//			var lists = ""
+//			$.ajax({
+//				type: 'post',
+//				url: 'index.php?s=/Api/IndexApi/music_list',
+//				dataType: 'json',
+//				data: {
+//					unionid: unionid,
+//					type_id: 1
+//				},
+//				success: function(res) {
+//					console.log(res)
+//					if(res.ResultType == 0) {
+//
+//						$.each(res.AppendData, function(a, i) {
+//							lists += '<div class="list" data-url="' + i.url + '" m-id="' + i.id + '">'
+//							lists += '<div class="l_left">' + i.name + '</div>'
+//							lists += '<div class="pitch">'
+//							lists += '<img src="__HOME_IMAGES__/newvnet/imgtxt/select@2x.png" alt="" />'
+//							lists += '</div>'
+//							lists += '</div>'
+//						})
+//					}
+//					$(".m_list").html(lists)
+//				},
+//				error: function() {
+//					console.log("错误")
+//				}
+//			});
+
+			var m_id = "";
+			$(document).on("click", ".list", function() {
+				$(".pitch").removeClass("show");
+				$(this).find(".pitch").addClass("show");
+				$(this).addClass("is").siblings().removeClass("is");
+				var m_url = $(this).attr("data-url");
+				m_id = $(".list").eq($(this).index()).attr("m-id");
+				//				console.log(m_id)
+				$("#audio").attr("src", m_url);
+				$(".m_right").html($(this).find(".l_left").html())
+			})
+			//音乐筛选
+			$(document).on("click", ".all_list", function() {
+
+				$(".all_list").find('a').removeClass("act");
+
+				$(".all_list").find('a').eq($(this).index()).addClass("act");
+
+				$(".tab_title").removeClass("act");
+
+				$(".tab_title").eq($(this).index()).addClass("act");
+
+				$(".line").removeClass("show");
+
+				$(".tab_title").eq($(this).index()).find(".line").addClass("show");
+
+				//				$(this).find('a').addClass("act");
+
+				$(".mask").hide();
+				$(".lei").css({
+					"transform": 'translateY(20.15rem)',
+					"transition": 'transform .2s'
+				});
+				type_id = $(this).attr("data-id");
+				var lsts = ""
+				$.ajax({
+					type: 'post',
+					url: 'index.php?s=/Api/IndexApi/music_list',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						type_id: type_id
+					},
+					success: function(res) {
+						console.log(res);
+						if(res.ResultType == 0) {
+							$.each(res.AppendData, function(c, o) {
+								lsts += '<div class="list" id="m'+o.id+'" data-url="' + o.url + '" m-id="' + o.id + '">'
+								lsts += '<div class="l_left">' + o.name + '</div>'
+								lsts += '<div class="pitch">'
+								lsts += '<img src="__HOME_IMAGES__/newvnet/imgtxt/select@2x.png" alt="" />'
+								lsts += '</div>'
+								lsts += '</div>'
+							})
+						}
+						$(".m_list").html(lsts);
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+			
+			
+			
+			
+			
+			$(".screen").on("click", function() {
+				$(".mask").show();
+				$(".lei").css({
+					"transform": 'translateY(-20.15rem)',
+					"transition": 'transform .3s'
+				});
+			})
+			$(".mask").on("click", function() {
+				$(".mask").hide();
+				$(".lei").css({
+					"transform": 'translateY(20.15rem)',
+					"transition": 'transform .2s'
+				});
+			});
+
+			$(".com_cen").on("click", function() {
+				var musicid = m_id;
+
+				if($('#radio').prop('checked')) {
+					is_home = 1
+				} else {
+					is_home = 2
+				}
+				console.log(is_home)
+				if($("#audio").attr("src") == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请选择音乐");
+				} else {
+
+					$.ajax({
+						type: 'post',
+						url: 'index.php?s=/Api/AppApi/edit_my_card',
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							music_id: musicid,
+							auto_music: is_home
+						},
+						success: function(res) {
+							console.log(res);
+							if(res.ResultType == 0) {
+								window.location.href = "/index.php?s=/Home/vmake/vmakee.html"
+							}
+
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+
+				}
+			})
+			document.addEventListener("WeixinJSBridgeReady", function() {
+				document.getElementById('audio').play();
+			}, false);
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

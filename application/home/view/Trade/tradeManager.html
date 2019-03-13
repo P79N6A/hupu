@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<title>创建商会</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.top {}
+			
+			body {
+				padding: .8rem;
+				background: #FFF;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			ul li {
+				height: 70px;
+				border-bottom: 1px solid #E5E5E5;
+				line-height: 70px;
+			}
+			
+			img {
+				float: right;
+				width: 10px;
+				margin-top: 25px;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<ul>
+			<a href="__APP__/Home/Trade/memberManager/id/{$trade.id}">
+				<li>
+					<span>成员管理</span>
+					<img src="__HOME_CSS__/add/image/jiantou_icon.png" />
+				</li>
+			</a>
+			<a href="__APP__/Home/Trade/adManager/id/{$trade.id}">
+				<li>
+					<span>广告管理</span>
+					<img src="__HOME_CSS__/add/image/jiantou_icon.png" />
+				</li>
+			</a>
+			<a href="__APP__/Home/Trade/editTrade/id/{$trade.id}">
+				<li>
+					<span>商会管理</span>
+					<img src="__HOME_CSS__/add/image/jiantou_icon.png" />
+				</li>
+			</a>
+		</ul>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

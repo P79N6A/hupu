@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>浏览详情</title>
+    <style>
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #f6f6f6;
+            width: 100%;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            position: fixed;
+            top: 0;
+
+
+        }
+
+
+
+        .header .list {
+            height: 100%;
+            width: 100%;
+            height: .46rem;
+            white-space: nowrap;
+            display: block;
+            overflow-x: scroll;
+            position: relative;
+            font-size: 0;
+
+
+
+        }
+
+
+        .header .list li {
+            width: 90px;
+            height: 100%;
+            line-height: .46rem;
+            color: #777777;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 5px;
+            font-size: .13rem;
+
+        }
+
+        .line {
+            width: 90px;
+            height: .03rem;
+            /* background: #32CEA0; */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            background: linear-gradient(80deg, transparent 30%, #32CEA1 20%, #32CEA0 70%, transparent 40%) !important;
+
+        }
+
+        .active {
+            color: #32CEA0 !important;
+            font-size: .16rem !important;
+        }
+
+        .main {
+            width: 100%;
+            padding: .48rem .2rem 0 .2rem;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .main .item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #F6F6F6;
+        }
+
+        .item .user_img_box {
+            width: .4rem;
+            height: .4rem;
+            padding: .12rem 0;
+
+        }
+
+        .item .user_img_box img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .item .user_name_box {
+            flex: 1;
+            padding-left: .12rem;
+            box-sizing: border-box;
+            padding-bottom: .12rem;
+            padding-top: .12rem;
+            text-align: left;
+        }
+
+        .user_name_box .user_name {
+            font-size: .18rem;
+            color: #111111;
+            width: 1.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user_name_box .time_look {
+            font-size: .12rem;
+        }
+        .null{
+        	width: 100%;
+        	height: 100%;
+        	line-height:3rem;
+        	font-size: 0.16rem;
+        	text-align: center;
+        	font-weight: 600;
+        	color:#333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <ul class="list">
+            <li class="active" data-type=' '>全部</li>
+            <li data-type='Nologin-card_jump'>v网</li>
+            <li data-type='Nologin-previewArticle '>文章</li>
+            <li data-type='share'>推广</li>
+            <div class="line"></div>
+        </ul>
+    </div>
+    <div class="main">
+
+		
+    </div>
+
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        var date = GetQueryString('date');
+        console.log(date)
+        var tp = '';
+        $(".list").on("click", "li", function () {
+            var index = $(this).index();
+            $(this).addClass("active").siblings().removeClass("active");
+            var li_width = ($(this).width() + 5);
+            $(".list .line").stop(false, true).animate({
+                'left': index * li_width + "px",
+                'bottom': '0px'
+            }, 100);
+            var switch_type = $(this).attr('data-type');
+            date_render(date,switch_type,callback)
+        })
+        date_render(date,tp,callback)
+        
+
+        function date_render(data,tp,callback) {
+        	 console.log(tp)
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/Stats/lists',
+                data: {
+                    day: data,
+                    unionid: unionid,
+                    type:tp
+
+                },
+                success: function (res) {
+                    callback(res)
+                   
+                }
+            })
+
+        }
+
+        function callback(res) {
+           
+            if (res.ResultType == 0) {
+                var data = res.AppendData;
+                var render = '';
+                
+                $.each(data, function (k, v) {
+                	
+                   v.control =  v.control.toLowerCase(v.control);
+                   v.action = v.action.toLowerCase(v.control);
+                   v.add_time = timestampToTime(v.add_time);
+                   if(v.avatar == ''){
+                       console.log('这是头像的判断')
+                       $(this)[0].avatar = '/Public/Home/images/wh/whq.png'
+                   }
+                   if(v.nick_name == ''){
+                        $(this)[0].nick_name = '匿名用户'
+                   }
+                   if(v.control == 'nologin' &&  v.action == 'card_jump'){
+                        $(v)[0].control = '访问了你的V网';
+                        $(v)[0].color = '#32CEA0';
+                   }
+                   if(v.control == 'share' && v.action == 'previewarticle'){
+                        $(v)[0].control = '推广了你的广告';
+                        $(v)[0].color = '#FE9C2A';
+                   }
+                   if(v.control == 'nologin' &&  v.action == 'previewarticle'){
+                        $(v)[0].control = '查看了你的文章';
+                        $(v)[0].color = '#F84241';
+                   }
+
+	                render+= '<div class="item">'
+	                render+= '<div class="user_img_box">'
+	                render+='<img src="'+v.avatar+'" alt="">'
+	                render+='</div>'
+	                render+='<div class="user_name_box">'
+	                render+='<p class="user_name">'+v.nick_name+'</p>'
+	                render+= '<p class="time_look">'+v.add_time+'</p>'
+	                render+='</div>'
+	                render+='<div class="visit_box">'
+	                render+='<p class="visit_text" style="color:'+v.color+'">'+v.control+'</p>'
+	                render+= '</div>'
+	                render+= '</div>'
+                })
+                if(render==''){
+                	$('.main').html('<div class="null">暂无数据</div>');
+                }else{
+//              	$(".null").hide();
+                	$('.main').html(render)
+                }
+                
+            }
+
+        }
+
+
+           function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = (date.getDate() < 10? '0' + date.getDate()+' ' : date.getDate()+' ');
+            var h = (date.getHours() < 10 ? '0'+date.getHours()+':':date.getHours()+':');
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes()+':':date.getMinutes()+':');
+            var s = date.getSeconds();
+                return Y + M + D + h + m + s;
+           
+        }
+
+
+
+    })
+</script>

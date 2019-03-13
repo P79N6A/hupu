@@ -1,0 +1,447 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>{$title}</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_JS__/whjs/js/Sortableone.js"></script>
+
+
+		<style type="text/css">
+			body {
+				background: #f0eff6;
+			}
+
+
+			header {
+                position: static !important;
+            }
+            .mui-content {
+                padding: 0 !important;
+            }
+
+			
+			
+			.in {
+				width: 90%;
+				margin: 0 auto;
+				height: 1rem;
+				background: #fff;
+				margin-top: 0.3rem;
+				line-height: 1rem;
+			}
+			
+			.in span {
+				margin-left: 0.3rem;
+				color: #4e4b4b;
+			}
+			
+			.in2 span {
+				margin-left: 0.3rem;
+				color: #909389;
+			}
+			
+			.in1 input {
+				width: 1rem;
+				/*height: 0.5rem;*/
+				float: right;
+				margin-right: 0.2rem;
+				margin-top: 0.25rem;
+				border: none;
+				background: #2FB3D3;
+				color: #fff;
+			}
+			
+			.in2 span:nth-child(2) {
+				float: right;
+				margin-right: 0.5rem;
+			}
+			
+			.in1 input::placeholder,
+			.in2 input::placeholder {
+				color: #C8C7CC;
+				font-size: 0.22rem
+			}
+			
+			.content {
+				width: 90%;
+				position: absolute;
+				/*margin: 0 auto;*/
+				margin-top: 0.3rem;
+				margin-left: 5%;
+				line-height: 2rem;
+				padding-bottom: 2rem;
+			}
+			
+			
+			.xx {
+				width: 0.3rem;
+				position: absolute;
+				top: 0.1rem;
+				right: 0.1rem;
+				z-index: 201;
+			}
+			
+			.btnbom {
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+			}
+			
+			.btnbom input {
+				width: 50%;
+				float: left;
+				text-align: center;
+				height: 0.8rem;
+				border: none;
+			}
+			
+			.btnbom input:nth-child(1) {
+				background: #fff;
+				color: #4e4b4b;
+			}
+			
+			.btnbom input:nth-child(2) {
+				background: #2FB3D3;
+				color: #fff;
+			}
+			
+			body {
+				margin: 0;
+				max-width: 100%;
+				display: block;
+				height: auto;
+			}
+			
+			#clipArea {
+				margin: 10px;
+				height: 87%;
+			}
+			
+			#file {
+				margin: 20px;
+			}
+			
+			input {
+				-webkit-appearance: none;
+				border-radius: 0;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			
+			.btun {
+				width: 262px;
+				height: 10%;
+				margin: 0 auto;
+			}
+			
+			#clipBtn {
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #2FB3D3;
+				color: #fff;
+				text-align: center;
+				border: none;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 28%;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1000000;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			.clearfix:after {
+				clear: both;
+				content: ' ';
+				display: block;
+			}
+
+			.fl{
+				float: left;
+			}
+
+			.fr{
+				float: right;
+			}
+			
+			.gif>img {
+				width: 20%;
+				position: absolute;
+				left: 40%;
+				top: 36%;
+			}
+
+			#content > span{
+					display: block;
+					float: left;
+					width: 31%;
+					height: 2rem;
+					margin-top: 0.1rem;
+					margin-left: 0.1rem;
+					position: relative;
+			}
+
+			#content .preview{
+				width: 100%;
+				height: 100%;
+			}
+
+			.mask{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				opacity: 0;
+				z-index: 199;
+			}
+
+
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body ontouchstart="">
+		<div class="in in1">
+			<span>产品详情图</span>
+			<input type="button" name="" id="" value="添加" onclick="add()"/>
+			<input type="file" class="file1" id="fileimg" value="" name="file1" onchange="imgPreview(this)" style="display: none" accept="image/*" multiple="multiple" />
+		</div>
+		<!-- {:U('Home/Chat/group')} -->
+		<form action="" id="form" method="post" enctype="multipart/form-data">
+			<div id="content" class="content clearfix">
+				<!-- <volist name="_list" id="vo" key="k">
+					<span class="pic_77{$k}" style="margin: 0;">
+            			<img src="{$vo.img_url}" class='preview' alt="">
+           				<input type="hidden" name="pic_77{$k}" value="{$vo.img_url}">
+            			<img src="__HOME_IMAGES__/x.png" alt="" class="xx" onclick="del_img(this)">
+        			</span>
+				</volist> -->
+				<!-- <input type="hidden" id="pid" value="" name="pid"/> -->
+			</div>
+		</form>
+		<input type="hidden" name="num" id="num" value=""/>
+		<div class="btnbom">
+			<input type="button" onclick="back();" name="" id="" value="取消" />
+			<input type="button"  name="" id="submit" value="保存" />
+			<!-- onclick="submit();" -->
+		</div>
+		<script src="__HOME_JS__/ljcut/jquery-2.1.3.min.js"></script>
+		<script src="__HOME_JS__/ljcut/iscroll-zoom.js"></script>
+		<script src="__HOME_JS__/ljcut/hammer.js"></script>
+		<script src="__HOME_JS__/ljcut/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/ljcut/jquery.photoClip.js"></script>
+		<script>
+		// $(function(){
+			console.log(1111)
+		 Sortable.create(content, {
+				group: "hello",
+				animation: 100,
+				filter: '.xx',
+ 				forceFallback:false,
+				onFilter: function (evt) {
+					evt.item.parentNode.removeChild(evt.item);
+				},
+			});
+		
+			var imlength;
+			var id='{$id}';
+			var pid='{$pid}';
+			// alert(pid);
+			$("#pid").val(pid);
+			$.ajax({
+		        //几个参数需要注意一下
+		        type: "POST",//方法类型
+		        dataType: "json",//预期服务器返回的数据类型
+		        url: "index.php?s=/Api/IndexApi/product_detail" ,//url 
+		        data: {"id":id,"product_id":pid},
+		        async: false,
+		        success: function (result) {                        
+		            if (result.ResultType == 0) {
+		            	var str=" ";
+		            	$.each(result.AppendData.img_detail,function(idx,item){
+		            		str+="<span data-id='"+idx+"' class='item pic_" + idx + "'><div class='mask'></div><img id='preview_" + idx + "' src='"+item.img+"' class='preview' /><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' name='img_detail[pic_" + idx + "]' value='" + item.img + "'></span>";
+		            	});	
+
+		            	$('.content').append(str);
+				}       imlength = $(".content span").length;                  
+		        },
+		        error : function() {
+		            alert("服务器繁忙，请稍后再试！");
+		        }                    
+		    });
+			// console.log(imlength)
+		// });
+			checkSubmitFlg = 1;
+
+			function back() {
+				var pid='{$pid}';
+				mui.confirm("正在编写状态，是否要返回？", "", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						top.location.href = '__ROOT__/index.php?s=/Home/Chat/group/id/'+pid;
+					}
+				});
+			}
+			$("#submit").click(function(){
+				var d={};
+				var t=$('form').serializeArray();
+				
+				$.each(t,function(){
+					d[this.name] = this.value;
+
+				});
+				var id='{$id}';
+				var pid='{$pid}';
+				var jsonArr=jsonToArray(JSON.stringify(d));
+
+				var product_detail=jsonArr;
+				// console.log(jsonArr);
+				$.ajax({
+			        //几个参数需要注意一下
+			        type: "POST",//方法类型
+			        dataType: "json",//预期服务器返回的数据类型
+			        url: "index.php?s=/Api/IndexApi/add_edit_product_img" ,//url 
+			        data: {"id":id,"product_id":pid,"product_detail":product_detail},
+			        success: function (result) {
+			            if (result.ResultType == 0) {
+			            	mui.toast("修改成功");
+			            	top.location.href = '__ROOT__/index.php?s=/Home/Chat/group/id/'+pid;
+			            	
+		            	}                       
+			        },
+			        error : function() {
+			            alert("服务器繁忙，请稍后再试！");
+			        }                    
+			    });
+			});
+			function jsonToArray (str) {
+			    const obj = JSON.parse(str);
+			    const result = [];
+			    for (var he in obj) {
+			        // result.push(key);
+			        result.push(obj[he]);
+			    }
+			    return result;
+				
+			}
+			function add() {
+				$('.file1').click();
+			}
+			var num=99;
+			var imglength = 0;
+			function imgPreview(fileDom){
+				//判断是否支持FileReader
+				var file = document.getElementById("fileimg").files;
+				if(window.FileReader) {
+					for(var i = 0; i<file.length ;i++){
+					var imgsiez = document.getElementById("fileimg").files[i].size;
+					if(imgsiez > 1024*1024*10){
+						mui.toast("请上传小于10M的图片");
+						return false;
+					}
+					// console.log(imgsiez + "图片的大小");
+					if(imglength + file.length > 9){
+						mui.toast("产品详情图最多上传9张");
+						return false;
+					}
+					if(imlength > 9){
+						mui.toast("产品详情图最多上传9张");
+						return false;
+					}
+					var reader = new FileReader();
+					reader.readAsDataURL(file[i]);
+					reader.onload = function(e) {
+						// console.log(e)
+					var id='{$id}';
+					var img=e.target.result;
+					// var arr=[];
+					$.ajax({
+				        //几个参数需要注意一下
+				        type: "POST",//方法类型
+				        dataType: "json",//预期服务器返回的数据类型
+				        url: "index.php?s=/Api/IndexApi/uploads_img" ,//url 
+				        data: {"id":id,"img":img,"start_name":"product"},
+				        success: function (result) {
+				            if (result.ResultType == 0) {
+								$('.content').append("<span class='pic_" + num + "'><div class='mask'></div><img id='preview_" + num + "' class='preview' /><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''></span>");
+				            	//获取图片dom
+								var img = document.getElementById("preview_" + num);
+								//图片路径设置为读取的图片
+								$('.pic_' + num).append("<input type='hidden' name='img_detail[pic_" + num + "]' value='" + result.AppendData + "'>");
+								$("#num").val(num);
+								img.src = e.target.result;
+								num++;
+			            	}                       
+				        },
+				        error : function() {
+				            alert("服务器繁忙，请稍后再试！");
+				        }                    
+				    });
+
+				};
+			}
+
+			imglength = imglength + file.length;
+			// console.log(imglength+"上一次点击和这一次点击的和");
+				} else {
+					alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+				}
+			
+			}
+			function del_img(Obj) {
+				mui.confirm("是否删除？","",["否","是"],function(res){
+			        if(res.index==1){
+						imglength = imglength -1;
+			        	Obj.parentNode.remove();
+			        }
+			    });
+			}
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

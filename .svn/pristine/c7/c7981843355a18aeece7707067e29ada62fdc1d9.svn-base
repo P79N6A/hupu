@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery.countdown.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/myrelevant.js?id=1"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <title>我的</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+            height: 100%;
+            padding-top: 0.5rem;
+        }
+
+        .tip_box {
+            width: 3.4rem;
+            height: 1rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.7rem;
+            margin-top: -0.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        .tip_box p {
+            margin-bottom: .25rem;
+        }
+
+        .tip_box a {
+            display: block;
+            width: 1rem;
+            height: .37rem;
+            line-height: .37rem;
+            color: #fff;
+            background: #FF9D49;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+
+        .me_too_box {
+            width: 100%;
+            height: .5rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .me_too_box a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #32CEA0;
+            line-height: .5rem;
+            color: #fff;
+            text-align: center;
+
+        }
+
+        .choice {
+            width: 100%;
+            height: 0.5rem;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .choice ul {
+            width: 100%
+        }
+
+        .choice ul li {
+            width: 50%;
+            height: 100%;
+            text-align: center;
+            line-height: .5rem;
+            position: relative;
+        }
+
+        .active {
+            color: #32CEA0 !important;
+
+        }
+
+        .choice ul li p {
+            font-size: .16rem;
+            color: #999999;
+        }
+
+        .choice ul li .line {
+            width: .3rem;
+            height: .02rem;
+            background: #32CEA0;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -0.15rem;
+            display: none;
+        }
+
+        .body_content {
+            position: relative;
+            height: auto;
+        }
+
+        .my_fabu_box,
+        .my_join_box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-bottom: .07rem;
+            width: 100%;
+        }
+
+        .my_join_box {
+            display: none;
+        }
+
+        .Extension {
+            width: 100%;
+            margin-top: .07rem;
+            line-height: .435rem;
+            background: #fff;
+
+        }
+
+        .Extension .Extension_heard_fabu {
+            width: 90%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .Extension_heard_join {
+            width: 90%;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .Extension p {
+            font-size: .16rem;
+            font-weight: bold;
+        }
+
+        .Extension .end_time {
+            font-size: .12rem;
+            background: #FFECDB;
+            border-radius: .02rem;
+            width: 1.38rem;
+            text-align: center;
+            color: #5C544E;
+            height: .235rem;
+            line-height: .235rem;
+            position: absolute;
+            top: -2px;
+            right: 0;
+        }
+
+        .img_box {
+            width: 100%;
+            height: 1.74rem;
+            margin-bottom: .15rem;
+            box-shadow:0px 1px 4px 0px rgba(0,0,0,0.19);
+            border-radius: .08rem;
+            overflow: hidden;
+
+        }
+
+        .img_box .show_img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .set_data {
+            width: 100%;
+            display: flex;
+            padding-bottom: .15rem;
+        }
+
+        .set_data div {
+            /* width: .8rem; */
+            /* height: .21rem; */
+            line-height: .21rem;
+            border-radius: .2rem;
+            text-align: center;
+            background: rgba(255, 236, 219, 1);
+            font-size: .12rem;
+            color: #5C544E;
+            padding: .05rem .05rem;
+            transform: scale(0.9);
+        }
+
+        .set_data div+div {
+            margin-left: .1rem;
+        }
+
+        .footer_user {
+            width: 100%;
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+            height: .615rem;
+            line-height: .615rem;
+        }
+
+        .footer_user div {
+            background: rgba(255, 236, 219, 1);
+            height: .25rem;
+            line-height: .27rem;
+            font-size: .13rem;
+            text-align: center;
+            color: #5C544E;
+            border-radius: 2px;
+            margin-top: .235rem;
+        }
+
+
+        .footer_user button {
+            background: #32CEA0;
+            border: 0;
+            outline: none;
+            border-radius: .3rem;
+            margin-top: .17rem;
+        }
+
+        .footer_user button a {
+            display: block;
+            color: #fff;
+            font-size: .13rem;
+            height: .33rem;
+            line-height: .35rem;
+            padding: 0 0.08rem;
+        }
+
+        .add_box {
+            width: .6rem;
+            height: .6rem;
+            position: fixed;
+            bottom: .735rem;
+            right: .165rem;
+        }
+
+        .add_box a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .add_box a img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            width: 1.6rem;
+            height: 1.1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: .05rem;
+            color: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -.55rem;
+            margin-left: -.8rem;
+            z-index: 999;
+            text-align: center;
+            display: none;
+        }
+
+        .loading img {
+            display: block;
+            width: .4rem;
+            height: .4rem;
+            margin: 0.15rem auto;
+        }
+
+        #canyu_link{
+                display: block;
+                width: 100%;
+                height: 100%;
+        }
+
+        .reward .total{
+            color: #FF9D49;
+        }
+
+       .reward .look{
+           display: block;
+           width: 100%;
+           height: 100%;
+           font-size: .14rem;
+        }
+
+        .end_time{
+            color: #FA861F !important;
+            box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.19);
+        }
+        .end_time .san{
+            position: absolute;
+            top: 0;
+            left: -3px;
+            overflow:hidden;
+            font-size: 0;     
+            line-height: 0;  
+            border-width:2px 3px 0 0;
+            border-style:solid;
+            border-color:transparent #E4BFA0 transparent transparent; 
+        }
+        .end_time .day{
+            background:rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 0 0.02rem;
+        }
+        .end_time .time{
+            background:rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 0 0.02rem;
+        }
+        .lead{
+            color: #FA861F !important;
+        }
+
+        #sur{
+            background: rgba(255, 236, 219, 1);
+            height: .25rem;
+            /* width: .89rem; */
+            line-height: .27rem;
+            font-size: .13rem;
+            text-align: center;
+            color: #5C544E;
+            border-radius: 2px;
+            margin-top: .235rem;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="tip_box">
+        <p>您暂时没有发布活动哦！</p>
+        <a href="/index.php?s=/Home/Sharingplatform/Advertise.html">点击发布</a>
+    </div>
+    <div class="content">
+        <!-- 选择tab栏 -->
+        <div class="choice">
+            <ul class="clearfix">
+                <li class="fl">
+                    <p class="active item" data-id="0">我发布的</p>
+                    <div class="line" style="display:block"></div>
+                </li>
+                <li class="fl">
+                    <p class="item" data-id="1">我参与的</p>
+                    <div class="line"></div>
+                </li>
+            </ul>
+        </div>
+        <!-- 推广活动列表 -->
+        <div class="body_content">
+            <div class="my_fabu_box items">
+
+            </div>
+        </div>
+    </div>
+    <!-- 添加推广广告 -->
+    <div class="add_box">
+        <a href="/index.php?s=/Home/Sharingplatform/consume_detail">
+            <img src="__HOME_IMAGES__/wh/icon_yu@2x.png" alt="">
+        </a>
+    </div>
+
+    <div class="me_too_box">
+        <a href="/index.php?s=/Home/Sharingplatform/Advertise.html">我也要发广告</a>
+    </div>
+    <input type="hidden" id="user" value="{$id}">
+    <div class="loading">
+        <img src="__HOME_IMAGES__/new_load.gif" alt="">
+        <p>加载中...</p>
+    </div>
+
+</body>
+
+</html>
+<script type="text/html" id="my_fabu">
+    {{each AppendData v i}}
+
+    <div class="Extension">
+        <div class="Extension_heard_fabu">
+            {{if v.activity_id == 1}}
+            <p>V网展示推广</p>
+            {{/if}} {{if v.activity_id == 2}}
+            <p>相册展示推广</p>
+            {{/if}} {{if v.activity_id == 3}}
+            <p>文章推广展示</p>
+            {{/if}} {{if v.activity_id == 4}}
+            <p>活动征集展示</p>
+            {{/if}}
+            <div id="end_time{{i}}" class="end_time"></div>
+            <div class="img_box">
+                <img class="show_img" src="{{v.cover_img}}" alt="">
+            </div>
+            <div class="set_data">
+                <div>总佣金:{{v.amount}}元</div>
+                <div>曝光量:{{v.count}}次</div>
+                <div>单次佣金:{{v.single_amount}}次</div>
+            </div>
+            <div class="footer_user clearfix">
+                <div class="fl" style="margin-right:0.1rem;">助推人数:{{v.share_user_count}}人</div>
+                <span class="fl" id="sur">剩余金额:
+				{{if v.status == 2}}
+					{{v.amount-(v.single_amount*v.clicked_count)}}
+				{{else if v.status == 3}}
+					0
+				{{/if}}
+				元</span>
+                <button class="fr">
+                    <a href="/index.php?s=/Home/Sharingplatform/Detailspage&share_id={{v.id}}"> 查看领取详情</a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+
+</script>
+
+<script type="text/html" id="my_canyu">
+
+    {{each AppendData v i}}
+<div class="Extension">
+    <div class="Extension_heard_join">
+        {{if v.activity_id == 1}}
+        <p>V网展示推广</p>
+        {{/if}} {{if v.activity_id == 2}}
+        <p>相册展示推广</p>
+        {{/if}} {{if v.activity_id == 3}}
+        <p>文章推广展示</p>
+        {{/if}} {{if v.activity_id == 4}}
+        <p>活动征集展示</p>
+        {{/if}}
+        <div id="end{{i}}" class="end_time"></div>
+        <div class="img_box">
+            <a id="canyu_link" href="{{v.activity_url}}/source/share/share_id/{{v.share_id}}/share_user_id/{{v.share_user_id}}">
+            <img class="show_img" src="{{v.cover_img}}" alt="">
+            </a>
+        </div>
+        <!-- <div class="set_data">
+            <div>总佣金:{{v.amount}}元</div>
+            <div>曝光量:{{v.count}}次</div>
+            <div>单次佣金:{{v.single_amount}}次</div>
+        </div> -->
+        <div class="reward clearfix">
+            <div class="fl total">我的佣金总额:{{v.total_money}}元</div>
+            <div class="fr">
+                <a class="look" href="/index.php?s=/Home/Sharingplatform/MyCommission&share_id={{v.share_id}}&money={{v.total_money}}">查看详情</a>
+            </div>
+        </div>
+        <!-- <div class="footer_user clearfix">
+            <div class="fl">助推人数:{{v.share_user_count}}人</div>
+            <button class="fr">
+                <a href="/index.php?s=/Home/Sharingplatform/MyCommission.html"> 查看我的佣金</a>
+            </button>
+        </div> -->
+    </div>
+</div>
+{{/each}}
+
+
+
+</script>

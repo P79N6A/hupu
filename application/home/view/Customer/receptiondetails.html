@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>接待详情</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+
+
+    <style>
+
+        .mint-cell-value img{
+            width:100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="接待详情">
+        <router-link to="/" slot="left" @click="window.history.go(-1);">
+            <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+    </mt-header>
+    <div>
+        <mt-cell title="客户姓名" :value="pojo.username"></mt-cell>
+        <mt-cell title="客户等级" :value="pojo.usertype"></mt-cell>
+        <mt-cell title="客户手机号" :value="pojo.userphone"></mt-cell>
+        <mt-cell title="预约人" :value="pojo.usersubscribeid"></mt-cell>
+        <mt-cell title="推荐人" :value="pojo.userreferee"></mt-cell>
+        <mt-cell title="接待人" :value="pojo.lr_customer_name"></mt-cell>
+        <mt-cell title="接待地址" :value="pojo.one_re_adess"></mt-cell>
+        <mt-cell title="所属公司" :value="pojo.fcname"></mt-cell>
+        <mt-cell title="来访事由" :value="pojo.usercause"></mt-cell>
+        <mt-cell title="来访时间" :value="pojo.createtime"></mt-cell>
+        <mt-cell title="来访录入人" :value="pojo.bcname"></mt-cell>
+        <mt-cell title="来访工作单">
+
+            <img  :src="pojo.one_job_img" >
+        </mt-cell>
+        <mt-cell title="接待详情" :value="pojo.two_dis"></mt-cell>
+        <mt-cell title="接待结果" :value="pojo.two_result"></mt-cell>
+        <mt-cell title="送出时间" :value="pojo.two_time"></mt-cell>
+        <mt-cell title="接待结果录入人" :value="pojo.ccname"></mt-cell>
+        <mt-cell title="接待结果工作单">
+
+            <img  :src="pojo.two_job_img" >
+        </mt-cell>
+
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            //动态数据
+            pojo: {
+                one_customer_id: '',
+                lr_customer_name: '',
+                lr_customer_id: '',
+                one_re_adess: '',
+                rid: '',
+                username: '11',
+                usertype: '',
+                userphone: '',
+                usersubscribeid: '',
+                usercauseid: '',
+                usercause: '',
+                userreferee: '',
+                one_job_img: '',
+                two_customer_id: '',
+                two_dis: '',
+                two_job_img: '',
+                two_result: '',
+                two_time: '',
+                createtime: '',
+                s_start: ''
+            },
+            paylist: [],
+            loading: false,
+
+
+            gradeList: [{
+                value: '创客',
+                label: '创客'
+            },
+                {
+                    value: '创投',
+                    label: '创投'
+                },
+                {
+                    value: '创业家',
+                    label: '创业家'
+                },
+                {
+                    value: '创业导师',
+                    label: '创业导师'
+                }, {
+                    value: '创业领袖',
+                    label: '创业领袖'
+                }
+            ],
+
+
+        },
+        methods: {
+            postData: function () {
+                var t = this;
+                var id = '{$rid}';
+
+                if (id == null || id == '') {
+                    t.$toast('重要参数缺失')
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/find_reception_by_id",
+                    data: {
+                        rid: id
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        console.log(res);
+                        if (res.ResultType == 0) {
+                            t.$toast('查询成功');
+                            t.pojo = res.AppendData[0];
+                        }
+                    },
+                    error: function () {
+                        //  console.log(313)
+                    }
+                })
+            },
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+            t.cuuid = $.cookie('k_cuuid');
+            t.postData();
+        },
+
+    })
+</script>
+</body>
+
+</html>

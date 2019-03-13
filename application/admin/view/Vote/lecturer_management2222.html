@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>讲师管理</title>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="__AGENCY__/js/vue/index.css">
+    <!-- 引入组件库 -->
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <script src="__AGENCY__/js/vue/jquery.min.js"></script>
+</head>
+<body >
+<!--javatom -->
+<div id="app">
+    <div class="api_search">
+        <el-row>
+            <el-col :span="2" style="text-align: center;">
+                讲师名
+            </el-col>
+            <el-col :span="5">
+                <el-input v-model="serachpojo.dname" placeholder="请输入讲师名"></el-input>
+            </el-col>
+            <el-col :span="3">
+                <el-button type="primary" size="medium" @click="postTableData">搜索</el-button>
+            </el-col>
+
+        </el-row>
+
+    </div>
+    <div class="api_table">
+        <template>
+                <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop="uid" label="#" width="100">
+                </el-table-column>
+                <el-table-column prop="uname" label="讲师名" >
+                </el-table-column>
+                <el-table-column prop="uuuid" label="讲师对外唯一id" >
+                </el-table-column>
+                <el-table-column prop="u_vote_num" label="当前票数" >
+                </el-table-column>
+
+                <el-table-column prop="u_number" label="编号" >
+                </el-table-column>
+                <el-table-column prop="u_sort" label="排序" >
+                </el-table-column>
+                <el-table-column prop="createtime" label="创建时间" >
+                </el-table-column>
+                <el-table-column label="头像" >
+                    <template slot-scope="scope">
+                         <img :src="scope.row.u_img_top" width="60px" height="60px" />
+                    </template>
+                </el-table-column>
+                <el-table-column label="推广图是否已上传" >
+                    <template slot-scope="scope">
+                        <el-tag type="success" v-if="scope.row.u_img_url=='' || scope.row.u_img_url==null">未上传</el-tag>
+                        <el-tag type="success" v-else >已上传</el-tag>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="推广音频是否已上传" >
+                    <template slot-scope="scope">
+                        <el-tag type="success" v-if="scope.row.u_sharing_audio=='' || scope.row.u_sharing_audio==null">未上传</el-tag>
+                        <el-tag type="success" v-else >已上传</el-tag>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="操作" style="width: 20%" width="50">
+
+                    <template slot-scope="scope">
+                        <el-button size="mini" @click="Edit(scope.row)">编辑</el-button>
+                        <el-button size="mini" @click="Del(scope.row.uuuid)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+    </div>
+
+    <div class="api_pagination">
+        <el-row type="flex" class="row-bg" justify="end">
+            <el-pagination @current-change="handleCurrentChange" :current-page.sync="pagination.pageNum" :page-size="pagination.pageSize" layout="total,prev, pager, next, jumper" :total="pagination.pageTotal">
+            </el-pagination>
+        </el-row>
+    </div>
+
+    <div class="api_add">
+        <el-dialog title="添加讲师/修改讲师" :visible.sync="dialogVisible" center>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    讲师名
+                </el-col>
+                <el-col :span="18">
+                    <el-input v-model="pojo.uname" placeholder="请输入讲师名"></el-input>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    讲师编号
+                </el-col>
+                <el-col :span="18">
+                    <el-input v-model="pojo.u_number" placeholder="请输入讲师编号"></el-input>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    排序
+                </el-col>
+                <el-col :span="18">
+                    <el-input v-model="pojo.u_sort" placeholder="讲师排序编号，排序值越小，则越靠前"></el-input>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    头像
+                </el-col>
+                <el-col :span="18">
+                    <el-upload
+                            :on-success="uploadimgsuccess"
+                            :data="uploadpojo"
+                            class="avatar-uploader"
+                            :action="uploadaction"
+                            name="img"
+                            show-file-list="false"
+                            :limit="1"
+
+                    >
+
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    推广图
+                </el-col>
+                <el-col :span="18">
+                    <el-upload
+                            :on-success="u_img_urlsuccess"
+                            :data="uploadpojo"
+                            class="avatar-uploader"
+                            :action="uploadaction"
+                            name="img"
+                            show-file-list="false"
+                            :limit="1"
+
+                    >
+
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-col>
+            </el-row>
+            <el-row type="flex" justify="center" style="margin-bottom: 10px;">
+                <el-col :span="6" style="text-align: center;">
+                    推广音频
+                </el-col>
+                <el-col :span="18">
+                    <el-upload
+                            :on-success="u_img_urlsuccess"
+                            :data="uploadpojo"
+                            class="avatar-uploader"
+                            :action="uploadmp3action"
+                            name="img"
+                            show-file-list="false"
+                            :limit="1"
+
+                    >
+
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+
+                </el-col>
+            </el-row>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitUser">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-button type="primary" @click="Inserts" size="medium" style="margin-left: 50%">添加</el-button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            dialogVisible: false,
+
+            currentPage: 5,
+
+            value: '',
+                tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            //pojo数据
+            pojo: {
+                uid:'',
+                uname:'',
+                uuuid:'',
+                u_img_url:'',
+                u_img_top:'',
+                u_number:0,
+                u_sort:0,
+                u_sharing_audio:'',
+                u_sharing_title:'',
+                u_sharing_dis:''
+
+            },
+            uploadpojo:{
+                "start_name": 'Vote',
+                "id":'468'
+            },
+            uploadmp3action:'{:U("/Api/IndexApi/upload_video")}',
+            serachpojo:{
+                dname:''
+            },
+            uploadaction:'{:U("/Api/IndexApi/uploads_img")}'},
+        methods: {
+            uploadimgsuccess:function(response, file, fileList){
+                var t=this;
+                t.pojo.u_img_top=response.AppendData;
+            },
+            u_img_urlsuccess:function(response, file, fileList){
+                var t=this;
+                t.pojo.u_img_url=response.AppendData;
+            },
+            Inserts:function(){
+                var t=this;
+                t.dialogVisible=true;
+                t.pojo={
+                    uid:'',
+                    uname:'',
+                    uuuid:'',
+                    u_img_url:'',
+                    u_img_top:'',
+                    u_number:0,
+                    u_sort:0,
+                    u_sharing_audio:'',
+                    u_sharing_title:'',
+                    u_sharing_dis:''
+                }
+            },
+            //分页点击更新数据数据
+            handleCurrentChange(val) {
+                var t = this;
+                t.n = val;
+                t.postTableData();
+
+            },
+            //简单封装一下请求数据数据
+            postTableData: function() {
+                var _this = this;
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/Vote/f_vote_user")}',
+                    data: {
+                        n: _this.n,
+                        dname:_this.serachpojo.dname,
+                        isfalg:true
+
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        var data=res.AppendData;
+                        _this.tableData = data.list;
+                        var paginstion = {
+                            pageNum: parseInt(data.pageNum),
+                            pageSize: data.pageSize,
+                            pageTotal: parseInt(data.pageTotal)
+                        };
+                        _this.pagination = paginstion
+                    },
+                    error: function() {}
+                })
+            },
+            Del:function (uuid) {
+                var t=this;
+                 if(!confirm("是否删除此讲师")){
+                     return;
+                 }
+
+                $.ajax({
+                    type: "POST",
+                    url:  '{:U("/Api/Vote/del_vote_user")}',
+                    data: {
+                        uuid:uuid
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        //console.log(res);
+                        if(res.ResultType==0){
+                            t.dialogVisible=false;
+                            t.IandEPostData();
+                        }else{
+                            alert("删除失败");
+                        }
+                    },
+                    error: function() {}
+                })
+                // t.IandEPostData();
+
+            },
+
+            submitUser:function () {
+                var t=this;
+                if(t.pojo.uname==''){
+                    alert("讲师名不能为空");
+                    return;
+                };
+                if(t.pojo.u_number==''){
+                    alert("讲师编号不能为空");
+                    return;
+                }
+                if(t.pojo.u_img_top==''){
+                    alert("商品图标未上传");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url:  '{:U("/Api/Vote/i_u_vote_user")}',
+                    data: t.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                       //console.log(res);
+                       if(res.ResultType==0){
+                           t.dialogVisible=false;
+                           t.IandEPostData();
+                       }else{
+                           alert("添加/修改失败");
+                       }
+                    },
+                    error: function() {}
+                })
+               // t.IandEPostData();
+
+            },
+            Edit:function (row) {
+                console.log(row)
+                var t=this;
+                t.pojo=row;
+                t.dialogVisible=true;
+            },
+            IandEPostData:function () {
+                var t=this;
+                //console.log(t.pojo.s_activitybuttomimgurl);
+                $.ajax({
+                    type: "POST",
+                    url:  '{:U("/Api/Vote/f_prize")}',
+                    data: t.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        t.dialogVisible=false;
+
+                        t.pojo={
+                            uid:'',
+                            uname:'',
+                            uuuid:'',
+                            u_img_url:'',
+                            u_img_top:'',
+                            u_number:0,
+                            u_sort:0,
+                            u_sharing_audio:'',
+                            u_sharing_title:'',
+                            u_sharing_dis:''
+                        }
+                        t.postTableData();
+                    },
+                    error: function() {}
+                })
+            }
+
+        },
+
+        mounted: function() {
+            var t=this;
+            t.postTableData();
+
+        },
+
+    })
+</script>
+
+</body>
+</html>

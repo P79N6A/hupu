@@ -1,0 +1,1535 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+	<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_JS__/whjs/js/rem.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+	<style>
+		.wzgc_bottom h1 {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: block;
+			width: 75%;
+		}
+		
+		a{
+			text-decoration: none;
+			-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+			-webkit-user-select: none;
+			-moz-user-focus: none;
+			-moz-user-select: none;
+		}
+		
+		a,a:hover,a:active,a:visited,a:link,a:focus{
+			
+		    color:#fff;
+		    outline:none;
+		    text-decoration: none;
+		}
+
+		.wzgc_content img {
+			width: 100%;
+		}
+
+		.wzgc_bottom_fix {
+			position: relative;
+			height: 40px;
+		}
+
+		.card {
+			display: none;
+		}
+
+		.card_panel {
+			text-align: center;
+		    width: 80%;
+		    height: 335px;
+		    background: #fff;
+		    position: fixed;
+		    top: 50%;
+		    left: 0;
+		    right: 0;
+		    margin: -152.5px auto 0;
+		    border-radius: 4px;
+		    z-index: 200;
+		    padding-top: 30px;
+		}
+
+		.card_panel .card_code {
+			text-align: center;
+		}
+		
+		.card_code>img {
+		    width: 200px;
+		    height: 200px;
+		}
+
+		.card_panel .card_code p {
+			font-size: 15px;
+			color:#333;
+		}
+		
+		.tab {
+		    width: 85%;
+		    height: 42px;
+		    line-height: 42px;
+		    display: flex;
+		    margin: 0 auto;
+		    border: 1px solid #32CEA0;
+		    border-radius: 4px;
+		}
+
+		.card_panel .card_button {
+		    width: 33%;
+		    height: 40px;
+		    float: left;
+		    line-height: 40px;
+		    margin: 0 auto;
+		    color: #32CEA0;
+		    background: #fff;
+		    font-size: 12px;
+		}
+		
+		.card_button:nth-of-type(2){
+				border-left:1px solid #32CEA0;
+				border-right:1px solid #32CEA0;
+		}
+			
+		.card_button:nth-of-type(1) {
+			border-bottom-left-radius: 4px;
+			border-top-left-radius: 4px;
+		}
+		.card_button:nth-of-type(3) {
+			border-bottom-right-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+
+		.card_button.on {
+			    background: #32CEA0;
+    			color: #fff;
+		}
+
+		.card .bg {
+			background: rgba(0, 0, 0, .7);
+			z-index: 98;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+		}
+
+		.card_edit_btn {
+			width: 60px;
+			height: 60px;
+			background: rgba(0, 0, 0, .5);
+			color: #FFFFFF;
+			border-radius: 50%;
+			position: fixed;
+			right: 1px;
+			z-index: 9;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			text-align: center;
+			line-height: 60px;
+		}
+
+		.card_edit_btn.on {
+			background: #218afe;
+		}
+
+		.dn {
+			display: none;
+		}
+
+		.zzc_paizhao_bg {
+			background: #2c3239 !important;
+		}
+
+		.zzc_mingpfuzhi_body {
+			background: #FFFFFF;
+			overflow: hidden;
+		}
+
+		.zzc_mingpfuzhi_input_div {
+			float: left;
+			margin: 10px 5%;
+			width: 40%;
+			overflow: hidden;
+			text-align: center;
+			border-radius: 5px;
+			height: 50px;
+			line-height: 50px;
+			border-radius: 0px;
+		}
+
+		.zzc_mingpfuzhi_input {
+			width: 80% !important;
+			float: left;
+			font-size: 14px;
+			height: 50px;
+			margin: auto;
+			line-height: 50px;
+			color: #666666 !important;
+			overflow: hidden;
+			border: none !important;
+			background: #f7f7f8 !important;
+		}
+
+		.zzc_mingpfuzhi_sub {
+			width: 20%;
+			background: #d6ebf0;
+			float: right;
+			text-align: center;
+			height: 50px;
+			line-height: 50px;
+			color: #2fb3d3;
+		}
+
+		.zzc_mingpfuzhi {
+			width: 90%;
+			overflow: hidden;
+			margin: auto;
+			background: #FFFFFF;
+		}
+
+		.zzc_mingpfuzhi_div {
+			width: 100%;
+			font-size: 16px;
+			color: #8e8e90;
+			overflow: hidden;
+			background: #f0eff6;
+		}
+
+		.zzc_mingpfuzhi_div p {
+			font-size: 16px;
+			padding: 10px 5%;
+			margin: 0px;
+		}
+
+		.zzc_mingpfuzhi_ul {
+			background: #FFFFFF;
+			width: 100%;
+			overflow: hidden;
+			font-size: 14px;
+			margin: auto;
+		}
+
+		.zzc_mingpfuzhi_li {
+			width: 90%;
+			height: 50px;
+			line-height: 50px;
+			margin: 0 auto;
+			border-bottom: 1px solid #f0eff6;
+		}
+
+		.zzc_mingpfuzhi_li span {
+			color: #333333;
+			margin-right: 20px;
+		}
+
+		.zzc_mingpfuzhi_li a {
+			float: right;
+			display: inline-block;
+			border-radius: 3px;
+			height: 35px;
+			padding: 0 15px;
+			margin-top: 5px;
+			line-height: 35px;
+			color: #FFFFFF;
+			background: #2FB3D3;
+		}
+
+		.zzc_zhifudashang {
+			overflow: hidden;
+			width: 100%;
+		}
+
+		.zzc_zhifudashang a {
+			border: 1px solid #CCCCCC;
+			text-align: center;
+			color: #CCCCCC;
+			width: 46%;
+			padding: 10px 0px;
+			margin: 2%;
+			float: left;
+		}
+
+		.zzc_zhifudashang a.on {
+			border: 1px solid #b6cd62;
+			color: #b6cd62;
+		}
+
+		.zzc_xuanzetup {
+			text-align: center;
+			margin-bottom: 10px;
+			color: #333333;
+			font-size: 14px;
+		}
+
+		.zzc_xuanzetup a {
+			border: 2px solid #2FB3D3;
+			display: inline-block;
+			border-radius: 50%;
+			height: 30px;
+			width: 30px;
+			line-height: 30px;
+			text-align: center;
+			color: #2FB3D3;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		.nav_box {
+			text-align: center;
+			width: 300px;
+			background: #fff;
+			position: fixed;
+			top: 12%;
+			left: 0;
+			right: 0;
+			margin: auto;
+			border-radius: 15px;
+			z-index: 100;
+			padding: 10px;
+		}
+
+		.nav_panel .bg {
+			background: rgba(0, 0, 0, .7);
+			z-index: 98;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+		}
+
+		.nav_title {
+			text-align: left;
+			font-weight: bold;
+		}
+
+		.nav_select_icon {
+			margin-bottom: 20px;
+			padding-top: 10px;
+		}
+
+		.nav_select_icon .mui-icon-plusempty {
+			font-size: 48px;
+			color: #2fb3d3;
+		}
+
+		.nav_content input[type=text] {
+			background: #f7f7f8;
+			border: 0;
+			color: #6a6e70;
+		}
+
+		.nav_btns button {
+			width: 40%;
+			height: 42px;
+		}
+
+		.nav_btns .nav_btns_yes {
+			border: 0;
+			color: #fff;
+			background: #2fb3d3;
+		}
+
+		.table td,
+		.table th {
+			border: 1px solid #ffffff;
+			text-align: center;
+		}
+
+		.table tbody tr:hover td {
+			background-color: #ffffff;
+		}
+
+		.mui-table-view {
+			    width: 100%;
+			    height: 82px;
+			    margin: 0 auto;
+			    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+			    border-radius: 4px;
+			    margin-bottom: 10px;
+		}
+
+		.mui-media {
+			width: 100%;
+			height: 82px;
+		}
+
+		.mui-media>a {
+			width: 100%;
+			height: 100%;
+			/*display: block;*/
+			margin: 0 !important;
+			padding: 0 !important;
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 20px;
+			position: relative;
+		}
+
+		.zzc_radius_img {
+			width: 60px !important;
+			height: 60px !important;
+			max-width: 60px !important;
+		}
+
+		.mui-media-body {
+			width: 49%;
+			font-size: 18px;
+			line-height: 25px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			float: left;
+		}
+
+		.wzgc_div>h1 {
+			font-size: 24px;
+		}
+
+		.wzgc_div,
+		.wzgc_content,
+		.wzgc_bottom {
+			width: 100%;
+			margin: 0 auto;
+			position: relative;
+			padding: 10px 0px;
+			overflow: hidden;
+			border-bottom: none;
+		}
+
+		.mui-table-view:before {
+			position: none;
+			height: 0px;
+			content: '';
+			transform: none;
+			background-color: none;
+			top: 0;
+		}
+
+		.mui-table-view:after {
+			position: none;
+			left: 0;
+			height: 0px;
+			content: '';
+			transform: none;
+			background-color: none;
+		}
+
+		.pro {
+			float: right;
+			font-size: 12px;
+		}
+
+		.pro>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #32CEA0;
+		}
+
+		.add {
+			position: absolute;
+			top: 26px;
+			right: 5%;
+		}
+
+		.add_v {
+			display: block;
+			width: 70px;
+			height: 30px;
+			background-color: #32CEA0;
+			color: #fff;
+			text-align: center;
+			line-height: 30px;
+			font-size: 12px;
+		}
+
+		.wzgc_bottom_fix .guanggao {
+			height: 50px;
+			padding: 0px;
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+		}
+
+		.editBox {
+			height: auto !important;
+			min-height: 0 !important;
+		}
+
+		.img {
+			width: 100%;
+			height: 100%;
+		}
+
+
+
+		#content {
+			width: 100%;
+			height: 24rem;
+			margin: 0 auto;
+			margin-top: 0.5rem;
+			background: rgba(255, 255, 255, 1);
+			box-shadow: 0px 2px 6px 0px rgba(192, 192, 192, 0.39);
+		    margin: 20px auto;
+			border-radius: 10px;
+		}
+
+		.title_name_box {
+			width: 100%;
+			height: 5.3rem;
+			text-align: center;
+			background:url("__HOME_IMAGES__/newvnet/article/inco_background.png") no-repeat;
+			background-size: 100% 100%;
+			position: relative;
+		}
+
+		.title_name_box p {
+			color: #fff;
+		}
+
+		.title_name_box .nick_name {
+			font-size: 1.1rem;
+			height: 1.55rem;
+			padding-top: .5rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		.title_name_box .post {
+			font-size: .65rem;
+			padding-top: .5rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		.title_name_box .headimg {
+			width: 3.45rem;
+			height: 3.575rem;
+			border-radius: 50%;
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			margin-left: -1.725rem;
+			margin-bottom: -1.7875rem;
+		}
+
+		.usermsg {
+			margin-top: 2.85rem;
+			padding: 0 1rem;
+		}
+
+		.usermsg span {
+			font-size: .75rem;
+		}
+
+		.usermsg .item {
+			color: #999999;
+			margin-left: .5rem;
+			font-size: .65rem;
+		}
+
+		.jianjie {
+			font-size: .75rem;
+			color: #000;
+		}
+
+		.usermsg .describe {
+			width: 100%;
+			max-height: 6rem;
+			height: 6rem;
+			overflow: scroll;
+			color: #999999;
+			margin-top: 0.5rem;
+		}
+
+
+		.clearfix::after {
+			content: ".";
+			clear: both;
+			display: block;
+			overflow: hidden;
+			font-size: 0;
+			height: 0;
+		}
+
+		.fl {
+			float: left;
+		}
+
+		.fr {
+			float: right;
+		}
+
+		.usermsg .clearfix {
+			margin: 0.2rem auto;
+		}
+
+		.fotterv {
+			display: block;
+			height: 1.875rem;
+			width: 5.3rem;
+			text-align: center;
+			line-height: 1.875rem;
+			color: #fff;
+			background: #32CEA0;
+			background-repeat: no-repeat;
+			background-position: .8rem .62rem;
+			font-size: 0.8rem;
+			border-radius: 5px;
+			margin: 0 auto;
+			margin-top: 2rem;
+		}
+
+		.wzgc_bottom_fix .guanggao .bian_edit {
+			background: #E7E7E7;
+		}
+
+		.bian_edit a {
+			color: #535353;
+		}
+
+		.color_text {
+			color: #2FB3D3;
+		}
+
+		.Reward {
+			width: 100%;
+			height: 11.325rem;
+			border-top: 1px solid #eee;
+			position: relative;
+		}
+
+		.Reward .center_text {
+			width: 100%;
+			text-align: center;
+			font-size: .6rem;
+		}
+
+		.Reward .numpeople {
+			font-size: .725rem;
+			padding-left: 5%;
+			padding-top: 1.2rem;
+		}
+
+		.Reward img {
+			display: block;
+			width: 71px;
+			height: 71px;
+			margin: 0 auto;
+			margin-bottom: .85rem;
+			position: relative;
+			z-index: 199;
+		}
+
+		.mask {
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 1);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 200;
+			opacity: 0.5;
+			display: none;
+		}
+
+		.user_reward {
+			width: 15rem;
+			height: 22.475rem;
+			background: #fff;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-left: -7.5rem;
+			margin-top: -11.2375rem;
+			z-index: 201;
+			border-radius: 10px;
+			display: none;
+		}
+
+		.user_reward h2 {
+			text-align: center;
+			margin-top: 1.4rem;
+			font-size: .9rem;
+		}
+
+		.user_reward p {
+			text-align: center;
+			color: #999999;
+			margin-top: .5rem;
+			font-size: .65rem;
+			margin-bottom: 1.325rem !important;
+		}
+
+		.user_reward ul {
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		.user_reward ul li {
+			width: 47%;
+			height: 2.45rem;
+			border: 1px solid #D9D9D9;
+			line-height: 2.45rem;
+			text-align: center;
+			margin-bottom: .5rem;
+			font-size: 1rem;
+			color: #C9C9C9;
+			border-radius: 3px;
+		}
+
+		.user_reward ul li:nth-child(odd) {
+			float: left;
+		}
+
+		.user_reward ul li:nth-child(even) {
+			float: right;
+		}
+
+		.actived {
+			color: #F57103 !important;
+			border: 1px solid #F57103 !important;
+		}
+
+		.color_s {
+			color: #000;
+			font-size: .75rem;
+		}
+
+		.check_pay {
+			background: #2FB3D3;
+			color: #fff;
+			width: 80%;
+			height: 2.475rem;
+			text-align: center;
+			margin: 0 auto;
+			border-radius: 2rem;
+			display: block;
+			border: none;
+		}
+
+		.payfor .payimg {
+			width: 15px;
+			height: 14px;
+		}
+
+			.choise {
+			width: 100%;
+			height: 3rem;
+			position: fixed;
+			bottom: 0rem;
+			right:0;
+			z-index: 999;
+			overflow: hidden;
+
+			}
+
+			.choise a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+			text-align: center;
+			line-height: 3rem;
+			background: #32CEA0;
+			font-size: 0.8rem;
+			}
+
+
+
+			.tips {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			left: 0;
+			z-index: 999;
+			top: 0;
+			background: rgba(0, 0, 0, .6);
+			display: none;
+			}
+
+			.tips .content {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			color: #fff;
+			}
+
+			.content .Arrow {
+			display: block;
+			position: absolute;
+			top: .12rem;
+			right: .8rem;
+			width: 4.8rem;
+			height: 2.8rem;
+			}
+
+			.content p {
+			color: #fff;
+			}
+
+			.content .tip_one {
+			position: absolute;
+			width: 16rem;
+			font-size: 1rem;
+			top: 12%;
+			left: 55%;
+			margin-left: -8rem;
+
+			}
+
+			.content .tips_two {
+			position: absolute;
+			width: 18rem;
+			height: 3rem;
+			line-height: 3rem;
+			font-size: 1rem;
+			top: 20%;
+			left: 55%;
+			margin-left: -8rem;
+			}
+
+			.content .tips_two img {
+			width: 2.5rem;
+			height: 2.5rem;
+			}
+
+			.content .tips_two .fl+.fl {
+			margin-left: 10px;
+			}
+
+			.content .tips_three {
+			position: absolute;
+			width: 18rem;
+			height: 3rem;
+			line-height: 3rem;
+			font-size: 1rem;
+			top: 32%;
+			left: 55%;
+			margin-left: -8rem;
+			}
+
+			.tips_three img {
+			width: 2.5rem;
+			height: 2.5rem;
+			}
+
+			.tips_three .fl+.fl {
+			margin-left: 10px;
+			}
+
+			.konw {
+			width: 8rem;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			text-align: center;
+			border: 2px solid #fff;
+			border-radius: 2rem;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -4rem;
+			margin-top: -1.5rem;
+			}
+
+			.share_text {
+			width: 4.5rem;
+			height: 1.8rem;
+			line-height: 1.8rem;
+			background: rgba(0, 0, 0, .6);
+			position: fixed;
+			z-index: 999;
+			top: 1rem;
+			right: 0.5rem;
+			text-align: center;
+			color: #fff;
+			border-radius: 2rem;
+			}
+
+			.share_text .box_ {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			}
+
+			.share_text img {
+			width: 1rem;
+			height: 1rem;
+			position: absolute;
+			top: 50%;
+			left: 15%;
+			margin-top: -0.5rem;
+			}
+
+			.share_text p {
+			height: 1rem;
+			line-height: 1rem;
+			color: #fff;
+			position: absolute;
+			top: 50%;
+			margin-top: -0.5rem;
+			right: 20%;
+			}
+			.container {
+			    width: 90%;
+			    margin: 0 auto 60px;
+			    background-color: #fff;
+			    text-align: left;
+			    text-shadow: none;
+			    overflow: hidden;
+			}
+			.wzgc_div>p>span {
+    			 margin-right: 0px; 
+			}
+	</style>
+
+
+
+</block>
+<block name="body">
+
+	<body>
+
+		<div class="share_text">
+			<div class="box_">
+				<img src="__HOME_IMAGES__/2x.share_msg.png" alt="">
+				<p> 分享</p>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="bg"></div>
+			<div class="card_panel">
+				<div class="card_code">
+					<p>二维码，打开我的V网</p>
+					<img src="{:url('Home/Card/cardCode?id='.I('get.id'))}" alt="" width="80%">
+				</div>
+				<div class="tab">
+				<div class="card_button" data_type='1'>
+					<if condition="$wx_ewm_url neq ''">
+						微信二维码
+						<else /> 导入通讯录
+					</if>
+				</div>
+				<div class="card_button on" data_type='2'>V网二维码</div>
+				<div class="card_button" data_type='3'>洋小秘公众号</div>
+			</div>
+			</div>
+		</div>
+
+		<div class="mui-content">
+			<div class="container">
+			<div class="wzgc_div">
+				<h1>{$data.title}</h1>
+				<p>
+					<span>{$data.add_time|date='Y-m-d H:i',###}</span>
+					<span>阅读：{$data.visit}</span>
+					<span class="pro"><a href="{$data['source_url']}">文章出处</a></span>
+				</p>
+			</div>
+
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a href="{:url('Home/Nologin/card_jump/id/'.$data['promotion']['id'])}">
+						<img class="mui-media-object mui-pull-left zzc_radius_img" src="{$data.promotion.headimg}">
+						<div class="mui-media-body">
+							{$data.promotion.nick_name}-{$data.promotion.position}
+							<p class='mui-ellipsis'>{$data.promotion.company}</p>
+						</div>
+						<div class="add">
+							<a href="javascript:showCode(2)" class="wzgc_shoucang_but add_v">添加V网</a>
+						</div>
+
+					</a>
+				</li>
+			</ul>
+			<div class="wzgc_content">
+				{$data.content}
+			</div>
+			<!--<div class="wzgc_bottom" style="margin-bottom: 200px;">
+				<h1>{$data.promotion.nick_name}-{$data.promotion.position}</h1>
+				<p>电话：<span>{$data.promotion.mobile}</span></p>
+				<p>公司：<span>{$data.promotion.company}</span></p>
+				<p>邮箱：<span>{$data.promotion.email}</span></p>
+				<div class="title">
+
+					<p>简介：</p>
+					<p><span>{$data.promotion.share_my_introduct}</span></p>
+					<p>我拥有的资源与优势：</p>
+					<p><span>{$data.promotion.share_my_advantage}</span></p>
+					<p>我需要对接的资源：</p>
+					<p><span>{$data.promotion.share_my_resource}</span></p>
+
+				</div>
+				<a href="javascript:showCode(2)" class="wzgc_shoucang_but">收藏V网</a>
+			</div>-->
+			<!--<div style="text-align: center;" onclick="reward()">-->
+			<!--<img src="__PUBLIC__/Home/images/article_reward.png" width="40" height="40">-->
+			<!--<p style="margin-top: 10px;">喜欢本文就给我打赏吧~</p>-->
+			<!--</div>-->
+
+			<div class="mask"></div>
+
+
+			<div class="user_reward">
+				<h2>打赏</h2>
+				<p>感谢您的支持与鼓励,持续创作</p>
+				<ul class="clearfix ul_box" id="money_box">
+					<li class=" actived" data-money="1">
+						<span>￥</span>1</li>
+					<li data-money="5">
+						<span>￥</span>5</li>
+					<li data-money="10">
+						<span>￥</span>10</li>
+					<li data-money="20">
+						<span>￥</span>20</li>
+					<li data-money="50">
+						<span>￥</span>50</li>
+					<li data-money="100">
+						<span>￥</span>100</li>
+				</ul>
+
+				<p class="payfor">
+					<span class="color_s">支付方式:</span>
+					<img class="payimg" src="__HOME_IMAGES__/inco_weixin_zhi.png" alt=""> 微信支付
+				</p>
+
+				<button class="check_pay" id="check_pay">确认支付</button>
+
+			</div>
+
+
+
+
+			<div class="Reward">
+				<p class="numpeople">已有
+					<span class="color_text">8</span>人打赏</p>
+
+				<img class="pay_reward" src="__HOME_IMAGES__/inco_dashang.png" alt="">
+
+				<p class="center_text">喜欢本文就给我打赏吧</p>
+			</div>
+
+
+
+
+
+			<div id="content">
+				<div class="content_box">
+					<div class="title_name_box">
+						<p class="nick_name">{$data.promotion.nick_name}</p>
+						<p class="post">{$data.promotion.position}</p>
+						<img class="headimg" src="{$data.promotion.headimg}" alt="">
+					</div>
+					<div class="usermsg">
+						<div class="clearfix">
+							<span class="fl">电话:</span>
+							<span class="item fl">{$data.promotion.mobile}</span>
+						</div>
+						<div class="clearfix">
+							<span class="fl">公司:</span>
+							<span class="item fl">{$data.promotion.company}</span>
+						</div>
+						<div class="clearfix">
+							<span class="fl">邮箱:</span>
+							<span class="item fl">{$data.promotion.email}</span>
+						</div>
+						<p class="jianjie">简介:</p>
+						<div class="describe">
+							{$data.promotion.share_my_introduct}
+						</div>
+					</div>
+
+				</div>
+				<a href="javascript:showCode(2)" class="wzgc_shoucang_but fotterv">收藏V网</a>
+			</div>
+
+
+
+
+			<!--<div class="wzgc_bottom_fix">
+				<div class="guanggao">
+					<div class="bian_edit">
+						<a href="javascript:void(0)" onclick="myedits()"> <span class="mui-icon mui-icon-compose"></span>我也要编写软文 </a>
+					</div>
+					
+				</div>
+			</div>-->
+			<!--<button onclick="pay()" class="mui-btn mui-btn-danger">打赏</button>-->
+			<div class="nav_panel dn">
+				<!-- 导航选择器 -->
+				<div class="bg"></div>
+
+				<div class="nav_box">
+					<div class="nav_title">打赏</div>
+					<div style="text-align: right;margin-top: -20px;margin-right: 10px;" onclick="closeAlert()"><img src="__PUBLIC__/Home/images/x.png"
+						    width="18" height="18" /></div>
+					<div class="nav_content">
+						<table width="100%" class="table" id="tablevalue">
+							<tr>
+								<td width=50%><button style="width: 70px;" id="5" onclick="pay(5)" class="mui-btn mui-btn-primary mui-btn-outlined">￥5</button></td>
+								<td width=50%><button style="width: 70px;" id="10" onclick="pay(10)" class="mui-btn mui-btn-primary mui-btn-outlined">￥10</button></td>
+							</tr>
+							<tr>
+								<td width=50%><button style="width: 70px;" id="20" onclick="pay(20)" class="mui-btn mui-btn-primary mui-btn-outlined">￥20</button></td>
+								<td width=50%><button style="width: 70px;" id="50" onclick="pay(50)" class="mui-btn mui-btn-primary mui-btn-outlined">￥50</button></td>
+							</tr>
+							<tr>
+								<td width=50%><button style="width: 70px;" id="100" onclick="pay(100)" class="mui-btn mui-btn-primary mui-btn-outlined">￥100</button></td>
+								<td width=50%><button style="width: 70px;" id="200" onclick="pay(200)" class="mui-btn mui-btn-primary mui-btn-outlined">￥200</button></td>
+							</tr>
+						</table>
+						<p><span class="mui-icon mui-icon-weixin"></span>微信支付</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="tips">
+			<div class="content">
+
+
+				<img class="Arrow" src="__HOME_IMAGES__/inco_youshang@2x.png" alt="">
+				<p class="tip_one">1.点击右上角</p>
+
+
+				<div class="tips_two clearfix">
+					<div class="fl">2.点击</div>
+					<img class="fl" src="__HOME_IMAGES__/inco_fasong@2x.png" alt="">
+					<div class="fl">或者</div>
+					<img class="fl" src="__HOME_IMAGES__/2x-friend.png" alt="">
+					<div class="fl">分享</div>
+
+				</div>
+
+
+				<div class="tips_three clearfix">
+					<div class="fl">3.点击</div>
+					<img class="fl" src="__HOME_IMAGES__/inco_lianjie@2x.png" alt="">
+					<div class="fl">复制链接</div>
+				</div>
+				<div class="konw">我知道了</div>
+				<audio id="audio" src=""></audio>
+			</div>
+		</div>
+
+
+
+
+		<if condition="$hidden eq 1">
+
+
+			<else />
+
+			<div class="choise">
+				<a href="javascript:;">点击复制链接</a>
+			</div>
+
+		</if>
+		
+		
+
+	</body>
+
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript">
+		
+		
+		//点击分享
+		$(".share_text").on("click", function () {
+		$(this).hide();
+		$(".tips").show();
+		})
+
+		//我知道了
+		$(".konw").on("click", function () {
+		$(".tips").hide();
+		$(".share_text").show();
+		});
+
+
+
+		//获得slider插件对象
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+		});
+
+		function reward() {
+			$('.nav_panel').show();
+			$('body').css('overflow', 'hidden');
+		}
+
+		var money = 1;
+		$("#check_pay").on("click", function () {
+			var data = {
+				//                'type': 3,
+				'money': money,
+				'user_id': '{$userId}',
+				'article_id': '{$ids}',
+				'reward_user_id': '{$reward_user_id}'
+			};
+
+			$.post("{:url('Home/Article/createReward')}", data, function (res) {
+
+				//                   console.log(res);
+
+				if (res.data.source == 0) {
+					window.location.href = res.data.mweb_url;
+				} else {
+
+					var appId = res.data.appId;
+					var timeStamp = res.data.timeStamp;
+					var nonceStr = res.data.nonceStr;
+					var package = res.data.package;
+					var signType = res.data.signType;
+					var paySign = res.data.paySign;
+					callpay(appId, timeStamp, nonceStr, package, signType, paySign);
+				}
+			});
+
+		});
+
+
+		$("#money_box").on("click", "li", function () {
+			money = $(this).attr("data-money");
+		});
+
+		function callpay(appId, timeStamp, nonceStr, package, signType, paySign) {
+			if (typeof WeixinJSBridge == "undefined") {
+				if (document.addEventListener) {
+					document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+				} else if (document.attachEvent) {
+					document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+					document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+				}
+			} else {
+				jsApiCall(appId, timeStamp, nonceStr, package, signType, paySign);
+			}
+		}
+
+		//调用微信JS api 支付
+		function jsApiCall(appId, timeStamp, nonceStr, package, signType, paySign) {
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest', {
+
+					"appId": appId, //公众号名称，由商户传入
+					"timeStamp": timeStamp, //时间戳，自1970年以来的秒数
+					"nonceStr": nonceStr, //随机串
+					"package": package,
+					"signType": signType, //微信签名方式：
+					"paySign": paySign //微信签名
+				},
+				function (res) {
+					WeixinJSBridge.log(res.err_msg);
+					if (res.err_msg == 'get_brand_wcpay_request:ok') {
+						$(".mask").hide();
+						$(".user_reward").hide();
+
+					}
+				}
+			);
+		}
+	</script>
+
+	<script>
+		function myedits() {
+			var uid = '{$uid}';
+			var aid = '{$userId}';
+			var tid = '{$tid}';
+			var _url = 'http://wx.yxm360.com/index.php?s=/Home/Article/previewArticle/is_home/1/id/' + tid + '';
+			if (aid != uid) {
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Home/Article/catchArticle", //url 
+					data: {
+						"id": uid,
+						"url": _url
+					},
+					// async: false,
+					success: function (result) {
+						// console.log(result);
+						if (result.status == 1) {
+							// window.location.href="http://192.168.100.2/index.php?s=/Home/Article/addArticle/id/"+result.id;
+							window.location.href = "/Home/Article/addArticle/id/" + result.id;
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			}
+			if (aid == uid) {
+				window.location.href = "/Home/Article/addArticle";
+			}
+		}
+
+
+
+		$(function () {
+			//导航取消
+			$('.nav_box .nav_btns_canel').on('touchend', function () {
+				$('.nav_panel').hide();
+				$('body').css('overflow', 'auto');
+			});
+			$('.nav_box .nav_btns_yes').on('touchend', function () {
+				pay();
+			});
+		});
+
+		function closeAlert() {
+			$('.nav_panel').hide();
+			$('body').css('overflow', 'auto');
+		}
+
+		function showCode(type) {
+			$('.card_button').removeClass('on');
+			$('.card_button[data_type="' + type + '"]').addClass('on');
+			var code = "";
+			var msg = "";
+			if (type == 1) {
+				code = "{:url('Home/Card/cardCode?id='.$userId)}";
+				msg = "扫描二维码，保存到本机通讯录";
+			} else if (type == 2) {
+				code = "{:url('Home/Card/myCode?id='.$userId)}";
+				msg = "扫描二维码，打开我的V网";
+			} else if (type == 3) {
+				code = "__PUBLIC__/Home/images/8.jpg";
+				msg = "扫描二维码，关注洋小秘公众号";
+			}
+			$('.card_panel .card_code img').attr('src', code);
+			$('.card_panel .card_code p').html(msg);
+			$('.card').show();
+		}
+
+
+		$('.card .bg').on('touchend', function () {
+			$('.card').hide();
+		});
+
+
+		$('.card_panel .card_button').on('touchend', function () {
+			var type = $(this).attr('data_type');
+			showCode(type);
+		});
+
+		
+		var vid  = '{$id}';
+		console.log(vid)
+		$(".choise a").on("click", function () {
+			$(this).attr("href",
+				"/index.php?s=/Home/Sharingplatform/PerfectInformation&type=3&href=/Home/Share/previewArticle/id/" + vid + "")
+		})
+	</script>
+	<script type="text/javascript">
+		define = null;
+		require = null;
+	</script>
+
+
+
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		$(".ul_box").on("click", "li", function () {
+			$(this).addClass("actived").siblings().removeClass("actived");
+		})
+
+
+
+		$(".mask").on("click", function () {
+			$(".user_reward").hide();
+			$(".mask").hide();
+		})
+
+
+
+		$(".pay_reward").on("click", function () {
+			$(".user_reward").show();
+			$(".mask").show();
+		})
+
+
+		// function sharePush() {
+		//     var id = "{$result.visit_id}";
+		//     $.post("{:url('Home/Card/sharePush')}", {'id': id}, function () {
+		//     });
+		// }
+
+
+		// 文字闪烁
+		// function color(){
+		// 		 setTimeout(function(){
+		// 			$('.wzgc_shoucang_but').css('color','#fff');
+		// 		 },100);
+		// 		setTimeout(function(){ 
+		// 			$('.wzgc_shoucang_but').css('color','#2FB3D3')
+		// 		},400);
+		// }
+		// setInterval(color,600);
+		$(".editBox").each(function (i, e) {
+
+			var strnum = $(e).html().split('?');
+			var isRemove = true;
+			for (var j = 0; j < strnum.length; j++) {
+				if (strnum[j] != '') {
+					isRemove = false;
+					break;
+				}
+			}
+			//              console.log(isRemove)
+			if (isRemove) {
+				$(this).remove();
+			}
+		})
+		$("body").find('br').remove();
+	</script>
+
+
+	<script>
+
+        $(function() {
+            var share_url = "{$share_url}";
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST", //方法类型
+                dataType: "json", //预期服务器返回的数据类型
+                url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                data:{share_url:share_url},
+                async: true,
+
+                // async: false,
+
+
+
+                success: function(result) {
+
+
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                        appId: result.AppendData.appId,
+                        timestamp: result.AppendData.timestamp,
+                        nonceStr: result.AppendData.nonceStr,
+                        signature: result.AppendData.signature,
+                        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                            'checkJsApi',
+                            'onMenuShareTimeline', //
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'getLocation'
+                        ]
+                    });
+                    wx.ready(function () {
+                        //分享到朋友圈
+                        wx.onMenuShareTimeline({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: '{$imgUrl}', // 分享链接
+                            success: function () {
+                                // 用户确认分享后执行的回调函数
+
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享给朋友
+                        wx.onMenuShareAppMessage({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: '{$imgUrl}', // 分享链接
+                            success: function () {
+                                // 用户确认分享后执行的回调函数
+
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ
+                        wx.onMenuShareQQ({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function () {
+                                // 用户确认分享后执行的回调函数
+
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到腾讯微博
+                        wx.onMenuShareWeibo({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function () {
+                                // 用户确认分享后执行的回调函数
+
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ空间
+                        wx.onMenuShareQZone({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function () {
+                                // 用户确认分享后执行的回调函数
+
+                            },
+                            cancel: function () {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+
+                    });
+
+                },
+                error: function() {
+                    alert("服务器繁忙，请稍后再试！");
+                }
+            });
+
+        });
+
+
+	</script>
+</block>

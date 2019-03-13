@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="zh-CN" id="index">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no, email=no" />
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<title>产品中心</title>
+		<link title="" rel="stylesheet" type="text/css" href="__ADMIN__/Lay/css/layui.css">
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link type="text/css" rel="stylesheet" href="__HOME_CSS__/add/css//trumbowyg.css?v=2" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="__COM_JS__/layer.js"></script>
+		<script type="text/javascript" src="__ADMIN__/Lay/layui.js"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/trumbowyg.min.js"></script>
+		<script src="__HOME_CSS__/add/js/trumbowyg.upload.js"></script>
+		<script src="__HOME_CSS__/add/js/trumbowyg.base64.js"></script>
+		<script type="text/javascript">
+			(function flexible(window, document) {
+				var docEl = document.documentElement
+				var dpr = window.devicePixelRatio || 1
+
+				// adjust body font size
+				function setBodyFontSize() {
+					if(document.body) {
+						document.body.style.fontSize = (12 * dpr) + 'px'
+					} else {
+						document.addEventListener('DOMContentLoaded', setBodyFontSize)
+					}
+				}
+				setBodyFontSize();
+
+				// set 1rem = viewWidth / 10
+				function setRemUnit() {
+					var rem = docEl.clientWidth / 18.75
+					docEl.style.fontSize = rem + 'px'
+				}
+
+				setRemUnit()
+
+				// reset rem unit','page resize
+				window.addEventListener('resize', setRemUnit)
+				window.addEventListener('pageshow', function(e) {
+					if(e.persisted) {
+						setRemUnit()
+					}
+				})
+
+				// detect 0.5px supports
+				if(dpr >= 2) {
+					var fakeBody = document.createElement('body')
+					var testElement = document.createElement('div')
+					testElement.style.border = '.5px solid transparent'
+					fakeBody.appendChild(testElement)
+					docEl.appendChild(fakeBody)
+					if(testElement.offsetHeight === 1) {
+						docEl.classList.add('hairlines')
+					}
+					docEl.removeChild(fakeBody)
+				}
+			}(window, document))
+		</script>
+		<!--<script src="http://www.jq22.com/jquery/1.8.3/jquery.min.js"></script>-->
+
+		<style type="text/css">
+			body {
+				background: #f0eff6;
+				margin: 0;
+			}
+			
+			.in {
+				width: 90%;
+				margin: 0 auto;
+				height: 1rem;
+				background: #fff;
+				margin-top: 0.3rem;
+				line-height: 1rem;
+				vertical-align: middle;
+				font-size: 0;
+				position: relative;
+			}
+			
+			.in span {
+				margin-left: 0.3rem;
+				color: #4e4b4b;
+				font-size: 0.3rem;
+				/*line-height: 1rem;*/
+				vertical-align: middle;
+				display: inline-block;
+			}
+			
+			.in1 input,
+			.in2 input {
+				width: 2.3rem;
+				height: 0.9rem;
+				float: right;
+				margin-right: 0.2rem;
+				border: none;
+				font-size: 0.25rem;
+			}
+			
+			.in3 input {
+				width: 4rem;
+				height: 0.9rem;
+				float: right;
+				margin-right: 0.2rem;
+				border: none;
+			}
+			
+			.in1 input::placeholder,
+			.in2 input::placeholder {
+				color: #C8C7CC;
+				font-size: 0.22rem
+			}
+			
+			.in3 select {
+				width: 2rem;
+				height: 0.5rem;
+				float: right;
+				background-color: #fff;
+				background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 90% 0.2rem;
+				background-size: 10%;
+				padding-left: 20px;
+				margin-right: 20px;
+				margin-top: 0.25rem;
+				color: #999;
+			}
+			
+			.in4 {
+				height: 5rem;
+			}
+			
+			textarea {
+				background: #fff;
+				color: #9CA1A6;
+				border: 0;
+				height: 4rem;
+				font-size: 0.16rem;
+				margin: 0;
+				padding: 0.2rem;
+				/*width: 90%;
+            margin: 0 auto;*/
+			}
+			
+			.btnbom {
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+			}
+			
+			.btnbom input {
+				width: 50%;
+				float: left;
+				text-align: center;
+				height: 100%;
+				border: none;
+			}
+			
+			.btnbom input:nth-child(1) {
+				background: #fff;
+				color: #4e4b4b;
+			}
+			
+			.btnbom input:nth-child(2) {
+				background: #2FB3D3;
+				color: #fff;
+			}
+			
+			.all_info {
+				width: 90%;
+				margin: 0 auto;
+				margin-top: 0.3rem;
+				line-height: 2rem;
+			}
+			
+			.info {
+				width: 90%;
+				position: absolute;
+				margin: 0 auto;
+				margin-top: 0.3rem;
+				line-height: 2rem;
+				padding-bottom: 2rem
+			}
+			
+			.preview {
+				width: 31%;
+				height: 2rem;
+				margin: 0.15rem 0;
+			}
+			
+			.photo,
+			.video,
+			.link {
+				width: 31%;
+				height: 2rem;
+				/*margin-top: -2rem;*/
+			}
+			
+			.xx {
+				width: 0.3rem;
+				margin-top: -1.5rem;
+				margin-left: -0.4rem;
+				margin-right: 0.1rem;
+			}
+			
+			.xxx {
+				width: 0.3rem;
+				margin-top: -3.5rem;
+			}
+			
+			.cover {
+				width: 0.5rem;
+				margin-left: 63%;
+			}
+			
+			.big_box {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0rem;
+				z-index: 2;
+				background: rgba(0, 0, 0, 0.5);
+				display: none;
+			}
+			
+			.link_div {
+				width: 60%;
+				position: fixed;
+				background: #fff;
+				z-index: 3;
+				top: 40%;
+				left: 20%;
+				display: none;
+			}
+			
+			#clipArea {
+				/*margin-top: 100px;*/
+				height: 85%;
+			}
+			
+			#file {
+				margin: 20px;
+			}
+			
+			input {
+				-webkit-appearance: none;
+				border-radius: 0;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			
+			.btun {
+				width: 262px;
+				height: 10%;
+				margin: 0 auto;
+				font-size: 0;
+			}
+			
+			#clipBtn {
+				width: 34%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #2FB3D3;
+				color: #fff;
+				text-align: center;
+				border: none;
+				border-radius: 5px;
+				position: relative;
+				z-index: 999;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 34%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 29%;
+				position: relative;
+				z-index: 999;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 998;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				width: 20%;
+				position: absolute;
+				left: 40%;
+				top: 36%;
+			}
+			
+			.hide {
+				display: none;
+			}
+			
+			#is_map {
+				display: inline-block;
+				position: absolute;
+				top: 0.25rem;
+				right: 0.4rem;
+				z-index:0;
+			}
+			
+			.mui-switch:before {
+				font-size: 13px;
+				position: absolute;
+				top: -0.28rem;
+				right: 11px;
+				content: 'Off';
+				text-transform: uppercase;
+				color: #999;
+			}
+			
+			.icon {
+				float: right;
+				line-height: 1rem;
+				margin-right: 0.5rem;
+			}
+			
+			.in2>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			#form {
+				margin-bottom: 80px;
+			}
+			
+			.custom {
+				width: 90%;
+				margin: 0 auto;
+				padding-top: 10px;
+				font-size: 0;
+			}
+			
+			.cus>span {
+				display: inline-block;
+				line-height: 40px;
+			}
+			
+			.custom_i1 {
+				width: 42%;
+			}
+			
+			.custom_i2 {
+				width: 43%;
+			}
+			
+			.custom_i3 {
+				width: 5%;
+			}
+			
+			.mui-icon-close {
+				width: 0.7rem;
+				height: 38px;
+				line-height: 38px;
+				text-align: center;
+				font-size: 0.6rem;
+				color: red;
+				float: right;
+				background-color: #fff;
+				margin-left: -5px;
+			}
+			
+			.add {
+				width: 90%;
+				margin: 0 auto;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background-color: #fff;
+			}
+			
+			.acr {
+				font-size: 16px;
+			}
+			.do{
+				margin-top: 0.3rem;
+				width: 90%;
+    			margin: 0 auto;
+    			height: 1rem;
+    			line-height: 1rem;
+    			font-size: 0.3rem;
+    			text-align: center;
+    			color:#2FB3D3;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body ontouchstart="">
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel" style="padding:0">取消</button>
+				<button id="clipBtn" style="padding:0">截取</button>
+			</div>
+		</div>
+		<form action="" id="form" method="post" enctype="multipart/form-data" data-id="0">
+		<input type="hidden" value="0" id="lock">
+			<div class="big_box"></div>
+
+			<input type="hidden" name="id" value="{$Think.get.id}">
+			<div class="in in1">
+				<span>标题</span>
+				<input type="text" name="title" style="text-align: right;width: 70%" value="{$data.title}" id="title" placeholder="请在此输入" />
+			</div>
+			<div class="in in2">
+				<span>封面</span>
+				<if condition="$data.thumb eq null">
+					<img src="__HOME_IMAGES__/h_icon_2_on.png" class="cover" id="cover_img" alt="">
+					<else/>
+					<img src="{$data.thumb}" class="cover" id="cover_img" alt="">
+				</if>
+				<input type="file" id="file" class="cover_file" style="display: none">
+				<input type="hidden" name="thumb" id="cover_input" value="{$data.thumb}" />
+
+			</div>
+			<div class="in in3">
+				<span>分类</span>
+				<select name="first" id="second">
+					<option value="">请选择</option>
+				</select>
+				<select name="" id="first">
+					<option value="">请选择</option>
+				</select>
+			</div>
+			<div class="in in2">
+				<span>产地</span>
+				<input type="text" name="sort" style="text-align: right" value="{$data.sort}" id="address" placeholder="请在此输入" />
+			</div>
+			<div class="in in2">
+				<span>价格</span>
+				<input type="text" name="sort" style="text-align: right" value="{$data.sort}" id="price" placeholder="请在此输入" />
+			</div>
+
+			<div class="in in2">
+				<span>是否在我的V网展示</span>
+				<span id="is_map" class="mui-switch ">
+					<div class="mui-switch-handle"></div>
+				</span>
+				<input type="hidden" value="" id="is_home">
+			</div>
+			<div class="do" onclick="submi();">
+				<span>点击添加更多详情</span>
+				<span class="mui-icon mui-icon-arrowdown"></span>
+			</div>
+			<!-- <div class="in in2">
+				<a href="javascript:void(0)" onclick="Carousel()">
+					<span>产品轮播图</span>
+					<span class="mui-icon mui-icon-arrowright zzc_jaidntou icon"></span>
+				</a>
+			</div>
+			<div class="in in2">
+				<a href="javascript:void(0)" onclick="detail()">
+					<span>产品详情图</span>
+					<span class="mui-icon mui-icon-arrowright zzc_jaidntou icon"></span>
+				</a>
+			</div>
+
+			<div class="in in2">
+				<a href="javascript:void(0)" onclick="parameter()">
+				<span>产品参数</span>
+				<span class="mui-icon mui-icon-arrowright icon"></span>
+				</a>
+			</div> -->
+
+			<input type="hidden" name="video_link">
+		</form>
+
+		<div class="btnbom">
+			<input type="button" onclick="back();" name="" id="" value="取消" />
+			<input type="button" onclick="present();" name="" id="" value="保存" />
+		</div>
+
+		<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+		<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+		
+		<script>
+			var isPageHide = false;
+			window.addEventListener('pageshow', function() {
+				if(isPageHide) {
+					window.location.reload();
+				}
+			});
+			window.addEventListener('pagehide', function() {
+				isPageHide = true;
+			});
+		</script>
+		<script>
+			$(".add").click(function() {
+				var len = $(".custom>span").length;
+				if(len >= 40) {
+					return false;
+				}
+				$(".custom").append(
+					'<span class="custom_i1">' +
+					'<input type="text" value="" placeholder="请输入参数名" />' +
+					'</span>' +
+					'<span class="acr">' + '-' + '</span>' +
+					'<span class="custom_i2">' +
+					'<input type="text" value="" placeholder="请输入参数值"/>' +
+					'</span>' +
+					'<span class="mui-icon mui-icon-close" onclick="del({$vo['
+					id ']})">' +
+					'</span>'
+				)
+			})
+		</script>
+		<script>
+			function Carousel() {
+				var pid = '{$pid}';
+				window.location.href = '__ROOT__/index.php?s=/Home/Chat/productbanner/pid/' + pid;
+			}
+
+			function detail() {
+				var pid = '{$pid}';
+				window.location.href = '__ROOT__/index.php?s=/Home/Chat/details/pid/' + pid;
+			}
+
+			function parameter() {
+				var pid = '{$pid}';
+				window.location.href = '__ROOT__/index.php?s=/Home/Chat/parameter/pid/' + pid;
+			}
+			$(function() {
+				var pid = '{$pid}';
+				var id = '{$id}';
+				var b = 1;
+				var img_detail = '{$img_detail}';
+				// $("#img").val(img);
+				// $("#img_detail").val(img_detail);
+
+				// function sel(a) {
+				// 	alert(a);
+				// }
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "/index.php?s=/Api/IndexApi/product_type", //url 
+					data: {
+						"id": id,
+						"type_id": 0
+					},
+					async: false,
+					success: function(result) {
+						if(result.ResultType == 0) {
+							htmlstr = '';
+							$.each(result.AppendData, function(idx, item) {
+								htmlstr += '<option value="' + item.id + '">' + item.title + '</option>';
+							})
+							$("#first").append(htmlstr);
+
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+
+				$("#first").change(function() {
+					var type_id = $(this).val(); //你可以传个this进去
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/product_type", //url 
+						data: {
+							"id": id,
+							"type_id": type_id
+						},
+						async: false,
+						success: function(result) {
+							if(result.ResultType == 0) {
+								if(type_id == '') {
+									$("#second").children().remove();
+									$("#second").html('<option value="">请选择</option>');
+
+								} else {
+									htmlstr = '';
+									$.each(result.AppendData, function(idx, item) {
+										htmlstr += '<option value="' + item.id + '">' + item.title + '</option>';
+									})
+
+									$("#second").html(htmlstr);
+								}
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				})
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "/index.php?s=/Api/IndexApi/product_detail", //url 
+					data: {
+						"id": id,
+						"product_id": pid
+					},
+					success: function(result) {
+						if(result.ResultType == 0) {
+
+							$("#is_home").val(result.AppendData.is_home);
+							if(result.AppendData.is_home == 1) {
+								$("#is_home").val(1);
+								$("#is_map").addClass("mui-active");
+
+							}
+							if(result.AppendData.is_home == 0) {
+								$("#is_home").val(0);
+								$("#is_map").addClass("muguanggao_but");
+
+							}
+
+							$("#title").val(result.AppendData.title);
+							if(result.AppendData.cover_img) {
+								$("#cover_img").attr("src", result.AppendData.cover_img);
+							} else {
+								$("#cover_img").attr("src", "__HOME_IMAGES__/h_icon_2_on.png");
+							}
+							$("#address").val(result.AppendData.address);
+							$("#price").val(result.AppendData.price);
+							// $("#is_home").val(result.AppendData.is_home);
+							// alert(result.AppendData.product_parameter);
+							htmlstr = '';
+							$.each(result.AppendData.product_parameter, function(idx, item) {
+								b++;
+
+								// alert(idx);
+								htmlstr += '<div class="cus cus_' + b + '">';
+								htmlstr += '<span class="cus_i1">';
+								htmlstr += '	<input type="text" value="' + item.title + '" id="title" placeholder="请输入参数名" />';
+								htmlstr += '</span>';
+								htmlstr += '<span class="acr">-</span>';
+								htmlstr += '<span class="cus_i2">';
+								htmlstr += '	<input type="text" value="' + item.content + '" id="content" placeholder="请输入参数值"/>';
+								htmlstr += '</span>';
+								htmlstr += '<span class="mui-icon mui-icon-close"  onclick="del(' + b + ')"></span>';
+								htmlstr += '</div>';
+							});
+							$(".custom").html(htmlstr);
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			});
+			
+			//第一次提交
+			function present() {
+				var type = $("#first").find("option:selected").attr("value");
+				var type_id = $("#second").find("option:selected").attr("value");
+
+				if($("#is_map").hasClass("mui-active")) {
+					$("#is_home").val(1);
+				} else {
+					$("#is_home").val(0);
+				}
+				var id = '{$id}';
+				var title = $("#title").val();
+				var cover_img = $("#cover_img").attr("src");
+				var str = new RegExp("http");
+
+				if(str.test(cover_img) == false) {
+					var id = '{$id}';
+					var img = $("#cover_img").attr("src");
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/uploads_img", //url 
+						data: {
+							"id": id,
+							"img": img,
+							"start_name":"product"
+						},
+						async: false,
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$("#cover_img").attr("src", result.AppendData);
+								top.location.href = "/index.php?s=/Home/Chat/product";
+
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+				var cover_img = $("#cover_img").attr("src");
+//				console.log(cover_img);return;
+				var address = $("#address").val();
+				var price = $("#price").val();
+				var is_home = $("#is_home").val();
+				var img = [];
+				$("input[name='im']").each(function(index, domEle) {
+					img.push($(this).val());
+				});
+				// console.log(img);
+				var img_detail = [];
+				$("input[name='imd']").each(function(index, domEle) {
+					img_detail[index] = $(this).val();
+				});
+
+				var pid = '{$pid}';
+				if(!title) {
+					mui.toast("标题内容不能为空");
+					return false;
+				}
+				if(!type && !type_id) {
+					mui.toast("产品分类不能为空");
+					return false;
+				}
+				if(!address) {
+					mui.toast("产地不能为空");
+					return false;
+				}
+				if(!price) {
+					mui.toast("价格不能为空");
+					return false;
+				}
+				var lock=$("#lock").val();
+				if(lock==0){
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/add_edit_product_index",
+						data: {
+							"id": id,
+							"title": title,
+							"cover_img": cover_img,
+							"type": type,
+							"type_id": type_id,
+							"address": address,
+							"price": price,
+							"is_home": is_home
+						},
+						// async: false,
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$("#lock").val(1);
+								$("#form").children(".tt").remove();
+                                mui.toast("修改成功");
+                                top.location.href = "/index.php?s=/Home/Chat/product";
+                            }
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+				if(lock==1){
+					mui.toast("请不要反复提交！");
+				}
+				
+
+			}
+			//第二次提交
+			function submi() {
+				var type = $("#first").find("option:selected").attr("value");
+				var type_id = $("#second").find("option:selected").attr("value");
+
+				if($("#is_map").hasClass("mui-active")) {
+					$("#is_home").val(1);
+				} else {
+					$("#is_home").val(0);
+				}
+				var id = '{$id}';
+				var title = $("#title").val();
+				var cover_img = $("#cover_img").attr("src");
+				var str = new RegExp("http");
+
+				if(str.test(cover_img) == false) {
+					var id = '{$id}';
+					var img = $("#cover_img").attr("src");
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/uploads_img", //url 
+						data: {
+							"id": id,
+							"img": img,
+							"start_name":"product"
+						},
+						async: false,
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$("#cover_img").attr("src", result.AppendData);
+
+							}
+						},
+						error: function() {
+							alert("请完整的填写以上信息！");
+						}
+					});
+				}
+				var cover_img = $("#cover_img").attr("src");
+//				console.log(cover_img);return;
+				var address = $("#address").val();
+				var price = $("#price").val();
+				var is_home = $("#is_home").val();
+				var img = [];
+				$("input[name='im']").each(function(index, domEle) {
+					img.push($(this).val());
+				});
+				// console.log(img);
+				var img_detail = [];
+				$("input[name='imd']").each(function(index, domEle) {
+					img_detail[index] = $(this).val();
+				});
+
+				var pid = '{$pid}';
+				if(!title) {
+					mui.toast("标题内容不能为空");
+					return false;
+				}
+				if(!type && !type_id) {
+					mui.toast("产品分类不能为空");
+					return false;
+				}
+				if(!address) {
+					mui.toast("产地不能为空");
+					return false;
+				}
+				if(!price) {
+					mui.toast("价格不能为空");
+					return false;
+				}
+				var lock=$("#lock").val();
+				if(lock==0){
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/add_edit_product_index",
+						data: {
+							"id": id,
+							"title": title,
+							"cover_img": cover_img,
+							"type": type,
+							"type_id": type_id,
+							"address": address,
+							"price": price,
+							"is_home": is_home
+						},
+						// async: false,
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$("#lock").val(1);
+								$("#form").children(".tt").remove();
+								var htmlstr = '';
+								htmlstr += '<div class="tt">';
+								htmlstr += '<div class="in in2">';
+								htmlstr += '	<a href="__ROOT__/index.php?s=/Home/Chat/productbanner/pid/' + result.AppendData + '">';
+								htmlstr += '		<span>产品轮播图</span>';
+								htmlstr += '		<span class="mui-icon mui-icon-arrowright zzc_jaidntou icon"></span>';
+								htmlstr += '	</a>';
+								htmlstr += '</div>';
+								htmlstr += '<div class="in in2">';
+								htmlstr += '	<a href="__ROOT__/index.php?s=/Home/Chat/details/pid/' + result.AppendData + '">';
+								htmlstr += '		<span>产品详情图</span>';
+								htmlstr += '		<span class="mui-icon mui-icon-arrowright zzc_jaidntou icon"></span>';
+								htmlstr += '	</a>';
+								htmlstr += '</div>';
+
+								htmlstr += '<div class="in in2">';
+								htmlstr += '	<a href="__ROOT__/index.php?s=/Home/Chat/parameter/pid/' + result.AppendData + '">';
+								htmlstr += '	<span>产品参数</span>';
+								htmlstr += '	<span class="mui-icon mui-icon-arrowright icon"></span>';
+								htmlstr += '	</a>';
+								htmlstr += '</div>';
+								htmlstr += '</div>';
+								$("#form").append(htmlstr);
+								// alert("成功");
+								$(".do").hide();//追加完三个层后这个层消失
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+				if(lock==1){
+					mui.toast("请不要反复提交！");
+				}
+				
+
+			}
+
+			function del() {
+				mui.confirm("是否删除？", "", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						$.post("/index.php?s=/Home/Card/delCard", {
+
+							'id': id
+						}, function(res) {
+							if(res.status == 1) {
+								mui.toast("删除成功");
+								setTimeout(function() {
+									top.location.href = "/index.php?s=/Home/Chat/grou";
+								}, 1000);
+							} else {
+								mui.toast("删除失败");
+							}
+						});
+
+					}
+				});
+			}
+		</script>
+		<script>
+			var clipArea = new PhotoClip("#clipArea", {
+				size: [262, 184],
+				outputSize: [640, 640],
+				file: "#file",
+				ok: "#clipBtn",
+				loadStart: function() {
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					$('.gif').hide();
+				},
+				done: function(dataURL) {
+				var imgsize = document.getElementById('file').files[0].size;
+				if(imgsize > 1024*1024*10){
+					mui.toast("请上传小于10M的图片");
+					return false;
+					}else{
+					var img = document.getElementById("cover_img");
+					//图片路径设置为读取的图片
+					img.src = dataURL;
+					$('#cover_input').attr('value', img.src);
+					}
+			
+				}
+			});
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+			})
+
+		</script>
+
+		<script>
+			var checkSubmitFlg = 1;
+			var num = 1;
+
+			function back() {
+				mui.confirm("正在编写状态，是否要返回？", "", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						top.location.href = "/index.php?s=/Home/Chat/product";
+					}
+				});
+			}
+			$('.cover').click(function() {
+				$('.cover_file').click();
+				$(".clip").show();
+			});
+
+			// function submit() {
+			// 	var title = $('input[name=title]').val();
+			// 	var content = $('textarea[name=content]').val();
+			// 	if(title.length <= 0) {
+			// 		mui.toast("请填写标题");
+			// 		return;
+			// 	}
+			// 	if(content.length <= 0) {
+			// 		mui.toast("请填写内容");
+			// 		return;
+			// 	}
+			// 	if(checkSubmitFlg == 1) {
+			// 		$("#form").submit();
+			// 		checkSubmitFlg = 0;
+			// 	} else {
+			// 		mui.toast("请勿重复提交");
+			// 	}
+
+			// }
+
+			function del_img(Obj) {
+				Obj.parentNode.remove();
+			}
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

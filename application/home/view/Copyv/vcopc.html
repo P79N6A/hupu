@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>复制内容</title>
+    <style>
+    	
+    	*{
+    		margin: 0;
+    		padding: 0;
+    	}
+        body,html{
+            padding-bottom: 56px;
+            box-sizing: border-box;
+        }
+        .topr a{
+            font-size: .13rem;
+            color: #fff;
+        }
+        .top {
+            width: 100%;
+            height: 1.2rem;
+            background: url(Public/Home/images/copyv/background_icon@2x.png);
+            position: relative;
+            background-size: 100% 100%;
+        }
+
+        .topt {
+            width: .8rem;
+            height: .8rem;
+            left: .2rem;
+            top: .2rem;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .topt img {
+            width: .8rem;
+            height: .8rem;
+            position: absolute;
+            background-size: 100% 100%;
+            border-radius: 50%;
+        }
+
+        .topc {
+            width: 40%;
+            height: .6rem;
+            left: 1.12rem;
+            top: .3rem;
+            position: absolute;
+        }
+
+        .name {
+            height: .22rem;
+            line-height: .22rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 1);
+            line-height: .22rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .company {
+            height: .17rem;
+            line-height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: .17rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .physic {
+            height: .17rem;
+            line-height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: .17rem;
+        }
+
+        .topr {
+            width: .6rem;
+            height: .17rem;
+            line-height: .17rem;
+            right: .16rem;
+            top: .16rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 1);
+            position: absolute;
+        }
+
+        .toprt {
+            width: .08rem;
+            height: .14rem;
+            right: 0;
+            position: absolute;
+        }
+
+        .toprt img {
+            width: .08rem;
+            height: .14rem;
+            top: .02rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .first {
+            width: 95%;
+            height: .45rem;
+            line-height: .45rem;
+            font-size: 12px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #333;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .secdt {
+            width: .03rem;
+            height: .12rem;
+            left: 0;
+            top: .165rem;
+            background: #32CEA0;
+            position: absolute;
+        }
+
+        .sectwz {
+            left: 3%;
+            font-size: .12rem;
+            position: absolute;
+        }
+
+        .three_lj {
+            width: 100%;
+            height: .64rem;
+            left: 0;
+            position: absolute;
+            overflow: auto;
+        }
+
+        .three_cp {
+            width: 100%;
+            height: .64rem;
+            left: 0;
+            position: absolute;
+            overflow: auto;
+        }
+
+        .three_sp {
+            width: 100%;
+            height: .64rem;
+            left: 0;
+            position: absolute;
+            overflow: auto;
+        }
+
+        .three_tw {
+            width: 100%;
+            height: .64rem;
+            left: 0;
+            position: absolute;
+            overflow: auto;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .csify {
+            width: 95%;
+            height: .64rem;
+            margin: 0 auto;
+        }
+
+        .csify li {
+            width: .84rem;
+            height: .64rem;
+            background: #F6F6F6;
+            float: left;
+            font-size: 12px;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #333;
+            font-weight: 550;
+            line-height: .64rem;
+            text-align: center;
+            margin-right: 0.066rem;
+            cursor: pointer;
+        }
+        .csify li:last-child{
+        	margin-right: 0;
+        	float:left;
+        }
+        
+
+        .four {
+            width: 100%;
+            height: 1.09rem;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none
+        }
+
+        .copy_all {
+            width: .64rem;
+            height: .2rem;
+            line-height: .2rem;
+            color: #fff;
+            text-align: center;
+            outline: none;
+            border: 0;
+            background: #32CEA0;
+            position: absolute;
+            top: 50%;
+            margin-top: -.1rem;
+            right: .16rem;
+            font-size: .12rem;
+        }
+
+        .sava {
+            width: 100%;
+            height: .56rem;
+            background: #fff;
+            padding: .08rem .16rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            z-index: 1;
+            border-top: 1px solid #eee;
+            border-radius:0.08rem;
+        }
+
+        .sava button {
+            width: 100%;
+            height: 100%;
+            background: #32CEA0;
+            color: #fff;
+            text-align: center;
+            border: 0;
+            outline: none;
+            display: block;
+            border-radius:0.04rem;
+        }
+
+        .divtp{
+            width: 100%;
+            height: .32rem;
+            text-align: center;
+            color: #fff;
+            background: #F8C85E;
+            line-height: .32rem;
+            display: none;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+        }
+        .num{
+        	display: block;
+        	float:right;
+        	width: 0.7rem;
+        	height: 100%;
+        }
+        .copy{
+        	display: block;
+        	float:right;
+        	width:70% ;
+        	height: 100%;
+        	font-size: 0.12rem;
+        	color:#333;
+        	text-align: right;
+        }
+        .nums{
+    		width: 30%;
+    		height: 100%;
+    		font-size: 0.12rem;
+    		color:#32CEA0;
+    		float:right;
+    		text-align: right;
+        }
+        .on{
+        	color:#fff !important;	
+        	background: #F8C85E !important;
+        	font-weight: 550 !important;
+        }
+        
+        .ona{
+        	color:#fff !important;	
+        	background: #F8C85E !important;
+        	font-weight: 550 !important;
+        }
+        .onb{
+        	color:#fff !important;	
+        	background: #F8C85E !important;
+        	font-weight: 550 !important;
+        }
+        .onc{
+        	color:#fff !important;	
+        	background: #F8C85E !important;
+        	font-weight: 550 !important;
+        }
+        
+        
+        /*弹出框*/
+       	.delzz {
+		    width: 100%;
+		    height: 100%;
+		    position: fixed;
+		    top: 0;
+		    background: rgba(0,0,0,0.5);
+		    display: none;
+		    z-index: 999;
+		}
+		.deltk {
+		    width: 3.11rem;
+		    height: 1.5rem;
+		    background: #fff;
+		    margin: 0 auto;
+		    margin-top: 60%;
+		    border-radius: .04rem;
+		}
+		.tkzz {
+		    height: 0.52rem;
+		    font-size: 16px;
+		    font-family: PingFangSC-Medium;
+		    font-weight: 550;
+		    color: #333;
+		    display: block;
+		    text-align: center;
+		    line-height: .7rem;
+		}
+		.note {
+		    width: 100%;
+		    height: 0.2rem;
+		    line-height: 0.2rem;
+		    font-size: 0.12rem;
+		    color: #FE5F5F;
+		    text-align: center;
+		}
+		
+		.delsc {
+		    font-size: 16px;
+		    font-family: PingFangSC-Regular;
+		    font-weight: 400;
+		    width: 2rem;
+		    height: .4rem;
+		    text-align: center;
+		    line-height: .4rem;
+		    border: 1px solid #F8C85E;
+		    background: #F8C85E;
+		    color: #fff;
+		    border-radius: .04rem;
+		    margin: 5% auto 0;
+		}
+	.loading{
+        width: 1.2rem;
+        height: .8rem;
+        border-radius: .05rem;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        text-align: center;
+        position: fixed;
+        z-index: 999;
+        top:50%;
+        left: 50%;
+        margin-top: -.4rem;
+        margin-left: -0.6rem;
+        display: none;
+
+    }
+
+    .loading img{
+        width: .3rem;
+        height: .3rem;
+        display: block;
+        margin:  .1rem auto;
+    }
+    .loading p{
+    	font-size:.14rem;
+	}
+    </style>
+</head>
+
+<body>
+    <div class="divtp">复制成功</div>
+    <div class="cont">
+        <div class="top">
+            <!-- <div class="topt"><img src="Public/Home/images/slicesrjl/Group4.png" alt=""></div>
+            <div class="topc">
+                <div class="name">Rain</div>
+                <div class="company">上海互浦教育科技有限公司</div>
+                <div class="physic">销售、房地产、保险</div>
+            </div>
+            <div class="topr">
+                <a href="www.baidu.com">
+                    <span>查看V网</span>
+                    <span class="toprt"><img src="Public/Home/images/copyv/801630496443526898.png" alt=""></span>
+                </a>
+            </div> -->
+        </div>
+        <div class="four">
+            <div class="secd">
+                <div class="first">
+                    <span class="secdt"></span>
+                    <span class="sectwz">链接中心</span>
+                    <span class="num">
+                    	<span class="l_num nums"></span>
+	                    <span class="copy">可复制</span>
+                    </span>
+                </div>
+            </div>
+            <div class="three_lj">
+                <ul class="csify list_link">
+                   <!-- 链接一切 -->
+                   
+                </ul>
+            </div>
+        </div>
+
+        <div class="four">
+            <div class="secd">
+                <div class="first">
+                    <span class="secdt"></span>
+                    <span class="sectwz">产品管理</span>
+                    <span class="num">
+                    	<span class="p_num nums"></span>
+	                    <span class="copy">可复制</span>
+                    </span>
+                </div>
+            </div>
+            <div class="three_cp">
+                <ul class="csify list_poduct">
+                    <!-- 产品管理 -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="four">
+            <div class="secd">
+                <div class="first">
+                    <span class="secdt"></span>
+                    <span class="sectwz">精彩视频</span>
+                    <span class="num">
+                    	<span class="v_num nums"></span>
+	                    <span class="copy">可复制</span>
+                    </span>
+                </div>
+            </div>
+            <div class="three_sp">
+                <ul class="csify list_video">
+                   <!-- 精彩视频 -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="four">
+            <div class="secd">
+                <div class="first">
+                    <span class="secdt"></span>
+                    <span class="sectwz">图文管理</span>
+                    <span class="num">
+                    	<span class="t_num nums"></span>
+	                    <span class="copy">可复制</span>
+                    </span>
+                </div>
+            </div>
+            <div class="three_tw">
+                <ul class="csify list_imagetext">
+                    <!-- 图文管理 -->
+                </ul>
+            </div>
+        </div>
+        <div class="sava">
+            <button>复制</button>
+        </div>
+    </div>
+    <!-- 遮罩层 -->
+	<div class="delzz">
+		<div class="deltk">
+			<span class="tkzz"></span>
+			<div class="note"></div>
+			<ul class="anniu">
+				<li class="delsc" data-id="">重新添加</li>
+			</ul>
+		</div>
+	</div>
+   <div class="loading">
+        <img src="__HOME_IMAGES__/new_load.gif" alt="">
+        <p>加载中...</p>
+    </div>
+    
+</body>
+<script>
+    $(function () {
+        var uid = '{$unionid}';
+        // console.log(uid);
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+        var uid = '{$unionid}';
+        var getid = GetQueryString("unionid"); //被复制人的id
+        var rid = GetQueryString("usid"); //用户unionid
+        console.log(rid);
+        console.log(getid);
+        // console.log(uid);
+        // var banner='1'
+
+        $.ajax({
+            url: '/index.php?s=/Api/AppApi/user_detail',
+            type: 'post',
+            data: {
+                unionid: rid,
+            },
+            beforeSend: function () {
+                $(".loading").show();
+            },
+            success: function (res) {
+//              console.log(res);
+				$(".loading").hide();
+                var list = '';
+                list +='<div class="topt"><img src="' + res.AppendData.headimg + '" alt=""></div>'
+                list += '<div class="topc">'
+                list += '<div class="name">' + res.AppendData.nick_name + '</div>'
+                list += '<div class="company">' + res.AppendData.company + '</div>'
+                list += '<div class="physic">' + res.AppendData.industry_tag + '</div>'
+                list += '</div>'
+                list += '<div class="topr">'
+                list += '<a href="/index.php?s=/Home/Nologin/card_jump/unionid/' + res.AppendData.unionid +'">'
+                list += '<span>查看V网</span>'
+                list +='<span class="toprt"><img src="__HOME_IMAGES__/copyv/801630496443526898.png" alt=""></span>'
+                list += '</a>'
+                list += '</div>'
+                $(".top").html(list);
+            }
+        })
+
+//      var link_type = 0 ;//链接一切
+//      gettype(link_type)
+//
+//      var video_type = 1; //视频分类
+//      gettype(video_type)
+//
+//      var imgtext_type = 2; //图文管理
+//      gettype(imgtext_type)
+
+
+       
+
+        $.ajax({
+            type:'post',
+            url:'/index.php?s=/Api/VcardApi/copy_index',
+            data:{
+            	unionid:uid,
+                user_id:getid,
+            },
+            success:function(res){
+                console.log(res);
+                var data = res.AppendData;
+                var l_num = 4-data.link_count;
+                var p_num = 4-data.product_count;
+                var v_num = 4-data.video_count;
+                var t_num = 4-data.show_count;
+                    var list_link = '';
+                    $.each(data.link,function(k,v){
+                        list_link+= '<li data-id="'+v.mode_id+'">'+v.title+'</li>';
+                    })
+
+                    $('.list_link').html(list_link)
+                	$('.l_num').html('('+l_num+')')
+                	$(document).on("click",".list_link li",function(){
+			        	if($(this).hasClass("on")){
+			        		$(this).removeClass("on");
+			        	}else{
+			        		$(this).addClass("on");
+			        	}
+			        	if(l_num == 4){
+			        		if($(".on").length>4){
+				        		$(this).removeClass("on");
+				        		$(".tkzz").html("链接中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加4个模板")
+				        	}
+			        	}else if(l_num == 3){
+			        		if($(".on").length>3){
+			        			$(this).removeClass("on");
+			        			$(".tkzz").html("链接中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加3个模板")
+			        		}
+			        		
+			        	}else if(l_num ==2){
+			        		if($(".on").length>2){
+				        		$(this).removeClass("on");
+				        		$(".tkzz").html("链接中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加2个模板")
+				        	}
+			        	}else if(l_num ==1){
+			        		if($(".on").length>1){
+				        		$(this).removeClass("on");
+				        		$(".tkzz").html("链接中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加=1个模板")
+				        	}
+			        	}else if(l_num ==0){
+			        		if($(".on").length>0){
+				        		$(this).removeClass("on");
+				        		$(".tkzz").html("链接中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：目前只开放4个栏目，如需增加，请删减")
+				        	}
+			        	}
+        			})
+					
+					var pro_list=''
+               		$.each(data.product,function(k,v){
+                        pro_list+= '<li data-id="'+v.mode_id+'">'+v.title+'</li>';
+                    })
+               		 
+               		$('.list_poduct').html(pro_list)
+               		$('.p_num').html('('+p_num+')')
+               		$(document).on("click",".list_poduct li",function(){
+			        	if($(this).hasClass("ona")){
+			        		$(this).removeClass("ona");
+			        	}else{
+			        		$(this).addClass("ona");
+			        	}
+			        	if(p_num == 4){
+			        		if($(".ona").length>4){
+				        		$(this).removeClass("ona");
+				        		$(".tkzz").html("产品中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加4个模板")
+				        	}
+			        	}else if(p_num == 3){
+			        		if($(".ona").length>3){
+			        			$(this).removeClass("ona");
+			        			$(".tkzz").html("产品中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加3个模板")
+			        		}
+			        		
+			        	}else if(p_num ==2){
+			        		if($(".ona").length>2){
+				        		$(this).removeClass("ona");
+				        		$(".tkzz").html("产品中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加2个模板")
+				        	}
+			        	}else if(p_num ==1){
+			        		if($(".ona").length>1){
+				        		$(this).removeClass("ona");
+				        		$(".tkzz").html("产品中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加1个模板")
+				        	}
+			        	}else if(p_num ==0){
+			        		if($(".ona").length>0){
+				        		$(this).removeClass("ona");
+				        		$(".tkzz").html("产品中心");
+				        		$(".delzz").show();
+				        		$(".note").html("注：目前只开放4个栏目，如需增加，请删减")
+				        	}
+			        	}
+        			})
+               
+                    var list_video = '';
+                    $.each(data.video,function(k,v){
+                        list_video+= '<li data-id="'+v.mode_id+'">'+v.title+'</li>';
+                    })
+
+                    $('.list_video').html(list_video);
+                    $('.v_num').html('('+v_num+')');
+                    $(document).on("click",".list_video li",function(){
+			        	if($(this).hasClass("onb")){
+			        		$(this).removeClass("onb");
+			        	}else{
+			        		$(this).addClass("onb");
+			        	}
+			        	if(v_num == 4){
+			        		if($(".onb").length>4){
+				        		$(this).removeClass("onb");
+				        		$(".tkzz").html("精彩视频");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加4个模板")
+				        	}
+			        	}else if(v_num == 3){
+			        		if($(".onb").length>3){
+			        			$(this).removeClass("onb");
+			        			$(".tkzz").html("精彩视频");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加3个模板")
+			        		}
+			        		
+			        	}else if(v_num ==2){
+			        		if($(".onb").length>2){
+				        		$(this).removeClass("onb");
+				        		$(".tkzz").html("精彩视频");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加2个模板")
+				        	}
+			        	}else if(v_num ==1){
+			        		if($(".onb").length>1){
+				        		$(this).removeClass("onb");
+				        		$(".tkzz").html("精彩视频");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加1个模板")
+				        	}
+			        	}else if(v_num ==0){
+			        		if($(".onb").length>0){
+				        		$(this).removeClass("onb");
+				        		$(".tkzz").html("精彩视频");
+				        		$(".delzz").show();
+				        		$(".note").html("注：目前只开放4个栏目，如需增加，请删减")
+				        	}
+			        	}
+        			})
+               		 
+                    var imgtext = '';
+                    $.each(data.show,function(k,v){
+                        imgtext+= '<li data-id="'+v.mode_id+'">'+v.title+'</li>';
+                    })
+
+                    $('.list_imagetext').html(imgtext)
+                	$('.t_num').html('('+t_num+')');
+                	$(document).on("click",".list_imagetext li",function(){
+			        	if($(this).hasClass("onc")){
+			        		$(this).removeClass("onc");
+			        	}else{
+			        		$(this).addClass("onc");
+			        	}
+			        	if(t_num == 4){
+			        		if($(".onc").length>4){
+				        		$(this).removeClass("onc");
+				        		$(".tkzz").html("图文管理");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加4个模板")
+				        	}
+			        	}else if(t_num == 3){
+			        		if($(".onc").length>3){
+			        			$(this).removeClass("onc");
+			        			$(".tkzz").html("图文管理");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加3个模板")
+			        		}
+			        		
+			        	}else if(t_num ==2){
+			        		if($(".onc").length>2){
+				        		$(this).removeClass("onc");
+				        		$(".tkzz").html("图文管理");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加2个模板")
+				        	}
+			        	}else if(t_num ==1){
+			        		if($(".onc").length>1){
+				        		$(this).removeClass("onc");
+				        		$(".tkzz").html("图文管理");
+				        		$(".delzz").show();
+				        		$(".note").html("注：你最多可以添加1个模板")
+				        	}
+			        	}else if(t_num ==0){
+			        		if($(".onc").length>0){
+				        		$(this).removeClass("onc");
+				        		$(".tkzz").html("图文管理");
+				        		$(".delzz").show();
+				        		$(".note").html("注：目前只开放4个栏目，如需增加，请删减")
+				        	}
+			        	}
+        			})
+            	} 
+
+        	})
+        
+        
+        $(".delsc").on("click",function(){
+        	$(".delzz").hide();
+        })
+        
+        
+        
+        $('.sava button').on('click',function(){
+        	if($(".list_link li").length!=0 && $(".on").length!=0){
+        		var list = "";
+         		$.each($(".on"),function(k,v){
+                	list  += $(this).attr("data-id")+",";
+          		})
+         		
+         		var list =list.substring(0,list.length-1);
+         		console.log(list);
+        		$.ajax({
+	                type:'post',
+	                url:'/index.php?s=/Api/VcardApi/news_copy_card',
+	                data:{
+	                    unionid:uid,
+	                    user_id:getid,
+						type:0,
+						mode_id:list
+	                },
+	                success:function(res){
+	                  console.log(res)
+	                    $('.divtp').slideDown(500).fadeOut(600);
+	                    setTimeout(function(){
+	                        location.href='/index.php?s=/Home/Vhome/card_jump.html'
+	                    },800)
+	                   
+	                }
+            	});
+        	}
+        	
+        	
+        	if($(".list_poduct li").length!=0 && $(".ona").length!=0){
+        		var lista = "";
+         		$.each($(".ona"),function(k,v){
+                	lista  += $(this).attr("data-id")+",";
+          		})
+         		var lista =lista.substring(0,lista.length-1);
+         			console.log(lista);
+        	
+            	$.ajax({
+	                type:'post',
+	                url:'/index.php?s=/Api/VcardApi/news_copy_card',
+	                data:{
+	                    unionid:uid,
+	                    user_id:getid,
+						type:3,
+						mode_id:lista
+	                },
+	                success:function(res){
+	                  console.log(res)
+	                    $('.divtp').slideDown(500).fadeOut(600);
+	                    setTimeout(function(){
+	                        location.href='/index.php?s=/Home/Vhome/card_jump.html'
+	                    },800)
+	                   
+	                }
+            	})
+        	}
+        	
+        	if($(".list_video li").length!=0 && $(".onb").length!=0 ){
+        		var listb = "";
+         		$.each($(".onb"),function(k,v){
+                	listb  += $(this).attr("data-id")+",";
+          		})
+         		var listb =listb.substring(0,listb.length-1);
+         		console.log(listb)
+        		
+            	$.ajax({
+	                type:'post',
+	                url:'/index.php?s=/Api/VcardApi/news_copy_card',
+	                data:{
+	                    unionid:uid,
+	                    user_id:getid,
+						type:1,
+						mode_id:listb
+	                },
+	                success:function(res){
+	                  console.log(res)
+	                    setTimeout(function(){
+	                        location.href='/index.php?s=/Home/Vhome/card_jump.html'
+	                    },800)
+	                   
+	                }
+            	})
+        	}
+        	
+        	if($(".list_imagetext li").length!=0 && $(".onc").length!=0){
+        				var listc = "";
+         		
+         		$.each($(".onc"),function(k,v){
+                	listc  += $(this).attr("data-id")+",";
+          		})
+         		var listc =listc.substring(0,listc.length-1);
+         		console.log(listc)
+            	$.ajax({
+	                type:'post',
+	                url:'/index.php?s=/Api/VcardApi/news_copy_card',
+	                data:{
+	                    unionid:uid,
+	                    user_id:getid,
+						type:2,
+						mode_id:listc
+	                },
+	                success:function(res){
+	                  console.log(res)
+	                    $('.divtp').slideDown(500).fadeOut(600);
+	                    setTimeout(function(){
+	                        location.href='/index.php?s=/Home/Vhome/card_jump.html'
+	                    },800)
+	                   
+	                }
+            	})
+        	}
+        })
+    })
+</script>
+</html>

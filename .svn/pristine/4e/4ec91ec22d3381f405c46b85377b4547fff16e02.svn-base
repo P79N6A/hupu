@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>会员购买</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #F6F6F6;
+			}
+			
+			.top {
+				width: 90%;
+				height: 6.95rem;
+				background: #fff;
+				margin: 1rem auto 0.8rem;
+			}
+			
+			.t_top {
+				width: 90%;
+				height: 2.7rem;
+				line-height: 2.7rem;
+				margin: 0 auto;
+				font-size: 0.8rem;
+				font-weight: 500;
+				color: #333;
+			}
+			
+			.tab {
+				width: 90%;
+				height: 3.45rem;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.t_cen {
+				width: 47.5%;
+				height: 98%;
+				border: 0.05rem solid #C5C5C5;
+				text-align: center;
+			}
+			
+			.t_left:first-child {
+				margin-right: 5%;
+			}
+			
+			.l_top {
+				width: 100%;
+				height: 2rem;
+				line-height: 2.5rem;
+				font-size: 1rem;
+			}
+			
+			.l_fot {
+				width: 100%;
+				height: 1.45rem;
+				font-size: 0.6rem;
+			}
+			
+			.r_top {
+				width: 100%;
+				height: 2rem;
+				line-height: 2.5rem;
+				font-size: 1rem;
+				color: #32CEA0;
+			}
+			
+			.r_fot {
+				width: 100%;
+				height: 1.45rem;
+				font-size: 0.6rem;
+				color: #777;
+			}
+			
+			.fot {
+				width: 90%;
+				height: 11rem;
+				background: #fff;
+				margin: 0 auto 6rem;
+			}
+			
+			.f_top {
+				width: 90%;
+				height: 1.9rem;
+				margin: 0 auto;
+				font-size: 0.8rem;
+				color: #333;
+				line-height: 1.9rem;
+			}
+			
+			.f_cen {
+				width: 90%;
+				height: 2.75rem;
+				line-height: 2.75rem;
+				border-top: 0.025rem solid #F6F6F6;
+				margin: 0 auto;
+				overflow: hidden;
+				font-size: 0.8rem;
+			}
+			
+			.f_l {
+				float: left;
+				width: 1.6rem;
+				height: 100%;
+				margin-right: 5%;
+			}
+			
+			.f_l>img {
+				width: 1.6rem;
+				height: 1.6rem;
+				margin: 0.575rem 0;
+			}
+			
+			.f_c {
+				float: left;
+				width: 60%;
+				height: 100%;
+			}
+			
+			.f_r {
+				float: right;
+				width: 20%;
+				height: 100%;
+				position: relative;
+			}
+			
+			.xz {
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 0.05rem solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				position: absolute;
+				top: 0.925rem;
+				right: 0rem;
+			}
+			
+			.xzs {
+				display: block;
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 2px solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				margin: 0.95rem 0.5rem 0.95rem 0;
+				/*display: none;*/
+			}
+			
+			.xz:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			
+			.xzs:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			
+			.pay {
+				width: 80%;
+				height: 2.4rem;
+				line-height: 2.4rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				letter-spacing: 0.1rem;
+				background: #F8C85E;
+				border-radius: 0.2rem;
+				margin: 0 auto;
+				color: #fff;
+			}
+			
+			.code {
+				width: 90%;
+				height: 5.1rem;
+				background: #fff;
+				margin: 0 auto 11.7rem;
+				display: none;
+			}
+			
+			.c_top {
+				width: 90%;
+				height: 2.5rem;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				color: #333;
+				margin: 0 auto;
+			}
+			
+			.c_fot {
+				width: 90%;
+				height: 2rem;
+				font-size: 0.8rem;
+				color: #333;
+				margin: 0 auto;
+			}
+			
+			.c_fot>input {
+				width: 90%;
+				height: 100%;
+				border: 2px solid rgba(197, 197, 197, 1);
+				outline: none;
+				padding: 0 5%;
+				font-size: 0.75rem;
+			}
+			
+			input::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #C5C5C5;
+				/* placeholder字体大小  */
+				font-size: 0.6rem;
+				opacity: 0.5;
+			}
+			
+			.atv {
+				background: #32CEA0;
+				border: 0.05rem solid #32CEA0;
+			}
+			
+			.act {
+				color: #fff;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			.balance-text {
+				width: 100%;
+				height: 1.35rem;
+				line-height: 1.35rem;
+				text-align: right;
+				font-size: 0.8rem;
+				margin: 0 auto;
+				color: #32CEA0;
+				background: #f6f6f6;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="t_top" data-id="{$vip_id}">
+				<span>用户ID：</span>
+				<span>{$phone}</span>
+			</div>
+			<div class="tab">
+				<volist name="vip" id="r" key="k">
+					<div class="t_cen t_left <if condition='$k==1'>atv</if>" data-id="{$r.id}">
+						<div class="r_top <if condition='$k==1'>act</if>">￥{$r.money}</div>
+						<div class="r_fot <if condition='$k==1'>act</if>">{$r.vip_name}</div>
+					</div>
+				</volist>
+			</div>
+		</div>
+		<div class="fot list">
+			<div class="f_top">支付方式</div>
+			<div class="f_cen">
+				<div class="f_l">
+					<img src="__HOME_IMAGES__/newvnet/mycenter/payment_icon_wechat@2x.png" alt="" />
+				</div>
+				<div class="f_c">微信支付</div>
+				<div class="f_r">
+					<label class="checkBox"><input class="xz" name="box" value="1" type="radio" checked></label>
+				</div>
+			</div>
+			<div class="f_cen">
+				<div class="f_l">
+					<img src="__HOME_IMAGES__/newvnet/mycenter/payment_icon_alipay@2x.png" alt="" />
+				</div>
+				<div class="f_c">支付宝支付</div>
+				<div class="f_r">
+					<label class="checkBox"><input class="xz" name="box" value="4" type="radio"></label>
+				</div>
+			</div>
+			<div class="f_cen">
+				<div class="f_l">
+					<img src="__HOME_IMAGES__/newvnet/mycenter/payment_icon_xiaomi@2x.png" alt="" />
+				</div>
+				<div class="f_c">小秘币支付</div>
+				<div class="f_r">
+					<label class="checkBox"><input class="xz" name="box" value="2" type="radio"></label>
+				</div>
+			</div>
+			<div class="balance-text">小秘币余额:{$user['money']}</div>
+		</div>
+		<div class="code list">
+			<div class="c_top">邀请码</div>
+			<div class="c_fot">
+				<input class="co_num" type="text" placeholder="输入邀请码" />
+			</div>
+		</div>
+		<div class="pay">确定支付</div>
+		<div class="model"></div>
+
+		<script>
+			$(".t_cen").on("click", function() {
+				$(".r_top").removeClass("act");
+				$(".r_fot").removeClass("act");
+				$(this).find(".r_top").addClass("act");
+				$(this).find(".r_fot").addClass("act");
+				$(".t_cen").eq($(this).index()).addClass("atv").siblings().removeClass('atv');
+				$(".list").hide().eq($(this).index()).show();
+				//另一种方法: $("div").eq($(".tab li").index(this)).addClass("on").siblings().removeClass('on'); 
+			});
+			$(".t_left").on("click", function() {
+				$(".pay").html("确定支付");
+				$(".pay").css("letter-spacing", "0.1rem")
+			});
+			$(".t_right").on("click", function() {
+				$(".pay").html("确定");
+				$(".pay").css("letter-spacing", "0.25rem")
+			})
+
+			//支付确定
+			var type = "";
+			$(".pay").on("click", function() {
+				var vip_id = $(".atv").attr("data-id");
+				var pay_code = $(".co_num").val();
+				var pay_type = $("input[name='box']:checked").val();
+				console.log(vip_id)
+				console.log(pay_code)
+				console.log(pay_type)
+				console.log({$user['id']})
+				
+				if(vip_id == 8) {
+					type = 3;
+					if(pay_code==""){
+						$(".model").show();
+						setTimeout(function() {
+							$(".model").hide();
+						}, 1500)
+						$(".model").html("请输入邀请码");
+						return false;
+					}
+				} else {
+					$('input[name="box"]:checked').each(function() {
+						type = $(this).val();
+					});
+				}
+
+				if(type == 4) {
+					top.location.href = "/index.php?s=/Home/Nologin/zf.html&vipid=" + vip_id + "&user_id=" + {$user['id']} + "";
+					return false;
+				}
+				if(type==""){
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请选择一种支付方式");
+					return false;
+				}
+				
+				if(type == 4) {
+					top.location.href = "/index.php?s=/Home/Nologin/zf.html&vipid=" + vip_id + "&user_id=" + {$user['id']} + "";
+					return false;
+				}
+				$.post("/index.php?s=/Home/Mycenter/membersbuy", {
+					"vip_id": vip_id,
+					"user_id": {$user['id']},
+					"pay_type": pay_type,
+					"pay_code": pay_code
+				}, function(res) {
+					console.log(res)
+					if(res.status == 1) {
+						top.location.href = "/Home/Order/orderConfirm?order_id=" + res.order_id;
+						
+					}else if(res.status == 2) {
+						top.location.href = "/Home/Order/orderConfirm2?order_id=" + res.order_id;
+					}else if(res.status == 4) {
+                        top.location.href = "/Home/User/success";
+                        
+                    }else {
+						$(".model").show();
+						setTimeout(function() {
+							$(".model").hide();
+						}, 1500)
+						$(".model").html(res.msg);
+					}
+	
+					
+				});
+						
+			})
+		</script>
+	</body>
+
+</html>

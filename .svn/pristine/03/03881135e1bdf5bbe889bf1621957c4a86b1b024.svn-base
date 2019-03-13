@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="" class="cssclass"/>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+   <script>
+    //摸板更换代码
+    var styles = {$style}
+    
+    if(styles==6){
+    	document.ready = function(){
+	    	$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/moa.css")
+	    	$("body").css({
+	    		'background': '#eee',
+	            
+	    	})
+	    	$(".header").css({
+	    		'background': 'url("__HOME_IMAGES__/green.png") top center no-repeat',
+	            'background-size': '100%',
+	            'background-color': '#fff',
+	    	})
+	    	$(".set_v a .img_box ").css('background', '#32cea0');
+	    	$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/tj_add.png");
+	    	$(".addfriend .erwei_box .item").css("border","2px solid #32cea0");
+	    	$(".tab_l").css("border","2px solid #32cea0");
+	    	$(".tab_l li").css("color","#32cea0");
+	    	$(".fl_cen").css({
+	    		'border-right':'1px solid #32CEA0',
+	    		'border-left':'1px solid #32CEA0'
+	    	})
+	    	$(".one_call .ok").css({
+		    	"background":'#32cea0',
+		    	'color': '#fff',
+		    });
+		    $(".message .er_box").css("border","2px solid #32cea0")
+		    $(".header_user .nick_msg").css("color","#fff")
+	    }
+    }
+ 
+    if(styles==8){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/mob.css")
+    		$(".set_v a p").addClass("all");
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#9F7CFF');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index2.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia2.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(137, 107, 220, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #9F7CFF");
+	        $(".tab_l").css("border","2px solid #9F7CFF");
+    		$(".tab_l li").css("color","#9F7CFF");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #9F7CFF',
+    			'border-left':'1px solid #9F7CFF'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#9F7CFF',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #9F7CFF");
+	    	$(".header_user .nick_msg").css("color","#fff")
+    	}
+    }
+    
+    if(styles==10){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/moc.css")
+    		$(".set_v a p").addClass("all");
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#086DB9');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index3.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia5.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(4, 73, 126, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #086DB9");
+	        $(".tab_l").css("border","2px solid #086DB9");
+    		$(".tab_l li").css("color","#086DB9");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #086DB9',
+    			'border-left':'1px solid #086DB9'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#086DB9',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #086DB9");
+	    	$(".header_user .nick_msg").css("color","#fff")
+    	}
+    }
+    if(styles==12){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/mod.css")
+    		$(".set_v a p").addClass("all");
+    		
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#CD2623');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index1.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia1.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(156, 28, 26, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #CD2623");
+	        $(".tab_l").css("border","2px solid #CD2623");
+    		$(".tab_l li").css("color","#CD2623");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #CD2623',
+    			'border-left':'1px solid #CD2623'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#CD2623',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #CD2623");
+	    	$(".header_user .nick_msg").css("color","#fff")
+    	}
+    }
+    
+    if(styles==14){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/moe.css")
+    		$(".set_v a p").addClass("all");
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#FFADAC');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index4.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia6.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(245, 120, 118, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #FFADAC");
+	        $(".tab_l").css("border","2px solid #FFADAC");
+    		$(".tab_l li").css("color","#FFADAC");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #FFADAC',
+    			'border-left':'1px solid #FFADAC'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#FFADAC',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #FFADAC");
+	    	$(".header_user .nick_msg").css("color","#fff")
+    	}
+    }
+    if(styles==15){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/mof.css")
+    		$(".set_v a p").addClass("all");
+    		
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#A8E4ED');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index5.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia7.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(21, 86, 152, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #A8E4ED");
+	        $(".tab_l").css("border","2px solid #A8E4ED");
+    		$(".tab_l li").css("color","#A8E4ED");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #A8E4ED',
+    			'border-left':'1px solid #A8E4ED'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#A8E4ED',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #A8E4ED");
+	    	$(".header_user .nick_msg").css("color","#333")
+    	}
+    }
+    if(styles==16){
+    	document.ready = function(){
+    		$(".cssclass").attr("href","__HOME_CSS__/vhome/stenil/mog.css")
+    		$(".set_v a p").addClass("all");
+    		
+    		$(".set_v a .img_box ").css('background', '#ffffff');
+    		$(".video_text .line").css('background', '#333');
+    		
+    		$("body").css({
+	    		'background': 'url("__HOME_IMAGES__/stencil/index6.png") top center no-repeat',
+	            'background-size': '100%',
+    		});
+	    	$(".header").css({
+	    		"background":'none',
+	    		'background-size': 'none',
+	    	});
+    		$(".set_v a .img_box img ").attr("src","__HOME_IMAGES__/stencil/jia3.png");
+	        $(".banner_box .swiper-container").css("box-shadow",'0 0.1rem 0.15rem rgba(32, 32, 32, 1)');
+	        $(".addfriend .erwei_box .item").css("border","2px solid #333");
+	        $(".tab_l").css("border","2px solid #333");
+    		$(".tab_l li").css("color","#333");
+    		$(".fl_cen").css({
+    			'border-right':'1px solid #333',
+    			'border-left':'1px solid #333'
+    		})
+    		$(".one_call .ok").css({
+	    		"background":'#333',
+	    		'color': '#fff',
+	    	});
+	    	$(".message .er_box").css("border","2px solid #333");
+	    	$(".header_user .nick_msg").css("color","#fff")
+    	}
+    }
+    </script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/newgreencard.js?v=4.0.03"></script>
+    <script src="__HOME_JS__/whjs/js/Sortable.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>{$title}</title>
+    <style>
+
+        body,
+        html {
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .header {
+            position: relative;
+            width: 100%;
+            padding-bottom: .16rem;
+        }
+
+        .header .icon_box {
+            width: 1.7rem;
+            background: #F8C85E;
+            border-top-left-radius: 0.2rem;
+            border-bottom-left-radius: .2rem;
+            position: absolute;
+            top: .08rem;
+            right: -1.36rem;
+            z-index: 2;
+            display: flex;
+            padding: .04rem 0;
+
+        }
+
+        .header .nav {
+            width: 100%;
+            height: .5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header .icon_box li {
+            flex: 1;
+            text-align: center;
+            box-sizing: border-box;
+
+        }
+
+        .header .icon_box .ss {
+            margin-top: -.015rem;
+        }
+
+
+        .header .icon_box li a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: .18rem;
+        }
+
+        .header .icon_box li a img {
+            display: block;
+            width: .22rem;
+            height: .22rem;
+            margin: 0 auto;
+        }
+
+        .header_user {
+            padding: 0 .16rem;
+            box-sizing: border-box;
+        }
+
+        .header_user .user_msg {
+            width: 100%;
+            height: .8rem;
+        }
+
+        .header_user .user_msg .user_imgbox {
+            width: 20%;
+            padding: 0 0 .1rem 0;
+        }
+
+        .header_user .user_msg .user_imgbox img {
+            width: .6rem;
+            height: .6rem;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .header_user .nick_msg {
+            width: 80%;
+            padding: .01rem 0 .1rem .16rem;
+            color: #fff;
+            box-sizing: border-box;
+            position: relative;
+
+        }
+
+        .header_user .nick_msg p {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .header_user .nick_msg p:nth-child(2) {
+            width: 90%;
+        }
+
+        .nick_msg .right_j {
+            position: absolute;
+            width: .08rem;
+            height: .14rem;
+            right: 0;
+            top: 50%;
+            margin-top: -0.07rem;
+        }
+
+        .banner_box {
+            /* width: 3.43rem;
+            height: 2.4rem; */
+            border-radius: .05rem;
+            margin: 0 auto;
+            margin-top: .06rem;
+
+        }
+
+        .banner_box .swiper-container {
+            width: 3.5rem;
+            height: 3.5rem;
+            box-shadow: 0 .1rem .1rem rgba(119, 119, 119, 0.10);
+            border-radius: .05rem;
+        }
+
+        .banner_box .swiper-container .swiper-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .banner_box .swiper-container .swiper-wrapper .swiper-slide {
+            width: 100%;
+            height: 100%;
+        }
+
+        .banner_box .swiper-container .swiper-wrapper .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: .05rem;
+        }
+		
+		.banner_box .swiper-container .swiper-wrapper .swiper-slide video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: .05rem;
+            object-fit: fill
+        }
+
+        .swiper-pagination {
+            position: static;
+            margin: 0 auto;
+            margin-top: .05rem;
+        }
+
+
+        .link_center {
+            width: 100%;
+            height: 1.45rem;
+            background: #fff;
+            margin-top: .16rem;
+            padding: .08rem .16rem .14rem .16rem;
+            box-sizing: border-box;
+            /* transform: translateX(-.55rem); */
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .link_center .all_link {
+            text-align: right;
+            height: .3rem;
+            line-height: .3rem;
+            position: relative;
+        }
+
+        .link_center .all_link a {
+            color: #c9c9c9;
+            margin-right: .16rem;
+            font-size: .16rem;
+        }
+
+        .link_center .all_link img {
+            width: .08rem;
+            height: .14rem;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -0.07rem;
+        }
+
+        .link_bottom {
+            width: 100%;
+			height: 0.92rem;
+            overflow: hidden;
+        }
+
+        .link_bottom .left_box {
+            width: 8%;
+            border-right: 1px solid #F3F3F3;
+        }
+
+        .link_bottom .right_box {
+            width: 90%;
+            height: 0.92rem;
+            overflow: auto;
+        }
+
+        .link_bottom .left_box div {
+            font-weight: bolder;
+        }
+
+        .right_box .item {
+            margin-bottom: .07rem;
+            height: 0.16rem;
+            line-height: 0.16rem;
+        }
+
+        .right_box .item a {
+            font-size: .12rem;
+            width: 81%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .right_box .item .small_title {
+            margin-left: .12rem;
+            margin-right: .04rem;
+            font-size: .12rem;
+            border-radius: .02rem;
+            padding: 0 .04rem;
+        }
+
+        .sort {
+            width: .4rem;
+            height: .4rem;
+            background: #fff;
+            box-shadow: 0 2px 6px 0;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            right: -0.47rem;
+            margin-top: -.2rem;
+        }
+
+        .sort img {
+            width: .18rem;
+            height: .20rem;
+            display: block;
+            margin: 0 auto;
+            margin-top: .1rem;
+
+        }
+
+        .main {
+            height: 1.01rem;
+            width: 100%;
+            background: #fff;
+            margin-top: .08rem;
+            position: relative;
+            /* transform: translateX(-.55rem); */
+        }
+
+        .main .item {
+            width: 25%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .main .item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main .item a img {
+            display: block;
+            width: .45rem;
+            height: .45rem;
+            margin: 0 auto;
+            padding-top: .16rem;
+            margin-bottom: .08rem;
+        }
+
+        /* 产品中心 */
+        .product_box {
+            width: 94%;
+            height: 2.455rem;
+            margin: 0 auto;
+            margin-top: .08rem;
+            border-radius: .05rem;
+            /* transform: translateX(-.55rem); */
+            position: relative;
+            border-radius: .05rem;
+            overflow: hidden;
+			background: #fff;
+
+
+        }
+
+        .product_box .product_header_title {
+            background: #fff;
+            height: .38rem;
+            line-height: .38rem;
+            padding: .08rem 0.12rem .08rem 0.12rem;
+            border-bottom: 1px solid #eee;
+            
+        }
+
+        .product_box .product_header_title h2 {
+            font-size: .18rem;
+        }
+
+        .product_box .product_header_title .right_box a {
+            display: block;
+            position: relative;
+        }
+
+        .product_box .product_header_title .right_box p {
+            font-size: .16rem;
+            color: #c9c9c9;
+            margin-right: .16rem;
+        }
+
+        .product_box .product_header_title .right_box img {
+            width: .08rem;
+            height: .14rem;
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -.07rem;
+        }
+
+        .bodymain {
+            width: 100%;
+            background: #fff;
+            height: 1.905rem;
+            overflow: auto;
+        }
+
+        .bodymain .list {
+            width: 50%;
+            height: .635rem;
+            border-bottom: 1px solid #f6f6f6;
+            box-sizing: border-box;
+        }
+
+        .bodymain .list:nth-child(odd) {
+            border-right: 1px solid #f6f6f6;
+        }
+
+        .bodymain .list a {
+            /* width: 100%;
+            height: 100%; */
+            display: block;
+            padding: .08rem .08rem .1rem .08rem;
+        }
+
+        .bodymain .list a .shop_imgbox {
+            width: .6rem;
+            height: .4rem;
+
+        }
+
+        .bodymain .list a .shop_imgbox img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: .03rem;
+        }
+
+        .bodymain .list a .ms {
+            width:60%;
+            height: 100%;
+            padding-left: .13rem;
+            box-sizing: border-box;
+        }
+
+        .bodymain .list a .ms h5 {
+            font-size: .16rem;
+            padding-bottom: .03rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bodymain .list a .ms p {
+            font-size: .12rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* 展示一切 */
+        .video_text {
+            width: 94%;
+            margin: 0 auto;
+            margin-top: .12rem;
+            background: #fff;
+            border-radius: .05rem;
+            position: relative;
+            /* transform: translateX(-.55rem); */
+            overflow: hidden;
+
+        }
+
+        .video_text .header_title {
+            padding: .08rem .12rem .08rem .12rem;
+            border-bottom: 1px solid #f6f6f6;
+            position: relative;
+        }
+
+        .video_text .header_title .head {
+            width: 65%;
+            height: .3rem;
+            line-height: .3rem;
+
+        }
+
+        .video_text .header_title .head h4 {
+            font-size: .18rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .video_text .header_title .text {
+            /* width: 1rem; */
+            height: .3rem;
+            line-height: .3rem;
+        }
+
+        .video_text .header_title .text div {
+            font-size: .16rem;
+        }
+
+
+        .video_text .header_title .text .tw {
+            padding-left: .38rem;
+        }
+
+        .video_text .line {
+            width: .12rem;
+            height: .03rem;
+            border-radius: .01rem;
+            background: #23D594;
+            position: absolute;
+            bottom: 0;
+            right: .96rem;
+
+
+        }
+
+        .look {
+            background: #fff;
+            /* padding: .115rem .07rem 0 .07rem; */
+            width: 100%;
+            /*height: 3.45rem;*/
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .look .video_show {
+            display: none;
+        }
+
+        .look .tuwen {
+            display: block;
+        }
+
+
+        .look .imgtext .item .list li:nth-child(2) {
+            width: 80%;
+            height: 100%;
+            position: relative;
+
+        }
+
+        .look .imgtext .item .list li img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .look .imgtext .item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .look .video_box {
+            width: 100%;
+            /* height: 1.8rem; */
+            margin-bottom: .08rem;
+            /* overflow: hidden; */
+        }
+
+        .look .video_box video {
+            /* width: 3.27rem; */
+            width: 100%;
+            height: 1.8rem;
+            object-fit: fill
+        }
+
+
+        .more_look {
+            height: .4rem;
+            line-height: .4rem;
+            width: 100%;
+        }
+
+        .more_look a {
+            display: block;
+            height: 100%;
+            text-align: center;
+            font-size: .14rem;
+            color: #c9c9c9;
+
+        }
+
+        .more_look a .content {
+            position: relative;
+            width: 1rem;
+            height: 100%;
+            margin: 0 auto;
+
+        }
+
+        .more_look a img {
+            width: .08rem;
+            height: .14rem;
+            margin-top: .13rem;
+            margin-left: .08rem;
+        }
+
+        .set_v {
+            margin-top: .2rem;
+            padding-bottom: .11rem;
+        }
+
+        /* 创建V网 */
+        .set_v a {
+            display: block;
+            width: 1.2rem;
+            text-align: center;
+            color: #23D594;
+            margin: 0 auto;
+        }
+
+        .set_v a .img_box {
+            width: .64rem;
+            height: .64rem;
+            margin: 0 auto;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 2px 4px 0 rgba(119, 119, 119, 0.50);
+            margin-bottom: .08rem;
+        }
+
+        .set_v a .img_box img {
+            width: .3rem;
+            height: .3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.15rem;
+            margin-top: -0.15rem;
+        }
+
+        /* 完成排序 */
+        #complete {
+            width: 2.22rem;
+            background: #23D594;
+            border-radius: .3rem;
+            font-size: .16rem;
+            padding: .12rem 0;
+            color: #fff;
+            border: 0;
+            outline: none;
+            position: fixed;
+            /* top: 50%; */
+            bottom: 10%;
+            left: 50%;
+            margin-left: -1.11rem;
+            display: none;
+            z-index: 99;
+        }
+
+        /* 进入v网 */
+        #in_v {
+            border-radius: .04rem;
+            text-align: center;
+            background: #fff;
+            width: 3.11rem;
+            height: 1.5rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.555rem;
+            margin-top: -0.75rem;
+            z-index: 999;
+            display: none;
+        }
+
+        #in_v p {
+            font-size: .18rem;
+            color: #000000;
+            padding-top: .24rem;
+        }
+
+        #in_v .con {
+            width: 86%;
+            margin: 0 auto;
+            margin-top: .4rem;
+        }
+
+        #in_v .con button:nth-child(1) {
+            padding: .09rem .28rem;
+            border-radius: .04rem;
+            outline: none;
+            border: 1px solid #c5c5c5;
+            background: #fff;
+            color: #777777;
+        }
+
+        #in_v .con button:nth-child(2) {
+            padding: .09rem .28rem;
+            border-radius: .04rem;
+            outline: none;
+            border: 1px solid #32CEA0;
+            background: #32CEA0;
+            color: #fff;
+
+        }
+
+
+          #quick_box .quick_tab{
+              width: 100%;
+              height: 100%;
+              position: relative;
+            
+          }
+
+            #quick_box .quick_tab .eye_box{
+                width: .4rem;
+                height: .4rem;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -.2rem;
+                margin-top: -.2rem;
+                background: #8c8c8c;
+                border-radius: 50%;
+                z-index: 999;
+
+            }
+
+            #quick_box .quick_tab .eye_box .eye_box_in{
+                width: .3rem;
+                height: .3rem;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -.15rem;
+                margin-top: -.15rem;
+                background: #b3b3b3;
+                 border-radius: 50%;
+            }
+
+           .eye_box .eye_box_in .eye_box_ins{
+                width: .2rem;
+                height: .2rem;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -.1rem;
+                margin-top: -.1rem;
+                background: #b7b7b7;
+                 border-radius: 50%;
+           }
+
+           .eye_box .eye_box_in .eye_box_ins .zz{
+                width: .22rem;
+                height: .22rem;
+                top: 50%;
+                left: 50%;
+                margin-left: -.11rem;
+                margin-top: -.11rem;
+                background: #9a9a9a;
+                border-radius: 50%;
+                position: absolute;
+
+           }
+
+            .eye_box .eye_box_in .eye_box_ins .zz img{
+                    width: .16rem;
+                    height: .12rem;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -0.06rem;
+                    margin-left: -0.08rem;
+
+            }
+
+            .quick_tab .item {
+                width: .6rem;
+                /* height: .4rem; */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -.3rem;
+                margin-top: -.2rem;
+                display: none;
+               
+            }
+
+             .quick_tab .item a{
+                 display: block;
+                 width: .32rem;
+                 height: .32rem;
+                 background:rgba(0,0,0,0.6);
+                 border-radius: 50%;
+                 position: relative;
+                 margin: 0 auto;
+             }
+
+               .quick_tab .item a img{
+                width: .16rem;
+                height: .16rem;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -.08rem;
+                margin-top: -.08rem;
+               }
+
+                .quick_tab .item p{
+                    font-size: .12rem;
+                    text-align: center;
+                    display: none;
+                }
+
+        #sort_content {
+            overflow-x: hidden;
+        
+        }
+
+        /* 拨打电话 */
+        .one_call {
+            width: 3.11rem;
+            height: 1.5rem;
+            background: #fff;
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.555rem;
+            margin-top: -0.75rem;
+            z-index: 999;
+            text-align: center;
+            padding: 0 .24rem;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .one_call .clearfix {
+            padding-top: .4rem;
+        }
+
+        .one_call p {
+            font-size: .18rem;
+            font-weight: bold;
+            padding-top: .24rem;
+        }
+
+        .one_call .canel,
+        .ok {
+            width: 1.2rem;
+            height: .4rem;
+            border-radius: .02rem;
+            font-size: .16rem;
+            text-align: center;
+            line-height: .4rem;
+        }
+
+        .one_call .canel {
+            color: #777777;
+            border: 1px solid #C5C5C5;
+            box-sizing: border-box;
+        }
+
+        /* 添加好友 */
+        .addfriend {
+            width: 3.11rem;
+            height: 3.05rem;
+            border-radius: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.555rem;
+            margin-top: -1.525rem;
+            z-index: 999;
+            background-color: #fff;
+            text-align: center;
+            display: none;
+        }
+
+        .addfriend p {
+            font-size: .14rem;
+            padding-top: .4rem;
+        }
+
+        .addfriend .erwei_box {
+            position: relative;
+            width: 100%;
+            height: 1.3rem;
+            margin: .14rem 0 .34rem 0;
+
+        }
+
+        .addfriend .erwei_box .item {
+            position: absolute;
+            width: 1.32rem;
+            height: 1.32rem;
+            top: 0;
+            left: 50%;
+            margin-left: -0.66rem;
+            border: 2px solid #32CEA0;
+        }
+
+        .addfriend .erwei_box .item img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tab_l {
+            width: 2.64rem;
+            margin: 0 auto;
+            border-radius: .05rem;
+        }
+
+        .tab_l li {
+            width: .88rem;
+            height: .4rem;
+            font-size: .13rem;
+            line-height: .4rem;
+            box-sizing: border-box;
+        }
+
+        
+
+        .del_box{
+            position: absolute;
+            width: .24rem;
+            height: .24rem;
+            top: .11rem;
+            right: .11rem;
+        }
+
+        .del_box img{
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 保存到通讯录 */
+        .message{
+            width: 3.11rem;
+            height: 3.05rem;
+            background: #fff;
+            border-radius: .05rem;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.555rem;
+            margin-top: -1.525rem;
+            z-index: 999;
+            display: none;
+           
+        }
+
+        .message p{
+            font-size: .14rem;
+            padding-top: .4rem;
+        }
+
+        .message .er_box{
+            width: 1.32rem;
+            height: 1.32rem;
+            margin: .12rem auto .43rem auto;
+        }
+
+        .message .er_box img{
+            width: 100%;
+            height: 100%;
+        }
+
+        .message .del_boxx{
+            position: absolute;
+            width: .24rem;
+            height: .24rem;
+            top: .11rem;
+            right: .11rem;
+        }
+
+          .message .del_boxx img{
+              width: 100%;
+              height: 100%;
+          }
+
+          /* 隐私提示 */
+          .tips{
+              width: 3.11rem;
+              height: 1.5rem;
+              position: fixed;
+              top: 50%;
+              left: 50%;
+              margin-left: -1.555rem;
+              margin-top: -0.75rem;
+              z-index: 999;
+              background: #fff;
+              border-radius: .05rem;
+              text-align: center;
+              display: none;
+          }
+
+          .tips img{
+              display: block;
+              width: .46rem;
+              height: .46rem;
+              margin: .24rem auto .27rem auto;
+          }
+
+         .nav .back{
+             width: .88rem;
+             height: .2rem;
+             line-height: .02rem;
+             text-align: center;
+             display: block;
+             position: absolute;
+             top: .08rem;
+             left: .16rem;
+             color: #fff;
+             
+         }
+
+         .nav .back .back_box{
+             position: relative;
+             width: 100%;
+             height: 100%;
+         }
+
+           .nav .back .back_box img{
+               position: absolute;
+               width: .09rem;
+               height: .16rem;
+               top: 50%;
+               margin-top: -0.08rem;
+               left: 0;
+           }
+
+            .nav .back .back_box span{
+                top: 50%;
+                position: absolute;
+                display: block;
+                font-size: .14rem;
+                left: .15rem;
+                height: .16rem;
+                line-height: .2rem;
+                margin-top: -0.08rem;
+            }
+
+        
+    
+            .sort_tips{
+                text-align: center;
+                color: #777777;
+                margin-top: .05rem;
+                display: none;
+            }
+
+            .mask_sort{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                display: none;
+            }
+
+
+
+        /* .p2{
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: .1rem 0 0 0.05rem;
+                box-sizing: border-box;
+                color: #333;
+
+            } */
+
+            .p1{
+                width: 98%;
+                font-size: .17rem !important;
+                color: #000000 !important;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                padding: .05rem 0 0 0.05rem;
+                box-sizing: border-box;
+            }
+
+
+        .look .imgtext {
+            width: 33.1%;
+            height: 1.1677rem;
+           	margin-bottom: 0.35%;
+            float:left;
+        }
+        
+        .imgtext:nth-child(3n-1) {
+    		margin: 0 0.35% 0.35% 0.35%;
+		}
+
+        .look .imgtext .item {
+            width: 100%;
+        }
+
+        .look .imgtext .item h4 {
+            margin-bottom: .08rem;
+        }
+
+        .look .imgtext .item {
+            padding-top: .115rem;
+        }
+
+        .zz {
+            padding-top: 0px !important;
+            height: 100%;
+        }
+
+        .look .imgtext .item .list {
+            width: 100%;
+            height: 100%;
+        }
+
+        .look .imgtext .item .list a {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+           
+
+        }
+
+        .look .imgtext .item .list li {
+            width: 100%;
+            height: 100%;
+             position: relative;
+
+        }
+
+        .show_list_title{
+            position: absolute;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            bottom: 0;
+            width: 100%;
+            height: 0.2rem;
+            line-height: 0.16rem;
+            padding: .02rem .02rem;
+            box-sizing: border-box;
+            font-size: .12rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            
+        }
+
+
+
+
+            .video_info{
+                width: 100%;
+                height: 1.8rem;
+            }
+            .video_title{
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                padding: .12rem .2rem;
+                box-sizing: border-box;
+                font-size: .16rem;
+            }
+
+            .option_box {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            #quick_box {
+            position: fixed;
+            width: .4rem;
+            height: .4rem;
+            bottom: .72rem;
+            right: .72rem;
+            z-index: 1001;
+            opacity: 0.6;
+
+            }
+            
+            .all{
+            	color:#fff;
+            }
+			.null{
+				width:100%;
+				height: 0.45rem;
+				line-height: 0.45rem;
+				font-size: 0.16rem;
+				color:#333;
+				text-align: center;
+			}
+</style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="nav">
+            <ul class="icon_box clearfix">
+                <li class="fl ss">
+                    <a class="toggle" href="javascript:;">开</a>
+                </li>
+                <li class="fl">
+                    <a href="javascript:;" class="music_btn">
+                        <img src="__HOME_IMAGES__/active.png" alt="">
+                    </a>
+                </li>
+                <li class="fl">
+                    <a href="/index.php?s=/Home/User/addCard/id/{$id}/mycard_type/1.html">
+                        <img src="__HOME_IMAGES__/Group 34@2x.png" alt="">
+                    </a>
+                </li>
+                <!-- 留言 -->
+                <li class="fl">
+                    <a href="/index.php?s=/Home/Chat/addMessage/id/{$id}/mycard_type/1.html">
+                        <img src="__HOME_IMAGES__/icon_liuyan@2x.png" alt="">
+                    </a>
+                </li>
+            </ul>
+            <!--<a class="back" href="javascript:history.back(-1);">-->
+            <!--<div class="back_box">-->
+            <!--<img src="__HOME_IMAGES__/left.png" alt="">-->
+            <!--<span> 返回首页</span>-->
+            <!--</div>-->
+
+            <!--</a>-->
+        </div>
+        <div class="header_user">
+            <div class="user_msg">
+                <div class="user_imgbox fl">
+                    <img src="" alt="">
+                </div>
+                <div class="fl nick_msg">
+                    <!-- <p class="name">杨明鑫</p>
+                    <p class="position">上海互浦科技教育有限公司</p>
+                    <p class="zw">销售、房地产、保险</p> -->
+                </div>
+            </div>
+        </div>
+        <div class="banner_box">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <!-- <div class="swiper-slide">
+                        <img src="__HOME_IMAGES__/img/show1.png" alt="">
+                    </div> -->
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="sort_tips">请长按拖动排序</div>
+
+    <div id="sort_box">
+        <div id="sort_content">
+            <script type="text/html" id="sort_content_sort_sort">
+                {{each sortlist v i}}
+
+                {{if v.template_classname=="link_center"}}
+            <!-- 链接中心 -->
+            <div class="link_center sort_sort">
+                <div class="all_link clearfix">
+                    <img class="fr" src="__HOME_IMAGES__/tojump@2x.png" alt="">
+                    <a class="fr" href="/index.php?s=/Home/Newnetwork/all_link1&unionid={$id}&id={$openid}">全部链接</a>
+                </div>
+                <div class="link_bottom clearfix">
+                    <div class="left_box fl">
+                        <div style="color:#57A9F9">链</div>
+                        <div style="color:#57A9F9">接</div>
+                        <div style="color:#333333">中</div>
+                        <div style="color:#333333">心</div>
+                    </div>
+
+                    <div class="right_box fl link_content">
+                            <!-- 链接一切 -->
+                    </div>
+
+                    <div class="sort">
+                        <img src="__HOME_IMAGES__/sortup.png" alt="">
+                    </div>
+                </div>
+                <div class="mask_sort"></div>
+            </div>
+                {{else if v.template_classname=="main"}}
+            <!-- 导航 -->
+            <div class="main clearfix sort_sort">
+                <div class="fl item">
+                    <a href="javascript:;" id="call">
+                        <img src="__HOME_IMAGES__/icon_bh@2x.png" alt="">
+                        <p>一键拨号</p>
+                    </a>
+                </div>
+                <div class="fl item">
+                    <a href="javascript:;" id="add_friends">
+                        <img src="__HOME_IMAGES__/icon_add@2x.png" alt="">
+                        <p>添加好友</p>
+                    </a>
+                </div>
+                <div class="fl item">
+                    <a href="javascript:;" id="Mail_list">
+                        <img src="__HOME_IMAGES__/icon_tx@2x.png" alt="">
+                        <p>通讯导入</p>
+                    </a>
+                </div>
+                <div class="fl item">
+                    <a href="javascript:;"id="address">
+                        <img src="__HOME_IMAGES__/icon_dz@2x.png" alt="">
+                        <p>地址导航</p>
+                    </a>
+                </div>
+                <div class="sort">
+                    <img src="__HOME_IMAGES__/sortup.png" alt="">
+                </div>
+                <div class="mask_sort"></div>
+            </div>
+                {{else if v.template_classname=="product_box"}}
+            <!-- 产品 -->
+            <div class="product_box sort_sort">
+              
+                <div class="sort">
+                    <img src="__HOME_IMAGES__/sortup.png" alt="">
+                </div>
+                 <div class="mask_sort"></div>
+            </div>
+                {{else if v.template_classname=="video_text"}}
+            <!-- 图文视频 -->
+            <div class="video_text sort_sort">
+                <div class="header_title clearfix">
+                    <div class="fl head">
+                        <h4>图文视频</h4>
+                    </div>
+                     <div class="fr text">
+                        <div class="fl sp item_s" data-check="1" data-unionid="{$id}" data-id="{$openid}">视频</div>
+                        <div class="fl tw item_s active " data-unionid="{$id}" data-id="{$openid}">图文</div>
+                    </div>
+                    <div class="line" style="transform: translate3d(0.71rem, 0px, 0px) translateZ(0px)" ></div>
+                </div>
+                <div class="look">
+                    <div class="video_show cut">
+                            <!-- 我的视频 -->
+                    </div>
+                    <div class="tuwen cut">
+                        
+
+                    </div>
+                </div>
+                <div class="more_look">
+                    <a id="lk" href="/index.php?s=/Home/Newnetwork/all_imgtext1&unionid={$id}">
+                        <div class="content clearfix">
+                            <span class="fl"> 查看更多</span>
+                            <img class="fl" src="__HOME_IMAGES__/tojump@2x.png" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="sort">
+                    <img src="__HOME_IMAGES__/sortup.png" alt="">
+                </div>
+                 <div class="mask_sort"></div>
+            </div>
+                {{/if}}
+                {{/each}}
+            </script>
+        </div>
+    </div>
+    <!-- 我也要创建v网 -->
+    <div class="set_v">
+        <a href="http://wx.yxm360.com/index.php?s=/Home/User/register/share_id/{$openid}">
+            <div class="img_box">
+                <img src="" alt="">
+            </div>
+            <p>我也要创建V网</p>
+        </a>
+    </div>
+
+    <!-- 遮罩 -->
+    <div class="mask"></div>
+    <!-- 完成排序 -->
+    <button id="complete">完成排序</button>
+    <!-- 进入V网 -->
+    <div id="in_v">
+        <p>您还没有编辑V网,您可以</p>
+        <div class="clearfix con">
+            <button class="fl">瞧瞧样式</button>
+            <button class="fr">立刻编辑</button>
+        </div>
+    </div>
+    <!-- 快速入口 -->
+    <div id="quick_box">
+        <div class="quick_tab">
+
+        </div>
+    </div>
+    <!-- 一键拨号 -->
+    <div class="one_call">
+        <p id="give_call">给他拨打电话</p>
+        <div class="clearfix">
+            <div class="fl canel">取消</div>
+            <a class="fr ok" id="call_you" href="javascript:;">确定</a>
+        </div>
+    </div>
+    <!-- 添加好友 -->
+    <div class="addfriend">
+        <div style="position: relative;">
+            <p>长按识别二维码</p>
+            <div class="erwei_box">
+                <div class="item" id="my_v_erwei"><img src="" alt=""></div>
+                <div class="item" style="display:none"><img src="__HOME_IMAGES__/8.jpg" alt=""></div>
+                <div class="item" id="my_erwei" style="display:none"><img src="" alt=""></div>
+            </div>
+            <ul class="clearfix tab_l">
+                <li class="fl actived">V网二维码</li>
+                <li class="fl" style="border-right:1px solid #32CEA0;border-left:1px solid #32CEA0">洋小秘公众号</li>
+                <li class="fl">微信二维码</li>
+            </ul>
+            <div class="del_box">
+                <img src="__HOME_IMAGES__/icon_close@2x.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- 通讯导入 -->
+    <div class="message">
+        <div style="position: relative;">
+            <p>长按识别二维码</p>
+            <div class="er_box" id="import"><img src="" alt=""></div>
+            <div style="font-size:0.18rem;">个人信息保存到手机通讯录</div>
+            <div class="del_boxx">
+                <img src="__HOME_IMAGES__/icon_close@2x.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- 设置隐私的提示 -->
+    <div class="tips">
+        <img src="__HOME_IMAGES__/icon_address1@2x.png" alt="">
+        <p>地图显示未开启</p>
+    </div>
+    <input type="hidden" value="{$id}" id="Getid">
+    <input type="hidden" value="{$user_id}">
+    <audio id="audio" src=""></audio>
+</body>
+
+</html>
+<!-- 产品中心 -->
+<script type="text/html" id="product">
+
+    <div class="render_box">
+    <div class="product_header_title">
+        <h2 class="fl">{{product}}</h2>
+        <div class="fr right_box">
+            <a class="clearfix" href="/index.php?s=/Home/Newnetwork/all_product1&unionid={$id}">
+                <p class="fl">全部产品</p>
+                <img class="fl" src="__HOME_IMAGES__/tojump@2x.png" alt="">
+            </a>
+        </div>
+    </div>
+    <ul class="bodymain clearfix">
+    {{each AppendData v i}}
+        <li class="fl list">
+            <a class="clearfix" href="/index.php?s=/Home/Nologin/propreview/unionid/{$id}/p_id/{{v.id}}">
+                <div class="fl shop_imgbox">
+                    <img src="{{v.cover_img}}" alt="">
+                </div>
+                <div class="fl ms">
+                    <h5>{{v.title}}</h5>
+                    <p>{{v.describe}}</p>
+                </div>
+            </a>
+        </li>
+    {{/each}}
+    </ul>
+</div>
+
+</script>
+<script>
+    $(function () {
+        var share_url = "{$share_url}";
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "index.php?s=/Api/WeShare/getSignPackage", //url
+            data: {
+                share_url: share_url
+            },
+            async: true,
+            // async: false,
+            success: function (result) {
+                var url =
+                    "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}";
+                // console.log(result);
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+
+
+                wx.ready(function () {
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ
+                    wx.onMenuShareQQ({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到腾讯微博
+                    wx.onMenuShareWeibo({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ空间
+                    wx.onMenuShareQZone({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{:'http://'.$share_host.url('Home/Nologin/card_jump?unionid='.$id.'&id='.$openid.'&style=6')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function () {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+
+                        },
+                        cancel: function () {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                });
+
+
+            },
+            error: function () {
+                console.log("走了错误")
+            }
+        });
+
+
+
+
+    });
+</script>

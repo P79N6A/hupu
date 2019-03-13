@@ -1,0 +1,257 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <link href="__HOME_CSS__/mui.indexedlist.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+    <style>
+        html,
+        body {height: 100%;	overflow: hidden;}
+        .mui-bar {	-webkit-box-shadow: none;box-shadow: none;}
+        #done.mui-disabled{color: gray;	}
+        .mui-indexed-list-search{border: none;}
+        .mui-indexed-list-bar{background: none;}
+        .mui-indexed-list-bar a{ font-size:14px;margin-top:8px;}
+        .mui-indexed-list-group{background:#FFFFFF;padding-top:10px;padding-bottom:10px;}
+
+        .mui-fullscreen .mui-segmented-control ~ .mui-slider-group{position: relative!important;top:0px;}
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{color:#2FB3D3!important;}
+        .mui-table-view {margin-top: 20px;opacity:1;background: rgba(255,255,255,0.1);border: none!important;}
+        .mui-table-view li a{color:#F2F2F2!important}
+        .mui-navigate-right{color: #F2F2F2;}
+        .mui-scroll{height: 100%;}
+    </style>
+</block>
+<block name="body">
+    <body>
+    <!-- 侧滑导航根容器 -->
+    <div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+        <!-- 菜单容器 -->
+        <aside class="mui-off-canvas-right">
+            <div class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <!-- 菜单具体展示内容 -->
+                    <div class="zzc_aside_header">筛选</div>
+                    <div class="zzc_aside_title">
+                        V网分组 <a href="">添加分组</a>
+                    </div>
+                    <div class="zzc_aside_body">
+                        <a href="" class="on">全部</a>
+                        <a href="">金融行业</a>
+                        <a href="">贸易经商</a>
+                    </div>
+                    <div class="zzc_aside_title">
+                        V网来源
+                    </div>
+                    <div class="zzc_aside_body">
+                        <a href="" class="on">全部</a>
+                        <a href="">线上收藏</a>
+                        <a href="">拍照收纳</a>
+                    </div>
+                    <div class="zzc_fixed_div">
+                        <input class="zzc_fixed_input1" type="" name="" id="" value="重置" />
+                        <input class="zzc_fixed_input2" type="" name="" id="" value="确定" />
+                    </div>
+                    <!-- 菜单具体展示内容 -->
+                </div>
+            </div>
+        </aside>
+        <!-- 主页面容器 -->
+        <div class="mui-inner-wrap">
+            <!-- 主页面标题 -->
+            <header class="mui-bar mui-bar-nav zzc_header">
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+                <h1 class="mui-title zzc_header_title">管理V网夹</h1>
+                <span class="mui-icon mui-icon-more zzc_right" ></span>
+            </header>
+            <div class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll" style="position:relative">
+                    <!-- 主界面具体展示内容 -->
+                    <!--主内容-->
+                    <div class="mui-content zzc_magrin_bottom">
+                        <div id='list' class="mui-indexed-list ">
+
+
+                            <div  class="mui-indexed-list-search mui-slider-indicator mui-segmented-control mui-segmented-control-inverted zzc_tab" style="padding:20px 0px;">
+                                <a class="mui-control-item zzc_taba" href=""><span class="mui-icon mui-icon-weixin"></span>拍照收纳</a>
+                                <a class="mui-control-item zzc_taba" href="#"><span class="mui-icon mui-icon-weixin"></span>交换V网</a>
+                                <a class="mui-control-item zzc_taba" href="#"><span class="mui-icon mui-icon-weixin"></span>筛选</a>
+                            </div>
+                            <div class="mui-indexed-list-bar">
+                                <a>A</a>
+                                <a>B</a>
+                                <a>C</a>
+                                <a>D</a>
+                                <a>E</a>
+                                <a>F</a>
+                                <a>G</a>
+                                <a>H</a>
+                                <a>I</a>
+                                <a>J</a>
+                                <a>K</a>
+                                <a>L</a>
+                                <a>M</a>
+                                <a>N</a>
+                                <a>O</a>
+                                <a>P</a>
+                                <a>Q</a>
+                                <a>R</a>
+                                <a>S</a>
+                                <a>T</a>
+                                <a>U</a>
+                                <a>V</a>
+                                <a>W</a>
+                                <a>X</a>
+                                <a>Y</a>
+                                <a>Z</a>
+                            </div>
+                            <div class="mui-indexed-list-alert"></div>
+                            <div class="mui-indexed-list-inner">
+                                <div class="mui-indexed-list-empty-alert">没有数据</div>
+                                <ul class="mui-table-view">
+                                    <li data-group="A" class="mui-table-view-divider mui-indexed-list-group">A</li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li data-group="B" class="mui-table-view-divider mui-indexed-list-group">B</li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li data-group="C" class="mui-table-view-divider mui-indexed-list-group">C</li>
+                                    <li class="mui-table-view-cell mui-indexed-list-item mui-checkbox">
+                                        <div class="zzc_qiehuan_li zzc_ze_padding">
+                                            <div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+                                            <div class="zzc_qiehuan_li_body">
+                                                CBD
+                                                <p class=''><span class="mui-icon mui-icon-phone zzc_ico_phone"></span>247987#789</p>
+                                            </div>
+                                            <input type="checkbox" class="zzc_qiehuan_checkbox" />
+                                        </div>
+                                    </li>
+                                    <li data-group="D" class="mui-table-view-divider mui-indexed-list-group">D</li>
+                                    <!--Mingpian-->
+                                    <li data-group="E" class="mui-table-view-divider mui-indexed-list-group">E</li>
+                                    <!--Mingpian-->
+                                    <li data-group="F" class="mui-table-view-divider mui-indexed-list-group">F</li>
+                                    <!--Mingpian-->
+                                    <li data-group="G" class="mui-table-view-divider mui-indexed-list-group">G</li>
+                                    <!--Mingpian-->
+                                    <li data-group="H" class="mui-table-view-divider mui-indexed-list-group">H</li>
+                                    <!--Mingpian-->
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="zzc_myranwen_bottom"style="border-top:1px solid #2FB3D3!important;">
+                        <input type="button" name="预览" id="" value="删除所选" class="zzc_myruanwen_bottom_button" style="background:#FFFFFF!important;" />
+                        <input type="button" name="保存" id="" value="设置分组" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+                    </div>
+
+                    <!--主内容结束-->
+                    <!--主界面具体展示内容-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script src="__HOME_CSS__/bs3/sea.js"></script>
+    <script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+    <script src="__HOME_JS__/mui.indexedlist.js"></script>
+    <!--<script src="js/mui.grouplist.testdata.js"></script>-->
+    <script type="text/javascript" charset="utf-8">
+//        mui('.mui-off-canvas-wrap').offCanvas().show();
+        mui.ready(function() {
+            var header = document.querySelector('header.mui-bar');
+            var list = document.getElementById('list');
+            var done = document.getElementById('done');
+            //calc hieght
+            list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+            //create
+            window.indexedList = new mui.IndexedList(list);
+            //done event
+            done.addEventListener('tap', function() {
+                var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
+                var checkedValues = [];
+                checkboxArray.forEach(function(box) {
+                    if (box.checked) {
+                        checkedValues.push(box.parentNode.innerText);
+                    }
+                });
+                if (checkedValues.length > 0) {
+                    mui.alert('你选择了: ' + checkedValues);
+                } else {
+                    mui.alert('你没选择任何V网');
+                }
+            }, false);
+            mui('.mui-indexed-list-inner').on('change', 'input', function() {
+                var count = list.querySelectorAll('input[type="checkbox"]:checked').length;
+                var value = count ? "完成(" + count + ")" : "完成";
+                done.innerHTML = value;
+                if (count) {
+                    if (done.classList.contains("mui-disabled")) {
+                        done.classList.remove("mui-disabled");
+                    }
+                } else {
+                    if (!done.classList.contains("mui-disabled")) {
+                        done.classList.add("mui-disabled");
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

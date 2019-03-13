@@ -1,0 +1,650 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		-webkit-scrollbar {display:none}
+		.tab:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		.tab {
+			width: 100%;
+			height: 4rem;
+			overflow: auto;
+			white-space: nowrap;
+			font-size: 0;
+		}
+		
+		.tab li {
+			width: auto;
+			height: 2.5rem;
+			line-height: 2.5rem;
+			text-align: center;
+			cursor: pointer;
+			list-style: none;
+			display: inline-block;
+			font-size: 16px;
+			position: relative;
+		}
+		
+		.tab li a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #666;
+			padding: 0 1rem;
+		}
+		
+		.tab li a.active {
+			color: #2FB3D3;
+		}
+		
+		.content {
+			margin-top: 70px;
+		}
+		
+		.content:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		
+		
+		.content li {
+			width: 95%;
+			margin: 0 auto;
+			height: auto;
+			display: none;
+		}
+		
+		.inside {
+			width: 100%;
+			height: 2.5rem;
+			overflow: hidden;
+			background: #fff;
+			box-shadow: 0px 0.05rem 0.2rem 0px rgba(0, 0, 0, 0.08);
+			margin-bottom: 1rem;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 500;
+		}
+		
+		.big {
+			width: 98%;
+			margin: 0 auto;
+			height: auto;
+		}
+		
+		.big>div {
+			width: 49.5%;
+			float: left;
+		}
+		
+		.big>div>a {
+			display: block;
+			width: 100%;
+			height: auto;
+			margin-bottom: 5px;
+		}
+		
+		.big>div>a>img {
+			width: 100%;
+			height: auto;
+			border-radius: 5px;
+		}
+		
+		.gap,
+		.gaps {
+			margin-right: 1%;
+		}
+		
+		.me {
+			width: 98%;
+			margin: 10px auto 10px;
+			padding-bottom: 10px;
+		}
+		
+		.me>div {
+			width: 49.5%;
+			float: left;
+		}
+		
+		.me>div>a>img {
+			width: 100%;
+			height: auto;
+			border-radius: 5px;
+		}
+		
+		.meleft>a {
+			position: relative;
+			display: block;
+			width: 100%;
+			height: auto;
+			margin-top: 10px;
+		}
+		
+		.mui-icon {
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: rgba(255, 255, 255, 0.5);
+			color: red;
+			font-size: 30px;
+		}
+		
+		.mesea {
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			font-size: 20px;
+			font-weight: 600;
+		}
+		
+		.line {
+			width: 20px;
+			height: 1.5px;
+			background: #2FB3D3;
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			margin-left: -7.5px;
+			display: none;
+		}
+		
+		.show {
+			display: block !important;
+		}
+	</style>
+</block>
+
+<block name="body">
+
+	<body class="">
+		<input type="hidden" id="types" value="" />
+		<div class="inside">
+			<ul class="tab" id="list">
+				<!-- <li class="active">最新</li>
+				<li>节日</li>
+				<li>早安</li>
+				<li>晚安</li>
+				<li>欢乐</li>
+				<li>励志</li>
+				<li>洋小秘专属1</li>
+				<li>其他</li>
+				<li>欢乐</li>
+				<li>励志</li>
+				<li>洋小秘专属2</li>
+				<li>其他</li>
+				<li>欢乐</li>
+				<li>励志</li>
+				<li>洋小秘专属3</li>
+				<li>其他</li>
+				<li>欢乐</li>
+				<li>励志</li>
+				<li>洋小秘专属4</li>
+				<li>其他</li> -->
+			</ul>
+		</div>
+		<ul class="content" id="con">
+			<!-- <li style="display: block;">
+				<div class="mesea">我的海报</div>
+				<div class="content me ">
+					<div class="meleft gap">
+						<a href="{:U('Home/Poster/coldfusion')}">
+							<img src="__HOME_IMAGES__/style_5.png" />
+							<span class="mui-icon mui-icon-closeempty"></span>
+						</a>
+					</div>
+					<div class="meleft">
+						<a href="{:U('Home/Poster/coldfusion')}">
+							<img src="__HOME_IMAGES__/style_5.png" />
+							<span class="mui-icon mui-icon-closeempty"></span>
+						</a>
+					</div>
+				</div>
+				<div class="mesea">海报模板</div>
+				<div class="big">
+					<div class="left gap">
+						<a href="{:U('Home/Poster/amend')}">
+							<img src="__HOME_IMAGES__/muwu.jpg" />
+							<img src="__HOME_IMAGES__/style_5.png" />
+						</a>
+						<a href="javascript:;">
+							<img src="__HOME_IMAGES__/style_5.png" />
+							<img src="__HOME_IMAGES__/muwu.jpg" />
+						</a>
+					</div>
+					<div class="left">
+						<a href="javascript:;">
+							<img src="__HOME_IMAGES__/style_5.png" />
+							<img src="__HOME_IMAGES__/style_5.png" />
+						</a>
+						<a href="javascript:;">
+							<img src="__HOME_IMAGES__/muwu.jpg" />
+							<img src="__HOME_IMAGES__/style_5.png" />
+						</a>
+					</div>
+				</div> -->
+			<!-- </li>
+			<li>
+				
+			</li>
+			<li>
+				
+			</li>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li> -->
+		</ul>
+
+		<!-- add layui css/js -->
+		<link rel="stylesheet" type="text/css" href="__LAY_CSS__/layui.css">
+		<script src="__LAY_ROOT__/layui.js"></script>
+
+		<!--选项卡-->
+		<script src="__HOME_CSS__/bs3/sign.js"></script>
+		<script>
+			$(function() {
+
+				// var id = '{$id}';
+				var cids = '{$cids}';
+				console.log(cids);
+				$("#types").val(cids);
+				if(cids > 0) {
+					con(cids);
+					var id = '{$id}';
+
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/poster_type", //url 
+						data: {
+							"id": id
+						},
+						success: function(result) {
+							// console.log(result)
+							if(result.ResultType == 0) {
+								var htmlstr = '';
+								if(result.AppendData) {
+									$.each(result.AppendData, function(i, enty) {
+										if(enty.id == cids) {
+											htmlstr += '<li><a href="javascript:void(0)" class="active" id="myli' + enty.id + '" onclick="con(' +
+												enty.id + ')" id="sdf" name="' + enty.id + '">' + enty.title + '</a><div class="line show"></div></li>';
+											$(".tab li").trigger("click");
+										} else {
+											htmlstr += '<li><a href="javascript:void(0)"  onclick="con(' + enty.id + ')"  name="' + enty.id +
+												'">' + enty.title + '</a><div class="line"></div></li>';
+										}
+
+									})
+								}
+								$('#list').html(htmlstr);
+							}
+
+							$("#list a").on("click", function() {
+								$(".line").removeClass("show");
+								$(this).next().show().parent().siblings().find(".line").hide();
+
+							})
+
+						},
+						error: function() {
+							
+						}
+					});
+					// 	// $("#sdf").click();
+					// 	// // con(cids);
+					// 	// // $("#sdf").click(2);
+					// 	// con(2);
+					// 	// $("#sdf").on("click",function(){ 
+					//  //    con(2); 
+					//  // }) 
+
+					// 	$("#sdf").click(function() {
+					// 	con();
+					// });
+				} else {
+					var id = '{$id}';
+
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/poster_type", //url 
+						data: {
+							"id": id
+						},
+						success: function(result) {
+							// console.log(result)
+							if(result.ResultType == 0) {
+								var htmlstr = '';
+								n = result.AppendData.length;
+								if(result.AppendData) {
+									$.each(result.AppendData, function(i, enty) {
+										if(i == 0) {
+											htmlstr += '<li><a href="javascript:void(0)" class="active" onclick="con(' + enty.id +
+												')" id="sdf" name="' + enty.id + '">' + enty.title + '</a></li>';
+											// $(this).click(); 
+											$("#types").val(enty.id);
+											$(".tab li").trigger("click");
+											// $(".tab li").bind("click");
+											$.ajax({
+												//几个参数需要注意一下
+												type: "POST", //方法类型
+												dataType: "json", //预期服务器返回的数据类型
+												url: "index.php?s=/Api/IndexApi/poster_img", //url 
+												data: {
+													"id": id,
+													"type_id": enty.id
+												},
+
+												success: function(result) {
+													console.log(result)
+													if(result.ResultType == 0) {
+
+														// console.log(result.AppendData.my);
+														// alert(dataObj);
+														var htmlstr = '';
+														htmlstr += '<li style="display: block;">';
+														htmlstr += '	<div class="mesea">我的海报</div>';
+														htmlstr += '	<div class="content me ">';
+														htmlstr += '<div class="meleft gaps" ></div>';
+														htmlstr += '<div id="mele_id" class="meleft" ></div>';
+														htmlstr += '	</div>';
+														$.each(result.AppendData.my, function(idx, item) {
+
+															if(idx % 2 == 0) {
+																$(".gaps").append(
+
+																	//                                                              '<a href="__ROOT__/index.php?s=/Home/Poster/coldfusion/id/'+item.id+'/tid/'+$cids+'">'+
+																	//                                                              '<img src="' + item.img + '" data-tp="'+item.type_id+'" data-content="'+item.content+'" data-title="'+item.title+'" />'+
+																	//                                                              '<span class="mui-icon mui-icon-closeempty" onclick="del('+item.id+');return false;"></span>'+
+																	//                                                              '</a>'
+																);
+
+															} else {
+																$("#mele_id").append(
+																	'<a href="__ROOT__/index.php?s=/Home/Poster/coldfusion/id/' + item.id + '/tid/' + $cids +
+																	'">' +
+																	'<img src="' + item.img + '" data-tp="' + item.type_id + '" data-content="' + item.content +
+																	'" data-title="' + item.title + '" />' +
+																	'<span class="mui-icon mui-icon-closeempty" onclick="del(' + item.id +
+																	');return false;"></span>' +
+																	'</a>'
+																);
+
+															}
+
+														});
+														htmlstr += '<div class="mesea">海报模板</div>';
+														htmlstr += '<div class="big">';
+														htmlstr += '<div class="left gap"></div>';
+														htmlstr += '<div id="left_id" class="left"></div>';
+														htmlstr += '	</div>';
+														htmlstr += '</li>';
+														$('#con').html(htmlstr);
+														$.each(result.AppendData.model, function(idx, item) {
+															if(idx % 2 == 0) {
+																$(".gap").append(
+																	'<a href="__ROOT__/index.php?s=/Home/Poster/newamend/id/' + item.id + '/tid/' + $cids +
+																	'">' +
+																	'<img class="lazyimg" data-sr="' + item.img + '" src="' + item.img + '" />' +
+																	'</a>'
+																);
+
+															} else {
+																$("#left_id").append(
+																	'<a href="__ROOT__/index.php?s=/Home/Poster/newamend/id/' + item.id + '/tid/' + $cids +
+																	'">' +
+																	'<img class="lazyimg" data-sr="' + item.img + '" src="' + item.img + '" />' +
+																	'</a>'
+																);
+
+															}
+														});
+
+													}
+												},
+												error: function() {
+													
+												}
+											});
+										} else {
+											$("#types").val(enty.id);
+											htmlstr += '<li><a href="javascript:void(0)" onclick="con(' + enty.id + ')" name="' + enty.id + '">' +
+												enty.title + '</a></li>';
+										}
+
+									})
+								}
+								$('#list').html(htmlstr);
+							}
+						},
+						error: function() {
+						
+						}
+					});
+				}
+			})
+
+			function con(parm) {
+				var id = '{$id}';
+
+				$(".tab li").on("click", function() {
+					$(this).find('a').addClass("active");
+					$(this).siblings().find('a').removeClass("active");
+					$("#types").val($(this).find('a').attr("name"));
+					//			    $(this).addClass('active').siblings().removeClass('active');
+				});
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/poster_img", //url 
+					data: {
+						"id": id,
+						"type_id": parm
+					},
+					success: function(result) {
+
+						$("body", "html").animate({
+							scrollTop: 0 + 'px'
+						});
+						// console.log(result)                    
+						if(result.ResultType == 0) {
+							var htmlstr = '';
+							htmlstr += '<li style="display: block;">';
+							htmlstr += '	<div class="mesea">我的海报</div>';
+							htmlstr += '	<div class="content me ">';
+							htmlstr += '	<div class="meleft gaps"></div>';
+							htmlstr += '	<div id="mele_id" class="meleft"></div>';
+							htmlstr += '</div>';
+
+							htmlstr += '<div class="mesea">海报模板</div>';
+							htmlstr += '	<div class="big">';
+							htmlstr += '<div class="left gap"></div>';
+							htmlstr += '<div id="left_id" class="left"></div>';
+							htmlstr += '</div>';
+							htmlstr += '</li>';
+							$('#con').html(htmlstr);
+							$.each(result.AppendData.my, function(idx, item) {
+								if(idx % 2 == 0) {
+									$(".gaps").append(
+										'<a href="__ROOT__/index.php?s=/Home/Poster/coldfusion/id/' + item.id + '/tid/' + parm + '">' +
+										'<img class="lazyimg" data-src="' + item.img + '" src="__HOME_IMAGES__/loadimg.gif" data-tp="' + item.type_id +
+										'" data-content="' + item.content + '" data-title="' + item.title + '" />' +
+										'<span class="mui-icon mui-icon-closeempty" onclick="del(' + item.id + ');return false;"></span>' +
+										'</a>'
+									);
+
+								} else {
+									$("#mele_id").append(
+										'<a href="__ROOT__/index.php?s=/Home/Poster/coldfusion/id/' + item.id + '/tid/' + parm + '">' +
+										'<img class="lazyimg" data-src="' + item.img + '" src="__HOME_IMAGES__/loadimg.gif" data-tp="' + item.type_id +
+										'" data-content="' + item.content + '" data-title="' + item.title + '" />' +
+										'<span class="mui-icon mui-icon-closeempty" onclick="del(' + item.id + ');return false;"></span>' +
+										'</a>'
+									);
+
+								}
+							});
+
+							$.each(result.AppendData.model, function(idx, item) {
+								if(idx % 2 == 0) {
+									$(".gap").append(
+										'<a href="__ROOT__/index.php?s=/Home/Poster/newamend/id/' + item.id + '/tid/' + parm + '">' +
+										'<img class="lazyimg" data-src="' + item.img + '" src="__HOME_IMAGES__/loadimg.gif" />' +
+										'</a>'
+									);
+								} else {
+									$("#left_id").append(
+										'<a href="__ROOT__/index.php?s=/Home/Poster/newamend/id/' + item.id + '/tid/' + parm + '">' +
+										'<img class="lazyimg" data-src="' + item.img + '" src="__HOME_IMAGES__/loadimg.gif" />' +
+										'</a>'
+									);
+
+								}
+							});
+
+						}
+
+						lazyRender();
+						// 检查一开始进入页面
+						var clock;
+						$(window).on("scroll", function() {
+							if(clock) { // 如果在300毫秒内进行scroll的话，都会被clearTimeout掉，setTimeout不会执行。
+								//如果有300毫秒外的操作，会得到一个新的timeID即clock，会执行一次setTimeout,然后保存这次setTimeout的ID，
+								//对于300毫秒内的scroll事件，不会生成新的timeID值，所以会一直被clearTimeout掉，不会执行setTimeout.
+								clearTimeout(clock);
+							}
+							clock = setTimeout(function() {
+								console.log('运行了一次');
+								lazyRender();
+							}, 300)
+
+						});
+
+						function checkShow($img) { // 传入一个img的jq对象
+							var scrollTop = $(window).scrollTop(); //即页面向上滚动的距离
+							var windowHeight = $(window).height(); // 浏览器自身的高度
+							var offsetTop = $img.offset().top; //目标标签img相对于document顶部的位置
+							if(offsetTop <= (scrollTop + windowHeight) && offsetTop >= scrollTop) { //在2个临界状态之间的就为出现在视野中的
+								return true;
+							} else {
+								return false;
+							}
+
+						};
+
+						function isLoaded($img) {
+							return $img.attr('data-src') === $img.attr('src'); //如果data-src和src相等那么就是已经加载过了
+						};
+
+						function loadImg($img) {
+							$img.attr('src', $img.attr('data-src')); // 加载就是把自定义属性中存放的真实的src地址赋给src属性
+						};
+
+						function lazyRender() {
+							$('.lazyimg').each(function() {
+								if(checkShow($(this)) && !isLoaded($(this))) {
+									loadImg($(this));
+
+								}
+							})
+						};
+
+					},
+					error: function() {
+						
+					}
+				});
+
+			}
+
+			function del(a) {
+				mui.confirm("确认删除吗？", "提示", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						var id = '{$id}';
+						var my_id = a;
+						var cids = $("#types").val();
+						$.ajax({
+							//几个参数需要注意一下
+							type: "POST", //方法类型
+							dataType: "json", //预期服务器返回的数据类型
+							url: "index.php?s=/Api/IndexApi/poster_del", //url 
+							data: {
+								"id": id,
+								"my_id": my_id
+							},
+							beforeSend: function() {
+								mui.toast("删除中....");
+							},
+							success: function(result) {
+								if(result.ResultType == 0) {
+									// mui.alert("恭喜您删除成功！");
+									// window.location.reload();return false;
+									window.location.href = "{:U('Home/Poster/index/cids/" + cids + "')}&" + (new Date().getTime());
+
+								}
+							},
+							error: function() {
+								
+							}
+						});
+						// 	$.post("{:U('Home/Card/delCard')}", {
+
+						// 		'id': id
+						// 	}, function(res) {
+						// 		if(res.status == 1) {
+						// 			mui.toast("删除成功");
+						// 			setTimeout(function() {
+						// 				top.location.href = "{:U('Home/Chat/grou')}";
+						// 			}, 1000);
+						// 		} else {
+						// 			mui.toast("删除失败");
+						// 		}
+						// 	});
+					}
+
+				});
+
+			};
+		</script>
+
+		<script>
+			$(function() {
+				$('.tab').find('li').click(function() {
+					var index = $(this).index();
+					$(this).addClass('active').siblings().removeClass('active');
+					$('.content').find('li').eq(index).show().siblings().hide();
+				})
+			})
+		</script>
+
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</block>

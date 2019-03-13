@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <block name="title"><title>{$title}</title></block>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="__HOME_CSS__/mui.min.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/zzc_style.css?v=1" rel="stylesheet" />
+    <link href="__HOME_CSS__/hao.css?v={:time()}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/font/mui-icons-extra.ttf">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/icons-extra.css">
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__HOME_JS__/jquery.min.js" type="text/javascript"></script>
+    <!-- css 扩展-->
+    <block name="css_extend"></block>
+</head>
+<!-- body -->
+
+<block name="body"></block>
+
+<!-- js 扩展-->
+<script src="__HOME_JS__/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init()
+</script>
+<block name="js_extend"></block>
+</html>

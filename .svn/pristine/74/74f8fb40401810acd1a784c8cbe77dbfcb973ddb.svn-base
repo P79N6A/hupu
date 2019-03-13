@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的贺卡</title>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/mui/js/mui.min.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.min.css">
+    <style>
+
+          body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #fff;
+             height: 100%;
+        }
+
+        #content{
+            width: 100%;
+       
+        }
+
+        #ulbox{
+            width: 100%;
+            height: 100%;
+        }
+
+        #ulbox li{
+            width: 50%;
+            height: 16rem;
+            padding: 0.5rem 0.5rem;
+            margin-bottom: 3rem;
+        }
+
+         #ulbox li img{
+             width: 100%;
+             height: 100%;
+             vertical-align: top;
+         }
+
+          #ulbox li p{
+              width: 100%;
+              border: 1px solid #dfdfdf;
+              height: 1.5rem;
+              line-height: 1.5rem;
+              text-align: center;
+              box-sizing: border-box;
+              background: #F2F2F2;
+              color: #abadb0;
+          }
+
+          #dxy{
+              width: 100%;
+              margin-top: 0.2rem;
+              height: 1.3rem;
+              line-height: 1.3rem;
+
+          }
+
+          #dxy a{
+              width: 33.333%;
+              display: block;
+              height: 100%;
+              text-align: center;
+              font-size: 0.8rem;
+              color: #fff;
+              
+          }
+
+           #dxy a:nth-child(1){
+                background: #ed5564;
+           }
+
+            #dxy a:nth-child(2){
+                background: #BBBBBB;
+           }
+        
+           #dxy a:nth-child(3){
+                background: #2FB3D3;
+           }
+
+    </style>
+</head>
+<body>
+    <div id="content">
+        <ul id="ulbox" class="clearfix">
+         
+        </ul>
+    </div>
+</body>
+</html>
+<script type="text/html" id="usercard">
+{{each AppendData v i}}
+
+   <li class="fl">
+                <img src="{{v.pic}}" alt="">
+                <p>{{v.title}}</p>
+                <div class="clearfix" id="dxy">
+                    <a id="del" class="fl" data-id="{{v.id}}" href="javascript:;;">删除</a>
+                    <a class="fl" href="index.php?s=/Home/Holidaycard/grats&gid={{v.id}}">修改</a>
+                    <a class="fl" href="index.php?s=/Home/Holidaycard/showview/gid/{{v.id}}/id/{{v.user_id}}">预览</a>
+                </div>
+            </li>
+
+{{/each}}
+
+</script>
+<script>
+    var id = '{$id}';
+    $.ajax({
+        type:"post",
+        url:"index.php?s=/Api/IndexApi/get_gcard",
+        data:{
+            id:id
+        },
+        success:function(res){
+            console.log(res)
+            $("#ulbox").html(template("usercard",res))
+        }
+    });
+
+
+    $("#ulbox").on("click","#del",function(){
+        var carid = $(this).attr("data-id");
+        var that = $(this);
+        mui.confirm("是否要删除该贺卡",["否","是"],function(res){
+            if(res.index == 1){
+                   $.ajax({
+                    url: "index.php?s=/Api/IndexApi/del_gcard",
+                    type: "post",
+                    data: {
+                        id: id,
+                        cardid: carid
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        that.parent().parent().remove();
+                        mui.toast("删除成功");
+                        goback();
+
+                        function goback() {
+                            var lis = $("#ulbox li");
+                            if (lis.length == '0') {
+                                // console.log(lis.length)
+
+                                window.location.href = "{:U('/Home/Greeting/index')}&" + (new Date().getTime());
+
+                            }
+
+                        }
+
+
+
+
+                    }
+                })
+            }
+            
+
+
+
+
+
+        })
+
+        console.log(carid)
+     
+
+    })
+
+
+
+    
+</script>

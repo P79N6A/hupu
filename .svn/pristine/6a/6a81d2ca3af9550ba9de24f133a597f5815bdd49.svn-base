@@ -1,0 +1,857 @@
+<extend name="./base" />
+<block name="css_extend">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<script src="/Public/Home/js/rem.js"></script>
+	<link rel="stylesheet" href="/Public/Home/css/rjl/Addactivity.css?w=123">
+	<style>
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		
+		.cookerl {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			position: absolute;
+			background-size: 100% 100%;
+			z-index: 99;
+			right: 20px;
+			margin-top: 8px;
+		}
+		
+		.cookerl img {
+			width: 20px;
+			height: 20px;
+			background-size: 100% 100%;
+		}
+		/* 截图的 */
+			.btun {
+				width: 548px;
+				height: 10%;
+				margin: 0 auto;
+				font-size: 20px;
+			}
+			
+			#clipBtn {
+				width: 15%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				top:0;
+				left:28%;
+				z-index: 999;
+				border-radius: 2.5px;
+				font-size: 16px;
+				padding:0 0;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width:15%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 2.5px;
+				border: none;
+				padding:0 0;
+				text-align: center;
+				position: relative;
+				top:0;
+				left:10%;
+				z-index: 999;
+				font-size: 16px;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 229;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				width: 2rem;
+				height: 2rem;
+				position: absolute;
+				top: 42.5%;
+    			left: 50%;
+    			transform: translate(-50%, -42.5%);
+			}
+			
+			#clipArea {
+				height: 85%;
+				width: 100%;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			.photo-clip-layer{
+				background: rgba(255,255,255,1)
+			}
+	</style>
+</block>
+<block name="body">
+
+	<body>
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel">取消</button>
+				<button id="clipBtn">截取</button>
+			</div>
+		</div>
+		<!-- 上传中 -->
+		<div class="zhez">
+			<div class="loading">
+				<img src="/Public/Home/images/new_load.gif" alt="">
+				<p>上传中...</p>
+			</div>
+		</div>
+		<div class="contert">
+			<div class="liuss">
+				<img id="fmt" src="" alt="" class="yuc">
+				<div class="haed">
+					<input class="rjtext" style="border-radius:0;" id="text" type="text" placeholder="请输入活动标题" value="" maxlength="15" />
+				</div>
+				<div class="loz">
+					<div class="contentt">
+						<img src="/Public/Home/images/rjl-fm.png" alt="">
+						<span>更换封面</span>
+						<input type="file" id="picture" accept="image/*">
+					</div>
+				</div>
+			</div>
+
+			<div class="add_box">
+				<div class="fl item">
+					<img src="/Public/Home/images/tjtp.png" alt="">
+					<div class="fist text">
+						添加图片
+						<input id="videoForm" class="updata" type="file">
+					</div>
+				</div>
+				<div class="fl item">
+					<img src="/Public/Home/images/tjsp.png" alt="">
+					<div class="secnd text">添加视频</div>
+					<input class="upvideo" type="file" accept="video/*" />
+				</div>
+				<div class="fl item yanf">
+					<img src="/Public/Home/images/tjwz.png" alt="">
+					<div class="thre text">添加文字</div>
+				</div>
+				<div class="fl item yanfb" data-id=''>
+					<img src="/Public/Home/images/tjxx.png" alt="">
+					<div class="four text">添加选项</div>
+				</div>
+			</div>
+
+			<div class="content_box">
+
+			</div>
+
+			<div class="contjl_box" id="btcs"></div>
+			<div class="contjl_boxd"></div>
+
+			<div class="grnm">
+				<a href="javascript:;">预览</a>
+				<!-- /index.php?s=/Home/Activity/Editform.html -->
+			</div>
+			<div class="baocun">
+				<a href="javascript:;">发布</a>
+			</div>
+		</div>
+
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+		<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+		<!-- 上传封面图片 -->
+		<script type="text/javascript">
+			// 限制input输入为15个字
+			$('#text').bind('input propertychange', function() { //添加监听input值的改变事件
+				var tvalmum;
+				//统计input输入字段的长度
+				tvalnum = $(this).val().length;
+				//如果大于15个字直接进行字符串截取
+				if(tvalnum > 16) {
+					var tval = $(this).val();
+					tval = tval.substring(0, 15);
+					$(this).val(tval);
+					mui.alert('标题限制15个字！');
+				}
+			});
+			// console.log(1)
+			var user_id = '{$unionid}';
+			var imgsrc;
+			var downing;
+			
+			var clipArea =  new PhotoClip("#clipArea", {
+				size: [375, 187.5],
+				outputSize: [375, 187.5],
+				file: "#picture",
+				ok: "#clipBtn",
+				loadStart: function() {
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					$('.gif').hide();
+				},
+				done: function(dataURL) {
+                    var imgsrc = dataURL;
+	                $.ajax({
+	                    url: "/index.php?s=/Api/IndexApi/uploads_img",
+	                    type: "post",
+	                    data: {
+	                        unionid: user_id,
+	                        img: imgsrc,
+	                        start_name: "sign",
+	                    },
+	                    beforeSend: function () {
+	                        $(".zhez").show();
+	                    },
+	                    success: function (res) {
+	                        console.log(res)
+	                        downing = res.AppendData;
+	                        $(".liuss .yuc").attr("src", downing);
+	                        $(".zhez").hide();
+	
+	                    },
+	                    error: function () {
+	                        console.log('走了错误')
+	                        $(".zhez").hide();
+	                    }
+	                })
+					
+				}
+            });
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			$("#picture").on("change", function() {
+				$(".clip").show();
+//				var current_pic = this.files[0];
+//				if(window.FileReader) {
+//					var render = new FileReader();
+//					render.readAsDataURL(current_pic);
+//					render.onload = function(res) {
+//						// console.log(res)
+//						imgsrc = res.target.result;
+//						$.ajax({
+//							url: "index.php?s=/Api/IndexApi/uploads_img",
+//							type: "post",
+//							data: {
+//								unionid: user_id,
+//								img: imgsrc,
+//								start_name: "sign",
+//							},
+//							beforeSend: function() {
+//								$(".zhez").show();
+//							},
+//							success: function(res) {
+//								$(".zhez").hide();
+//								// console.log(res)
+//								downing = res.AppendData;
+//								// $(".liuss").css("background-image", "url(" + downing + ")");
+//								$(".liuss .yuc").attr("src", downing);
+//
+//								// 点击任意地方添加图片或者文字
+//							},
+//							error: function() {
+//								$(".zhez").hide();
+//							}
+//						})
+//					}
+//				} else {
+//					alert("暂不支持该设备");
+//				}
+			});
+
+			//预览
+			var Renid;
+			$(".grnm").on("click", function() {
+				// console.log(111)
+
+				// 报名参数添加
+
+				if($("#text").val() == "") {
+					// console.log("执行了")
+					mui.alert("请输入标题");
+					return false;
+				}
+				if($("#fmt").attr("src") == '') {
+					// console.log("执行了")
+					mui.alert("请上传封面图");
+					return false;
+				}
+				if($('.yanfb').attr("data-id") == '') {
+					// console.log("执行了")
+					mui.alert("请添加选项");
+					return false;
+				}
+
+				// 添加标题和文字内容
+				var title = $("#text").val();
+				var cover_img = $("#fmt").attr("src");
+				var content = $(".content_box").html();
+
+				$.ajax({
+					type: 'post',
+					url: "index.php?s=/Api/SignUpApi/add_sign_up",
+					data: {
+						unionid: user_id,
+						title: title,
+						cover_img: cover_img,
+						content: content,
+					},
+					success: function(res) {
+						// console.log(res);
+						Renid = res.AppendData;
+
+						var titlearr = [];
+						$(".boianji").each(function(i, e) {
+							titlearr.push($(e).val());
+						})
+
+						$.ajax({
+							type: 'post',
+							url: "index.php?s=/Api/SignUpApi/sign_up_detail",
+							data: {
+								unionid: user_id,
+								sign_id: Renid,
+								title: titlearr,
+							},
+							success: function(res) {
+								// console.log(res);
+								location.href =
+									'/index.php?s=/Home/Activity/Preform.html&Renid=' +
+									Renid + '';
+							},
+							error: function() {
+								// alert("异常！");
+							}
+						})
+
+					},
+					error: function() {
+						// alert("异常！");
+					}
+				})
+			})
+			// 保存
+			var Renid;
+
+			$(".baocun").on("click", function() {
+				//缺少一个空白 不可点击跳转
+				// if ($("#text").val() == "" || $("#fmt").attr("src") == '' || $('.yanfb').attr("data-id") == '') {
+				//     // console.log("执行了")
+				//     mui.alert("请输入标题上传封面图及添加选项");
+				//     return false;
+				// }
+				if($("#text").val() == "") {
+					// console.log("执行了")
+					mui.alert("请输入标题");
+					return false;
+				}
+				if($("#fmt").attr("src") == '') {
+					// console.log("执行了")
+					mui.alert("请上传封面图");
+					return false;
+				}
+				if($('.yanfb').attr("data-id") == '') {
+					// console.log("执行了")
+					mui.alert("请添加选项");
+					return false;
+				}
+
+				// 添加标题和文字内容
+				var title = $("#text").val();
+				var cover_img = $("#fmt").attr("src");
+				var content = $(".content_box").html();
+
+				$.ajax({
+					type: 'post',
+					url: "index.php?s=/Api/SignUpApi/add_sign_up",
+					data: {
+						unionid: user_id,
+						title: title,
+						cover_img: cover_img,
+						content: content,
+					},
+					success: function(res) {
+						// console.log(res);
+						Renid = res.AppendData;
+						// console.log(Renid)
+
+						// 报名参数添加
+						if($(".boianji").val() == '') {
+							mui.alert("请输入完整信息");
+							return false;
+						}
+						var titlearr = [];
+						$(".boianji").each(function(i, e) {
+							if(!$(e).val() == '') {
+								titlearr.push($(e).val());
+							}
+
+						})
+
+						$.ajax({
+							type: 'post',
+							url: "index.php?s=/Api/SignUpApi/sign_up_detail",
+							data: {
+								unionid: user_id,
+								sign_id: Renid,
+								title: titlearr,
+							},
+							success: function(res) {
+								location.href =
+									'/index.php?s=/Home/Activity/EventsPlaza.html&Renid=' +
+									Renid + '';
+							},
+							error: function() {
+								// alert("异常！");
+							}
+						})
+
+					},
+					error: function() {
+						// alert("异常！");
+					}
+				})
+			})
+		</script>
+
+		<script type="text/javascript">
+			var imgsrc;
+			var downing;
+			var user_id = '{$unionid}';
+			// console.log(user_id)
+			//这里是上传图片添加
+			$(".content_box").on("change", ".updata", function() {
+				var current_pic = this.files[0];
+				var that = $(this);
+				$(".yanf").removeAttr("data-check");
+
+				if(window.FileReader) {
+					var render = new FileReader();
+					render.readAsDataURL(current_pic);
+					render.onload = function(res) {
+						// console.log(res)
+						imgsrc = res.target.result;
+
+						$.ajax({
+							url: "index.php?s=/Api/IndexApi/uploads_img",
+							type: "post",
+							data: {
+								unionid: user_id,
+								img: imgsrc,
+								start_name: "sign",
+							},
+							// kaishi 
+
+							beforeSend: function() {
+								$(".zhez").show();
+							},
+							success: function(res) {
+								$(".zhez").hide();
+								// console.log(res)
+								downing = res.AppendData;
+
+							},
+							error: function() {
+								$(".zhez").hide();
+							}
+
+						})
+					}
+
+				} else {
+					alert("暂不支持该设备");
+				}
+			});
+		</script>
+		<script>
+			var user_id = '{$unionid}';
+			//添加图片
+			$('#videoForm').on("change", function() {
+
+				$(".yanf").removeAttr("data-check");
+				var current_pic = this.files[0];
+
+				if(window.FileReader) {
+					var render = new FileReader();
+					render.readAsDataURL(current_pic);
+					render.onload = function(res) {
+						imgsrc = res.target.result;
+						$.ajax({
+							url: "index.php?s=/Api/IndexApi/uploads_img",
+							type: "post",
+							data: {
+								unionid: user_id,
+								img: imgsrc,
+								start_name: "sign",
+							},
+							// kaishi 
+
+							beforeSend: function() {
+								$(".zhez").show();
+							},
+							success: function(res) {
+								$(".zhez").hide();
+								downing = res.AppendData;
+
+								$('.content_box').append(
+									'<div class="zanku">' +
+									'                <div class="tana">' +
+									'                <div class="cookerl"> <img src="/Public/Home/images/inco_neirong_de.png"> </div>' +
+									'                    <form id="myform" name="myform" action="your_url" method="post" enctype="multipart/form-data">' +
+									'                        <div id="sendBefore">' +
+									'<img src="' + downing + '" alt="" class="ryc">' +
+									'                            <input id="videoForm" class="updata" type="file" >' +
+									'                        </div>' +
+									'                </form></div>' +
+
+									'            </div>'
+								);
+
+								// /Public/Home/images/home_moren.png
+							},
+							error: function() {
+								$(".zhez").hide();
+							}
+						})
+					}
+
+				} else {
+					alert("暂不支持该设备");
+				}
+
+			});
+
+			//添加文字
+			//点击添加文字 弹出编辑框
+			$('.add_box').on("click", ".yanf", function() {
+				if($(this).attr("data-check") == 1) {
+
+				} else {
+					$(".content_box").append(editbtn());
+					// 滑动在可视区
+					$("body,html").animate({
+						scrollTop: "5000px"
+					});
+				}
+				$(this).attr("data-check", "1");
+
+			});
+
+			//添加视频
+
+			$('.upvideo').change(function() {
+
+				var unionid = '{$unionid}';
+				var files = this.files[0];
+				var filesize = this.files[0].size;
+				// console.log(unionid);
+				// console.log(files);
+				if(filesize > 1024 * 1024 * 30) {
+					alert("请上传小于30M的视频")
+				} else {
+					var formdata = new FormData();
+					formdata.append("img", files);
+					formdata.append("start_name", 'article');
+					// formdata.append("id", 64);
+					formdata.append("unionid", unionid);
+
+					$.ajax({
+						type: "post",
+						url: "index.php?s=/Api/IndexApi/upload_video",
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".zhez").show();
+						},
+						success: function(res) {
+							$(".zhez").hide();
+							// console.log(res)
+							$('.content_box').append(
+								'<div class="zanku">' +
+								'<div class="cookerl"> <img src="/Public/Home/images/inco_neirong_de.png"> </div>' +
+								'<video class="tanra" controls="" poster="" src="' + res.AppendData +
+								'" >' +
+								'</video>' +
+
+								'<div class="add_parameter"></div>' +
+								'</div>'
+							);
+						},
+						error: function() {
+							$(".zhez").hide();
+						}
+
+					})
+				}
+
+			});
+
+			// 结束
+
+			// 添加选项
+			$('.add_box').on("click", ".yanfb", function() {
+				$("body,html").animate({
+					scrollTop: "5000px"
+				});
+				// console.log("这是添加参数选项的")
+				if($(this).attr("data-id") == 1) {
+
+				} else {
+
+					var list = "";
+
+					list += '<div class = "add_boox" >';
+					list += '<div class="tierjl"><p>报名表</p></div>'
+					list += '<div class = "add_parter" > </div>';
+					list += '<div class = "zankud">';
+					list +=
+						'<textarea placeholder = "请添加姓名"class = "boianji" rows = "5" maxlength = "100" value="" disabled >姓名';
+					list += '</textarea>';
+
+					list += '<div class = "add_parter" >';
+					list += '<div class ="add_parterl" ></div>';
+					list += '</div >';
+					list += '</div>';
+					// 开始
+					list += '<div class = "zankuud">';
+					list +=
+						'<textarea value="手机号" placeholder = "请添加手机号"class = "boianji" rows = "5" maxlength = "100" disabled>手机号';
+					list += '</textarea>';
+
+					list += '<div class = "add_parter" >';
+					list += '<div class ="add_parterl" ></div>';
+					list += '</div >';
+					list += '</div >';
+
+					// 结束
+
+					list += '</div >';
+					$('.contjl_box').append(list);
+
+					// 备注开始
+					var listt = "";
+					listt += '<div class = "zanud">';
+					listt +=
+						'<textarea value="备注" placeholder = "请填写备注"class = "boianji" rows = "5" maxlength = "100">备注';
+					listt += '</textarea>';
+					// listt += '<div class="cooker"><img src="/Public/Home/images/inco_neirong_de.png"></div >';
+					listt += '<div class="cookerl"><img src="/Public/Home/images/inco_neirong_de.png"></div >';
+
+					listt += '</div >';
+					// 结束
+					$('.contjl_boxd').append(listt);
+				}
+				$(this).attr("data-id", "1");
+				// 点击this上的按钮式 在这个按钮里面加上data-id这个属性
+
+			});
+
+			//点击添加选项
+			$(function() {
+				$('.contjl_box').on("click", ".add_parter", function() {
+					// console.log(111)
+					if($(".zankud").length >= 9) {
+						mui.alert("最多添加10个")
+						return false;
+					} else {
+						$('.contjl_box').append(
+							'<div class = "zankud">' +
+							'<textarea placeholder = "请添加报名参数"class = "boianji" rows = "5" maxlength = "100" value="">' +
+							'</textarea>' +
+							// '<div class="cooker"><img src="/Public/Home/images/inco_neirong_de.png"></div >' +
+							'<div class="cookerl"><img src="/Public/Home/images/inco_neirong_de.png"></div >' +
+							'<div class = "add_parter" >' +
+							'<div class ="add_parterl" ></div>' +
+							'</div >' +
+							'</div>'
+						);
+					}
+				});
+			});
+
+			$(".contjl_box").on("click", ".cookerl", function() {
+				$(this).parent().remove();
+
+			})
+			$(".contjl_boxd").on("click", ".cookerl", function() {
+				$(this).parent().remove();
+			})
+		</script>
+		<script>
+			//编辑组件
+			function editbtn() {
+				var edit = '';
+				edit += '<div class="editor_boxcontent" >';
+				edit += '<div class="edit_text">';
+				edit += '<textarea cols="15" rows="3" class="txtedit" id="textmsg" placeholder="点击添加文字内容"></textarea>';
+				edit += '<div class="btn_group clearfix">';
+				edit += ' <div class="cleartext fl">清空</div>';
+				edit += ' <div class="check fr">';
+				edit += '<div class="Determine fl">确定</div>';
+				edit += ' <div class="cancel fr">关闭</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				return edit;
+			}
+
+			function xiugaieditbtn(txt) {
+				var edit = '';
+				edit += '<div class="editor_boxcontent" >';
+				edit += '<div class="edit_text">';
+				edit += '<textarea cols="15" rows="3" class="txtedit" id="textmsg" placeholder="点击添加文字内容">' + txt +
+					'</textarea>';
+				edit += '<div class="btn_group clearfix">';
+				edit += ' <div class="cleartext fl">清空</div>';
+				edit += ' <div class="check fr">';
+				edit += '<div class="sure fl">确定</div>';
+				edit += ' <div class="cancel fr">关闭</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				edit += '</div>';
+				return edit;
+			}
+
+			// 点击清空按钮
+
+			$('.content_box').on("click", ".cleartext", function() {
+				// console.log(111)
+				$(".txtedit").val(" ");
+			})
+
+			// 点击确定按钮
+			$('.content_box').on("click", ".Determine", function() {
+
+				$(".yanf").removeAttr("data-check");
+				var text = $(this).parents(".edit_text").find(".txtedit").val();
+				var list = "";
+				list += '<div class="zanku" >';
+				list += ' <div class="cookerl"><img src="/Public/Home/images/inco_neirong_de.png"></div>';
+				list += ' <pre class="bjwz">' + text + '</pre>';
+
+				list += ' </div>';
+				$('.content_box').append(list);
+				$(".thre").removeAttr("data-check");
+				$(".editor_boxcontent").remove();
+
+			})
+
+			$('.content_box').on("click", ".cancel", function() {
+				$('.editor_boxcontent').remove();
+				$(".thre").removeAttr("data-check");
+				$(".bjwz").removeAttr("data-check");
+				$(".yanf").removeAttr("data-check");
+
+			})
+			// 点击删除
+			$('.content_box').on("click", ".del", function() {
+				$('.zanku').remove();
+			})
+
+			//点击编辑zanku .thre
+			var that;
+			var text;
+			$(".content_box").on("click", ".bjwz", function() {
+				text = $(this).text();
+				that = $(this);
+				if($(this).attr("data-check") == 1) {
+
+				} else {
+					$(this).parent().after(xiugaieditbtn(text));
+				}
+				$(this).attr("data-check", "1");
+
+			})
+
+			$(".content_box").on("click", ".sure", function() {
+				var edittext = $(this).parents(".edit_text").find(".txtedit").val();
+				that.text(edittext);
+				$(".bjwz").removeAttr("data-check");
+				$(".editor_boxcontent").remove();
+			})
+
+			$(".content_box").on("click", ".cookerl", function() {
+				$(this).parent().remove();
+				$(".yanf").removeAttr("data-check");
+
+			});
+
+			// 按钮部分到顶部时 停止滑动
+			$(window).scroll(function() {
+				var scrollTop = $(this).scrollTop();
+				if(scrollTop >= 250) {
+					$(".add_box").css({
+						position: "fixed",
+						top: "0",
+						left: "0",
+						'margin-top': 0
+					})
+				} else {
+					$(".add_box").css({
+						position: "static",
+						top: "auto",
+						left: "auto",
+						'margin-top': "0.25rem"
+					})
+				}
+			})
+		</script>
+
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+</block>

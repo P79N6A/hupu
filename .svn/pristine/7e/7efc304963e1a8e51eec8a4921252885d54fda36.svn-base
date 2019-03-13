@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title></title>
+    <style>
+            body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #f6f6f7;
+        }
+        
+           #content{
+            overflow: hidden;
+            background: #fff;
+            height: 100%;
+            width: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .userimg{
+            width: .5rem;
+            height: .5rem;
+            border-radius: 50%;
+            position: fixed;
+            bottom: .5rem;
+            left: 50%;
+            margin-left: -.25rem;
+            text-align: center;
+            border: 1px solid #fff;
+            z-index:9;
+        }
+
+        .userimg img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+         .userimg span{
+             color:#fff;
+             font-size: 0.14rem;
+             display: block;
+             width: 100%;
+         }
+
+         .play{
+             width: .5rem;
+             height: .5rem;
+             position: fixed;
+             top: 0.1rem;
+             right: 0.1rem;
+             cursor: pointer;
+         }
+
+         .play img{
+             width: 100%;
+             height: 100%;
+         }
+
+         .usertext{
+             position: absolute;
+             height: 1rem;
+             max-height: 1rem;
+             width:2rem;
+             display: block;
+            /* overflow: hidden; */
+         }
+
+         .font{
+             font-size: 0.8rem;
+             margin-top: 0.2rem;
+             padding-left: 0.8rem;
+         }
+
+         .box_con{
+             width: 100%;
+             height: 100%;
+             position: relative;
+         }
+
+         textarea{
+             width: 100%;
+             height: 100%;
+             resize: none;
+             background: transparent;
+             border: 0;
+             outline: none;
+             font-size: .13rem;
+             letter-spacing:2px;
+             display: block;
+         }
+
+         .small{
+             width: .8rem;
+             height: .8rem;
+             position: absolute;
+         }
+
+         .small img{
+             width: 100%;
+             height: 100%;
+         }
+
+        .tip{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            display: none;
+        }
+        .mask{
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+</body>
+</html>
+<script type="text/html" id="content">
+{{each AppendData v i}}
+    <div id="content" style="background-image:url({{v.pic}})">
+        <div class="box_con">
+        <div class="userimg">
+            <a href="index.php?s=/Home/Nologin/card_jump/id/{{v.user_id}}">
+                <img src="{{v.headimg}}" alt="">
+                <span>我的v网</span>
+            </a>
+        </div>
+        <div class="play">
+            <img src="__HOME_IMAGES__/wh/preview_icon_music@2x.png" alt="">
+        </div>
+        <!-- <div class="usertext">
+            <input class="title" disabled type="text" value="{{v.title}}" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}" >
+            <div class="font" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}"></div>
+            <input class="date" disabled type="text" value="{{v.phone}}" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}">
+        </div> -->
+            <div class="usertext" style="top:{{v.content_y* v.edit_height }}px;left:{{v.content_x * v.edit_width }}px; transform: scale({{v.content_zoom}})rotate({{v.content_angle}}deg);" >
+                  <textarea class="con_text" disabled style="color:{{v.font_color}}; font-size:0.14rem" >{{v.content}}</textarea>
+            </div>
+
+            {{if v.small_img != "" }}
+            <div class="small" style="top:{{v.small_img_y * v.edit_height }}px;left:{{v.small_img_x * v.edit_width }}px;transform: scale({{v.small_img_zoom}})rotate({{v.small_img_angle}}deg)" >
+                <img src="{{v.small_img}}" alt="">
+            </div>
+            {{/if}}
+          
+              <audio id="audio" src="{{v.music_url}}"></audio>
+        </div>
+    </div>
+{{/each}}
+
+<div class="mask">
+    <img class="tip" src="__HOME_IMAGES__/wh/tip.png" alt="">
+</div>
+
+
+</script>
+<script>
+    var bofang;
+
+    var gid = '{$gid}';
+    var id = '{$id}';
+    console.log(id)
+    console.log(gid)
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+
+    var share_tip = GetQueryString('share');
+
+
+
+
+    var edit_width,edit_height;
+    $.ajax({
+         url:"index.php?s=/Api/IndexApi/get_gcard",
+         type:"post",
+         async:false,
+         data:{
+             id:id,
+             cardid: gid
+         },
+         success:function(res){
+             console.log(res)
+             var docwidth = $(document).width();
+             var docheight = $(document).height();
+             edit_width = res.AppendData[0].edit_width;
+             edit_height = res.AppendData[0].edit_height;
+
+            var bili_w = docwidth/edit_width;
+            var bili_h = docheight/edit_height;
+            var new_w = bili_w.toFixed(2);
+            var new_h = bili_h.toFixed(2);
+        
+            console.log(new_w)
+            console.log(new_h)
+
+            res.AppendData[0].edit_width = (new_w - 0)+0.1;
+            res.AppendData[0].edit_height =(new_h - 0)+0.1;
+           
+             $("body").html(template("content",res));
+                if(share_tip == 1){
+                $('.tip').show();
+                $('.mask').show();
+                }
+            $('.tip').on('click',function(){
+                $('.tip').hide();
+                $('.mask').hide();
+            })
+                 $(document).on("click", ".play", function () {
+                 $(this).toggleClass("on");
+                 if ($(this).hasClass("on")) {
+                     $(this).find("img").attr("src", "__HOME_IMAGES__/wh/preview_icon_music_shut@2x.png");
+                     bofang.pause();
+                 } else {
+                     $(this).find("img").attr("src", "__HOME_IMAGES__/wh/preview_icon_music@2x.png");
+                     bofang.play();
+                 }
+             })
+
+
+                //微信自动加载完  audio 自动播放
+             document.addEventListener('DOMContentLoaded', function () {
+                 function audioAutoPlay() {
+                     bofang = document.getElementById('audio');
+                     bofang.play();
+                     document.addEventListener("WeixinJSBridgeReady", function () {
+                         bofang.play();
+                     }, false);
+                 }
+                 audioAutoPlay();
+             });
+
+
+
+            $.each(res.AppendData,function(k,v){
+                var content = v.content;
+                var i = 0;
+                auto();
+                function auto(){
+                    if(i <= content.length){
+                        $('.con_text').html(content.slice(0,i++));
+                        setTimeout(auto,100)
+                    }
+                }
+            })
+            
+         }
+         
+    })
+
+
+
+</script>
+
+<script>
+
+
+    $(function() {
+        var share_url = "{$share_url}";
+//        share_url = encodeURIComponent(share_url);
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "index.php?s=/Api/WeShare/getSignPackage", //url
+            data:{share_url:share_url},
+            async: true,
+
+            // async: false,
+            success: function(result) {
+
+
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+
+                wx.ready(function() {
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{$share_jump}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{$share_jump}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function() {
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ
+                    wx.onMenuShareQQ({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{$share_jump}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到腾讯微博
+                    wx.onMenuShareWeibo({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link:"{$share_jump}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ空间
+                    wx.onMenuShareQZone({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: "{$desc}", // 分享链接
+                        link: "{$share_jump}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+
+                });
+
+            },
+            error: function() {
+                console.log('走了错误')
+            }
+        });
+
+    });
+
+
+
+
+</script>

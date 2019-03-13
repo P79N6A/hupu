@@ -1,0 +1,86 @@
+<?php/** 信息管理 */namespace app\home\controller;use app\common\controller\HomeBase;use app\api\logic\MsgList  as msgLogic;
+class Message extends HomeBase{	private $art_logic = null;	  	function initialize() 	{ 		parent::initialize();        $this->art_logic = new artLogic();    }    
+    /**
+     * 信息中心
+     */
+    public function index()    {
+        $this->title="消息中心";
+        //获取消息列表
+        $where['user_id'] = $this->userInfo['id'];
+        $where['is_read'] = 0;
+        $list=$this->art_logic->getMsgList($where);
+        $result = array(
+            1 => '暂无信息',
+            2 => 0 ,
+            3 => 0,
+            4 => '暂无信息',
+        );
+        foreach($list as $v){
+            if(in_array($v['type'],array(2,3))){
+                $result[$v['type']]++;
+            }else{
+                $result[$v['type']] = $v['msg'];
+            }
+        }
+        $result[1] = Db::table('s_msg_list')->where(array('object_id'=>$this->userInfo['id'],'is_read'=>0))->order('id desc')->getField('msg');
+        $this->assign('result',$result);
+        return $this->fetch();
+    }
+    /**
+     * 信息分类列表
+     */
+    public function categoryList()    {
+        $title = '';
+        $type = Input('get.type');
+        $where = array(
+            'user_id' => $this->userInfo['id'],
+            'type' => $type,
+        );
+        $result=$this->art_logic->getMsgList($where,'add_time desc');
+        switch ($type){
+            case 1:
+                $title = 'V网交换';
+                break;
+            case 2:
+                $title = '我的粉丝';
+                foreach ($result as &$v){
+                    $v['user_name'] = Db::table('s_user_info')->where(array('id'=>$v['object_id']))->getField('nick_name');
+                }
+                break;
+            case 3:
+                $title = '系统用户推荐';
+                break;
+            case 4:
+                $title = '商会信息';
+                break;
+        }        
+        $this->assign('regulate',Input('get.regulate') == "regulate" ? 1 : 0);
+        $this->assign('type',$type);
+        $this->assign('title',$title);
+        $this->assign('result',$result);
+        return $this->fetch();
+    }
+    /**
+     * 信息详情
+     */
+    public function info()    {
+        $this->title="消息中心";
+        return $this->fetch();
+    }
+    /**
+     *  设置信息状态(已读)
+     */
+    public function setStatus()    {
+        $post = Input('post.');
+        $this->art_logic->redMsg(array('id'=>array('in',empty($post['ids']) ? array(-1) : $post['ids'])));
+        header("location:".url("Home/Message/categoryList",array('type'=>$post['type'])));
+    }
+    /**
+     *  删除
+     */
+    public function delete()    {
+        $post = Input('post.');
+        $this->art_logic->delMsg(array('user_id' => $this->userInfo['id'],'id'=>empty($post['ids']) ? array(-1) : array('in',$post['ids'])));
+        header("location:".url("Home/Message/categoryList",array('type'=>$post['type'])));
+    }
+}

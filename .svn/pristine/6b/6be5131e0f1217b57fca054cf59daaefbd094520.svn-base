@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>移动</title>
+    <style>
+      
+        .list{
+            width: 100%;
+            padding: .16rem .44rem .56rem .24rem;
+            box-sizing: border-box;
+        }
+
+        .list li{
+            width: 100%;
+            height: 1.6rem;
+            position: relative;
+             margin-bottom: .12rem;
+        }
+
+        li video{
+            width: 100%;
+            height: 100%;
+        }
+
+        li p{
+            position: absolute;
+            bottom: 0;
+            background:rgba(0,0,0,1);
+            opacity:0.5;
+            color: #fff;
+            width: 100%;
+            text-indent: .12rem;
+            padding: .02rem 0;
+        }
+
+        li .check{
+            width: .12rem;
+            height: .12rem;
+            border-radius: 50%;
+            border: 1px solid #979797;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.06rem;
+            right: -.32rem;
+        }
+
+        .check_in{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 99;
+        }
+
+         .check_in img{
+             width: .2rem;
+             height: .2rem;
+             display: block;
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             margin-top: -.1rem;
+             margin-left: -.1rem;
+         }
+
+        .box_button {
+            width: 100%;
+            height: .56rem;
+            padding: .08rem .16rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            border-top: 1px solid #f6f6f6;
+            z-index: 999;
+            background: #fff;
+        }
+
+        .box_button button {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #32CEA0;
+            outline: none;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .tips{
+            width: 1.8rem;
+            padding: .05rem 0.05rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            position: fixed;
+            bottom: .6rem;
+            left: 50%;
+            margin-left: -0.9rem;
+            z-index: 999;
+            font-size: .14rem;
+            display: none;
+
+        }
+
+       
+    </style>
+</head>
+<body>
+    <ul class="list">
+     <!-- 数据 -->
+    </ul>
+    <div class="box_button">
+        <button>移动</button>
+    </div>
+    <div class="tips">请至少选择一个进行移动</div>
+</body>
+</html>
+<script>
+$(function(){
+
+     var unionid = '{$unionid}';
+    function GetQueryString(name) {
+        if (window.location.href.indexOf('?') > -1) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+            if (r != null) return unescape(r[2]);
+        }
+        return ''; //便于容错处理
+    }
+    var video_typeid = GetQueryString('video_type');
+
+
+    
+    $.ajax({
+        url:'/index.php?s=/Api/AppApi/video_list',
+        type:'post',
+        data:{
+            unionid:unionid,
+            start:0,
+            length:5,
+            type_id:video_typeid,
+
+        },
+        success:function(res){
+            console.log(res)
+            if(res.ResultType == 0){
+                var data = res.AppendData;
+                var rednder = '';
+                $.each(data,function(k,v){
+                    rednder+= '<li>'
+                    rednder+= '<video src="'+v.video+'" poster="'+v.video_cover+'"></video>'
+                    rednder+= '<p>'+v.title+'</p>'
+                    rednder+= '<div class="check">'
+                    rednder+='<div class="check_in" data-move="'+v.id+'" >'
+                    // rednder+='<img src="__HOME_IMAGES__/wh/Select_icon@2x.png" alt="">'
+                    rednder+= '</div>'
+                    rednder+= '</div>'
+                    rednder+= '</li>'
+                })
+
+                $('.list').html(rednder)
+            }
+        }
+    })
+
+          $('.list').on('click', '.check_in', function () {
+            $(this).toggleClass('switch');
+            if ($(this).hasClass('switch')) {
+                $(this).html('<img src="__HOME_IMAGES__/wh/Select_icon@2x.png" alt="">')
+            } else {
+                $(this).html('')
+            }
+
+
+        })
+
+
+   
+        $('.box_button button').on('click', function () {
+            var movearr = [];
+            $('.check .check_in').each(function (i, e) {
+                if($(e).hasClass('switch')){
+                    movearr.push($(e).attr('data-move'));
+                }
+            })
+            if(movearr.length == 0){
+                 $('.tips').stop(true).fadeIn(500).fadeOut(2000);
+                 return false;
+             }
+            var strarr = movearr.join(',');
+            console.log(strarr)
+
+            location.href = '/index.php?s=/Home/Newnetwork/move&str='+strarr+''
+           
+        })
+
+
+
+
+
+})
+</script>

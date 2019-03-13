@@ -1,0 +1,82 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+</block>
+
+<block name="body">
+
+	<body class="zzc_body_bg">
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">绑定账户</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content zzc_mui_content_bg">
+			<div class="zzc_bangding_zhanghu">
+				请选择要切换的账户，如需设置默认账户<br/> 请先切换到该账户
+			</div>
+			<div class="zzc_qiehuan_div">
+				<foreach name="list" item="vo" key="k">
+					<div class="zzc_qiehuan_li zzc_border_bottom">
+						<div class="zzc_qiehuan_li_img"><img class="" src="{$vo.user_info.headimg}"></div>
+						<div class="zzc_qiehuan_li_body">
+							{$vo.user_info.nick_name}
+							<p class=''>{$vo.user_info.mobile}</p>
+							<if condition="$k eq 0">
+								<a class="zzc_qiehuan_but">当前用户</a>
+								<else />
+								<a href="{:url('Home/User/changeAccount',array('id'=>$vo['user_id']))}" class="zzc_qiehuan_but">切换用户</a>
+								<a href="{:url('Home/User/delAccount',array('id'=>$vo['user_id']))}" class="zzc_qiehuan_but" style="margin-top: 30px;">删除用户</a>
+							</if>
+						</div>
+					</div>
+				</foreach>
+				<div class="zzc_qiehuan_add">
+					<a href="{:url('Home/User/bindAccount')}">+ <span style="color: #666;">添加账户</span></a>
+				</div>
+			</div>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript">
+		function zzc_dialog_title() {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '切换成功?',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+								this.close();
+							}
+						}
+					]
+				});
+				show();
+			});
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

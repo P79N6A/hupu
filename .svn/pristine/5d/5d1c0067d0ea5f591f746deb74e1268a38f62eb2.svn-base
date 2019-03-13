@@ -1,0 +1,2923 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>V网首页</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<script src="/Public/Home/js/whjs/js/template-web.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.banner_cen a {
+				color: #fff;
+			}
+			
+			.top {
+				width: 90%;
+				height: 1.6rem;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.top_left {
+				width: 12.5%;
+				height: 100%;
+			}
+			
+			.top_left>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.top_cen {
+				width: 12.5%;
+				height: 100%;
+			}
+			
+			.top_right {
+				width: 20%;
+				height: 100%;
+			}
+			
+			.top_right>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.top_right>a>img {
+				width: 0.8rem;
+				height: 0.55rem;
+				margin: 0.8rem auto 0;
+			}
+			
+			.top_cen>img {
+				width: 0.8rem;
+				height: 0.55rem;
+				margin: 0.8rem auto 0;
+			}
+			
+			.top_left>a>img {
+				width: 0.8rem;
+				height: 0.75rem;
+				margin: 0.625rem auto 0;
+			}
+			/*滑动特效*/
+			
+			.banner {
+				width: 100%;
+				height: 25.3rem;
+				margin: 0 auto;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.banner_cen {
+				width: 90%;
+				height: 24.45rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 5%;
+				bottom: 0;
+				transition: all 0.5s;
+				border-radius: 0.2rem;
+			}
+			
+			.title {
+				width: 100.2%;
+				height: 2.8rem;
+				line-height: 2.8rem;
+				font-size: 1rem;
+				color: #fff;
+				display: flex;
+			}
+			
+			.tit_left {
+				width: 50%;
+				height: 100%;
+			}
+			
+			.tit_right {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				font-size: 0.6rem;
+				overflow: hidden;
+			}
+			
+			.tit_right>a {
+				width: 50%;
+				height: 100%;
+				display: block;
+				text-align: right;
+				float: right;
+			}
+			
+			.vimg {
+				width: 100%;
+				height: 21.05rem;
+				border-radius: 0.2rem;
+				overflow: auto;
+				/*-webkit-overflow-scrolling: touch;*/
+				padding-top: 0.6rem;
+			}
+			
+			.cena {
+				z-index: 998;
+			}
+			
+			.cenb {
+				z-index: 997;
+			}
+			
+			.cenc {
+				z-index: 996;
+			}
+			
+			.cend {
+				z-index: 995;
+			}
+			
+			.cene {
+				z-index: 999;
+				transform: translate(-200%, 200%) rotateZ(-30deg);
+			}
+			
+			.show {
+				width: 100%;
+				height: 21.05rem;
+				overflow: auto;
+			}
+			
+			.vimg>img {
+				width: 93%;
+				height: auto;
+				margin: 0 3.5% 3.5%;
+				border-radius: 0.25rem;
+			}
+			
+			.vimg>video {
+				width: 93%;
+				height: auto;
+				margin: 0 3.5% 3.5%;
+				border-radius: 0.25rem;
+				object-fit: fill;
+			}
+			
+			.v_vdo>video {
+				width: 93%;
+				height: 10.475rem;
+				margin: 0 3.5% 3.5%;
+				border-radius: 0.25rem;
+				z-index: 999;
+				object-fit: fill
+			}
+			/*滑动特效*/
+			
+			.er_cen {
+				width: 80%;
+				height: 0.8rem;
+				margin: -0.85rem auto 0;
+				border-bottom-left-radius: 0.2rem;
+				border-bottom-right-radius: 0.2rem;
+				z-index: 100;
+				position: relative;
+			}
+			
+			.san_cen {
+				width: 70%;
+				height: 0.8rem;
+				margin: 0 auto;
+				border-bottom-left-radius: 0.2rem;
+				border-bottom-right-radius: 0.2rem;
+			}
+			/**********侧边栏***********/
+			
+			.side {
+				position: fixed;
+				top: 0;
+				left: -77%;
+				width: 77%;
+				height: 100%;
+				background: #4D4F5E;
+				z-index: 999;
+			}
+			
+			.h_img {
+				width: 4rem;
+				height: 4rem;
+				margin: 1.2rem auto 0;
+				border-radius: 50%;
+			}
+			
+			.h_img>img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.name {
+				width: 84%;
+				height: 2rem;
+				line-height: 2.5rem;
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				margin: 0 auto;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.job {
+				width: 84%;
+				height: 2.5rem;
+				line-height: 1rem;
+				color: #fff;
+				font-size: 0.6rem;
+				text-align: center;
+				margin: 0 auto;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.tab {
+				width: 84%;
+				height: 3.75rem;
+				display: flex;
+				color: #fff;
+				margin: 0 auto;
+				font-size: 0.6rem;
+			}
+			
+			.t_cen {
+				width: 33.3%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.t_img {
+				width: 1.2rem;
+				height: 1.2rem;
+				margin: 0 auto;
+			}
+			
+			.t_img>img {
+				width: 1.2rem;
+				height: 1.1rem;
+			}
+			
+			.music {
+				width: 1.15rem !important;
+				height: 1.15rem !important;
+			}
+			
+			.t_tit {
+				width: 100%;
+				height: 1.7rem;
+				line-height: 1.7rem;
+			}
+			
+			.list {
+				width: 92%;
+				height: 12rem;
+				margin: 0 0 0 8%;
+			}
+			
+			.l_cen {
+				width: 100%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				border-bottom: 0.025rem solid rgba(255, 255, 255, 0.2);
+				color: #fff;
+				font-size: 0.6rem;
+				display: flex;
+			}
+			
+			.l_cen>a {
+				width: 100%;
+				height: 100%;
+				color: #fff;
+				font-size: 0.6rem;
+				display: flex;
+				text-decoration: none;
+			}
+			
+			.l_img {
+				width: 1.75rem;
+				height: 1.75rem;
+				margin: 0.375rem 0.5rem 0.375rem 0;
+			}
+			
+			.call {
+				width: 1.35rem;
+				height: 1.1rem;
+			}
+			
+			.invite {
+				width: 1.2rem;
+				height: 1.2rem;
+			}
+			
+			.book {
+				width: 1.3rem;
+				height: 1.2rem;
+			}
+			
+			.here {
+				width: 0.95rem;
+				height: 1.3rem;
+			}
+			
+			.set {
+				width: 84%;
+				height: 2.15rem;
+				line-height: 2.15rem;
+				text-align: center;
+				font-size: 0.8rem;
+				margin: 0 auto;
+			}
+			
+			.set>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+			}
+			
+			.masks {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				display: none;
+				z-index: 999;
+			}
+			/*侧边栏*/
+			/******生活趣事*****/
+			
+			.t_link {
+				width: 100%;
+				height: 21.05rem;
+				overflow: auto;
+			}
+			
+			.life {
+				width: 88%;
+				height: 3.35rem;
+				background: rgba(0, 0, 0, 0.1);
+				margin: 0 auto 0.6rem;
+				padding: 0 2.5%;
+			}
+			
+			.life>a {
+				width: 100%;
+				height: 100%;
+				display: flex;
+			}
+			
+			.life_left {
+				width: 4.2rem;
+				height: 2.8rem;
+				border-radius: 0.5rem;
+				margin: 0.275rem 0.6rem 0 0;
+			}
+			
+			.life_img {
+				width: 4.2rem;
+				height: 100%;
+				border-radius: 0.25rem;
+			}
+			
+			.life_right {
+				width: 76.5%;
+				height: 100%;
+			}
+			
+			.life_tit {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				color: #FFF;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.life_head {
+				width: auto;
+				display: inline-block !important;
+				height: 0.8rem;
+				line-height: 0.8rem;
+				font-size: 0.6rem;
+				border-radius: 0.1rem;
+				color: rgba(239, 123, 107, 1);
+				background: #FFCEC7;
+				color: #EF7B6B;
+				padding: 0 0.25rem;
+			}
+			/******生活趣事*****/
+			/******产品中心*****/
+			
+			.v_pro {
+				width: 100%;
+				height: 21.05rem;
+				overflow: auto;
+			}
+			
+			.life_tits {
+				height: 1.35rem;
+				font-size: 0.6rem;
+				color: #fff;
+			}
+			/******产品中心*****/
+			/********内容展示********/
+			
+			.con_cens {
+				width: 93%;
+				height: 21.05rem;
+				overflow: auto;
+				padding: 0 3.5% 0;
+				
+			}
+			
+			.con {
+				width: 33.1%;
+				height: 5.199rem;
+				float:left;
+				margin-bottom: 0.35%;
+				position: relative;
+			}
+			
+			.con>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			
+			.con_img {
+				float: left;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.con:nth-child(3n-1){
+				
+				margin: 0 0.35% 0.35% 0.35%;
+			}
+			
+			.con_img>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.con_tit {
+				width: 100%;
+				height: 0.8rem;
+				background: rgba(0,0,0,0.3);
+				position: absolute;
+				left:0;
+				bottom:0;
+				color:#fff;
+				font-size: 0.55rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.con_title {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.con_des {
+				width: 100%;
+				height: 35%;
+				line-height: 1.191rem;
+				font-size: 0.6rem;
+				color: #FDFDFD;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			/********内容展示********/
+			/*****底部数字*****/
+			
+			.select {
+				width: 50%;
+				margin-left: 15%;
+				display: flex;
+				float: left;
+			}
+			
+			.select>div {
+				width: 1.2rem;
+				height: 1.2rem;
+				opacity: 0.65;
+				margin-right: 0.6rem;
+				text-align: center;
+				line-height: 1.2rem;
+				border-radius: 50%;
+				font-size: 0.75rem;
+				margin-top: 0.8rem;
+			}
+			
+			.active {
+				opacity: 1 !important;
+			}
+			
+			.foot {
+				width: 100%;
+				height: 2.5rem;
+				position: relative;
+			}
+			
+			.entry {
+				width: 30%;
+				height: 100%;
+				font-size: 0.8rem;
+				font-weight: 500;
+				float: right;
+				line-height: 2.725rem;
+				margin-right: 5%;
+				text-align: right;
+				position: relative;
+			}
+			
+			.entry>span>img {
+				float: right;
+				width: 0.85rem;
+				height: 0.8rem;
+				margin-top: 1rem;
+				margin-left: 0.4rem;
+			}
+			/*****底部数字*****/
+			/*******快速入口******/
+			
+			.option {
+				width: 24%;
+				height: auto;
+				position: absolute;
+				bottom: 2rem;
+				right: 5%;
+				background: rgba(0, 0, 0, 0.7);
+				z-index: 999999999;
+				display: none;
+				animate-duration: 2s; //动画持续时间
+				animate-delay: 1s; //动画延迟时间
+				animate-iteration-count: 2; //动画执行次数，无限次数：infinite
+			}
+			
+			.op_cen {
+				width: 90%;
+				height: 0rem;
+				line-height: 1.65rem;
+				color: #fff;
+				font-size: 0.6rem;
+				padding: 0 5%;
+			}
+			
+			.op_cen>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				color: #fff;
+			}
+			
+			.op_cen>a>span>img {
+				width: 0.7rem;
+				height: 0.7rem;
+				margin: 0.475rem 0;
+			}
+			
+			.op_img {
+				width: 25%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.op_tit {
+				width: 68%;
+				height: 100%;
+				text-align: left;
+				margin-left: 7%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			#dowebok {
+				animate-duration: 2s; //动画持续时间
+				animate-delay: 1s; //动画延迟时间
+				animate-iteration-count: 2; //动画执行次数，无限次数：infinite
+			}
+			/*******快速入口******/
+			/*******弹出框******/
+			
+			.hs_top {
+				width: 100%;
+				height: 4rem;
+				line-height: 3.5rem;
+				font-size: 0.8rem;
+				font-weight: 500;
+				color: #333;
+				text-align: center;
+			}
+			
+			.hs_fot {
+				width: 80%;
+				height: 3.5rem;
+				display: flex;
+				margin: 0 auto;
+			}
+			
+			.cancel {
+				width: 45%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				border: 0.05rem solid #C5C5C5;
+				border-radius: 0.2rem;
+				font-size: 0.8rem;
+				color: #777;
+			}
+			
+			.san {
+				width: 45%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 0.2rem;
+				margin-left: 10%;
+				background: #32CEA0;
+			}
+			
+			.san>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+				font-size: 0.8rem;
+				color: #fff;
+			}
+			
+			.hints {
+				width: 80%;
+				height: 7.5rem;
+				background: rgba(255, 255, 255, 1);
+				border-radius: 0.2rem;
+				margin: 0 auto;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				background: #fff;
+				z-index: 120000;
+				margin-left: -40%;
+				margin-top: -3.75rem;
+				display: none;
+			}
+			
+			.hint {
+				width: 80%;
+				height: 15.25rem;
+				background: rgba(255, 255, 255, 1);
+				border-radius: 0.2rem;
+				margin: 0 auto;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				background: #fff;
+				z-index: 120000;
+				margin-left: -40%;
+				margin-top: -7.625rem;
+				display: none;
+			}
+			
+			.hinte {
+				width: 80%;
+				height: 15.25rem;
+				background: rgba(255, 255, 255, 1);
+				border-radius: 0.2rem;
+				margin: 0 auto;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				background: #fff;
+				z-index: 120000;
+				margin-left: -40%;
+				margin-top: -7.625rem;
+				display: none;
+			}
+			
+			.h_tbs {
+				width: 100%;
+				height: 3.45rem;
+				font-size: 0.8rem;
+				text-align: center;
+				color: #333;
+			}
+			
+			.h_tit {
+				width: 100%;
+				height: 3.5rem;
+				line-height: 4.7rem;
+				color: #333;
+				font-size: 0.6rem;
+				text-align: center;
+			}
+			
+			.h_erimg {
+				width: 100%;
+				height: 6.6rem;
+				margin-bottom: 1.7rem;
+				position: relative;
+			}
+			
+			.ma_cen {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			
+			.ma_cen>img {
+				display: block;
+				width: 6.4rem;
+				height: 6.4rem;
+				border: 0.05rem solid #32CEA0;
+				margin: 0 auto;
+			}
+			
+			.h_tab {
+				width: 85%;
+				height: 2rem;
+				line-height: 2rem;
+				display: flex;
+				margin: 0 auto;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 0.2rem;
+			}
+			
+			.t_list {
+				width: 33%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #32CEA0;
+				text-align: center;
+				border-right: 0.05rem solid #32CEA0;
+			}
+			
+			.t_list:nth-of-type(1) {
+				border-bottom-left-radius: 0.2rem;
+				border-top-left-radius: 0.2rem;
+			}
+			
+			.t_list:last-child {
+				border-right: 0;
+				width: 33.33%;
+				border-bottom-right-radius: 0.2rem;
+				border-top-right-radius: 0.2rem;
+			}
+			
+			.tvt {
+				background: #32CEA0;
+				color: #fff;
+			}
+			
+			.on {
+				display: block;
+			}
+			
+			.dele {
+				width: 1.2rem;
+				height: 1.2rem;
+				position: absolute;
+				top: 0.6rem;
+				right: 0.6rem;
+			}
+			
+			.dele>img {
+				width: 100%;
+				height: 100%;
+			}
+			/*******弹出框******/
+			/*视频*/
+			
+			.v_vdo {
+				width: 100%;
+				height: 21.05rem;
+				overflow: auto;
+			}
+			/*上拉加载动画*/
+			
+			#loadId {
+				display: none;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+				float:left;
+			}
+			
+			.loadings {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading>img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			.hintimg {
+				display: block;
+				width: 9.25rem;
+				height: 7.45rem;
+				margin: 6.2rem auto;
+			}
+			/*隐私判断*/
+			.tips {
+			    width: 15.55rem;
+			    height: 7.5rem;
+			    position: fixed;
+			    top: 50%;
+			    left: 50%;
+			    margin-left: -7.775rem;
+			    margin-top: -3.75rem;
+			    z-index: 9999999;
+			    background: #fff;
+			    border-radius: 0.25rem;
+			    text-align: center;
+			    display: none; 
+			}
+			.tips img {
+			    display: block;
+			    width: 2.3rem;
+			    height: 2.3rem;
+			    margin: 1.2rem auto 1.2rem auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="top_left">
+				<a href="/index.php?s=/Home/User/square.html">
+					<img src="__HOME_IMAGES__/newvnet/vhome/icon_ icon_home@2x.png" alt="" />
+				</a>
+			</div>
+			<div class="top_cen">
+				<img src="__HOME_IMAGES__/newvnet/vhome/Hamburger@2x.png" alt="" />
+			</div>
+			<div class="top_right">
+				<a href="/index.php?s=/Home/Vhome/sorts/style/{$style}.html">
+					<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="banner" id="sort_content">
+			<script type="text/html" id="sort_content_sort_sort">
+				{{each sortlist v i}} {{if i==0}}
+				<div class="banner_cen cena " name="{{i}}">
+					{{if v.template_classname=="cena"}}
+					<div class="title">个人展示</div>
+					<div class="vimg one show">
+						<!--<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />-->
+					</div>
+
+					{{else if v.template_classname=="cenb"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_link.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg two">
+						<div class="t_link">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cenc"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_product.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg three">
+						<div class="v_pro">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cend"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/vNewnetwork/all_video.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg four">
+						<div class="v_vdo">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cene"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_imgtext.html">全部图文</a>
+						</div>
+					</div>
+					<div class="vimg five">
+						<div class="con_cens">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{/if}}
+
+				</div>
+				{{else if i==1}}
+				<div class="banner_cen cenb" name="{{i}}">
+					{{if v.template_classname=="cena"}}
+					<div class="title">个人展示</div>
+					<div class="vimg one show">
+						<!--<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />-->
+					</div>
+
+					{{else if v.template_classname=="cenb"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_link.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg two">
+						<div class="t_link">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cenc"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_product.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg three">
+						<div class="v_pro">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cend"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_video.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg four">
+						<div class="v_vdo">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cene"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_imgtext.html">全部图文</a>
+						</div>
+					</div>
+					<div class="vimg five">
+						<div class="con_cens">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{/if}}
+
+				</div>
+				{{else if i==2}}
+				<div class="banner_cen cenc" name="{{i}}">
+					{{if v.template_classname=="cena"}}
+					<div class="title">个人展示</div>
+					<div class="vimg one show">
+						<!--<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />-->
+					</div>
+
+					{{else if v.template_classname=="cenb"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_link.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg two">
+						<div class="t_link">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cenc"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_product.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg three">
+						<div class="v_pro">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cend"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_video.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg four">
+						<div class="v_vdo">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cene"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_imgtext.html">全部图文</a>
+						</div>
+					</div>
+					<div class="vimg five">
+						<div class="con_cens">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{/if}}
+				</div>
+				{{else if i==3}}
+				<div class="banner_cen cend" name="{{i}}">
+					{{if v.template_classname=="cena"}}
+					<div class="title">个人展示</div>
+					<div class="vimg one show">
+						<!--<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />-->
+					</div>
+
+					{{else if v.template_classname=="cenb"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_link.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg two">
+						<div class="t_link">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cenc"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_product.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg three">
+						<div class="v_pro">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cend"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_video.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg four">
+						<div class="v_vdo">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cene"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_imgtext.html">全部图文</a>
+						</div>
+					</div>
+					<div class="vimg five">
+						<div class="con_cens">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{/if}}
+				</div>
+				{{else if i==4}}
+				<div class="banner_cen cene" name="{{i}}">
+					{{if v.template_classname=="cena"}}
+					<div class="title">个人展示</div>
+					<div class="vimg one show">
+						<!--<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+                        <img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />-->
+					</div>
+
+					{{else if v.template_classname=="cenb"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_link.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg two">
+						<div class="t_link">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cenc"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_product.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg three">
+						<div class="v_pro">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cend"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_video.html">全部链接</a>
+						</div>
+					</div>
+					<div class="vimg four">
+						<div class="v_vdo">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{else if v.template_classname=="cene"}}
+					<div class="title">
+						<div class="tit_left"></div>
+						<div class="tit_right">
+							<a href="/index.php?s=/Home/Newnetwork/all_imgtext.html">全部图文</a>
+						</div>
+					</div>
+					<div class="vimg five">
+						<div class="con_cens">
+
+						</div>
+						<div class="loading" id="loadId">
+							<img src="__HOME_IMAGES__/loading.png" alt="">
+							<span>正在加载中...</span>
+						</div>
+					</div>
+
+					{{/if}}
+				</div>
+				{{/if}} {{/each}}
+			</script>
+		</div>
+
+		<div class="er_cen"></div>
+		<div class="san_cen"></div>
+		<div class="foot">
+			<div class="select">
+				<div class="active">1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+			</div>
+			<div class="entry">
+				<span>快速入口</span>
+				<span>
+					<img class="q_img" src="" alt="" />
+				</span>
+			</div>
+			<div class="option">
+
+			</div>
+		</div>
+
+		<div class="masks"></div>
+		<div class="side">
+			<div class="h_img">
+				<img src="" alt="" />
+			</div>
+			<div class="name"></div>
+			<div class="job"></div>
+			<div class="tab">
+				<div class="t_cen ones">
+					<div class="t_img">
+						<img src="__HOME_IMAGES__/newvnet/vhome/icon_shoucang@2x.png" alt="" />
+					</div>
+					<div class="t_tit">收藏</div>
+				</div>
+				<div class="t_cen two">
+					<div class="t_img">
+						<img src="__HOME_IMAGES__/newvnet/vhome/icon_liuyan@2x.png" alt="" />
+					</div>
+					<div class="t_tit">留言</div>
+				</div>
+				<div class="t_cen mus">
+					<div class="t_img">
+						<img class="music" src="__HOME_IMAGES__/newvnet/vhome/icon_yinyue@2x.png" alt="" />
+					</div>
+					<div class="t_tit">音乐开</div>
+				</div>
+			</div>
+			<div class="list">
+				<div class="l_cen callme">
+					<div class="l_img">
+						<img class="call" src="__HOME_IMAGES__/newvnet/vhome/icon_telephone@2x.png" alt="" />
+					</div>
+					<div>一键拨号</div>
+				</div>
+				<div class="l_cen friend">
+					<div class="l_img">
+						<img class="invite" src="__HOME_IMAGES__/newvnet/vhome/icon_friends@2x.png" alt="" />
+					</div>
+					<div>邀请好友</div>
+				</div>
+				<div class="l_cen lead">
+					<div class="l_img">
+						<img class="book" src="__HOME_IMAGES__/newvnet/vhome/icon_communication@2x.png" alt="" />
+					</div>
+					<div>通讯导入</div>
+				</div>
+				<div class="l_cen">
+					<a class="here" href="javascript:;">
+						<div class="l_img">
+							<img class="here" src="__HOME_IMAGES__/newvnet/vhome/icon_address@2x.png" alt="" />
+						</div>
+						<div class="">地址导航</div>
+					</a>
+				</div>
+			</div>
+			<div class="set">
+				<a class="make" href="javascripr:;">创建V网</a>
+			</div>
+		</div>
+		<div class="hints">
+			<div class="hs_top">给他拨打电话</div>
+			<div class="hs_fot">
+				<div class="cancel">取消</div>
+				<div class="san">
+					<!--<a href="tel:15639279607">确定</a>-->
+				</div>
+			</div>
+		</div>
+		<div class="hint">
+			<div class="h_tit">长按识别二维码</div>
+			<div class="h_erimg">
+				<div class="ma_cen on">
+					<img class="v_erwei" src="" alt="" />
+				</div>
+				<div class="ma_cen">
+					<img src="__HOME_IMAGES__/8.jpg" alt="" />
+				</div>
+				<div class="ma_cen">
+					<img class="er_wei" src="" alt="" />
+				</div>
+			</div>
+			<div class="h_tab">
+				<div class="t_list tvt">V网二维码</div>
+				<div class="t_list">洋小秘公众号</div>
+				<div class="t_list">微信二维码</div>
+			</div>
+
+			<div class="dele">
+				<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />
+			</div>
+		</div>
+
+		<div class="hinte">
+			<div class="h_tit">长按识别二维码</div>
+			<div class="h_erimg">
+				<div class="ma_cen on">
+					<img class="one_touch" src="" alt="" />
+				</div>
+			</div>
+			<div class="h_tbs">
+				个人信息保存到手机通讯录
+			</div>
+
+			<div class="dele">
+				<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />
+			</div>
+		</div>
+		<audio id="audio" autoplay="autoplay" loop="loop" src=""></audio>
+		<div class="tips">
+	        <img src="" alt="">
+	        <p></p>
+    	</div>
+		<script>
+			//			console.log('{$share_id}');
+			var unionid = "{$unionid}";
+			var sortlist = [{
+					"template_name": '产品中心',
+					"template_classname": "cenc"
+				},
+				{
+					"template_name": '展示一切',
+					"template_classname": "cene"
+				},
+				{
+					"template_name": '视频',
+					"template_classname": "cend"
+				},
+				{
+					"template_name": '链接一切',
+					"template_classname": "cenb"
+				},
+				{
+					"template_name": '个人展示',
+					"template_classname": "cena"
+				}
+			];
+			//
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/plate_order_list',
+				data: {
+					unionid: unionid
+				},
+				async: false,
+				success: function(res) {
+					//                    console.log(res)
+					if(res.Message == "操作成功") {
+						var _sort_list = [];
+						_sort_list[parseInt(res.AppendData["产品中心"])] = {
+							"template_name": '产品中心',
+							"template_classname": "cenc"
+						};
+						_sort_list[parseInt(res.AppendData["展示一切"])] = {
+							"template_name": '展示一切',
+							"template_classname": "cene"
+						};
+						_sort_list[parseInt(res.AppendData["视频"])] = {
+							"template_name": '视频',
+							"template_classname": "cend"
+						};
+						_sort_list[parseInt(res.AppendData["链接一切"])] = {
+							"template_name": '链接一切',
+							"template_classname": "cenb"
+						};
+						_sort_list[parseInt(res.AppendData["个人展示"])] = {
+							"template_name": '个人展示',
+							"template_classname": "cena"
+						};
+						var _list = [];
+						for(var index = 0; index < _sort_list.length; index++) {
+							if(_sort_list[index] == null || _sort_list[index] == undefined) {
+								continue;
+								//console.log(index);
+							}
+							_list.push(_sort_list[index]);
+
+						}
+						//						console.log(_sort_list);
+						sortlist = _list;
+
+					}
+					init_sort();
+				},
+				error: function() {
+					console.log("顺序")
+				}
+			})
+
+			function init_sort() {
+				// console.log(sortlist);
+				var obj = {
+					"sortlist": sortlist
+				};
+				$("#sort_content").html(template("sort_content_sort_sort", obj));
+			}
+			move = true;
+			$(".top_cen").on('click', function() {
+				$(".masks").show()
+				$(".side").css({
+					"transform": 'translateX(100%)',
+					"transition": 'transform .2s'
+				});
+			});
+			$(".masks").on('click', function() {
+				$(".masks").hide();
+				$(".hint").hide();
+				$(".hinte").hide();
+				$(".side").css({
+					"transform": 'translateX(0%)',
+					"transition": 'transform .2s'
+				});
+			});
+
+			//中间滑动
+			//滑动处理
+			var startX, moveEndX, X, Y, X1, Y1, n = 10000,
+				_this, time = 0,
+				id;
+			$(".banner>div").on('touchstart', function(e) {
+				//e.preventDefault();
+				startX = e.touches[0].pageX;
+
+				startY = e.touches[0].pageY;
+				
+			});
+			$(".banner>div").on('touchend', function(e) {
+				if(time == 1) {
+					return;
+				}
+				time = 1;
+				setTimeout(function() {
+					time = 0
+				}, 500)
+
+				moveEndX = e.changedTouches[0].pageX;
+				moveEndY = e.changedTouches[0].pageY;
+				X = moveEndX - startX;
+				Y = moveEndY - startY;
+				X1 = Math.abs(X)
+				Y1 = Math.abs(Y)
+				if(Y1 > X1) {
+					return
+				}
+				if(X > 50) {
+					$('.show,.t_link,.v_pro,.con_cens').animate({
+						scrollTop: '1px'
+					})
+					n++;
+					var name = $(this).attr("name");
+					if(name == 0) {
+						name = 4
+					} else {
+						name--
+					}
+					var index = $(".banner>div").eq(name).css("z-index");
+					// ID值
+					id = name;
+
+					$(".banner>div").eq(name).css({
+						"transform": "translate(0%,0%) rotateZ(0deg)",
+						"transition": "all 0.5s",
+						"z-index": index
+					});
+					if(name == 0) {
+						name = 4
+					} else {
+						name--;
+					}
+					// 备用项
+					var index = $(".banner>div").eq(name).css("z-index");
+					index = Number(index);
+					index = index + 5;
+					$(".banner>div").eq(name).css({
+						"transform": "translate(-200%,200%) rotateZ(-30deg)",
+						"transition": "all 0s",
+						"z-index": index
+					});
+				} else if(X < -50) {
+					$('.show,.t_link,.v_pro,.con_cens').animate({
+						scrollTop: '1px'
+					})
+					var name = $(this).attr("name");
+					// 当前滑动项
+					$(this).css({
+						"transform": "translate(-200%,200%) rotateZ(-30deg)",
+						"transition": "all 0.8s"
+					});
+					var present = name;
+					if(name == 0) {
+						name = 4
+					} else {
+						name--
+					}
+					// 上一个滑动项
+					var index = $(".banner>div").eq(name).css("z-index") - 5;
+					$(".banner>div").eq(name).css({
+						"transform": "translate(0%,0%) rotateZ(0deg)",
+						"transition": "all 0s",
+						"z-index": index
+					});
+					present == 4 ? present = 0 : present++;
+					id = present;
+				}
+				myfun();
+			});
+
+			function myfun() {
+				//				console.log(id);
+				$('.select div').eq(id).addClass("active").siblings().removeClass("active");
+				
+			}
+
+			//快速入口
+			move = true;
+			$(".entry").on("click", function() {
+				if(move) {
+					$('.option').show();
+					$('.option').animate({
+						height: "auto"
+					}, 100)
+					$('.op_cen').animate({
+						height: "1.65rem"
+					}, 100)
+					if(styles==7){
+						$(".q_img").attr('src', '__HOME_IMAGES__/newvnet/vhome/upper@2x.png');
+					}
+					if(styles==9){
+						$(".q_img").attr('src', '__HOME_IMAGES__/newvnet/vhome/upper@2x.png');
+					}
+					if(styles==11){
+						$(".q_img").attr('src', '/Public/Home/images/stencil/vj2.png');
+					}
+					move = false;
+				} else {
+					$('.option').hide();
+					$('.option').animate({
+						height: "auto"
+					}, 100)
+					$('.op_cen').animate({
+						height: "0"
+					}, 100)
+					if(styles==7){
+						$(".q_img").attr('src', '__HOME_IMAGES__/newvnet/vhome/lower@2x.png');
+					}
+					if(styles==9){
+						$(".q_img").attr('src', '__HOME_IMAGES__/newvnet/vhome/lower@2x.png');
+					}
+					if(styles==11){
+						$(".q_img").attr('src', '/Public/Home/images/stencil/vj1.png');
+					}
+					move = true;
+				}
+			})
+			//弹出框
+			
+			$(".cancel").on("click", function() {
+				$(".masks").hide();
+				$(".hints").hide();
+			})
+			$(".t_list").click(function() {
+				$(".t_list").eq($(this).index()).addClass("tvt").siblings().removeClass('tvt');
+				$(".ma_cen").eq($(".t_list").index(this)).addClass("on").siblings().removeClass('on');
+			});
+			//邀请好友
+			$(".friend").on("click", function() {
+				$(".masks").show();
+				$(".hint").show();
+				$(".side").css({
+					"transform": 'translateX(0%)',
+					"transition": 'transform .2s'
+				});
+			})
+			//通讯导入
+			$(".lead").on("click", function() {
+				$(".masks").show();
+				$(".hinte").show();
+				$(".side").css({
+					"transform": 'translateX(0%)',
+					"transition": 'transform .2s'
+				});
+			})
+			$(".dele").on("click", function() {
+				$(".masks").hide();
+				$(".hint").hide();
+				$(".hinte").hide();
+			})
+
+			//个人展示渲染
+
+			var list = ""
+			//			console.log(unionid)
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/banner_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+				},
+				success: function(res) {
+					console.log(res)
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							$('.show').animate({
+								scrollTop: '1px'
+							})
+							//console.log(i.img_url)
+							var img_id = i.img_url;  //根据id得到值
+							var index = img_id.lastIndexOf(".");  //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+							img_id = img_id.substring(index);
+							if(img_id == ".mp4" || img_id == ".rmvb" || img_id == ".avi" || img_id == ".ts" || img_id == ".3GP" || img_id == ".MOV") {
+								list += '<video class="lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.img_url + '" poster="'+i.img_url+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast" controls="controls"/>'
+							}else{
+								list += '<img class="lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.img_url + '" alt="" />'
+							}
+							
+						})
+						$(".one").html(list);
+
+						$(".one").append("<div class='loadings'>我也是有底线的哟！</div>");
+					} else if(res.ResultType == 2) {
+						$(".one").html('<img class="hintimg" src="__HOME_IMAGES__/newvnet/vhome/picture_icon copy@2x.png""/>');
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			
+			
+
+			//链接分类渲染
+			var typed = new Array();
+			var arry = Array();
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/mode_type_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 0
+				},
+				async: false,
+				success: function(res) {
+					//					console.log(res)
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							typed.push(i.id)
+							arry.push(i.title)
+						})
+						for(var i = 0; i < sortlist.length; i++) {
+							if(sortlist[i].template_name == "链接一切" && i == 0) {
+								$(".cena .tit_left").html(arry[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "链接一切" && i == 1) {
+								$(".cenb .tit_left").html(arry[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "链接一切" && i == 2) {
+								$(".cenc .tit_left").html(arry[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "链接一切" && i == 3) {
+								$(".cend .tit_left").html(arry[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "链接一切" && i == 4) {
+								$(".cene .tit_left").html(arry[0]);
+								break;
+							}
+						}
+
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			//链接跳转渲染
+			var unionid = "{$unionid}";
+			var lists = ""
+			var lengtha = 0;
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/link_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					start: 0,
+					length: 10,
+					type_id: type_id
+				},
+				success: function(res) {
+					if(res.ResultType == 0) {
+//						console.log(res)
+						$(res.AppendData).each(function(v, i) {
+							if(i.jump_url == "") {
+								i.jump_url = 'javascript:void(0)';
+							}
+							lists += '<div class="life">'
+							lists += '<a href="' + i.jump_url + '">'
+							lists += '<div class="life_left">'
+							lists += '<img class="life_img lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.icon_url + '" alt="" />'
+							lists += '</div>'
+							lists += '<div class="life_right">'
+							lists += '<div class="life_tit">' + i.name + '</div>'
+
+							if(i.tab == null || i.tab == '' || i.tab == undefined) {
+								lists += '<div class="life_head" style="color:#c5c5c5;background:#e8e8e8;">未选</div>'
+							} else {
+								$.each(i.tab, function(c, e) {
+									if(c == 0) {
+										lists += '<div class="life_head" style="color:' + e.color + ';background:' + e.background + ';" >' + e.name + '</div>'
+									}
+								})
+							}
+
+							lists += '</div>'
+							lists += '</a>'
+							lists += '</div>'
+						})
+						$(".t_link").html(lists);
+					} else if(res.ResultType == 2) {
+						$(".t_link").html('<img class="hintimg" src="__HOME_IMAGES__/newvnet/vhome/picture_icon copy@2x.png""/>');
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			//链接一切上拉加载
+			var scrollFlaga = true;
+			$(".t_link").scroll(function() {
+				var lists = "";
+				var scrollHeight = $(this)[0].scrollHeight;
+				var scrollTop = $(this).scrollTop();
+				var clientHeight = $(this)[0].clientHeight;
+				lists="";
+				if(scrollFlaga != true) {
+					return false;
+				}
+				//				console.log(scrollHeight - clientHeight)
+				//				console.log(scrollTop);
+
+				if(scrollHeight - clientHeight >= scrollTop) {
+
+					lengtha += 10;
+					//					console.log(length)
+					scrollFlaga = false;
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/AppApi/link_list',
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: lengtha,
+							length: 10,
+							type_id: type_id
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+//							console.log(res);
+							scrollFlaga = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".t_link").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlaga = false;
+							}
+							if(res.ResultType == 0) {
+								$(res.AppendData).each(function(v, i) {
+									if(i.jump_url == "") {
+										i.jump_url = 'javascript:void(0)';
+									}
+									lists += '<div class="life">'
+									lists += '<a href="' + i.jump_url + '">'
+									lists += '<div class="life_left">'
+									lists += '<img class="life_img lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.icon_url + '" alt="" />'
+									lists += '</div>'
+									lists += '<div class="life_right">'
+									lists += '<div class="life_tit">' + i.name + '</div>'
+									if(i.tab == null || i.tab == '' || i.tab == undefined) {
+										lists += '<div class="life_head" style="color:#c5c5c5;background:#e8e8e8;">未选</div>'
+									} else {
+										$.each(i.tab, function(c, e) {
+											if(c == 0) {
+												lists += '<div class="life_head" style="color:' + e.color + ';background:' + e.background + ';" >' + e.name + '</div>'
+											}
+										})
+									}
+									lists += '</div>'
+									lists += '</a>'
+									lists += '</div>'
+								})
+								$(".t_link").append(lists);
+								lists = "";
+							}
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+
+				}
+			});
+
+			//产品分类渲染
+
+			var typep = new Array();
+			var arrp = Array()
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/mode_type_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 3
+				},
+				async: false,
+				success: function(res) {
+					//					console.log(res)
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							typep.push(i.id)
+							arrp.push(i.title)
+
+						})
+						//$(".cenc .tit_left").html(arrp[0])
+
+						for(var i = 0; i < sortlist.length; i++) {
+							if(sortlist[i].template_name == "产品中心" && i == 0) {
+								$(".cena .tit_left").html(arrp[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "产品中心" && i == 1) {
+								$(".cenb .tit_left").html(arrp[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "产品中心" && i == 2) {
+								$(".cenc .tit_left").html(arrp[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "产品中心" && i == 3) {
+								$(".cend .tit_left").html(arrp[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "产品中心" && i == 4) {
+								$(".cene .tit_left").html(arrp[0]);
+								break;
+							}
+						}
+
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			//产品渲染
+			var type_idp = typep[0];
+			var lengthb = 0;
+			var listc = ""
+//			console.log(type_idp)
+//			console.log(unionid)
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/IndexApi/product_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					start: 0,
+					length: 10,
+					new_type: type_idp
+				},
+				success: function(res) {
+//					console.log(res)
+					if(res.ResultType == 0) {
+					    var iiititle='';
+					    var describeoo='';
+						$(res.AppendData).each(function(v, i) {
+						    iiititle= i.title==null?'':i.title;
+                            describeoo=i.describe=null?'':i.describe;
+							listc += '<div class="life">'
+							listc += '<a href="/index.php?s=/Home/vhome/propreview/unionid/'+unionid+'/p_id/' + i.id + '">'
+							listc += '<div class="life_left">'
+							listc += '<img class="life_img lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.cover_img + '" alt="" />'
+							listc += '</div>'
+							listc += '<div class="life_right">'
+							listc += '<div class="life_tit">' + iiititle + '</div>'
+							listc += '<div class="life_tits">' + describeoo + '</div>'
+							listc += '</div>'
+							listc += '</a>'
+							listc += '</div>'
+						})
+						$(".v_pro").html(listc);
+
+					} else if(res.ResultType == 2) {
+						$(".v_pro").html('<img class="hintimg" src="__HOME_IMAGES__/newvnet/vhome/picture_icon copy@2x.png""/>');
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			//产品上拉加载
+			var scrollFlagb = true;
+			$(".v_pro").scroll(function() {
+				var listc = "";
+				var scrollHeight = $(this)[0].scrollHeight;
+				var scrollTop = $(this).scrollTop();
+				var clientHeight = $(this)[0].clientHeight;
+				listc="";
+				if(!scrollFlagb) {
+					return false;
+				}
+				//				console.log(scrollHeight - clientHeight)
+				//				console.log(scrollTop);
+				if(scrollHeight - clientHeight >= scrollTop) {
+					lengthb += 10;
+					scrollFlagb = false;
+					$.ajax({
+						url: '/index.php?s=/Api/IndexApi/product_list',
+						type: "post",
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: lengthb,
+							length: 10,
+							new_type: type_idp
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+//							console.log(res);
+							scrollFlagb = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".v_pro").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlagb = false;
+							}
+							if(res.ResultType == 0) {
+								$(res.AppendData).each(function(m, n) {
+									listc += '<div class="life">'
+									listc += '<a href="/index.php?s=/Home/vhome/propreview/unionid/'+unionid+'/p_id/' + n.id + '">'
+									listc += '<div class="life_left">'
+									listc += '<img class="life_img lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + n.cover_img + '" alt="" />'
+									listc += '</div>'
+									listc += '<div class="life_right">'
+									listc += '<div class="life_tit">' + n.title + '</div>'
+									listc += '<div class="life_tits">' + n.describe + '</div>'
+									listc += '</div>'
+									listc += '</a>'
+									listc += '</div>'
+								})
+								$(".v_pro").append(listc);
+								listc = ""
+							}
+
+						}
+
+					})
+
+				}
+			});
+
+			//视频渲染
+			var types = new Array();
+			var arr = Array()
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/mode_type_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 1
+				},
+				async: false,
+				success: function(res) {
+					//					console.log(res)
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							types.push(i.id)
+							arr.push(i.title)
+							//	$(".cend .tit_left").html(arr[0])
+
+						})
+
+						for(var i = 0; i < sortlist.length; i++) {
+							if(sortlist[i].template_name == "视频" && i == 0) {
+								$(".cena .tit_left").html(arr[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "视频" && i == 1) {
+								$(".cenb .tit_left").html(arr[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "视频" && i == 2) {
+								$(".cenc .tit_left").html(arr[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "视频" && i == 3) {
+								$(".cend .tit_left").html(arr[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "视频" && i == 4) {
+								$(".cene .tit_left").html(arr[0]);
+								break;
+							}
+						}
+
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			var type_id = types[0];
+			var unionid = "{$unionid}";
+			var listd = ""
+			var lengthc = 0;
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/video_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					start: 0,
+					length: 5,
+					type_id: type_id
+
+				},
+				success: function(res) {
+					console.log(res)
+
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							listd += '<video playsinline -webkit-playsinline src="' + i.video + '" poster="' + i.video_cover + '" controls="controls"></video>'
+						})
+						$(".v_vdo").html(listd);
+					} else if(res.ResultType == 2) {
+						$(".v_vdo").html('<img class="hintimg" src="__HOME_IMAGES__/newvnet/vhome/picture_icon copy@2x.png"/>');
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			//视频上拉加载
+			var scrollFlagc = true;
+			$(".v_vdo").scroll(function() {
+				var scrollHeight = $(this)[0].scrollHeight;
+				var scrollTop = $(this).scrollTop();
+				var clientHeight = $(this)[0].clientHeight;
+				listd="";
+				if(!scrollFlagc) {
+					return false;
+				}
+				//				console.log(scrollHeight - clientHeight)
+				//				console.log(scrollTop);
+
+				if(scrollHeight - clientHeight >= scrollTop) {
+
+					lengthc += 5;
+					//					console.log(length)
+					scrollFlagc = false;
+					$.ajax({
+						url: '/index.php?s=/Api/AppApi/video_list',
+						type: "post",
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: lengthc,
+							length: 5,
+							type_id: type_id
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+														console.log(res);
+							scrollFlagc = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".v_vdo").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlagc = false;
+							}
+							if(res.ResultType == 0) {
+								$(res.AppendData).each(function(m, n) {
+									listd += '<video playsinline -webkit-playsinline src="' + n.video + '" poster="' + n.video_cover + '" controls="controls"></video>'
+								})
+								$(".v_vdo").append(listd);
+								listd = ""
+							}
+
+						}
+
+					})
+
+				}
+			});
+
+			//内容展示渲染
+
+			var typee = new Array();
+			var arre = Array()
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/mode_type_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 2
+				},
+				async: false,
+				success: function(res) {
+					//					console.log(res)
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							typee.push(i.id)
+							arre.push(i.title)
+							//	$(".cene .tit_left").html(arre[0])
+
+						})
+
+						for(var i = 0; i < sortlist.length; i++) {
+							if(sortlist[i].template_name == "展示一切" && i == 0) {
+								$(".cena .tit_left").html(arre[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "展示一切" && i == 1) {
+								$(".cenb .tit_left").html(arre[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "展示一切" && i == 2) {
+								$(".cenc .tit_left").html(arre[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "展示一切" && i == 3) {
+								$(".cend .tit_left").html(arre[0]);
+								break;
+							}
+							if(sortlist[i].template_name == "展示一切" && i == 4) {
+								$(".cene .tit_left").html(arre[0]);
+								break;
+							}
+						}
+
+					}
+				},
+			});
+			var type_id = typee[0];
+			var unionid = "{$unionid}";
+			var liste = ""
+			var lengthd = 0;
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					start: 0,
+					length: 15,
+					type_id: type_id
+				},
+				success: function(res) {
+//					console.log(res);
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							liste += '<div class="con">'
+							liste += '<a href="/index.php?s=/Home/Nologin/preview/unionid/'+unionid+'/show_id/' + i.id + '/type_id/' + type_id + '/title/' + arre[0] + '">'
+							liste += '<div class="con_img">'
+							liste += '<img class="lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.thumb + '" alt="" />'
+							liste += '</div>'
+							liste += '<div class="con_tit">'
+							if(i.title==""||i.title==null||i.title==undefined){
+								liste += '<div class="con_title"></div>'
+							}else{
+								liste += '<div class="con_title">' + i.title + '</div>'
+							}
+							
+							//							liste += '<div class="con_des">' + i.content + '</div>'
+							liste += '</div>'
+							liste += '</a>'
+							liste += '</div>'
+						})
+						$(".con_cens").html(liste);
+					} else if(res.ResultType == 2) {
+						$(".con_cens").html('<img class="hintimg" src="__HOME_IMAGES__/newvnet/vhome/picture_icon copy@2x.png""/>');
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			//内容上拉加载
+			var scrollFlagd = true;
+			$(".con_cens").scroll(function() {
+				var scrollHeight = $(this)[0].scrollHeight;
+				var scrollTop = $(this).scrollTop();
+				var clientHeight = $(this)[0].clientHeight;
+				liste="";
+				if(scrollFlagd != true) {
+					return false;
+				}
+				//				console.log(scrollHeight - clientHeight)			
+				//				console.log(scrollTop);
+				if(scrollHeight - clientHeight >= scrollTop) {
+					lengthd += 15;
+//										console.log(length)
+					scrollFlagd = false;
+					$.ajax({
+						url: '/index.php?s=/Api/AppApi/show_list',
+						type: "post",
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: lengthd,
+							length: 15,
+							type_id: type_id
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+//														console.log(res);
+							scrollFlagd = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".con_cens").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlagd = false;
+							}
+
+							if(res.ResultType == 0) {
+							    var ttt='';
+								$(res.AppendData).each(function(m, n) {
+								    ttt= n.title==null?'': n.title;
+									liste += '<div class="con">'
+									liste += '<a href="/index.php?s=/Home/Nologin/preview/unionid/'+unionid+'/show_id/' + n.id + '/type_id/' + type_id + '/title/' + arre[0] + '">'
+									liste += '<div class="con_img">'
+									liste += '<img class="lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + n.thumb + '" alt="" />'
+									liste += '</div>'
+									liste += '<div class="con_tit">'
+									liste += '<div class="con_title">' + ttt + '</div>'
+									//									liste += '<div class="con_des">' + n.content + '</div>'
+									liste += '</div>'
+									liste += '</a>'
+									liste += '</div>'
+								})
+								$(".con_cens").append(liste);
+								liste = "";
+							}
+						}
+
+					})
+
+				}
+			});
+
+			//v网个人信息
+			var lista = ""
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/AppApi/user_detail',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+				},
+				success: function(res) {
+//					console.log(res)
+					if(res.ResultType == 0) {
+						//$(".make").attr("href", "/index.php?s=/Home/Mycenter/register/myphone/" + res.AppendData.phone + "/unionid/" + res.AppendData.unionid)
+                        $(".make").attr("href", "/index.php?s=/Home/vmake/vmakee.html")
+						$(".h_img>img").attr("src", res.AppendData.headimg);
+						$(".name").html(res.AppendData.nick_name);
+						$(".job").html(res.AppendData.company);
+						lista += '<a href="tel:' + res.AppendData.mobile + '">确定</a>'
+						$(".v_erwei").attr("src", "/index.php?s=/Home/Nologin/myCode/id/" + res.AppendData.id + ".html"); //v网二维码
+						if(res.AppendData.is_wechat==0){
+							$(".er_wei").attr("src", " /Public/Home/images/er2.png"); 
+						}else{
+							$(".er_wei").attr("src", "" + res.AppendData.wx_ewm_url + ""); //用户的微信二维码
+						}
+						$(".one_touch").attr("src", "/index.php?s=/Home/Nologin/cardCode/id/" + res.AppendData.id + ".html"); //长按二维码的二维码
+						$("#audio").attr("src", "" + res.AppendData.music_url + "");
+						$(".callme").on("click",function(){
+							if(res.AppendData.is_phone==0){
+								$(".tips").show();
+								$(".tips").find("p").text('手机号码已设置隐私项');
+								$(".tips").find("img").attr("src", "/Public/Home/images/icon_dial@2x1.png");
+								 setTimeout(function() {
+									$(".tips").hide();
+								}, 1500);
+							}else{
+								$(".masks").show();
+									$(".hints").show();
+									$(".side").css({
+										"transform": 'translateX(0%)',
+										"transition": 'transform .2s'
+									});
+								}
+						})
+						$(".here").on("click", function() {
+							if(res.AppendData.is_map==0){
+								$(".tips").show();
+								$(".tips").find("p").text('地图显示未开启');
+								$(".tips").find("img").attr("src", "/Public/Home/images/icon_address1@2x.png");
+								setTimeout(function() {
+									$(".tips").hide();
+								}, 1500);
+							}else{
+								$(".side").css({
+									"transform": 'translateX(0%)',
+									"transition": 'transform .2s'
+								})
+								$(".here").attr("href", "/index.php?s=/Home/Nologin/diTu/address/" + res.AppendData.address + ".html")
+							}	
+						})
+					}	
+					//					console.log(res)
+					$(".san").html(lista)
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			//快速入口
+			var listt = ""
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/NewCardApi/quick_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 1,
+				},
+				success: function(res) {
+//										console.log(res)
+					if(res.ResultType == 0) {
+						
+						$(res.AppendData).each(function(s, t) {
+							listt += '<div class="op_cen">'
+							listt += '<a href="' + t.url + '">'
+							listt += '<span class="op_img">'
+							listt += '<img src="' + t.img + '" alt="" />'
+							listt += '</span>'
+							listt += '<span class="op_tit">' + t.title + '</span>'
+							listt += '</a>'
+							listt += '</div>'
+						})
+						$(".option").html(listt)
+					}else if(res.ResultType == 3){
+						$(".entry").hide();
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			//点击切换音乐播放
+			var open = true
+			$(".t_cen").on("click", function() {
+				var t = $(this);
+				if(t.hasClass("mus")) {
+					if(open) {
+
+						var audio = document.getElementById('audio');
+						audio.pause();
+						$(".music").css("opacity", 0.5)
+						$(".mus .t_tit").html("音乐关")
+						//             console.log("暂停音乐")
+						open = false;
+					} else {
+
+						var audio = document.getElementById('audio');
+						audio.play();
+						$(".music").css("opacity", 1)
+						$(".mus .t_tit").html("音乐开")
+						open = true
+					}
+				} else if(t.hasClass("ones")) {
+					window.location.href = "http://wx.yxm360.com?s=/Home/User/collection.html";
+				} else {
+					window.location.href = "http://wx.yxm360.com?s=/Home/Chat/myMessage/id/{$id}";
+				}
+
+			})
+
+			//懒加载
+			lazyRender();
+			$('.v_pro').animate({
+				scrollTop: '1px'
+			})
+			// 检查一开始进入页面
+			var clock;
+			$(".show,.t_link,.v_pro,.con_cens").on("scroll", function() {
+				if(clock) { // 如果在300毫秒内进行scroll的话，都会被clearTimeout掉，setTimeout不会执行。
+					//如果有300毫秒外的操作，会得到一个新的timeID即clock，会执行一次setTimeout,然后保存这次setTimeout的ID，
+					//对于300毫秒内的scroll事件，不会生成新的timeID值，所以会一直被clearTimeout掉，不会执行setTimeout.
+					clearTimeout(clock);
+				}
+				clock = setTimeout(function() {
+					//					console.log('运行了一次');
+					lazyRender();
+				}, 300)
+			});
+
+			function checkShow($img) { // 传入一个img的jq对象
+				var scrollTop = $('.vimg').scrollTop(); //即页面向上滚动的距离
+				var windowHeight = $('.banner').height(); // 浏览器自身的高度
+				var offsetTop = $img.offset().top; //目标标签img相对于document顶部的位置
+				if(offsetTop < (scrollTop + windowHeight) && offsetTop > scrollTop) { //在2个临界状态之间的就为出现在视野中的
+					return true;
+				} else {
+					return false;
+				}
+			};
+
+			function isLoaded($img) {
+				return $img.attr('data-src') === $img.attr('src'); //如果data-src和src相等那么就是已经加载过了
+				//				console.log('判断是否加载了')
+			};
+
+			function loadImg($img) {
+				$img.attr('src', $img.attr('data-src')); //加载就是把自定义属性中存放的真实的src地址赋给src属性
+				//				console.log('走了加载图片的方法')
+			};
+
+			function lazyRender() {
+				$('.lazyimg').each(function() {
+					if(checkShow($(this)) && !isLoaded($(this))) {
+						loadImg($(this));
+						//						console.log("第一次加载")
+					}
+				})
+			};
+		</script>
+
+
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+		<script>
+            $(function () {
+                var share_url = "{$share_url}";
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                    data: {
+                        share_url: share_url
+                    },
+                    async: true,
+                    // async: false,
+                    success: function (result) {
+                        var url = "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}";
+                        // console.log(result);
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                            appId: result.AppendData.appId,
+                            timestamp: result.AppendData.timestamp,
+                            nonceStr: result.AppendData.nonceStr,
+                            signature: result.AppendData.signature,
+                            jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                'checkJsApi',
+                                'onMenuShareTimeline', //
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'getLocation'
+                            ]
+                        });
+
+
+                        wx.ready(function () {
+                            //分享到朋友圈
+                            wx.onMenuShareTimeline({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link:  "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                type: '', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ
+                            wx.onMenuShareQQ({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link:  "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到腾讯微博
+                            wx.onMenuShareWeibo({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link:  "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ空间
+                            wx.onMenuShareQZone({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?unionid='.$unionid.'&style=7')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            $(document).on('click', '.pic', function (event) {
+                                var imgArray = [];
+                                var curImageSrc = $(this).attr('src');
+                                var oParent = $(this).parent();
+                                if (curImageSrc && !oParent.attr('href')) {
+                                    $('.pic').each(function (index, el) {
+                                        var itemSrc = $(this).attr('src');
+                                        imgArray.push(itemSrc); //如果在微信上测试，点击预览后出现一直在加载无法显示的情况，建议把图片的路径设置成全路径,如：http://blog.zongdaosoft.com/uploadFiles/uploadImgs/17/1.jpg
+                                    });
+                                    wx.previewImage({
+                                        current: curImageSrc,
+                                        urls: imgArray
+                                    });
+                                }
+                            });
+                        });
+
+
+                    },
+                    error: function () {
+                        console.log("走了错误")
+                    }
+                });
+
+            }); 
+            var styles = {$style}   
+			if(styles==7){
+            	$("body").css({
+    				'background': '#4D4F5E',
+    			})
+            	$(".banner_cen").css({
+    				'background': '#4D4F5E',
+    			})
+            	$(".vimg").css({
+    				'background': '#fff',
+    				"border-radius":"0.2rem",
+    				"box-shadow":'0rem 0.2rem 0.8rem 0rem rgba(51, 51, 51, 0.6)',
+    			})
+            	$(".er_cen").css({
+    				'background': '#4D4F5E',
+					'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(51, 51, 51, 0.5)',
+    			})
+    			$(".san_cen").css({
+    				'background': '#4D4F5E',
+    				'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(51, 51, 51, 0.5)',
+    			})
+    			$(".select>div").css({
+    				'border': '0.05rem solid #FFCA3F',
+    				'color':'#FFCA3F'
+    			})
+    			$(".entry").css("color","#FFCA3F")
+    			$(".q_img").attr("src","__HOME_IMAGES__/newvnet/vhome/lower@2x.png")
+    			$(".option").css("border","0.025rem solid rgba(255, 202, 63, 0.6)")
+    			$(".op_cen").css("border-bottom","0.025rem solid rgba(255, 202, 63, 0.6)")
+    			$(".set").css("border", "0.05rem solid #FFCA3F")
+    			$(".set>a").css("color", "#FFCA3F");
+    			$(".loadings").css("color","#fff");
+    			$(".loading").css("color","#fff");
+    			
+            }
+            if(styles==9){
+            	$("body").css({
+		    		'background': 'url("/Public/Home/images/stencil/v1.png")',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+    			});
+    			$(".banner_cen").css({
+    				'background': '#fff',
+    			})
+    			$(".title").css({
+    				'background': 'url("/Public/Home/images/stencil/v1.png")',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+    			})
+    			$(".vimg").css({
+    				'background': '#fff',
+    				"border-radius":"0.2rem",
+    				"box-shadow":'0rem 0.2rem 0.8rem 0rem rgba(205, 38, 35, 0.6)',
+    			})
+    			$(".er_cen").css({
+    				'background': '#fff',
+					'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(205, 38, 35, 0.5)',
+    			})
+    			$(".san_cen").css({
+    				'background': '#fff',
+    				'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(205, 38, 35, 0.5)',
+    			})
+    			$(".side").css({
+    				'background': '#CD2623',
+    			})
+    			$(".select>div").css({
+    				'border': '0.05rem solid #FFCA3F',
+    				'color':'#FFCA3F'
+    			})
+    			$(".entry").css("color","#FFCA3F")
+    			$(".q_img").attr("src","__HOME_IMAGES__/newvnet/vhome/lower@2x.png");
+    			$(".option").css("border","0.025rem solid rgba(255, 202, 63, 0.6)")
+    			$(".op_cen").css("border-bottom","0.025rem solid rgba(255, 202, 63, 0.6)")
+    			$(".set").css("border", "0.05rem solid #FFCA3F")
+    			$(".set>a").css("color", "#FFCA3F")
+    			$(".loadings").css("color","#000");
+    			$(".loading").css("color","#000");
+            }
+            
+            if(styles==11){
+            	$("body").css({
+		    		'background': 'url("/Public/Home/images/stencil/v2.png")',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+    			});
+    			$(".banner_cen").css({
+    				'background': '#fff',
+    			})
+    			$(".title").css({
+    				'background': 'url("/Public/Home/images/stencil/vt2.png")',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+    			})
+    			$(".vimg").css({
+    				'background': '#fff',
+    				"border-radius":"0.2rem",
+    				"box-shadow":'0rem 0.2rem 0.8rem 0rem rgba(62, 147, 226, 0.6)',
+    			})
+    			$(".er_cen").css({
+    				'background': '#fff',
+					'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(62, 147, 226, 0.5)',
+    			})
+    			$(".san_cen").css({
+    				'background': '#fff',
+    				'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(62, 147, 226, 0.5)',
+    			})
+    			$(".side").css({
+    				'background': '#3E93E2',
+    			})
+    			$(".select>div").css({
+    				'border': '0.05rem solid #fff',
+    				'color':'#fff'
+    			})
+    			$(".entry").css("color","#fff")
+    			$(".q_img").attr("src","/Public/Home/images/stencil/vj1.png")
+    			$(".option").css("border","0.025rem solid rgba(255, 255, 255, 0.6)")
+    			$(".op_cen").css("border-bottom","0.025rem solid rgba(255, 255, 255, 0.6)")
+    			$(".set").css("border", "0.05rem solid #FFF")
+    			$(".set>a").css("color", "#FFF")
+    			$(".loadings").css("color","#000");
+    			$(".loading").css("color","#000");
+            }
+            if(styles==13){
+            	$("body").css({
+		    		'background': '#32cea0',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+    			});
+    			$(".banner_cen").css({
+    				'background': '#fff',
+    			})
+    			$(".title").css({
+    				'background': '#32cea0',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+    			})
+    			$(".vimg").css({
+    				'background': '#fff',
+    				"border-radius":"0.2rem",
+    				"box-shadow":'0rem 0.2rem 0.8rem 0rem rgba(50, 206, 160, 0.6)',
+    			})
+    			$(".er_cen").css({
+    				'background': '#fff',
+					'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(50, 206, 160, 0.5)',
+    			})
+    			$(".san_cen").css({
+    				'background': '#fff',
+    				'box-shadow': '0rem 0.2rem 0.8rem 0rem rgba(50, 206, 160, 0.5)',
+    			})
+    			$(".side").css({
+    				'background': '#32cea0',
+    			})
+    			$(".select>div").css({
+    				'border': '0.05rem solid #fff',
+    				'color':'#fff'
+    			})
+    			$(".entry").css("color","#fff")
+    			$(".q_img").attr("src","/Public/Home/images/stencil/vj1.png")
+    			$(".option").css("border","0.025rem solid rgba(255, 255, 255, 0.6)")
+    			$(".op_cen").css("border-bottom","0.025rem solid rgba(255, 255, 255, 0.6)")
+    			$(".set").css("border", "0.05rem solid #FFF")
+    			$(".set>a").css("color", "#FFF")
+	    		$(".loadings").css("color","#000");
+	    		$(".loading").css("color","#000");
+            }
+            
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/LArea.min.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<title>创建商会</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.top {
+				padding: .8rem;
+			}
+			
+			body {
+				background: #FFF;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			ul li {
+				height: 50px;
+				border-bottom: 1px solid #E5E5E5;
+				line-height: 50px;
+			}
+			
+			.xk {
+				display: inline-block;
+				width: 50px;
+				height: 50px;
+				background: #ABADB0;
+				float: right;
+				border-radius: 50%;
+			}
+			
+			.xk img {
+				margin-left: 9px;
+				width: 30px;
+				height: auto;
+				margin-top: 10px;
+			}
+			
+			textarea {
+				background: #F6F6F7;
+				color: #9CA1A6;
+				border: 0;
+				height: 200px;
+				font-size: 14px;
+				margin: 0;
+			}
+			
+			p {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				text-align: right;
+				background: #F6F6F7;
+				color: #9CA1A6;
+				margin-top: -5px;
+				padding-bottom: 10px;
+				padding-right: 15px;
+			}
+			
+			button {
+				width: 100%;
+				height: 50px;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				border-radius: 0;
+				background: #2FB3D3;
+				color: #FFF;
+			}
+			
+			.shanghp {
+				width: 30%!important;
+			}
+			
+			.content-block {
+				position: absolute;
+				top: 4.5rem;
+				left: 7.8rem;
+			}
+			
+			.content-block input {
+				border: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<form action="">
+			<div class="top">
+				<form id="signform" action="{:U('Home/Trade/editTrade')}" method="post" class="form-horizontal">
+					<input type="hidden" name="image" id="image" value="" />
+					<input type="hidden" name="id" id="id" value="{$trade.id}" />
+					<ul>
+						<li style="height: 60px;line-height: 60px;">
+							<span>商会标志</span>
+							<input type="file" id="imgTest" class="file" name="logo" onchange="imgChange(event)" accept="image/*;capture=camera" id="imgTest" value="" style="display: none;" />
+							<span class="xk">
+							<img src="__HOME_CSS__/add/image/xiangji_Icon.png" onclick="fileSelect();"/>
+						</span>
+						</li>
+						<li>
+							<span>商会地区</span>
+							<img src="__HOME_CSS__/add/image/jiantou_icon.png" style="float: right;width: 10px;margin-top: 15px;z-index: 2;position: absolute;left: 21rem;" />
+							<!--<span style="float: right;">上海</span>-->
+							<div class="content-block">
+								<input id="demo1" type="text" readonly="" />
+								<input id="value1" type="hidden" name="city" value="20,234,504" />
+							</div>
+						</li>
+						<li>
+							<span>商会名称</span>
+							<!--<span style="float: right;margin-right: 20px;">商会商会</span>-->
+							<input type="text" class="shanghp" name="name" placeholder="商会名称" value="{$trade.name}" style="border: none;	width: 50%;height: 1.8rem;position: absolute;left:16rem;top: 8.5rem;" />
+						</li>
+						<li>
+							<span>入会价格</span>
+							<!--<span style="float: right;margin-right: 20px;">商会商会</span>-->
+							<input type="number" class="shanghp" name="money" placeholder="入会价格" value="{$trade.money}" style="border: none;	width: 50%;height: 1.8rem;position: absolute;left:16rem;top: 11.5rem;" />
+						</li>
+						<li>
+							<span>商会介绍</span>
+							<img src="__HOME_CSS__/add/image/img_icon.png" alt="" style="float: right;width: 30px;margin-top: 11px;" />
+						</li>
+					</ul>
+					<textarea name="intro" id="intro" rows="" cols="" placeholder="在此输入" maxlength="300" required="required"> {$trade.intro}</textarea>
+					<p>限10-300个字</p>
+				</form>
+			</div>
+
+			<button type="submit" id="add">保存</button>
+		</form>
+	</body>
+	<script src="__HOME_CSS__/add/js/LAreaData1.js"></script>
+	<script src="__HOME_CSS__/add/js/LAreaData2.js"></script>
+	<script src="__HOME_CSS__/add/js/LArea.js"></script>
+	<script type="text/javascript">
+		var area1 = new LArea();
+		area1.init({
+			'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+			'valueTo': '#value1', //选择完毕后id属性输出到该位置
+			'keys': {
+				id: 'id',
+				name: 'name'
+			}, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+			'type': 1, //数据源类型
+			'data': LAreaData //数据源
+		});
+		area1.value = [1, 13, 3]; //控制初始位置，注意：该方法并不会影响到input的value
+
+		//        $('.xk').click(event =>{
+		//            $('.file').click()
+		//        })
+
+		$("#add").on("click", function() {
+			var name = $("input[name=name]").val();
+			var money = $("input[name=money]").val();
+			var intro = $("#intro").val();
+			var city = $("#value1").val();
+			var logo = $("#image").val();
+			var id = $("#id").val();
+			var type = 1;
+			$.post("{:U('Home/Trade/editTrade')}", {
+				"name": name,
+				"money": money,
+				"type": type,
+				"intro": intro,
+				"city": city,
+				"logo": logo,
+				"id": id
+			}, function(res) {
+				console.log(res);
+				if(res.status == 1) {
+					mui.toast(res.msg);
+					top.location.href = "/Home/Trade/myTrades";
+				} else {
+					mui.toast(res.msg);
+				}
+			});
+		});
+
+		function fileSelect() {
+			document.getElementById("imgTest").click();
+		}
+
+		function imgChange(e) {
+			console.info(e.target.files[0]); //图片文件
+			var dom = $("input[id^='imgTest']")[0];
+			console.info(dom.value); //这个是文件的路径 C:\fakepath\icon (5).png
+			console.log(e.target.value); //这个也是文件的路径和上面的dom.value是一样的
+			var reader = new FileReader();
+			reader.onload = (function(file) {
+				return function(e) {
+					console.info(this.result); //这个就是base64的数据了
+					//                        doument.getElenemtById("image").value = this.result;
+					$("#image").val(this.result);
+				};
+			})(e.target.files[0]);
+			reader.readAsDataURL(e.target.files[0]);
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+</html>

@@ -1,0 +1,100 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+</block>
+
+<block name="body">
+
+	<body class="">
+
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">购买V网</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content ">
+			<div class="zzc_myranwen_search">
+				<div class="zzc_myranwen_search_input" style="left:5%;width:76%;">
+					<input type="text" class="zzc_seach_input" style="background: none;border:1px solid #EFEFF4;" placeholder="按姓名或手机号搜索">
+				</div>
+				<span class="zzc_right">搜索</span>
+			</div>
+			<div class="zzc_qiehuan_div" style="margin-top: 0px;">
+				<div class="zzc_qiehuan_li zzc_border_bottom">
+					<div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+					<div class="zzc_qiehuan_li_body">
+						CBD
+						<p class=''>247987#789</p>
+						<a href="" class="zzc_qiehuan_but" style="color:#F7E1BC; border-color:#F7E1BC ;">更换</a>
+					</div>
+				</div>
+				<div class="zzc_qiehuan_li zzc_border_bottom">
+					<div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+					<div class="zzc_qiehuan_li_body">
+						CBD
+						<p class=''>247987#789</p>
+						<a href="" class="zzc_qiehuan_but" style="color:#F7E1BC; border-color:#F7E1BC ;">更换</a>
+					</div>
+				</div>
+				<div class="zzc_qiehuan_li zzc_border_bottom">
+					<div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+					<div class="zzc_qiehuan_li_body">
+						CBD
+						<p class=''>247987#789</p>
+						<a href="" class="zzc_qiehuan_but" style="color:#F7E1BC; border-color:#F7E1BC ;">更换</a>
+					</div>
+				</div>
+				<div class="zzc_qiehuan_li zzc_border_bottom">
+					<div class="zzc_qiehuan_li_img"><img class="" src="__HOME_IMAGES__/60x60.gif"></div>
+					<div class="zzc_qiehuan_li_body">
+						CBD
+						<p class=''>247987#789</p>
+						<a href="" class="zzc_qiehuan_but" style="color:#F7E1BC; border-color:#F7E1BC ;">更换</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript">
+		function zzc_dialog_title() {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '切换成功?',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+								this.close();
+							}
+						}
+					]
+				});
+				show();
+			});
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

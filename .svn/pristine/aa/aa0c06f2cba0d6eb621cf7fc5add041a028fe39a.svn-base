@@ -1,0 +1,565 @@
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>{$title}</title>
+		<!-- Link Swiper's CSS -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+		<!-- Demo styles -->
+		<style>
+			html,
+			body {
+				position: relative;
+				height: 100%;
+			}
+			
+			.clearfix:after {
+				content: ".";
+				display: block;
+				height: 0;
+				clear: both;
+				visibility: hidden;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.fr {
+				float: right;
+			}
+			
+			body {
+				background: #eee;
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: auto;
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+			
+			.swiper-slide {
+				font-size: 0.45rem;
+				background: #fff;
+				height: 4rem;
+				/* Center slide text vertically */
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				/*-webkit-box-pack: center;*/
+				-ms-flex-pack: center;
+				/*-webkit-justify-content: center;
+				justify-content: center;*/
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				border-bottom: 0.025rem solid #999999;
+				padding-left: 0.5rem;
+				width: 100%;
+				/*overflow: hidden;*/
+				position: relative;
+			}
+			
+			.char {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				/*（行数）*/
+				-webkit-box-orient: vertical;
+			}
+			
+			.refresh {
+				position: absolute;
+				line-height: 100px;
+				bottom: 100%;
+				text-align: center;
+				width: 100%;
+			}
+			
+			.loadmoree {
+				width: 100%;
+				height: 2.5rem;
+				overflow: hidden;
+				text-align: center;
+				display: none;
+			}
+			
+			.loadmoree img {
+				width: 30px;
+				height: 30px;
+			}
+			
+			.loadmoree span {
+				font-size: 0.5rem;
+				display: block;
+			}
+			
+			.nav {
+				background-color: #fff;
+				box-shadow: 0rem 0.05rem 0.2rem 0rem rgba(0, 0, 0, 0.08);
+				color: #666;
+				width: 100%;
+				height: 2.5rem;
+				position: fixed;
+				z-index: 999;
+				top: 0;
+				left: 0;
+			}
+			
+			.nav>ul>li {
+				float: left;
+				width: 50%;
+				height: 100%;
+				line-height: 2.5rem;
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			.sel-a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color:#666;
+				position: relative;
+			}
+			
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			
+			.sel-a>span {
+				color: #666;
+				font-size: 0.85rem;
+			}
+			
+			.tit {
+				color: #000000;
+				width: 18rem;
+				font-size: 0.75rem;
+				overflow: hidden;
+				/*内容超出后隐藏*/
+				text-overflow: ellipsis;
+				/* 超出内容显示为省略号*/
+				white-space: nowrap;
+				/*文本不进行换行*/
+			}
+			
+			.char {
+				width: 95%;
+				color: #B6B6B6;
+				font-size: 0.65rem;
+			}
+			
+			.image{
+				display: inline-block;
+				width: .85rem;
+			    height: 1.075rem;
+			    margin-left: .375rem;
+			    position: absolute;
+    			top:0.7rem;
+			}
+			
+			.img{
+				width: .9rem;
+			    height: 1rem;
+			    position: absolute;
+			    top: 0.8rem;
+			    margin-left: .35rem;
+			}
+			.img>img{
+				width: 100%;
+				height: 100%;
+			}
+			.image>img {
+				width: 100%;
+				height: 100%;	
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+			.flipx {
+				transform: rotateY(180deg);
+			}
+			
+			.checkspan {
+				color: #fff;
+				font-size: 0.75rem;
+			}
+			
+			.right>a {
+				text-decoration: none;
+				line-height: 4rem;
+				text-align: center;
+				border-bottom: 0.025rem solid #999;
+			}
+			
+			.right {
+				width: 10rem;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				right: -10rem;
+				font-size: 0;
+			}
+			
+			.grab {
+				display: inline-block;
+				width: 5rem;
+				height: 100%;
+				background-color: #f0ad4e;
+				font-size: 0.65rem;
+				color: #fff;
+			}
+			
+			.pre {
+				display: inline-block;
+				width: 5rem;
+				height: 100%;
+				background-color: #dd524e;
+				color: #fff;
+				font-size: 0.65rem;
+			}
+			
+			.list {
+				width: 100%;
+				height: 100%;
+				background-color: #fff;
+				z-index: 600;
+				position: absolute;
+				overflow: hidden;
+				overflow-y: scroll;
+				display: none;
+				top: 3rem;
+				left: 0;
+			}
+			
+			.list>ul {
+				width: 100%;
+				position: absolute;
+				background: #fff;
+				top: 0;
+				left: 0;
+			}
+			
+			.list>ul>li {
+				width: 100%;
+				height: 2.5rem;
+				text-align: center;
+				line-height: 2.5rem;
+				border-bottom: 0.025rem dashed #999;
+			}
+			
+			.list>ul>li>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #333;
+				font-size: 0.75rem;
+			}
+			
+			.shade {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				z-index: 500;
+				display: none;
+			}
+			
+			.hint {
+				width: 90%;
+				height: 2rem;
+				line-height: 2rem;
+				margin: 0 auto;
+				font-size: 0.7rem;
+				color: #2FB3D3;
+				margin-top: 3rem;
+			}
+			
+			.swiper-wrapper {
+				height: 100%;
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="nav">
+			<ul>
+				<!-- <li id="select">
+					<a class="sel-a select" href="javascript:;">
+						<span>分类</span>
+						<i class="image" href="javascript:;"><img src="__HOME_IMAGES__/jt.png" alt="" /></i>
+					</a>
+				</li> -->
+				<li>
+					<a class="sel-a" href="{:u('Home/Article/catchArticle')}">
+						
+						<span>文章抓取</span>
+						<i class="image"><img src="__HOME_IMAGES__/inco_shou.png" alt="" /></i>
+					</a>
+				</li>
+				<li>
+					<a class="sel-a" href="{:u('Home/Eleditor/index')}">
+						
+						<span>文章编辑</span>
+						<i class="img"><img src="__HOME_IMAGES__/inco_draw.png" alt="" /></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="list">
+			<!-- <div class="list_box"> -->
+			<notempty name="article_type">
+				<ul>
+					<foreach name="article_type" item="type">
+						<li>
+							<a href="javascript:void (0)" onclick="goto({$type.id})" class="zzc_from_car_a">{$type.name}</a>
+						</li>
+					</foreach>
+				</ul>
+			</notempty>
+			<!-- </div> -->
+		</div>
+		<div class="shade"></div>
+		<!-- Swiper -->
+		<div class="hint">温馨提示：文章列表左滑预览和抓取哦！！！</div>
+		<div class="swiper-container">
+
+			<foreach name="list" item="vo">
+				<div class="swiper-slide item">
+					<a href="javascript:void(0)" onclick="previewArticle({$vo['id']})">
+						<h3 class="tit" style="margin: 0">{$vo.title}</h3>
+						<p class="char" style="margin-top: 0.3rem">{$vo.content}</p>
+					</a>
+					<div class="right">
+						<a href="javascript:;" class="grab" onclick="yl({$vo['id']})">预览</a>
+						<a href="javascript:;" class="pre" onclick="zq({$vo['id']})">抓取</a>
+					</div>
+				</div>
+			</foreach>
+
+		</div>
+		<span id="page" style="display: none">{$page}</span>
+		<div class="loadmoree">
+			<img class="loadimg" src="/Public/Home/images/loadad.gif" alt="">
+			<span class="">正在加载中....</span>
+		</div>
+		<!-- Swiper JS -->
+		<script src="//hm.baidu.com/hm.js?1cf880de4bc3c11500482f152b3353c0"></script>
+		<script src="__HOME_JS__/rem.js"></script>
+		<script src="__HOME_JS__/jquery-1.8.3.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<script type="text/html" id="list">
+			{{each result v i}}
+			<div class="swiper-slide item">
+				<a href="javascript:void(0)" onclick="previewArticle({{v.id}})">
+					<h3 class="tit" style="margin: 0">{{v.title}}</h3>
+					<p class="char" style="margin-top: 0.3rem">{{v.content}}</p>
+				</a>
+				<div class="right">
+					<a href="javascript:;" class="grab" onclick="yl({{v.id}})">预览</a>
+					<a href="javascript:;" class="pre" onclick="zq({{v.id}})">抓取</a>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<!-- Initialize Swiper -->
+		<script>
+			$(function() {
+
+				var scrollFlag = true;
+				var page = $("#page").text();
+				$(window).scroll(function() {
+					//已经滚动到上面的页面高度
+					var scrollTop = $(this).scrollTop();
+					//页面高度
+					var scrollHeight = $(document).height();
+					//浏览器窗口高度
+					var windowHeight = $(this).height();
+					//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+					if(!scrollFlag) {
+						return false;
+					}
+					console.log(scrollTop + windowHeight)
+					console.log(scrollHeight)
+					if(scrollTop + windowHeight == scrollHeight) {
+						scrollFlag = false;
+						$.ajax({
+							url: '__APP__/Home/Article/listArticle/page/',
+							type: "get",
+							data: {
+								page: page
+
+							},
+							beforeSend: function() {
+								$(".loadmoree").show();
+							},
+							success: function(res) {
+								scrollFlag = true;
+								$(".loadmoree").hide();
+								console.log(res)
+								page = res.page
+								$(".swiper-container").append(template("list", res));
+								if(res.result.length == 0) {
+									$(".loadmoree").show().find("span").text("已经到底啦！").css("margin-top", '0.8rem');
+									$(".loadimg").hide();
+									scrollFlag = false;
+								}
+
+							}
+
+						})
+
+					}
+				});
+
+				var isPageHide = false;
+				window.addEventListener('pageshow', function() {
+					if(isPageHide) {
+						window.location.reload();
+					}
+				});
+				window.addEventListener('pagehide', function() {
+					isPageHide = true;
+				});
+				//侧滑
+				var x1, x2, bl;
+				var p = 0;
+				$(".swiper-slide").live("touchstart", function() {
+					x1 = event.targetTouches[0].pageX;
+					// console.log(x1)
+					bl = true;
+				})
+				$(".swiper-slide").live("touchmove", function() {
+					// console.log(event.targetTouches[0].pageX);
+					if(bl) {
+						x2 = event.targetTouches[0].pageX;
+						if(x2 - x1 < -100) {
+							$(this).css({
+								"transform": 'translateX(-10rem)',
+								"transition": 'transform 1s'
+							});
+							bl = false;
+						}
+
+						if(x2 - x1 > 20) {
+							$(this).css({
+								"transform": 'translateX(0rem)',
+								"transition": 'transform 1s'
+							});
+							bl = false;
+						}
+					}
+				});
+			})
+		</script>
+		<script>
+			function data(data, page) {
+				// console.log(page);
+				var result = "";
+				for(var i = 0; i < data.length; i++) {
+					var article = data[i];
+					result += '<div class="swiper-slide">' +
+						'<a href="javascript:void(0)" onclick="previewArticle(' + article['id'] + ')">' +
+						'<h3 class="tit" style="margin: 0;">' + article['title'] + '</h3>' +
+						'<p class="char" style="margin-top: 0.3rem;">' + article['content'] + '</p>' +
+						'</a>' +
+						'<div class="right">' +
+						'<a href="javascript:;" class="grab" onclick="yl(' + article["id"] + ')">预览</a>' +
+						'<a href="javascript:;" class="pre" onclick="zq()">抓取</a>' +
+						'</div>' +
+						'</div>';
+				}
+				document.getElementById('page').innerHTML = page;
+				return result;
+			}
+
+			function previewArticle(id) {
+				var userid = '{$user_id}';
+				window.location.href = "{:U('Home/Article/previewArticle/is_home/1/id/" + id + "/uid/" + userid + "')}";
+			}
+
+			function goto(id) {
+				window.location.href = "/Home/Article/listArticle?type_id=" + id;
+			}
+
+			function yl(id) {
+				window.location.href = "{:U('Home/Article/previewArticle/is_home/1/id/" + id + "')}";
+			}
+
+			function zq(id) {
+				// window.location.href= "{:u('Home/Article/catchArticle/')} ";
+				// window.location.href= "{:u('Home/Article/previewArticle/id/"+id+"')} ";
+				window.location.href = "{:U('Home/Article/catchArticle/id/" + id + "')} ";
+				// http://wx.yxm360.com/index.php?s=/Home/Article/previewArticle/is_home/1/id/19760.html
+			}
+
+			//下拉框
+
+			$(function() {
+				$(".checkspan").bind("click", function() {
+					var ul = $(this).siblings('ul')
+					if(ul.is(":hidden")) {
+						ul.slideDown('400', function() {
+							$(this).find("li").bind("click", function() {
+								var selectLi = $(this).text();
+								$(".sel-a span").text(selectLi);
+								$(".sel-a ul").slideUp(400);
+							})
+							ul.mouseleave(function() {
+								$('.sel-a ul').slideUp(400)
+							});
+						});
+					} else {
+						$(this).siblings('ul').slideUp(400)
+					}
+
+				});
+
+			});
+
+			//下拉框
+
+			$(".select").click(function() {
+				$(".shade").show();
+				$(".list").show();
+			});
+			$(".shade").click(function() {
+				$(".shade").hide();
+				$(".list").hide();
+			});
+			$(".list").click(function(e) {
+				e.stopPropagation();
+			})
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+		<div id="yhqhadin" style="display:none;"></div>
+	</body>
+
+</html>

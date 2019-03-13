@@ -1,0 +1,45 @@
+<?php
+/** 新V网首页*/
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+class Vlink extends HomeBase {
+
+    /**
+     *新V网
+     */
+    public function vlinkage()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    public function addvlink()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+    public function linkdisplay()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+    public function compositor()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    public function move_link()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    public function move()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+};

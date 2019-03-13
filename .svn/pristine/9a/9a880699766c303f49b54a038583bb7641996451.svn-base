@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>添加产品</title>
+		<script src="__HOME_JS__/whjs/js/newrem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+		<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+	    <script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+	    <script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+	    <script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+		<style>
+			body,
+			html {
+				background: #fff;
+			}
+			
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			a {
+				-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+				-webkit-user-select: none;
+				-moz-user-focus: none;
+				-moz-user-select: none;
+			}
+			
+			.title {
+				width: 90%;
+				height: 0.45rem;
+				line-height: 0.65rem;
+				font-size: 0.16rem;
+				color: #333;
+				font-weight: 600;
+				margin: 0 auto;
+			}
+			
+			.ipt {
+				width: 90%;
+				height: 0.4rem;
+				padding-bottom: 0.1rem;
+				border-bottom: 0.01rem solid #F6F6F6;
+				margin: 0 auto;
+			}
+			
+			.ipt>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: none;
+				font-size: 0.14rem;
+				color: #666;
+				outline: none;
+			}
+			
+			.txt {
+				width: 90%;
+				height: 0.6rem;
+				margin: 0 auto;
+				padding: 0.1rem 0;
+				border-bottom: 0.01rem solid #F6F6F6;
+			}
+			
+			.txt>textarea {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				font-size: 0.14rem;
+				color: #666;
+			}
+			
+			textarea::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #C5C5C5;
+				/* placeholder字体大小  */
+				font-size: 0.14rem;
+			}
+			
+			.cover {
+				width: 90%;
+				height: 0.64rem;
+				margin: 0 auto;
+				line-height: 0.64rem;
+				display: flex;
+				border-bottom: 0.01rem solid #F6F6F6;
+			}
+			
+			.c_tit {
+				width: 50%;
+				height: 100%;
+				font-size: 0.16rem;
+				font-weight: 600;
+			}
+			
+			.c_img {
+				width: 50%;
+				height: 100%;
+				line-height: 0.64rem;
+				overflow: hidden;
+			}
+			
+			.c_img>img {
+				display: block;
+				width: 0.41rem;
+				height: 0.41rem;
+				margin: 0.115rem 0;
+				float: right;
+				border-radius: 0.05rem;
+			}
+			
+			#fil_cov {
+				display: none;
+				float: right;
+				width: 50%;
+				height: 100%;
+			}
+			
+			.price,
+			.fenl {
+				width: 90%;
+				height: 0.54rem;
+				margin: 0 auto;
+				line-height: 0.54rem;
+				display: flex;
+				border-bottom: 0.01rem solid #F6F6F6;
+			}
+			
+			.p_tit {
+				width: 30%;
+				height: 100%;
+				font-size: 0.16rem;
+				font-weight: 600;
+			}
+			
+			.p_ipt {
+				width: 70%;
+				height: 100%;
+			}
+			
+			.p_ipt>input {
+				display: block;
+				border: none;
+				width: 100%;
+				height: 100%;
+				outline: none;
+				text-align: right;
+			}
+			
+			.f_tit {
+				width: 20%;
+				height: 100%;
+				font-size: 0.16rem;
+				font-weight: 600;
+			}
+			
+			.fenl>select {
+				width: 40%;
+				height: 100%;
+				border: none;
+				text-align-last: right;
+				font-size: 0.14rem;
+				color: #777;
+				padding-right: 0.2rem;
+				appearance: none;
+				-moz-appearance: none;
+				/* Firefox */
+				-webkit-appearance: none;
+				/* Safari 和 Chrome */
+				background: url(__HOME_IMAGES__/newvnet/apro/icon_xia@2x.png) no-repeat 100% 0.24rem;
+				background-size: 10%;
+			}
+			
+			.fenl>select>option {
+				direction: rtl;
+			}
+			
+			.p_ipt>a {
+				display: block;
+				text-decoration: none;
+				font-size: 0.14rem;
+				color: #C5C5C5;
+				text-align: right;
+			}
+			
+			.p_ipt>a>span>img {
+				float: right;
+				width: 0.08rem;
+				height: 0.14rem;
+				margin: 0.2rem 0 0.2rem 0.08rem;
+			}
+			
+			.banner,
+			.show {
+				width: 90%;
+				height: 0.54rem;
+				line-height: 0.54rem;
+				margin: 0 auto;
+				font-size: 0.16rem;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.ban_img,
+			.show_img {
+				width: 90%;
+				height: auto;
+				margin: 0 auto;
+				overflow: hidden;
+				padding-bottom: 0.16rem;
+				border-bottom: 0.01rem solid #F6F6F6;
+			}
+			
+			.b_img {
+				width: 1.0851rem;
+				height: 1.0851rem;
+				position: relative;
+				float: left;
+				margin-bottom: 0.06rem;
+			}
+			
+			.lb_img{
+				width: 1.0851rem;
+				height: 0.5425rem;
+				position: relative;
+				float: left;
+				margin-bottom: 0.06rem;
+			}
+			
+			.b_img>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: 0.02rem;
+			}
+			.lb_img>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: 0.02rem;
+			}
+			
+			.del {
+				width: 0.2rem;
+				height: 0.2rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+				cursor:pointer ;
+			}
+			.dels {
+				width: 0.2rem;
+				height: 0.2rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+				cursor:pointer ;
+			}
+			
+			
+			.del>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.dels>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.b_img>video {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border-radius: 0.02rem;
+				object-fit: fill;
+			}
+			
+			.b_img:nth-child(3n-1) {
+				margin: 0 0.059rem;
+			}
+			
+			#file_img,
+			#file_imgs {
+				width: 100%;
+				height: 100%;
+				display: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			
+			.show_con {
+				width: 90%;
+				height: 0.6rem;
+				margin: 0 auto;
+				padding-bottom: 0.15rem;
+			}
+			
+			.show_con>textarea {
+				display: block;
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				font-size: 0.14rem;
+				color: #666;
+			}
+			
+			.show_img {
+				margin-bottom: 0.56rem;
+			}
+			
+			.complete {
+				width: 100%;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				text-align: center;
+				font-size: 0.16rem;
+				font-weight: 600;
+				padding: 0.08rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-top: 0.0125rem solid #F6F6F6;
+			}
+			
+			.comp_cen {
+				width: 90%;
+				height: 100%;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.preview {
+				width: 36%;
+				height: 100%
+			}
+			
+			.preview>a {
+				display: block;
+				text-decoration: none;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				color: #333;
+			}
+			
+			.com_cen {
+				width: 64%;
+				height: 100%;
+				border-radius: 0.05rem;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+				letter-spacing: 0.1rem;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 2rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 0.44rem;
+				padding: 0 0.15rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.16rem;
+				text-align: center;
+				line-height: 0.44rem;
+				border-radius: 0.052rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			.mask {
+				width: 1.5rem;
+				height: 1.2rem;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 0.025rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -0.75rem;
+				margin-left: -0.6rem;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mask img {
+				width: 0.4rem;
+				height: 0.4rem;
+				display: block;
+				margin: 0 auto;
+				margin-top: 0.2rem;
+				margin-bottom: 0.2rem;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mask p {
+				color: #fff;
+				text-align: center;
+				font-size: 0.15rem;
+			}
+			
+			.mesk {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.7);
+				position: fixed;
+				left: 0;
+				top: 0;
+				z-index: 998;
+				display: none;
+			}
+			
+			.tip_mssg {
+				background: #fff;
+				position: fixed;
+				width: 2.4rem;
+				height: 1.3rem;
+				top: 50%;
+				left: 50%;
+				margin-top: -0.65rem;
+				margin-left: -1.24rem;
+				border-radius: .1rem;
+				text-align: center;
+				z-index: 1001;
+			}
+			
+			.tip_mssg p:nth-child(1) {
+				font-size: .18rem;
+				text-align: center;
+				height: 0.6rem;
+				line-height: 0.7rem;
+			}
+			
+			.tip_mssg p:nth-child(2) {
+				font-size: .16rem;
+				text-align: center;
+				height: 0.7rem;
+				line-height: 0.4rem;
+			}
+			
+			.tip_mssg .check {
+				width: 100%;
+				border-top: 0.01rem solid #979797;
+			}
+			
+			.tip_mssg .check .confrirm {
+				color: #34B1D3;
+			}
+			
+			.confrirm {
+				padding: .1rem .525rem .1rem .465rem;
+				font-size: .16rem;
+			}
+			/*参数选择*/
+			
+			.can {
+				width: 100%;
+				height: 100%;
+				background: #F6F6F6;
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1000;
+				overflow: auto;
+			}
+			
+			.add {
+				width: 90%;
+				height: 0.55rem;
+				line-height: 0.55rem;
+				background: #fff;
+				margin: 0 auto 0.7rem;
+				font-weight: 500;
+				font-size: 0.16rem;
+				color: #F8C85E;
+				text-align: center;
+				border-bottom-left-radius: 0.04rem;
+				border-bottom-right-radius: 0.04rem;
+			}
+			
+			.max {
+				width: 90%;
+				height: auto;
+				margin: 0.12rem auto 0;
+				border-top-left-radius: 0.04rem;
+				border-top-right-radius: 0.04rem;
+				z-index: 100;
+			}
+			
+			.tab {
+				width: 100%;
+				height: 0.46rem;
+				line-height: 0.46rem;
+				font-size: 0.16rem;
+				font-weight: 600;
+				color: #333;
+				display: flex;
+				background: #fff;
+				padding-bottom: 0.01rem;
+				border-bottom: 0.01rem solid #F8F8F8;
+			}
+			
+			.tab_left {
+				width: 25%;
+				height: 100%;
+				padding: 0 3.5%;
+			}
+			
+			input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+			}
+			
+			input::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #C5C5C5;
+				/* placeholder字体大小  */
+				font-size: 0.14rem;
+			}
+			
+			.tab_cen {
+				width: 60.5%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.tab_right {
+				width: 12.5%;
+				height: 100%;
+				text-align: center;
+				background: #fff;
+			}
+			
+			.tab_right>img {
+				width: 0.2rem;
+				height: 0.2rem;
+				margin: 0.13rem 0;
+			}
+			
+			.confirm {
+				width: 100%;
+				height: 0.4rem;
+				background: #fff;
+				padding: 0.08rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.save {
+				width: 90%;
+				height: 0.4rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.16rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.1rem;
+				line-height: 0.4rem;
+				border-radius: 0.04rem;
+			}
+			/*参数删除弹框*/
+			
+			.delzz,
+			.delzzs {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: #00000059;
+				display: none;
+				z-index: 1000;
+			}
+			
+			.deltk {
+				width: 3.11rem;
+				height: 1.5rem;
+				background: #fff;
+				margin: 0 auto;
+				margin-top: 60%;
+				border-radius: .04rem;
+			}
+			
+			.tkzz {
+				font-size: 16px;
+				font-family: PingFangSC-Medium;
+				font-weight: 550;
+				color: #333;
+				display: block;
+				text-align: center;
+				line-height: .7rem;
+			}
+			
+			.delqx {
+				font-size: 16px;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				float: left;
+				margin-left: 7%;
+				margin-top: 5%;
+				width: 1.2rem;
+				height: .4rem;
+				text-align: center;
+				line-height: .4rem;
+				color: #777;
+				border: 1px solid #c5c5c5;
+				border-radius: .04rem;
+			}
+			
+			.delsc,
+			.del_san {
+				font-size: 16px;
+				font-family: PingFangSC-Regular;
+				font-weight: 400;
+				float: left;
+				margin-left: 7%;
+				margin-top: 5%;
+				width: 1.2rem;
+				height: .4rem;
+				text-align: center;
+				line-height: .4rem;
+				border: 1px solid #FE5F5F;
+				color: #FE5F5F;
+				border-radius: .04rem;
+				cursor: pointer;
+			}
+			/* 截图的 */
+			
+			.btun {
+				width: 274px;
+				height: 10%;
+				margin: 0 auto;
+			}
+			
+			#clipBtn {
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				z-index: 999;
+				border-radius: 5px;
+				font-size: 16px;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 26%;
+				position: relative;
+				z-index: 999;
+				font-size: 16px;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 229;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				position: absolute;
+				top: 32%;
+				left: 34%;
+			}
+			
+			#clipArea {
+				height: 85%;
+				width: 100%;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			/*轮播图裁剪*/
+			.btunr {
+				width: 274px;
+				height: 10%;
+				margin: 0 auto;
+			}
+			
+			#clipBtnr {
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				z-index: 999;
+				border-radius: 5px;
+				font-size: 16px;
+			}
+			
+			#cancelr {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 26%;
+				position: relative;
+				z-index: 999;
+				font-size: 16px;
+			}
+			
+			.gifr {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 229;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gifr>img {
+				position: absolute;
+				top: 42.5%;
+				left: 50%;
+				width: 60px;
+				height: 60px;
+				margin-left: -30px;
+				margin-top: -30px;
+			}
+			
+			#clipArear {
+				height: 85%;
+				width: 100%;
+			}
+			
+			.clipr {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			
+			.photo-clip-layer {
+				background: rgba(255, 255, 255, 1)
+			}
+			
+			
+			/*轮播图上传*/
+			.s_lun{
+				width: 90%;
+				height: 0.8rem;
+    			margin: 0 auto 0.12rem;
+			}
+			.lun_img{
+				width: 45%;
+				height: 0.8rem;
+				background: #F8F8F8;
+				border-radius: 2px;
+	            float: left;
+	            position: relative;
+			}
+			.xq_img{
+				width: 45%;
+				height: 0.8rem;
+				background: #F8F8F8;
+				border-radius: 2px;
+	            float: left;
+	            position: relative;
+			}
+			.lun_vdo{
+				width: 45%;
+	            height: 0.8rem;
+	            background: #F8F8F8;
+	            border-radius: 2px;
+	            float: left;
+	            margin-left: 10%;
+	            position: relative;
+			}
+			
+			.lun_img img{
+	            display: block;
+			    width: .48rem;
+			    height: .36rem;
+			    margin: 0.22rem 0.16rem;
+        	}
+        	
+        	.xq_img img{
+	            display: block;
+			    width: .48rem;
+			    height: .36rem;
+			    margin: 0.22rem 0.16rem;
+        	}
+	        .lun_vdo img{
+	        	display: block;
+			    width: .48rem;
+			    height: .36rem;
+			    margin: 0.22rem 0.16rem;
+	        }
+	        .t_left{
+	        	width: 50%;
+				height: 100%;
+				float:left;
+				text-align: center;
+	        }
+	        .t_right {
+			    width: 50%;
+			    height: 100%;
+			    font-size: 0.16rem;
+			    color: #111;
+			    line-height: 0.8rem;
+			    float: left;
+			}
+			.chuantp {
+			    width: 100%;
+			    height: 100%;
+			    opacity: 0;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    display: block;
+			}
+			.v_vdo {
+			    width: 100%;
+			    height: 100%;
+			    opacity: 0;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel">取消</button>
+				<button id="clipBtn">截取</button>
+			</div>
+		</div>
+		<!--轮播图裁剪-->
+		<div class="clipr">
+	        <div class="gifr">
+	            <img src="__HOME_IMAGES__/new_load.gif" alt="" />
+	        </div>
+	        <div id="clipArear"></div>
+	        <div class="btunr">
+	            <button id="cancelr">取消</button>
+	            <button id="clipBtnr">截取</button>
+	        </div>
+    	</div>
+
+		<div class="title">产品标题</div>
+		<div class="ipt">
+			<input class="t_tit" type="text" placeholder="输入标题…" />
+		</div>
+		<div class="title">产品描述</div>
+		<div class="txt">
+			<textarea class="txt_des" name="" rows="" cols="" placeholder="输入对产品的详细描述…"></textarea>
+		</div>
+		<div class="cover">
+			<div class="c_tit">封面</div>
+			<div class="c_img">
+				<img class="cover_img" src="__HOME_IMAGES__/newvnet/vhome/cover.png" alt="" />
+			</div>
+			<input type="file" id="fil_cov" accept="image/*" />
+		</div>
+		<div class="price">
+			<div class="p_tit">价格</div>
+			<div class="p_ipt">
+				<input class="much" type="number" placeholder="输入产品价格" />
+			</div>
+		</div>
+		<div class="price">
+			<div class="p_tit">产地</div>
+			<div class="p_ipt">
+				<input class="here" type="text" placeholder="输入产品生产所在地" />
+			</div>
+		</div>
+		<!--<div class="fenl">
+			<div class="f_tit">分类</div>
+			<select name="first" id="second">
+				<option value="">请选择</option>
+			</select>
+			<select name="" id="first">
+				<option value="">请选择</option>
+			</select>
+		</div>-->
+		<div class="price">
+			<div class="p_tit">产品参数</div>
+			<div class="p_ipt can_num">
+				<a href="javascript:;">
+					<span>设置参数</span>
+					<span>
+						<img src="__HOME_IMAGES__/newvnet/vhome/shape2x.png" alt="" />
+					</span>
+				</a>
+			</div>
+		</div>
+
+		<div class="can">
+			<div class="max">
+				<!--<div class="tab">
+					<div class="tab_left">
+						<input class="tab_name" type="text" placeholder="标题" />
+					</div>
+					<div class="tab_cen">
+						<input class="tab_con" type="text" placeholder="参数" />
+					</div>
+					<div class="tab_right">
+						<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />
+					</div>
+				</div>-->
+			</div>
+			<div class="add">+&nbsp;添加更多规格</div>
+			<div class="confirm">
+				<div class="save">
+					确定
+				</div>
+			</div>
+		</div>
+
+		<div class="banner">
+			产品轮播图
+		</div>
+		
+		<div class="s_lun">
+			<div class="lun_img">
+				<div class="t_left">
+            		<img src="Public/Home/images/newvnet/icon/Path 13@2x.png" alt="">
+            	</div>
+               	<div class="t_right">上传图片</div>
+                <input type="file" class="chuantp" id="fileimg" accept="image/*">
+			</div>
+			<div class="lun_vdo">
+				<div class="t_left">
+            		<img src="Public/Home/images/newvnet/icon/Group 70@2x.png" alt="">
+            	</div>
+               	<div class="t_right">上传视频</div>
+                <input type="file" class="v_vdo" id="v_file" accept="video/*">
+			</div>
+		</div>
+		
+		<div class="ban_img">
+			
+			
+		</div>
+		<div class="show">
+			产品详情展示
+		</div>
+		
+		<div class="s_lun">
+			<div class="xq_img ">
+				<div class="t_left">
+            		<img src="Public/Home/images/newvnet/icon/Path 13@2x.png" alt="">
+            	</div>
+               	<div class="t_right">上传图片</div>
+                <input type="file" class="chuantp" id="fileimgs" accept="image/*">
+			</div>
+			<div class="lun_vdo">
+				<div class="t_left">
+            		<img src="Public/Home/images/newvnet/icon/Group 70@2x.png" alt="">
+            	</div>
+               	<div class="t_right">上传视频</div>
+                <input type="file" class="v_vdo" id="v_files" accept="video/*">
+			</div>
+		</div>
+		<!--<div class="show_con">
+			<textarea class="show_des" name="" rows="" cols="" placeholder="请输入内容…"></textarea>
+		</div>-->
+		<div class="show_img">
+			
+		</div>
+		<div class="complete">
+			<div class="comp_cen">
+				<div class="preview">
+					<a href="javascript:;">预览</a>
+				</div>
+				<div class="com_cen">
+					保存
+				</div>
+			</div>
+		</div>
+
+		<div class="mask">
+			<img src="__HOME_IMAGES__/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<div class="model"></div>
+		<input class="y_img" type="hidden" value="" />
+		<div class="mesk">
+			<div class="tip_mssg">
+				<p>提示</p>
+				<p class="text">视频只能添加1个！</p>
+			</div>
+		</div>
+		<div class="delzz">
+			<div class="deltk">
+				<span class="tkzz">确定删除此参数吗?</span>
+				<ul class="anniu">
+					<li class="delqx">取消</li>
+					<li class="delsc" data-id="">删除</li>
+				</ul>
+			</div>
+		</div>
+		<div class="delzzs">
+			<div class="deltk">
+				<span class="tkzz">确定删除此图片吗?</span>
+				<ul class="anniu">
+					<li class="delqx">取消</li>
+					<li class="del_san" data-id="">删除</li>
+				</ul>
+			</div>
+		</div>
+		<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
+		<!--<script>eruda.init();</script>-->
+		<!--<script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+		<script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+		<script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>-->
+		<script>
+			var pr_id = "{$p_id}" //产品id
+			var unionid = '{$unionid}';
+			
+			//封面
+			$(".c_img").click(function() {
+				$("#fil_cov").click();
+				$(".clip").show();
+			})
+
+			//封面上传
+			var clipArea = new PhotoClip("#clipArea", {
+				size: [336, 224],
+				outputSize: [640, 640],
+				file: "#fil_cov",
+				ok: "#clipBtn",
+				loadStart: function() {
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					$('.gif').hide();
+				},
+				done: function(dataURL) {
+					var imgsrc = dataURL;
+					$.ajax({
+						url: "/index.php?s=/Api/IndexApi/uploads_img",
+						type: "post",
+						data: {
+							unionid: unionid,
+							img: imgsrc,
+							start_name: "Cards",
+						},
+						beforeSend: function() {
+							$('.loading').show()
+							$('.mask').show()
+						},
+						success: function(res) {
+//							console.log(res)
+							downing = res.AppendData;
+							$(".cover_img").attr("src", downing);
+							$(".y_img").val(downing);
+							$('.loading').hide()
+							$('.mask').hide()
+
+						},
+						error: function() {
+							console.log('走了错误')
+							$('.loading').hide()
+							$('.mask').hide()
+						}
+					})
+
+				}
+			});
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+			});
+			$("#cancelr,#clipBtnr").click(function() {
+				$(".clipr").hide();
+			});
+
+			//轮播图
+			
+			
+			$("#fileimg").click(function() {
+				$('.clipr').show();
+				
+			})	
+			
+//				var that = $(this);
+//				var file_img = this.files[0];
+//				var is_size=this.files[0].size/1024;
+//				if(is_size>10240){
+//					$(".mesk").show();
+//					$(".text").html("请上传小于10M的图片")
+//					setTimeout(function() {
+//						$(".mesk").hide();
+//					}, 1500);
+//					return false;
+//				}
+					
+			    var clipArear = new PhotoClip("#clipArear", {
+			        size: [350, 175],
+			        outputSize: [640, 640],
+			        file: "#fileimg",
+			        ok: "#clipBtnr",
+			        loadStart: function () {
+			            $('.gifr').show();
+			        },
+			        loadComplete: function () {
+			            $('.gifr').hide();
+			        },
+			        done: function (dataURL) {
+			            var imgsrc = dataURL;
+			            $.ajax({
+			                url: "/index.php?s=/Api/IndexApi/uploads_img",
+			                type: "post",
+			                data: {
+			                    unionid: unionid,
+			                    img: imgsrc,
+			                    start_name: "product"
+			                },
+			                beforeSend: function () {
+			                    $('.loading').show()
+								$('.mask').show()
+			                },
+			                success: function (res) {
+			                    $(".mask").hide();
+			                    // 点击上传的图片数组呈现出来
+			                    dataimg = res.AppendData;
+			                    if($(".ban_img .b_imgs").length >= 4) {
+									$(".mesk").show();
+									$(".text").html("图片只能添加4个")
+									setTimeout(function() {
+										$(".mesk").hide();
+									}, 1500);
+									return false;
+								}
+			                    $(".ban_img").append(
+									'<div class="b_img b_imgs lb_img">' +
+									'<img src="' + dataimg + '" alt="" />' +
+									'<div class="dels">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="b_ipt" type="hidden" value="' + dataimg + '" />' +
+									'</div>'
+									)
+ 
+				                },
+				                error: function () {
+				                    console.log('走了错误')
+			                    $(".mask").hide();
+			                    $(".loading").hide();
+			                }
+			            })
+			
+			        }
+			    });
+			 
+					
+//					var that = $(this);
+//					var file_img = this.files[0];
+//					var i_size=this.files[0].size/1024;
+//					if(i_size>10240){
+//						$(".mesk").show();
+//						$(".text").html("请上传小于10M的图片")
+//						setTimeout(function() {
+//							$(".mesk").hide();
+//						}, 1500);
+//						return false;
+//					}
+//					var formdata = new FormData();
+//					formdata.append("img", file_img);
+//					formdata.append("start_name", 'product');
+//					formdata.append("unionid", unionid);
+//					var render = new FileReader();
+//					render.readAsDataURL(file_img)
+//					render.onload = function(res) {
+//						$.ajax({
+//							type: 'post',
+//							url: '/index.php?s=/Api/IndexApi/uploads_img',
+//							dataType: 'json',
+//							data: formdata,
+//							processData: false,
+//							contentType: false,
+//							beforeSend: function() {
+//								$(".mask").show();
+//								$(".mask").show().find('p').text("图片上传中");
+//								
+//							},
+//							success: function(result) {
+//								//								console.log(result)
+//								$(".mask").hide();
+//								if(result.ResultType == 0) {
+//									$(".ban_img").append(
+//										'<div class="b_img b_imgs">' +
+//										'<img src="' + result.AppendData + '" alt="" />' +
+//										'<div class="dels">' +
+//										'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+//										'</div>' +
+//										'<input class="b_ipt" type="hidden" value="' + result.AppendData + '" />' +
+//										'</div>'
+//									)
+//								}
+//							},
+//							error: function() {
+//								console.log("错误")
+//							}
+//						});
+//					}
+				
+				$("#v_file").change(function() {
+				
+					if($(".ban_img .b_vdo").length >= 1) {
+						$(".mesk").show();
+						$(".text").html("视频只能添加1个")
+						setTimeout(function() {
+							$(".mesk").hide();
+						}, 1500);
+						return false;
+					}
+					var type = $("#v_file").val();
+					var files = this.files[0];
+					var v_size=this.files[0].size/1024;
+					if(v_size>30720){
+						$(".mesk").show();
+						$(".text").html("请上传小于30M的视频")
+						setTimeout(function() {
+							$(".mesk").hide();
+						}, 1500);
+						return false;
+					}
+					var formdata = new FormData();
+					formdata.append("img", files);
+					formdata.append("start_name", 'product');
+					formdata.append("unionid", unionid);
+					$.ajax({
+						type: "post",
+						url: "/index.php?s=/Api/IndexApi/upload_video",
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".mask").show();
+							$(".mask").show().find('p').text("视频上传中");
+						},
+						success: function(res) {
+							//							console.log(res)
+							$(".mask").hide();
+							
+							if(res.ResultType == 0) {
+								$(".ban_img").append(
+									'<div class="b_img b_vdo lb_img">' +
+									'<video src="' + res.AppendData + '" poster="'+res.AppendData+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast"  controls="controls"></video>' +
+									'<div class="dels">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="b_ipt" type="hidden" value="' + res.AppendData + '" />' +
+									'</div>'
+								)
+							}
+
+						}
+					}) 
+				})
+
+			//产品详情图
+			
+			$("#fileimgs").change(function() {
+
+				if($(".show_img .b_imgs").length >= 4) {
+					$(".mesk").show();
+					$(".text").html("图片只能添加4个")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				var that = $(this);
+				var file_img = this.files[0];
+				var is_size=this.files[0].size/1024;
+				if(is_size>10240){
+					$(".mesk").show();
+					$(".text").html("请上传小于10M的图片")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				var formdata = new FormData();
+				formdata.append("img", file_img);
+				formdata.append("start_name", 'product');
+				formdata.append("unionid", unionid);
+				var render = new FileReader();
+				render.readAsDataURL(file_img)
+				render.onload = function(res) {
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/IndexApi/uploads_img',
+						dataType: 'json',
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".mask").show();
+							$(".mask").show().find('p').text("图片上传中");
+						},
+						success: function(result) {
+							//								console.log(result)
+							$(".mask").hide();
+	//								console.log(type)
+							if(result.ResultType == 0) {
+								$(".show_img").append(
+									'<div class="b_img b_imgs">' +
+									'<img src="' + result.AppendData + '" alt="" />' +
+									'<div class="dels">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="s_ipt" type="hidden" value="' + result.AppendData + '" />' +
+									'</div>'
+								)
+							}
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			})
+			$("#v_files").change(function() {
+
+				if($(".show_img .b_vdos").length >= 1) {
+					$(".mesk").show();
+					$(".text").html("视频只能添加1个")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				var videosize = document.getElementById("v_files").files[0].size;
+				var type = $("#file_imgs").val();
+				var files = this.files[0];
+				var vs_size=this.files[0].size/1024;
+				if(vs_size>30720){
+					$(".mesk").show();
+					$(".text").html("请上传小于30M的视频")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				var formdata = new FormData();
+				formdata.append("img", files);
+				formdata.append("start_name", 'product');
+				formdata.append("unionid", unionid);
+				$.ajax({
+					type: "post",
+					url: "/index.php?s=/Api/IndexApi/upload_video",
+					data: formdata,
+					processData: false,
+					contentType: false,
+					beforeSend: function() {
+						$(".mask").show();
+						$(".mask").show().find('p').text("视频上传中");
+					},
+					success: function(res) {
+						//							console.log(res)
+						$(".mask").hide();
+						if(res.ResultType == 0) {
+							$(".show_img").append(
+								'<div class="b_img b_vdos">' +
+								'<video src="' + res.AppendData + '" poster="'+res.AppendData+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast"  controls="controls"></video>' +
+								'<div class="dels">' +
+								'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+								'</div>' +
+								'<input class="s_ipt" type="hidden" value="' + res.AppendData + '" />' +
+								'</div>'
+							)
+						}
+					}
+				})  
+			})
+
+			//参数设置
+			$(".add").on("click", function() {
+				$(".max").append(
+					'<div class="tab">' +
+					'<div class="tab_left">' +
+					'<input class="tab_name" type="text" placeholder="标题" />' +
+					'</div>' +
+					'<div class="tab_cen">' +
+					'<input class="tab_con" type="text"  placeholder="参数"/>' +
+					'</div>' +
+					'<div class="tab_right">' +
+					'<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />' +
+					'</div>' +
+					'</div>'
+				)
+			})
+
+			$(".can_num").on("click", function() {
+				$(".can").show();
+			})
+			var arrs = [];
+			$(".save").on("click", function() {
+				$.each($(".tab"), function(idx, item) {
+					//				 	console.log($(this).find(".tab_name").val());
+					var product_parameters = [$(this).find(".tab_name").val(), $(this).find(".tab_con").val()];
+					arrs.push(product_parameters);
+				});
+				//参数修改
+				var unionid = '{$unionid}';
+				var p_id = "{$p_id}" //产品id
+				//			console.log(unionid);
+//				console.log(arrs)
+//				console.log(p_id)
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/add_edit_product_para',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						product_id: p_id,
+						product_para: arrs,
+
+					},
+					success: function(res) {
+//						console.log(res)
+						$(".can").hide();
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+			//产品参数删除
+			$(document).on("click", ".tab_right", function() {
+				//				$(this).parent().hide();
+				$(".delzz").show();
+				$(".tkzz").html("确定删除此参数吗?")
+				$(".delsc").attr("data-id", $(this).attr("data-id"))
+			})
+
+			$(".delsc").on("click", function() {
+				var p_id = $(this).attr("data-id");
+				var elelist = $("div.tab div.tab_right");
+				for(var a in elelist) {
+					//					console.log($(elelist[a]).attr("data-id"))
+					if($(elelist[a]).attr("data-id") == p_id) {
+						$(elelist[a]).parent().remove();
+						break;
+					}
+				}
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/del_product_parm',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						parm_id: p_id
+
+					},
+					success: function(res) {
+						$(".delzz").hide();
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+
+			$(".delqx").on("click", function() {
+				$(this).next().attr("data-isfalg",'');
+				$(".delzz").hide();
+				$(".delzzs").hide();
+			})
+
+			//添加产品
+			$(".com_cen").on("click", function() {
+//				console.log(arrs)
+				var arr = [];
+				var list = [];
+				$(".ban_img .b_ipt").each(function(v, i) {
+					arr.push($(this).attr("value"));
+				})
+				$(".show_img .s_ipt").each(function(k, c) {
+					list.push($(this).attr("value"));
+				})
+				var tit = $(".t_tit").val();
+				var des = $(".txt_des").val();
+				var co_img = $(".y_img").val();
+				var much = $(".much").val();
+				var here = $(".here").val();
+				var unionid = "{$unionid}";
+				var type_id = "{$type_id}" //分类id
+				var p_id = "{$p_id}" //产品id
+				var title = "{$title}"
+				var show_des = $(".show_des").val();
+				//				console.log(arrs)
+//				console.log(arr)
+//				console.log(list)
+//				console.log(p_id)
+				if(tit == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入标题");
+					return false;
+				}
+				if(des == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产品描述");
+					return false;
+				}
+
+				if(co_img == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请上传封面");
+					return false;
+				}
+
+				if(much == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入价格");
+					return false;
+				}
+
+				if(here == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产地");
+					return false;
+				}
+
+				if(des == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产品描述");
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/add_edit_product_index',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						title: tit,
+						cover_img: co_img,
+						address: here,
+						price: much,
+						is_home: 1,
+						product_id: p_id,
+						new_type: type_id,
+						describe: des
+
+					},
+					success: function(res) {
+
+						var arrs = [];
+
+						$.each($(".tab"), function(idx, item) {
+							//				 	console.log($(this).find(".tab_name").val());
+							var product_parameters = [$(this).find(".tab_name").val(), $(this).find(".tab_con").val()];
+							arrs.push(product_parameters);
+						});
+						//参数修改
+						var unionid = '{$unionid}';
+						if(res.AppendData == "") {
+							var pr_id = "{$p_id}" //产品id
+						} else {
+							var pr_id = res.AppendData //产品id
+						}
+//						console.log(pr_id);
+//						console.log(arrs)
+						$.ajax({
+							type: 'post',
+							url: '/index.php?s=/Api/IndexApi/add_edit_product_para',
+							dataType: 'json',
+							data: {
+								unionid: unionid,
+								product_id: pr_id,
+								product_para: arrs,
+
+							},
+							success: function(res) {
+//								console.log(res)
+								//								$(".can").hide();
+							},
+							error: function() {
+								console.log("错误")
+							}
+						});
+
+						var arrr = [];
+						var listt = [];
+						$(".ban_img .b_ipt").each(function(v, i) {
+							arrr.push($(this).attr("value"));
+						});
+						$(".show_img .s_ipt").each(function(v, i) {
+							listt.push($(this).attr("value"));
+						});
+//						console.log(arrr)
+//						console.log(listt)
+//						console.log(pr_id)
+						//				console.log(unionid)
+
+						$.ajax({
+							type: 'post',
+							url: '/index.php?s=/Api/IndexApi/add_edit_product_img',
+							dataType: 'json',
+							data: {
+								unionid: unionid,
+								product_id: pr_id,
+								product_banner: arrr,
+								product_detail: listt
+							},
+							success: function(res) {
+//								console.log(res);
+								if(res.ResultType == 0) {
+									$(".delzzs").hide();
+									//							window.location.href = '/index.php?s=/Home/vhome/myres.html'
+								}
+							},
+							error: function() {
+								console.log("错误")
+							}
+						});
+
+//						console.log(res);
+						if(res.ResultType == 0) {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 800)
+							$(".model").html("保存成功");
+
+							setTimeout(function() {
+								window.location.href = '/index.php?s=/Home/Newnetwork/my_product.html&typeid=' + type_id + '&title=' + title + ''
+							}, 1000)
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+
+			$(document).on("click", ".del", function() {
+				$(".delzzs").show();
+				//				$(this).parent().remove();
+				$(".del_san").attr("data-id", $(this).attr("data-id"))
+			})
+			
+			$(document).on("click", ".dels", function() {
+				$(this).parent().remove();
+			})
+
+			$(".del_san").on("click", function() {
+				var ban_id = $(this).attr("data-id");
+//				console.log(ban_id);
+				var isfalg=$(this).attr("data-isfalg");
+//				console.log(isfalg);
+//				console.log(typeof isfalg);
+				if(isfalg==true || isfalg=="true"){
+//					console.log("进来了,我就是不让你进来");
+					return;
+				}
+				$(this).attr("data-isfalg","true");
+				var elelists = $("div.b_imgs div.del");
+				for(var b in elelists) {
+					
+					//console.log($(elelists[b]).attr("data-id") == ban_id);
+					if($(elelists[b]).attr("data-id") == ban_id) {
+				//	console.log($(elelists[b]).attr("data-id"))
+						$(elelists[b]).parent().remove();
+						break;
+					}
+				}
+
+				var arrr = [];
+				var listt = [];
+				var p_id = "{$p_id}" //产品id
+				$(".ban_img .b_ipt").each(function(v, i) {
+					arrr.push($(this).attr("value"));
+				});
+				$(".show_img .s_ipt").each(function(v, i) {
+					listt.push($(this).attr("value"));
+				});
+				//								console.log(arrr)
+				//								console.log(listt)
+//				console.log(p_id)
+				//				console.log(unionid)
+
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/add_edit_product_img',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						product_id: p_id,
+						product_banner: arrr,
+						product_detail: listt
+					},
+					success: function(res) {
+//						console.log(res);
+						if(res.ResultType == 0) {
+							$(".delzzs").hide();
+							//							window.location.href = '/index.php?s=/Home/vhome/myres.html'
+						}
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+
+			//预览产品
+			$(".preview").on("click", function() {
+				console.log(arrs)
+				var arr = [];
+				var list = [];
+				$(".ban_img .b_ipt").each(function(v, i) {
+					arr.push($(this).attr("value"));
+				})
+				$(".show_img .s_ipt").each(function(v, i) {
+
+					list.push($(this).attr("value"));
+				})
+				var tit = $(".t_tit").val();
+				var des = $(".txt_des").val();
+				var co_img = $(".y_img").val();
+				var much = $(".much").val();
+				var here = $(".here").val();
+				var unionid = "{$unionid}";
+				var type_id = "{$type_id}" //分类id
+				var p_id = "{$p_id}" //产品id
+				var title = "{$title}"
+				var show_des = $(".show_des").val();
+				//				console.log(arrs)
+//				console.log(arr)
+//				console.log(list)
+//				console.log(p_id)
+				if(tit == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入标题");
+					return false;
+				}
+				if(des == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产品描述");
+					return false;
+				}
+
+				if(co_img == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请上传封面");
+					return false;
+				}
+
+				if(much == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入价格");
+					return false;
+				}
+
+				if(here == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产地");
+					return false;
+				}
+
+				if(des == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入产品描述");
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/add_edit_product_index',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						title: tit,
+						cover_img: co_img,
+						address: here,
+						price: much,
+						is_home: 1,
+						product_id: p_id,
+						new_type: type_id,
+						describe: des
+
+					},
+					success: function(res) {
+
+						var arrs = [];
+
+						$.each($(".tab"), function(idx, item) {
+							//				 	console.log($(this).find(".tab_name").val());
+							var product_parameters = [$(this).find(".tab_name").val(), $(this).find(".tab_con").val()];
+							arrs.push(product_parameters);
+						});
+						//参数修改
+						var unionid = '{$unionid}';
+						if(res.AppendData == "") {
+							var pr_id = "{$p_id}" //产品id
+						} else {
+							var pr_id = res.AppendData //产品id
+						}
+						console.log(pr_id);
+						console.log(arrs)
+						$.ajax({
+							type: 'post',
+							url: '/index.php?s=/Api/IndexApi/add_edit_product_para',
+							dataType: 'json',
+							data: {
+								unionid: unionid,
+								product_id: pr_id,
+								product_para: arrs,
+
+							},
+							success: function(res) {
+								console.log(res)
+								//								$(".can").hide();
+							},
+							error: function() {
+								console.log("错误")
+							}
+						});
+
+						var arrr = [];
+						var listt = [];
+						$(".ban_img .b_ipt").each(function(v, i) {
+							arrr.push($(this).attr("value"));
+						});
+						$(".show_img .s_ipt").each(function(v, i) {
+							listt.push($(this).attr("value"));
+						});
+						//				console.log(arrr)
+						//				console.log(listt)
+						console.log(pr_id)
+						//				console.log(unionid)
+
+						$.ajax({
+							type: 'post',
+							url: '/index.php?s=/Api/IndexApi/add_edit_product_img',
+							dataType: 'json',
+							data: {
+								unionid: unionid,
+								product_id: pr_id,
+								product_banner: arrr,
+								product_detail: listt
+							},
+							success: function(res) {
+								console.log(res);
+								if(res.ResultType == 0) {
+									$(".delzzs").hide();
+									//							window.location.href = '/index.php?s=/Home/vhome/myres.html'
+								}
+							},
+							error: function() {
+								console.log("错误")
+							}
+						});
+
+						console.log(res);
+						if(res.ResultType == 0) {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 800)
+							$(".model").html("保存成功");
+
+							setTimeout(function() {
+								window.location.href = '/index.php?s=/Home/Newnetwork/my_product.html&typeid=' + type_id + '&title=' + title + ''
+							}, 1000)
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+
+			//修改详情
+			var unionid = '{$unionid}';
+			var p_id = "{$p_id}" //分类id
+			//			console.log(unionid);
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/IndexApi/product_detail',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					product_id: p_id
+
+				},
+				success: function(res) {
+//					console.log(res);
+					if(res.ResultType == 0) {
+						$(".t_tit").val(res.AppendData.title);
+						$(".txt_des").val(res.AppendData.describe);
+						$(".y_img").val(res.AppendData.cover_img);
+						$(".cover_img").attr("src", res.AppendData.cover_img);
+						$(".much").val(res.AppendData.price);
+						$(".here").val(res.AppendData.address);
+						$.each(res.AppendData.img, function(q, x) {
+							var img_id = x.img;  //根据id得到值
+
+							var index = img_id.lastIndexOf(".");  //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+							img_id = img_id.substring(index);  //截断"."之前的，得到后缀
+							if(img_id == ".mp4" || img_id == ".rmvb" || img_id == ".avi" || img_id == ".ts" || img_id == ".MOV" || img_id == ".3GP") { 
+
+								$(".ban_img").append(
+									'<div class="b_img b_vdo b_imgs lb_img">' +
+									'<video src="' + x.img + '"  poster="'+x.img+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast"  controls="controls"></video>' +
+									'<div class="del" data-id="' + x.id + '">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="b_ipt" type="hidden" value="' + x.img + '" />' +
+									'</div>'
+								)
+
+							} else {
+								$(".ban_img").append(
+									'<div class="b_img b_imgs lb_img">' +
+									'<img src="' + x.img + '" alt="" />' +
+									'<div class="del" data-id="' + x.id + '">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="b_ipt" type="hidden" value="' + x.img + '" />' +
+									'</div>'
+								)
+							}
+
+						})
+						$.each(res.AppendData.img_detail, function(y, z) {
+
+							var img_id = z.img;  //根据id得到值
+
+							var index = img_id.lastIndexOf(".");  //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+							img_id = img_id.substring(index);  //截断"."之前的，得到后缀
+							if(img_id == ".mp4" || img_id == ".rmvb" || img_id == ".avi" || img_id == ".ts" || img_id == ".MOV" || img_id == ".3GP") { 
+								$(".show_img").append(
+									'<div class="b_img b_vdos b_imgs">' +
+									'<video src="' + z.img + '"  poster="'+z.img+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast" controls="controls"></video>' +
+									'<div class="del" data-id="' + z.id + '">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="s_ipt" type="hidden" value="' + z.img + '" />' +
+									'</div>'
+								)
+							} else {
+								$(".show_img").append(
+									'<div class="b_img b_imgs">' +
+									'<img src="' + z.img + '" alt="" />' +
+									'<div class="del" data-id="' + z.id + '">' +
+									'<img src="__HOME_IMAGES__/newvnet/apro/icon_shan@2x.png" alt="" />' +
+									'</div>' +
+									'<input class="s_ipt" type="hidden" value="' + z.img + '" />' +
+									'</div>'
+								)
+
+							}
+						})
+
+						$.each(res.AppendData.product_parameter, function(r, a) {
+							$(".max").append(
+								'<div class="tab">' +
+								'<div class="tab_left">' +
+								'<input class="tab_name" type="text" value="' + a.title + '" placeholder="标题" />' +
+								'</div>' +
+								'<div class="tab_cen">' +
+								'<input class="tab_con" type="text" value="' + a.content + '"  placeholder="参数"/>' +
+								'</div>' +
+								'<div class="tab_right" data-id="' + a.id + '">' +
+								'<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />' +
+								'</div>' +
+								'</div>'
+							)
+						})
+
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

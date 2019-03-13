@@ -1,0 +1,10 @@
+<?php
+
+function toJson($code=0,$msg='',$count=0,$data){
+
+    $json = ['code' => $code, 'msg' => $msg, 'count' => $count, 'data' => $data];
+
+
+
+    return json($json);
+}

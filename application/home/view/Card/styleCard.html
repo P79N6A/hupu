@@ -1,0 +1,442 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.zzc_afaaf_from {
+			position: relative;
+			width: 90%;
+			margin: 10px auto 0px auto;
+			overflow: hidden;
+			padding: 15px;
+			background: #FFFFFF;
+		}
+		
+		.zzc_afahfj_img {
+			height: 150px;
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+			background: #2FB3D3 url(images/003.png) no-repeat center top;
+			background-size: 100%;
+		}
+		
+		.zzc_afahfj_a1,
+		.zzc_afahfj_a2 {
+			position: absolute;
+			right: 5%;
+			background: #2FB3D3;
+			color: #FFFFFF;
+			border-radius: 6px;
+			padding: 5px 15px;
+		}
+		
+		.zzc_afahfj_a1 {
+			bottom: 50px;
+		}
+		
+		.zzc_afahfj_a2 {
+			bottom: 10px;
+		}
+		
+		.zzc_afafh_img {
+			border-radius: 50%;
+			width: 30px;
+			float: right;
+			margin: 6px;
+		}
+		
+		.zzc_afafh_img2 {
+			width: 35px;
+			float: right;
+			margin-top: 8px;
+		}
+		
+		.zzc_jaidntou {
+			float: right;
+			color: #b9b9b9;
+			margin-left: 10px;
+		}
+		
+		.zzc_hfjah_div {
+			width: 100%;
+			overflow: hidden;
+			background: #FFFFFF;
+			margin-bottom: 20px;
+		}
+		
+		.zzc_reg_input textarea {
+			border: none!important;
+			box-shadow: none;
+			border-top: 1px solid #CCCCCC!important;
+			border-radius: 0px;
+		}
+		
+		.iw_poi_title {
+			color: #CC5522;
+			font-size: 14px;
+			font-weight: bold;
+			overflow: hidden;
+			padding-right: 13px;
+			white-space: nowrap
+		}
+		
+		.iw_poi_content {
+			font: 12px arial, sans-serif;
+			overflow: visible;
+			padding-top: 4px;
+			white-space: -moz-pre-wrap;
+			word-wrap: break-word
+		}
+		
+		.zzc_reg_input {
+			line-height: 40px;
+		}
+		
+		.zzc_gfsga_div,.zzc_gfsgas_div {
+			width: 30%;
+			float: left;
+			overflow: hidden;
+			margin-left: 10%;
+			margin-bottom: 20px;
+		}
+		
+		.zzc_gfsga_img,.zzc_gfsgas_img {
+			width: 100%;
+			border-radius: 5px;
+		}
+		
+		.zzc_gfsga_span,.zzc_gfsgas_span{
+			border-radius: 5px;
+			border: 1px solid #CCCCCC;
+			color: #333;
+			text-align: center;
+			padding: 5px 0px;
+			width: 100%;
+			display: inline-block;
+			margin: 0px;
+			margin-top: 5px;
+		}
+		
+		.zzc_gfsga_div span.on {
+			background: #2FB3D3!important;
+			color: #FFFFFF!important;
+			border-color: #2FB3D3;
+		}
+		.zzc_gfsgas_div span.on {
+			background: #2FB3D3!important;
+			color: #FFFFFF!important;
+			border-color: #2FB3D3;
+		}
+		
+		.jindutiao_div {
+			background: #FFFFFF;
+			border-color: #CCCCCC;
+		}
+		
+		.jindutiao_div_span {
+			height: 11px!important;
+		}
+		
+		.jindutiao_num {
+			margin-top: 8px;
+			color: #CCCCCC!important;
+			font-weight: normal;
+		}
+		
+		.zzc_afhafj_bottom {
+			width: 100%;
+			margin: 10px auto;
+		}
+		
+		.zzc_afhafj_left {
+			width: 20%;
+			margin-left: 5%;
+			float: left;
+		}
+		
+		.zzc_afhafj_right {
+			width: 70%;
+			float: right;
+		}
+		
+		.zzc_afhafj_right input {
+			border: none!important;
+			width: 40%!important;
+			height: 30px!important;
+			line-height: 30px!important;
+			padding: 0px;
+			margin: 0 5% 10px 5%;
+			background: #2FB3D3!important;
+			border-radius: 5px;
+			padding: 2px 10px;
+			float: left;
+			margin: 0 10px 10px 10px;
+			display: inline-block;
+		}
+		
+		.zzc_core_a {
+			width: 40%;
+			text-align: center;
+			line-height: 30px;
+			color: #fff;
+			float: left;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			background: #2fb3d3;
+		}
+		
+		.card_panel {
+			background: #2fb3d3;
+			width: 25%;
+			height: 70px;
+			line-height: 70px;
+			color: #fff;
+			text-align: center;
+		}
+		
+		.zzc_gfsga_img {
+			height: 153px;
+		}
+		
+		
+		.privacy {
+			width: 250px;
+			height: 150px;
+			background: #fff;
+			border-radius: 10px;
+			font-size: 20px;
+			text-align: center;
+			background: #fff;
+			color: #000;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin:-75px  0 0 -125px;
+			z-index: 100;
+			display: none;
+		}
+		
+		.allcity-masks {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #000;
+			opacity: .8;
+			width: 100%;
+			z-index: 100;
+			cursor: pointer;
+			height: 100%;
+		}
+		
+		.up {
+			width: 100%;
+			height: 75px;
+			line-height: 75px;
+			text-align: center;
+			font-size: 20px;
+		}
+		
+		.down {
+			width: 100%;
+			height: 75px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 22px;
+			color: #000;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<div class="mui-content zzc_mui_content_bg zzc_shouruliushui" style="margin-bottom: 70px;">
+		<form action="" method="post" id="form" enctype="multipart/form-data">
+			<div class="zzc_afaaf_from">
+				模板切换
+			</div>
+
+			<div class="zzc_afaaf_from">
+				<div class="zzc_gfsga_div">
+					<img class="zzc_gfsga_img" src="__HOME_IMAGES__/style_1.png" alt="" />
+					<if condition="$data['style']==1">
+						<span class="zzc_gfsga_span on" data-type="1">正在使用</span>
+						<else />
+						<span class="zzc_gfsga_span" data-type="1">立即使用</span>
+					</if>
+				</div>
+				<div class="zzc_gfsga_div" style="float: right;margin-right: 10%;">
+					<img class="zzc_gfsga_img" src="__HOME_IMAGES__/style_2.png" alt="" />
+					<if condition="$data['style']==2">
+						<span class="zzc_gfsga_span on" data-type="2">正在使用</span>
+						<else />
+						<span class="zzc_gfsga_span" data-type="2">立即使用</span>
+					</if>
+				</div>
+				<div class="zzc_gfsga_div" style="float: right;margin-right: 10%;">
+					<img class="zzc_gfsga_img" src="__HOME_IMAGES__/style_4.png" alt="" />
+					<if condition="$data['style']==4">
+						<span class="zzc_gfsga_span on" data-type="4">正在使用</span>
+						<else />
+						<span class="zzc_gfsga_span" data-type="4">立即使用</span>
+					</if>
+				</div>
+				<div class="zzc_gfsga_div" style="float: right;margin-right: 10%;">
+					<img class="zzc_gfsga_img" src="__HOME_IMAGES__/style_3.png" alt="" />
+					<if condition="$data['style']==3">
+						<span class="zzc_gfsga_span on" data-type="3">正在使用</span>
+						<else />
+						<span class="zzc_gfsga_span" data-type="3">立即使用</span>
+					</if>
+				</div>
+				<div class="zzc_gfsgas_div" style="">
+					<img class="zzc_gfsgas_img" src="__HOME_IMAGES__/style_5.png" alt="" />
+					<if condition="$data['style']==5">
+						<span class="zzc_gfsgas_span on" data-type="5">正在使用</span>
+						<else />
+						<span class="zzc_gfsgas_span" data-type="5">立即使用</span>
+					</if>
+				</div>
+				<input value='{$data.style}' type="hidden" name="style" />
+			</div>
+			<!--<div class="zzc_afaaf_from" id="music">-->
+			<!--背景音乐-->
+			<!--<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>            -->
+			<!--</div>  -->
+			<!--<div class="zzc_afaaf_from">
+				<div style="width: 30%;float: left;">背景透明度</div>
+				<div style="width: 60%;float: left;">
+					<div class="mui-input-row mui-input-range">
+						<input type="range" name="bg_opacity" min="0" max="100" value="{$data.bg_opacity}">
+					</div>
+				</div>
+			</div>-->
+
+			<!--<div class="zzc_afaaf_from" style="overflow-y:auto ;">
+				<div>颜色设置</div>
+				<div class="zzc_afhafj_bottom">
+					<div class="card_panel fl">
+						V网主体
+					</div>
+					<div class=" zzc_afhafj_right">
+						<div class="zzc_core_a" id="color_bg" value="{$data.background_color}">
+							背景色
+							<input value='{$data.background_color}' type="hidden" name="background_color" />
+						</div>
+						<div class="zzc_core_a" id="color_text" value="{$data.text_color}">
+							正文色
+							<input value='{$data.text_color}' type="hidden" name="text_color" />
+						</div>
+						<div class="zzc_core_a" id="color_title" value="{$data.title_color}">
+							标题色
+							<input value='{$data.title_color}' type="hidden" name="title_color" />
+						</div>
+						<div class="zzc_core_a" id="color_link" value="{$data.link_color}">
+							链接色
+							<input value='{$data.link_color}' type="hidden" name="link_color" />
+						</div>
+					</div>
+				</div>
+			</div>-->
+			<div class="zzc_myranwen_bottom">
+				<input type="hidden" name="jump_url">
+				<input type="button" name="" id="yulan" value="预览" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" />
+				<input type="button" name="" id="save" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" />
+			</div>
+		</form>
+	</div>
+	<div class="allcity-masks"></div>
+	<div class="privacy">
+		<div class="up">温馨提示</div>
+		<div class="down">请选择最新的风格</div>
+	</div>
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript" src="__HOME_JS__/jquery.cxcolor.js"></script>
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+	<script type="text/javascript">
+		$("#yulan,#save,#music").on('touchend', function() {
+			var id = $(this).attr('id');
+			var jump_url = ""; //提交完成跳转的地址
+			switch(id) {
+				case 'music':
+					jump_url = "{:url('Home/Card/musicCard')}";
+					break;
+				case 'yulan':
+					//预览
+					jump_url = "{:url('Home/Nologin/card_jump/id/'.$userInfo['id'])}";
+					break;
+				case 'save':
+					//保存
+					break;
+
+			}
+			$('input[name=jump_url]').val(jump_url);
+			$('#form').submit();
+		});
+		$('.zzc_gfsgas_div').on('touchend', function() {
+			var type = $(this).find('span').attr('data-type');
+			$('.zzc_gfsgas_div .zzc_gfsgas_span').removeClass('on').html("立即使用");
+			$(this).find('.zzc_gfsgas_span').addClass('on').html("正在使用");
+			$("input[name=style]").val(type);
+		});
+		
+		$('.zzc_gfsga_div').on('click', function() {		
+			$('.allcity-masks').show();
+			$(".privacy").show();
+			setTimeout(function() {
+				$('.privacy').hide();
+				$('.allcity-masks').hide();
+			}, 1500);
+	
+		});
+		
+		/* 颜色选择器--背景、字体颜色     */
+		$("#color_bg").cxColor();
+		(function() {
+			var color = $("#color_bg");
+			color.css("background", color.attr('value'));
+			color.bind("change", function() {
+				$('.zzc_afhafj_bottom input[name=background_color]').val(this.value);
+				color.css("background", this.value);
+			});
+
+		})();
+		$("#color_text").cxColor();
+		(function() {
+			var color = $("#color_text");
+			color.css("background", color.attr('value'));
+			color.bind("change", function() {
+				$('.zzc_afhafj_bottom input[name=text_color]').val(this.value);
+				color.css("background", this.value);
+			});
+		})();
+		$("#color_title").cxColor();
+		(function() {
+			var color = $("#color_title");
+			color.css("background", color.attr('value'));
+			color.bind("change", function() {
+				$('.zzc_afhafj_bottom input[name=title_color]').val(this.value);
+				color.css("background", this.value);
+			});
+		})();
+		$("#color_link").cxColor();
+		(function() {
+			var color = $("#color_link");
+			color.css("background", color.attr('value'));
+			color.bind("change", function() {
+				$('.zzc_afhafj_bottom input[name=link_color]').val(this.value);
+				color.css("background", this.value);
+			});
+		})();
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <title>壁纸</title>
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+        }
+        #con{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+           
+        }
+        .content {
+            width: 100%;
+            position: relative;
+            flex: 0.8;
+            
+        }
+
+        .content .wallpaper {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+
+        .erwei {
+            position: absolute;
+            top: 4.84rem;
+            right: .18rem;
+            width: .6rem;
+            height: .6rem;
+        }
+
+        .erwei .erwei_box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .erwei .erwei_box .user_wewei {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .erwei .erwei_box .tz {
+            width: .16rem;
+            height: .16rem;
+            position: absolute;
+            right: -.06rem;
+            bottom: -0.06rem;
+        }
+
+        .save {
+            text-align: center;
+            color: #000;
+            background: rgba(255,255,255,1);
+            flex: 0.2;
+            border: 0;
+            outline: none;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div id="con">
+        <div class="content">
+            <img class="wallpaper" src="__HOME_IMAGES__/wh/Template2_3@2x.png" alt="">
+            <div class="erwei">
+                <div class="erwei_box">
+                    <img class="user_wewei" src="__HOME_IMAGES__/pagePic.png" alt="">
+                    <img class="tz" src="__HOME_IMAGES__/wh/zoom_icon@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+        <button class="save">长按保存到相册</button>
+    </div>
+</body>
+
+</html>
+<script>
+$(function(){
+
+
+
+
+
+
+
+})
+</script>

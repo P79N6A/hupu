@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>咨询查询</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+
+
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .mint-cell .mint-cell-wrapper{
+            background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 0%, transparent 0%);
+            background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 0%, transparent 0%)
+            }
+        ul,li{ padding:0;margin:0;list-style:none}
+        .popup3{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        .serachbnt button{width: 40%;margin-left: 5%;margin-top: 10px}
+        .serachdata input{background: #fff}
+</style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="咨询列表">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button  slot="right" @click="popupVisible=true">刷选</mt-button>
+    </mt-header>
+    <!--刷选-->
+    <div>
+
+        <mt-popup v-model="popupVisible" position="right" pop-transition="popup-fade" modal="false" class="popup3">
+                <div class="serachdata">
+                    <p>时间段查询</p>
+                    <mt-field label="开始时间" placeholder="请输入录入时间" type="date" v-model="serachpojo.starttime"></mt-field>
+                    <mt-field label="终止时间" placeholder="请输入终止时间" type="date" v-model="serachpojo.endtime"></mt-field>
+
+                    <p>用户信息模糊查询</p>
+                    <mt-field label="用户姓名" placeholder="请输入用户姓名" v-model="serachpojo.username"></mt-field>
+                    <mt-field label="用户手机号" placeholder="请输入用户手机号" v-model="serachpojo.userphone"></mt-field>
+                    <p>咨询类型</p>
+                    <a class="mint-cell mint-field">
+                        <!---->
+                        <div class="mint-cell-left"></div>
+                        <div class="mint-cell-wrapper">
+                            <div class="mint-cell-title">
+                                <span class="mint-cell-text">咨询类型</span>
+
+                            </div>
+                            <div class="mint-cell-value">
+
+                                <el-select v-model="serachpojo.fanwenleixing" clearable placeholder="请选择">
+
+                                    <el-option v-for="item in gradeList" :key="item.value" :label="item.label" :value="item.value">
+                                    </el-option>
+                                </el-select>
+                                <div class="mint-field-clear" style="display: none;"><i class="mintui mintui-field-error"></i></div>
+                                <span class="mint-field-state is-default"><i class="mintui mintui-field-default"></i></span>
+                                <div class="mint-field-other"></div>
+                            </div>
+
+                        </div>
+                        <div class="mint-cell-right"></div>
+                    </a>
+                    <p>用户咨询问题模糊查询</p>
+                    <mt-field label="内容" placeholder="请输入内容" v-model="serachpojo.userwenti"></mt-field>
+                </div>
+                <div class="serachbnt">
+
+                    <mt-button type="default" @click="popupVisible=false">取消</mt-button>
+                    <mt-button type="primary" @click="serachs">查询</mt-button>
+                </div>
+
+        </mt-popup>
+
+    </div>
+    <div>
+
+            <ul v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+                <li v-for="(item,index) in tableData">
+
+                    <mt-cell :title="item.username+'=>'+item.userphone" ></mt-cell>
+                    <mt-cell title="创建时间" :value="item.createtime"></mt-cell>
+                    <mt-cell-swipe
+                            title="操作"
+                            :value="item.bcname + '<<'"
+                            :right="[
+    {
+      content: '详情',
+      style: { background: 'lightgray', color: '#fff' },
+      handler: () => showx(item.cid)
+    }
+  ]">
+
+                    </mt-cell-swipe>
+                </li>
+                <li class="more_loading" v-show="!queryLoading && tableData.length>8" style="text-align: center;font-size: 12px;margin-top: 10px">
+
+                    <mt-spinner type="triple-bounce" color="#00ccff" :size="40" v-show="moreLoading&&!allLoaded"></mt-spinner>
+
+                    <span v-show="allLoaded">----我也是有底线的----</span>
+                    <span v-show="!allLoaded">加载中...</span>
+                </li>
+
+            </ul>
+       <!--http://localhost:801/index.php?s=/Home/Customer/receptionlist.html-->
+    </div>
+</div>
+<script type="text/javascript">
+
+    new Vue({
+        el: "#app",
+        data: {
+            popupVisible:false,
+            //动态数据
+            //动态数据
+            allLoaded:false,
+            //是否显示提示
+            queryLoading:false,
+            //显示加载特效
+            moreLoading:false,
+
+            dataallLoaded:false,
+
+            tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            pojo:{
+                username: '',
+                fanwenleixing: '',
+                userphone: '',
+                userwenti: '',
+                psolve: '',
+                customer_id: '',
+            },
+            paylist: [],
+            loading: false,
+            serachpojo:{
+                starttime:'',
+                endtime:'',
+                username: '',
+                fanwenleixing: '',
+                userphone: '',
+                userwenti: ''
+            },
+            isserach:false,
+            gradeList: [{
+                value: '电话咨询',
+                label: '电话咨询'
+            },
+                {
+                    value: '微信咨询',
+                    label: '微信咨询'
+                },
+                {
+                    value: '现场咨询',
+                    label: '现场咨询'
+                },
+
+            ],
+
+
+
+        },
+        methods: {
+            showx:function(id){
+                window.location.href="/index.php?s=/Home/Customer/callltails.html&cid="+id;
+            },
+            showb:function(id){
+                console.log(id)
+            },
+            loadBottom:function() {
+
+                var t=this;
+               t.postTableData();
+            },
+            serachs:function(){
+                var t=this;
+                t.allLoaded=false;
+                    //是否显示提示
+                    t.queryLoading=false;
+                    //显示加载特效
+                    t.moreLoading=false;
+
+                    t.dataallLoaded=false;
+                t.isserach=true;
+                t.popupVisible=false;
+                t.n=1;
+                t.postTableData();
+            },
+            postTableData: function() {
+                var _this = this;
+                if(_this.dataallLoaded){
+                    _this.moreLoading = true;
+                    return;
+                }
+                if(_this.allLoaded){
+                    return;
+                }
+                _this.moreLoading = !_this.allLoaded;
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/CustomerService/f_call")}',
+                    data: {
+                        n: _this.n,
+                        starttime:_this.serachpojo.starttime,
+                        endtime:_this.serachpojo.endtime,
+                        username:_this.serachpojo.username,
+                        fanwenleixing:_this.serachpojo.fanwenleixing,
+                        userphone:_this.serachpojo.userphone,
+                        userwenti:_this.serachpojo.userwenti
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        var data = res.AppendData;
+                        console.log(res)
+                        var c= _this.tableData;
+                        if(_this.isserach){
+                            _this.tableData = data.list;
+                            _this.isserach=false;
+                        }else{
+                            for( var i in data.list){
+                                c.push(data.list[i]);
+                            }
+                            _this.tableData = c;
+                        }
+
+                        if(data.list.length<10){
+                            _this.allLoaded=true;
+                        }else{
+                            _this.n= _this.n+1;
+                            _this.allLoaded=false;
+                        }
+
+                    },
+                    error: function() {}
+                })
+            },
+
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+            t.postTableData();
+
+            t.cuuid = $.cookie('k_cuuid');
+
+            if( t.cuuid ==null ||  t.cuuid =='' ){
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+        },
+
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>注册</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: url(__HOME_IMAGES__/newvnet/mycenter/519793418760177720.png) no-repeat;
+				background-size: cover;
+				overflow: hidden;
+			}
+			
+			.top {
+				width: 4rem;
+				height: 4rem;
+				border-radius: 50%;
+				margin: 1.6rem auto 0.8rem;
+			}
+			
+			.top>img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.tit {
+				width: 90%;
+				height: 1.7rem;
+				font-size: 0.6rem;
+				color: #fff;
+				text-align: center;
+				margin: 0 auto 3.35rem;
+				letter-spacing: 0.05rem;
+			}
+			
+			.t_name {
+				width: 100%;
+				height: 1rem;
+			}
+			
+			.t_num {
+				width: 100%;
+				height: 0.7rem;
+			}
+			
+			.iphone {
+				width: 80%;
+				height: 2.4rem;
+				margin: 0 auto;
+				border: 0.05rem solid rgba(255, 255, 255, 0.3);
+				border-radius: 0.2rem;
+				margin-bottom: 1.2rem;
+			}
+			
+			.code {
+				width: 80%;
+				height: 2.4rem;
+				margin: 0 auto;
+				border: 0.05rem solid rgba(255, 255, 255, 0.3);
+				border-radius: 0.2rem;
+			}
+			
+			.i_left,
+			.c_left {
+				float: left;
+				width: 18%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.i_left>img {
+				width: 0.975rem;
+				height: 1.025rem;
+				margin: 0.6875rem 0;
+			}
+			
+			.c_left>img {
+				width: 0.875rem;
+				height: 1rem;
+				margin: 0.7rem 0;
+			}
+			
+			.i_cen,
+			.c_cen {
+				float: left;
+				width: 0.3%;
+				height: 1.025rem;
+				background: #fff;
+				margin: 0.6875rem 5% 0.6875rem 0;
+				opacity: 0.3;
+			}
+			
+			.i_right {
+				float: left;
+				width: 76.7%;
+				height: 100%;
+			}
+			
+			.c_right {
+				float: left;
+				width: 46.7%;
+				height: 100%;
+			}
+			
+			.i_right>input {
+				width: 100%;
+				height: 100%;
+				background: none;
+				font-size: 0.6rem;
+				border: none;
+				outline: none;
+				color: #fff;
+			}
+			
+			.c_right>input {
+				width: 100%;
+				height: 100%;
+				background: none;
+				font-size: 0.6rem;
+				border: none;
+				outline: none;
+				color: #fff;
+			}
+			
+			input::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #fff;
+				/* placeholder字体大小  */
+				font-size: 0.6rem;
+				opacity: 0.5;
+			}
+			
+			.do {
+				float: left;
+				width: 27%;
+				height: 1.6rem;
+				margin: 0.4rem 3% 0.4rem 0;
+				background: #31CEA0;
+				border-radius: 0.2rem;
+			}
+			
+			.feachBtn {
+				width: 100%;
+				height: 100%;
+				background: #31CEA0;
+				border: none;
+				outline: none;
+				font-size: 0.6rem;
+				color: #fff;
+				border-radius: 0.2rem;
+			}
+			
+			.hint {
+				width: 75%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0.6rem;
+				color: #fff;
+				margin: 0 auto 1.5rem;
+			}
+			
+			.next {
+				width: 80%;
+				height: 2.4rem;
+				background: #31CEA0;
+				border-radius: 0.2rem;
+				margin: 0 auto 0.8rem;
+				text-align: center;
+				line-height: 2.4rem;
+				color: #fff;
+				font-size: 1rem;
+				font-weight: 600;
+				letter-spacing: 0.1rem;
+			}
+			
+			.foot {
+				width: 80%;
+				height: 1rem;
+				text-align: center;
+				margin: 0 auto;
+				font-size: 0.6rem;
+				color: #fff;
+			}
+			
+			.word {
+				opacity: 0.45;
+			}
+			
+			.user>a {
+				color: #42FDC5;
+				opacity: 1;
+				text-decoration: none;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			.mask {
+				width: 4.75rem;
+				height: 4rem;
+				background: rgba(0, 0, 0, 0.6);
+				border-radius: 0.125rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -2rem;
+				margin-left: -2.375rem;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mask img {
+				width: 1.25rem;
+				height: 1.25rem;
+				display: block;
+				margin: 0 auto;
+				margin-top: 0.625rem;
+				margin-bottom: 0.625rem;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mask p {
+				color: #fff;
+				text-align: center;
+				font-size: 0.6rem;
+			}
+			
+			/*省市选择*/
+			.here {
+				width: 80%;
+				height: 2.4rem;
+				display: flex;
+				margin: 0 auto 1.2rem;
+			}
+			
+			.h_left {
+				width: 32%;
+				height: 100%;
+				border-radius: 0.2rem;
+				border: 0.05rem solid rgba(255, 255, 255, 0.3);
+				
+				text-align: center;
+			}
+			
+			.h_right {
+				width: 32%;
+				height: 100%;
+				border-radius: 0.2rem;
+				border: 0.05rem solid rgba(255, 255, 255, 0.3);
+				margin:0 2%;
+				text-align: center;
+			}
+			.h_end {
+				width: 32%;
+				height: 100%;
+				border-radius: 0.2rem;
+				border: 0.05rem solid rgba(255, 255, 255, 0.3);
+				text-align: center;
+			}
+			
+			.h_left>select {
+				width: 85%;
+				height: 100%;
+				padding-right: 15%;
+				border: none;
+				color: #fff;
+				text-align: center !important;
+				text-align-last: center !important;
+				font-size: 0.6rem;
+				line-height: 1rem;
+				background-color: #fff;
+				background: url(__HOME_IMAGES__/newvnet/mycenter/xia@2x.png) no-repeat 100% 50%;
+				background-size: 10%;
+				-webkit-appearance: none;
+				outline: none;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			
+			.h_right>select {
+				width: 85%;
+				height: 100%;
+				padding-right: 20%;
+				border: none;
+				color: #fff;
+				text-align: center !important;
+				text-align-last: center !important;
+				font-size: 0.6rem;
+				line-height: 1rem;
+				background-color: #fff;
+				background: url(__HOME_IMAGES__/newvnet/mycenter/xia@2x.png) no-repeat 100% 50%;
+				background-size: 10%;
+				-webkit-appearance: none;
+				outline: none;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			
+			.h_end>select {
+				width: 85%;
+				height: 100%;
+				padding-right: 20%;
+				border: none;
+				color: #fff;
+				text-align: center !important;
+				text-align-last: center !important;
+				font-size: 0.6rem;
+				line-height: 1rem;
+				background-color: #fff;
+				background: url(__HOME_IMAGES__/newvnet/mycenter/xia@2x.png) no-repeat 100% 50%;
+				background-size: 10%;
+				-webkit-appearance: none;
+				outline: none;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			
+			option{
+				color:#777;
+				text-align: center;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		<div class="top">
+			<img class="headimg" src="" alt="" />
+		</div>
+		<div class="tit">
+			<div class="t_name"></div>
+			<div class="t_num"></div>
+		</div>
+
+		<div class="here">
+			<div class="h_left">
+				<select class="h_sel" name="">
+					<option value="">请选择</option>
+				</select>
+			</div>
+			<div class="h_right">
+				<select class="r_sel" name="">
+					<option value="">请选择</option>
+				</select>
+			</div>
+			<div class="h_end" data-id="1">
+				<select class="e_sel" name="">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+		<div class="iphone">
+			<span class="i_left">
+				<img src="__HOME_IMAGES__/newvnet/mycenter/sign_icon_telephone@2x.png" alt="" />
+			</span>
+			<span class="i_cen"></span>
+			<span class="i_right">
+				<input type="number" class="phone" placeholder="请输入手机号" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+			</span>
+		</div>
+		<div class="code">
+			<span class="c_left">
+				<img src="__HOME_IMAGES__/newvnet/mycenter/icon_code_white@2x.png" alt="" />
+			</span>
+			<span class="c_cen"></span>
+			<span class="c_right">
+				<input type="number" class="cod" placeholder="请输入验证码" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+			</span>
+			<span class="do">
+				<button type="button" class="feachBtn">获取验证码</button>
+			</span>
+		</div>
+		<div class="hint">初始密码为注册手机号</div>
+		<div class="next">下一步</div>
+		<div class="foot">
+			<span class="word">点击注册即代表已经同意 </span>
+			<span class="user"><a href="http://wx.yxm360.com/Public/user_knowledge.html">用户协议</a></span>
+		</div>
+		<div class="model"></div>
+		<div class="mask">
+			<img src="__HOME_IMAGES__/loadad.gif" alt="">
+			<p></p>
+		</div>
+		<script>
+		
+		$(function(){
+			
+			var share_id = "{$share_id}";
+			var t_phone = "{$phone}";
+			console.log(share_id);
+			$.ajax({
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "/index.php?s=/Api/AppApi/res_user", //url 
+				data: {
+					"id": share_id,
+					"phone": t_phone
+				},
+				success: function(result) {
+					console.log(result);
+					$(".t_name").html("来自好友" + result.AppendData.nick_name + "的推荐")
+					$(".t_num").html(result.AppendData.phone)
+					$(".headimg").attr("src",result.AppendData.headimg)
+				},
+				error: function() {
+					console.log("错误！");
+				}
+			});
+			//省市联动
+			var list = "";
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/IndexApi/region_list',
+				dataType: 'json',
+				data: {
+					id: share_id,
+
+				},
+				success: function(res) {
+					console.log(res);
+					if(res.ResultType == 0) {
+						list += '<option value="">请选择</option>'
+						$.each(res.AppendData, function(v, i) {
+							list += '<option class="op" value="' + i.region_id + '">' + i.region_name + '</option>'
+						})
+						$(".h_sel").html(list);
+
+					}
+
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			$(".h_sel").change(function() {
+				var options = $(".h_sel option:selected");
+				var re_id = options.val();
+				console.log(re_id);
+				var lists = "";
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/region_list',
+					dataType: 'json',
+					data: {
+						id: share_id,
+						region_id: re_id
+
+					},
+					success: function(res) {
+												console.log(res);
+						if(res.ResultType == 0) {
+							lists += '<option value="">请选择</option>'
+							$.each(res.AppendData, function(v, i) {
+								lists += '<option class="op" value="' + i.region_id + '">' + i.region_name + '</option>'
+							})
+							$(".r_sel").html(lists);
+
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+				$(this).css({
+					"color": '#fff',
+					"font-weight": '600',
+					"font-size": '0.8rem'
+				});
+				$(".r_sel").css({
+					"color": '#fff',
+					"font-weight": '0',
+					"font-size": '0.6rem'
+				});
+
+			});
+			
+			$(".r_sel").change(function() {
+				var options = $(".r_sel option:selected");
+				var city_id = options.val();
+				console.log(city_id);
+				var lits = "";
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/region_list',
+					dataType: 'json',
+					data: {
+						id: share_id,
+						city_id: city_id
+
+					},
+					success: function(res) {
+						console.log(res);
+						if(res.ResultType == 0) {
+							$(".h_end").show()
+							lits += '<option value="">请选择</option>'
+							$.each(res.AppendData, function(v, i) {
+								lits += '<option class="op" value="' + i.region_id + '">' + i.region_name + '</option>'
+							})
+							$(".e_sel").html(lits);
+
+						}if(res.ResultType == 3) {
+							$(".h_end").hide()
+							$(".h_end").attr("data-id",0)
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+				$(this).css({
+					"color": '#fff',
+					"font-weight": '600',
+					"font-size": '0.8rem'
+				});
+				$(".e_sel").css({
+					"color": '#fff',
+					"font-weight": '0',
+					"font-size": '0.6rem'
+				});
+
+			});
+			
+			$(".r_sel").change(function() {
+				$(this).css({
+					"color": '#fff',
+					"font-weight": '600',
+					"font-size": '0.8rem'
+				});
+			})
+			$(".e_sel").change(function() {
+				$(this).css({
+					"color": '#fff',
+					"font-weight": '600',
+					"font-size": '0.8rem'
+				});
+
+			})
+			
+			
+
+			//手机号判断是否注册
+			var code = 0;
+			$('.feachBtn').on("click", function() {
+				var phone = $(".phone").val();
+				if($(".phone").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入手机号");
+					return false;
+				}
+
+				$.ajax({
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/AppApi/is_register", //url 
+					data: {
+						"id": share_id,
+						"phone": phone
+					},
+					success: function(result) {
+						console.log(result)
+						if(result.ResultType == 3) {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							$(".model").html("此手机号已被注册");
+						} else if(result.ResultType == 0){
+							var count = 60;
+							var countDown = setInterval(function(){
+								if(count === 0) {
+									$('.feachBtn').text('获取验证码').removeAttr('disabled');
+									$('.feachBtn').css({
+										background: '#31CEA0',
+										color: '#fff',
+									});
+									clearInterval(countDown);
+								} else {
+									$('.feachBtn').attr('disabled', true);
+									$('.feachBtn').css({
+										background: '#31CEA0',
+										color: '#fff',
+									});
+									if(count < 10) {
+										$('.feachBtn').text('0' + count + 'S');
+									} else {
+										$('.feachBtn').text(count + 'S');
+									}
+								}
+								count--;
+							}, 1000);
+
+							$.ajax({
+								type: "POST", //方法类型
+								dataType: "json", //预期服务器返回的数据类型
+								url: "/index.php?s=/Api/IndexApi/send_phone_code", //url 
+								data: {
+									phone: phone,
+									id: share_id,
+									type: 1
+								},
+								async: false,
+								beforeSend: function() {
+									$(".mask").show();
+									$(".mask").find("p").html("发送中...")
+								},
+								success: function(res) {
+									console.log(res)
+									if(res.ResultType == 0) {
+										$(".mask").hide();
+										$(".model").show();
+										setTimeout(function() {
+											$(".model").hide();
+										}, 1500)
+										$(".model").html("发送成功");
+										code = res.AppendData
+									}else{
+										$(".mask").hide();
+										$(".model").show();
+										setTimeout(function() {
+											$(".model").hide();
+										}, 1500)
+										$(".model").html("验证码获取失败,请重新获取");
+									}
+								},
+								error: function() {
+									console.log("错误");
+								}
+							});
+						}
+					},
+					error: function() {
+						console.log("错误！");
+					}
+				});
+
+			});
+
+			$(".next").on("click", function() {
+				var phone = $(".phone").val();
+				var cod = $(".cod").val();
+				var options = $('.h_sel option:selected').val();
+				var city = $('.r_sel option:selected').val();
+				var cou = $(".h_end").attr("data-id")
+//				console.log(phone)
+//				console.log(options)
+//				console.log(city)
+//				console.log(phone)
+//				console.log(share_id)
+//console.log(cou)
+				if($('.h_sel').val() == "") {
+					$(".model").show();
+					$(".model").html("请选择省份");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($('.r_sel').val() == "") {
+					$(".model").show();
+					$(".model").html("请选择市");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($('.e_sel').val() == ""&&cou == 1) {
+					$(".model").show();
+					$(".model").html("请选择县");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($(".phone").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入手机号");
+					return false;
+				}
+				if($(".cod").val() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请输入验证码");
+					return false;
+				}
+				
+				if($(".cod").val()!= code) {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("验证码不正确");
+					return false;
+				}
+
+				$.ajax({
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "/index.php?s=/Api/AppApi/is_register", //url 
+					data: {
+						"id": share_id,
+						"phone": phone
+					},
+					beforeSend: function() {
+						$(".mask").show();
+						$(".mask").find("p").html("注册中...")
+					},
+					success: function(result) {
+						if(result.ResultType == 0){
+							$.ajax({
+								type: 'post',
+								url: '/index.php?s=/Api/AppApi/app_register',
+								dataType: 'json',
+								data: {
+									id: share_id,
+									rec_user_id:share_id,//推荐人id
+									province_id: options,
+									city_id: city,
+									phone: phone,
+									sex:1,
+									age_id:30-50
+								},
+								success: function(res) {
+									console.log(res)
+									$(".mask").hide();
+									if(res.ResultType==0){
+										
+										$(".model").show();
+										$(".model").html(res.Message);
+										setTimeout(function() {
+											$(".model").hide();
+										}, 1000);
+										setTimeout(function() {
+											window.location.href = "/index.php?s=/Home/mycenter/membersbuy/phone/"+phone+"/user_id/"+res.AppendData.id;
+										}, 800);
+									}
+								},
+								error: function() {
+									console.log("错误")
+								}
+							});
+						}
+						 if(result.ResultType == 3) {
+							$(".model").show();
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							$(".model").html("此手机号已被注册");
+//							return false;
+						}
+					},
+					error: function() {
+						console.log("错误！");
+					}
+				});
+			})
+		})
+	</script>
+	
+	</body>
+
+</html>

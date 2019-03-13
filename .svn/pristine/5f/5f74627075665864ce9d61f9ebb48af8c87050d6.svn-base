@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <title>视频详情</title>
+    <style>
+        body,html{
+            background: #f6f6f6;
+        }
+        .header{
+            width: 100%;
+            height: .32rem;
+            background: #fff;
+            line-height: .32rem;
+            padding: 0 .32rem;
+            box-sizing: border-box;
+            overflow-x: scroll;
+            white-space:nowrap;
+        }
+        .header-item{
+            display: inline-block;
+            margin-right: .32rem;
+            position: relative;
+        }
+
+         .header-item .line{
+             width: 100%;
+             height: .02rem;
+             background: #32CEA0;
+             position: absolute;
+             bottom: 0;
+             display: none;
+
+         }
+
+        .active{
+            color: #32CEA0
+        }
+
+        .content{
+            padding: .17rem .2rem 0 .2rem;
+            box-sizing: border-box;
+        }
+
+        .video_box_item{
+            background: #fff;
+            margin-bottom: .16rem;
+        }
+
+        .content .smatitle{
+            padding: .12rem .12rem .13rem .12rem;
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #333333;
+        }
+
+        video{
+            width: 100%;
+            height: 100%;
+        }
+
+        .video_box{
+            width: 100%;
+            height: 2rem;
+            overflow: hidden;
+        }
+
+        .div_type{
+            width: 100%;
+            display: flex;
+            padding-bottom: .14rem;
+        }
+
+          .div_type a{
+              display: block;
+              flex: 1;
+              text-align: center;
+              height: .26rem;
+              position: relative;
+              
+          }
+
+        .div_type a:nth-child(2){
+            border-left: 1px solid #C5C5C5;
+            border-right: 1px solid #C5C5C5;
+        }
+
+        .div_type a img {
+            width: .16rem;
+            height: .16rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.09rem;
+            left: .3rem;
+
+           
+        }
+        .div_type a span {
+            font-size: .14rem;
+            line-height: .26rem;
+            height: 100%;
+            display: inline-block;
+            margin-left: .2rem;
+           
+        }
+
+        .pay-box{
+            width: 3.26rem;
+            background: #fff;
+            border-radius: .04rem;
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            margin-left: -1.63rem;
+            text-align: center;
+            z-index: 1001;
+            padding-bottom: .24rem;
+            display: none;
+        }
+
+        .pay-box .title{
+            width: 100%;
+            font-weight: bold;
+            font-size: .16rem;
+            padding: .16rem 0 .12rem 0;
+        }
+
+           .pay-box .desc{
+               color: #777777;
+               padding-bottom: .32rem;
+           }
+
+           .list {
+               width: 100%;
+               display: flex;
+               flex-wrap: wrap;
+               justify-content: space-between;
+               padding: 0 .31rem;
+               box-sizing: border-box;
+           }
+
+            .list li{
+                width: 1.2rem;
+                height: .32rem;
+                line-height: .32rem;
+                border: 1px solid #32CEA0;
+                border-radius: .02rem;
+                margin-bottom: .12rem;
+                color: #c9c9c9;
+            }
+            .pay_active{
+                color: #fff !important;
+                background: #32CEA0;
+            }
+             .pay-mode{
+                height: .26rem;
+                line-height: .26rem;
+                padding-bottom: .18rem;
+            }
+             .pay-mode .left_box{
+                 width: 50%;
+                 text-align: right;
+             }
+
+             .pay-mode .right_box{
+                 width: 50%;
+                 text-align: left;
+                 position: relative;
+             }
+
+               .pay-mode .right_box span{
+                   text-indent: .3rem;
+               }
+
+
+            .pay-mode span{
+                display: inline-block;
+                line-height: .26rem;
+            }
+
+            .pay-mode img{
+                width: .18rem;
+                height: .18rem;
+                position: absolute;
+                top: 50%;
+                left: .05rem;
+                margin-top: -0.09rem;
+                
+            }
+
+            .pay-box button{
+                width: 2.82rem;
+                height: .5rem;
+                line-height: .5rem;
+                text-align: center;
+                color: #fff;
+                font-size: .2rem;
+                background: #32CEA0;
+                border-radius: .25rem;
+                border: 0;
+                outline: none;
+            }
+
+            .aaa{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .pay_wa{
+                width: 100%;
+                padding: .17rem 0 0 .2rem;
+                box-sizing: border-box;
+            }
+
+            .pay_wa .pay_icon{
+                width: 100%;
+                height: .3rem;
+                line-height: .3rem;
+                position: relative;
+            }
+
+             .pay_icon img{
+                 width: .12rem;
+                 height: .12rem;
+                 position: absolute;
+                 left: 0;
+                 top: 50%;
+                 margin-top: -0.06rem;
+             }
+
+               .pay_icon  p{
+                   padding-left: .2rem;
+                   box-sizing: border-box;
+                   font-size: .14rem;
+               }
+               .user_item_box{
+                   width: 100%;
+                   height: .6rem;
+                   border-bottom: 1px solid #eeeeee;
+                   display: flex;
+               }
+
+                .user_item_box .item_box{
+                    flex:1;
+                }
+
+                .user_item_box .item_box:nth-child(1){
+                    position: relative;
+                    flex: 0.5;
+                }
+                .user_item_box .item_box:nth-child(2){
+                        padding-top: .1rem;
+                }
+                .user_item_box .item_box:nth-child(3){
+                       text-align: center;
+                       position: relative;
+                }
+                .user_item_box .item_box:nth-child(2) p{
+                    width: 1rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .user_item_box .item_box:nth-child(1) img{
+                    width: .4rem;
+                    height: .4rem;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-left: -.2rem;
+                    margin-top: -.2rem;
+                }
+
+            .user_item_box .item_box:nth-child(2) .user-name{
+                width: 100%;
+                position: relative;
+                height: 60;
+            }
+
+            .user-name img{
+                width: .28rem;
+                height: .16rem;
+                position: absolute;
+                top: 50%;
+                margin-top: -0.08rem;
+                right: 0.2rem;
+            }
+
+            .user-name p{
+                width: 1rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+               .user_item_box .item_box:nth-child(3) span{
+                        display: inline-block;
+                        height: .24rem;
+                        line-height: .24rem;
+                        width: .5rem;
+                       
+                }
+
+            .user_item_box .item_box:nth-child(3) .sp1{
+                top: 50%;
+                margin-top: -0.12rem;
+                position: absolute;
+                left: 0;
+            }
+
+              .user_item_box .item_box:nth-child(3) .sp2{
+                top: 50%;
+                margin-top: -0.125rem;
+                position: absolute;
+                right: .1rem;
+                width: 0.8rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                
+              }
+
+
+
+
+
+     </style>
+</head>
+<body>
+    <div class="content">
+        <!-- <div class="video_box_item">
+            <div class="video_box">
+                <video src="__HOME_IMAGES__/video2.mp4" controls></video>
+            </div>
+            <p class="smatitle">明鑫集团打造最优文化的和美丽的企业</p>
+            <div class="div_type">
+                <a href="javascript:;">
+                    <img src="__HOME_IMAGES__/wh/share_icon@2x.png" alt="">
+                    <span>分享</span>
+                </a>
+                <a href="javascript:;" class="top">
+                    <img src="__HOME_IMAGES__/wh/Fabulous_icon@2x.png" alt="">
+                    <span>999</span>
+                </a>
+                <a href="javascript:;" class="Reward" >
+                    <img src="__HOME_IMAGES__/wh/money_icon@2x.png" alt="">
+                    <span>打赏</span>
+                </a>
+            </div>
+        </div> -->
+    </div>
+    <!-- 打赏排行 -->
+    <div class="pay_wa">
+        <div class="pay_icon">
+            <img src="__HOME_IMAGES__/wh/label_icon_article_click@2x.png" alt="">
+            <p>打赏排行</p>
+        </div>
+        <div class="boxo">
+            <!-- <div class="user_item_box">
+                <div class="item_box">
+                    <img src="__HOME_IMAGES__/wh/icon_yu@2x.png" alt="">
+                </div>
+                <div class="item_box">
+                    <div class="user-name">
+                        <p>真寻小哥哥</p>
+                        <img src="__HOME_IMAGES__/wh/no.1@2x.png" alt="">
+                    </div>
+                    <p>2018-11-24</p>
+                </div>
+                <div class="item_box">
+                <span class="sp1" style="font-size:.12rem;">打赏</span><span class="sp2" style="font-size:.16rem; color:#F8C85E;">120元</span>
+                </div>
+            </div> -->
+        </div>
+
+    </div>
+
+    <div class="mask"></div>
+    <!-- 支付 -->
+    <div class="pay-box">
+        <p class="title">打赏</p>
+        <p class="desc">感谢您的支持与鼓励，持续创作！</p>
+        <ul class="list">
+            <li class="pay_active">
+                <span>￥</span>
+                <span class="money">1</span>
+            </li>
+            <li>
+                <span>￥</span>
+                <span class="money">5</span>
+            </li>
+            <li>
+                <span>￥</span>
+                <span class="money">10</span>
+            </li>
+            <li>
+                <span>￥</span>
+                <span class="money">20</span>
+            </li>
+            <li>
+                <span>￥</span>
+                <span class="money">50</span>
+            </li>
+            <li>
+                <span>￥</span>
+                <span class="money">100</span>
+            </li>
+        </ul>
+        <div class="pay-mode">
+            <span class="fl left_box">支付方式:</span> 
+            <div class="div pay_box fl right_box">
+                <img src="__HOME_IMAGES__/wh/inco_weixin_zhi copy@2x.png" alt="">
+                <span>微信支付</span>
+            </div>
+        </div>
+        <button class="check_pay">确认支付</button>
+    </div>
+</body>
+</html>
+<script>
+$(function(){
+    var money = 1;
+    var openid = '{$openid}';
+
+    var nickname = '{$username}'
+    var user_img = '{$user_img}';
+    var detail = '{$video_}';
+        
+
+// 打赏
+var tips = $('.mask');
+$('.content').on('click','.Reward',function(){
+    tips.show();
+    $('.pay-box').show();
+})
+
+$('.content').on('click','.top',function(){
+    $(this).toggleClass('zan');
+    var top = $(this).attr('data-top');
+    var num = $(this).find('span').text();
+    var new_num = (num-0)+1;
+    $(this).find('span').text(new_num);
+    if($(this).hasClass('zan')){
+        $(this).find('img').attr('src','__HOME_IMAGES__/wh/fabulous_click_icon@2x.png').next().css('color','#32CEA0');
+    }
+         $.ajax({
+                url:'/index.php?s=/Api/Video/praise',
+                type:'post',
+                data:{
+                    id:top
+                },
+                success:function(res){
+                    console.log(res)
+                }
+            })
+})
+
+tips.on('click',function(){
+     $('.pay-box').hide();
+     tips.hide()
+})
+
+
+$('.list li').on('click',function(){
+    $(this).addClass('pay_active').siblings().removeClass('pay_active');
+    money = $(this).find('.money').text();
+})
+    
+   //支付 
+$('.check_pay').on('click',function(){
+    
+         $.ajax({
+            type:'post',
+            url:'/index.php?s=/Api/Video/reward',
+            data:{
+                openid:openid,
+                id:detail,
+                money:money,
+                nick_name:nickname,
+                avatar:user_img
+                
+
+            },
+            success:function(res){
+                console.log(res)
+                jsApiCall(res.data);
+                $('.mask').hide();
+                $('.pay-box').hide();
+            }
+            })
+    
+})
+
+    //调用微信JS api 支付
+    function jsApiCall(data) {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": data.appId, //公众号名称，由商户传入
+                "timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+                "nonceStr": data.nonceStr, //随机串
+                "package": data.package,
+                "signType": data.signType, //微信签名方式：
+                "paySign": data.paySign //微信签名
+            },
+            function (res) {
+                WeixinJSBridge.log(res.err_msg);
+                if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                    alert("支付成功");
+                }
+            }
+        );
+    }
+
+
+
+        $.ajax({
+            url:'/index.php?s=/Api/Video/detail',
+            type:'get',
+            data:{
+                id:detail
+            },
+            success:function(res){
+                console.log(res)
+                var vudeo_list = '';
+                var detail = res.AppendData.info;
+                        vudeo_list+=  '<div class="video_box_item">'
+                        vudeo_list+= '<div class="video_box">'
+                        vudeo_list+= '<video src="'+detail.url+'" controls></video>'
+                        vudeo_list+= '</div>'
+                        vudeo_list+='<p class="smatitle">'+detail.name+'</p>'
+                        vudeo_list+= '<div class="div_type">'
+                        vudeo_list+='<a href="javascript:;">'
+                        vudeo_list+= '<img src="__HOME_IMAGES__/wh/share_icon@2x.png" alt="">'
+                        vudeo_list+= '<span>分享</span>'
+                        vudeo_list+= '</a>'
+                        vudeo_list+='<a href="javascript:;" class="top" data-top="'+detail.id+'" >'
+                        vudeo_list+= '<img src="__HOME_IMAGES__/wh/Fabulous_icon@2x.png" alt="">'
+                        vudeo_list+= '<span>'+detail.praise+'</span>'
+                        vudeo_list+= '</a>'
+                        vudeo_list+= '<a href="javascript:;" class="Reward" >'
+                        vudeo_list+= '<img src="__HOME_IMAGES__/wh/money_icon@2x.png" alt="">'
+                        vudeo_list+= '<span>打赏</span>'
+                        vudeo_list+= '</a>'
+                        vudeo_list+= '</div>'
+                        vudeo_list+='</div>'
+                
+                $('.content').html(vudeo_list);
+                
+                var dashang = '';  //打赏
+                var datadashang = res.AppendData;
+                if(datadashang.ListData.length == 0 ){
+                    $('.boxo').html('<p style="text-align: center;margin-top:30px;">暂时还没有人打赏哦</p>')
+                }else{
+                $.each(datadashang.ListData,function(k,v){
+                    var timer = v.add_time;
+                    var newtime = timestampToTime(timer)
+                    v.add_time = newtime;
+                    dashang+= '<div class="user_item_box">'
+                    dashang+= '<div class="item_box">'
+                    dashang+= '<img src="'+v.avatar+'" alt="">'
+                    dashang+=  '</div>'
+                    dashang+=  '<div class="item_box">'
+                    dashang+=  '<div class="user-name">'
+                    dashang+= '<p>'+v.nick_name+'</p>'
+                    if(k == 0){
+                        dashang+=  '<img src="__HOME_IMAGES__/wh/no.1@2x.png" alt="">'
+                    }
+                    if(k == 1){
+                        dashang+=  '<img src="__HOME_IMAGES__/wh/no.2@2x.png" alt="">'
+                    }
+                    if( k == 2){
+                        dashang+=  '<img src="__HOME_IMAGES__/wh/no.3@2x.png" alt="">'
+                    }
+                    dashang+=  '</div>'
+                    dashang+=  '<p>'+v.add_time+'</p>'
+                    dashang+= '</div>'
+                    dashang+=  '<div class="item_box">'
+                    dashang+=  '<span class="sp1" style="font-size:.12rem;">打赏</span><span class="sp2" style="font-size:.16rem; color:#F8C85E;">'+v.money+'元</span>'
+                    dashang+=  '</div>'
+                    dashang+= '</div>'
+                })
+                $('.boxo').html(dashang)
+            }
+
+               
+            }
+        })
+
+
+
+
+
+
+    function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = (date.getDate() < 10? '0' + date.getDate()+' ' : date.getDate()+' ');
+            var h = (date.getHours() < 10 ? '0'+date.getHours()+':':date.getHours()+':');
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes()+':':date.getMinutes()+':');
+            var s = date.getSeconds();
+                return Y + M + D ;
+           
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+})
+</script>

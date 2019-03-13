@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>壁纸</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        #con {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            width: 100%;
+            height: 90%;
+            position: relative;
+
+        }
+
+        .content .wallpaper {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .erwei {
+            position: absolute;
+            bottom: 0.8rem;
+            right: .18rem;
+            /* width: 0.8rem;
+            height: 0.8rem; */
+            width: 1rem;
+            height: 1rem;
+            z-index: 0;
+        }
+
+        .erwei .erwei_box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .erwei .erwei_box .user_wewei {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .erwei .erwei_box .tz {
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            right: -.04rem;
+            bottom: -0.04rem;
+            z-index: 999;
+        }
+
+        .footer {
+            box-sizing: border-box;
+            padding: 0 .2rem;
+            box-sizing: border-box;
+            width: 100%;
+            height: 10%;
+            padding-top: .1rem;
+        }
+
+        button {
+            width: 100%;
+            color: #fff;
+            background: #32CEA0;
+            text-align: center;
+            padding: .1rem 0;
+            outline: none;
+            border: 0;
+            border-radius: .04rem;
+
+        }
+
+        @-webkit-keyframes change {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .loading {
+            width: 155px;
+            height: 120px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -77.5px;
+            margin-top: -60px;
+            text-align: center;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+
+        }
+
+        .loading img {
+            width: 40px;
+            height: 40px;
+            margin-top: 18px;
+            animation: change 3s linear infinite;
+        }
+
+        .loading span {
+            display: block;
+            color: #fff;
+            margin-top: 12px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="yx" src="" alt="" style="display:none;">
+    <div id="con">
+        <div class="content">
+            <img class="wallpaper" src="" alt="">
+            <div class="erwei" id="box">
+                <div class="erwei_box">
+                    <img class="user_wewei" src="/Public/Home/images/pagePic.png" alt="">
+                    <img class="tz" src="/Public/Home/images/wh/zoom_icon@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <button>立即使用</button>
+        </div>
+    </div>
+    <div class="loading">
+        <img src="/Public/Home/images/loadad.gif" alt="">
+        <span>正在生成中...</span>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var id = '{$id}';
+        var init_x, init_y, move_x, move_y;
+        var touch_div_w = $('.erwei').width();
+        var touch_div_h = $('.erwei').height();
+
+        var content_w = $('.content').width();
+        var content_h = $('.content').height();
+
+        $(".content").on('touchstart', '.erwei', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            init_x = event.originalEvent.changedTouches[0].pageX;
+            init_y = event.originalEvent.changedTouches[0].pageY;
+
+        })
+        var strtop = $('.erwei').css('top');
+        var strleft = $('.erwei').css('left');
+        var img_top = strtop.substring(0,strtop.length-2);
+        var img_left = strleft.substring(0,strleft.length-2);
+        $('.content').on('touchmove', '.erwei', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            move_x = event.originalEvent.changedTouches[0].pageX;
+            move_y = event.originalEvent.changedTouches[0].pageY;
+            img_top = $('#box').offset().top;
+            img_left = $('#box').offset().left;
+
+            var end_x = move_x - (touch_div_w / 2);
+            var end_y = move_y - (touch_div_h / 2);
+
+            if (end_x <= 0) {
+                end_x = 0;
+            }
+            if (end_y <= 0) {
+                end_y = 0;
+            }
+            if (end_x >= content_w - touch_div_w) {
+                end_x = content_w - (touch_div_w + 4);
+            }
+            if (end_y >= content_h - touch_div_h) {
+                end_y = content_h - (touch_div_h + 4)
+            }
+
+
+            $(this).css({
+                left: end_x + 'px',
+                top: end_y + 'px'
+
+            })
+        })
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+        var imgsrc = GetQueryString("imgsrc");
+        var w_id = GetQueryString("w_id");
+        console.log(w_id)
+        $('.wallpaper').attr('src', imgsrc);
+        $('#yx').attr('src', imgsrc);
+
+        var bili_w;
+        var bili_h;
+        $('img').load(function () {
+            var yt_w = $('#yx').width();
+            var yt_h = $('#yx').height();
+            var xz_w = $('.wallpaper').width();
+            var xz_h = $('.wallpaper').height();
+
+            bili_w = yt_w / xz_w;
+            bili_h = yt_h / xz_h;
+            bili_w = bili_w.toFixed(2);
+            bili_h = bili_h.toFixed(2);
+
+        })
+
+
+
+        $('.footer button').on('click', function () {
+            var left = (img_left * bili_w);
+            var top = (img_top * bili_h);
+
+            var newleft = left.toFixed(2)
+            var newtop = top.toFixed(2)
+
+       
+
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/IndexApi/extension_code',
+                data: {
+                    left: newleft,
+                    top: newtop,
+                    w_id: w_id,
+                    id: id
+                },
+                beforeSend: function () {
+                    $('.loading').show();
+                },
+                success: function (res) {
+                    $('.loading').hide()
+                    console.log(res)
+                    if (res.ResultType == 0) {
+                        var data = res.AppendData;
+                        location.href = '/index.php?s=/Home/Poster/preview/img/&' + data +
+                            '';
+                    }
+
+                },
+                error: function () {
+                    $('.loading').hide();
+                }
+            })
+        })
+
+
+
+    })
+</script>

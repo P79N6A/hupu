@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/mui/css/mui.min.css">
+    <script src="/Public/Home/js/whjs/js/mui/js/mui.min.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>编辑模板</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+            width: 100%;
+            height: 92%;
+        }
+
+        .header img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer {
+            width: 100%;
+            height: 8%;
+        }
+
+        .footer button {
+            width: 50%;
+            height: 100%;
+            border: 0;
+            outline: none;
+            background: #fff;
+            box-sizing: border-box;
+            position: relative;
+            border-radius: 0;
+        }
+
+        .footer button img {
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -.1rem;
+            left: .66rem;
+        }
+
+        .footer button span {
+            width: .36rem;
+            height: .2rem;
+            line-height: .2rem;
+            display: block;
+            position: absolute;
+            top: 50%;
+            margin-top: -.09rem;
+            left: .94rem;
+        }
+
+        .footer button:nth-child(1) {
+            color: #777777;
+            font-size: .16rem;
+        }
+
+        .footer button:nth-child(2) {
+            color: #fff;
+            font-size: .16rem;
+            background: #32CEA0;
+        }
+
+        .share {
+            width: 0.8rem;
+            height: .3rem;
+            line-height: .3rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: .15rem;
+            display: block;
+            position: fixed;
+            top: .1rem;
+            right: .1rem;
+            color: #fff !important;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <a class="share" href="javascript:;">分享</a>
+    <div class="header">
+        <img class="cover" src="" alt="">
+    </div>
+    <div class="footer clearfix">
+        <button class="fl del_button">
+            <img src="/Public/Home/images/wh/icon_delete@2x.png" alt="">
+            <span>删除</span>
+        </button>
+        <button class="fl edit_go">
+            <img src="/Public/Home/images/wh/edit_icon@2x.png" alt="">
+            <span>编辑</span>
+        </button>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var id = '{$id}'
+        var unionid = '{$unionid}';
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';
+        }
+
+        var edit = GetQueryString('edit');
+        var img = GetQueryString('img');
+        var del_id = GetQueryString('id');
+
+        console.log(img)
+        console.log(del_id)
+        console.log(edit)
+        $('.cover').attr('src', img);
+
+        var formdata = new FormData();
+        var url_go;
+
+        if (edit == 1) { //海报秀
+            $('.share').attr('href', '/index.php?s=/Home/Nologin/share_img/id/' + del_id + '.html&share=1');
+            url_go = 'index.php?s=/Api/IndexApi/poster_del';
+            formdata.append('id', id);
+            formdata.append('my_id', del_id);
+        } else {
+            $('.share').hide() //锁屏壁纸
+            $('.edit_go').empty().text('预览')
+            url_go = 'index.php?s=/Api/IndexApi/wallpaper_del';
+            formdata.append('unionid', unionid);
+            formdata.append('wall_id', del_id);
+
+        }
+
+        $('.del_button').on('click', function () {
+            delete_template(url_go, formdata)
+
+        })
+
+        $('.edit_go').on('click', function () {
+            if (edit == 1) {
+                location.href = '/index.php?s=/Home/Poster/poster_edit.html&poster=' + del_id +
+                    '&edit=1'
+            } else if (edit == '') {
+                location.href = '/index.php?s=/Home/Poster/preview/img/&' + img + ''
+            }
+
+        })
+
+
+        function delete_template(url_go, formdata) {
+
+            mui.confirm("确认删除吗？", "提示", ["否", "是"], function (res) {
+                if (res.index == 1) {
+                    $.ajax({
+                        url: url_go,
+                        type: 'post',
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (res) {
+                            location.href =
+                                '/index.php?s=/Home/Selecttemplate/all_template.html';
+                        }
+                    })
+                }
+            })
+
+
+        }
+
+
+    })
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

@@ -1,0 +1,543 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>菜单列表</h5>
+        </div>
+        <div class="ibox-content">          
+            <div class="row">
+                <div class="col-sm-12">   
+                    <div  class="col-sm-2">
+                        <div class="input-group" >  
+                            <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#myModal">添加菜单</button> 
+                        </div>
+                    </div>                                                                                        
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+
+
+                    <table class="layui-hide" id="listTable" lay-filter="listTable"></table>
+
+                    <script type="text/html" id="barDemo">
+
+                        <a style="display: none;" class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                        <a  style="display: none;"  class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+{include file="public/footer" /}
+
+<script src="__ADMIN_JS__/bootstrap.min.js?v=3.3.6"></script>
+
+<script src="__ADMIN_JS__/plugins/switchery/switchery.js"></script><!--IOS开关样式-->
+<script src="__ADMIN_JS__/plugins/chosen/chosen.jquery.js"></script>
+<script src="__ADMIN_JS__/plugins/iCheck/icheck.min.js"></script>
+
+<link href="__ADMIN_CSS__/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="__ADMIN_CSS__/plugins/chosen/chosen.css" rel="stylesheet">
+
+<script>
+
+    layui.use(['form', 'element', 'table', 'jquery'], function () {
+        var table = layui.table;
+        var $ = layui.$ //重点处
+            , form = layui.form
+            , laydate = layui.laydate
+            , layer = layui.layer;
+        var urls = '/Admin/{$class}/getList';
+
+        //日期
+        laydate.render({
+            elem: '.date'
+        });
+
+        table.render({
+            elem: '#listTable'
+            , url: urls
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,toolbar: '#toolbar' //增加工具栏打印，筛选，导出
+            , cols: [[
+                {type: 'checkbox'}
+                , {field: 'id',width:80,  title: 'ID', sort: true}
+                , {field: 'title', event:'title',width:200,  templet:'#titleTpl', title: '权限名称'}
+                , {field: 'name', event:'name', width:250, title: '节点'}
+                // , {field: 'create_time', width:180,   title: '添加时间'}
+                , {field: 'sort', event:'sort',width:80,  title: '排序'}
+                , {field: 'name', templet:'#statusTpl',  title: '菜单状态'}
+
+                // , {field: 'path', event:'path',  title: '音乐路径'}
+                , {title: '操作', width: 100, align: 'center', toolbar: '#barDemo'}
+
+            ]]
+            , page: true
+            , id: 'listReload'//会员列表重载
+
+        });
+
+        //监听行工具事件
+        table.on('tool(listTable)', function (obj) {
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+
+            // console.log(data.user_id);
+
+            if (layEvent === 'detail') {
+                layer.msg('查看操作');
+
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    //向服务端发送删除指令
+                    del_member(data.id);
+                    layer.close(index);
+                });
+            } else if (layEvent === 'edit') {
+                // layer.msg('编辑操作');
+                location.href = './edits/id/' + obj.data.id;
+            }
+
+            if(layEvent === 'name'){
+
+                layer.prompt({
+
+                    formType: 2
+                    ,title: '修改name'
+                    ,value: data.name
+                }, function(value, index){
+                    layer.close(index);
+                    //这里一般是发送修改的Ajax请求
+                    $.ajax({
+                        type: 'POST',
+                        url: "./edits", // ajax请求路径
+                        data: {
+                            id: data.id,
+                            name: value
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //调用弹窗显示信息
+                            layer.msg(data['msg']);
+
+                            if (data.code == 1) {
+
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    name: value
+                                });
+
+                            }
+
+                        }
+                    });
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        name: value
+                    });
+                });
+            }
+
+            if(layEvent === 'sort') {
+
+                layer.prompt({
+
+                    formType: 2
+                    , title: '修改sort'
+                    , value: data.sort
+                }, function (value, index) {
+                    layer.close(index);
+                    //这里一般是发送修改的Ajax请求
+                    $.ajax({
+                        type: 'POST',
+                        url: "./edits", // ajax请求路径
+                        data: {
+                            id: data.id,
+                            sort: value
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //调用弹窗显示信息
+                            layer.msg(data['msg']);
+
+                            if (data.code == 1) {
+
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    sort: value
+                                });
+
+                            }
+
+                        }
+                    });
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        sort: value
+                    });
+                });
+            }
+
+
+            if(layEvent === 'title') {
+
+                layer.prompt({
+
+                    formType: 2
+                    , title: '修改title'
+                    , value: data.title
+                }, function (value, index) {
+                    layer.close(index);
+                    //这里一般是发送修改的Ajax请求
+                    $.ajax({
+                        type: 'POST',
+                        url: "./edits", // ajax请求路径
+                        data: {
+                            id: data.id,
+                            title: value
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            //调用弹窗显示信息
+                            layer.msg(data['msg']);
+
+                            if (data.code == 1) {
+
+                                //同步更新表格和缓存对应的值
+                                obj.update({
+                                    title: value
+                                });
+
+                            }
+
+                        }
+                    });
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        title: value
+                    });
+                });
+            }
+
+        });
+
+
+        //工具栏事件
+        table.on('toolbar(listTable)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+
+            switch(obj.event){
+                case 'getCheckData':
+
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+                case 'delSelected':
+                    var checkStatus = table.checkStatus('listReload')
+                        , data = checkStatus.data;
+                    var ids = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var val = data[i].id;//注意修改字段  /*zzy*/
+                        if (ids.length > 0) {
+                            ids += ',';
+                        }
+                        ids += val;
+                    }
+                    if (data.length > 0) {
+                        console.log(ids);
+                        lunhui.deletes(ids, '{:url("delSelecteds")}');
+                    } else {
+                        layer.msg('请选中需要删除的数据', {icon: 0, time: 1500}, function (index) {
+                            console.log(obj);
+                            obj.del(); //删除对应行（tr）的DOM结构
+                            layer.close(index);
+                        });
+                    }
+                    break;
+            }
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            table.reload('listReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+                , where: {
+                    phone: data.field.phone
+                    , province_id: data.field.province_id
+                    , city_id: data.field.city_id
+                    , nick_name: data.field.nick_name
+                    , vipgroup: data.field.vipgroup
+                    , mobile: data.field.mobile
+                    , start_at: data.field.start_at
+                    , end_at: data.field.end_at
+                    , isPay: data.field.isPay
+                }
+            });
+            return false;
+        });
+
+        form.on('select(province_id)', function (data) {
+            //这里一般是发送修改的Ajax请求
+            $.ajax({
+                type: 'POST',
+                url: "/admin/base/getCity", // ajax请求路径
+                data: {
+                    province_id: $('#province_id').val(),
+                },
+                dataType: 'json',
+                success: function (data) {
+
+                    var city = data.city;
+                    var option=$("<option></option>");
+                    $(option).val("0");
+                    $(option).html("请选择");
+                    $("#city_id").html(option);
+                    for(var i in city){
+                        var option=$("<option></option>");
+                        $(option).val(city[i]['region_id']);
+                        $(option).html(city[i]['region_name']);
+                        $("#city_id").append(option);
+                    }
+                    form.render('select');
+
+                }
+            });
+
+        });
+
+
+    });
+
+
+</script>
+
+
+
+
+<div class="modal  fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title">添加菜单</h3>                  
+                </div>
+                <form class="form-horizontal" name="add_rule" id="add_rule" method="post" action="{:url('add_rule')}">
+                    <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属父级</label>
+                                <div class="col-sm-8">                                                      
+                                    <select name="pid" class="form-control">
+                                        <option value="0">--默认顶级--</option>
+                                        {foreach name="admin_rule" item="v"}
+                                            <option value="{$v.id}" style="margin-left:55px;">{$v.lefthtml}{$v.title}</option>                                          
+                                        {/foreach}
+                                    </select>                                    
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">菜单名称</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="title" id="title" placeholder="输入菜单名称" class="form-control"/>
+                                </div>
+                            </div>                      
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">节点</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="name" id="name" placeholder="模块/控制器/方法" class="form-control"/>
+                                    <span class="help-block m-b-none">如：admin/user/adduser (一级节点添加“#”即可)</span>
+                                </div>
+                            </div>  
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">CSS样式</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="css" id="css" placeholder="输入菜单名称前显示的CSS样式" class="form-control"/>
+                                    <span class="help-block m-b-none"> <a href="http://fontawesome.dashgame.com/" target="_black">选择图标</a> 如fa fa-user </span>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">排&nbsp;序</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="sort" id="sort" value="" placeholder="输入排序" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                            <label class="col-sm-3 control-label">状&nbsp;态</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='status' value="1" checked="checked"/>开启&nbsp;&nbsp;
+                                    <input type="radio" name='status' value="0" />关闭
+                                </div>
+                            </div>
+                        </div>                  
+                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> 保存</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+   
+    $(function(){
+        $('#add_rule').ajaxForm({
+            beforeSubmit: checkForm, 
+            success: complete, 
+            dataType: 'json'
+        });
+        
+        function checkForm(){
+            if( '' == $.trim($('#title').val())){
+                layer.msg('请输入菜单名称',{icon:2,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+                });
+                return false;
+            }
+            
+            if( '' == $.trim($('#name').val())){
+                layer.msg('控制器/方法不能为空',{icon:0,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+                });
+                return false;
+            }
+        }
+
+
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    window.location.href="{:url('menu/index')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1});
+                return false;   
+            }
+        }
+     
+    });
+
+
+    //更新排序
+    $(function(){
+        $('#ruleorder').ajaxForm({
+            success: complete, 
+            dataType: 'json'
+        });
+
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 1,time:1500,shade: 0.1}, function(index){
+                    // window.location.href="{:url('menu/index')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 2,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                    // window.location.href=data.url;
+                });
+            }
+        }
+    });
+
+
+/**
+ * [del_rule 删除菜单]
+ * @Author[田建龙 864491238@qq.com]
+ * @param   {[type]}    id [用户id]
+ */
+function del_rule(id){
+    layer.confirm('确认删除此菜单?', {icon: 3, title:'提示'}, function(index){
+        //do something
+        $.getJSON('./del_rule', {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1},function(index){
+                    layer.close(index);
+                    window.location.href="{:url('menu/index')}";
+                });
+               
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+
+        layer.close(index);
+    })
+
+}
+
+//菜单状态
+function rule_state(id){
+    lunhui.status(id,'{:url("rule_state")}');
+}
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},                    
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>
+
+
+<!--状态的模板-->
+<script type="text/html" id="statusTpl">
+
+
+    {{# if(d.status==1){ }}
+    <a href="javascript:;" onclick="edit_lock({{d.id}});">
+        <div id="zt{{d.id}}"><span class="label label-info ">开启</span></div>
+    </a>
+
+    {{# }else{ }}
+
+    <a href="javascript:;" onclick="edit_lock({{d.id}});">
+        <div id="zt{{d.id}}"><span class="label label-danger">禁用</span></div>
+    </a>
+    {{# } }}
+
+
+</script>
+<!--状态的模板-->
+
+<script type="text/html" id="titleTpl">
+
+    {{d.lefthtml}}{{d.title}}
+
+</script>
+</body>
+</html>

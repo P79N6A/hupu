@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link    href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/wap/public.js"></script>
+    <script src="__AGENCY__/wap/ysImg.js"></script>
+    <title>代理商修改</title>
+    <style>
+        body,html{
+            background: #eee;
+        }
+
+        .header{
+            width: 100%;
+            background: #fff;
+            height: 2.32rem;
+            padding: .16rem .16rem;
+            box-sizing: border-box;
+        }
+
+        .tipp{
+            padding-bottom: .24rem;
+            font-weight: bold;
+            font-size: .16rem;
+        }
+
+        .pp{
+             font-weight: bold;
+              font-size: .16rem;
+        }
+
+         .header ul{
+             width: 100%;
+             height: 100%;
+             display: flex;
+             justify-content: space-around;
+         }
+
+          .header ul li{
+              width: 1.6rem;
+              height: 1.05rem;
+              text-align: center;
+          }
+
+          .header ul li .item{
+              width: 100%;
+              height: .3rem;
+              line-height: .3rem;
+              text-align: center;
+              color: #fff;
+              background: #2BCA83;
+              margin-top: .1rem;
+              border-radius: .01rem;
+          }
+
+           .header ul li .img_box{
+               width: 100%;
+               height: 100%;
+               position: relative;
+           }
+
+           .header ul li .img_box img{
+               width: 100%;
+               height: 100%;
+           }
+
+            .header ul li .img_box .up_data{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                opacity: 0;
+            }
+
+            .main{
+                width: 100%;
+                height: 1.68rem;
+                background: #fff;
+                margin-top: .08rem;
+                padding: .16rem .16rem;
+                box-sizing: border-box;
+                overflow-x: scroll;
+                overflow-y: hidden;
+            }
+
+             .main .tp{
+                 padding-bottom: .12rem;
+             }
+              .main .list{
+                  width: 135%;
+                  height: 100%;
+                  overflow-x: scroll;
+              }
+
+            .main .list li{
+                width: 1.05rem;
+                height: .72rem;
+                color: #DDAE59;
+                margin-right: .08rem;
+                text-align: center;
+            }
+
+             .main .list li p{
+                 margin-top: .1rem;
+             }
+
+              .main .list li .dl_box{
+                  width: 100%;
+                  height: 100%;
+                  position: relative;
+              }
+
+            .main .list li .dl_box .dels{
+                     width: .15rem;
+                     height: .15rem;
+                     top: 0;
+                     right: 0;
+                     z-index: 10;
+                     position: absolute;
+                 }
+
+                  .main .list li .dl_box .ht{
+                      width: 100%;
+                      height: 100%;
+                  }
+
+                   .main .list li .dl_box input{
+                       width: 100%;
+                       height: 100%;
+                       position: absolute;
+                       top: 0;
+                       left: 0;
+                       z-index: 999;
+                       opacity: 0;
+                   }
+
+                   .input_msg{
+                       width: 100%;
+                       margin-top: .08rem;
+                       padding: .16rem .16rem 0 .16rem;
+                       box-sizing: border-box;
+                       background: #fff;
+                   }
+
+                   .proposer{
+                       width: 100%;
+                      
+
+                   }
+
+                   .proposer .item{
+                       width: 100%;
+                       height: .5rem;
+                       line-height: .5rem;
+                       border-bottom: 1px solid rgba(244,244,244,1);
+                   }
+
+                    .proposer .item .user{
+                        width: 40%;
+                         line-height: .5rem;
+                         color: #7E818A;
+                         font-size: .15rem;
+                    }
+
+                    .proposer .item input{
+                        width: 60%;
+                        height: 100%;
+                        border: 0;
+                        outline: none;
+                        color: #C5C5C5;
+                        font-size: .14rem;
+                    }
+
+
+                    .Proxy_type{
+                        width: 100%;
+                        margin-top: .05rem;
+                        background: #fff;
+                        padding: 0 .16rem;
+                        box-sizing: border-box;
+
+                    }
+
+                    .Proxy_type .item{
+                        width: 100%;
+                        height: .54rem;
+                        line-height: .54rem;
+                        position: relative;
+                        border-bottom: 1px solid rgba(244,244,244,1);
+
+                    }
+
+                     .Proxy_type .item .left{
+                         width: 40%;
+                         height: 100%;
+                         font-size: .15rem;
+                         color: #7E818A;
+                     }
+
+                       .Proxy_type .item .right{
+                           width: 60%;
+                           height: 100%;
+                           outline: none;
+                           border: 0;
+                           appearance:none;
+                           -moz-appearance:none;
+                           -webkit-appearance:none;
+                           color: #C5C5C5;
+                           background: #fff;
+                       }
+
+                       .Proxy_type .item .right textarea{
+                           width: 100%;
+                           height: 100%;
+                           border: 0;
+                           outline: none;
+                           padding-top: .16rem;
+                           box-sizing: border-box;
+                           font-size: .14rem;
+                           color: #C5C5C5;
+                           height: .54rem;
+                           max-height: .54rem;
+                       }
+                       
+                       .Proxy_type .item img{
+                           width: .16rem;
+                           height: .09rem;
+                           position: absolute;
+                           top: 50%;
+                           margin-top: -0.045rem;
+                           right: 0.8rem;
+                       }
+
+                    .yh_box{
+                        width: 100%;
+                        margin-top: .08rem;
+                        padding: 0 .16rem;
+                        box-sizing: border-box;
+                        background: #fff;
+                    }
+                       .yh{
+                           width: 100%;
+                           background: #fff;
+                           height: .54rem;
+                           line-height: .54rem;
+                           position: relative;
+                           border-bottom: 1px solid rgba(244,244,244,1);
+
+                       }
+
+                        .yh .left{
+                            width: 40%;
+                            font-size: .15rem;
+                            color: #7E818A;
+                            line-height: .54rem;
+                        }
+
+                         .yh .right{
+                            width: 60%;
+                            height: 100%;
+                            width: 60%;
+                            height: 100%;
+                            outline: none;
+                            border: 0;
+                            appearance: none;
+                            -moz-appearance: none;
+                            -webkit-appearance: none;
+                            color: #C5C5C5;
+                            background: #fff;
+                         }
+
+                          .yh .right input{
+                              height: 98%;
+                              width: 100%;
+                              outline: none;
+                              border: 0;
+                              color: #C5C5C5;
+                              box-sizing: border-box;
+                          }
+
+                         .yh  img{
+                                width: .16rem;
+                                height: .09rem;
+                                position: absolute;
+                                top: 50%;
+                                margin-top: -0.045rem;
+                                right: 0.8rem;
+                         }
+
+                         .bz {
+                             height: .8rem;
+                             line-height: .8rem;
+                             color: #7E818A;
+                         }
+
+                          .bz #bz{
+                              resize: none;
+                              border: 0;
+                              outline: none;
+                              background: #F2F2F2;
+                              width: 70%;
+                              height: .6rem;
+                              margin-top: .1rem;
+                              margin-left: .2rem;
+                              border: 1px solid rgba(242,242,242,1);
+                          }
+
+                          .tj{
+                              width: 100%;
+                              height: .72rem;
+                              background: #F7F7F7;
+                              padding: .11rem .16rem;
+                              box-sizing: border-box;
+                          }
+
+                           .tj button{
+                               width: 100%;
+                               height: 100%;
+                               border-radius: .04rem;
+                               color: #fff;
+                               text-align: center;
+                               outline: none;
+                               border: 0;
+                               background: #2BCA83;
+                           }
+
+                           .over{
+                               overflow: hidden !important;
+                           }
+
+        #dx{
+            width: 2.92rem;
+            height: 3.12rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -1.56rem;
+            margin-left: -1.46rem;
+
+            z-index: 999;
+            background: #fff;
+            border-radius: .04rem;
+        }
+        #dx .dx-box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #dx .dx-box .ddd{
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            margin-left: -.5rem;
+            margin-top: -.5rem;
+        }
+
+        #dx .dx-box .del{
+            width: .14rem;
+            height: .14rem;
+            position: absolute;
+            right: .12rem;
+            top: .12rem;
+        }
+
+        #dx .dx-box p{
+            position: absolute;
+            bottom: .5rem;
+            width: 100%;
+            text-align: center;
+        }
+        .mask1{width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 998;
+        }
+
+        #tjr{
+            width: 60%;
+            height: 100%;
+            outline: none;
+            border: 0;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            color: #C5C5C5;
+            background: #fff;
+        }
+        #tjr1{
+            width: 60%;
+            height: 100%;
+            outline: none;
+            border: 0;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            color: #C5C5C5;
+            background: #fff;
+        }
+        .tjrdl{
+            position: relative;
+        }
+
+        .tjrdl img{
+            width: .16rem;
+            height: .09rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.045rem;
+            right: 0.8rem;
+        }
+        .mint-cell-title{
+            width: 40%;
+            line-height: .5rem;
+            color: #7E818A;
+            font-size: .15rem;
+            float: left;
+        }
+        .mint-field-core{
+            width: 60%;
+            height: 100%;
+            border: 0;
+            outline: none;
+            color: #C5C5C5;
+            font-size: .14rem;
+        }
+        .mint-cell-wrapper{
+            padding: 0px;
+        }
+        .proposer .item.nagent_wechar{
+            border-bottom: 0px solid rgba(244,244,244,1);
+        }
+        .sex{
+            position: relative;
+        }
+
+        .sex img{
+            width: .16rem;
+            height: .09rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.045rem;
+            right: 0.8rem;
+        }
+        .sex .right{
+            width: 60%;
+            height: 100%;
+            outline: none;
+            border: 0;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            color: #C5C5C5;
+            background: #fff;
+        }
+
+        .yh input{
+            width: 60%;
+            height: 100%;
+            box-sizing: border-box;;
+            border: 0;
+            color: #C5C5C5;
+        }
+        div.mint-checkbox-label {
+            line-height: .15rem !important;
+            vertical-align: baseline !important;
+            color: #7E818A;
+            font-size: .15rem;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <div class="header">
+        <p class="tipp">请拍摄并上传你的身份证照片</p>
+        <ul>
+            <li>
+                <div class="img_box useridimg zhen">
+
+                    <input class="up_data" type="file" accept="image/*"  >
+                    <img src="__HOME_IMAGES__/wh/icon_shenfenzheng@2x.png" alt="">
+                </div>
+                <p class="item">拍摄正面</p>
+            </li>
+            <li>
+                <div class="img_box useridimg fan">
+                    <input class="up_data" type="file" accept="image/*" >
+                    <img src="__HOME_IMAGES__/wh/icon_sfz@2x.png" alt="">
+                </div>
+                <p class="item">拍摄反面</p>
+            </li>
+        </ul>
+    </div>
+    <div class="main publicupload">
+        <p class="tp pp">请上传代理商合同 (最多三张)</p>
+        <ul class="list clearfix">
+            <li class="fl" v-for="(item,index) in pojo.nagent_contracts">
+                <div class="dl_box">
+                    <img class="ht" :src="item.url">
+                    <img class="dels" src="__HOME_IMAGES__/wh/icon_de@2x.png"  @click="dels(index,'nagent_contracts')">
+                </div>
+                <p>合同{{index+1}}</p>
+            </li>
+            <li class="fl" v-show="pojo.nagent_contracts.length<3">
+                <div class="dl_box">
+                    <img class="ht" src="__HOME_IMAGES__/wh/GrCopy2@2x.png" alt="">
+                    <input class="dl_up" type="file" accept="image/*" data-tar="nagent_contracts">
+                </div>
+                <p>请上传合同照片</p>
+            </li>
+        </ul>
+    </div>
+    <div class="main publicupload">
+        <p class="tp pp">请上传转账记录 (最多三张)</p>
+        <ul class="list clearfix">
+            <li class="fl"  v-for="(item,index) in pojo.nagent_transfer_record">
+                <div class="dl_box">
+                    <img class="ht" :src="item.url">
+                    <img class="dels" src="__HOME_IMAGES__/wh/icon_de@2x.png"  @click="dels(index,'nagent_transfer_record')">
+                </div>
+                <p>转账{{index+1}}</p>
+            </li>
+            <li class="fl" v-show="pojo.nagent_transfer_record.length < 3">
+                <div class="dl_box">
+                    <img class="ht" src="__HOME_IMAGES__/wh/GrCopy2@2x.png" alt="" >
+                    <input class="dl_up" type="file" accept="image/*" data-tar="nagent_transfer_record">
+                </div>
+                <p>请上传记录照片</p>
+            </li>
+        </ul>
+    </div>
+    <div class="main publicupload">
+        <p class="tp pp">请上传转账凭证 (最多三张)</p>
+        <ul class="list clearfix">
+            <li class="fl" v-for="(item,index) in pojo.payment_voucher_img">
+                <div class="dl_box">
+                    <img class="ht" :src="item.url">
+                    <img class="dels" src="__HOME_IMAGES__/wh/icon_de@2x.png"
+                         @click="dels(index,'payment_voucher_img')">
+                </div>
+                <p>转账{{index+1}}</p>
+            </li>
+            <li class="fl" v-show="pojo.payment_voucher_img.length < 3">
+                <div class="dl_box">
+                    <img class="ht" src="__HOME_IMAGES__/wh/GrCopy2@2x.png" alt="">
+                    <input class="dl_up" type="file" accept="image/*" data-tar="payment_voucher_img">
+                </div>
+                <p>请上传转账凭证照片</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main over publicupload">
+        <p class="tp pp">学习考核 (一张)</p>
+        <ul class="list clearfix">
+            <li class="fl"  v-for="(item,index) in pojo.study_assessment_img">
+                <div class="dl_box">
+                    <img class="ht" :src="item.url">
+                    <img class="dels" src="__HOME_IMAGES__/wh/icon_de@2x.png"  @click="dels(index,'study_assessment_img')">
+                </div>
+                <p>考核{{index+1}}</p>
+            </li>
+            <li class="fl" v-show="pojo.study_assessment_img.length==0">
+                <div class="dl_box ">
+                    <img class="ht" src="__HOME_IMAGES__/wh/GrCopy2@2x.png" alt="">
+                    <input class="dl_up" type="file" accept="image/*" data-tar="study_assessment_img">
+                </div>
+                <p>请上传记录照片</p>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 填写推荐人信息 -->
+    <div class="content">
+        <div class="input_msg">
+            <p class="tipp">推荐人信息</p>
+            <div class="proposer">
+                <div class="item clearfix">
+                    <div class="fl user">推荐人姓名</div>
+                    <input type="text" class="fl" placeholder="请输入推荐人姓名" v-model="pojo.superior_name">
+                </div>
+                <div class="item clearfix">
+                    <div class="fl user">推荐人手机号</div>
+                    <input type="text" class="fl" placeholder="请输入推荐人手机号" v-model="pojo.superior_phone">
+                </div>
+                <div class="item clearfix tjrdl">
+                    <div class="fl user">合同编号</div>
+                    <input type="text" class="fl" placeholder="请输入合同编号" v-model="pojo.contract_name">
+                </div>
+                <div class="item clearfix tjrdl">
+                    <div class="fl user">推荐人代理类型</div>
+                    <select id="tjr" class="right fl" v-model="pojo.superior_type_id">
+                            <option value="-1" selected>请选择类型</option>
+                            <option value="1">创投</option>
+                            <option value="2">创业家</option>
+                            <option value="3">创业导师</option>
+                            <option value="4">创业领袖</option>
+                    </select>
+
+
+                    <img src="__HOME_IMAGES__/downx.png" alt="">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="input_msg">
+            <p class="tipp">填写申请人信息</p>
+            <div class="proposer">
+                <div class="item clearfix">
+                    <div class="fl user">申请人姓名</div>
+                    <input type="text" class="fl" placeholder="请输入申请人姓名" v-model="pojo.nagent_name">
+                </div>
+                <div class="item clearfix">
+                    <div class="fl user">申请人手机号</div>
+                    <input type="text" class="fl" placeholder="请输入申请人手机号" v-model="pojo.nagent_phone">
+                </div>
+                <div class="item clearfix">
+                    <div class="fl user">身份证号</div>
+                    <input type="text" class="fl" placeholder="请输入申请人的身份证号" v-model="pojo.nagent_id">
+                </div>
+                <div class="item clearfix">
+                    <div class="fl user">电子邮件</div>
+                    <input type="email" class="fl" placeholder="请输入申请人的邮箱" v-model="pojo.nagent_milebox">
+                </div>
+                <div class="item clearfix nagent_wechar">
+                    <div class="fl user">微信号</div>
+                    <input type="text" class="fl" placeholder="请输入申请人的微信号" v-model="pojo.nagent_wechar">
+                </div>
+                <div class="item clearfix nagent_wechar">
+                    <div class="fl user">出生年月</div>
+                    <input type="text" class="fl" placeholder="年年年年-月月-日日" v-model="pojo.nagent_dateofbirth">
+                </div>
+
+                <div class="item clearfix sex">
+                    <div class="fl user">性别</div>
+                    <select  class="right fl" v-model="pojo.sex">
+                        <option value="-1" selected>请选择性别</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                    <img src="__HOME_IMAGES__/downx.png" alt="">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="Proxy_type">
+            <div class="item">
+                <div class="fl left">代理类型</div>
+                <select  class="right fl" v-model="pojo.nagent_type_id">
+                    <option value="-1" selected>请选择类型</option>
+                    <option value="1">创投</option>
+                    <option value="2">创业家</option>
+                    <option value="3">创业导师</option>
+                    <option value="4">创业领袖</option>
+                </select>
+                <img src="__HOME_IMAGES__/downx.png" alt="">
+            </div>
+        </div>
+
+        <div class="yh_box">
+            <div class="yh">
+                <div class="fl left">银行账户名</div>
+                <input type="text" placeholder="请输入银行账户名" v-model="pojo.nagent_back_account_name">
+
+            </div>
+            <div class="yh">
+                <div class="fl left">开户行名称</div>
+                <div class="fl right">
+                    <input type="text" placeholder="请输入开户行名称" v-model="pojo.nagent_bank_name">
+                </div>
+            </div>
+            <div class="yh">
+                <div class="fl left">开户行帐号</div>
+                <div class="fl right">
+                    <input type="text" placeholder="请输入开户行帐号" v-model="pojo.nagent_bank_account">
+                </div>
+            </div>
+            <div class="yh bz">
+                <p class="fl">备注</p>
+                <textarea class="fl" id="bz" v-model="pojo.remarks"></textarea>
+            </div>
+            <div class="mint-checklist"><label class="mint-checklist-title"></label><div class="mint-cell"><!---->
+                <div class="mint-cell-left"></div>
+                <div class="mint-cell-wrapper">
+                    <div class="mint-cell-title">
+                        <label class="mint-checklist-label" >
+                            <span class="mint-checkbox is-right" >
+                                <input type="checkbox" class="mint-checkbox-input" checked value="true">
+                                <span class="mint-checkbox-core" ></span>
+                            </span>
+                        </label>
+                        <div class="mint-checkbox-label lsss" style="margin-top: 5px">本人对上述填写的信息与提供的资料保证真实有效，自愿承担一切法律责任</div>
+                    </div>
+                    <div class="mint-cell-value"><span></span></div><!----></div>
+                <div class="mint-cell-right"></div>
+            </div></div>
+        </div>
+    </div>
+    <!-- 提交 -->
+    <div class="tj">
+        <button @click="sub">提交</button>
+    </div>
+
+    <div class="mask1" v-show="maskisfalg"></div>
+
+    <!-- 动画 -->
+    <div id="dx"  v-show="maskisfalg">
+        <div class="dx-box">
+            <!-- <img class="del" src="__HOME_IMAGES__/inco_bianji_de@2x.png" alt=""> -->
+            <img class="ddd" src="__HOME_IMAGES__/wh/dx.gif" alt="">
+            <p>图片努力上传中...</p>
+        </div>
+
+    </div>
+    </div>
+
+
+
+
+<script>
+   var userobj= new Vue({
+        el:"#app",
+        data:{
+            thisoptionsvalue: true,
+            thisoptions: [{
+                label: '申请代理免责声明',
+                value: 'true',
+            }],
+              maskisfalg:false,
+              pojo:{
+                nid: '',// int(11) NOT NULL,
+                nagent_type_id:'',
+                nagent_name: '',// '代理商姓名',
+                nagent_phone: '',// '代理商申请人手机号',
+                nagent_id: '',// '代理商申请人ID',
+                nagent_wechar: '',// '代理商微信',
+                nagent_type: '',// '代理商类型',
+                nagent_milebox: '',// '代理商邮箱',
+                nagent_back_account_name: '',// '代理商银行开户名',
+                nagent_bank_name: '',// '开户行名',
+                nagent_bank_account: '',// '银行卡卡号',
+                remarks: '',// '备注',
+                superior_name: '',//,
+                superior_phone: '',// '推荐人手机号',
+                nagent_contracts:[],// '代理商合同图片地址集',
+                nagent_transfer_record: [],// '转账图片记录集',
+                nagent_idimgs:[],// '代理商身份证正反面地址',
+                  payment_voucher_img:[],
+                superior_type: '',// '代理商类型',
+                superior_type_id:'',
+                old_starte: '',// '旧状态',
+                nstate: '',// '状态',
+                createTime: '',// '创建时间',
+                two_editTime: '',// '第二次修改时间',
+                one_editTime: '',// '第一次修改状态时间',
+                three_editTime: '',// '第三次修改时间',
+                create_id: '',// DEFAULT NULL,
+                three_id: '',//DEFAULT NULL,
+                two_id: '',// DEFAULT NULL,
+                one_id: '',// DEFAULT NULL COMMENT '第一次修改id',
+                nagent_dateofbirth: '',// '代理商生日',
+                sex: '',// '年龄',
+                study_assessment_img: [],//
+                expiration_of_contract_time: '',// '合同到期时间',
+                contract_number: '',// '合同编号',
+                contract_name:'',
+                payable_amount: '',// '应交金额',
+                sj_payable_amount: '',//
+                uuid: '',//
+                nagent_dis: '',
+
+            },
+              //身份证图片
+                nagent_idimgs_zhen:'',
+                nagent_idimgs_fan:'',
+            //
+            typelist: [{
+                value: 1,
+                label: '创投'
+            }, {
+                value: 2,
+                label: '创业家'
+            },
+                {
+                    value: 3,
+                    label: '创业导师'
+                }, {
+                    value: 4,
+                    label: '创业领袖'
+                }],
+            contractlist:[],
+            region_id:'',
+            selectOnePojo: [
+                {
+                    "region_id": "1",
+                    "region_name": "北京市"
+                },
+                {
+                    "region_id": "9",
+                    "region_name": "上海市"
+                },
+                {
+                    "region_id": "3561",
+                    "region_name": "深圳市"
+                },
+                {
+                    "region_id": "2",
+                    "region_name": "天津市"
+                },
+                {
+                    "region_id": "22",
+                    "region_name": "重庆市"
+                },
+                {
+                    "region_id": "34",
+                    "region_name": "澳门特别行政区"
+                },
+                {
+                    "region_id": "33",
+                    "region_name": "香港特别行政区"
+                },
+                {
+                    "region_id": "32",
+                    "region_name": "台湾省"
+                },
+                {
+                    "region_id": "31",
+                    "region_name": "新疆维吾尔自治区"
+                },
+                {
+                    "region_id": "30",
+                    "region_name": "宁夏回族自治区"
+                },
+                {
+                    "region_id": "29",
+                    "region_name": "青海省"
+                },
+                {
+                    "region_id": "28",
+                    "region_name": "甘肃省"
+                },
+                {
+                    "region_id": "27",
+                    "region_name": "陕西省"
+                },
+                {
+                    "region_id": "26",
+                    "region_name": "西藏自治区"
+                },
+                {
+                    "region_id": "25",
+                    "region_name": "云南省"
+                },
+                {
+                    "region_id": "24",
+                    "region_name": "贵州省"
+                },
+                {
+                    "region_id": "23",
+                    "region_name": "四川省"
+                },
+                {
+                    "region_id": "21",
+                    "region_name": "海南省"
+                },
+                {
+                    "region_id": "20",
+                    "region_name": "广西壮族自治区"
+                },
+                {
+                    "region_id": "19",
+                    "region_name": "广东省"
+                },
+                {
+                    "region_id": "18",
+                    "region_name": "湖南省"
+                },
+                {
+                    "region_id": "17",
+                    "region_name": "湖北省"
+                },
+                {
+                    "region_id": "16",
+                    "region_name": "河南省"
+                },
+                {
+                    "region_id": "15",
+                    "region_name": "山东省"
+                },
+                {
+                    "region_id": "14",
+                    "region_name": "江西省"
+                },
+                {
+                    "region_id": "13",
+                    "region_name": "福建省"
+                },
+                {
+                    "region_id": "12",
+                    "region_name": "安徽省"
+                },
+                {
+                    "region_id": "11",
+                    "region_name": "浙江省"
+                },
+                {
+                    "region_id": "10",
+                    "region_name": "江苏省"
+                },
+                {
+                    "region_id": "3",
+                    "region_name": "河北省"
+                },
+                {
+                    "region_id": "8",
+                    "region_name": "黑龙江省"
+                },
+                {
+                    "region_id": "7",
+                    "region_name": "吉林省"
+                },
+                {
+                    "region_id": "6",
+                    "region_name": "辽宁省"
+                },
+                {
+                    "region_id": "5",
+                    "region_name": "内蒙古自治区"
+                },
+                {
+                    "region_id": "4",
+                    "region_name": "山西省"
+                }
+            ],
+            selectTwoPojo:[],
+            selectThreePojo:[],
+            isfalg:true,
+
+        },
+        methods:{
+            hrefa:function(){
+                var t=this;
+                console.log(1);
+            },
+            inputcl:function(){
+                var t=this;
+                t.thisoptionsvalue=!t.thisoptionsvalue;
+            },
+            dels:function(index,tar){
+                var t=this;
+                if (tar == "nagent_contracts") {
+                    t.pojo.nagent_contracts.splice(index, 1);
+                } else if (tar == "nagent_transfer_record") {
+                    t.pojo.nagent_transfer_record.splice(index, 1);
+                }  else if (tar == "payment_voucher_img") {
+                    t.pojo.payment_voucher_img.splice(index, 1);
+                } else {
+                    t.pojo.study_assessment_img.splice(index, 1);
+                }
+            },
+            sub:function () {
+                var t=this;
+                if( $('input[type=checkbox]:checked')[0]==undefined || $('input[type=checkbox]:checked')[0]=='undefined' ){
+                    t.$toast("请同意代理商申请协议");
+                    return;
+                }
+                if(t.pojo.nagent_contracts.length==0){t.$toast("合同照片未上传"); return ;}
+
+                if(t.pojo.nagent_transfer_record.length==0){t.$toast("转账记录未上传"); return;}
+                if(t.nagent_idimgs_zhen==""){t.$toast("身份证正面未上传"); return ;}
+                if(t.nagent_idimgs_fan==""){t.$toast("身份证反面未上传"); return ;}
+                if(t.pojo.payment_voucher_img.length==0){t.$toast("转账凭证未上传"); return ;}
+                if(t.pojo.study_assessment_img.length==0){t.$toast("学习考核照片未上传"); return ;}
+
+                if(t.pojo.superior_name==''){t.$toast("推荐人姓名不能为空"); return ;}
+                if(t.pojo.superior_phone==''){t.$toast("推荐人手机号不能为空"); return ;}
+                if(t.pojo.superior_type_id ==''|| t.pojo.superior_type_id=='-1'){t.$toast("推荐人类型不能为空"); return ;}
+                if(t.pojo.contract_name=='' || t.pojo.contract_name==null){t.$toast("代理商合同编号不能为空"); return ;}
+                if(t.pojo.nagent_name==''){t.$toast("代理商姓名不能为空"); return ;}
+                if(t.pojo.nagent_phone==''){t.$toast("代理商手机号不能为空"); return ;}
+                if(t.pojo.nagent_id==''){t.$toast("代理商身份证号不能为空"); return ;}
+                if(t.pojo.nagent_type_id==''){t.$toast("代理商类型不能为空"); return ;}
+                if(t.pojo.nagent_milebox==''){t.$toast("代理商邮箱不能为空"); return ;}
+                if(t.pojo.nagent_wechar==''){t.$toast("代理商微信不能为空"); return ;}
+                if(t.pojo.nagent_back_account_name==''){t.$toast("代理商银行开户名不能为空"); return ;}
+                if(t.pojo.nagent_bank_account==''){t.$toast("代理商银行卡号不能为空"); return ;}
+
+                if(t.pojo.nagent_dateofbirth==''){t.$toast("代理商出生日期不能为空"); return ;}
+                if(t.pojo.sex==''){t.$toast("代理商性别不能为空"); return ;}
+                // if(t.pojo.thisoptionsvalue==false){
+                //     t.$toast("请同意代理商申请协议");
+                //     return;
+                // }
+                t.pojo.nagent_idimgs=[{name: '身份正面',url:t.nagent_idimgs_zhen},{name: '身份反面',url:t.nagent_idimgs_fan}]
+                for(var a in t.typelist){
+                    if(t.typelist[a].value==t.pojo.nagent_type_id){
+                        t.pojo.nagent_type=t.typelist[a].label;
+                    }
+                    if(t.typelist[a].value==t.pojo.superior_type_id){
+                        t.pojo.superior_type=t.typelist[a].label;
+                    }
+                }
+                if(!t.isfalg) return;
+                 t.isfalg=false;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/u_apply_agent",
+                    data:t.pojo,
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+
+                    crossDomain: true,
+                    success: function (res) {
+                        t.isfalg=true
+                        isRole(res);
+                        if(res.ResultType==0){
+                            t.$toast("提交成功");
+                            window.location.href="/index.php?s=/Home/WapAgent/AgentList";
+                        }else{
+                            t.$toast(res.Message);
+
+                        }
+
+                    },
+                    error: function () {
+                        t.isfalg=true;
+                        t.$toast("提交失败");
+                        //console.log(313)
+                    }
+                })
+            },
+
+            initData:function () {
+                var t=this;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/find_agent_by_uuid",
+                    data: {
+                        "uuid":t.pojo.uuid
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        isRole(res);
+                        if(res.ResultType==0){
+                            t.pojo=res.AppendData;
+                            t.pojo.nagent_contracts=JSON.parse(t.pojo.nagent_contracts);
+                            t.nagent_contracts= t.pojo.nagent_contracts;
+                            t.pojo.nagent_transfer_record=JSON.parse(t.pojo.nagent_transfer_record);
+                            t.nagent_transfer_record= t.pojo.nagent_transfer_record;
+                            t.pojo.nagent_idimgs=JSON.parse(t.pojo.nagent_idimgs);
+                            if(t.pojo.hasOwnProperty("payment_voucher_img") && t.pojo.payment_voucher_img!=null && t.pojo.payment_voucher_img!=undefined && t.pojo.payment_voucher_img!="" && t.pojo.payment_voucher_img!=" "){
+
+                                t.pojo.payment_voucher_img=JSON.parse(t.pojo.payment_voucher_img);
+                                t.payment_voucher_img= t.pojo.payment_voucher_img;
+                            }else {
+                                t.pojo.payment_voucher_img=[];
+                            }
+
+                            t.nagent_idimgs= t.pojo.nagent_idimgs;
+                            if(res.AppendData.study_assessment_img!=null
+                                && res.AppendData.study_assessment_img!=''
+                                && res.AppendData.study_assessment_img!=[]
+                                && res.AppendData.study_assessment_img!='null'){
+                                t.pojo.study_assessment_img=JSON.parse(t.pojo.study_assessment_img);
+                            }else{
+                                t.pojo.study_assessment_img=[];
+                            }
+
+                            if(t.pojo.nagent_idimgs[0]!=null
+                                && t.pojo.nagent_idimgs[0]!=''
+                                && t.pojo.nagent_idimgs[0]!=[]
+                                &&t.pojo.nagent_idimgs[0]!='null' ){
+                                console.log(t.pojo.nagent_idimgs[0].url);
+                                t.nagent_idimgs_zhen=t.pojo.nagent_idimgs[0].url;
+                                $("div.useridimg.zhen img").attr("src",t.pojo.nagent_idimgs[0].url);
+                                $("div.useridimg.zhen").next().text("再次点击修改正面");
+                            }
+                            if(t.pojo.nagent_idimgs[1]!=null
+                                && t.pojo.nagent_idimgs[1]!=''
+                                && t.pojo.nagent_idimgs[1]!=[]
+                                &&t.pojo.nagent_idimgs[1]!='null' ){
+                                t.nagent_idimgs_fan=t.pojo.nagent_idimgs[1].url;
+                                $("div.useridimg.fan img").attr("src",t.pojo.nagent_idimgs[1].url);
+                                $("div.useridimg.fan").next().text("再次点击修改反面");
+                                ;
+                            }
+                            t.pojo.nagent_type_id=parseInt(t.pojo.nagent_type_id);
+                            t.pojo.superior_type_id=parseInt(t.pojo.superior_type_id)
+                            t.pojo.sex=parseInt(t.pojo.sex)
+                        }else{
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            }
+        },
+        mounted:function () {
+            var t=this;
+            t.pojo.uuid='{$pojouuid}'
+            t.initData();
+         //   var newDATE=new Date().getTime()
+          //  t.startDate=new Date(new Date().getTime()-1000*60*60*24*365*80)
+
+
+        }
+    })
+
+
+   $("div.useridimg input[type=file]").on("change", function () {
+       var that = $(this);
+       that.next().attr("src", "__HOME_IMAGES__/wh/timg2.gif").css("transform", "scale(0.5)");
+       var thisp = that.parent().next();
+       var thispT = thisp.text();
+       if (thispT == "拍摄正面" || thispT == "再次点击修改正面") {
+           $("#dx p").text("正面努力上传中...");
+       } else if (thispT == "拍摄反面" || thispT == "再次点击修改反面") {
+           $("#dx p").text("反面努力上传中...");
+       }
+
+       var file = that[0].files[0];
+
+
+       var formObj = new FormData();
+       var imgSize = file.size;
+
+       formObj.append('unionid',  'EkcIHDJhjog');
+       formObj.append('start_name', "agencyadm");
+
+       if(imgSize < 256 * 1024){
+           formObj.append('img', file);
+           $.ajax({
+               url: "/index.php?s=/Api/IndexApi/uploads_img",
+               type: 'POST',
+               data: formObj,
+               dataType:'json',
+               processData:false,
+               contentType:false,
+               beforeSend: function () {
+                   userobj.$data.maskisfalg = true;
+               },
+
+               success: function (res) {
+                   var srcimg = res.AppendData;
+                   that.next().attr("src", srcimg);
+
+                   if(thisp.text()=="拍摄正面" || thisp.text()=="再次点击修改正面" ){
+                       userobj.$data.nagent_idimgs_zhen=srcimg
+                       thisp.text("再次点击修改正面");
+                   }else if(thisp.text()=="拍摄反面" || thisp.text()=="再次点击修改反面"){
+                       userobj.$data.nagent_idimgs_fan=srcimg
+                       thisp.text("再次点击修改反面");
+                   }
+                   userobj.$data.maskisfalg=false;
+               },
+               error: function () {
+                   userobj.$data.maskisfalg = false;
+               }
+           })
+
+       } else {    // 图片压缩处理
+           var reader   = 0.85,
+               maxWidth = 400,
+               maxHeight= 400,
+               suffix = file.name.substring(file.name.lastIndexOf('.') + 1);
+
+           if(imgSize > 2 * 1024 * 1024 && imgSize < 4 * 1024 * 1024){
+               reader=0.75
+           }else if(imgSize < 6 * 1024 * 1024){
+               reader=0.6
+           }else if(imgSize >= 6 * 1024 * 1024){
+               reader=0.5
+           }
+
+           fileResizetoFile(file,reader,function(res){
+               console.log(res);
+               formObj.append('img', res);
+               $.ajax({
+                   url: "/index.php?s=/Api/IndexApi/uploads_img",
+                   type: "post",
+                   data: formObj,
+                   beforeSend: function () {
+                       userobj.$data.maskisfalg = true;
+                   },
+
+                   success: function (res) {
+                       console.log(res);
+                       var srcimg = res.AppendData;
+                       that.next().attr("src", srcimg);
+
+                       if(thisp.text()=="拍摄正面" || thisp.text()=="再次点击修改正面" ){
+                           userobj.$data.nagent_idimgs_zhen=srcimg
+                           thisp.text("再次点击修改正面");
+                       }else if(thisp.text()=="拍摄反面" || thisp.text()=="再次点击修改反面"){
+                           userobj.$data.nagent_idimgs_fan=srcimg
+                           thisp.text("再次点击修改反面");
+                       }
+                       userobj.$data.maskisfalg=false;
+                   },
+                   error: function () {
+                       userobj.$data.maskisfalg = false;
+                   }
+               })
+
+           })
+
+
+
+       }
+
+
+
+
+
+
+
+
+       // var render = new FileReader();
+       // render.readAsDataURL(file);
+       // render.onload = function (res) {
+       //     var imsrc = res.target.result;
+       //     $.ajax({
+       //         url: "/index.php?s=/Api/IndexApi/uploads_img",
+       //         type: "post",
+       //         data: {
+       //             unionid: 'EkcIHDJhjog',
+       //             img: imsrc,
+       //             start_name: 'agencyadm'
+       //         },
+       //         beforeSend: function () {
+       //             userobj.$data.maskisfalg = true;
+       //         },
+       //
+       //         success: function (res) {
+       //             console.log(res);
+       //             var srcimg = res.AppendData
+       //             that.next().attr("src", srcimg);
+       //
+       //
+       //             if (thisp.text() == "拍摄正面" || thisp.text() == "再次点击修改正面") {
+       //                 userobj.$data.nagent_idimgs_zhen = srcimg
+       //                 thisp.text("再次点击修改正面");
+       //             } else if (thisp.text() == "拍摄反面" || thisp.text() == "再次点击修改反面") {
+       //                 userobj.$data.nagent_idimgs_fan = srcimg
+       //                 thisp.text("再次点击修改反面");
+       //             }
+       //             userobj.$data.maskisfalg = false;
+       //         },
+       //         error: function () {
+       //             userobj.$data.maskisfalg = false;
+       //         }
+       //     })
+       // }
+   })
+
+
+   $("div.publicupload input[type=file]").on("change", function () {
+       console.log(1)
+       var that = $(this);
+       var tar = that.attr("data-tar");
+
+       $("#dx p").text("图片努力上传中.....");
+
+       var file = that[0].files[0];
+
+       var imgSize = file.size;
+       var formObj = new FormData();
+       formObj.append('unionid',  'EkcIHDJhjog');
+       formObj.append('start_name', "agencyadm");
+
+       if(imgSize < 256 * 1024){
+           formObj.append('img', file);
+           $.ajax({
+               url: "/index.php?s=/Api/IndexApi/uploads_img",
+               data: formObj,
+               type: 'POST',
+               dataType:'json',
+               processData:false,
+               contentType:false,
+               beforeSend: function () {
+                   userobj.$data.maskisfalg = true;
+               },
+               success: function (res) {
+                   console.log(res);
+                   var srcimg = res.AppendData;
+                   if(tar=="nagent_contracts"){
+                       userobj.$data.pojo.nagent_contracts[ userobj.$data.pojo.nagent_contracts.length]=  {name: '合同记录', url:srcimg};
+                   } else if (tar == "nagent_transfer_record") {
+                       userobj.$data.pojo.nagent_transfer_record[userobj.$data.pojo.nagent_transfer_record.length] = {
+                           name: '付费记录',
+                           url: srcimg
+                       }
+                   }else if (tar == "payment_voucher_img") {
+                       userobj.$data.pojo.payment_voucher_img[userobj.$data.pojo.payment_voucher_img.length] = {
+                           name: '付费凭据记录',
+                           url: srcimg
+                       }
+                   }
+                   else {
+                       userobj.$data.pojo.study_assessment_img[userobj.$data.pojo.study_assessment_img.length] = {
+                           name: '学习考核',
+                           url: srcimg
+                       }
+                   }
+                   userobj.$data.maskisfalg=false;
+               },
+               error: function () {
+                   alert("上传错误，请再次尝试上传");
+                   userobj.$data.maskisfalg = false;
+               }
+           })
+
+       } else {    // 图片压缩处理
+           var reader   = 0.85,
+               maxWidth = 400,
+               maxHeight= 400,
+               suffix = file.name.substring(file.name.lastIndexOf('.') + 1);
+
+           if(imgSize > 2 * 1024 * 1024 && imgSize < 4 * 1024 * 1024){
+               reader=0.75
+           }else if(imgSize < 6 * 1024 * 1024){
+               reader=0.6
+           }else if(imgSize >= 6 * 1024 * 1024){
+               reader=0.5
+           }
+
+           fileResizetoFile(file,reader,function(res){
+               console.log(res);
+               formObj.append('img', res);
+               $.ajax({
+                   url: "/index.php?s=/Api/IndexApi/uploads_img",
+                   data: formObj,
+                   type: 'POST',
+                   dataType:'json',
+                   processData:false,
+                   contentType:false,
+                   beforeSend: function () {
+                       userobj.$data.maskisfalg = true;
+                   },
+                   success: function (res) {
+                       console.log(res);
+                       var srcimg = res.AppendData;
+                       if(tar=="nagent_contracts"){
+                           userobj.$data.pojo.nagent_contracts[ userobj.$data.pojo.nagent_contracts.length]=  {name: '合同记录', url:srcimg};
+                       } else if (tar == "nagent_transfer_record") {
+                           userobj.$data.pojo.nagent_transfer_record[userobj.$data.pojo.nagent_transfer_record.length] = {
+                               name: '付费记录',
+                               url: srcimg
+                           }
+                       }else if (tar == "payment_voucher_img") {
+                           userobj.$data.pojo.payment_voucher_img[userobj.$data.pojo.payment_voucher_img.length] = {
+                               name: '付费凭据记录',
+                               url: srcimg
+                           }
+                       }
+                       else {
+                           userobj.$data.pojo.study_assessment_img[userobj.$data.pojo.study_assessment_img.length] = {
+                               name: '学习考核',
+                               url: srcimg
+                           }
+                       }
+                       userobj.$data.maskisfalg=false;
+                   },
+                   error: function () {
+                       alert("上传错误，请再次尝试上传");
+                       userobj.$data.maskisfalg = false;
+                   }
+               })
+
+           })
+
+
+       }
+   })
+
+
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<?php
+
+namespace app\admin\controller;
+use app\admin\model\Node;
+use app\admin\model\ConfigModel;
+use think\Controller;
+use think\Session;
+
+
+class Base extends Controller
+{
+    public function _initialize()
+    {
+
+        $auth = new \com\Auth();
+        $module     = strtolower(request()->module());
+$controller = strtolower(request()->controller());
+$action     = strtolower(request()->action());
+$url        = $module."/".$controller."/".$action;
+
+
+//跳过检测以及主页权限
+if(session('uid')!=1){
+if(!in_array($url, ['admin/index/index','admin/index/indexpage','admin/upload/upload','admin/index/uploadface','admin/module/detailinfo','admin/project/detail'])){
+if(!$auth->check($url,session('uid'))){
+
+$this->error('抱歉，您没有操作权限');
+}
+}
+}
+
+//生成url查看项目详情
+if(!in_array($url, ['admin/project/detail'])){
+if(!session('uid')||!session('username')){
+$this->redirect('login/index');
+}
+}
+
+//将配置信息传入模版，工时、系数
+$configs = new ConfigModel();
+$kk = $configs->getAllConfig();
+session('gs',$kk[12]);
+session('xs',$kk[11]);
+//        dump(4224);die;
+
+$this->assign([
+'gs' => session('gs'),
+'xs' => session('xs')
+]);
+
+$node = new Node();
+$this->assign([
+'username' => session('username'),
+'portrait' => session('portrait'),
+'rolename' => session('rolename'),
+'menu' => $node->getMenu(session('rule'))
+]);
+
+$config = cache('db_config_data');
+
+if(!$config){
+$config = load_config();
+cache('db_config_data',$config);
+}
+config($config);
+
+if(config('web_site_close') == 0 && session('uid') !=1 ){
+$this->error('站点已经关闭，请稍后访问~');
+}
+
+if(config('admin_allow_ip') && session('uid') !=1 ){
+if(in_array(request()->ip(),explode('#',config('admin_allow_ip')))){
+$this->error('403:禁止访问');
+}
+}
+
+}
+
+function gengxin(){
+$menu = new ConfigModel();
+$gs = input('param.gs');
+$xs = input('param.xs');
+
+$map['name']='gs';
+$maps['name']='xs';
+$flag = $menu->SaveConvfig($map,$gs);
+$flag = $menu->SaveConvfig($maps,$xs);
+//更新session信息
+//        session('gs',$gs);
+//        session('xs',$xs);
+return json(['code' => $flag['code'],  'msg' => $flag['msg']]);
+}
+}
+
+{if !empty($menu)}
+{foreach name="menu" item="vo"}
+<li class="menu">
+    <a href="{$vo.href}">
+        <i class="{$vo.css}"></i>
+        <span class="nav-label">{$vo.title} </span>
+        <span class="fa arrow"></span>
+    </a>
+    <ul class="nav nav-second-level">
+        {if !empty($vo['child'])}
+        {foreach name="$vo['child']" item="v"}
+        <li>
+            <a class="J_menuItem" href="{$v.href}">{$v.title}</a>
+        </li>
+        {/foreach}
+        {/if}
+    </ul>
+</li>
+{/foreach}
+{/if}

@@ -1,0 +1,143 @@
+{include file="Public/header"}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑</h5>
+                    <div class="ibox-tools">
+                        <!--收起来-->
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <!--脚手架-->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <!--关闭当前页-->
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="userAdd" id="edit" method="post" action="{:url('edit')}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">用户名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="username" type="text" value="{$data.username}" readonly class="form-control">
+                            </div>
+                        </div>
+                        <!--<div class="hr-line-dashed"></div>-->
+                        <!--<div class="form-group">-->
+                        <!--<label class="col-sm-3 control-label">头像：</label>-->
+                        <!--<div class="input-group col-sm-4">-->
+                        <!--<input type="hidden" id="data_photo" name="portrait" >-->
+                        <!--<div id="fileList" class="uploader-list" style="float:right"></div>-->
+                        <!--<div id="imgPicker" style="float:left">选择头像</div>-->
+                        <!--<img id="img_data" class="img-circle" height="80px" width="80px" style="float:left;margin-left: 50px;margin-top: -10px;" src="/static/admin/images/head_default.gif"/>-->
+                        <!--</div>-->
+                        <!--</div> -->
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">登录密码：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="password" type="text" placeholder="密码不填为不修改" class="form-control"
+                                       name="password">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属角色：</label>
+                            <div class="input-group col-sm-4">
+
+                                <select class="form-control m-b chosen-select" name="role">
+                                    <option value="">==请选择==</option>
+                        {foreach name="roles" item="vo"}
+                        <option value="{$vo.id}"
+                                {if condition="$data['role_id'] eq $vo['id']" }selected{/if}>
+                        {$vo.remark} ({$vo.name})
+                        </option>
+                        {/foreach}
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">账户状态：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='lock' value="0" {if condition="$data['lock'] eq 0 "
+                                           }checked{/if}/>正常&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <input type="radio" name='lock' {if condition="$data['lock'] eq 1 " }checked{/if}
+                                    value="1"/>冻结
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+
+                        <input name="id" value="{$data.user_id}" type="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="Public/footer"}
+
+
+<script type="text/javascript">
+
+
+    $(function(){
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            // if( '' == $.trim($('#title').val())){
+            //     layer.msg('请输入宜居人数',{icon:2,time:1500,shade: 0.1}, function(index){
+            //         layer.close(index);
+            //     });
+            //     return false;
+            // }
+        }
+
+
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    window.location.href="{:url('index')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+                return false;
+            }
+        }
+
+    });
+
+</script>
+
+
+
+</body>
+</html>

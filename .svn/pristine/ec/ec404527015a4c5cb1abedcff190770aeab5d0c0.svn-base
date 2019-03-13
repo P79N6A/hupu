@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+		<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+		<title>小秘币记录</title>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/record.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<style>
+			.num{
+				border-bottom: none;
+				height: 1.5rem;
+				line-height: 1.5rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="tab active" type-id="2">领取</div>
+			<div class="tabs" type-id="1">转赠</div>
+		</div>
+		<div class="narrate on">
+			<div class='not'>您还没有领取记录哦！！！</div>
+			<div class="grant">
+				
+			</div>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+		<div class="narrate">
+			<div class='null'>您还没有转赠记录哦！！！</div>
+			<div class="neck">
+				
+			</div>
+			<div class="load" id="loadid">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+		
+		<script>
+			window.onload = function() {
+				$(".tab").click()
+			}
+			var scrollFlag = true;
+			var type = 2;
+			var id = '{$unionid}';
+			var one = true;
+			var two = true;
+			var onenum = 0;
+			var twonum = 0;
+			var oneis = true;
+			var twois = true;
+			var length = 0;
+
+			function initData(type, id) {
+//				console.log(type,id)
+				$.ajax({
+					type: "post",
+					url: "index.php?s=/Api/Profit/send_money_log",
+					data: {
+						unionid: id,
+						start: 0,
+						length: 10,
+						type: type,
+					},
+					success: function(res) {
+//						console.log(res)
+						if(type==2 && res.AppendData.length == 0){
+							$(".not").show()
+						}else if(type==1 && res.AppendData.length == 0){
+							$(".null").show()	
+						}
+						var list = '';
+						var lists = '';
+						$.each(res.AppendData, function(k, v) {
+							if(type == 2) {
+								list+='<div class="count_one">'
+								list+='<div class="name">'+v.rec_name+'</div>' ;
+								list+='<div class="date">';
+								list+='<span>'+v.create_time+'</span>';
+								list+='</div>';
+								list+='<div class="num">';
+								list+='<span>'+'领取小秘币：'+'</span>';
+								list+='<span>'+v.money+'</span>';
+								list+='</div>';
+//								list+='<div class="word">'+v.msg+'</div>'
+								list+='</div>'
+							}
+							if(type == 1) {
+								lists+='<div class="count_two">'
+								lists+='<div class="name">'+v.get_name+'</div>' ;
+								lists+='<div class="date">';
+								lists+='<span>'+v.create_time+'</span>';
+								lists+='</div>';
+								lists+='<div class="num">';
+								lists+='<span>'+'转赠小秘币：'+'</span>';
+								lists+='<span>'+v.money+'</span>';
+								lists+='</div>';
+//								lists+='<div class="word">'+v.msg+'</div>'
+								lists+='</div>'
+							}
+
+						})
+						
+						if(type == 2) {
+							
+							$(".grant").html(list);
+						} else if(type == 1){
+							
+							$(".neck").html(lists);
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+
+			}
+			$(".top div").on("click", function() {
+				scrollFlag = true;
+				$(this).addClass("active").siblings().removeClass("active");
+				type = $(this).attr("type-id");
+				//$(".narrate").hide().eq($(this).index()).show()
+				$(document).scrollTop(0);
+				//   $(document).height(0);
+				$(".narrate").hide().eq($(this).index()).show();
+//				console.log("type==>"+type)
+				if(type == 2) {
+
+					if(!one) {
+						return;
+					}
+
+					one = false;
+					initData(type,id);
+				} else if(type == 1){
+					if(!two) {
+
+						return;
+					}
+					two = false;
+					initData(type,id);
+
+				}
+			})
+
+			$(window).scroll(function() {
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+
+				//页面高度
+				var scrollHeight = $(document).height();
+
+				//同步高度
+				if(type == 2) {
+					if(onenum <= scrollTop && oneis) {
+						onenum = scrollTop;
+					} else if(type == 1){
+						return;
+					}
+				} else{
+
+					if(twonum <= scrollTop && twois) {
+						twonum = scrollTop;
+					} else {
+
+						return;
+					}
+				}
+
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+//				alert(8);
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				//alert(scrollFlag);
+				if(!scrollFlag) {
+//					alert(10);
+					return false;
+				}
+//				alert(scrollTop);
+//				alert(scrollTop + windowHeight);
+//				alert(scrollHeight);
+				//1027  1387
+				//1844 2320
+				if((scrollTop + windowHeight) >= scrollHeight) {
+					length+= 10;
+					scrollFlag = false;
+					$.ajax({
+						type: "post",
+						url: "index.php?s=/Api/Profit/send_money_log",
+						data: {
+							unionid: id,
+							start: length,
+							length:10,
+							type: type,
+						},
+						beforeSend: function() {
+							$('#loadId').show();
+							$('#loadid').show();
+						},
+						success: function(res) {
+//							console.log("2222222")
+//							console.log(res)
+//							alert(length);
+//							alert(JSON.stringify(res))
+							scrollFlag = true;
+							$('#loadId').hide();
+							$('#loadid').hide();
+							//							console.log(res);
+							var list = '';
+							var lists = '';
+							$.each(res.AppendData, function(k, v) {
+								if(type == 2) {
+									list+='<div class="count_one">'
+									list+='<div class="name">'+v.rec_name+'</div>' ;
+									list+='<div class="date">';
+									list+='<span>'+v.create_time+'</span>';
+									list+='</div>';
+									list+='<div class="num">';
+									list+='<span>'+'领取小秘币：'+'</span>';
+									list+='<span>'+v.money+'</span>';
+									list+='</div>';
+//									list+='<div class="word">'+v.msg+'</div>'
+									list+='</div>'
+								}
+								if(type == 1) {
+									lists+='<div class="count_two">'
+									lists+='<div class="name">'+v.get_name+'</div>' ;
+									lists+='<div class="date">';
+									lists+='<span>'+v.create_time+'</span>';
+									lists+='</div>';
+									lists+='<div class="num">';
+									lists+='<span>'+'转赠小秘币：'+'</span>';
+									lists+='<span>'+v.money+'</span>';
+									lists+='</div>';
+//									lists+='<div class="word">'+v.msg+'</div>'
+									lists+='</div>'
+								}
+							})
+							if(type == 2) {
+								$(".grant").append(list);
+							} else if(type == 1){
+								$(".neck").append(lists);
+							}
+
+							if(res.AppendData.length <= 2) {
+								scrollFlag = false;
+								if(type == 2) {
+									if($(".grant>div").length <= 0) {
+										$(".not").show()
+										oneis = false;
+										return;
+									} else if(type == 1){
+										$(".not").hide();
+									}
+									oneis = false;
+									$(".grant").append("<div class='loading'>我也是有底线的哟！</div>");
+								} else {
+									if($(".neck>div").length <= 0) {
+										$(".null").show();
+										twois = false;
+										return;
+									} else {
+										$(".null").hide();
+									}
+									twois = false;
+									$(".neck").append("<div class='loading'>我也是有底线的哟！</div>");
+								}
+							} else {
+								scrollFlag = true;
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+
+					})
+
+				}
+			});
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css"/>
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<title>商会介绍</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				padding: .8rem;
+				background: #FFF;
+			}
+			.bag{
+				width: 100%;
+				height: 200px;
+				background: #ABADB0;
+				border-radius: 5px;
+				padding-top: 70px;
+			}
+			.bag p{
+				text-align: center;
+				margin: 0;
+				color: #FFF;
+			}
+			.bag span{
+				display: block;
+				width: 44px;
+				height: 42px;
+				background: url(__HOME_CSS__/add/image/xiangji_Icon.png);
+				background-size:100% 100%;
+				margin: 0 auto;
+			}
+			img{
+				width: 100%;
+				height: 200px;
+				border-radius: 5px;
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<p style="color: #000000;">
+			你已上传{$count}张广告图片
+		</p>
+		<form id="signform" action="{:U('Home/Trade/addManager')}" method="post" class="form-horizontal">
+			<input type="hidden" name="image" id="image" value="" />
+			<input type="hidden" name="id" id="id" value="{$trade.id}" />
+			<input type="file"  id="imgTest" class="file" name="logo" onchange="imgChange(event)" accept="image/*;capture=camera" id="imgTest" value="" style="display: none;"/>
+			<div class="bag">
+				<p>
+					<span src="image/xiangji_Icon.png"/>
+				</p>
+				<p>
+					请上传图片
+				</p>
+			</div>
+			<volist name="images" id="vo">
+				<p>
+					<img src="../../{$vo}"/>
+				</p>
+			</volist>
+		</form>
+		<if condition="($count eq 0) ">
+		<p style="text-align: center;margin-top: 80px;">
+			HI，来创建你的第一条广告信息吧！~
+		</p>
+		</if>
+	</body>
+	<script type="text/javascript">
+
+        function fileSelect() {
+            document.getElementById("imgTest").click();
+        }
+
+        function imgChange(e) {
+            console.info(e.target.files[0]);//图片文件
+            var dom = $("input[id^='imgTest']")[0];
+            console.info(dom.value);//这个是文件的路径 C:\fakepath\icon (5).png
+            console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
+            var reader = new FileReader();
+            reader.onload = (function (file) {
+                return function (e) {
+                    console.info(this.result); //这个就是base64的数据了
+//                        doument.getElenemtById("image").value = this.result;
+                    $("#image").val(this.result);
+
+                    var id=$("#id").val();
+                    var image=this.result;
+                    $.post("{:U('Home/Trade/adManager')}",{"image":image,"id":id},function(res){
+                        console.log(res);
+                        if(res.status==1){
+                            mui.toast(res.msg);
+                            top.location.href="__APP__/Home/Trade/adManager/id/{$trade.id}";
+                        }else{
+                            mui.toast(res.msg);
+                        }
+                    });
+
+                };
+            })(e.target.files[0]);
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+
+
+
+		$('.bag').click(event =>{
+			$('.file').click()
+		})
+		
+		
+		
+
+		var sum = (num1, num2) => num1 + num2;
+		console.log(sum(1,5))
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</html>

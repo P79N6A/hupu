@@ -1,0 +1,605 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+
+	<style>
+		body {
+			font-size: 16px;
+		}
+		
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
+		h3 {
+			font-size: 17px;
+		}
+		
+		ul {
+			list-style: none;
+		}
+		
+		.tit {
+			width: 90%;
+			margin: 0 auto;
+			height: auto;
+			padding: 10px 0;
+			border-bottom: 1px solid #999;
+		}
+		
+		.title {
+			width: 100%;
+			height: auto;
+			line-height: 30px;
+		}
+		
+		.date {
+			margin-right: 10px;
+		}
+		
+		.Img {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+		}
+		
+		.Img>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+		
+		.rank {
+			display: inline-block;
+			width: 80%;
+		}
+		
+		.brief {
+			padding: 10px 0;
+			width: 90%;
+			margin: 0 auto;
+			height: 80px;
+			line-height: 40px;
+			border-bottom: 1px solid #999;
+		}
+		
+		.con {
+			padding: 10px 0;
+			height: auto;
+			width: 90%;
+			margin: 0 auto;
+			border-bottom: 1px solid #999;
+			font-size: 20px;
+		}
+		
+		.person {
+			width: 90%;
+			margin: 0 auto;
+			position: relative;
+			margin-bottom: 60px;
+		}
+		
+		.mess {
+			color: #000;
+		}
+		
+		.allcity-boxss {
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate(-50%, -50%);
+			-moz-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			-o-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			width: 15rem;
+			height: 20rem;
+			z-index: 200;
+			background-color: #fff;
+			border-radius: 0.5rem;
+		}
+		
+		.tab:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		.tab li {
+			width: 8rem;
+			height: 2rem;
+			text-align: center;
+			line-height: 2rem;
+			margin: 0 auto;
+			border-radius: 1rem;
+			margin-top: 0.5rem;
+			background-color: #2AB7CF;
+			color: #fff;
+			font-size: 0.7rem;
+		}
+		
+		.tab li.dian {
+			border: 1px solid #2AB7CF;
+			background-color: #fff;
+			color: #000000;
+		}
+		
+		.content:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		.content li {
+			width: 8rem;
+			height: 8rem;
+			margin: 1.5rem auto 0;
+			display: none;
+		}
+		
+		.content li>img {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.er {
+			width: 7.5rem;
+			height: 1.5rem;
+			text-align: center;
+			line-height: 1.5rem;
+			margin: 0 auto;
+			font-size: 0.6rem;
+			color: #999999;
+		}
+		
+		.allcity-masks {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #000;
+			opacity: .8;
+			width: 100%;
+			z-index: 100;
+			cursor: pointer;
+			height: 100%;
+		}
+		.add{
+			width: 3rem;
+			height: 1.5rem;
+			line-height: 1.5rem;
+			border-radius: 5px;
+			position:absolute;
+			right:5px;
+			top:20px;
+			background-color: #2FB3D3;
+			color:#fff;
+			font-size: 0.5rem;
+			text-align:center ;
+		}
+		.con img{
+			max-width: 100%;
+		}
+	</style>
+</block>
+<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css"/>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+<block name="body">
+
+	<body class="">
+
+		<div class="tit">
+			<h3 class="title"></h3>
+			<p>
+				<span class="date">
+    				<!-- <span>2018-03-19</span>
+				<span>10:21</span> -->
+				</span>
+				<span>浏览量：</span>
+				<span id="visit"></span>
+			</p>
+		</div>
+		<div class="brief">
+			<a class="jump">
+				<span class="Img">
+					<img src=""  id="cover_img" alt="" />
+				</span>
+				<span class="rank">
+					<h3 id="nick_names" style="color: #000;"></h3>
+					<p id="companys"></p>
+				</span>
+			</a>
+		</div>
+		<div class="con">
+			<!--<img src="__HOME_IMAGES__/tixiantongzhi.png" alt="" />-->
+			<!--<img src="__HOME_IMAGES__/muwu.jpg" />-->
+		</div>
+		<div class="person">
+			<p>
+				<span class="mess">姓名：</span>
+				<span id="nick_name"></span>
+			<p>
+				<span class="mess">电话：</span>
+				<span id="mobile"></span>
+			</p>
+			<p>
+				<span class="mess">公司：</span>
+				<span id="company"></span>
+			</p>
+			<p>
+				<span class="mess">邮箱：</span>
+				<span id="email"></span>
+			</p>
+			<p class="mess">简介：</p>
+			<p id="share_my_introduct"></p>
+			<input type="hidden" value="" id="aid"/>
+			<div class="add">加我V网</div>
+		</div>
+		
+		<div class="allcity-boxss">
+			<ul class="content">
+				<li style="display: block;">
+					<img src="{:U('Home/Card/myCode?id='.$id)}" style="width:100%;height: 100%" alt="" />
+				</li>
+				<li>
+					<img src="__PUBLIC__/Home/images/8.jpg" style="width:100%;height: 100%" alt="" />
+				</li>
+				<li>
+					<img src="{$erweima}" style="width:100%;height: 100%" alt="" />
+				</li>
+			</ul>
+			<div class="er">长按识别二维码</div>
+			<ul class="tab">
+				<li class="dian">v网二维码</li>
+				<li>洋小秘公众号</li>
+				<li>微信二维码</li>
+			</ul>
+
+		</div>
+		<div class="allcity-masks"></div>
+		<div class="zzc_myranwen_bottom">
+				<!-- <input type="hidden" name="music_id" value="{$data.music_id}">
+				<input type="button" name="返回" id="yulan" value="返回" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" onclick="returns()"/>
+				<input type="button" name="保存" id="save" onclick="extension()" value="推广" class="zzc_myruanwen_bottom_button zzc_blue_bg" /> -->
+			</div>
+		<script>
+			$('.tab').find('li').click(function() {
+				var index = $(this).index();
+				$(this).addClass('dian').siblings().removeClass('dian');
+				$('.content').find('li').eq(index).show().siblings().hide();
+			})
+			$(".add").click(function(){
+				$(".allcity-masks").show();
+				$(".allcity-boxss").show();
+			})
+			$(".allcity-masks").click(function(){
+				$(".allcity-masks").hide();
+				$(".allcity-boxss").hide();
+			})
+			$(".allcity-boxss").click(function(e){
+				e.stopPropagation();
+			})
+			$(function(){
+				var id='{$id}';
+				var article_id='{$sid}';
+				var kid='{$kid}';
+				// alert(article_id);
+				if(kid==1){
+					htmlstr='';
+					htmlstr+='	<input type="hidden" name="music_id" value="{$data.music_id}">';
+					htmlstr+='	<input type="button" name="返回" id="yulan" value="返回" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" onclick="returns()"/>';
+					htmlstr+='	<input type="button" name="保存" id="save" onclick="extension()" value="推广" class="zzc_myruanwen_bottom_button zzc_blue_bg" />';
+					$(".zzc_myranwen_bottom").html(htmlstr);
+
+					$.ajax({
+					//几个参数需要注意一下
+					type: "POST",//方法类型
+					dataType: "json",//预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/system_article_content" ,//url
+					data: {"id":id,"article_id":article_id},
+					success: function (result) {
+						if (result.ResultType == 0) {
+							$("#nick_name").html(result.AppendData.user.nick_name);
+							$("#nick_names").html(result.AppendData.user.nick_name);
+							$("#mobile").html(result.AppendData.user.mobile);
+							$("#company").html(result.AppendData.user.company);
+							$("#companys").html(result.AppendData.user.company);
+							$("#email").html(result.AppendData.user.email);
+							$("#share_my_introduct").html(result.AppendData.user.share_my_introduct);
+							// alert(result.AppendData.article_content.content);
+							$(".con").html(result.AppendData.article_content.content);
+							$(".title").html(result.AppendData.article_content.title);
+							$(".date").html(result.AppendData.article_content.addtime);
+							$("#visit").html(result.AppendData.article_content.visit);
+							$("#aid").val(result.AppendData.article_content.id);
+							$("#cover_img").attr("src",result.AppendData.user.headimg);
+                            $('.jump').attr("href",'http://'+window.location.host+'/index.php?s=/Home/Nologin/card_jump/id/'+result.AppendData.user.id)
+                        }
+					},
+					error : function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+				}
+				if(kid==2){
+					var aid='{$aid}';
+					
+					
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST",//方法类型
+						dataType: "json",//预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/my_extend_detail" ,//url
+						data: {"id":id,"aid":aid},
+						success: function (result) {
+							if (result.ResultType == 0) {
+								$("#nick_name").html(result.AppendData.user.nick_name);
+								$("#nick_names").html(result.AppendData.user.nick_name);
+								$("#mobile").html(result.AppendData.user.mobile);
+								$("#company").html(result.AppendData.user.company);
+								$("#companys").html(result.AppendData.user.company);
+								$("#email").html(result.AppendData.user.email);
+								$("#share_my_introduct").html(result.AppendData.user.share_my_introduct);
+								// alert(result.AppendData.article_content.content);
+								$(".con").html(result.AppendData.article_content.content);
+								$(".title").html(result.AppendData.article_content.title);
+								$(".date").html(result.AppendData.article_content.addtime);
+								$("#visit").html(result.AppendData.article_content.visit);
+								$("#aid").val(result.AppendData.article_content.id);
+								$("#cover_img").attr("src",result.AppendData.user.headimg);
+                                $('.jump').attr("href",'http://'+window.location.host+'/index.php?s=/Home/Nologin/card_jump/id/'+result.AppendData.user.id)
+
+                            }
+						},
+						error : function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+				
+				
+			})
+			function returns(){
+				// window.location.href='http://www.ddhbb.com';
+				window.location.href="__ROOT__/index.php?s=/Home/Article/get";
+			}
+			function extension(){
+				var id='{$id}';
+				var article_id=$("#aid").val();
+				var kid='{$kid}';
+				var sid='{$sid}';
+				var aid='{$aid}';
+				mui.confirm("是否要跳到分享页？", "", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						$.ajax({
+							//几个参数需要注意一下
+							type: "POST",//方法类型
+							dataType: "json",//预期服务器返回的数据类型
+							url: "index.php?s=/Api/IndexApi/extend_system_article" ,//url
+							data: {"id":id,"article_id":article_id},
+							success: function (result) {
+								if (result.ResultType == 2) {
+									mui.alert("您已推广！");
+								}
+								if (result.ResultType == 0) {
+									// mui.alert("推广成功！");
+									var aid=result.AppendData;
+									window.location.href="__ROOT__/index.php?s=/Home/Article/detail/id/"+sid+"/kid/2/aid/"+aid+"";
+								}
+							},
+							error : function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+						
+					}else{
+						$.ajax({
+							//几个参数需要注意一下
+							type: "POST",//方法类型
+							dataType: "json",//预期服务器返回的数据类型
+							url: "index.php?s=/Api/IndexApi/extend_system_article" ,//url
+							data: {"id":id,"article_id":article_id},
+							success: function (result) {
+								if (result.ResultType == 2) {
+									mui.alert("您已推广！");
+								}
+								if (result.ResultType == 0) {
+									mui.alert("推广成功！");
+									// var aid=result.AppendData;
+									// window.location.href="__ROOT__/index.php/Home/Article/detail/id/"+sid+"/kid/2/aid/"+aid+"";
+								}
+							},
+							error : function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+					}
+				});
+				
+			}
+		</script>
+
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+
+
+
+            $(function() {
+
+
+                var share_url = "{$share_url}";
+
+
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                    data:{share_url:share_url},
+                    async: true,
+
+                    // async: false,
+                    success: function(result) {
+
+
+						var kid = '{$kid}';
+						if(kid == 1){
+							document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+								// 通过下面这个API隐藏右上角按钮hideOptionMenu
+								WeixinJSBridge.call('hideOptionMenu');
+							});
+						}else{
+
+
+
+
+                            wx.config({
+                                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                                appId: result.AppendData.appId,
+                                timestamp: result.AppendData.timestamp,
+                                nonceStr: result.AppendData.nonceStr,
+                                signature: result.AppendData.signature,
+                                jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                    'checkJsApi',
+                                    'onMenuShareTimeline', //
+                                    'onMenuShareAppMessage',
+                                    'onMenuShareQQ',
+                                    'onMenuShareWeibo',
+                                    'getLocation'
+                                ]
+                            });
+
+
+                            wx.ready(function() {
+                                //分享到朋友圈
+                                wx.onMenuShareTimeline({
+                                    title: "{$sharetitle}", // 分享标题
+                                    desc: "{$desc}", // 分享内容
+                                    link: "{$link}", //分享链接
+                                    imgUrl: "{$imgUrl}", // 分享封面
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                        // sharePush();
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+
+
+                                //分享给朋友
+                                wx.onMenuShareAppMessage({
+                                    title: "{$sharetitle}", // 分享链接
+                                    desc: "{$desc}", // 分享链接
+                                    link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                    imgUrl: "{$imgUrl}", // 分享链接
+                                    type: '', // 分享类型,music、video或link，不填默认为link
+                                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                        // sharePush();
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+                                //分享到QQ
+                                wx.onMenuShareQQ({
+                                    title: "{$sharetitle}", // 分享链接
+                                    desc: "{$desc}", // 分享链接
+                                    link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                    imgUrl: "{$imgUrl}", // 分享链接
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                        // sharePush();
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+                                //分享到腾讯微博
+                                wx.onMenuShareWeibo({
+                                    title: "{$sharetitle}", // 分享链接
+                                    desc: "{$desc}", // 分享链接
+                                    link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                    imgUrl: "{$imgUrl}", // 分享链接
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                        // sharePush();
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+                                //分享到QQ空间
+                                wx.onMenuShareQZone({
+                                    title: "{$sharetitle}", // 分享链接
+                                    desc: "{$desc}", // 分享链接
+                                    link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                    imgUrl: "{$imgUrl}", // 分享链接
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                        // sharePush();
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+
+                            });
+
+						}
+
+                    },
+                    error: function() {
+//                    alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+
+
+
+
+            });
+
+
+
+
+//			var kid = '{$kid}';
+//			if(kid == 1){
+//                document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+//                    // 通过下面这个API隐藏右上角按钮hideOptionMenu
+//                    WeixinJSBridge.call('hideOptionMenu');
+//                });
+//			}else{
+//                wx.config({
+//                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+//                    appId: "{$signPackage['appId']}",
+//                    timestamp: "{$signPackage['timestamp']}",
+//                    nonceStr: "{$signPackage['nonceStr']}",
+//                    signature: "{$signPackage['signature']}",
+//                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+//                        'checkJsApi',
+//                        'onMenuShareTimeline', //
+//                        'onMenuShareAppMessage',
+//                        'onMenuShareQQ',
+//                        'onMenuShareWeibo'
+//                    ]
+//                });
+//
+
+//                });
+//			}
+
+
+
+
+
+		</script>
+	</body>
+</block>

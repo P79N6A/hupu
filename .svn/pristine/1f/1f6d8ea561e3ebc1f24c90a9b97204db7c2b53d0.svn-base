@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css"/>
+    <script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+    <title>商脉搜索</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            /*padding: .8rem;*/
+            background: #FFF;
+        }
+        img{
+            width: 100%;
+            height: 200px;
+        }
+
+        .bottom{
+            padding: .8rem;
+        }
+        .ttile{
+            color: #2FB3D3;
+            /*border-bottom: 1px solid #E5E5E5;*/
+            /*height: 30px;*/
+
+        }
+        ul{
+            margin-top: 8px;
+            overflow: hidden;
+            border-top: 1px solid #E5E5E5;
+            border-bottom: 1px solid #E5E5E5;
+            margin-bottom: 10px;
+        }
+        ul li{
+            list-style: none;
+            width: 30%;
+            margin: 5px 0px;
+            margin-left: 3%;
+            float: left;
+            padding: 5px;
+
+        }
+        button{
+            /*position: absolute;
+            left: 0;
+            bottom: 0;*/
+            width: 100%;
+            height: 50px;
+            border-radius: 0;
+            background: #2FB3D3;
+            color: #FFF;
+        }
+        .search{
+            width: 100%;
+            height: 50px;
+            background: #2C3239;
+            padding: 0 20px;
+            margin-top: -5px;
+            color: #FFF;
+            position: relative;
+        }
+        input{
+            width: 70%!important;
+            margin-top: 5px;
+            border-radius: 50px!important;
+            color: #909389!important;
+            background: #565B61!important;
+        }
+        i{
+            font-size: 30px!important;
+        }
+        .sel{
+            width: 100%;
+            height: 50px;
+            padding:  0 20px;
+            padding-top: 10px;
+        }
+        .sel select{
+            float: left;
+            width: 49%;
+            margin-bottom: 0;
+            background: #E7E7E7;
+        }
+        .mui-icon-gear{
+            position: absolute;
+            right: 14px;
+            top: 5px;
+        }
+        .f-color{color: #fff;}
+        #mycard{position: fixed;bottom: 0;}
+        .bottom{margin-bottom: 50px;}
+        #province_id{margin-right: 5px;}
+        .bottom li .mui-icon{
+            display: none;
+        }
+        .bottom li.on{
+            background: #2FB3D3;
+            color: #FFF;
+            position: relative;
+        }
+        .bottom li.on .mui-icon{
+            color: #fff;
+            position: absolute;right: 0;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<form action="/Home/Business/search" id="form" method="get">
+    <img src="__HOME_CSS__/add/image/shangmaisous_bj.png" alt="" />
+    <div class="search">
+        <input type="text" name="keyword" placeholder="请输入关键词"/>
+        <i class="mui-icon mui-icon-search" id="search"></i>
+        <a class="f-color" href="{:url('Home/Business/setting')}"><i class="mui-icon mui-icon-gear" style="margin-left: 40px;"></i></a>
+    </div>
+    <div class="sel">
+        <select name="province_id" id="province_id">
+            <option value="0">请选择</option>
+            <volist name="province_list" id="province">
+                <option  value="{$province.region_id}">{$province.region_name}</option>
+            </volist>
+        </select>
+        <select name="city_id"  id="city_id"  >
+            <option value="0">请选择</option>
+            <volist name="city_list" id="city">
+                <option value="{$city.region_id}" selected="selected">{$city.region_name}</option>
+            </volist>
+        </select>
+    </div>
+    <div class="bottom">
+        <volist name="type" id="vo">
+            <div class="ttile">
+                {$vo.name}
+            </div>
+            <?php $types=M("sqtype")->where("parent_id=".$vo['id'])->select();?>
+            <ul>
+                <volist name="types" id="v">
+                    <li value="{$v.id}">{$v.name}<span class="mui-icon mui-icon-checkmarkempty"></span></li>
+                </volist>
+            </ul>
+        </volist>
+    </div>
+
+    <input type="hidden" name="type_id">
+</form>
+<button id="mycard" onclick="top.location.href='{:url('Home/Vhome/card_jump')}'">我的V网</button>
+<script>
+    $("#search").on("click",function(){
+        var types=$(".bottom li.on");
+        var ids=[];
+        for(var i=0;i<types.length;i++){
+            ids.push($(types[i]).attr('value'));
+        }
+        var type_id=ids.join(',');
+        $("input[name=type_id]").val(type_id);
+        $("#form").submit();
+    });
+    $(".bottom li").on("click",function(){
+        if($(this).hasClass('on')){
+            $(this).removeClass("on");
+        }else{
+            $(this).addClass("on");
+        }
+
+    });
+    $("#province_id").change(function(){
+        var province_id=$(this).val();
+        $.ajax({
+            url:'/Home/User/get_citys',
+            Type:"POST",
+            data:"province_id="+province_id,
+            dataType:"json",
+            success:function(data){
+                var city = data.city;
+                var option=$("<option></option>");
+                $(option).val("0");
+                $(option).html("请选择");
+                var option1=$("<option></option>");
+                $(option1).val("0");
+                $(option1).html("请选择");
+                $("#city_id").html(option);
+                $("#district_id").html(option1);
+                for(var i in city){
+                    var option=$("<option></option>");
+                    $(option).val(city[i]['region_id']);
+                    $(option).html(city[i]['region_name']);
+                    $("#city_id").append(option);
+                }
+            }
+
+        });
+    });
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        	// 通过下面这个API隐藏右上角按钮hideOptionMenu
+        	WeixinJSBridge.call('hideOptionMenu');
+        });
+</script>
+</body>
+</html>

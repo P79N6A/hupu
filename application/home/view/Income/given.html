@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <!-- <link rel="stylesheet" href="__HOME_JS__/whjs/js/mui/css/mui.min.css"> -->
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/mui/js/mui.min.js"></script>
+
+    <title>小秘币转赠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.26rem;
+            position: relative;
+            background-size: 100% 100% !important;
+            background: url(Public/Home/images/slicesrjl/Group22x.png);
+        }
+        .topput{
+            width:2.45rem;
+            height:.45rem;
+            top:.56rem;
+            left:.16rem;
+            color:#fff;
+            outline: none;
+            position: absolute;
+            border-radius:.02rem;
+            background: rgba(0,0,0,0.1);
+            border:1px solid #FFFFFF;
+            font-size:14px;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            text-align: center;
+        }
+        input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; } 
+        .topbut{
+            width:.84rem;
+            height:.45rem;
+            border:none;
+            right:.16rem;
+            top:.56rem;
+            color:#fff;
+            background:#46D1A9;
+            border-radius:.02rem;
+            position: absolute;
+            font-size:14px;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            outline: none;
+            
+        }
+    .secd{
+        width:100%;
+        height:1.1rem;
+        margin-top:.08rem;
+        background: #fff;
+        position: relative;
+    }
+    .secdone{
+        width:90%;
+        height:.21rem;
+        font-size:.15rem;
+        top:.18rem;
+        left:.15rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        line-height:.21rem;
+        position: absolute;
+    }
+    .pepp{
+        width:.19rem;
+        height:.28rem;
+        font-size:.2rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        line-height:.28rem;
+        position: absolute;
+        left: .15rem;
+        bottom:.28rem;
+    }
+    .xmje{
+        width:1.6rem;
+        height:.2rem;
+        font-size:.14rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:#9B9B9B;
+        line-height:.2rem;
+        border: none;
+        outline: none;
+        position: absolute;
+        top:.58rem;
+        left:.36rem;
+        background: #ffffff00;
+    }
+    .three{
+        width:100%;
+        height:.51rem;
+        background:#fff;
+        margin-top:.08rem;
+        position: relative;
+    }
+    .yzm{
+        /* width:.45rem; */
+        height:.21rem;
+        font-size:.15rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        line-height:.21rem;
+        position: absolute;
+        top:.15rem;
+        left:.16rem;
+    }
+    .shuru{
+        width:1rem;
+        height:.2rem;
+        font-size:.14rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:#9B9B9B !important;
+        /* background: pink; */
+        line-height:.2rem;
+        position: absolute;
+        border:none;
+        outline: none;
+        top:.16rem;
+        left:1.8rem;
+        text-align: center;
+        border-right:1px solid #9B9B9B;
+    }
+    .dianji{
+        /* width:.75rem; */
+        height:.21rem;
+        font-size:.15rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:#32CEA0;
+        line-height:.21rem;
+        position: absolute;
+        top:.15rem;
+        right:.15rem;
+        text-align: center;
+    }
+    .qdzz{
+        width:3.26rem;
+        height:.4rem;
+        line-height:.4rem;
+        background:#32CEA0;
+        border-radius:.04rem;
+        position: fixed;
+        bottom:.56rem;
+        left:.3rem;
+        font-size:.14rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        text-align: center;
+        color:#fff;
+    }
+    .topl{
+        display: none;
+    }
+    .topl img{
+        width:.7rem;
+        height:.7rem;
+        position: absolute;
+        border-radius: 50%;
+        top:.31rem;
+        left:.16rem;
+        background-size: 100% 100%;
+    }
+    .diyi{
+        width:1.5rem;
+        height:.28rem;
+        font-size:.2rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        line-height:.28rem;
+        position: absolute;
+        top: .39rem;
+        left:1.02rem;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+    }
+    .dier{
+        width:.89rem;
+        height:.2rem;
+        font-size:.14rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        line-height:.2rem;
+        position: absolute;
+        bottom: .39rem;
+        left:1.02rem;
+    }
+    .xiug{
+        width:.62rem;
+        height:.31rem;
+        background:rgba(70,209,169,1);
+        border-radius:.02rem;
+        font-size:.13rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        color:#fff;
+        position: absolute;
+        top:.49rem;
+        right:.16rem;
+        text-align: center;
+        line-height:.31rem; 
+    }
+    .detail{
+        width:.62rem;
+        height:.24rem;
+        background:rgba(5, 5, 5, 0.43);
+        border-radius:.12rem 0px 0px .12rem;
+        position: absolute;
+        right:0;
+        top:.2rem;
+        /* position: relative; */
+    }
+    .detail img{
+        width:.14rem;
+        height:.14rem;
+        position: absolute;
+        background-size: 100% 100%;
+        top:.05rem;
+        right:.36rem;
+    }
+    .detail span{
+        width: .3rem;
+        height: .16rem;
+        font-size: .11rem;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: #fff;
+        position: absolute;
+        line-height: .24rem;
+        right: .02rem;
+    }
+    .zzcg{
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: fixed;
+        background: #0000008c;
+        z-index: 9;
+    }
+    .zzcgtop{
+        width:100%;
+        height:2.88rem;
+        background: #fff;
+    }
+    .one{
+        width:1.56rem;
+        height:1.6rem;
+        top: .12rem;
+        left:1.1rem;
+        position: absolute;
+    }
+    .one img{
+        width:1.56rem;
+        height:1.6rem;
+        background-size: 100% 100%;
+        position: absolute;
+    }
+    .zzleft{
+        width:1.2rem;
+        height:.44rem;
+        border-radius:.22rem;
+        border:1px solid #979797;
+    }
+    .tipmoney{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    width: 1.8rem;
+    font-size: .12rem;
+    padding: 0.05rem 0 ;
+    margin-left: -0.9rem;
+    border-radius: .05rem;
+    display: none;
+}
+   </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="top">
+            <div class="topr">
+                <div class="detail">
+                    <img src="Public/Home/images/slicesrjl/copyrjl.png" alt="">
+                    <span>记录</span>
+                </div>
+                <input type="text" class="topput" value="" placeholder="请输入对方注册手机号" name="phone">
+                <input type="button" class="topbut" name="" id="" value="确定">
+            </div>
+            <div class="topl">
+                <!-- <img src="Public/Home/images/slicesrjl/kzer2x.png" alt="">
+                <span class="diyi">洋小秘</span>
+                <span class="dier">13872372939</span>
+                <div class="xiug">修改</div> -->
+            </div>
+        </div>
+        <div class="secd">
+            <!-- <div class="secdone">您还有<span style="color:#32CEA0;">19960419</span>个小秘币</div>
+            <span class="pepp">￥</span>
+            <input type="text" class="xmje" value="" placeholder="请输入100倍数的金额"> -->
+        </div>
+        <div class="three">
+            <span class="yzm">验证码</span>
+            <input type="text" class="shuru" value="" placeholder="请输入验证码" name="code">
+            <a class="fl" href="javascript:;" id="getcode">
+                <span class="dianji" id="code">发送验证码</span>
+            </a>
+        </div>
+        <!-- <div class="zzcg">
+            <div class="zzcgtop">
+                <div class="one">
+                    <img src="Public/Home/images/slicesrjl/uccess_icon@2x.png" alt="">
+                </div>
+                <div class="zzleft"></div>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div> -->
+        <div class="qdzz">确定转赠</div>
+        <div class="tipmoney"></div>
+    </div>
+</body>
+<script>
+    $(function () {
+        var user_id = '{$unionid}'
+        $.ajax({
+            url: 'index.php?s=Api/Profit/GetDetail',
+            type: 'post',
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                list = '';
+                list += '<div class="secd">'
+                list +=
+                    '<div class="secdone">您还有<span style="color:#32CEA0;">' + res.AppendData.balance +
+                    '</span>个小秘币</div>'
+                list += '<span class="pepp">￥</span>'
+                list +=
+                    '<input type="text" class="xmje" value="" placeholder="请输入100倍数的金额" name="money">'
+                list += '</div>'
+                $('.secd').append(list);
+            }
+        })
+    })
+    // 点击添加转赠人的手机号
+    $('.top').on('click', '.topbut', function () {
+
+        var user_id = '{$unionid}'
+        var textphone = $(this).prev().val();
+        var phone = $("input[name=phone]").val();
+        if (phone.length == 0) {
+            $(".tipmoney").text("请输入手机号").stop(true).fadeIn(1000).fadeOut(2000);
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/AppApi/res_user",
+            data: {
+                unionid: user_id,
+                phone: textphone
+            },
+            success: function (res) {
+                console.log(res);
+                vuew = '';
+                if (res.ResultType != 0) {
+                    $(".tipmoney").text("手机号输入有误").stop(true).fadeIn(1000).fadeOut(2000);
+                    setTimeout(function () {
+                        location.reload()
+                    }, 1000);
+                } else {
+                    vuew += '<div class="topl">'
+                    vuew += '<img src="' + res.AppendData.headimg + '" alt="">'
+                    vuew += '<span class="diyi">' + res.AppendData.nick_name + '</span>'
+                    vuew += '<span class="dier">' + res.AppendData.phone + '</span>'
+                    vuew += '<div class="xiug">修改</div>'
+                    vuew += '</div>'
+                }
+                $('.topl').html(vuew);
+                $('.topl').show();
+            }
+        })
+        $('.topr').hide();
+
+
+    })
+    // 修改转赠人的手机号
+    $('.top').on('click', '.xiug', function () {
+        $('.topr').show();
+        $('.topl').hide();
+    })
+    // 点击跳转记录
+    $('.topr').on('click', '.detail', function () {
+        window.location.href = "index.php?s=/Home/income/czsuccess.html"
+    })
+
+    $(function () {
+        var balance = '{$money}';
+        var new_balance = balance - 0;
+
+        // 点击获取验证码 并判断手机号金额是否正确填写
+        $("#getcode").on("click", function () {
+
+            var phone = $("input[name=phone]").val();
+            var money = $("input[name=money]").val();
+
+            var code = $("input[name=code]").val();
+            var newmoney = money - 0;
+            if (phone.length == 0) {
+                $(".tipmoney").text("请输入手机号").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+            if (money.length == 0) {
+                $(".tipmoney").text("请输入转赠金额").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            // if (newmoney > new_balance) {
+            //     alert("转赠金额不能大于余额");
+            //     return;
+            // }
+
+
+            if (newmoney % 100 != 0) {
+                $(".tipmoney").text("转赠金额必须是100的整数倍").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            $.post("{:url('Home/Grant/is_user_exist')}", {
+                "phone": phone
+            }, function (res) {
+
+
+                if (res.status == 0) {
+                    // mui.toast(res.msg);
+                    alert(res.msg);
+                    return;
+                } else {
+                    var code = document.getElementById('code');
+                    console.log(code);
+
+
+                    if (code.innerHTML != '发送验证码') {
+                        return;
+                    }
+                    var time = 59;
+                    var h;
+                    var flag;
+                    if (flag) {
+                        return false;
+                    }
+
+                    flag = true;
+                    h = setInterval(function () {
+                        if (time < 10) {
+                            time = '0' + time;
+                        }
+                        code.innerHTML = time + 's';
+
+                        document.getElementById("getcode").style.backgroundColor =
+                            "#E0EEEE";
+                        time--;
+                        if (time < 0) {
+                            clearInterval(h);
+                            flag = false;
+                            code.innerHTML = '获取验证码';
+                            document.getElementById("getcode").style.backgroundColor =
+                                "#2FB3D3";
+                        }
+                    }, 1000);
+
+                    var grant_user = '{$grant_user_phone}';
+
+                    var type = 6;
+
+                    $.post("{:url('Home/User/sendCodeForGrant')}", {
+
+                        "phone": grant_user,
+                        "type": type
+
+                    }, function (res) {
+                        console.log(res);
+                        if (res.status == 1) {
+                            $(".tipmoney").text("发送成功").stop(true).fadeIn(1000).fadeOut(
+                                2000);
+
+                        } else {
+                            alert(res.msg);
+                        }
+                    });
+                }
+            });
+        })
+
+        //点击确定判断是否转赠成功
+
+        $(".qdzz").on("click", function () {
+            var phone = $("input[name=phone]").val();
+            var money = $("input[name=money]").val();
+            var newmoney = money - 0;
+            console.log(newmoney)
+            console.log(new_balance)
+            var code = $("input[name=code]").val();
+            var grant_user_phone = '{$grant_user_phone}';
+            var grant_user_info_id = '{$grant_user_info_id}';
+            var type = 6;
+
+
+            if (phone.length == 0) {
+                $(".tipmoney").text("请输入手机号").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            if (money.length == 0) {
+                $(".tipmoney").text("请输入转赠金额").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            if (newmoney > new_balance) {
+                $(".tipmoney").text("转赠金额不能大于余额").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+
+            if (money % 100 != 0) {
+                $(".tipmoney").text("转赠金额必须是100的整数倍").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+            if (code.length == 0) {
+                $(".tipmoney").text("请输入验证码").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+
+            $.post("{:url('Home/Grant/grantMoney')}", {
+
+                "phone": phone,
+                "money": money,
+                "code": code,
+                "grant_user_phone": grant_user_phone,
+                "grant_user_info_id": grant_user_info_id,
+                "type": type
+
+            }, function (res) {
+
+                if (res.status == 1) {
+                    $(".tipmoney").text("此用户不存在").stop(true).fadeIn(1000).fadeOut(2000);
+
+                }
+
+                if (res.status == 2) {
+                    $(".tipmoney").text("转赠金额不能大于余额").stop(true).fadeIn(1000).fadeOut(2000);
+                }
+
+                if (res.status == 3) {
+                    $(".tipmoney").text("验证码错误或已过期").stop(true).fadeIn(1000).fadeOut(2000);
+                }
+                if (res.status == 4) {
+                    $(".secczz").stop(true).fadeIn(1000).fadeOut(5000);
+                    setTimeout(function () {
+
+                        top.location.href = "{:url('Home/Income/income')}";
+                    }, 1000);
+                }
+
+                if (res.status == 5) {
+                    // alert("转赠失败");
+                    $(".tipmoney").text("转赠失败").stop(true).fadeIn(1000).fadeOut(2000);
+                }
+            });
+
+            console.log("click");
+
+        });
+
+
+        // 点击确定赠送
+        $(document).on('click', '.qdzz', function () {
+            var phone = $("input[name=phone]").val();
+            var money = $("input[name=money]").val();
+            var grant_user_phone = '{$grant_user_phone}';
+            var grant_user_info_id = '{$grant_user_info_id}';
+            var type = 6;
+
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: {
+                    "phone": phone,
+                    "money": money,
+                    "code": code,
+                    "grant_user_phone": grant_user_phone,
+                    "grant_user_info_id": grant_user_info_id,
+                    "type": type
+                },
+            })
+
+        })
+    });
+</script>
+
+</html>

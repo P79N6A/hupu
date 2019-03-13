@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <title>链接中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .first {
+            width: 3.43rem;
+            height: 1.04rem;
+            margin: 0 auto;
+            margin-top: .12rem;
+            background: #FFF;
+            box-shadow: 0px 2px 10px 0px #BFBFBF;
+            font-size: 16px;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(51, 51, 51, 1);
+            text-align: center;
+            line-height: 1.04rem;
+        }
+        .firsthov{
+            width: 3.43rem;
+            height: 1.04rem;
+            margin: 0 auto;
+            margin-top: .12rem;
+            background: #FFF;
+            font-size: 16px;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(51, 51, 51, 1);
+            text-align: center;
+            line-height: 1.04rem;
+            border:3px solid #32CEA0;
+        }
+        .last {
+            width: 3.75rem;
+            height: .56rem;
+            bottom: 0;
+            position: fixed;
+            background:#fff;
+            border-top: 1px solid #F6F6F6;
+        }
+
+        .left {
+            width: 1.65rem;
+            height: .4rem;
+            background: rgba(197, 197, 197, 1);
+            border-radius: .04rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            line-height: .4rem;
+            position: absolute;
+            top: .08rem;
+            left: .16rem;
+        }
+
+        .right {
+            width: 1.65rem;
+            height: .4rem;
+            background: rgba(50, 206, 160, 1);
+            border-radius: .04rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            line-height: .4rem;
+            position: absolute;
+            right: .16rem;
+            top: .08rem;
+        }
+
+        .zhez {
+            width: 100%;
+            height: 100%;
+            background: #00000047;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+        .zhea {
+            width: 100%;
+            height: 100%;
+            background: #00000047;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+         .tank {
+            width: 3.11rem;
+            height: 2.09rem;
+            background: #fff;
+            border-radius: .04rem;
+            position: absolute;
+            top: 30%;
+            left: 8%;
+            z-index: 9;
+        }
+        .tankq {
+            width: 3.11rem;
+            height: 1.64rem;
+            background: #fff;
+            border-radius: .04rem;
+            position: absolute;
+            top: 30%;
+            left: 8%;
+            z-index: 9;
+        }
+        .tank span {
+            width: 1.12rem;
+            height: .22rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: .22rem;
+            text-align: center;
+            position: absolute;
+            left:1rem;
+            top:.24rem;
+        }
+        .zhea span{
+            width: 1.77rem;
+            height: .44rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: .22rem;
+            text-align: center;
+            position: absolute;
+            left:.67rem;
+            top:.24rem;
+        }
+        .tank input{
+            border: 0;
+            width: 2.59rem;
+            height: .43rem;
+            left: .16rem;
+            top: .7rem;
+            background: #F2F2F2;
+            border-radius: .04rem;
+            position: absolute;
+            padding-left: .2rem;
+            outline:none; 
+        }
+        .close{
+            width: .3rem;
+            height: .3rem;
+            right: .28rem;
+            top: .78rem;
+            border-radius: 50%;
+            position: absolute;
+            background: #D8D8D8;
+        }
+        .close img{
+            width:.16rem;
+            height:.16rem;
+            left:.07rem;
+            top:.07rem;
+            position: absolute;
+            background:pink;
+        }
+        .qux{
+            width:1.2rem;
+            height:.4rem;
+            text-align: center;
+            line-height: .4rem;
+            border-radius:.04rem;
+            font-size:.16rem;
+            left:.24rem;
+            bottom:.16rem;
+            position: absolute;
+            font-weight:400;
+            color:rgba(119,119,119,1);
+            border:1px solid #C5C5C5;
+            font-family:PingFangSC-Regular;
+        }
+        .qud{
+            width:1.2rem;
+            height:.4rem;
+            right:.24rem;
+            bottom:.16rem;
+            line-height: .4rem;
+            background:rgba(50,206,160,1);
+            border-radius:.04rem;
+            font-size:.16rem;
+            text-align: center;
+            font-weight:500;
+            color:#fff;
+            position: absolute;
+            font-family:PingFangSC-Medium;
+        }
+        .cont{
+            padding-bottom:.7rem;
+        }
+        .succ{
+            width:3.75rem;
+            height:.32rem;
+            line-height:.32rem;
+            font-size:.16rem;
+            text-align: center;
+            font-weight:500;
+            color:#fff;
+            display:none;
+            background:#F8C85E;
+            position: absolute;
+            font-family:PingFangSC-Medium;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="succ">复制成功</div>
+    <div class="cont">
+        <div class="first">链接一切</div>
+        <div class="first">哈哈哈哈哈哈</div>
+        <div class="first">这里有六个字</div>
+        <div class="first">合并梦想</div>
+    </div>
+    <div class="last">
+        <div class="left">新建模块</div>
+        <div class="right">复制到(15)</div>
+    </div>
+    <div class="zhez">
+        <div class="tank">
+            <span>新建自定义模块</span>
+            <input type="text" class="six" placeholder="新建自定义模块">
+            <div class="close"><img src="" alt=""></div>
+            <div class="qux">取消</div>
+            <div class="qud">确定</div>
+        </div>
+    </div>
+    <div class="zhea">
+        <div class="tankq">
+            <span>“11条”复制链接已经存在 仍要复制它吗？</span>
+            <div class="qux">取消</div>
+            <div class="qud">确定</div>
+        </div>
+    </div>
+
+</body>
+<script>
+    // $('.six').text().val()
+
+    $('.cont').on('click', '.first', function () {
+        // $(this).css("border", "3px solid #32CEA0");
+        $(this).addClass("firsthov").siblings().removeClass("firsthov");
+    })
+    // 
+    $('.last').on('click', '.left', function () {
+        $('.zhez').show();
+    })
+    $('.last').on('click', '.right', function () {
+        $('.zhea').show();
+
+        setTimeout("(.succ).style.display='block'",3000);//滑动三秒钟显示
+
+    })
+    $('.tank').on('click', '.qux', function () {
+        $('.zhez').hide();
+    })
+    $('.tank').on('click', '.qud', function () {
+        $('.zhez').hide();
+        console.log(111);
+        // $('.first').html($(this).prev().val())
+
+        $('.cont').append(
+            '<div class="first">链接一切</div>'
+        );
+    })
+    $('.tankq').on('click', '.qux', function () {
+        $('.zhea').hide();
+    })
+
+</script>
+
+</html>

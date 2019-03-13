@@ -1,0 +1,60 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <style type="text/css">
+        .show_content{
+            margin: 10px;
+            padding: 20px 10px;
+            background-color: white;
+        }
+        .show_content p {
+            color: #BEC3C7;
+        }
+    </style>
+</block>
+
+<block name="body">
+    <body class="zzc_body_bg">
+
+    <if condition="$regulate eq 0">
+        <header class="mui-bar mui-bar-nav zzc_header">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan" >返回</a>
+        </header>
+    </if>
+    <div class="mui-content zzc_mui_content_bg">
+        <div class="show_content">
+            <b>姓名：{$messageInfo.nick_name}</b>
+            <p></p>
+            <p>申请时间：{$messageInfo.send_time|date="Y-m-d H:i",###}</p>
+            <p>结果：<if condition="$messageInfo.status eq 2">已通过<elseif condition="$messageInfo.status eq 1"/>待审核<else />不通过</if></p>
+        </div>
+        <if condition="$messageInfo.status eq 1">
+            <form action="{:U('Home/Trade/messageInfo')}" method="post">
+                <input type="hidden" value="{$messageInfo.id}" name="id">
+                <input type="hidden" value="" name="status">
+                <div class="zzc_myranwen_bottom"style="border-top:1px solid #2FB3D3!important;">
+                    <input type="button" name="" id="delCards" value="拒绝" class="zzc_myruanwen_bottom_button" onclick="submitHandle(this,2)" style="background:#FFFFFF!important;" />
+                    <input type="button" name="" id="setGroup" value="同意" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="submitHandle(this,1)" />
+                </div>
+            </form>
+        </if>
+    </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script>
+        function submitHandle(that,status) {
+            $('[name="status"]').val(status);
+//            alert( $(that).closest('form').html())
+            $(that).closest('form').submit();
+        }
+    </script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

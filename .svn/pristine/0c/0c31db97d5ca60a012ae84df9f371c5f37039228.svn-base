@@ -1,0 +1,487 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>修改收货地址</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+    <script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <style type="text/css">
+        body {
+            background: #f0eff6;
+        }
+
+        .in {
+            width: 90%;
+            margin: 0 auto;
+            height: 1rem;
+            background: #fff;
+            margin-top: 0.3rem;
+            line-height: 1rem;
+            border-bottom: 1px solid #eee;
+
+        }
+
+        .in span {
+            width: 30%;
+            height: 100%;
+            display: block;
+            color: #4e4b4b;
+        }
+
+        .inn span {
+            color: #4e4b4b;
+        }
+
+        .in2 span {
+            margin-left: 0.3rem;
+            color: #909389;
+        }
+
+        .in1 input {
+            width:70%;
+            height: 0.8rem;
+            float: right;
+            margin-top: 0.1rem;
+            border: none;
+            background: #fff;
+            color: #999;
+            font-size: 0.25rem;
+
+        }
+
+        .in2 span:nth-child(2) {
+            float: right;
+            margin-right: 0.5rem;
+        }
+
+        .in1 input::placeholder,
+        .in2 input::placeholder {
+            color: #C8C7CC;
+            font-size: 0.22rem
+        }
+
+        .zzc_myruanwen_from_input span {
+            float: left;
+        }
+
+        .zzc_myruanwen_from_input {
+            margin: 10px auto;
+            background: #FAFAFA;
+            position: relative;
+            width: 90%;
+            height: 60px;
+            line-height: 60px;
+            overflow: hidden;
+        }
+
+        .zzc_myruanwen_from_input span {
+            float: left;
+        }
+
+        .sel {
+            width: 80%;
+            height: 100%;
+        }
+
+        .select {
+            font-size: 14px;
+            height: auto;
+            margin-top: 1px;
+            border: 0 !important;
+            background-color: #8a6de9;
+            width: 75%;
+        }
+
+        .myguanggao_bottom>input {
+            background: #2FB3D3;
+            height: 60px;
+            width: 100%;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+        }
+
+        .myguanggao_bottom {
+            height: 60px;
+            width: 100%;
+            position: fixed;
+            bottom: 0px;
+            left: 0;
+        }
+
+        .sele {
+            width: 75%;
+            height: 100%;
+            background-color: #FAFAFA;
+            font-size: 17px;
+            background: url(/Public/Home/images/inco_fenlei_grey.png) no-repeat 90% 25px;
+            background-size: 6% 15%;
+            margin-bottom: 0;
+            padding: 0;
+        }
+
+        .inn {
+            width: 90%;
+            margin: 0 auto;
+            height: 1rem;
+            background: #fff;
+            margin-top: 0.3rem;
+            line-height: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .clearfix:after {
+            clear: both;
+            content: ' ';
+            display: block;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+
+        }
+
+        .default {
+            width: 90%;
+            background-color: #fff;
+            margin: 0 auto;
+            margin-top: 0.3rem;
+            height: 1rem;
+            
+
+        }
+
+        .mui-switch {
+            margin-top: 0.25rem;
+            margin-right: 0.25rem;
+        }
+
+        .default_dress {
+            height: 100%;
+            line-height: 1rem;
+            margin-left: 0.3rem;
+        }
+
+
+        .dress_box {
+            width: 90%;
+            margin: 0 auto;
+            /* height: 1rem; */
+            background: #fff;
+            margin-top: 0.3rem;
+            line-height: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        #city_one{
+            margin-left: 0.8rem;
+        }
+
+
+        #city_one,#city_two {
+            color: #999;
+            width: 28%;
+            height: 100%;
+        }
+
+        #content {
+            width: 90%;
+            margin: 0 auto;
+            box-shadow: 3px 4px 8px 0px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            background: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        mui.init();
+    </script>
+</head>
+
+<body>
+
+    <div id="content">
+        <div id="content_box">
+            <!-- 修改的数据 -->
+        </div>
+        <div class="default clearfix">
+            <div class="default_dress fl">是否设置默认发货地址</div>
+            <div class="mui-switch  fr">
+                <div class="mui-switch-handle"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="myguanggao_bottom">
+        <input type="submit" name="" id="submit" value="保存" />
+    </div>
+    <!-- 修改的数据 -->
+    <script type="text/html" id="modifydress">
+        <div class="in in1">
+            <span class="fl">收货人</span>
+            <input type="text" name="" class="zzc_mingpfuzhi_input" id="username" value="{{collect_people}}" placeholder="请填写收货人">
+        </div>
+        <div class="in in1">
+            <span class="fl">联系手机</span>
+            <input type="text" name="" class="zzc_mingpfuzhi_input" id="usernum" value="{{telephone}}" placeholder="请填写手机号码">
+        </div>
+
+        <div class="dress_box in1">
+            <span class="fl" >所在地址</span>
+            <!-- <input type="text" placeholder="请输入所在地址的省市" id="userdress" value="{{address}}"> -->
+            <select class="city" id="city_one">
+
+            </select>
+
+            <select class="city" id="city_two">
+
+            </select>
+
+        </div>
+        <div class="inn in1">
+            <span class="fl">详细地址</span>
+            <input type="text" name="" class="zzc_mingpfuzhi_input" id="userdetail" value="{{detailed_address}}" placeholder="请输入所在地的详细地址">
+        </div>
+    </script>
+
+    <script type="text/html" id="city">
+        <option value="">请选择省市</option>
+        {{each AppendData v i }}
+        <option data-id="{{v.region_id}}" value="{{v.region_id}}">{{v.region_name}}</option>
+        {{/each }}
+    </script>
+
+    <script type="text/html" id="city_">
+        <option value="">请选择区域</option>
+        {{each AppendData v i}}
+        <option data-id="{{v.region_id}}" value="{{v.region_id}}">{{v.region_name}}</option>
+        {{/each}}
+
+    </script>
+
+    <script>
+        $(function () {
+            var ischeck;
+            var id = '{$id}';
+
+            var one_id;
+            var two_id;
+            var result;
+            var check_id_one;
+            var check_id_two;
+
+            console.log(id);
+            var search = location.search;
+            var newsearch = search.substring(search.indexOf('&') + 1, search.lastIndexOf('/') - 2);
+
+            function getCaption(obj) {
+                var index = obj.lastIndexOf("/");
+                obj = obj.substring(index + 1, obj.length);
+                //  console.log(obj);
+                return obj;
+            }
+            var link = getCaption(search);
+            console.log(link)
+
+
+
+
+
+            //渲染要修改的数据
+            $.ajax({
+                url: "index.php?s=/Api/LuckApi/get_address",
+                type: "post",
+                async: false,
+                data: {
+                    unionid: id,
+
+                },
+                success: function (res) {
+                    console.log(res.AppendData)
+                    $.each(res.AppendData, function (i, e) {
+                        if (e.id == newsearch) {
+                            console.log(e)
+                            result = e;
+                            $("#content_box").html(template('modifydress', e))
+                            if (e.is_enabled == 1) {
+                                $(".mui-switch").addClass("mui-active");
+                            } else {
+                                $(".mui-switch").removeClass("mui-active");
+
+                            }
+
+                        }
+
+                        if ($(".default").find(".mui-switch").hasClass("mui-active")) {
+                            document.querySelector('.mui-switch-handle').setAttribute('style', '');
+                            $(".mui-switch").addClass("mui-disabled")
+
+                        }
+
+
+                    })
+
+                }
+            });
+
+
+
+
+
+
+            //一级城市
+            $.ajax({
+                type: "post",
+                url: "index.php?s=/Api/IndexApi/region_list",
+                data: {
+                    unionid: id,
+                },
+                success: function (res) {
+                    console.log(res)
+                    $("#city_one").html(template("city", res));
+                    $("#city_one option").each(function (i, e) {
+                        if ($(e).text() == result.province_name) {
+                            check_id_one = $(this).val();
+                            $(this).attr("selected", "selected");
+                        }
+                    })
+
+
+                    one_id = $("#city_one option:selected").val();
+
+                    //二级城市
+                    $.ajax({
+                        type: "post",
+                        url: "index.php?s=/Api/IndexApi/region_list",
+                        data: {
+                            unionid: id,
+                            region_id: one_id
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            $("#city_two").html(template("city_", res));
+                            $("#city_two option").each(function (i, e) {
+                                if ($(e).text() == result.city_name) {
+                                    console.log($(this))
+                                    check_id_two = $(this).val();
+                                    $(this).attr("selected", "selected");
+                                }
+                            })
+
+                            two_id = $("#city_two option:selected").val();
+
+
+                        }
+                    })
+
+
+
+
+                }
+            });
+
+
+            // 点击切换城市
+            $("#city_one").on("change", function () {
+                one_id = $("#city_one option:selected").val();
+                $.ajax({
+                    type: "post",
+                    url: "index.php?s=/Api/IndexApi/region_list",
+                    data: {
+                        unionid: id,
+                        region_id: one_id
+                    },
+                    success: function (res) {
+                        $("#city_two").html(template("city_", res));
+                    }
+                })
+            });
+
+
+            $("#city_two").on("change", function () {
+                two_id = $("#city_two option:selected").val();
+            })
+
+
+
+
+
+
+
+            $("#submit").on("click", function () {
+                var username = $("#username").val();
+                var usernum = $("#usernum").val();
+                var userdress = $("#userdress").val();
+                var userdetail = $("#userdetail").val();
+                var check = $(".mui-switch");
+                ischeck = 0;
+                console.log(ischeck + "外边的");
+                if (check.hasClass("mui-active")) {
+                    ischeck = 1;
+                    console.log(ischeck + "里面的");
+                } else {
+                    ischeck = 0;
+                }
+
+                if (username == '') {
+                    mui.toast("请输入收货人姓名");
+                    return false;
+                } else if (one_id == '' || two_id == '') {
+                    mui.toast("请选择所在地址的省市,及区域");
+                    return false;
+                } else if (userdetail == '') {
+                    mui.toast("请输入所在地的详细地址");
+                    return false;
+                }
+
+                // console.log(one_id + "one")
+                // console.log(two_id + "two")
+                // console.log(userdress + "大致地址")
+                // console.log(userdetail + "详细地址");
+
+                $.ajax({
+                    url: "index.php?s=/Api/LuckApi/add_address",
+                    type: "post",
+                    data: {
+                        unionid: id,
+                        oid: newsearch,
+                        name: username,
+                        tel: usernum,
+                        province_id: one_id,
+                        city_id: two_id,
+                        detail_add: userdetail,
+                        is_true: ischeck
+
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        mui.toast("保存成功");
+                        window.location = "/index.php?s=/Home/Lottery/addgoods/" + link +
+                            "";
+                    }
+                })
+
+            });
+
+
+
+
+        });
+    </script>
+    <script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+
+</html>

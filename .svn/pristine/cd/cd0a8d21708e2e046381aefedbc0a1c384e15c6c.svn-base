@@ -1,0 +1,180 @@
+<?php
+/** 参会签到*/
+namespace app\home\controller;
+
+class Customer
+{
+
+    private $unionid;
+    public function _initialize()
+    {
+        $this->unionid = Db::table('s_user_info')->where('id=468')->getField('unionid');
+    }
+    
+    /**
+     *登录页面
+     */
+    public function att_login()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+    
+    /**
+     *个人中心
+     */
+    public function center()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+
+    /**
+     * 问题添加页面
+     */
+    public  function  reception()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+
+    /**
+     * 问题完善页面
+     */
+    public  function  receptionend()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->rid = Input('get.rid');
+        return $this->fetch();
+    }
+
+    /**
+     * 测试上拉加载页面
+     * 不符合要求
+     * 存在bug
+     */
+    public  function  receptionlist()
+    {
+    	$this->assign('unionid',$this->unionid);
+    	return $this->fetch();
+    }
+    
+    /**
+     * 接待分页条件查询也页面
+     */
+    public  function  receptionlist2()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->isstr = Input('get.isstr');
+        return $this->fetch();
+    }
+    
+    /**
+     * 接待分页条件查询也页面
+     */
+    public  function  myreceptionlist()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->isstr = Input('get.isstr');
+        return $this->fetch();
+    }
+    
+    /**
+     * 问题录入
+     * 需要不符合
+     * 不太方便
+     */
+    public  function  posts()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+    
+    /**
+    *问题录入
+     */
+    public  function  posts2()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+    
+    /**
+    	问题录入
+     */
+    public  function  call()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+    
+    /**
+    	问题列表
+     */
+    public  function  calllist()
+    {
+        $this->assign('unionid',$this->unionid);
+        return $this->fetch();
+    }
+
+    /**
+     * 查看接待详情
+     */
+    public  function  receptiondetails()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->rid = Input('get.rid');
+        return $this->fetch();
+    }
+
+    /**
+     * 问题补充
+     */
+    public function postsone()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->pid = Input('get.pid');
+        return $this->fetch();
+    }
+
+    /**
+     * 咨询记录
+     */
+    public  function callltails()
+    {
+         $this->assign('unionid',$this->unionid);
+        $this->cid= Input('get.cid');
+        return $this->fetch();
+    }
+
+    /**
+     * 问题list
+     */
+    public  function postslist()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->cid= Input('get.cid');
+        return $this->fetch();
+    }
+
+    /**
+     * 问题解答
+     */
+    public  function question()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->postid= Input('get.postid');
+        return $this->fetch();
+    }
+    
+    /**
+     * 问题解答
+     */
+    public  function questionone()
+    {
+        $this->assign('unionid',$this->unionid);
+        $this->postid= Input('get.postid');
+        return $this->fetch();
+    }
+
+}

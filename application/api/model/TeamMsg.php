@@ -1,0 +1,1 @@
+<?php//购买列表 数据层namespace app\api\model;use think\Model;class TeamMsg extends Model{    protected $table = 's_team_msg';}

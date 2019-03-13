@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+        <title>{$title}</title>
+		<link type="text/css" rel="stylesheet" href="__HOME_CSS__/dist/css/swiper.min.css" />
+		<link rel="stylesheet" href="__HOME_CSS__/index.css" />
+		<script src="__HOME_JS__/jquery.min.js"></script>
+		<script src="__HOME_JS__/rem.js"></script>
+		<script type="text/javascript" src="__HOME_JS__/jquery.lazyload.js"></script>
+		<style>
+			.base {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 2.45rem;
+				line-height: 2.45rem;
+				z-index: 600;
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			.base>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-container {
+				height: 6rem;
+			}
+			
+			#investproSwiper {
+				margin-top: 0.52rem;
+			}
+			
+			#investproSwiper .swiper-slide {
+				width: 5rem;
+				height: 6rem;
+			}
+			
+			#investproSwiper .swiper-slide .investpro {
+				width: 5.61rem;
+				height: 3.74rem;
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+				margin-top: 0.58rem;
+				margin-left: 0.19rem;
+				-webkit-transition: all 0.5s linear;
+			}
+			
+			#investproSwiper .swiper-slide-active .investpro {
+				width: 6.16rem;
+				height: 4.11rem;
+				margin-left: -.08rem;
+				margin-top: .36rem;
+			}
+			
+			.swiper-slide-active .investpro a {
+				width: 4.33rem;
+				height: .8rem;
+				line-height: .8rem;
+				bottom: .4rem;
+			}
+			
+			.swiper-container-horizontal>.swiper-pagination {
+				height: .5rem;
+				text-align: center;
+				bottom: 0;
+			}
+			
+			.swiper-pagination-bullet {
+				background: #fff;
+				border-radius: 50%;
+				width: .12rem;
+				height: .12rem;
+				margin-left: .18rem;
+				opacity: 1;
+			}
+			
+			.swiper-pagination-bullet-active {
+				background: #e04531;
+			}
+			
+			.investproTab {
+				width: 4.6rem;
+				height: 6.37rem;
+				position: absolute;
+				top: 0.58rem;
+				z-index: 2;
+				opacity: 0;
+			}
+			
+			.investpro-prev {
+				left: -3.6rem;
+			}
+			
+			.investpro-next {
+				right: -3.6rem;
+			}
+			
+			.sxm_slide>img {
+				border-radius: 0.375rem;
+			}
+			
+			.sxm_slide>h3 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-size: 0.65rem;
+			}
+			
+			.mess {
+				margin: 0 0.3rem;
+			}
+			
+			.lbt-left {
+				color: #FFFFFF;
+				float: left;
+				width: 57%;
+				height: 2.875rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.lbt_cen {
+				width: 100%;
+				height: 2rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.yang {
+				font-size: 1rem;
+				float: left;
+				line-height: 2rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.lead {
+				font-size: 0.65rem;
+				margin-left: 0.5rem;
+				float: right;
+				height: 2rem;
+				line-height: 2.2rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.firm {
+				font-size: 0.65rem;
+				font-family: "PingFangSC-Light";
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				float: left;
+				width: 100%;
+				height: 0.8rem;
+				line-height: 0.8rem;
+			}
+			
+			.lbt-right {
+				float: right;
+				width: 38%;
+				height: 2.875rem;
+			}
+			
+			.lbt-right>ul li {
+				float: left;
+				width: 30%;
+				height: 100%;
+				font-size: 0.525rem;
+				text-align: center;
+			}
+			
+			.lbt-right>ul li a {
+				display: block;
+				width: 1.8rem;
+				height: 1.8rem;
+				margin: 0 auto;
+			}
+			
+			.lbt-right>ul li a img {
+				width: 100%;
+				height: 100%;
+				-webkit-touchstart-highlight-color: rgba(0, 0, 0, 0);
+			}
+			
+			.lbt-right>ul li p {
+				font-size: 0.6rem;
+				margin-top: 0.125rem;
+			}
+			
+			.sc {
+				color: #FFFFFF;
+			}
+			
+			.tow {
+				color: #FFFFFF;
+			}
+			
+			.music {
+				color: #FFFFFF;
+			}
+			
+			.rise {
+				transition: all .5s;
+			}
+			
+			.ico1>p {
+				color: #2AB7CF;
+			}
+			
+			.fame {
+				height: 3.9rem;
+				overflow: auto;
+			}
+			
+			html,
+			body {
+				position: relative;
+			}
+			
+			body {
+				background: #eee;
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.swiper-containers {
+				width: 18.75rem;
+				height: 18.75rem;
+			}
+			
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+			}
+			
+			.swiper-slide>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide>video {
+				width: 100%;
+				height: 100%;
+				object-fit: fill;
+			}
+			
+			.rise,
+			.lbt-foot {
+				z-index: 10;
+			}
+			
+			#swiper_box {
+				margin-left: 0.3rem;
+				margin-right: 0.3rem;
+			}
+			
+			.ban {
+				display: none;
+			}
+			
+			.ban>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.privacy {
+				width: 10rem;
+				height: 5rem;
+				background: #fff;
+				border-radius: 0.25rem;
+				font-size: 0.75rem;
+				text-align: center;
+				background: #fff;
+				color: #000;
+				margin-bottom: 3rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin: -2.5rem 0 0 -5rem;
+				z-index: 100;
+				display: none;
+			}
+			
+			.up {
+				width: 100%;
+				height: 2rem;
+				line-height: 3rem;
+				text-align: center;
+				font-size: 0.7rem;
+			}
+			
+			.down {
+				width: 100%;
+				height: 3rem;
+				line-height: 2.5rem;
+				text-align: center;
+				font-size: 0.75rem;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="max">
+			<div class="top">
+				<div class="swiper-containers">
+					<div class="swiper-wrapper">
+						
+						
+					</div>
+				</div>
+				<div class="rise">
+					<span class="shang">
+                    	<img class="shang-img" src="__HOME_IMAGES__/new_1.png" alt="" />
+                	</span>
+					<span class="moods">
+	                    <p>
+	                        <span>今日人气</span>
+							<span class="six">{$popularity}</span>
+						</p>
+						<p>
+							<span>总人气</span>
+							<span class="one">{$all_popularity}</span>
+						</p>
+					</span>
+				</div>
+				<div class="lbt-foot">
+					<div class="lbt-left">
+						<div class="lbt_cen">
+							<span class="yang">{$data.nick_name}</span>
+							<span class="lead">{$data.position}</span>
+						</div>
+						<div class="firm">{$data.company}</div>
+					</div>
+					<div class="lbt-right">
+						<ul>
+							<li>
+								<a href="<if condition=" $userInfo[ 'id']==I( 'get.id') ">http://wx.yxm360.com?s=/Home/User/collection.html}<else />http://wx.yxm360.com?s=/Home/User/addCard/id/{$_GET['id']}/visit_id/{$data['visit_id']}/mycard_type/1</if>" onclick="javascript:void(0);"> <img class="lbt-x" src="__HOME_IMAGES__/new_collect.png" alt="" /></a>
+								<p style="color:#fff">收藏</p>
+							</li>
+							<li class="mess">
+								<if condition="$userInfo['id']==I('get.id')">
+									<a href="http://wx.yxm360.com?s=/Home/Chat/myMessage/id/{$_GET['id']}"> <img class="lbt-w" src="__HOME_IMAGES__/new_msg.png" alt="" /></a>
+								</if>
+								<if condition="$userInfo['id']!=I('get.id')">
+									<a href="http://wx.yxm360.com?s=/Home/Chat/addMessage/id/{$_GET['id']}"> <img class="lbt-w" src="__HOME_IMAGES__/new_msg.png" alt="" /></a>
+								</if>
+								<p class="tow">留言</p>
+							</li>
+							<li>
+								<a href="javascript:;">
+									<img class="lbt-y" src="__HOME_IMAGES__/new_music.png" alt="" />
+								</a>
+								<p class="music">音乐</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="nav">
+				<ul>
+					<li class="iphone" style="border-bottom:0.5px solid #909090;border-right:0.5px solid #909090">
+						<if condition="$data.is_phone eq 1">
+							<a class="hone" href="tel:{$data['mobile']}">
+								<else />
+								<a class="hone" href="javascript:void(0)" onclick='shut()'>
+						</if>
+						<div class="iph">
+							<span class="bh">
+                            		<img src="__HOME_IMAGES__/news_phone.png" data-original="__HOME_IMAGES__/news_phone.png" alt="" />
+                        		</span>
+							<p>一键拨号</p>
+						</div>
+						</a>
+					</li>
+					<li class="weixin" style="border-bottom:0.5px solid #909090">
+						<div class="xin">
+							<a class="wx" href="javascript:;">
+								<img src="__HOME_IMAGES__/news_men.png" data-original="__HOME_IMAGES__/news_men.png" alt=""/>
+							</a>
+							<p>一键加我</p>
+						</div>
+					</li>
+					<li class="qq" style="border-right:0.5px solid #909090">
+						<div class="QQ">
+							<a class="dr" href="javascript:;">
+								<img src="__HOME_IMAGES__/news_tx.png" data-original="__HOME_IMAGES__/news_tx.png" alt=""/>
+							</a>
+							<p>一键导入</p>
+						</div>
+					</li>
+					<li class="here">
+						<div class="her">
+							<if condition="$data['is_map'] eq 1">
+								<a class="map" href="{:U('Home/Nologin/diTu?address='.$data['address'])}">
+							<else/>
+								<a class="map" href="javascript:;" onclick="domap()">
+							</if>
+							<img src="__HOME_IMAGES__/new_copy.png" data-original="__HOME_IMAGES__/new_copy.png" alt=""/>
+							</a>
+							<p>一键导航</p>
+						</div>
+					</li>
+				</ul>
+				<div class="boss">
+					<img class="boss-img" src="{$data.headimg}" alt="" />
+				</div>
+				<div class="boss-cen">
+					<img src="__HOME_IMAGES__/new_box.png" alt="" />
+				</div>
+			</div>
+			<div class="event">
+				<div class="think">
+					<ul>
+						<li class="link-img">
+							<img src="__HOME_IMAGES__/new-RecCopy2.png" alt="" />
+						</li>
+						<li>链接一切</li>
+						<li class='links-img'>
+							<img src="__HOME_IMAGES__/new-RecCopy3.png" alt="" />
+						</li>
+					</ul>
+				</div>
+				<div class="char">LINK EVERYTHING</div>
+			</div>
+			<div id="swiper_box">
+				<div class="swiper-containerx">
+					<div class="swiper-wrapper">
+						<foreach name="data.UserNavList" item="vo">
+							<div class="swiper-slide">
+								<a href="{$vo.jump_url}" target="_blank">
+									<div class="slide-img">
+										<img class="lazyimg" data-src="{$vo.icon_url}" src="__HOME_IMAGES__/loadimg.gif" alt="" />
+									</div>
+									<div class="title">
+										<h3 style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{$vo.name}</h3>
+									</div>
+								</a>
+							</div>
+						</foreach>
+					</div>
+				</div>
+			</div>
+			<if condition="$product_num gt 0">
+				<a href="{:U('Home/Nologin/product_list/user_id/'.$user_id)}" style="text-decoration: none;color: black">
+					<div class="event">
+						<div class="think">
+							<ul>
+								<li class="link-img">
+									<img src="__HOME_IMAGES__/new-RecCopy2.png" alt="" />
+								</li>
+								<li>产品中心</li>
+								<li class='links-img'>
+									<img src="__HOME_IMAGES__/new-RecCopy3.png" alt="" />
+								</li>
+							</ul>
+						</div>
+						<div class="char">PRODUCT CENTER </div>
+					</div>
+				</a>
+				<div class="swiper-container" id="investproSwiper">
+					<div class="swiper-wrapper">
+						<if condition="$product_num gt 1">
+							<foreach name="product" item="product">
+								<div class="swiper-slide">
+									<a href="{:U('Home/Nologin/product_detail/product_id/'.$product['id'].'/user_id/'.$user_id)}" style="display: block; width: 100%;height:100%; text-decoration: none;color: black">
+										<div class="investpro sxm_slide">
+											<img class="lazyimg" data-src="{$product.cover_img}" src="__HOME_IMAGES__/loadimg.gif" alt="" width="100%" height="100%">
+											<h3>{$product.title}</h3>
+										</div>
+									</a>
+								</div>
+							</foreach>
+							<else/>
+							<div class="swiper-slide">
+								<a href="{:U('Home/Nologin/product_detail/product_id/'.$product[0]['id'].'/user_id/'.$user_id)}" style="display: block; width: 100%;height:100%; text-decoration: none;color: black">
+
+									<div class="investpro sxm_slide">
+										<img class="lazyimg" data-src="{$product[0]['cover_img']}" src="__HOME_IMAGES__/loadimg.gif" alt="" width="100%" height="100%">
+										<h3>{$product[0]['title']}</h3>
+									</div>
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="{:U('Home/Nologin/product_detail/product_id/'.$product[0]['id'].'/user_id/'.$user_id)}" style="display: block; width: 100%;height:100%; text-decoration: none;color: black">
+									<div class="investpro sxm_slide">
+										<img class="lazyimg" data-src="{$product[0]['cover_img']}" src="__HOME_IMAGES__/loadimg.gif" alt="" width="100%" height="100%">
+										<h3>{$product[0]['title']}</h3>
+									</div>
+								</a>
+							</div>
+						</if>
+					</div>
+				</div>
+			</if>
+			<div class="know-me">
+				<div class="know">
+					<ul>
+						<li class="link-img">
+							<img src="__HOME_IMAGES__/new-RecCopy2.png" alt="" />
+						</li>
+						<li>展示一切</li>
+						<li class='links-img'>
+							<img src="__HOME_IMAGES__/new-RecCopy3.png" alt="" />
+						</li>
+					</ul>
+				</div>
+				<div class="char">SHOW EVERYTHING</div>
+			</div>
+			<div class="show_box">
+				<if condition="$data['show_list'] eq 0">
+					<div>
+						<for start="0" end="$data_count">
+							<div class='footer'>
+								<ul>
+									<li class="yx-show">
+										<a href="{:U('Home/Nologin/contentDetail',array('card_content_id'=>$data['UserContentList'][0+$i*3]['id']))}">
+											<img class="lazyimg" data-src="{$data['UserContentList'][0+$i*3]['thumb']}" src="__HOME_IMAGES__/loadimg.gif" alt="" />
+											<p>{$data['UserContentList'][0+$i*3]['title']}</p>
+										</a>
+									</li>
+									<if condition="$data['UserContentList'][1+$i*3] neq ''">
+										<li class="xm">
+											<a href="{:U('Home/Nologin/contentDetail',array('card_content_id'=>$data['UserContentList'][1+$i*3]['id']))}">
+												<img class="lazyimg" data-src="{$data['UserContentList'][1+$i*3]['thumb']}" src="__HOME_IMAGES__/loadimg.gif" alt="" />
+												<p>{$data['UserContentList'][1+$i*3]['title']}</p>
+											</a>
+										</li>
+									</if>
+									<if condition="$data['UserContentList'][2+$i*3] neq ''">
+										<li class="yx-show">
+											<a href="{:U('Home/Nologin/contentDetail',array('card_content_id'=>$data['UserContentList'][2+$i*3]['id']))}">
+												<img class="lazyimg" data-src="{$data['UserContentList'][2+$i*3]['thumb']}" src="__HOME_IMAGES__/loadimg.gif" alt="" />
+												<p>{$data['UserContentList'][2+$i*3]['title']}</p>
+											</a>
+										</li>
+									</if>
+								</ul>
+							</div>
+						</for>
+					</div>
+				<else/>
+					<div class="max_img">
+						<foreach name="data['UserContentList']" item="vo">
+							<div class="max_img_cen">
+								<a href="{:U('Home/Nologin/contentDetail',array('card_content_id'=>$vo['id']))}">
+									<img class="lazyimg" data-src="{$vo.thumb}" src="__HOME_IMAGES__/loadimg.gif" alt="" />
+									<p>{$vo.title}</p>
+								</a>
+							</div>
+						</foreach>
+					</div>
+				</if>
+			</div>
+			<div class="blank"></div>
+			<div class="bar-warp">
+				<div class="allcity-box">
+					<div class="y-teacher">
+						<img src="{$data.headimg}" alt="" />
+					</div>
+					<div class="y-cen">
+						<img src="__HOME_IMAGES__/new_box.png" alt="" />
+					</div>
+					<div class="star">
+						<h3>{$data['nick_name']}</h3>
+						<p>{$data['company']}|{$data['position']}</p>
+					</div>
+					<div class="da">
+						<div class="fame">
+							<ul>
+								<li>{$data.position}</li>
+								<li>{$data.industry_tag}</li>
+								<li>{$data.company}</li>
+							</ul>
+						</div>
+						<if condition="$data.share_my_introduct neq ''">
+							<div class="art">
+								{$data.share_my_introduct}
+							</div>
+							<else/>
+							<div class="da-img">
+								<img src="__HOME_IMAGES__/news98.png" alt="" />
+							</div>
+						</if>
+					</div>
+				</div>
+				<div class="allcity-mask"></div>
+			</div>
+			<div class="allcity-boxs">
+				<p class="smer">长按识别二维码</p>
+				<p class="boxs-txt">识别二维码，保存到本机通讯录</p>
+				<p class="boxs-img"><img data-src="{:U('Home/Nologin/cardCode?id='.$user_id)}" src="__HOME_IMAGES__/loadimg.gif" alt="" class="lazy_qq" /></p>
+			</div>
+			<div class="allcity-boxss">
+				<ul class="content">
+					<li style="display: block;">
+						<img data-src="{:U('Home/Nologin/myCode?id='.$user_id)}" src="__HOME_IMAGES__/loadimg.gif" style="width:100%;height: 100%" alt="" class="lazy_a"  />
+					</li>
+					<li>
+						<img data-src="__PUBLIC__/Home/images/8.jpg" src="__HOME_IMAGES__/loadimg.gif" style="width:100%;height: 100%" alt="" class="lazy" />
+					</li>
+					<li>
+						<if condition="$data.is_wechat eq 1">
+							<img data-src="{$data.wx_ewm_url}" src="__HOME_IMAGES__/loadimg.gif" style="width:100%;height: 100%" alt="" class="lazy_wx" />
+						<else />
+							<img src="__HOME_IMAGES__/er2.png" style="width:85%;height: 85%;margin: 7.5%;" alt="" />
+						</if>
+						<!-- <img src="{$data.wx_ewm_url}" style="width:100%;height: 100%" alt="" /> -->
+					</li>
+				</ul>
+				<div class="er">长按识别二维码</div>
+				<ul class="tab">
+					<li class="dian do">v网二维码</li>
+					<li class="do">洋小秘公众号</li>
+					<if condition="$data.is_wechat eq 1">
+						<li id="do">
+					<else/>
+						<li id="wx">
+					</if>
+					微信二维码</li>
+				</ul>
+
+			</div>
+			<div class="allcity-masks"></div>
+		</div>
+
+
+		<a href="{:U('Home/User/register',array('share_id'=>$user_id))}">
+			<div class="base">
+				<img src="__HOME_IMAGES__/miss.gif" alt="" />
+			</div>
+		</a>
+		<if condition="$no_my neq 1">
+			<div class="go">
+				<a href="{:U('Home/User/usercenter')}">
+					<img src="__HOME_IMAGES__/new_4.png" alt="" />
+				</a>
+			</div>
+		</if>
+		</div>
+		<audio controls="controls" id="audio" autoplay style="display: none">
+			<source src="{$data.music_url}" />
+		</audio>
+		<div class="privacy">
+			<div class="up">温馨提示</div>
+			<div class="down">该项已被设置为隐私项</div>
+		</div>
+		<script>
+			var ii = '{$data.img_num}';
+		</script>
+		<script src="__HOME_JS__/index.js"></script>
+		<script src="__HOME_CSS__/dist/js/swiper.min.js"></script>
+		<script>
+			//顶部轮播图
+    var lit = ""
+    var id = '{$user_id}';
+    console.log(id)
+    $.ajax({
+        type: "post",
+        url: "/index.php?s=/Api/AppApi/banner_list",
+        data: {
+            id: id
+        },
+        beforeSend: function () {},
+        success: function (res) {
+            console.log(res)
+            if(res.ResultType == 0) {
+				$(res.AppendData).each(function(g, i) {
+					console.log(i)
+					var img_id = i.img_url;  //根据id得到值
+					var index = img_id.lastIndexOf(".");  //（考虑严谨用lastIndexOf(".")得到）得到"."在第几位
+					img_id = img_id.substring(index);
+					if(img_id == ".mp4" || img_id == ".rmvb" || img_id == ".avi" || img_id == ".ts" || img_id == ".3GP" || img_id == ".MOV") {
+						lit += '<div class="swiper-slide" data-id="'+i.id+'" data-sort="'+i.sort+'">'
+						lit += '<video class="lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.img_url + '" poster="'+i.img_url+'?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast" controls="controls"/>'
+						lit += '</div>'
+					}else{
+						lit += '<div class="swiper-slide" data-id="'+i.id+'" data-sort="'+i.sort+'">'
+						lit += '<img class="swiper_img lazyimg" src="/Public/Home/images/loadimg.gif" data-src="' + i.img_url + '" alt="" />'
+						lit += '</div>'
+
+					}
+					
+				})
+				
+    			$(".top>.swiper-containers>.swiper-wrapper").html(lit); //顶部广告轮播图
+    			lazyRender();
+    			
+    			var ban = $(".swiper-containers .swiper-slide").length;
+				if(ban <= 0) {
+					$(".ban").show();
+					var swiper = new Swiper('.swiper-containers', {
+						spaceBetween: 0,
+						centeredSlides: true,
+						loop: true,
+					});
+				} else {
+
+					var swiper = new Swiper('.swiper-containers', {
+						spaceBetween: 0,
+						centeredSlides: true,
+						loop: true,
+						autoplay: {
+							delay: 2500,
+							disableOnInteraction: false,
+						},
+					});
+				}
+
+  			}else if(res.ResultType == 2) {
+				$(".top .swiper-wrapper").html('<a class="ban" href="">'+
+				'<img src="__HOME_IMAGES__/banner.png" alt="" />'+
+				'</a>'
+				)
+			}
+
+        }
+    })
+
+			
+		</script>
+		<script>
+			var w = $(".lbt_cen").width();
+			var w1 = $(".yang").width();
+			var w2 = $(".lead").width();
+			var gap = w - w1;
+			$(".lead").css("width", gap * 0.8);
+			if(w1 > w) {
+				$(".yang").css("width", "100%");
+			}
+		</script>
+		<script>
+			var abcSwiper = new Swiper("#investproSwiper", {
+				slidesPerView: 'auto', //设置slider容器能够同时显示的slides数量
+				centeredSlides: true, //设定为true时，活动块会居中，而不是默认状态下的居左。
+				loop: true,
+				speed: 500,
+				noSwiping: false, //设置为true时禁止切换
+				paginationClickable: false,
+				pagination: '.swiper-pagination',
+				prevButton: '#investpro-prev',
+				nextButton: '#investpro-next'
+			});
+		</script>
+		<script>
+//			var isPageHide = false;
+//			window.addEventListener('pageshow', function() {
+//				if(isPageHide) {
+//					window.location.reload();
+//				}
+//			});
+//			window.addEventListener('pagehide', function() {
+//				isPageHide = true;
+//			});
+//			$("img.lazy").lazyload({
+//				skip_invisible: false
+//			});
+
+			var len = $(".swiper-containerx .swiper-slide").length;
+			if(len <= 3) {
+				var swiper = new Swiper('.swiper-containerx', {
+					centeredSlides: true,
+					slidesPerView: 3,
+					spaceBetween: 10,
+					loop: true,
+					noSwiping: true,
+					pagination: {
+						el: '.swiper-pagination',
+						clickable: true,
+					}
+				});
+			} else {
+				var swiper = new Swiper('.swiper-containerx', {
+					centeredSlides: true,
+					autoplay: {
+						delay: 2500,
+						disableOnInteraction: false,
+					},
+					slidesPerView: 3,
+					spaceBetween: 10,
+					loop: true,
+					pagination: {
+						el: '.swiper-pagination',
+						clickable: true,
+					}
+				});
+			}
+			var swiper = new Swiper('.swiper-container', {
+				centeredSlides: true,
+				autoplay: {
+					delay: 2500,
+					disableOnInteraction: false,
+				},
+				slidesPerView: 3,
+				spaceBetween: 10,
+				loop: true,
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+			});
+			//V网二维码
+			$(".boss").on('click', function() {
+				event.stopPropagation();
+				showCode1();
+			});
+			function showCode1() {
+				$(".allcity-box").show();
+				$(".share").hide();
+				$(".qr").hide();
+				$(".allcity-mask").show();
+				$(".tea-intro1").show();
+			}
+			//微信二维码
+			$(".weixin").on('click', function() {
+	  			var img=new Image();
+				img.src=$(".lazy_a").attr('data-src');
+				img.onload=function(){
+					$(".lazy_a").attr('src', $(".lazy_a").attr('data-src'));
+				}
+				$(".lazy").attr('src', $(".lazy").attr('data-src'));
+				$(".lazy_wx").attr('src', $(".lazy_wx").attr('data-src'));
+				event.stopPropagation();
+				event.stopPropagation();
+				$(".allcity-masks").show();
+				$(".allcity-boxs").hide();
+				$(".allcity-boxss").show();
+			});
+			//导入通讯录
+			$(".qq").on('click', function() {
+				var img=new Image();
+				img.src=$(".lazy_qq").attr('data-src');
+				img.onload=function(){
+					$(".lazy_qq").attr('src', $(".lazy_qq").attr('data-src'));
+				}
+				event.stopPropagation();
+				$(".allcity-masks").show();
+				$(".allcity-boxs").show();
+				$(".allcity-boxss").hide();
+			});
+			$(".allcity-masks").on('click', function() {
+				$(".allcity-masks").hide();
+				$(".allcity-boxs").hide();
+				$(".allcity-boxss").hide();
+				$(".allcity-box").hide();
+			});
+			$(".allcity-mask").on('click', function() {
+				$(".allcity-box").hide();
+				$(".allcity-mask").hide();
+				$(".privacy").hide();
+			});
+			//音频播放
+			var audio = document.getElementById("audio");
+			if('{$data.auto_music}' == 1) {
+				$('.lbt-y').attr('src', '__HOME_IMAGES__/new_music1.png');
+				var fly = false;
+				//微信自动加载完  audio 自动播放
+				document.addEventListener('DOMContentLoaded', function() {
+					function audioAutoPlay() {
+						var audio = document.getElementById('audio');
+						audio.play();
+						document.addEventListener("WeixinJSBridgeReady", function() {
+							audio.play();
+						}, false);
+					}
+					audioAutoPlay();
+				});
+			} else {
+				var fly = true;
+				$('.lbt-y').attr('src', '__HOME_IMAGES__/new_music.png');
+			}
+
+			$('.lbt-y').on('touchstart', function() {
+				if(fly) {
+					$(this).attr('src', '__HOME_IMAGES__/new_music1.png');
+					audio.play();
+					fly = false;
+				} else {
+					$(this).attr('src', '__HOME_IMAGES__/new_music.png');
+					audio.pause();
+					fly = true;
+				}
+			});
+			jie = true;
+			$('.jies').on('click', function() {
+				var _this = $(this);
+				if(_this.text().length < 120) return;
+				if(jie) {
+					$(this).css({
+						"height": 'auto',
+						'transition': 'transform 2s',
+						"-webkit-line-clamp": '1000'
+					});
+					jie = false;
+				} else {
+					$(this).css({
+						"height": 'auto',
+						'transition': 'transform 2s',
+						"text-overflow": 'ellipsis',
+						"display": '-webkit-box',
+						"-webkit-box-orient": 'vertical',
+						"-webkit-line-clamp": '3'
+					});
+					jie = true;
+				}
+			});
+		</script>
+		<script>
+				//懒加载
+				lazyRender();
+				// 检查一开始进入页面
+				var clock;
+				$(window).on("scroll", function() {
+					if(clock) { // 如果在300毫秒内进行scroll的话，都会被clearTimeout掉，setTimeout不会执行。
+						//如果有300毫秒外的操作，会得到一个新的timeID即clock，会执行一次setTimeout,然后保存这次setTimeout的ID，
+						//对于300毫秒内的scroll事件，不会生成新的timeID值，所以会一直被clearTimeout掉，不会执行setTimeout.
+						clearTimeout(clock);
+					}
+					clock = setTimeout(function() {
+//						console.log('运行了一次');
+						lazyRender();
+					}, 300)
+				});
+				function checkShow($img) { // 传入一个img的jq对象
+					var scrollTop = $(window).scrollTop(); //即页面向上滚动的距离
+					var windowHeight = $(window).height(); // 浏览器自身的高度
+					var offsetTop = $img.offset().top; //目标标签img相对于document顶部的位置
+					if(offsetTop <= (scrollTop + windowHeight) && offsetTop >= scrollTop) { //在2个临界状态之间的就为出现在视野中的
+						return true;
+					} else {
+						return false;
+					}
+				};
+				function isLoaded($img) {
+					return $img.attr('data-src') === $img.attr('src'); //如果data-src和src相等那么就是已经加载过了
+				};
+				function loadImg($img) {
+					$img.attr('src', $img.attr('data-src')); //加载就是把自定义属性中存放的真实的src地址赋给src属性
+				};
+				function lazyRender() {
+					$('.lazyimg').each(function() {
+						if(checkShow($(this)) && !isLoaded($(this))) {
+							loadImg($(this));
+						}
+					})
+				};
+		</script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+
+            $(function() {
+                var share_url = "{$share_url}";
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "/index.php?s=/Api/WeShare/getSignPackage", //url
+                    data:{share_url:share_url},
+                    async: true,
+
+                    // async: false,
+                    success: function(result) {
+
+
+                        var url = "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}";
+
+                        console.log(url);
+
+
+
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                            appId: result.AppendData.appId,
+                            timestamp: result.AppendData.timestamp,
+                            nonceStr: result.AppendData.nonceStr,
+                            signature: result.AppendData.signature,
+                            jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                'checkJsApi',
+                                'onMenuShareTimeline', //
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'getLocation'
+                            ]
+                        });
+
+
+                        wx.ready(function() {
+                            //分享到朋友圈
+                            wx.onMenuShareTimeline({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                type: '', // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ
+                            wx.onMenuShareQQ({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到腾讯微博
+                            wx.onMenuShareWeibo({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ空间
+                            wx.onMenuShareQZone({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{:'http://'.$share_host.U('Home/Nologin/card_jump?id='.$user_id.'&style=5')}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                    // sharePush();
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+ 							$(document).on('click', '.pic', function(event) {
+                                var imgArray = [];
+                                var curImageSrc = $(this).attr('src');
+                                var oParent = $(this).parent();
+                                if(curImageSrc && !oParent.attr('href')) {
+                                    $('.pic').each(function(index, el) {
+                                        var itemSrc = $(this).attr('src');
+                                        imgArray.push(itemSrc); //如果在微信上测试，点击预览后出现一直在加载无法显示的情况，建议把图片的路径设置成全路径,如：http://blog.zongdaosoft.com/uploadFiles/uploadImgs/17/1.jpg
+                                    });
+                                    wx.previewImage({
+                                        current: curImageSrc,
+                                        urls: imgArray
+                                    });
+                                }
+                            });
+                        });
+
+
+                    },
+                    error: function() {
+                        console.log("走了错误")
+                    }
+                });
+
+
+
+
+            });
+
+
+
+			$('.tab').find('li').click(function() {
+				var index = $(this).index();
+				$(this).addClass('dian').siblings().removeClass('dian');
+				$('.content').find('li').eq(index).show().siblings().hide();
+			})
+		</script>
+	</body>
+
+</html>

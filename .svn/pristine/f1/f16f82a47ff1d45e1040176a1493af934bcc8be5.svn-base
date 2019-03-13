@@ -1,0 +1,271 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+
+    <link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+    <script src="__HOME_CSS__/bs3/sea.js"></script>
+    <script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    <!--<link rel="stylesheet" type="text/css" href="http://www.helloweba.com/demo/css/demo.css" />-->
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" href="/Public/Com/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/Public/Com/css/hwLayer.css">
+
+
+</block>
+
+<block name="body">
+    <body class="zzc_body_bg">
+    <header class="mui-bar mui-bar-nav zzc_header">
+        <h1 class="mui-title zzc_header_title">确认订单</h1>
+    </header>
+    <div class="mui-content zzc_mui_content_bg">
+        <!--<form action="" method="post" onsubmit="return false;">-->
+
+        <form action="" method="post">
+            <input type="hidden" name="order_id" value="{$order.id}">
+            <input type="hidden" name="vip_list_id" value="{$order.vip_list_id}">
+            <input type="hidden" name="user_id" value="{$order.user_id}">
+            <div class="zzc_tixianshenqing_div">
+                <div class="zzc_reg_input">
+                    <label class="">订单号</label>
+                    <div class="mt10">{$order.order_no}</div>
+                </div>
+                <div class="zzc_reg_input">
+                    <label class="">商品</label>
+                    <div class="mt10">{$order.vip_name}</div>
+                </div>
+            </div>
+            <div class="zzc_tixianshenqing_div">
+                <div class="zzc_reg_input">
+                    <label class="">价格</label>
+                    <div class="mt10">{$order.price}</div>
+                </div>
+                <div class="zzc_reg_input">
+                    <label class="">推荐人</label>
+                    <div class="mt10">{$order.share_name}</div>
+                </div>
+                <div class="zzc_anquanyanzheng_bottom">
+                    <p>这是购买{$order.vip_name}会员</p>
+                </div>
+            </div>
+            <div class="zzc_myranwen_bottom">
+                <a href="" style="background:#ffffff!important;width: 65%;" class="zzc_myruanwen_bottom_button"> 合计：<span style="color: red;">￥{$order.price}</span></a>
+                <input type="button"  onclick="callpay();return false;" id="" value="提交订单" style="width:35%;"  class="zzc_myruanwen_bottom_button zzc_blue_bg" />
+            </div>
+        </form>
+    </div>
+
+    <div class="row main">
+
+        <div class="col-md-12">
+            <div class="hw-overlay" id="hw-layer">
+                <div class="hw-layer-wrap">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12 hw-icon">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                          	<div class="sucs">
+                          		<img src="__HOME_IMAGES__/success.png" alt="" />
+                          	</div>
+							<div class="moneys">198元</div>
+                            <button class="btn btn-success hwLayer-ok">支付成功</button>
+
+                            <button class="btn btn-warning hwLayer-cancel">支付未成功，查看原因</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wait-overlay" id="wait-layer">
+                <!--<div class="hw-layer-wrap">-->
+                    <div class="rows">
+                        <div class="col-md-3 col-sm-12 hw-icon">
+                            <i class="glyphicon glyphicon-info-sign"></i>
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <span  id="wait-message" style="text-align: left"></span >
+                        </div>
+                    </div>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(function(){
+            //展示层
+            function showLayer(id){
+                var layer = $('#'+id),
+                    layerwrap = layer.find('.hw-layer-wrap');
+                layer.fadeIn();
+                //屏幕居中
+                layerwrap.css({
+                    'margin-top': -layerwrap.outerHeight()/2
+                });
+            }
+
+            //隐藏层
+            function hideLayer(){
+                $('.hw-overlay').fadeOut();
+            }
+
+
+            //隐藏层
+            function hideWaitLayer(){
+                $('.wait-overlay').fadeOut();
+            }
+
+            var  order_id = {$order_id};
+
+            $('.hwLayer-ok').on('click', function() {
+                hideLayer();
+                var layerid = "wait-layer";
+                showLayer(layerid);
+                var time=3;
+                var h;
+                var flag;
+                if(flag){
+                    return false;
+                }
+                flag = true;
+
+                h= setInterval(function(){
+
+                    document.getElementById("wait-message").innerHTML = '请稍等'+'0'+time+'秒';
+
+                    time--;
+                    if(time<0){
+                        clearInterval(h);
+                        flag = false;
+                        hideWaitLayer();
+
+                        $.post("{:U('Home/Order/payConfirm')}",{"order_id":order_id},function(res){
+                            if(res.status==1){
+                                mui.toast("付款成功");
+                                setTimeout(function(){
+                                    top.location.href="/Home/User/success";
+                                },1000);
+                            }else{
+                                mui.toast(res.msg);
+                            }
+                        });
+                    }
+                },1000);
+            });
+
+
+            $('.hwLayer-cancel,.hwLayer-close').on('click', function() {
+                hideLayer();
+            });
+
+            if ({$referer} ==1){
+                var layerid = "hw-layer";
+                showLayer(layerid);
+            }else {
+                hideWaitLayer();
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+
+
+        //调用微信JS api 支付
+        function jsApiCall()
+        {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {$pay_info.pra},
+            function(res){
+                WeixinJSBridge.log(res.err_msg);
+                if(res.err_msg=='get_brand_wcpay_request:ok'){
+                    top.location.href="/Home/User/success";
+                }
+            }
+        );
+        }
+
+
+        function callpay()
+        {
+
+            if ({$is_wechat} == 1){
+
+                if (typeof WeixinJSBridge == "undefined"){
+                    if( document.addEventListener ){
+                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                    }else if (document.attachEvent){
+                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                    }
+                }else{
+                    jsApiCall();
+                }
+
+            }else {
+                var wechat_url = "{$mweb_url}";
+                var  order_id = {$order_id};
+
+                $.post("{:U('Home/Order/payConfirm')}",{"order_id":order_id},function(res){
+                    if(res.status==1){
+                        mui.toast("付款成功,无需再次付款");
+                        setTimeout(function(){
+                            top.location.href="/Home/User/success";
+
+                        },1000);
+                    }else{
+                        window.location.href = wechat_url;
+                    }
+                });
+
+
+            }
+
+        }
+
+    </script>
+    <script type="text/javascript">
+
+
+        //获取共享地址
+        function editAddress()
+        {
+            WeixinJSBridge.invoke(
+                'editAddress',
+//                            {$pay_info.address},
+                function(res){
+                    var value1 = res.proviceFirstStageName;
+                    var value2 = res.addressCitySecondStageName;
+                    var value3 = res.addressCountiesThirdStageName;
+                    var value4 = res.addressDetailInfo;
+                    var tel = res.telNumber;
+                }
+            );
+        }
+
+
+        window.onload = function(){
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', editAddress);
+                    document.attachEvent('onWeixinJSBridgeReady', editAddress);
+                }
+            }else{
+                editAddress();
+            }
+        };
+
+    </script>
+
+    </body>
+</block>
+
+<block name="js_extend">
+
+</block>

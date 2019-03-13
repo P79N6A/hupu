@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			footer ul li.on p {
+				background: url(__HOME_CSS__/add/image/sahnghuii_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div class="dong">
+			<a href="{:U('Home/User/usercenter')}">
+				<div class="home"></div>
+			</a>
+			<div class="sou">
+				<form action="{:U('Home/Team/moments')}" method="post">
+					<input type="text" name="keyword" value="{$Think.post.keyword}" placeholder="团队名搜索" />
+					<span onclick="goto(this)"></span>
+				</form>
+			</div>
+			<a href="{:U('Home/Vhome/card_jump')}">
+				<div class="ren"></div>
+			</a>
+		</div>
+		<if condition="empty($myteam)">
+			<div class="myshang">
+				<p>我的团队</p>
+				<div class="my_tou1">
+					<a href="{:U('Home/Team/create')}">
+						<img src="__HOME_CSS__/add/image/chuangjian_icon.png" alt="" />
+						<br />
+						<div class="my_guan my_guan3">创建团队</div>
+					</a>
+				</div>
+			</div>
+			<else />
+			<div class="myshang">
+				<p>我的团队</p>
+				<div class="my_guan my_guan1">
+					<a href="{:U('Home/Team/regulate')}">管理</a>
+				</div>
+				<div class="my_guan my_guan2">
+					<a href="{:U('Home/Team/lists?id='.$myteam['id'])}">查看</a>
+				</div>
+				<div class="my_tou">
+					<img src="{$myteam.headurl}" alt="" />
+					<br />
+					<p style="left:25%;">{$myteam.name}</p>
+				</div>
+			</div>
+		</if>
+		<div class="cont">
+			<p class="kls">团队列表<span>共{:count($team)}个</span></p>
+			<foreach name="team" item="vo" key="k">
+				<div class="neir">
+					<a href="{:U('Home/Team/lists?id='.$vo['id'])}">
+						<img src="{$vo.headurl}" alt="" />
+						<p>{$vo.name}</p>
+						<div class="my_guan">查看</div>
+					</a>
+				</div>
+			</foreach>
+		</div>
+
+		<footer>
+			<ul>
+				<li>
+					<a href="{:U('Home/Team/moments2')}">
+						<p></p>
+						<span>动态</span>
+					</a>
+				</li>
+				<li>
+					<a href="{:U('Home/Team/message')}">
+						<p></p>
+						<span>消息</span>
+					</a>
+				</li>
+				<li class="on">
+					<a href="{:U('Home/Team/moments')}">
+						<p></p>
+						<span>团队</span>
+					</a>
+				</li>
+				<li>
+					<a href="{:U('Home/Team/mine')}">
+						<p></p>
+						<span>我的</span>
+					</a>
+				</li>
+			</ul>
+		</footer>
+
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function goto(that) {
+				$(that).closest('form').submit();
+			}
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <title>年费贡献</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .top {
+            width: 100%;
+            height: .46rem;
+            background: #fff;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+        }
+
+        .topdao li {
+            float: left;
+            width: 33.3%;
+            height: .46rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 400;
+            color: #A1A1A1;
+            line-height: .46rem;
+            text-align: center;
+        }
+
+        .pingz {
+            width: 5rem;
+            height: .46rem;
+            padding: .12rem 0;
+            color: #2B2B2B;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            border-bottom: .03rem solid #2B2B2B;
+        }
+
+        .first {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .secend {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .three {
+            width: 100%;
+            background: #FFF;
+            margin-top: .04rem;
+            display: none;
+        }
+
+        .massage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+
+        .masage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+
+        .prep {
+            /* width: .28rem; */
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .2rem;
+            position: absolute;
+            top: .2rem;
+            left: .19rem;
+        }
+
+        .time {
+            position: absolute;
+            left: .19rem;
+            bottom: .08rem;
+        }
+
+        .time li {
+            float: left;
+            width: .9rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #9b9b9b;
+
+        }
+
+        .dell {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            right: .5rem;
+            top: .31rem;
+        }
+
+        .ball {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #32CEA0;
+            line-height: .21rem;
+            position: absolute;
+            right: .5rem;
+            top: .31rem;
+        }
+
+        .massage img {
+            width: .08rem;
+            height: .13rem;
+            top: .36rem;
+            right: .15rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .masage img {
+            width: .08rem;
+            height: .13rem;
+            top: .36rem;
+            right: .15rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .onetop {
+            width: 3.51rem;
+            height: .92rem;
+            background: #fff;
+            margin: .11rem auto;
+        }
+
+        .yzb li {
+            text-align: center;
+            margin-top: .06rem;
+        }
+
+        .yzb {
+            width: 100%;
+            height: .5rem;
+        }
+
+        .deone {
+            height: .37rem;
+            line-height: .57rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(50, 206, 160, 1);
+        }
+
+        .detwo {
+            height: .2rem;
+            line-height: .2rem;
+            font-size: .3rem;
+            font-family: DFZongYiW7;
+            color: rgba(50, 206, 160, 1);
+        }
+
+        .qs {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: rgba(0,0,0,0.6);
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="onetop">
+            <!-- <ul class="yzb">
+                <li class="deone">年费贡献总额</li>
+                <li class="detwo">19960419</li>
+            </ul> -->
+        </div>
+
+        <div class="top">
+            <ul class="topdao">
+                <li class="fone"><span>全部</span></li>
+                <li class="sone"><span>近七天</span></li>
+                <li class="tone"><span>上月</span></li>
+            </ul>
+        </div>
+        <div class="first">
+            <!-- <div class="massage">
+                <span class="prep">转出</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+        </div>
+        <div class="secend">
+            <!-- <div class="massage">
+                <span class="prep">转1</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+        </div>
+        <div class="three">
+            <!-- <div class="massage">
+                <span class="prep">转2</span>
+                <ul class="time">
+                    <li>2018-09-23</li>
+                    <li>16:16:49</li>
+                </ul>
+                <span class="dell">-15.50</span>
+                <img src="Public/Home/images/slicesrjl/right2x.png" alt="">
+            </div> -->
+        </div>
+        <div class="qs">
+            <p>暂无提现记录</p>
+        </div>
+    </div>
+</body>
+<script>
+    // $('.topdao li').click(function () {
+    //     $(".topdao li span").addClass("pingz");
+    // })
+    $(function () {
+        var user_id = '{$unionid}';
+        var nffl = '10';
+        // 时间戳转换
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000            
+            var Y = date.getFullYear() + '/';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() +
+                    1) :
+                date.getMonth() + 1) + '/';
+            var D = (date.getDate() < 10 ? '0' + date.getDate() +
+                ' ' : date.getDate() +
+                ' ');
+            var h = (date.getHours() < 10 ? '0' + date.getHours() +
+                ':' : date.getHours() +
+                ':');
+            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() +
+                ':' :
+                date.getMinutes() + ':');
+            var s = date.getSeconds();
+            return Y + M + D + h + m + s;
+        }
+
+        $.ajax({
+            url: '/index.php?s=/Api/Profit/GetDetail',
+            type: 'post',
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                list = '';
+                list += '<div class="onetop">'
+                list += '<ul class="yzb">'
+                list += '<li class="deone">年费贡献总额</li>'
+                list += '<li class="detwo">' + res.AppendData.give_vip3 + '</li>'
+                list += '</ul>'
+                list += '</div>'
+                $('.onetop').html(list)
+            }
+        })
+
+
+        // 点击显示全部0
+        $('.topdao').on('click', '.fone', function () {
+            var type = '0';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: nffl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var allc = '';
+                    $.each(res.AppendData, function (k, v) {
+
+
+                        var time = timestampToTime(v.add_time);
+
+                        allc += '<div class="massage" data-id=\"' + v.id + '\">'
+                        allc += '<span class="prep">' + time + '</span>'
+                        allc += '<span class="dell">' + v.money + '</span>'
+                        allc +=
+                            '<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+                        allc += '</div>'
+                    })
+                    $('.first').html(allc);
+                    if ($(".first .massage").length == 0) {
+                        $(".qs").text("暂无年费贡献记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+            $(".fone span").addClass("pingz");
+            $(".sone span").removeClass("pingz");
+            $(".tone span").removeClass("pingz");
+            $('.first').show();
+            $('.secend').hide();
+            $('.three').hide();
+        })
+        // 七天1
+        $('.topdao').on('click', '.sone', function () {
+            var type = '1';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: nffl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var sendy = '';
+                    $.each(res.AppendData, function (k, v) {
+
+                        var time = timestampToTime(v.add_time);
+
+                        sendy += '<div class="massage" data-id=\"' + v.id + '\">'
+                        sendy += '<span class="prep">' + time + '</span>'
+                        sendy += '<span class="dell">' + v.money + '</span>'
+                        sendy +=
+                            '<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+                        sendy += '</div>'
+                    })
+                    $('.secend').html(sendy);
+                    if ($(".secend .massage").length == 0) {
+                        $(".qs").text("暂无年费贡献记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+
+
+            $(".sone span").addClass("pingz");
+            $(".fone span").removeClass("pingz");
+            $(".tone span").removeClass("pingz");
+            $('.first').hide();
+            $('.secend').show();
+            $('.three').hide();
+        })
+        // 上个月2
+        $('.topdao').on('click', '.tone', function () {
+
+            var type = '2';
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetLiuShui',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    get_type: nffl,
+                },
+                success: function (res) {
+                    console.log(res);
+
+                    var smon = '';
+                    $.each(res.AppendData, function (k, v) {
+
+                        var time = timestampToTime(v.add_time);
+
+                        smon += '<div class="massage" data-id=\"' + v.id + '\">'
+                        smon += '<span class="prep">' + time + '</span>'
+                        smon += '<span class="dell">' + v.money + '</span>'
+                        smon +=
+                            '<img src="Public/Home/images/slicesrjl/right2x.png" alt="">'
+                        smon += '</div>'
+                    })
+                    $('.three').html(smon);
+                    if ($(".three .massage").length == 0) {
+                        $(".qs").text("暂无年费贡献记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+
+            $(".fone span").removeClass("pingz");
+            $(".sone span").removeClass("pingz");
+            $(".tone span").addClass("pingz");
+            $('.first').hide();
+            $('.secend').hide();
+            $('.three').show();
+        })
+
+        //点击查看每条赠送记录的详情massage 
+        $('.first,.secend,.three').on('click', ".massage", function () {
+            console.log(1)
+            window.location.href = "/index.php?s=/Home/income/verdetails&unionid=" + user_id + "&id=" +
+                $(this).attr("data-id");
+        })
+
+        $('.fone').click();
+    })
+</script>
+
+</html>

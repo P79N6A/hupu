@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>咨询详情</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+
+    <style>
+
+        .mint-cell-value img{
+            width:100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="咨询详情">
+        <router-link to="/" slot="left" @click="window.history.go(-1);">
+            <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+    </mt-header>
+    <div>
+
+        <mt-cell title="客户姓名" :value="pojo.username"></mt-cell>
+        <mt-cell title="客户电话" :value="pojo.userphone"></mt-cell>
+        <mt-cell title="咨询类型" :value="pojo.fanwenleixing"></mt-cell>
+        <mt-cell title="客服回答" :value="pojo.psolve"></mt-cell>
+        <mt-cell title="咨询时间" :value="pojo.createtime"></mt-cell>
+        <mt-cell title="录入人" :value="pojo.bcname"></mt-cell>
+
+
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            //动态数据
+            pojo: {
+                username: '',
+                fanwenleixing: '',
+                userphone: '',
+                userwenti: '',
+                psolve: '',
+                customer_id: '',
+                createtime:''
+            },
+            paylist: [],
+            loading: false,
+
+
+
+
+        },
+        methods: {
+            postData: function () {
+                var t = this;
+                var id = '{$cid}';
+
+                if (id == null || id == '') {
+                    t.$toast('重要参数缺失')
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/find_call_by_id",
+                    data: {
+                        cid: id
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        console.log(res);
+                        if (res.ResultType == 0) {
+                            t.$toast('查询成功');
+                            t.pojo = res.AppendData[0];
+                        }
+                    },
+                    error: function () {
+                        //  console.log(313)
+                    }
+                })
+            },
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+            t.cuuid = $.cookie('k_cuuid');
+
+            if( t.cuuid ==null ||  t.cuuid =='' ){
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+            t.postData();
+        },
+
+    })
+</script>
+</body>
+
+</html>

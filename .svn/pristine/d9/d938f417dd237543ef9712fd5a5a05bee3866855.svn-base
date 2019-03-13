@@ -1,0 +1,43 @@
+<?php
+
+namespace app\admin\controller;
+
+use think\Controller;
+use think\Db;
+
+class Base extends Controller
+{
+
+    function getModelClass()
+    {
+        $clazz = get_called_class();
+        $clazz = str_replace('controller', 'model', $clazz);
+        $object = new $clazz();
+        return $object;
+    }
+
+    public function test1()
+    {
+        dump($this->getModelClass());
+    }
+
+
+    //获取地级市
+    public function getCity(){
+        $where['top_parentid'] = input('province_id',1);
+
+        $where['level'] = 2;
+
+        if (in_array($where['top_parentid'],array(1,2,9,22))) {
+
+            $where['level'] = 3;
+        }
+        $listObj = Db::name('region');
+
+        $list = $listObj->where($where)->select();
+
+        $data=array('status'=>0,'city'=>$list);
+
+        return json($data);
+    }
+}

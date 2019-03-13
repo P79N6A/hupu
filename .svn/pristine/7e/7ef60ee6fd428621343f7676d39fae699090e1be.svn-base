@@ -1,0 +1,246 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		body{
+			background-color: #fff;
+			}
+		.zzc_afahfj_img {
+			height: 150px;
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+			background: #2FB3D3 url(images/003.png) no-repeat center top;
+			background-size: 100%;
+		}
+		
+		.zzc_afahfj_a1,
+		.zzc_afahfj_a2 {
+			position: absolute;
+			right: 5%;
+			background: #2FB3D3;
+			color: #FFFFFF;
+			border-radius: 6px;
+			padding: 5px 15px;
+		}
+		
+		.zzc_afahfj_a1 {
+			bottom: 50px;
+		}
+		
+		.zzc_afahfj_a2 {
+			bottom: 10px;
+		}
+		
+		.zzc_afafh_img {
+			border-radius: 50%;
+			width: 30px;
+			float: right;
+			margin: 6px;
+		}
+		
+		.zzc_afafh_img2 {
+			width: 35px;
+			float: right;
+			margin-top: 8px;
+		}
+		
+		.zzc_jaidntou {
+			float: right;
+			margin-top: 10px;
+			color: #b9b9b9;
+			margin-left: 10px;
+		}
+		
+		.zzc_hfjah_div {
+			width: 100%;
+			overflow: hidden;
+			background: #FFFFFF;
+			margin-bottom: 20px;
+		}
+		
+		.zzc_reg_input textarea {
+			border: none!important;
+			box-shadow: none;
+			border-top: 1px solid #CCCCCC!important;
+			border-radius: 0px;
+		}
+		
+		.iw_poi_title {
+			color: #CC5522;
+			font-size: 14px;
+			font-weight: bold;
+			overflow: hidden;
+			padding-right: 13px;
+			white-space: nowrap
+		}
+		
+		.iw_poi_content {
+			font: 12px arial, sans-serif;
+			overflow: visible;
+			padding-top: 4px;
+			white-space: -moz-pre-wrap;
+			word-wrap: break-word
+		}
+		
+		.zzc_reg_input {
+			line-height: 40px;
+		}
+		
+		.zzc_reg_input.on {
+			color: #2fb3d3;
+		}
+		
+		.myguanggao_li {
+			width: 90%;
+			margin: 0 auto;
+			padding: 20px 10px;
+		}
+		
+		.zzc_reg_from {
+			width: 90%;
+			margin: auto;
+			/*font-size: 0;*/
+		}
+		.mui-content{
+			margin-bottom: 80px;
+		}
+		.music_tit {
+			display: inline-block;
+			width: 32%;
+			height: 100%;
+			font-size: 17px;
+		}
+		
+		.music_fl {
+			display: inline-block;
+			width: 66%;
+			height: 100%;
+			font-size: 20px;
+			border-radius: 10px;
+			line-height: 30px;
+			direction: rtl;
+		}
+		
+		.sele {
+			margin-bottom: 0;
+			border-radius: 10px;
+			line-height: 30px;
+			background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 100% 20px;
+			background-size: 8% 16%;
+			background-color: #fff;
+			padding-right: 30px;
+			padding-left: 0;
+			font-size: 17px;
+		}
+		
+		.myguanggao_li .muguanggao_but {
+			position: absolute;
+			right: 0px;
+			top: 16px;
+		}
+	</style>
+</block>
+<block name="body">
+	<form action="" method="post" id="form_type" enctype="multipart/form-data">
+		<div class="zzc_reg_from">
+			<div class="zzc_reg_input">
+				<span class="music_tit">音乐分类：</span>
+				<span class="music_fl">
+					<select name="type" class="sele">
+						<option value="">请选择</option>
+						<volist name="types" id="type">
+							<option value="{$type.id}"<?php echo $type_id==$type['id']?'selected':''?>>{$type.title}</option>
+						</volist>
+					</select>
+				</span>
+			</div>
+		</div>
+	</form>
+	<form action="" method="post" id="form" enctype="multipart/form-data">
+		<div class="mui-content">
+			<div class="myguanggao_li">自动播放
+				<div id="auto_music" class="mui-switch  <if condition=" $data[ 'auto_music']==1 ">mui-active</if> muguanggao_but ">
+					<div class="mui-switch-handle"></div>
+				</div>
+				<input type="hidden" name="auto_music" value="{$data.auto_music}">
+			</div>
+			
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from">
+					<div class="zzc_reg_input close" data-id="0">关闭音乐</div>
+					<volist name="music" id="vo">
+						<div class="zzc_reg_input <if condition=" $vo[ 'id'] eq $data[ 'music_id'] " >on</if>" data-id="{$vo.id}" data-url="{$vo.url}">
+							{$vo.name}
+						</div>
+					</volist>
+				</div>
+			</div>
+
+		</div>
+		<div class="zzc_myranwen_bottom">
+			<input type="hidden" class="song" name="music_id" value="{$data.music_id}">
+			<input type="button" name="返回" id="yulan" value="取消" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" />
+			<input type="button" name="保存" id="save" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" />
+		</div>
+		<audio src="" id="audio" loop="loop"></audio>
+	</form>
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript" src="__HOME_JS__/jquery.cxcolor.js"></script>
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+	<script type="text/javascript">
+		var audio = document.getElementById('audio');
+		$('.zzc_hfjah_div .zzc_reg_input').on('click', function() {
+			$('.zzc_hfjah_div .zzc_reg_input').removeClass('on');
+			$(this).addClass('on');
+			var music_id = $(this).attr('data-id');
+			if(music_id==0){
+				return false;
+			}
+			audio.src = $(this).attr('data-url');
+			audio.play();
+			
+			$('input[name=music_id]').val(music_id);
+		});
+		$("#yulan,#save,#music").on('touchend', function() {
+			var id = $(this).attr('id');
+			var jump_url = ""; //提交完成跳转的地址
+			switch(id) {
+				case 'yulan':
+					//预览
+					jump_url = "{:url('Home/Card/NewCreatecard')}";
+					break;
+				case 'save':
+					jump_url = "{:url('Home/Card/NewCreatecard')}";
+					//保存
+					break;
+
+			}
+			if($('#auto_music.mui-switch').hasClass('mui-active')) {
+				$('input[name=auto_music]').val(1);
+			} else {
+				$('input[name=auto_music]').val(0);
+			}
+			$('input[name=jump_url]').val(jump_url);
+			$('#form').submit();
+		});
+		$('.sele').change(function(){
+			$('#form_type').submit();
+		})
+		
+		$(".close").click(function(){
+			$(".song").val(0);
+		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

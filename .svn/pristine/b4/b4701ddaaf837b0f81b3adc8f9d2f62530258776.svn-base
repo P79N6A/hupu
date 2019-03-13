@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="referrer" content="never">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>{$data.title}</title>
+	<link href="__HOME_CSS__/wx.css" rel="stylesheet" />
+	<style>
+	
+		body {
+				background-color: #fff;
+				font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+			
+			.mui-bar-nav {
+				/*box-shadow: none;
+            -webkit-box-shadow: none;
+            background-color: inherit;*/
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.container {
+				width: 90%;
+				margin: 0 auto;
+				background-color: #fff;
+				text-align: left;
+				text-shadow: none;
+				overflow: hidden;
+			}
+			/* .rich_media_content {
+			padding: 0 5px;
+			box-sizing: border-box;
+		} */
+			
+			footer {
+				width: 100%;
+				text-align: center;
+				padding: 10px 0;
+				opacity: 0.6;
+				margin-top: 10px;
+			}
+			
+			add {
+				position: absolute;
+				top: 26px;
+				right: 5%;
+			}
+			
+			.rich_media_content .editor-mode {
+				/*border: dashed 1px red;*/
+				padding: 5px;
+				/*position: relative;*/
+			}
+			
+			.rich_media_content span.editor-mode,
+			.rich_media_content strong.editor-mode {
+				display: inline-block;
+				margin: 1px;
+			}
+			
+			.rich_media_content .editor-mode:after {
+				font-family: Muiicons;
+				position: absolute;
+				right: -5px;
+				top: -5px;
+				color: red;
+				font-size: 24px;
+				content: '\e400';
+				width: 24px;
+				height: 24px;
+				line-height: 24px;
+			}
+			
+			.wzgc_content img {
+				width: 100%;
+			}
+			
+			.card {
+				display: none;
+			}
+			
+			.card_panel {
+				text-align: center;
+				width: 80%;
+				height: 305px;
+				background: #fff;
+				position: fixed;
+				top: 50%;
+				left: 0;
+				right: 0;
+				margin: -152.5px auto 0;
+				border-radius: 4px;
+				z-index: 100;
+				padding-top: 30px;
+			}
+			
+			.card_panel .card_code {
+				text-align: center;
+			}
+			
+			.card_panel .card_code p {
+				font-size: 15px;
+			}
+			
+			.card_code>img {
+				width: 200px;
+				height: 200px;
+			}
+			
+			.card_panel .card_button {
+				width: 33%;
+				height: 40px;
+				float: left;
+				line-height: 40px;
+				margin: 0 auto;
+				color: #32CEA0;
+				background: #fff;
+				font-size: 12px;
+			}
+			.card_button:nth-of-type(2){
+				border-left:1px solid #32CEA0;
+				border-right:1px solid #32CEA0;
+			}
+			
+			.card_button:nth-of-type(1) {
+			    border-bottom-left-radius: 4px;
+			    border-top-left-radius: 4px;
+			}
+			.card_button:nth-of-type(3) {
+			    border-bottom-right-radius: 4px;
+			    border-top-right-radius: 4px;
+			}
+			
+			.card_button.on {
+				background: #32CEA0;
+				color: #fff;
+			}
+			
+			.card .bg {
+				background: rgba(0, 0, 0, .7);
+				z-index: 98;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+			}
+			
+			.card_edit_btn {
+				width: 60px;
+				height: 60px;
+				background: rgba(0, 0, 0, .5);
+				color: #FFFFFF;
+				border-radius: 50%;
+				position: fixed;
+				right: 1px;
+				z-index: 9;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				text-align: center;
+				line-height: 60px;
+			}
+			
+			.card_edit_btn.on {
+				background: #218afe;
+			}
+			
+			.dn {
+				display: none;
+			}
+			
+			.zzc_paizhao_bg {
+				background: #2c3239!important;
+			}
+			
+			.zzc_mingpfuzhi_body {
+				background: #FFFFFF;
+				overflow: hidden;
+			}
+			
+			.zzc_mingpfuzhi_input_div {
+				float: left;
+				margin: 10px 5%;
+				width: 40%;
+				overflow: hidden;
+				text-align: center;
+				border-radius: 5px;
+				height: 50px;
+				line-height: 50px;
+				border-radius: 0px;
+			}
+			
+			.zzc_mingpfuzhi_input {
+				width: 80%!important;
+				float: left;
+				font-size: 14px;
+				height: 50px;
+				margin: auto;
+				line-height: 50px;
+				color: #666666!important;
+				overflow: hidden;
+				border: none!important;
+				background: #f7f7f8!important;
+			}
+			
+			.zzc_mingpfuzhi_sub {
+				width: 20%;
+				background: #d6ebf0;
+				float: right;
+				text-align: center;
+				height: 50px;
+				line-height: 50px;
+				color: #32CEA0;
+			}
+			
+			.zzc_mingpfuzhi {
+				width: 90%;
+				overflow: hidden;
+				margin: auto;
+				background: #FFFFFF;
+			}
+			
+			.zzc_mingpfuzhi_div {
+				width: 100%;
+				font-size: 16px;
+				color: #8e8e90;
+				overflow: hidden;
+				background: #f0eff6;
+			}
+			
+			.zzc_mingpfuzhi_div p {
+				font-size: 16px;
+				padding: 10px 5%;
+				margin: 0px;
+			}
+			
+			.zzc_mingpfuzhi_ul {
+				background: #FFFFFF;
+				width: 100%;
+				overflow: hidden;
+				font-size: 14px;
+				margin: auto;
+			}
+			
+			.zzc_mingpfuzhi_li {
+				width: 90%;
+				height: 50px;
+				line-height: 50px;
+				margin: 0 auto;
+				border-bottom: 1px solid #f0eff6;
+			}
+			
+			.zzc_mingpfuzhi_li span {
+				color: #333333;
+				margin-right: 20px;
+			}
+			
+			.zzc_mingpfuzhi_li a {
+				float: right;
+				display: inline-block;
+				border-radius: 3px;
+				height: 35px;
+				padding: 0 15px;
+				margin-top: 5px;
+				line-height: 35px;
+				color: #FFFFFF;
+				background: #32CEA0;
+			}
+			
+			.zzc_zhifudashang {
+				overflow: hidden;
+				width: 100%;
+			}
+			
+			.zzc_zhifudashang a {
+				border: 1px solid #CCCCCC;
+				text-align: center;
+				color: #CCCCCC;
+				width: 46%;
+				padding: 10px 0px;
+				margin: 2%;
+				float: left;
+			}
+			
+			.zzc_zhifudashang a.on {
+				border: 1px solid #b6cd62;
+				color: #b6cd62;
+			}
+			
+			.zzc_xuanzetup {
+				text-align: center;
+				margin-bottom: 10px;
+				color: #333333;
+				font-size: 14px;
+			}
+			
+			.zzc_xuanzetup a {
+				border: 2px solid #32CEA0;
+				display: inline-block;
+				border-radius: 50%;
+				height: 30px;
+				width: 30px;
+				line-height: 30px;
+				text-align: center;
+				color: #32CEA0;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			
+			.nav_box {
+				text-align: center;
+				width: 300px;
+				background: #fff;
+				position: fixed;
+				top: 12%;
+				left: 0;
+				right: 0;
+				margin: auto;
+				border-radius: 15px;
+				z-index: 100;
+				padding: 10px;
+			}
+			
+			.nav_panel .bg {
+				background: rgba(0, 0, 0, .7);
+				z-index: 98;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+			}
+			
+			.nav_title {
+				text-align: left;
+				font-weight: bold;
+			}
+			
+			.nav_select_icon {
+				margin-bottom: 20px;
+				padding-top: 10px;
+			}
+			
+			.nav_select_icon .mui-icon-plusempty {
+				font-size: 48px;
+				color: #32CEA0;
+			}
+			
+			.nav_content input[type=text] {
+				background: #f7f7f8;
+				border: 0;
+				color: #6a6e70;
+			}
+			
+			.nav_btns button {
+				width: 40%;
+				height: 42px;
+			}
+			
+			.nav_btns .nav_btns_yes {
+				border: 0;
+				color: #fff;
+				background: #32CEA0;
+			}
+			
+			.table td,
+			.table th {
+				border: 1px solid #ffffff;
+				text-align: center;
+			}
+			
+			.table tbody tr:hover td {
+				background-color: #ffffff;
+			}
+			
+			.mui-table-view {
+				width: 100%;
+				height: 82px;
+				margin: 0 auto;
+				box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+				border-radius: 4px;
+				margin-bottom: 10px;
+			}
+			
+			.mui-media {
+				width: 100%;
+				height: 82px;
+				position: relative;
+			}
+			
+			ul li {
+				list-style: none;
+			}
+			
+			.mui-media>a {
+				width: 100%;
+				height: 100%;
+				display: block;
+				position: relative;
+			}
+			
+			.zzc_radius_img {
+				width: 60px !important;
+				height: 60px !important;
+				position: absolute;
+				top: 50%;
+				left: 10px;
+				margin-top: -30px;
+				border-radius: 50%;
+			}
+			
+			.mui-media-body {
+				width: 45%;
+				/*font-size: 14px;*/
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				margin-top: 18px;
+				font-size: 16px;
+				color: #333;
+			}
+			
+			.mui-ellipsis {
+				font-size: 14px;
+				color: #777;
+			}
+			
+			.wzgc_div>h1 {
+				font-size: 24px;
+			}
+			
+			.wzgc_div,
+			.wzgc_content {
+				width: 100%;
+				margin: 0 auto;
+				position: relative;
+				padding: 10px 0px;
+				overflow: hidden;
+				border-bottom: none;
+			}
+			
+			.wzgc_bottom .wzgc_shoucang_but {
+				position: absolute;
+				left: 50%;
+				bottom: 24px;
+				background: #32CEA0;
+				border-radius: 5px;
+				width: 106px;
+				height: 38px;
+				text-align: center;
+				line-height: 38px;
+				color: #FFFFFF;
+				margin-left: -53px;
+			}
+			
+			.wzgc_bottom {
+				color: #333333;
+				border: none;
+				width: 100%;
+				height: 450px;
+				margin: 0 auto;
+				box-shadow: 0px 2px 6px 0px rgba(192, 192, 192, 0.39);
+				position: relative;
+				margin: 20px auto;
+			}
+			
+			.wzgc_bottom>p>span {
+				color: #AAAAAA;
+			}
+			
+			.wzgc_bottom>p {
+				color: #333333;
+			}
+			
+			.wzgc_bottom>div.title {
+				color: #333333;
+			}
+			
+			.wzgc_bottom>div.title>p {
+				color: #333333;
+			}
+			
+			.wzgc_bottom>div.title>p>span {
+				color: #AAAAAA;
+			}
+			
+			.wzgc_bottom_fix {
+				width: 100%;
+				overflow: hidden;
+			}
+			
+			.wzgc_bottom_fix .yuanchuang {
+				height: 40px;
+				background: #f4f6f9;
+				text-align: center;
+				padding: 10px 0px;
+				color: #32CEA0;
+				font-size: 16px;
+			}
+			
+			.wzgc_bottom_fix .guanggao {
+				height: 40px;
+			}
+			
+			.wzgc_bottom_fix .guanggao img {
+				height: 160px;
+				padding: 0px;
+				width: 100%;
+			}
+			
+			.wzgc_bottom_fix .guanggao .bian_edit {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				background: #f7e1bc;
+				color: #8e3c22;
+				font-size: 16px;
+				position: absolute;
+				top: 0;
+				left: 0px;
+			}
+			
+			.mui-table-view:before {
+				position: none;
+				height: 0px;
+				content: '';
+				transform: none;
+				background-color: none;
+				top: 0;
+			}
+			
+			.mui-table-view:after {
+				position: none;
+				left: 0;
+				height: 0px;
+				content: '';
+				transform: none;
+				background-color: none;
+			}
+			
+			.pro {
+				float: right;
+				font-size: 12px;
+				margin-top: 4px;
+			}
+			
+			.pro>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #32CEA0;
+			}
+			
+			.add {
+				position: absolute;
+				top: 26px;
+				right: 5%;
+			}
+			
+			.add_v {
+				display: block;
+				width: 78px;
+				height: 32px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				line-height: 32px;
+				border-radius: 2px;
+				font-size: 12px;
+			}
+			
+			.wzgc_bottom_fix {
+				width: 100%;
+			}
+			
+			.wzgc_bottom_fix .yuanchuang {
+				height: 40px;
+				background: #f4f6f9;
+				text-align: center;
+				padding: 10px 0px;
+				color: #32CEA0;
+				font-size: 16px;
+			}
+			
+			.wzgc_bottom_fix .guanggao {
+				padding: 0px;
+				position: relative;
+				width: 100%;
+			}
+			
+			.wzgc_bottom_fix .guanggao img {
+				height: 160px;
+				padding: 0px;
+				width: 100%;
+			}
+			
+			.wzgc_bottom_fix .guanggao .bian_edit {
+				width: 100%;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				background: #f7e1bc;
+				color: #8e3c22;
+				font-size: 16px;
+				position: absolute;
+				top: 0;
+				left: 0px;
+			}
+			
+			.img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			video {
+				width: 100%;
+				height: auto;
+			}
+			
+			.clearfix::after {
+				content: ".";
+				clear: both;
+				display: block;
+				overflow: hidden;
+				font-size: 0;
+				height: 0;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.imgbox {
+				width: 25%;
+				height: 100%;
+				position: relative;
+			}
+			
+			.wzgc_div .item {
+				font-size: 14px;
+				color: #666;
+			}
+			
+			#edit_img {
+				width: 20px;
+				height: 20px;
+				margin-top: 10px;
+				display: block;
+			}
+			
+			#edit_a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #32CEA0;
+			}
+			
+			#edit_a .box {
+				width: 140px;
+				margin: 0 auto;
+				line-height: 40px;
+			}
+			
+			.rich_media_content .editor-mode:after {
+				display: none;
+			}
+			
+			.del {
+				display: none;
+			}
+			/*.txt_cens {
+				display: none;
+			}*/
+			/*.tra {
+				display: none;
+			}*/
+			
+			.wzgc_bottom h1 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				display: block;
+				width: 100%;
+				height: 40px;
+				line-height: 50px;
+				text-align: center;
+				font-size: 20px;
+				color: #fff;
+				font-weight: 550;
+			}
+			
+			.tag-container {
+				width: 100% !important;
+				height: auto;
+				margin: 0 auto;
+			}
+			
+			.txt {
+				margin-top: 10px;
+			}
+			
+			.v_top {
+				width: 100%;
+				height: 106px;
+				background: url("__HOME_IMAGES__/newvnet/article/inco_background.png") no-repeat;
+				background-size: 100%;
+			}
+			
+			.v_phone {
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				font-size: 14px;
+				font-weight: 550;
+				text-align: center;
+				color: #fff;
+			}
+			
+			.v_img {
+				width: 76px;
+				height: 76px;
+				border-radius: 50%;
+				position: absolute;
+				top: 72px;
+				left: 50%;
+				margin-left: -38px;
+			}
+			
+			.v_img>img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.v_info {
+				width: 90%;
+				height: 203px;
+				margin: 50px auto 0;
+			}
+			
+			.lst {
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				font-size: 16px;
+				color: #333;
+			}
+			
+			.lst>span {
+				font-size: 14px;
+				color: #777;
+			}
+			
+			.v_desc {
+				width: 100%;
+				height: 128px;
+				overflow: auto;
+				font-size: 14px;
+				color: #777;
+			}
+			
+			.tab {
+				width: 85%;
+				height: 40px;
+				line-height: 40px;
+				display: flex;
+				margin: 0 auto;
+				border:1px solid #32CEA0;
+				border-radius: 4px;
+			}
+
+
+			/* 打赏 */
+			.pay-box{
+				width: 300px;
+				height: 362px;
+				background: #fff;
+				text-align: center;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -181px;
+				margin-left: -150px;
+				z-index: 999;
+				border-radius: 4px;
+				padding-bottom: 10px;
+				display: none;
+			}
+
+			.pay-box .title {
+				color: #333333;
+				font-size: 16px;
+				font-weight: 600;
+				margin: 16px 0 12px 0;
+			}
+
+			.pay-box .desc {
+				margin-bottom: 32px;
+			}
+
+			.pay-box .list {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				
+				margin-bottom: 12px;
+			}
+
+			.pay-box .list li{
+				width: 120px;
+				height: 32px;
+				line-height: 32px;
+				margin-bottom: 12px;
+				border: 1px solid #32CEA0;
+				color: #c9c9c9;
+				border-radius: 2px;
+			}
+
+			.pay-mode {
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				display: flex;
+				padding-bottom: 18px;
+			}
+
+			.left_box {
+				flex: 1;
+				text-align: right;
+			}
+			.right_box {
+				flex: 1;
+				text-align: left;
+				position: relative;
+			}
+
+			.right_box img {
+				width: 18px;
+				height: 18px;
+				position: absolute;
+				top: 50%;
+				margin-top: -9px;
+				left: 2px;
+				
+			}
+
+			.right_box span {
+				padding-left: 26px;
+			}
+
+			.div_box{
+				width: 100%;
+				text-align: center;
+				margin-top: 10px;
+			}
+
+			.text_box{
+				color: #777777;
+				font-size: 15px;
+				margin-bottom: 12px;
+				text-align: left;
+				
+			}
+			.number_people{
+				color: #32CEA0;
+			}
+
+			.like{
+				font-size: 12px;
+				color: #777777;
+			
+			}
+			.shang{
+				width: 67px;
+				height: 67px;
+				display: block;
+				margin: 0 auto;
+				margin-bottom: 12px;
+			}
+			.mask {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .7);
+				position: fixed;
+				z-index: 200;
+				display: none;	
+			}
+			.pay_active {
+				background: #32CEA0;
+				color: #fff !important;
+			}
+
+			.check_pay {
+				width: 282px;
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+				border-radius: 25px;
+				border: 0;
+				outline: none;
+				font-size: 20px;
+			}
+			
+		</style>
+</head>
+
+<body>
+	<div class="mask"></div>
+	<div class="card">
+		<div class="bg"></div>
+		<div class="card_panel">
+			<div class="card_code">
+				<p>二维码，打开我的V网</p>
+				<img src="{:U('Home/Card/cardCode?id='.I('get.id'))}" alt="" width="80%">
+
+			</div>
+			<div class="tab">
+				<div class="card_button" data_type='1'>
+					<if condition="$wx_ewm_url neq ''">
+						微信二维码
+						<else /> 导入通讯录
+					</if>
+				</div>
+				<div class="card_button on" data_type='2'>V网二维码</div>
+				<div class="card_button" data_type='3'>洋小秘公众号</div>
+			</div>
+		</div>
+	</div>
+	<div class="mui-content">
+		<div class="container">
+			<div class="wzgc_div">
+				<h1>{$data.title}</h1>
+				<p>
+					<span class="item">{$data.add_time|date='Y-m-d H:i',###}</span>
+					<span class="item">阅读：{$data.visit}</span>
+					<span class="pro"><a href="{$data['source_url']}">文章出处</a></span>
+				</p>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a class="clearfix" href="http://wx.yxm360.com?s=/Home/Nologin/card_jump/id/{$data['promotion']['id']}">
+						<div class="imgbox fl">
+							<img class="mui-media-object mui-pull-left zzc_radius_img" src="{$data.promotion.headimg}">
+						</div>
+						<div class="mui-media-body fl">
+							{$data.promotion.nick_name}-{$data.promotion.position}
+							<p class='mui-ellipsis'>{$data.promotion.company}</p>
+						</div>
+						<div class="add">
+							<a href="javascript:showCode(2)" class="wzgc_shoucang_but add_v">添加V网</a>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<div class="rich_media_content " id="article_content">
+				<div class="tag-container">{$data.content}</div>
+			</div>
+			<!-- 打赏 -->
+			<div class="div_box">
+				<p class="text_box">已有<span class="number_people">{$reward_num}</span>人打赏</p>
+				<img class="shang" src="/Public/Home/images/inco_dashang.png" alt="">
+				<p class="like">喜欢本文就给我打赏吧</p>
+			</div>
+
+			<div class="pay-box">
+				<p class="title">打赏</p>
+				<p class="desc">感谢您的支持与鼓励，持续创作！</p>
+				<ul class="list">
+					<li class="pay_active">
+						<span>￥</span>
+						<span class="money">1</span>
+					</li>
+					<li>
+						<span>￥</span>
+						<span class="money">5</span>
+					</li>
+					<li>
+						<span>￥</span>
+						<span class="money">10</span>
+					</li>
+					<li>
+						<span>￥</span>
+						<span class="money">20</span>
+					</li>
+					<li>
+						<span>￥</span>
+						<span class="money">50</span>
+					</li>
+					<li>
+						<span>￥</span>
+						<span class="money">100</span>
+					</li>
+				</ul>
+				<div class="pay-mode">
+					<span class="left_box">支付方式:</span>
+					<div class="div pay_box right_box">
+						<img src="/Public/Home/images/wh/inco_weixin_zhi copy@2x.png" alt="">
+						<span>微信支付</span>
+					</div>
+				</div>
+				<button class="check_pay">确认支付</button>
+			</div>
+
+			<if condition="$article_cards eq 1">
+				<div class="wzgc_bottom">
+					<div class="v_top">
+						<h1>{$data.promotion.nick_name}-{$data.promotion.position}</h1>
+						<div class="v_phone">{$data.promotion.mobile}</div>
+						<div class="v_img">
+							<img src="{$data.promotion.headimg}" alt="" />
+						</div>
+					</div>
+					<div class="v_info">
+						<p class="lst">公司：<span>{$data.promotion.company}</span></p>
+						<p class="lst">邮箱：<span>{$data.promotion.email}</span></p>
+						<p class="lst">简介：</p>
+						<p class="v_desc"><span>{$data.promotion.share_my_introduct}</span></p>
+					</div>
+					<a href="javascript:showCode(2)" class="wzgc_shoucang_but">收藏V网</a>
+				</div>
+			</if>
+			<!--<div class="wzgc_bottom_fix">
+				<div class="guanggao">
+					<div class="bian_edit">
+						<a href="javascript:void(0)" id="edit_a" onclick="myedits()">
+							<div class="box clearfix">
+								<img id="edit_img" class="fl" src="/Public/Home/images/edit.png" alt="">
+								<span class="fl">我也要编写软文</span>
+							</div>
+						</a>
+						 {:U('Home/Article/addArticle',['id' => $ids,'uid'=>$userId])} 
+					</div>
+				</div>
+			</div>-->
+			<!--<button onclick="pay()" class="mui-btn mui-btn-danger">打赏</button>-->
+			<!--<div class="nav_panel">
+				 导航选择器 
+				<div class="bg"></div>
+				<div class="nav_box">
+					<div class="nav_title">打赏</div>
+					<div style="text-align: right;margin-top: -20px;margin-right: 10px;" onclick="closeAlert()"><img src="__PUBLIC__/Home/images/x.png" width="18" height="18" /></div>
+					<div class="nav_content">
+						<table width="100%" class="table" id="tablevalue">
+							<tr>
+								<td width=50%><button style="width: 70px;" id="5" onclick="pay(5)" class="mui-btn mui-btn-primary mui-btn-outlined">￥5</button></td>
+								<td width=50%><button style="width: 70px;" id="10" onclick="pay(10)" class="mui-btn mui-btn-primary mui-btn-outlined">￥10</button></td>
+							</tr>
+							<tr>
+								<td width=50%><button style="width: 70px;" id="20" onclick="pay(20)" class="mui-btn mui-btn-primary mui-btn-outlined">￥20</button></td>
+								<td width=50%><button style="width: 70px;" id="50" onclick="pay(50)" class="mui-btn mui-btn-primary mui-btn-outlined">￥50</button></td>
+							</tr>
+							<tr>
+								<td width=50%><button style="width: 70px;" id="100" onclick="pay(100)" class="mui-btn mui-btn-primary mui-btn-outlined">￥100</button></td>
+								<td width=50%><button style="width: 70px;" id="200" onclick="pay(200)" class="mui-btn mui-btn-primary mui-btn-outlined">￥200</button></td>
+							</tr>
+						</table>
+						<p><span class="mui-icon mui-icon-weixin"></span>微信支付</p>
+					</div>
+				</div>
+			</div>-->
+		</div>
+	</div>
+	<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript">
+		
+		$(".tra").attr("contenteditable", "flase");
+		var wx_ewm_url = '{$wx_ewm_url}';
+
+		mui.init();
+		mui.ready(function () {
+			//去除img的边框
+			mui('#article_content img').each(function (index, item) {
+				item.style.border = null;
+			});
+			//
+			videoHeight();
+
+			//修正视频高宽
+			var width = document.documentElement.clientWidth;
+			[].forEach.call(document.querySelectorAll("iframe.video_iframe"), function (item, index) {
+				item.width = width;
+				item.height = width / 1.33;
+				item.src = item.getAttribute('data-src').replace('preview', 'player')
+					.replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+				item.style.width = width + 'px';
+				item.style.height = width / 1.33 + 'px';
+			});
+
+		});
+
+		function videoHeight() {
+			//修正视频高宽
+			var width = document.documentElement.clientWidth - 50;
+			[].forEach.call(document.querySelectorAll("iframe"), function (item, index) {
+				item.width = width + 50;
+				item.height = width / 1.33;
+				item.src = item.getAttribute('data-src').replace('preview', 'player')
+					.replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+				item.style.width = width + 'px';
+				item.style.height = width / 1.33 + 'px';
+			});
+		}
+		//获得slider插件对象
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+		});
+
+		function reward() {
+			$('.nav_panel').show();
+			$('body').css('overflow', 'hidden');
+		}
+ 
+		//调用微信JS api 支付
+		function jsApiCall(data) {
+			WeixinJSBridge.invoke(
+				'getBrandWCPayRequest', {
+					"appId": data.appId, //公众号名称，由商户传入
+					"timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+					"nonceStr": data.nonceStr, //随机串
+					"package": data.package,
+					"signType": data.signType, //微信签名方式：
+					"paySign": data.paySign //微信签名
+				},
+				function (res) {
+					WeixinJSBridge.log(res.err_msg);
+					if (res.err_msg == 'get_brand_wcpay_request:ok') {
+						alert("支付成功");
+					}
+				}
+			);
+		}
+
+		function myedits() {
+			var uid = '{$uid}';
+			var aid = '{$userId}';
+			var tid = '{$tid}';
+			var _url = 'http://wx.yxm360.com/index.php?s=/Home/Article/previewArticle/is_home/1/id/' + tid + '';
+			if (aid != uid) {
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "/index.php?s=/Home/Article/catchArticle", //url 
+					data: {
+						"id": uid,
+						"url": _url
+					},
+					// async: false,
+					success: function (result) {
+						// console.log(result);
+						if (result.status == 1) {
+							// window.location.href="http://192.168.100.2/index.php?s=/Home/Article/addArticle/id/"+result.id;
+							window.location.href = "/index.php?s=/Home/Article/addArticle/id/" + result.id;
+						}
+					},
+					error: function () {
+						//						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			}
+			if (aid == uid) {
+				window.location.href = "/Home/Article/addArticle";
+			}
+		}
+		$(function () {
+			//导航取消
+			$('.nav_box .nav_btns_canel').on('touchend', function () {
+				$('.nav_panel').hide();
+				$('body').css('overflow', 'auto');
+			});
+			$('.nav_box .nav_btns_yes').on('touchend', function () {
+				//pay();
+			});
+		});
+
+		function closeAlert() {
+			$('.nav_panel').hide();
+			$('body').css('overflow', 'auto');
+		}
+
+		function showCode(type) {
+			$('.card_button').removeClass('on');
+			$('.card_button[data_type="' + type + '"]').addClass('on');
+			var code = "";
+			var msg = "";
+			console.log(wx_ewm_url);
+			if (type == 1) {
+				if (wx_ewm_url) {
+					code = wx_ewm_url;
+					msg = "扫描二维码，添加我的微信";
+				} else {
+					code = "{:U('Home/Card/cardCode@wx.yxm360.com',array('id'=>$userId))}";
+					msg = "扫描二维码，保存到本机通讯录";
+				}
+			} else if (type == 2) {
+
+				code = "{:U('Home/Card/myCode@wx.yxm360.com',array('id'=>$userId))}";
+				msg = "扫描二维码，打开我的V网";
+			} else if (type == 3) {
+				code = "__PUBLIC__/Home/images/8.jpg";
+				msg = "扫描二维码，关注洋小秘公众号";
+			}
+			$('.card_panel .card_code img').attr('src', code);
+			$('.card_panel .card_code p').html(msg);
+			$('.card').show();
+		}
+		$('.card .bg').on('touchend', function () {
+			$('.card').hide();
+		});
+		$('.card_panel .card_button').on('touchend', function () {
+			var type = $(this).attr('data_type');
+			showCode(type);
+		});
+
+		define = null;
+		require = null;
+
+		// 点击打赏
+
+		$('.shang').on('click',function(){
+			$('.mask').show();
+			$('.pay-box').show()
+		})
+
+		var default_money = 1;
+		$('.pay-box li').on('click',function(){
+			$(this).addClass('pay_active').siblings().removeClass('pay_active');
+			default_money = $(this).find('.money').text()
+		})
+
+		var user_ = '{$userId}';
+		var article_ = '{$tid}';
+		var payuseropenid = '{$getopenid_}';
+		var nickname = '{$names}';
+		console.log(payuseropenid)
+		console.log(nickname)
+		$('.check_pay').on('click',function(){
+
+			$.ajax({
+				type:'post',
+				url:'/index.php?s=/Home/Articlegrab/createReward',
+				data:{
+					openid:payuseropenid,
+					article_id:article_,
+					money:default_money,
+					nick_name:nickname,
+
+				},
+				success:function(res){
+					console.log(res)
+					jsApiCall(res.data)
+				}
+
+			})
+
+			$('.pay-box').hide()
+			$('.mask').hide()
+		})
+
+		    //调用微信JS api 支付
+    function jsApiCall(data) {
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": data.appId, //公众号名称，由商户传入
+                "timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+                "nonceStr": data.nonceStr, //随机串
+                "package": data.package,
+                "signType": data.signType, //微信签名方式：
+                "paySign": data.paySign //微信签名
+            },
+            function (res) {
+                WeixinJSBridge.log(res.err_msg);
+                if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                    alert("支付成功");
+                }
+            }
+        );
+    }
+
+		$('.mask').on('click',function(){
+			$(this).hide()
+			$('.pay-box').hide()
+		})
+
+		$(function () {
+			var share_url = "{$share_url}";
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "/index.php?s=/Api/WeShare/getSignPackage", //url
+				data: {
+					share_url: share_url
+				},
+				async: true,
+				// async: false,
+				success: function (result) {
+					wx.config({
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+						appId: result.AppendData.appId,
+						timestamp: result.AppendData.timestamp,
+						nonceStr: result.AppendData.nonceStr,
+						signature: result.AppendData.signature,
+						jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+							'checkJsApi',
+							'onMenuShareTimeline', //
+							'onMenuShareAppMessage',
+							'onMenuShareQQ',
+							'onMenuShareWeibo',
+							'getLocation'
+						]
+					});
+					var url = "{:'http://'.$share_host.U('Home/Nologin/previewArticle/id/'.$tid.'/uid/'.$userId)}";
+					wx.ready(function () {
+						//分享到朋友圈
+						wx.onMenuShareTimeline({
+							title: "{$sharetitle}", // 分享标题
+							desc: "{$desc}", // 分享内容
+							link: url, //分享链接
+							imgUrl: "{$imgUrl}", // 分享封面
+							success: function () {
+								// 用户确认分享后执行的回调函数
+								// sharePush();
+							},
+							cancel: function () {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+						//分享给朋友
+						wx.onMenuShareAppMessage({
+							title: "{$sharetitle}", // 分享链接
+							desc: "{$desc}", // 分享链接
+							link: url, //分享出去后的链接，这里可以将链接设置为另一个页面。
+							imgUrl: "{$imgUrl}", // 分享链接
+							type: '', // 分享类型,music、video或link，不填默认为link
+							dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+							success: function () {
+								// 用户确认分享后执行的回调函数
+								// sharePush();
+							},
+							cancel: function () {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+						//分享到QQ
+						wx.onMenuShareQQ({
+							title: "{$sharetitle}", // 分享链接
+							desc: "{$desc}", // 分享链接
+							link: url, //分享出去后的链接，这里可以将链接设置为另一个页面。
+							imgUrl: "{$imgUrl}", // 分享链接
+							success: function () {
+								// 用户确认分享后执行的回调函数
+								// sharePush();
+							},
+							cancel: function () {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+						//分享到腾讯微博
+						wx.onMenuShareWeibo({
+							title: "{$sharetitle}", // 分享链接
+							desc: "{$desc}", // 分享链接
+							link: url, //分享出去后的链接，这里可以将链接设置为另一个页面。
+							imgUrl: "{$imgUrl}", // 分享链接
+							success: function () {
+								// 用户确认分享后执行的回调函数
+								// sharePush();
+							},
+							cancel: function () {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+						//分享到QQ空间
+						wx.onMenuShareQZone({
+							title: "{$sharetitle}", // 分享链接
+							desc: "{$desc}", // 分享链接
+							link: url, //分享出去后的链接，这里可以将链接设置为另一个页面。
+							imgUrl: "{$imgUrl}", // 分享链接
+							success: function () {
+								// 用户确认分享后执行的回调函数
+								// sharePush();
+							},
+							cancel: function () {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+					});
+				},
+				error: function () {
+					//                    alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

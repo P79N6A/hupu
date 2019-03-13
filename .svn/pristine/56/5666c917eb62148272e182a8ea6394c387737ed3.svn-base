@@ -1,0 +1,91 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+</block>
+
+<block name="body">
+
+	<body class="zzc_body_bg">
+
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">隐私保护</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content zzc_mui_content_bg">
+			<div class="zzc_qiehuan_div">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						允许别人在商脉中搜索
+						<div class="mui-switch mui-switch-mini <if condition=" $info.sq_is_search eq 1 ">mui-active</if>" id="onSwitch" name="sq_is_search">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						允许被别人复制V网
+						<div class="mui-switch mui-switch-mini onSwitch <if condition=" $info.is_copy_cards eq 1 ">mui-active</if>" id="onSwitch2" name="is_copy_cards">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a href="{:U('Home/User/securityList')}" class="mui-navigate-right">保护个人信息 <i class="mui-pull-right update"></i></a>
+				</li>
+			</ul>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script>
+		document.getElementById("onSwitch").addEventListener('toggle', function(event) {
+			var value = 0;
+			if(event.detail.isActive)
+				value = 1;
+			data = {
+				'name': $(this).attr('name'),
+				'value': value,
+			};
+			$.ajax({
+				type: 'POST',
+				url: "{:U('Home/User/security')}",
+				data: data,
+				success: function() {
+
+				},
+				dataType: 'json'
+			});
+
+		});
+		document.getElementById("onSwitch2").addEventListener('toggle', function(event) {
+			var value = 0;
+			if(event.detail.isActive)
+				value = 1;
+			data = {
+				'name': $(this).attr('name'),
+				'value': value,
+			};
+			$.ajax({
+				type: 'POST',
+				url: "{:U('Home/User/security')}",
+				data: data,
+				success: function() {
+
+				},
+				dataType: 'json'
+			});
+
+		});
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

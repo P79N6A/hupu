@@ -1,0 +1,342 @@
+<extend name="Public:base1" />
+<block name="main">
+
+    <style>
+
+        .row-alert{
+            width: 100%;
+            flex-direction:row;
+            display:inline;
+        }
+
+        .left-style{
+            /*background-color: #FF34B3;*/
+            display:inline;
+        }
+
+        .right-style{
+            float:right;
+            /*background-color: #FFEC8B;*/
+            display:inline;
+        }
+
+        .total_count {
+            /*float:right;*/
+            margin-left:50px;
+            /*margin-top:-70px;*/
+            font-size: 16px;
+            /*background-color: #00FFFF;*/
+            color:#1C86EE;
+            font-weight: bold;
+        }
+    </style>
+
+
+
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>会员列表</h4>
+        </div>
+        <!--<a href="{:U('Musics/addMusics')}" class="btn btn-primary pull-right margin-top">添加音乐</a>-->
+    </div>
+    <div class="clearfix"></div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">内容查询</div>
+
+        <div class="panel-body">
+            <form method="post" name="myForms" action=""  class="layui-form">
+                <div class="row">
+                    <div class="layui-form-item">
+
+                        <!-- <label class="layui-form-label">类型</label> -->
+                        <label class="layui-form-label">vip等级</label>
+                        <div class="layui-input-inline">
+                            <select name="viplist" lay-verify="" id="province_id" lay-filter="province_id">
+                                <option value="-1">已付费</option>
+                                <foreach name="viplist" item="vo" >
+                                    <option value="{$vo.level}" <if condition="$search['viplist'] eq $vo['level']">selected</if>>{$vo.vip_name}</option>
+                                </foreach>
+                            </select>
+                            <!-- <select name="viplist" lay-verify="" name="type">
+                                <option value="0" <if condition="$search.type eq 0">selected</if>>全部</option>
+                                <option value="1" <if condition="$search.type eq 1">selected</if>>直接粉丝收入</option>
+                                <option value="2" <if condition="$search.type eq 2">selected</if>>打赏红包</option>
+                                <option value="3" <if condition="$search.type eq 3">selected</if>>购买会员</option>
+                                <option value="4" <if condition="$search.type eq 4">selected</if>>视频打赏</option>
+                                <option value="5" <if condition="$search.type eq 5">selected</if>>会员续费</option>
+                                <option value="6" <if condition="$search.type eq 6">selected</if>>间接收入</option>
+                                <option value="7" <if condition="$search.type eq 7">selected</if>>招商奖励</option>
+
+                            </select> -->
+                        </div>
+
+                        <label class="layui-form-label">日期</label>
+                        <div class="layui-input-inline"> <!-- 注意：这一层元素并不是必须的 -->
+                            <input type="text" name="startDate" class="layui-input" id="test1"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$search.startDate}">
+                        </div>
+                        <div class="layui-input-inline"> <!-- 注意：这一层元素并不是必须的 -->
+                            <input type="text" name="overDate" class="layui-input" id="test2"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="{$search.overDate}">
+                        </div>
+
+
+
+
+                        <label class="layui-form-label">分红用户</label>
+
+                        <!--<label>是否免费推荐</label>-->
+
+
+                        <div class="layui-input-inline">
+                            <select name="is_give" lay-verify="" id="is_give" lay-filter="is_give">
+                                <option value="-1" <if condition="$search['is_give'] eq -1">selected</if>>请选择</option>
+                                <option value="1" <if condition="$search['is_give'] eq 1">selected</if>>是</option>
+                                <option value="2" <if condition="$search['is_give'] eq 2">selected</if>>否</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+
+            <div class="row-alert">
+                <div class="left-style">
+                    <span class="total_count">查询结果：共{$total_count}条记录</span>
+                </div>
+
+
+                <div class="right-style">
+                    <a class="btn btn-success" onclick="exportExcel()">导出Excel</a>
+
+                    <!--<a class="btn btn-success" onclick="">导出Excel</a>-->
+                    <!--<button class="btn btn-info" type="submit" onclick="exp()">查询</button>-->
+                    <button class="btn btn-info" type="submit">查询</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>用户名</td>
+                <!-- <td>注册手机号</td> -->
+                <td>性别</td>
+                <td>年龄段</td>
+                <td>地区</td>
+                <!-- <td>累计收入</td>
+                <td>余额</td> -->
+                <td>注册时间</td>
+                <td>推荐人</td>
+                <!-- <td>成为vip时间</td> -->
+                <td>vip等级</td>
+                <!--<td>年费</td>-->
+                <!-- <td>旗下用户</td> -->
+            </tr>
+            </thead>
+            <tbody>
+
+            <foreach name="data" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <!-- <td><span onclick="user_detail('{$vo.id}')">{$vo.nick_name}</span></td> -->
+                    <td>{$vo.nick_name}</td>
+
+                    <!--<td>{$vo.sex}</td>-->
+
+                    <td>
+                        <if condition="($vo.sex eq 0)"> 男
+                            <else /> 女
+                        </if>
+                    </td>
+
+                    <td>
+                        <if condition="($vo.age_id eq 1)">10岁以下
+                            <elseif condition="$vo.age_id eq 2"/>11-20岁
+                            <elseif condition="$vo.age_id eq 3"/>21-25岁
+                            <elseif condition="$vo.age_id eq 4"/>26-30岁
+                            <elseif condition="$vo.age_id eq 5"/>31-35岁
+                            <elseif condition="$vo.age_id eq 6"/>36-40岁
+                            <elseif condition="$vo.age_id eq 7"/>41-45岁
+                            <elseif condition="$vo.age_id eq 8"/>46-50岁
+                            <else />50岁以上
+                        </if>
+                    </td>
+
+
+                    <!-- <td>{$vo.phone}</td> -->
+                    <td>{$vo.province_name}-{$vo.city_name}-{$vo.district_name}</td>
+
+                    <td>{$vo.add_time|date='Y-m-d H:i:s',###}</td>
+                    <td>{$vo.rec_name}</td>
+                    <!-- <td><if condition="$vo.vip_orver_time gt 0">{$vo.vip_orver_time|strtotime='-1 year',###|date='Y-m-d H:i:s',###}</if></td> -->
+                    <td>{$vo.vip_name}</td>
+                    <!-- <td></td> -->
+                </tr>
+
+            </foreach>
+
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+
+    <div class="pages">{$_page}</div>
+
+    <script>
+
+
+
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+
+        function user_detail(uid) {
+            var str='user_detail&user_id='+uid;
+            var url = '{:U("'+str+'")}';
+            // alert(url);return;
+            //iframe层
+            layer.open({
+                type: 2,
+                title: '会员详情页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '40%'],
+                content: url//iframe的url
+            });
+        };
+
+
+
+        $("#search").click(function(){
+            $("#searchForm").attr('action',"{:U('admin/Area/agentList')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+
+
+        $("#export").click(function(){
+            $("#searchForm").attr("action","{:U('admin/Area/agentList')}");    //通过jquery为action属性赋值
+            // $("#searchForm").submit();
+            return false;
+        });
+
+
+
+        function exportExcel() {
+            document.myForms.action = "__APP__/Admin/Area/excel";
+            document.myForms.submit();
+            document.myForms.action = "";
+//            return false;
+        }
+
+        $('.btn-info').click(function() {
+//            console.log("走了没");
+            document.myForms.action = "__APP__/Admin/Area/agentList";
+            document.myForms.submit();
+            document.myForms.action = "";
+        });
+
+
+        layui.use(['laydate','form'], function(){
+            var layer = layui.layer;
+            var form = layui.form();
+            // var laydate = layui.laydate();
+            // laydate.render({
+            //     elem: '#test1'
+            // });
+            // laydate.render({
+            //     elem: '#test2'
+            // });
+            // 初始化市
+            var pro = $("#province_id").val();
+            if(pro >0){
+                var province_id=pro;
+                $.ajax({
+                    url:'{:U("Admin/Public/get_citys")}',
+                    Type:"POST",
+                    data:"province_id="+province_id,
+                    dataType:"json",
+                    success:function(data){
+                        var selectedCity = <if condition="$search.city_id gt 0 ">{$search.city_id}<else />0</if>;
+                        var city = data.city;
+                        var option=$("<option></option>");
+                        $(option).val("0");
+                        $(option).html("请选择");
+                        var option1=$("<option></option>");
+                        $(option1).val("0");
+                        $(option1).html("请选择");
+                        $("#city_id").html(option);
+                        $("#district_id").html(option1);
+                        for(var i in city){
+                            var option=$("<option></option>");
+                            $(option).val(city[i]['region_id']);
+                            $(option).html(city[i]['region_name']);
+                            if(selectedCity == city[i]['region_id'])
+                                $(option).attr('selected','selected');
+                            $("#city_id").append(option);
+                        }
+                        form.render('select');
+                    }
+
+                });
+            }
+
+
+            form.on('select(province_id)', function(data){
+                var province_id=data.value;
+                $.ajax({
+                    url:'{:U("Admin/Public/get_citys")}',
+                    Type:"POST",
+                    data:"province_id="+province_id,
+                    dataType:"json",
+                    success:function(data){
+                        var city = data.city;
+                        var option=$("<option></option>");
+                        $(option).val("0");
+                        $(option).html("请选择");
+                        var option1=$("<option></option>");
+                        $(option1).val("0");
+                        $(option1).html("请选择");
+                        $("#city_id").html(option);
+                        $("#district_id").html(option1);
+                        for(var i in city){
+                            var option=$("<option></option>");
+                            $(option).val(city[i]['region_id']);
+                            $(option).html(city[i]['region_name']);
+                            $("#city_id").append(option);
+                        }
+                        form.render('select');
+                    }
+
+                });
+
+            });
+
+        });
+
+
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/js/My97DatePicker/WdatePicker.js"></script>
+
+
+</block>

@@ -1,0 +1,774 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script type="text/javascript" src="__COM_JS__/layer.js"></script>
+	<script type="text/javascript" src="__ADMIN__/Lay/layui.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+	<style>
+		.mui-fullscreen .mui-segmented-control~.mui-slider-group {
+			position: relative!important;
+			top: 0px;
+		}
+
+		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+			color: #2FB3D3!important;
+		}
+
+		.mui-table-view {
+			margin-top: 20px;
+			opacity: 1;
+			background: rgba(255, 255, 255, 0.1);
+			border: none!important;
+		}
+
+		.mui-table-view li a {
+			color: #F2F2F2!important
+		}
+
+		.mui-navigate-right {
+			color: #F2F2F2;
+		}
+
+		.mui-scroll {
+			height: 100%;
+		}
+
+		.zzc_afahfj_img {
+			height: 150px;
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+			background: #2FB3D3 url(__HOME_IMAGES__/003.png) no-repeat center top;
+			background-size: 100%;
+		}
+
+		.zzc_afahfj_a1,
+		.zzc_afahfj_a2 {
+			position: absolute;
+			right: 5%;
+			background: #2FB3D3;
+			color: #FFFFFF;
+			border-radius: 6px;
+			padding: 5px 15px;
+		}
+
+		.zzc_afahfj_a1 {
+			bottom: 50px;
+		}
+
+		.zzc_afahfj_a2 {
+			bottom: 10px;
+		}
+
+		.zzc_afafh_img {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			float: right;
+			border: 1px solid #666;
+		}
+
+		.zzc_afafh_img2 {
+			width: 35px;
+			float: right;
+			margin-top: 8px;
+		}
+
+		.zzc_jaidntou {
+			float: right;
+			margin-top: 10px;
+			color: #b9b9b9;
+			margin-left: 10px;
+		}
+
+		.zzc_hfjah_div {
+			width: 100%;
+			overflow: hidden;
+			background: #FFFFFF;
+			/* margin-top: 20px; */
+		}
+
+		.zzc_reg_input textarea {
+			border: none!important;
+			box-shadow: none;
+			border-top: 1px solid #CCCCCC!important;
+			border-radius: 0px;
+		}
+
+		.iw_poi_title {
+			color: #CC5522;
+			font-size: 14px;
+			font-weight: bold;
+			overflow: hidden;
+			padding-right: 13px;
+			white-space: nowrap
+		}
+
+		.iw_poi_content {
+			font: 12px arial, sans-serif;
+			overflow: visible;
+			padding-top: 4px;
+			white-space: -moz-pre-wrap;
+			word-wrap: break-word
+		}
+
+		.sex,
+		.age {
+			display: inline-block;
+			width: 100px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 17px;
+		}
+
+		.box {
+			width: 200px;
+			height: 100px;
+			border-radius: 10px;
+			background: #fff;
+			display: none;
+			position: fixed;
+			top: 300px;
+			left: 100px;
+			z-index: 100;
+			padding: 20px;
+		}
+
+		.box2 {
+			width: 200px;
+			height: 200px;
+			border-radius: 10px;
+			background: #fff;
+			display: none;
+			position: fixed;
+			top: 300px;
+			left: 100px;
+			z-index: 100;
+			padding: 20px;
+		}
+
+		.big {
+			background: rgba(0, 0, 0, 0.5);
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 50;
+			display: none;
+		}
+
+		.mbsc-android-holo .dwv {
+			text-align: left;
+			text-indent: .8em;
+		}
+
+		#sexlist {
+			font-size: 17px;
+		}
+
+		#agelist {
+			font-size: 17px;
+		}
+
+		#clipArea {
+			/*margin-top: 100px;*/
+			height: 85%;
+		}
+
+		#file {
+			margin: 20px;
+		}
+
+		input {
+			-webkit-appearance: none;
+			border-radius: 0;
+		}
+
+		.clip {
+			background-color: #000;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			z-index: 10000;
+		}
+
+		.photo-clip-view {
+			background-color: #fff;
+		}
+
+		.btun {
+			width: 262px;
+			height: 10%;
+			margin: 0 auto;
+		}
+
+		#clipBtn {
+			width: 35%;
+			height: 40px;
+			line-height: 40px;
+			background-color: #2FB3D3;
+			color: #fff;
+			text-align: center;
+			border: none;
+		}
+
+		#cancel {
+			background-color: #fff;
+			color: #000;
+			width: 35%;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 5px;
+			border: none;
+			margin-right: 28%;
+		}
+
+		.gif {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000000;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			display: none;
+		}
+
+		.gif>img {
+			width: 20%;
+			position: absolute;
+			left: 40%;
+			top: 36%;
+		}
+
+		.zzc_myranwen_bottom{
+			z-index: 999;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<div class="clip">
+		<div class="gif">
+			<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+		</div>
+		<div id="clipArea"></div>
+		<div class="btun">
+			<button id="cancel" style="padding:0">取消</button>
+			<button id="clipBtn" style="padding:0">截取</button>
+		</div>
+	</div>
+	<!-- <form action="" method="post" id="form2" enctype="multipart/form-data">
+		<input id="fileUpload4" name="bcard" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="opacity: 0;">
+	</form> -->
+
+	<body class="zzc_body_bg">
+	<form action="" method="post" id="form" enctype="multipart/form-data">
+		<input type="hidden" name="jump_url" value="">
+		<input type="hidden" name="background_id" value="">
+		<input type="hidden" name="head_id" value="">
+		<input type="hidden" name="ewm_id" value="">
+		<div class="mui-content zzc_mui_content_bg zzc_shouruliushui" style="margin-bottom: 80px;">
+			<!-- <div class="zzc_afahfj_img" style=" background-image: url('{$data.background_img}');">
+                <a href="javascript:;" class="zzc_afahfj_a1" id="fuzhi">复制背景</a>
+                <a href="#" class="zzc_afahfj_a2">更换背景</a>
+                <input id="fileUpload0" name="bg_img" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="opacity: 0;">
+                <input type="hidden" name="background_img" value="{$data.background_img}">
+            </div> -->
+			<!-- <div style="padding:10px;overflow:hidden;width:100%;"></div> -->
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from" style="width:90%; margin:auto;">
+					<div class="zzc_reg_input" id="">
+						<label style="width:60%!important">头像</label>
+						<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+						<img class="zzc_afafh_img my_img" id="img0" src="{$data.headimg}" alt="" />
+						<input id="file" name="head_img" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="display: none;">
+						<input type="hidden" name="headimg" id="cover_input" value="{$data.headimg}">
+					</div>
+					<!--<div class="zzc_reg_input" style="border:none" id="bcard">
+                    <label style="width:60%!important">拍照识别纸质V网</label>
+                    <span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+                    <img  class="zzc_afafh_img2" src="__HOME_IMAGES__/004.png" alt="" />
+                </div>-->
+				</div>
+			</div>
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from" style="width:90%; margin:auto;">
+					<div class="zzc_reg_input">
+						<label class="">姓名</label>
+						<input type="text" value="{$data.nick_name}" name="nick_name" placeholder="" onkeyup="ValidateValue(this)" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">性别</label>
+						<span class="sex">
+								<select name="sex" id="sexlist">
+									<option value="0"<?php echo $data['sex']==0?'selected':''?>>男</option>
+									<option value="1"<?php echo $data['sex']==1?'selected':''?>>女</option>
+								</select>
+							<!--<img src="__HOME_IMAGES__/arr.png" alt="" />-->
+							</span>
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">年龄</label>
+						<span class="age">
+								<select name="age_id" id="agelist">
+                                    <volist name="age_list" id="vo">
+                                        <option value="{$vo.id}"<?php echo $data['age_id']==$vo['id']?'selected':''?>>{$vo.age_group}</option>
+                                    </volist>
+
+								</select>
+							<!--<img src="__HOME_IMAGES__/arr.png" alt="" />-->
+							</span>
+					</div>
+					<div class="zzc_reg_input" onclick='setting()'>
+						<label class="">行业</label>
+						<input type="text" style="color:#000" value="{$data.setting}" readonly="readonly" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">公司</label>
+						<input type="text" value="{$data.company}" name="company" placeholder="" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">职务</label>
+						<input type="text" value="{$data.position}" name="position" placeholder="" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">其他职务</label>
+						<input type="text" value="{$data.industry_tag}" name="industry_tag" placeholder="" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">手机</label>
+						<input type="text" value="{$data.mobile}" name="mobile" placeholder="" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">邮箱</label>
+						<input type="text" value="{$data.email}" name="email" placeholder="" />
+					</div>
+					<div class="zzc_reg_input">
+						<label class="">QQ</label>
+						<input type="text" value="{$data.qq}" name="qq" placeholder="" />
+					</div>
+					<!--  <div class="zzc_reg_input">
+                    <label class="">微信</label>
+                    <input type="text"  name="wxnum" placeholder="" value="{$data.wxnum}" />
+                </div>-->
+					<div class="zzc_reg_input" id="ewmimg">
+						<label class="">微信二维码</label>
+						<input type="hidden" name="wx_ewm_url" value="{$data.wx_ewm_url}">
+						<img class="zzc_afafh_img" src="{$data.wx_ewm_url}" alt="">
+						<input id="fileUpload2" name="ewm_img" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="opacity: 0;">
+					</div>
+					<!--<div class="zzc_reg_input">
+                    <label class="">留言板</label>
+                    <input type="text" value="" placeholder="" />
+                </div> -->
+					<div class="zzc_reg_input" style="border:none">
+						<label class="">网址</label>
+						<input type="text" name="site" value="{$data.site}" placeholder="" />
+					</div>
+				</div>
+			</div>
+
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from" style="width:90%; margin:auto;">
+					<div class="zzc_reg_input" style="border:none">
+						<label class="">简介</label>
+						<textarea name="share_my_introduct" rows="5" cols="" placeholder="">{$data.share_my_introduct}</textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from" style="width:90%; margin:auto;">
+					<div class="zzc_reg_input" style="border:none" id="banner">
+						<label class="">广告轮播图</label>
+						<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+					</div>
+					<div class="zzc_reg_input" style="border:none" id="menu_btn">
+						<label style="width:60%!important">链接一切</label>
+						<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+					</div>
+					<div class="zzc_reg_input" style="border:none" id="zhanshi">
+						<label class="">展示一切</label>
+						<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+					</div>
+					<div class="zzc_reg_input" style="border:none" id="chanpin">
+						<label class="">产品中心</label>
+						<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="zzc_hfjah_div">
+				<div class="zzc_reg_from" style="width:90%; margin:auto;">
+					<!--<div class="zzc_reg_input" id="get_map">
+                        <label class="">位置</label>
+                        <span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+                    </div>-->
+					<div class="zzc_reg_input">
+						<label class="">地址</label>
+						<input type="text" value="{$data.address}" name="address" placeholder="" />
+					</div>
+				</div>
+				<div class="myguanggao_li" style="border: none;">显示地图
+					<div id="is_map" class="mui-switch  <if condition=" $data[ 'is_map']==1 ">mui-active</if> muguanggao_but ">
+					<div class="mui-switch-handle"></div>
+				</div>
+				<input type="hidden" name="is_map" value="{$data.is_map}">
+			</div>
+			<div style="width:100%;height:150px;border:#ccc solid 1px;" id="dituContent"></div>
+		</div>
+		<div class="zzc_hfjah_div">
+			<div class="zzc_reg_from" style="width:90%; margin:auto;">
+				<div class="zzc_reg_input" style="border: none;" id="fengge">
+					<label class="">风格设置</label>
+					<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+				</div>
+				<div class="zzc_reg_input" id="music">
+					背景音乐
+					<span class="mui-icon mui-icon-arrowright zzc_jaidntou "></span>
+				</div>
+			</div>
+
+		</div>
+		<input type="hidden" class="id" value="{$data.id}">
+		</div>
+		<div style="height:50px;position:relative" />
+		<div class="zzc_myranwen_bottom">
+			<input type="button" name="" id="yulan" value="预览" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" />
+			<input type="button" name="" id="save" value="确定" class="zzc_myruanwen_bottom_button zzc_blue_bg" />
+		</div>
+	</form>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=0mowWq56hycvTM5TVxXMHytZmx0ksywG&s=1；"></script>
+	<script src="__HOME_JS__/jquery.form.js"></script>
+	<script src="__HOME_JS__/ljcut/jquery-2.1.3.min.js"></script>
+	<script src="__HOME_JS__/ljcut/iscroll-zoom.js"></script>
+	<script src="__HOME_JS__/ljcut/hammer.js"></script>
+	<script src="__HOME_JS__/ljcut/lrz.all.bundle.js"></script>
+	<script src="__HOME_JS__/ljcut/jquery.photoClip.js"></script>
+
+	<script>
+        $('.my_img').click(function() {
+            $('#file').click();
+            $(".clip").show();
+        });
+        var clipArea = new bjj.PhotoClip("#clipArea", {
+            size: [193, 193],
+            outputSize: [640, 640],
+            file: "#file",
+            view: "#view",
+            ok: "#clipBtn",
+            loadStart: function() {
+                // console.log("照片读取中");
+                $('.gif').show();
+            },
+            loadComplete: function() {
+                // console.log("照片读取完成");
+                $('.gif').hide();
+            },
+            clipFinish: function(dataURL) {
+                //		console.log(dataURL);
+                var img = document.getElementById("img0");
+                var id = $('.id').val();
+                //图片路径设置为读取的图片
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "index.php?s=/Api/IndexApi/upload_img" ,//url
+                    data: {"id":id,"img":dataURL},
+                    success: function (result) {
+                        if (result.ResultType == 0) {
+                            img.src = result.AppendData;
+                            $('#cover_input').val(result.AppendData);
+                        }
+                    },
+                    error : function() {
+                        alert("服务器繁忙，请稍后再试！");
+                    }
+                })
+            }
+        });
+        $("#cancel,#clipBtn").click(function() {
+            $(".clip").hide();
+        })
+        //clipArea.destroy();
+
+        // function imgPreview(fileDom) {
+        //     //判断是否支持FileReader
+        //     if(window.FileReader) {
+        //         var reader = new FileReader();
+        //     } else {
+        //         alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        //     }
+        //     //获取文件
+        //     var file = fileDom.files[0];
+        //     // console.log();return;
+        //     var imageType = /^image\//;
+        //     //是否是图片
+        //     if(!imageType.test(file.type)) {
+        //         alert("请选择图片！");
+        //         return;
+        //     }
+        //     //读取完成
+        //     reader.onload = function(e) {
+        //         //获取图片dom
+        //         var img = document.getElementById("img0");
+        //         //图片路径设置为读取的图片
+        //         img.src = e.target.result;
+        //     };
+        //     reader.readAsDataURL(file);
+        //
+        // }
+	</script>
+	<script type="text/javascript">
+        var wx_appId = "{$signPackage.appId}";
+        var wx_timestamp = "{$signPackage.timestamp}";
+        var wx_nonceStr = "{$signPackage.nonceStr}";
+        var wx_signature = "{$signPackage.signature}";
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: wx_appId, // 必填，公众号的唯一标识
+            timestamp: wx_timestamp, // 必填，生成签名的时间戳
+            nonceStr: wx_nonceStr, // 必填，生成签名的随机串
+            signature: wx_signature, // 必填，签名，见附录1
+            jsApiList: [
+                'chooseImage',
+                'uploadImage'
+            ]
+        });
+
+        function chooseImage(obj) {
+            // 选择张片
+            wx.ready(function() {
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function(res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        // 上传照片
+                        wx.uploadImage({
+                            localId: '' + localIds,
+                            isShowProgressTips: 1,
+                            success: function(res) {
+                                var serverId = res.serverId;
+                                if(obj == "background") {
+                                    $(".zzc_afahfj_img").css({
+                                        "background-image": 'url("' + localIds + '")'
+                                    });
+                                    $("input[name=background_id]").val(serverId);
+
+                                } else if(obj == "head") {
+                                    $("#headimg .zzc_afafh_img").attr("src", localIds);
+                                    $("input[name=head_id]").val(serverId);
+                                } else if(obj == "ewm") {
+                                    $("#ewmimg .zzc_afafh_img").attr("src", localIds);
+                                    $("input[name=ewm_id]").val(serverId);
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        }
+	</script>
+	<script type="text/javascript">
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null;
+            if(window.createObjectURL != undefined) { // basic
+                url = window.createObjectURL(file);
+            } else if(window.URL != undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file);
+            } else if(window.webkitURL != undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+        $(function() {
+            $("#fileUpload4").on("change", function() {
+                layer.load(1);
+                // 上传设置
+                var options = {
+                    // 规定把请求发送到那个URL
+                    url: "{:url('Home/Card/uploadBcard')}",
+                    // 请求方式
+                    type: "post",
+                    // 服务器响应的数据类型
+                    dataType: "json",
+                    // 请求成功时执行的回调函数
+                    success: function(data, status, xhr) {
+                        if(data.status == 1) {
+                            var data = data.data;
+                            $("input[name=nick_name]").val(data.nick_name);
+                            $("input[name=company]").val(data.company);
+                            $("input[name=position]").val(data.position);
+                            $("input[name=mobile]").val(data.mobile);
+                            $("input[name=email]").val(data.email);
+                            $("input[name=address]").val(data.address);
+                        } else {
+                            mui.toast(data.msg);
+                        }
+                        layer.closeAll();
+                    }
+                };
+                $("#form2").ajaxSubmit(options);
+            });
+            $("#zhanshi,#menu_btn,#yulan,#save,#fengge,#fuzhi,#banner,#music,#chanpin").on('click', function() {
+                var id = $(this).attr('id');
+                var jump_url = ""; //提交完成跳转的地址
+                switch(id) {
+                    case 'fuzhi':
+                        //复制进去
+                        jump_url = "{:url('Home/Card/copyCard')}";
+                        break;
+                    case 'zhanshi':
+                        //展示进去
+                        jump_url = "{:url('Home/Card/showCard')}";
+                        break;
+                    case 'menu_btn':
+                        //菜单按钮
+                        jump_url = "{:url('Home/Card/menuCard')}";
+                        break;
+                    case 'fengge':
+                        jump_url = "{:url('Home/Card/styleCard')}";
+                        break;
+                    case 'yulan':
+                        //预览
+                        jump_url = "{:url('Home/Vhome/card_jump/id/'.$userInfo['id'])}";
+                        break;
+                    case 'banner':
+                        jump_url = "{:url('Home/Card/showBanner')}";
+                        break;
+                    case 'music':
+                        jump_url = "{:url('Home/Card/musicCard')}";
+                        break;
+                    case 'chanpin':
+                        jump_url = "{:url('Home/Chat/product')}";
+                        break;
+                    case 'save':
+                        //保存
+                        break;
+
+                }
+                // console.log(id);
+                // console.log(jump_url);return;
+                if($('#is_map.mui-switch').hasClass('mui-active')) {
+                    $('input[name=is_map]').val(1);
+                } else {
+                    $('input[name=is_map]').val(0);
+                }
+                $('input[name=jump_url]').val(jump_url);
+                $('#form').submit();
+            });
+            // $("#fileUpload0").on("change",function(){
+            //     var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+            //     if (objUrl) {
+            //         $(".zzc_afahfj_img").css({"background-image":'url("'+objUrl+'")'}) ; //将图片路径存入src中，显示出图片
+            //     }
+            // });
+            // $("#fileUpload1").on("change",function(){
+            //     var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+            //     if (objUrl) {
+            //         $("#headimg .zzc_afafh_img").attr("src",objUrl); //将图片路径存入src中，显示出图片
+            //     }
+            // });
+            // $("#fileUpload2").on("change",function(){
+            //     var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+            //     if (objUrl) {
+            //         $("#ewmimg .zzc_afafh_img").attr("src",objUrl); //将图片路径存入src中，显示出图片
+            //     }
+            // });
+            $('.zzc_afahfj_a2').on('click', function() {
+                //背景更换
+                // $('#fileUpload0').click();
+                chooseImage("background");
+            });
+            $('#headimg').on('click', function() {
+                //头像更换
+                chooseImage("head");
+            });
+            $('#ewmimg').on('click', function() {
+                //二维码更换
+                chooseImage("ewm");
+            });
+            $('#bcard').on('click', function() {
+                //头像更换
+                top.location.href = "/Home/Cardwallet/photoCard?type=2";
+            });
+            // 百度地图API功能
+            var map = new BMap.Map("dituContent");
+            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+            var local = new BMap.LocalSearch(map, {
+                renderOptions: {
+                    map: map
+                }
+            });
+            local.search("{$data.address}");
+            $("input[name=address]").keydown(function() {
+                local.search($(this).val());
+            });
+
+            function myFun(result) {
+                var cityName = result.name;
+                map.setCenter(cityName);
+            }
+            $("#get_map").on('click', function() {
+                var geolocation = new BMap.Geolocation(); //实例化浏览器定位对象。
+                geolocation.getCurrentPosition(function(r) { //定位结果对象会传递给r变量
+                    if(this.getStatus() == BMAP_STATUS_SUCCESS) { //通过Geolocation类的getStatus()可以判断是否成功定位。
+                        var mk = new BMap.Marker(r.point); //基于定位的这个点的点位创建marker
+                        map.addOverlay(mk); //将marker作为覆盖物添加到map地图上
+                        map.panTo(r.point); //将地图中心点移动到定位的这个点位置。注意是r.point而不是r对象。
+                        var point = new BMap.Point(r.point.lng, r.point.lat);
+                        var gc = new BMap.Geocoder();
+                        gc.getLocation(point, function(rs) {
+                            var addComp = rs.address;
+                            $("input[name=address]").val(addComp);
+                            local.search(addComp);
+                        });
+                    } else {
+                        alert('failed' + this.getStatus());
+                    }
+                }, {
+                    enableHighAccuracy: true
+                })
+            });
+
+        })
+	</script>
+	<script type="text/javascript">
+        function setting() {
+            top.location.href = '{:url("Home/Trade/select",array("channel"=>1))}';
+        }
+
+        function ValidateValue(textbox) {
+            var IllegalString = "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！ %@#￥……&*（）——|{}【】‘；：”“'。，、？]‘’";
+            var textboxvalue = textbox.value;
+            var index = textboxvalue.length - 1;
+            var s = textbox.value.charAt(index);
+            if(IllegalString.indexOf(s) >= 0) {
+                s = textboxvalue.substring(0, index);
+                textbox.value = s;
+            }
+        }
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

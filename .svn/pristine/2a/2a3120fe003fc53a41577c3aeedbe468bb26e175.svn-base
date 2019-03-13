@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>{$title}</title>
+    <style>
+        body,html{
+            padding-bottom: .5rem;
+        }
+     
+        .header{
+        width: 100%;
+        padding: .05rem .16rem;
+        box-sizing: border-box;
+        box-shadow:0px 2px 4px 0px rgba(242,242,242,0.5);
+    }
+    .header .header-box{
+        width: 100%;
+        height: .3rem;
+        position: relative;
+        background-color: rgba(246,246,246,1);
+    }
+      .header .header-box .header-search{
+          position: absolute;
+          width: 100%;
+          height:100%;
+          left: 0;
+          top: 50%;
+          margin-top: -.15rem;
+          border: 0 ;
+          outline: none;
+          background: #F6F6F6;
+          text-indent: .36rem;
+          font-size: .14rem;
+      }
+
+    .header .header-box img{
+        width: .16rem;
+        height: .16rem;
+        position: absolute;
+        top: 50%;
+        margin-top: -0.08rem;
+        left: .08rem;
+    }
+
+    .options{
+        width: 100%;
+        height: .98rem;
+        border-bottom: 1px solid rgba(246,246,246,1);
+    }
+
+    .options .options-box{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        padding-top: .16rem;
+        box-sizing: border-box;
+    }
+
+      .options .options-box .fl{
+          flex: 1;
+          height: 100%;
+      }
+      .options-box .fl a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+      }
+        .options-box .fl a img{
+            display: block;
+            width: .45rem;
+            height: .45rem;
+            margin: 0 auto;
+            padding-bottom: .05rem;
+        }
+
+        .main{
+            width: 100%;
+        }
+
+        .main .header-nav{
+            width: 100%;
+            height: .42rem;
+        }
+
+         .main .header-nav .fl{
+             width: 40%;
+             height: 100%;
+             position: relative;
+         }
+
+         .main .header-nav .fl .line{
+             width: .03rem;
+             height: .14rem;
+             background: #32CEA0;
+             position: absolute;
+             top: 50%;
+             left: .05rem;
+             margin-top: -0.07rem;
+         }
+
+          .main .header-nav .fl p{
+              width: .8rem;
+              height: .2rem;
+              font-size: .16rem;
+              position: absolute;
+              left: .23rem;
+              top: 50%;
+              margin-top: -0.11rem;
+          }
+
+            .main .header-nav .fr{
+                width: .8rem;
+                height: 100%;
+            }
+
+             .main .header-nav .fr a{
+                 display: block;
+                 width: 100%;
+                 height: 100%;
+                 position: relative;
+                 
+             }
+
+              .main .header-nav .fr a p{
+                  color: #777777;
+                  position: absolute;
+                  width: .42rem;
+                  top: 50%;
+                  right: .35rem;
+                  height: .2rem;
+                  margin-top: -.1rem;
+              }
+
+                .main .header-nav .fr a img{
+                    width: .16rem;
+                    height: .09rem;
+                    position: absolute;
+                    top: 50%;
+                    right: 16px;
+                    margin-top: -0.045rem;
+                }
+
+                .article-box{
+                    width: 100%;
+                    padding: .05rem 0 .05rem .16rem;
+                    box-sizing: border-box;
+                }
+                .article-box li{
+                    width: 100%;
+                    height: 1.12rem;
+                    border-bottom: 1px solid rgba(246,246,246,1);
+                   
+                }
+
+                .article-box li .le{
+                    width: 35%;
+                    height: 100%;
+                }
+                .article-box li .ri{
+                    width:65%;
+                    height: 100%;
+                    padding-left: .12rem;
+                    padding-top: .1rem;
+                    box-sizing: border-box;
+                }
+
+                .article-box li .ri .title{
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    padding-top: .05rem;
+                }
+
+                  .article-box li .le img{
+                      width: 100%;
+                      height: .8rem;
+                      display: block;
+                      margin-top: .1rem;
+                  }
+
+                   .article-box li .ri .time-look{
+                       width:100%;
+                       height: .3rem;
+                       
+                   }
+                   .article-box li .ri .time-look .look{
+                       position: relative;
+                       height: 100%;
+                       width: 40%;
+                       
+                   }
+
+
+                    .article-box li .ri .time-look .time{
+                        height: 100%;
+                        width: 60%;
+                        position: relative;
+                    }
+
+                    .article-box li .ri a{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                   .ri .time-look .look img{
+                       width: .13rem;
+                       height: .09rem;
+                       margin-top: -0.045rem;
+                       display: block;
+                       position: absolute;
+                       top: 50%;
+                   }
+
+                   .ri .time-look .time img{
+                       width: .13rem;
+                       height: .13rem;
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -0.065rem;
+                   }
+
+                    .ri .time-look .lktitle{
+                        width: .4rem;
+                        height: .2rem;
+                        position: absolute;
+                        top: 50%;
+                        left: .2rem;
+                        margin-top: -.1rem;
+                        color: #777777;
+                    }
+
+                .ri .time-look .time_end {
+                    height: .2rem;
+                    position: absolute;
+                    top: 50%;
+                    left: .2rem;
+                    margin-top: -.1rem;
+                    color: #777777;
+                    }
+
+                    .footer-bar{
+                        width: 100%;
+                        height: .5rem;
+                        background: #fff;
+                        box-shadow:0px 1px 2px 3px rgba(242,242,242,0.5);
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                    }
+
+                    .footer-bar .bar{
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                    }
+
+                    .footer-bar .bar li{
+                        flex: 1.2;
+                    }
+
+                    .footer-bar .bar li a{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .footer-bar .bar li a img{
+                        display: block;
+                        width: .16rem;
+                        height: .2rem;
+                        margin: .06rem auto .02rem auto;
+                    }
+
+                     .footer-bar .bar li a .img2{
+                         width: .21rem;
+                         height: .2rem;
+                     }
+                     .footer-bar .bar li a .img3{
+                         width: .2rem;
+                         height: .2rem;
+                     }
+                     .footer-bar .bar li a .img4{
+                         width: .19rem;
+                         height: .19rem;
+                     }
+
+                     .footer-bar .bar li a p{
+                         text-align: center;
+                         color: #C5C5C5;
+                     }
+
+                    .footer-bar .bar li:nth-child(3){
+                        flex: 1.5;
+                    }
+
+                    #Make{
+                        width: .6rem;
+                        height: .4rem;
+                        line-height: .4rem;
+                        font-size: .18rem;
+                        color: #C5C5C5;
+                        background: #EBEBEB;
+                        border: 0;
+                        outline: none;
+                        text-align: center;
+                        margin: .05rem auto 0 auto;
+                        display: block;
+                        border-radius: .2rem;
+                    }
+
+                    .make{
+                        width: 100%;
+                        height: 100%;
+                        position: absolute;
+                        z-index: 999;
+                        top: 0;
+                        left: 0;
+                        background: rgba(246,246,246,0.2);
+                        display: none;
+                       
+                    }
+
+
+                     .make ul{
+                         display: flex;
+                         flex-wrap: wrap;
+                         justify-content: space-around;
+                         margin-top: 1.32rem;
+
+                     }
+
+                    .make ul li{
+                        width: 1.68rem;
+                        height: 1.2rem;
+                        margin-bottom: .16rem;
+                        
+                    }
+
+                     .make .close{
+                         width: .32rem;
+                         height: .32rem;
+                         margin: 0 auto;
+                         margin-top: .7rem;
+                     }
+
+                    .make .close img{
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .make ul li a{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .make ul li a img{
+                        width: 100%;
+                        height: 100%;
+                    }
+    
+    
+    </style>
+</head>
+
+<body>
+    <div class="header vague">
+        <div class="header-box">
+            <input type="search" class="header-search" placeholder="搜索你喜欢的文章">
+            <img src="/Public/Home/images/search.png" alt="">
+        </div>
+    </div>
+    <div class="options vague">
+        <div class="options-box clearfix">
+            <div class="fl">
+                <a href="/index.php?s=/Home/Articlegrab/grab.html">
+                    <img src="/Public/Home/images/wh/Entrance_icon_grab@2x.png" alt="">
+                    <p>抓取文章</p>
+                </a>
+            </div>
+            <div class="fl">
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/Entrance_icon_write@2x.png" alt="">
+                    <p>编写文章</p>
+                </a>
+            </div>
+            <div class="fl">
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/Entrance_icon_my@2x.png" alt="">
+                    <p>我的文章</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main vague">
+        <div class="header-nav">
+            <div class="fl">
+                <div class="line"></div>
+                <p>推荐文章</p>
+            </div>
+            <div class="fr">
+                <a href="javascript:;" class="goo">
+                    <p>全部</p>
+                    <img src="/Public/Home/images/downx.png" alt="">
+                </a>
+            </div>
+        </div>
+        <ul class="article-box">
+            <li class="clearfix">
+                <div class="fl le">
+                    <img src="/Public/Home/images/yuantiao.jpg" alt="">
+                </div>
+                <div class="fl ri">
+                    <a href="javascript:;">
+                        <p class="title">国内三十余载大型媒体争相转载明鑫是一个服务于企业级的产品理念</p>
+                        <div class="time-look clearfix">
+                            <div class="look fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">
+                                <p class="fl lktitle">1200</p>
+                            </div>
+                            <div class="time fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">
+                                <p class="fl time_end">2018-10-16</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="clearfix">
+                <div class="fl le">
+                    <img src="/Public/Home/images/yuantiao.jpg" alt="">
+                </div>
+                <div class="fl ri">
+                    <a href="javascript:;">
+                        <p class="title">国内三十余载大型媒体争相转载明鑫是一个服务于企业级的产品理念</p>
+                        <div class="time-look clearfix">
+                            <div class="look fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">
+                                <p class="fl lktitle">1200</p>
+                            </div>
+                            <div class="time fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">
+                                <p class="fl time_end">2018-10-16</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+            <li class="clearfix">
+                <div class="fl le">
+                    <img src="/Public/Home/images/yuantiao.jpg" alt="">
+                </div>
+                <div class="fl ri">
+                    <a href="javascript:;">
+                        <p class="title">国内三十余载大型媒体争相转载明鑫是一个服务于企业级的产品理念</p>
+                        <div class="time-look clearfix">
+                            <div class="look fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">
+                                <p class="fl lktitle">1200</p>
+                            </div>
+                            <div class="time fl">
+                                <img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">
+                                <p class="fl time_end">2018-10-16</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- 底部 -->
+    <div class="footer-bar vague">
+        <ul class="bar">
+            <li>
+                <a href="javascript:">
+                    <img src="/Public/Home/images/wh/label_icon_article_click@2x.png" alt="">
+                    <p style="color:#32CEA0;">文章</p>
+                </a>
+            </li>
+            <li>
+                <a href="/index.php?s=/Home/Trade/trad.html">
+                    <img class="img2" src="/Public/Home/images/wh/label_icon_Resources_default@2x.png" alt="">
+                    <p>商圈</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <button id="Make">制作</button>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img class="img3" src="/Public/Home/images/wh/table_icon_Template_default@2x.png" alt="">
+                    <p>V网</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img class="img4" src="/Public/Home/images/wh/table_icon_my_default@2x.png" alt="">
+                    <p>我的</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 制作 -->
+    <div class="make">
+        <ul>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/Make_Entrance_V@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/make_entrance_copy@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/make_entrance_poster@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/make_entrance_festival@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/make_entrance_album@2x.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <img src="/Public/Home/images/wh/make_entrace_wallpaper@2x.png" alt="">
+                </a>
+            </li>
+        </ul>
+        <div class="close">
+            <img src="/Public/Home/images/wh/make_icon_close@2x.png" alt="">
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        // 制作
+        $("#Make").on("click", function () {
+            $(".vague").css({
+                "-webkit-filter": "blur(8px)",
+                "-moz-filter": "blur(8px)",
+                "-o-filter": "blur(8px)",
+                "-ms-filter": "blur(8px)"
+            })
+
+            $(".make").show();
+        })
+        $(".make .close").on("click", function () {
+            $(".make").slideUp(500, function () {
+                $(".vague").removeAttr("style");
+            });
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    })
+</script>

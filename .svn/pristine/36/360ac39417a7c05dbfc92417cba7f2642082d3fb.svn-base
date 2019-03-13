@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<title>拍照收纳</title>
+		<link rel="stylesheet" href="__HOME_CSS__/vhome/vwebclip/style_v.css">
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #fff;
+			}
+			
+			.top {
+				width: 100%;
+				height: 7.2rem;
+				padding: 0.55rem 0;
+				background: #f6f6f6;
+			}
+			
+			.t_cen {
+				width: 92%;
+				height: 7.2rem;
+				margin: 0 4% 0.55rem;
+				background: #fff;
+				overflow: hidden;
+				position: relative;
+			}
+			
+			.t_img {
+				width: 100%;
+				height: 4.5rem;
+				text-align: center;
+			}
+			
+			.t_img>img {
+				width: 2.75rem;
+				height: 2.75rem;
+				margin: 1.4rem auto 0;
+			}
+			
+			.t_tit {
+				width: 100%;
+				height: 2.7rem;
+				text-align: center;
+				font-size: 0.75rem;
+				color: #333;
+				font-weight: 550;
+			}
+			
+			.save {
+				width: 100%;
+				height: 2.9rem;
+				background: #f8f8f8;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+			}
+			
+			.saves {
+				width: 100%;
+				height: 2.9rem;
+				background: #f8f8f8;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				display: none;
+			}
+			
+			.s_cen {
+				width: 90%;
+				height: 2rem;
+				background: #32CEA0;
+				opacity: 0.5;
+				border-radius: 0.2rem;
+				margin: 0.45rem auto;
+				line-height: 2rem;
+				color: #fff;
+				font-size: 0.7rem;
+				font-weight: 600;
+				text-align: center;
+			}
+			
+			.tu {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			
+			.tu>img {
+				width: 100%;
+				height: auto;
+			}
+			
+			.changes {
+				width: 4.55rem;
+				height: 1.5rem;
+				background: rgba(0, 0, 0, 0.47);
+				border-radius: 0.75rem;
+				font-size: 0.65rem;
+				color: #FFF;
+				text-align: center;
+				line-height: 1.5rem;
+				font-weight: 600;
+				float: right;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1;
+				display: none;
+			}
+			
+			.load {
+				width: 78%;
+				height: 15.65rem;
+				background: #fff;
+				border-radius: 0.2rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-webkit-transform: translateX(-50%) translateY(-50%);
+				-moz-transform: translateX(-50%) translateY(-50%);
+				-ms-transform: translateX(-50%) translateY(-50%);
+				transform: translateX(-50%) translateY(-50%);
+				z-index: 2;
+				display: none;
+			}
+			
+			.l_up {
+				width: 10rem;
+				height: 10rem;
+				margin: 0.5rem auto 0;
+			}
+			
+			.l_up>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.l_down {
+				width: 100%;
+				height: 5.15rem;
+				line-height: 4.5rem;
+				text-align: center;
+				color: #666;
+				font-size: 0.7rem;
+			}
+			
+			.t_img>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			.changes>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.huan,
+			.shi {
+				width: 100%;
+				height: 100%;
+				font-size: 0.65rem;
+				color: #FFF;
+				font-weight: 600;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			.t_max {
+				width: 100%;
+				height: 100%;
+				background: #fff;
+				z-index: 10;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+			
+			.list {
+				width: 100%;
+				height: 22.5rem;
+				overflow: auto;
+				display: none;
+			}
+			
+			.l_cen {
+				width: 90%;
+				padding: 0 5%;
+				height: 3rem;
+				display: flex;
+				border-bottom: 0.025rem solid rgba(151, 151, 151, 0.13);
+			}
+			
+			.l_left {
+				width: 20%;
+				line-height: 3rem;
+				font-size: 0.75rem;
+				font-weight: 550;
+			}
+			
+			.l_right {
+				width: 80%;
+				height: auto;
+			}
+			
+			.l_right>input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				font-size: 0.7rem;
+				color: #777;
+				text-align: right;
+			}
+			
+			.btn {
+				width: 9.7rem;
+				height: 1.5rem;
+				position: absolute;
+				right: 0.9rem;
+				bottom: 0.55rem;
+			}
+			
+			.again {
+				width: 4.55rem;
+				height: 1.5rem;
+				background: rgba(0, 0, 0, 0.47);
+				border-radius: 0.75rem;
+				font-size: 0.65rem;
+				color: #FFF;
+				text-align: center;
+				line-height: 1.5rem;
+				font-weight: 600;
+				float: right;
+				display: none;
+				margin-left: 0.6rem;
+			}
+			.big_img{
+				position: fixed;
+				top:0;
+				left:0;
+				width: 94%;
+				height: 94%;
+				padding: 3%;
+				background: rgba(0,0,0,0.5);
+				display: none;
+			}
+			.big_imgs{
+				display: block;
+				width: 100%;
+				height: auto;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="t_cen">
+				<div class="tu">
+					<img class="tu_img" src="" alt="" />
+					<div class="btn">
+						<div class="again">
+							<div class="shi">重新识别</div>
+						</div>
+						<div class="changes">
+							<input type="file" accept="image/*" class="bg">
+							<div class="huan">更换照片</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="t_max">
+					<div class="t_img">
+						<input type="file" accept="image/*" id="up">
+						<img src="__HOME_IMAGES__/newvnet/vweb/icon_add@2x.png" alt="" />
+					</div>
+					<div class="t_tit">添加照片</div>
+				</div>
+			</div>
+			<div class="list">
+				<div class="l_cen">
+					<div class="l_left">姓名</div>
+					<div class="l_right">
+						<input class="name" type="text" placeholder="在此输入姓名" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">公司</div>
+					<div class="l_right">
+						<input class="com" type="text" placeholder="在此输入公司" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">手机</div>
+					<div class="l_right">
+						<input class="phone" type="text" placeholder="在此输入手机" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">地址</div>
+					<div class="l_right">
+						<input class="here" type="text" placeholder="在此输入地址" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">邮编</div>
+					<div class="l_right">
+						<input class="pc" type="text" placeholder="在此输入邮编" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">传真</div>
+					<div class="l_right">
+						<input class="fax" type="text" placeholder="在此输入传真" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">邮箱</div>
+					<div class="l_right">
+						<input class="mail" type="text" placeholder="在此输入邮箱" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">网址</div>
+					<div class="l_right">
+						<input class="net" type="text" placeholder="在此输入公网址" />
+					</div>
+				</div>
+				<div class="l_cen">
+					<div class="l_left">QQ</div>
+					<div class="l_right">
+						<input class="qq" type="text" placeholder="在此输入QQ" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mask"></div>
+		<div class="model"></div>
+		<div class="load">
+			<div class="l_up">
+				<img src="__HOME_IMAGES__/newvnet/vweb/dx.gif" alt="" />
+			</div>
+			<div class="l_down">信息识别中</div>
+		</div>
+		<div class="save">
+			<div class="s_cen">点击识别</div>
+		</div>
+		<div class="saves">
+			<div class="s_cen">保存到V网夹</div>
+		</div>
+		<div class="big_img">
+			<img class="big_imgs" src="" alt="" />
+		</div>
+		<input type="hidden" class="ca_img" value="" />
+		<script>
+            //http://mingxin365.com:2001/webdemo/h5/login.html?uname=13524161046&friend=15859729766
+            var unionid = "{$unionid}";
+			var card_id="{$card_id}";
+			var zhimg = ""
+			$("#up,.bg").on("change", function() {
+				var file_img = $(this)[0].files[0];
+				//console.log($("#up")[0].files)
+				var render = new FileReader();
+				render.readAsDataURL(file_img)
+				render.onload = function(res) {
+					var img = res.target.result;
+					var newfile = img.toString();
+					zhimg = newfile.substring(newfile.indexOf(',') + 1);
+
+					$(".t_max").hide();
+					$(".tu_img").attr("src", img);
+					$(".s_cen").css("opacity", "1")
+				}
+			})
+			$(".t_img img").on("click", function() {
+				$("#up").click()
+			})
+			$(".huan").on("click", function() {
+				$(".bg").click()
+			})
+			$(".save,.again").on("click", function() {
+				if($('.tu_img').attr('src') == '') {
+					$(".model").show();
+					$(".model").html("请添加照片");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+
+				}
+				var file_img = $(".tu_img").attr("src");
+				//var unionid = "{$unionid}";
+				console.log(file_img)
+				var formdata = new FormData();
+				formdata.append("img", file_img);
+				formdata.append("start_name", 'Card');
+				formdata.append("unionid", unionid);
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/IndexApi/uploads_img',
+					dataType: 'json',
+					data: formdata,
+					processData: false,
+					contentType: false,
+					success: function(res) {
+						console.log(res)
+						if(res.ResultType == 0) {
+							$(".ca_img").val(res.AppendData);
+
+						}
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+				$.ajax({
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					url: '/index.php?s=/Api/HK/baidu_mp_post',
+					data: {
+						"image": zhimg,
+					},
+					type: "post",
+					dataType: "json",
+					async: true,
+					beforeSend: function(xhr) {
+						$(".load").show();
+						$(".mask").show();
+					},
+					success: function(res) {
+						data = res.words_result;
+						if(!data.hasOwnProperty('NAME')) {
+							data.NAME = '';
+						} else if(!data.hasOwnProperty('COMPANY')) {
+							data.COMPANY = '';
+						} else if(!data.hasOwnProperty('MOBILE')) {
+							data.MOBILE = '';
+						} else if(!data.hasOwnProperty('ADDR')) {
+							data.ADDR = '';
+						} else if(!data.hasOwnProperty('PC')) {
+							data.PC = '';
+						} else if(!data.hasOwnProperty('FAX')) {
+							data.FAX = '';
+						} else if(!data.hasOwnProperty('EMAIL')) {
+							data.EMAIL = '';
+						} else if(!data.hasOwnProperty('URL')) {
+							data.URL = '';
+						} else if(!data.hasOwnProperty('QQ')) {
+							data.QQ = '';
+						}
+						//console.log(data);
+						$(".name").val(data.NAME[0]);
+						$(".com").val(data.COMPANY[0]);
+						$(".phone").val(data.MOBILE[0]);
+						$(".here").val(data.ADDR[0]);
+						$(".pc").val(data.PC[0]);
+						$(".fax").val(data.FAX[0]);
+						$(".mail").val(data.EMAIL[0]);
+						$(".net").val(data.URL[0]);
+						$(".qq").val(data.QQ[0]);
+						$(".load").hide();
+						$(".mask").hide();
+						$(".list").show();
+						$(".save").hide();
+						$(".saves").show();
+						$(".again").show();
+					},
+					fail: function(res) {
+						$(".load").hide();
+						$(".mask").hide();
+
+					}
+				});
+			})
+			$(".saves").on("click", function() {
+
+				var thumb = $(".ca_img").val();
+				var name = $(".name").val();
+				var com = $(".com").val();
+				var phone = $(".phone").val();
+				var here = $(".here").val();
+				var pc = $(".pc").val();
+				var fax = $(".fax").val();
+				var email = $(".mail").val();
+				var net = $(".net").val();
+				var qq = $(".qq").val();
+				//console.log(unionid);
+				$.ajax({
+					type: "post",
+					url: "/index.php?s=/Api/NewCardApi/fill_cards",
+					data: {
+						unionid: unionid,
+						realname: name,
+						telephone: phone,
+						thumb: thumb,
+						company: com,
+						email: email,
+						qq: qq,
+						site: net,
+						address: here,
+						fax: fax,
+						zipcode: pc,
+                        card_id:card_id
+					},
+					success: function(res) {
+						console.log(res)
+						if(res.ResultType == 0) {
+							window.location.href = '/index.php?s=/Home/Vwebclip/index.html'
+						}
+
+					},
+
+				}) 
+			})
+            initData();
+			function initData() {
+				if(card_id==null || card_id==''){
+				    return false;
+				}
+                $.ajax({
+                    type: "post",
+                    url: "/index.php?s=/Api/NewCardApi/cards_detail",
+                    data: {
+                        unionid: unionid,
+                        card_id:card_id
+
+                    },
+                    success: function(res) {
+                        console.log(res)
+                        if(res.ResultType == 0) {
+                         //   site
+                            $(".name").val(res.AppendData.realname);
+                            $(".com").val(res.AppendData.data.company);
+                            $(".phone").val(res.AppendData.data.telephone);
+                            $(".here").val(res.AppendData.data.address);
+                            $(".pc").val(res.AppendData.data.zipcode);
+                           $(".fax").val(res.AppendData.data.fax);
+                            $(".mail").val(res.AppendData.data.email);
+                            $(".net").val(res.AppendData.data.site);
+                            $(".qq").val(res.AppendData.data.qq);
+                            $(".t_max").hide();
+                            $(".s_cen").css("opacity", "1")
+                           $(".tu_img").attr("src", res.AppendData.data.thumb);
+                            $(".load").hide();
+                            $(".mask").hide();
+                            $(".list").show();
+                            $(".save").hide();
+                            $(".saves").show();
+                            $(".again").show();
+                        }
+
+                    },
+
+                })
+            }
+			$(".tu_img").on("click",function(){
+				$(".big_img").show();
+				$(".big_imgs").attr("src",$(".tu_img").attr("src"))
+			})
+			$(".big_img").on("click",function(){
+				$(".big_img").hide();
+			})
+			$(".big_imgs").on("click",function(){
+				$(".big_img").hide();
+			})
+		</script>
+	</body>
+
+</html>

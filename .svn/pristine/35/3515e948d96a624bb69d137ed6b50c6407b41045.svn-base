@@ -1,0 +1,13 @@
+<!--<script src="__ADMIN_JS__/jquery-3.2.1.min.js"></script>-->
+<script src="__ADMIN_JS__/jquery.min.js"></script>
+<script src="__ADMIN_JS__/jquery.form.js"></script>
+
+<script src="__IFRAME__/layuiadmin/layui/layui.all.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laydate.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/layer.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laypage.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laytpl.js"></script>
+
+<script src="__ADMIN_JS__/lunhui.js"></script>
+
+

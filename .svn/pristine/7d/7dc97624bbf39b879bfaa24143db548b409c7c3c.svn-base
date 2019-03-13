@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script> 
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>访客统计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.31rem;
+            background: #40E8B7;
+            position: relative;
+            z-index: 9;
+        }
+
+        .seced {
+            width: 3.21rem;
+            height: 1.55rem;
+            background: #fff;
+            position: absolute;
+            z-index: 10;
+            left: .28rem;
+            top: .39rem;
+            box-shadow: 0px .02rem .07rem 0px rgba(0, 0, 0, 0.13);
+            border-radius: .06rem;
+        }
+
+        .secdmg {
+            width: .6rem;
+            height: .6rem;
+            border-radius: 50%;
+            background: yellow;
+            left: 1.58rem;
+            top: .09rem;
+            z-index: 12;
+            position: absolute;
+        }
+
+        .secdmg img {
+            width: .6rem;
+            height: .6rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .one {
+            width: 100%;
+            height: .2rem;
+            top: .38rem;
+            text-align: center;
+            font-size: .2rem;
+            color: rgba(50, 206, 160, 1);
+            line-height: .2rem;
+            font-family: PingFangSC-Medium;
+            position: absolute;
+        }
+
+        .two {
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(156, 156, 156, 1);
+            line-height: .17rem;
+            position: absolute;
+            top: .63rem;
+            left: 1.33rem;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .dell li {
+            width: .48rem;
+            height: .5rem;
+            float: left;
+            margin-left: 13%;
+        }
+
+        .fore {
+            text-align: center;
+            font-size: .2rem;
+            color: #32CEA0;
+            height: .2rem;
+            margin-left:.12rem;
+        }
+
+        .five {
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #9C9C9C;
+            height: .17rem;
+            line-height: .17rem;
+            position: absolute;
+            margin-left:.03rem;
+        }
+
+        .sixleft {
+            width: .57rem;
+            height: .85rem;
+            position: absolute;
+        }
+        .six{
+            margin:.75rem 0;
+        }
+
+        .sixone {
+            width: 85%;
+            height: .84rem;
+            position: absolute;
+            margin: 0 15%;
+            border-bottom: .01rem solid #979797;
+        }
+
+        .sixrgt {
+            width: .37rem;
+            height: .37rem;
+            left: .15rem;
+            bottom: .2rem;
+            position: absolute;
+        }
+
+        .sixrgt img {
+            width: .37rem;
+            height: .37rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .first {
+            width: 100%;
+            height: .85rem;
+            /* margin: .75rem 0; */
+        }
+
+        .lea {
+            width: .9rem;
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            top: .25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gue {
+            width: 1rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(153, 153, 153, 1);
+            line-height: .17rem;
+            position: absolute;
+            top: .53rem;
+        }
+
+        .fole {
+            width: 1.17rem;
+            height: .16rem;
+            font-size: .11rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(155, 155, 155, 1);
+            line-height: .16rem;
+            position: absolute;
+            top: .25rem;
+            right: .04rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top"></div>
+        <div class="secdmg"><img src="Public/Home/images/slicesrjl/share_iconrjl.png" alt=""></div>
+        <div class="seced">
+            <span class="one">19960419</span>
+            <div class="two">总浏览量</div>
+            <ul class="dell">
+                <li>
+                    <span class="fore">1996</span>
+                    <span class="five">今日访问</span>
+                </li>
+                <li>
+                    <span class="fore">419</span>
+                    <span class="five">昨日访问</span>
+                </li>
+                <li>
+                    <span class="fore">22</span>
+                    <span class="five">转发次数</span>
+                </li>
+            </ul>
+        </div>
+        <div class="six">
+            <div class="first">
+                <div class="sixleft">
+                    <div class="sixrgt"> <img src="Public/Home/images/slicesrjl/Group4.png" alt=""></div>
+                </div>
+                <div class="sixone">
+                    <span class="lea">柳林东</span>
+                    <span class="gue">访问了你的V网</span>
+                    <span class="fole">2018年8月21日 19:00</span>
+                </div>
+            </div>
+            <div class="first">
+                    <div class="sixleft">
+                        <div class="sixrgt"> <img src="Public/Home/images/slicesrjl/Group4.png" alt=""></div>
+                    </div>
+                    <div class="sixone">
+                        <span class="lea">柳林东</span>
+                        <span class="gue">访问了你的V网</span>
+                        <span class="fole">2018年8月21日 19:00</span>
+                    </div>
+                </div>
+                <div class="first">
+                        <div class="sixleft">
+                            <div class="sixrgt"> <img src="Public/Home/images/slicesrjl/Group4.png" alt=""></div>
+                        </div>
+                        <div class="sixone">
+                            <span class="lea">柳林东</span>
+                            <span class="gue">访问了你的V网</span>
+                            <span class="fole">2018年8月21日 19:00</span>
+                        </div>
+                    </div>
+                    <div class="first">
+                            <div class="sixleft">
+                                <div class="sixrgt"> <img src="Public/Home/images/slicesrjl/Group4.png" alt=""></div>
+                            </div>
+                            <div class="sixone">
+                                <span class="lea">柳林东</span>
+                                <span class="gue">访问了你的V网</span>
+                                <span class="fole">2018年8月21日 19:00</span>
+                            </div>
+                        </div>
+        </div>
+    </div>
+</body>
+
+</html>

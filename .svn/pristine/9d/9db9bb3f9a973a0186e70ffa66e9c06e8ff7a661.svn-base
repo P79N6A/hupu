@@ -1,0 +1,13 @@
+<?php
+//phpinfo();
+
+$path = __DIR__;
+
+if(strpos($path,'ublic')){
+    $base_path = '/';
+}else{
+    $base_path = '/public';
+}
+var_dump(__DIR__);
+var_dump(realpath(__DIR__));
+//var_dump(define('APP_ROOT', realpath(__DIR__ . '/../../../') . '/'););

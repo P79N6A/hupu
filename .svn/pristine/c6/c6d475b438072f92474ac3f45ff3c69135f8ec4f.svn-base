@@ -1,0 +1,285 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			footer ul li.on p {
+				background: url(__HOME_CSS__/add/image//dongtai_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+			
+			.dong2 {
+				height: 1.3rem;
+				background: #233239;
+			}
+			
+			.sou2 {
+				float: left;
+				width: 4.5rem;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				background: #565b61;
+				border-radius: 20px;
+				margin-top: 0.3rem;
+				margin-left: 0.2rem;
+			}
+			
+			.sou2 input {
+				width: 3.6rem;
+				height: 0.4rem;
+				font-size: 0.22rem;
+				background: #565b61;
+				border: none;
+				margin-left: 0.2rem;
+			}
+			
+			.sou2 span {
+				display: inline-block;
+				width: 0.4rem;
+				height: 0.4rem;
+				position: absolute;
+				left: 4.1rem;
+				top: 0.4rem;
+				background: url(__HOME_CSS__/add/image//sousbai_icon.png);
+				background-size: 100% 100%;
+			}
+			
+			.erwei {
+				width: 0.4rem;
+				height: 0.4rem;
+				background: url(__HOME_CSS__/add/image//erweim_icon.png);
+				background-size: 100% 100%;
+				float: left;
+				margin-top: 0.4rem;
+				margin-left: 0.3rem;
+			}
+			
+			.jilv {
+				width: 0.35rem;
+				height: 0.4rem;
+				background: url(__HOME_CSS__/add/image//xinjian_icon.png);
+				background-size: 100% 100%;
+				float: left;
+				margin-top: 0.4rem;
+				margin-left: 0.5rem;
+			}
+			
+			.dian {
+				width: 50%;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				text-align: center;
+				float: left;
+				background: #191f28;
+				color: #ccc;
+			}
+			
+			.dian1 {
+				border-right: 1px solid #C0C0C0;
+			}
+			
+			.dianz {
+				color: #fff;
+			}
+			
+			.di1 {}
+			
+			.chengyuan {
+				width: 1rem;
+				text-align: center;
+				float: left;
+				margin-top: 0.2rem;
+			}
+			
+			.chengyuan img {
+				width: 0.7rem;
+				height: 0.7rem;
+				border-radius: 5px;
+			}
+			
+			.chengyuan p {
+				font-size: 0.26rem;
+				margin-top: 0.1rem;
+			}
+			
+			.chengyuan p span {
+				display: inline-block;
+				width: 0.7rem;
+				font-size: 0.22rem;
+				height: 0.26rem;
+				line-height: 0.26rem;
+				background: #2FB3D3;
+				border-radius: 5px;
+				color: #fff;
+				margin-top: 0.1rem;
+			}
+			
+			.tongxunlu h4 {
+				height: 0.6rem;
+				line-height: 0.6rem;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.neir3 i {
+				width: 0.5rem;
+				height: 0.5rem;
+			}
+			
+			.maodian {
+				position: fixed;
+				top: 3.7rem;
+				left: 6.3rem;
+				color: #000000;
+				width: 0.2rem;
+			}
+			
+			.maodian a {
+				color: #999;
+				width: 0.2rem;
+				text-align: center;
+			}
+			
+			.erwm {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				background: rgba(0, 0, 0, 0.6);
+				text-align: center;
+				z-index: 2;
+			}
+			
+			.erbj {
+				width: 4.5rem;
+				margin: 0 auto;
+				margin-top: 1.5rem;
+				background: url(__HOME_CSS__/add/image//erweima_bj.png);
+				background-size: 100% 100%;
+				height: 6.8rem;
+			}
+			
+			.erbj .er_1p {
+				padding-top: 0.58rem;
+				font-size: 0.32rem;
+				color: #fff;
+			}
+			
+			.erbj p span {
+				font-size: 0.26rem
+			}
+			
+			.erbj .img1 {
+				margin-top: 0.1rem;
+				width: 1.4rem;
+				height: 1.4rem;
+				border-radius: 50%;
+				border: 1px solid #fff;
+			}
+			
+			.erbj .img2 {
+				width: 3rem;
+				height: 3rem;
+				margin-top: 0.2rem;
+			}
+			
+			.er_2p {
+				color: #999;
+				margin-top: 0.2rem;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div class="dong">
+			<a href="{:U('Home/User/usercenter')}">
+				<div class="home"></div>
+			</a>
+			<div class="sou">
+				<form action="{:U('Home/Team/moments2')}" method="post">
+					<input type="text" name="keyword" value="{$Think.post.keyword}" placeholder="团队名搜索" />
+					<span onclick="goto(this)"></span>
+				</form>
+			</div>
+			<a href="{:U('Home/Vhome/card_jump')}">
+				<div class="ren"></div>
+			</a>
+		</div>
+
+		<div class="cont">
+			<div class="di1">
+
+				<foreach name="articleS" item="vo">
+					<div class="zhuye">
+						<a href="{:U('Home/Article/previewArticle',array('id'=>$vo['id'],'is_home'=>1))}">
+							<h5>{$vo.title}</h5>
+							<div>
+								<p>{$vo.content}</p>
+								<span><img src="{$vo.thumb}" alt="" /></span>
+							</div>
+						</a>
+					</div>
+				</foreach>
+
+			</div>
+
+		</div>
+
+		<footer>
+			<ul>
+				<li class="on">
+					<a href="{:U('Home/Team/moments2')}">
+						<p></p>
+						<span>动态</span>
+					</a>
+				</li>
+				<li>
+					<a href="{:U('Home/Team/message')}">
+						<p></p>
+						<span>消息</span>
+					</a>
+				</li>
+				<li>
+					<a href="{:U('Home/Team/moments')}">
+						<p></p>
+						<span>团队</span>
+					</a>
+				</li>
+				<li>
+					<a href="{:U('Home/Team/mine')}">
+						<p></p>
+						<span>我的</span>
+					</a>
+				</li>
+			</ul>
+		</footer>
+
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function goto(that) {
+				$(that).closest('form').submit();
+			}
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

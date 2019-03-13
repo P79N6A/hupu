@@ -1,0 +1,475 @@
+<?php
+
+// +----------------------------------------------------------------------
+
+// | 登录控制器
+
+// +----------------------------------------------------------------------
+
+// | Copyright (c) 2016 http://www.zenghao.cc All rights reserved.
+
+// +----------------------------------------------------------------------
+
+// | Author: isum <http://www.zenghao.cc>
+
+// +----------------------------------------------------------------------
+
+namespace Admin\Controller;
+
+
+
+use Think\Controller;
+
+
+
+use Common\Service\MAC;
+
+
+
+
+
+class PublicController extends Controller{
+
+
+
+
+
+    public function login(){
+
+
+
+        if(IS_POST){
+
+            $post = I('post.');
+
+
+
+            if(empty($post['username'])){
+
+                $this->ajaxReturn(array('status'=>1, 'msg'=>'用户名不能为空'));
+
+            }
+
+
+
+            if(empty($post['password'])){
+
+                $this->ajaxReturn(array('status'=>1, 'msg'=>'密码不能为空'));
+
+            }
+
+
+
+
+
+            $adminUser = M('adminUser');
+
+
+
+
+
+            if ($post['type'] == 1){
+
+                $map['username'] = $post['username'];
+
+                $map['vip']  = array('gt',0);
+
+                $map['lock'] = 0;
+
+
+
+                $_result = M("admin_user")->where($map)->find();
+
+            }else{
+
+                $map['username'] = $post['username'];
+
+                $map['vip']  = array('eq',0);
+
+                $map['lock'] = 0;
+
+
+
+                $_result = M("admin_user")->where($map)->find();
+
+            }
+
+
+
+            if($_result){
+
+
+
+                if($_result['password'] == md5(sha1(md5($post['password'])))){
+
+                    $_result['last_login'] = time();
+
+                    $_result['last_ip'] = get_client_ip();
+
+                    session('admin', $_result);
+
+                    $adminUser->save($_result);
+
+                    session(C('USER_AUTH_KEY'), $_result['user_id']);
+
+                    session('username', $_result['username']);
+
+
+
+                    // 超级管理员识别
+
+                    //   C('RBAC_SUPERADMIN') 为admin
+
+                    if($_result['username'] == C('RBAC_SUPERADMIN')){
+
+                        session(C('ADMIN_AUTH_KEY'), true);
+
+                    }else
+
+                    {
+
+                        session(C('ADMIN_AUTH_KEY'), false);
+
+                    }
+
+                    $_SESSION[C('USER_AUTH_KEY')];
+
+                    $rbac=new \Org\Util\Rbac();
+
+
+
+                    //取出用户权限信息
+
+                    $rbac::saveAccessList($_result['user_id']);
+
+
+
+                    if($_result['vip']==1 || $_result['vip']==2){
+
+
+
+//                        $group = $info->where(array('id'=>$result['user_info_id']))->field("id,vip_group_id,nick_name,province_id,city_id")->find();
+
+//                        if($group['vip_group_id'] == 5 || $group['vip_group_id'] == 6){
+
+                        session('address', $_result);
+
+                        $this->ajaxReturn(array('status'=>2, 'msg'=>'登录成功'));
+
+//                        }
+
+                    }
+
+                    if($_result['vip'] == 9){
+
+                        $this->ajaxReturn(array('status'=>3, 'msg'=>'登录成功'));
+
+                    }
+
+                    $this->ajaxReturn(array('status'=>0, 'msg'=>'登录成功'));
+
+                }else{
+
+                    $this->ajaxReturn(array('status'=>1, 'msg'=>'用户名或密码不正确'));
+
+                    // $this->ajaxReturn(array('status'=>3, 'msg'=>md5(sha1(md5($post['password'])))));
+
+                }
+
+            }else{
+
+                $this->ajaxReturn(array('status'=>1, 'msg'=>'会员不存在'));
+
+            }
+
+        }else{
+
+
+
+            $cookie_value = cookie('addr_cookie');
+
+            if ($cookie_value){
+
+                $is_equal = 1;
+
+            }else{
+
+                $is_equal = 2;
+
+            }
+
+            $this->assign('is_equal',$is_equal);
+
+
+
+            $this->display();
+
+        }
+
+    }
+
+
+
+    public function admin_login(){
+
+
+
+        $post = I('post.');
+
+        $where['phone']=$post['phone'];
+
+        $where['type']=$post['type'];
+
+        $where['code']=$post['code'];
+
+        $is = D('Api/MobileCode')->where($where)->order('id desc')->find();
+
+
+
+        $time=time();
+
+
+
+        if(!$is || ($is['expire_time']) < $time){
+
+            $this->ajaxReturn(array('status'=>4, 'msg'=>"验证码错误或过期"));
+
+        }
+
+
+
+        $_result = M("admin_user")->where(['phone'=>$post['phone'],'lock'=>0])->find();
+
+
+
+        if($_result){
+
+
+
+            $_result['last_login'] = time();
+
+            $_result['last_ip'] = get_client_ip();
+
+            session('admin', $_result);
+
+            M("admin_user")->save($_result);
+
+            session(C('USER_AUTH_KEY'), $_result['user_id']);
+
+            session('username', $_result['username']);
+
+
+
+            // 登录成功，存储客户端的cookie，过期时间一天。
+
+            cookie('addr_cookie',1,array('expire'=>3600*24));
+
+
+
+            // 超级管理员识别
+
+            //   C('RBAC_SUPERADMIN') 为admin
+
+            if($_result['username'] == C('RBAC_SUPERADMIN')){
+
+                session(C('ADMIN_AUTH_KEY'), true);
+
+            }else
+
+            {
+
+                session(C('ADMIN_AUTH_KEY'), false);
+
+            }
+
+            $_SESSION[C('USER_AUTH_KEY')];
+
+            $rbac=new \Org\Util\Rbac();
+
+
+
+            //取出用户权限信息
+
+            $rbac::saveAccessList($_result['user_id']);
+
+
+
+            if($_result['vip']==1 || $_result['vip']==2){
+
+                session('address', $_result);
+
+                $this->ajaxReturn(array('status'=>2, 'msg'=>'登录成功'));
+
+            }
+
+
+
+            if($_result['vip'] == 9){
+
+                $this->ajaxReturn(array('status'=>3, 'msg'=>'登录成功'));
+
+            }
+
+
+
+            $this->ajaxReturn(array('status'=>0, 'msg'=>'登录成功'));
+
+
+
+        }else{
+
+            $this->ajaxReturn(array('status'=>1, 'msg'=>'会员不存在'));
+
+        }
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+    public function logout(){
+
+        //session('admin', null);
+
+        session('[destroy]');
+
+        $this->redirect('public/login');
+
+    }
+
+
+
+
+
+
+
+    public function getPhone(){
+
+        $admin_user = I('post.admin_user');
+
+        if(empty($admin_user)){
+
+            $this->ajaxReturn(array('status'=>2, 'msg'=>'用户名不能为空'));
+
+        }
+
+        $user = M("admin_user")->where(['username'=>$admin_user,'vip'=>0])->find();
+
+        if ($user){
+
+            $this->ajaxReturn(array('status'=>1, 'msg'=>'获取手机号成功','data'=>$user['phone']));
+
+        }else{
+
+            $this->ajaxReturn(array('status'=>3, 'msg'=>'该用户不存在'));
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+    public function sendCodeForLogin(){
+
+        //发送手机验证码
+
+        if(IS_POST){
+
+            $res=I("post.");
+
+            $data=D("Api/Member",'Logic')->sendAdminLoginCode($res);
+
+            $this->ajaxReturn($data);
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+    //获取地级市
+
+    public function get_citys(){
+
+        $listObj = M('region');
+
+        $where['top_parentid'] = I('province_id');
+
+        $where['level'] = 2;
+
+        if (in_array(I('province_id'),array(1,2,9,22))) {
+
+            $where['level'] = 3;
+
+        }
+
+        $list = $listObj->where($where)->select();
+
+        $data=array('status'=>0,'city'=>$list);
+
+        header("Content-type: application/json");
+
+        exit(json_encode($data));
+
+    }
+
+
+
+
+
+
+
+    //获取地级县
+
+    public function get_district(){
+
+        $listObj = M('region');
+
+        $where['parent_id'] = I('city_id');
+
+        $where['level'] = 3;
+
+        $list = $listObj->where($where)->select();
+
+        $data=array('status'=>0,'district'=>$list);
+
+        header("Content-type: application/json");
+
+        exit(json_encode($data));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+?>

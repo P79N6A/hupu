@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/template-web.js"></script>
+    <title>投票大厅</title>
+
+    <style>
+        body,html{
+        background:linear-gradient(180deg,rgba(77,205,253,1) 0%,rgba(38,158,249,1) 100%);
+        /* height: 100%; */
+        padding-bottom: .4rem;
+        }
+
+        #content{
+            position: relative;
+        }
+        .header-input{
+        width: 90%;
+        height: .42rem;
+        margin: 0 auto;
+        position: relative;
+        margin-top: .08rem;
+
+
+        }
+
+        ::-webkit-input-placeholder { 
+        color:    #4EB3FF;
+        font-size: .14rem;
+
+
+        }
+
+        input[type="search"]{
+        -webkit-appearance:none;
+        }
+
+        input::-webkit-search-cancel-button {
+        display: none;
+        }
+
+        .header-input input{
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: .04rem;
+        background:rgba(255,255,255,1); 
+        opacity: 0.5;
+        font-size: .14rem;
+        padding-left: 1.1rem;
+        color: #4EB3FF;
+        -webkit-appearance: none;
+
+
+        }
+
+        .header-input img{
+        position: absolute;
+        width: .2rem;
+        height: .2rem;
+        top: 50%;
+        margin-top: -0.1rem;
+        right:.2rem;
+        z-index: 999;
+        }
+
+        .top_ten{
+        width: 3.05rem;
+        height: 1.52rem;
+        margin: 0 auto;
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+        }
+        .top_ten img{
+        width: 100%;
+        height: 100%;
+        }
+
+        .vote_box{
+        width: 3.5rem ;
+        margin: 0 auto;
+        }
+
+
+        .swiper-slide .list li{
+        width: 50%;
+        height: 2rem;
+        margin-bottom: .1rem;
+        padding: 0 .05rem 0 0.05rem;
+        box-sizing: border-box;
+        }
+
+        .swiper-slide .list li .item{
+        background:#fff;
+        height: 100%;
+        border-radius: .08rem;
+        overflow: hidden;
+        text-align: center;
+        }
+
+        .swiper-slide .list li .item .user_imgbox{
+        width: .58rem;
+        height: .58rem;
+        margin: .12rem auto;
+        overflow: hidden;
+        border-radius: 50%;
+
+        }
+
+        .swiper-slide .list li .item .user_imgbox img{
+        width: 100%;
+        height: 100%;
+        }
+
+        .swiper-slide .list li .item .user_name{
+        text-align: center;
+        font-size: .18rem;
+        font-weight: normal;
+        }
+
+        .swiper-slide .list li .item .count_votes{
+        margin-top: .04rem;
+        }
+
+        .swiper-slide .list li .item .count_votes .bottom_bg{
+        width: 1.05rem;
+        height: .05rem;
+        background: url(/Public/Home/images/back_c.png) left center no-repeat; 
+        margin: .02rem auto;
+        border-radius: .02rem;
+        overflow: hidden;
+        }
+
+        .swiper-slide .list li .item .count_votes .bottom_bg .top_bg{
+        background: url(/Public/Home/images/back_b.png) right center repeat-x;
+        width: 0px;
+        height: 100%;
+        border-radius: .02rem;
+        }
+
+        .swiper-slide .list li .item .throw_votes{
+        margin-top: .15rem;
+        color: rgb(74, 176, 255);
+        font-size: .12rem;
+        height: .36rem;
+        line-height: .36rem;
+        position: relative;
+        }
+
+         .swiper-slide .list li .item .throw_votes img{
+             width: .12rem;
+             height: .12rem;
+             position: absolute;
+             top: 50%;
+             margin-top: -0.06rem;
+             left: 30%;
+         }
+
+          .swiper-slide .list li .item .throw_votes span{
+              position: absolute;
+              left: 40%;
+          }
+
+        .swiper-slide .list li .item .throw_votes .throw_btn{
+        width: 1.07rem;
+        height: .36rem;
+        line-height: .36rem;
+        color: #fff;
+        border-radius: .2rem;
+        background:linear-gradient(90deg,rgba(129,216,255,1) 0%,rgba(74,176,255,1) 100%);
+        border: 0;
+        outline: none;
+        position: relative;
+        font-size: .12rem;
+        margin: 0 auto;
+        }
+
+      
+        .swiper-slide .list li .item .throw_votes button img{
+        width: .12rem;
+        height: .12rem;
+        position: absolute;
+        top: 50%;
+        margin-top: -0.06rem;
+        left: .19rem;
+        }
+
+        .model_totas{
+        width: 2.95rem;
+        height: 3.29rem;
+        background: #fff;
+        position: fixed;
+        z-index: 999;
+        border-radius: .08rem;
+        top: 50%;
+        left: 50%;
+        margin-left: -1.475rem;
+        margin-top: -1.645rem;
+        text-align: center;
+        display: none;
+        }
+
+        .model_totas .del_box{
+        width: 100%;
+        height: .3rem;
+        position: relative;
+        }
+
+        .model_totas .del_box img{
+        display: block;
+        width: .12rem;
+        height: .12rem;
+        position: absolute;
+        top: .13rem;
+        right: .14rem
+        }
+
+        .model_totas .throw_box{
+        width: .69rem;
+        height: .77rem;
+        margin: 0 auto;
+        }
+
+        .model_totas .throw_box img{
+        width: 100%;
+        height: 100%;
+        }
+
+        .model_totas a{
+        display: block;
+        width: 1.27rem;
+        height: .41rem;
+        border-radius: .2rem;
+        background:linear-gradient(90deg,rgba(131,217,255,1) 0%,rgba(76,177,255,1) 100%);
+        color: #fff;
+        line-height: .41rem;
+        margin: 0 auto;
+
+        }
+
+        #loadmask{
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        border-radius: .05rem;
+        display: none;
+        }
+
+        #loadmask .loading_box{
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        position: relative;
+
+        }
+
+        #loadmask .loading_box img{
+        display: block;
+        width: .5rem;
+        height: .5rem;
+        top: 30%;
+        left: 50%;
+        position: absolute;
+        margin-left: -0.25rem;
+        }
+
+        #loadmask .loading_box p{
+            color: #fff;
+            font-size: .16rem;
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            top: 45%;
+        }
+
+        .no{
+            width: 1.07rem;
+            height: .36rem;
+            line-height: .36rem;
+            color:rgb(74, 176, 255) ;
+            border-radius: .2rem;
+            background: #fff;
+            border: 0;
+            outline: none;
+            position: relative;
+            font-size: .12rem;
+            margin: 0 auto;
+        }
+
+        .tip{
+            width: 2rem;
+            height:.25rem;
+            line-height: .25rem;
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: .05rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1rem;
+            z-index: 1000;
+            display: none;
+        }
+
+        .rule{
+            width: .56rem;
+            background: rgba(0, 0, 0, 0.29);
+            color: #fff;
+            position: absolute;
+            right: 0;
+            top: .11rem;
+            font-size: .13rem;
+            padding: .04rem 0 0.04rem .1rem;
+            border-radius: .15rem 0 0 .15rem; 
+
+
+        }
+
+        #tab{
+            width: 100%;
+            height: .44rem;
+            background: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            box-shadow:0px -2px 6px 0px rgba(0,0,0,0.05);
+            z-index: 999;
+        }
+
+        #tab .column{
+            width: 50%;
+            height: 100%;
+            line-height: .44rem;
+            text-align: center;
+            
+        }
+
+        #tab .column a{
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+         #tab .column a p{
+            color: #E13455;
+            font-size: .14rem;
+            position: absolute;
+            left: 50%;
+         }
+
+           #tab .column a img{
+            position: absolute;
+            top: 50%;
+            left: 35%;
+            width: .15rem;
+            height: .15rem;
+            margin-top: -0.09rem;
+           }
+
+           .record{
+               width: .7rem;
+               position: fixed;
+               right: 0;
+               bottom: .89rem;
+               z-index: 997;
+               background: #fff;
+               border-radius: .2rem 0 0 .2rem;
+           }
+
+           .record a{
+                font-size: .13rem;
+                color: #DE5448;
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: .05rem .01rem .05rem .05rem;
+                
+           }
+
+           .thorw_rlue{
+               width: 2.95rem;
+               height: 4.12rem;
+               background: #fff;
+               border-radius: .05rem;
+               text-align: center;
+               z-index: 999;
+               position:fixed;
+               top: 50%;
+               left: 50%;
+               margin-top: -2.06rem;
+               margin-left: -1.475rem;
+               display: none;
+           }
+
+           .thorw_rlue p{
+               font-size: .18rem;
+               padding: .3rem 0;
+
+           }
+
+           .thorw_rlue .del_bo{
+                width: .12rem;
+                height: .12rem;
+                position: absolute;
+                top: .13rem;
+                right: .14rem;
+           }
+
+
+
+
+
+            .thorw_rlue .del_bo img{
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+             .thorw_rlue .item{
+                 text-align: left;
+                 margin-bottom: .1rem;
+                 padding: 0 .4rem;
+                 font-size: .14rem;
+
+             }
+
+             #box{
+                 max-height: 3rem;
+                 overflow: scroll;
+             }
+
+    
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <!-- <div class="header-input">
+            <input type="search" id="search" placeholder="请输入姓名搜索">
+            <img src="/Public/Home/images/blue.png" alt="">
+        </div> -->
+        <div class="rule">投票规则</div>
+        <div class="top_ten">
+            <img src="/Public/Home/images/new_ten.png" alt="">
+        </div>
+        <div class="vote_box">
+            <div class="swiper-container">
+                <div id="loadmask">
+                    <div class="loading_box">
+                        <img src="/Public/Home/images/new_load.gif" alt="">
+                        <p>数据加载中...</p>
+                    </div>
+                </div>
+                <div class="swiper-wrapper">
+                    <!-- 轮播图数据 -->
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <div class="model_totas">
+        <div class="del_box"><img src="/Public/Home/images/inco_bianji_de@2x.png" alt=""></div>
+        <div class="throw_box"><img src="/Public/Home/images/success_ck.png" alt=""></div>
+        <p style="font-size:.25rem;padding-top: .05rem;padding-bottom: .25rem;">投票成功</p>
+        <p id="count" style="color:#9E9E9E;width: 2.2rem;margin: 0 auto;padding-bottom: .33rem">恭喜您投票成功，您还获得了一次<span
+                style="color:#4CB0FF">免费抽奖</span>的机会。</p>
+        <a href="javascript:void(0)" id="Continue">继续投票</a>
+    </div>
+    <div class="tip">您今天的投票机会已用完 </div>
+    <!-- 投票规则 -->
+    <div class="thorw_rlue">
+        <div style="position:relative;">
+            <p>投票规则</p>
+            <div id="box">
+                <div class="item">请您踊跃投票并参与抽奖，评选结果将在2018年12月10日洋小秘香港周年庆典现场公布并隆重举行颁奖表彰仪式。</div>
+                <div class="item">投票规划：</div>
+                <div class="item">【参选条件】 明鑫商学院首席讲师、专业讲师和助理讲师。</div>
+                <div class="item">【投票规则】 关注并进入互浦科技公众号，每个手机号每天只能投票一次，一次最多三票。</div>
+                <div class="item">【严禁行为】 如发现恶意刷票行为，将直接取消讲师资格。</div>
+                <div class="item">【抽奖资格】 当天投票完成三票者，有资格参与抽奖。</div>
+                <div class="item">【奖品发放】 所有获奖产品待活动结束后统一发出。</div>
+                <div class="item">【评选依据】 网上投票占50%，综合考评占50%。</div>
+                <div class="item">【投票时间】 2018年10月11日至11月10日。</div>
+                <div class="item">注：活动最终解释权归上海互浦科技有限公司所有。</div>
+            </div>
+            <div class="del_bo">
+                <img src="/Public/Home/images/inco_bianji_de@2x.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- 抽奖排行榜 -->
+    <div class="clearfix" id="tab">
+        <div class="fl column">
+            <a href="/index.php?s=/Home/Vote/rank.html&openid={$openid}">
+                <img src="/Public/Home/images/icon_paihang@3x.png" alt="">
+                <p>排行榜</p>
+            </a>
+        </div>
+        <div class="fl column">
+            <a class="xy" href="/index.php?s=/Home/Vote/draw.html&openid={$openid}">
+                <img src="/Public/Home/images/icon_choujiang@3x.png" alt="">
+                <p>幸运抽奖</p>
+            </a>
+        </div>
+    </div>
+    <!-- 中奖记录 -->
+    <div class="record">
+        <a href="/index.php?s=/Home/Vote/my_prize.html&openid={$openid}">中奖记录</a>
+    </div>
+</body>
+
+</html>
+<script type="text/html" id="thorw_data">
+    {{each list v i}}
+<div class="swiper-slide">
+    <ul class="list clearfix">
+        {{each list[i] v i}}
+        <li class="fl">
+            <div class="item">
+                <div class="user_imgbox"><img src="{{v.u_img_top}}" alt=""></div>
+                <p class="user_name">{{v.u_number}}号--{{v.uname}}</p>
+                <div class="count_votes">
+                <p style="color:#707070">当前获得票:<span style="color:#4CB0FF">{{v.u_vote_num}}票</span></p>
+                <div class="bottom_bg">
+                    <div data-width="{{v.bili}}" class="top_bg"></div>
+                </div>
+                </div>
+                {{if v.isfalg == null}}
+                <div class="throw_votes" data-id="{{v.uuuid}}">
+                    <button class="throw_btn">在线投票</button>
+                </div>
+                {{else}}
+                 <div class="throw_votes">
+                     <button class="no">
+<img class="throw_img" src="/Public/Home/images/success.png" style="display:show" alt="">
+已投票
+                     </button>
+                </div>
+                {{/if}}
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</div>
+{{/each}}
+
+</script>
+<script>
+    var user_id = '{$openid}';
+    var flag = true
+    var num = 1;
+
+    function mypric() {
+        window.location.href = "/index.php?s=/Home/Vote/draw.html&openid={$openid}";
+    }
+    // console.log(user_id)
+    var mySwiper = new Swiper('.swiper-container', {
+        // autoplay: 5000,//可选选项，自动滑动
+        observer: true, //修改swiper自己或子元素时，自动初始化swiper
+        observeParents: true, //修改swiper的父元素时，自动初始化swiper
+        prevButton:'.swiper-button-prev',
+        nextButton:'.swiper-button-next',
+        onSlideNextEnd: function (swiper) {
+            animate();
+            console.log('切换结束了');
+            var index = swiper.activeIndex;
+            // console.log(index+"当前的idnex")
+            var all_index = $(".swiper-wrapper .swiper-slide").length;
+            //    console.log(all_index+"全部的长度")
+            if ((index + 1) == all_index) {
+                console.log("这是最后一张轮播图");
+                if (flag) {
+                    flag = false;
+                    num += 1;
+                    $.ajax({
+                        type: "post",
+                        url: "/index.php?s=/Api/Vote/f_vote_user",
+                        data: {
+                            openid: user_id,
+                            n: num,
+                            s: 8,
+                            // dname: search_text
+                        },
+                        beforeSend: function () {
+                            $("#loadmask").show();
+                            mySwiper.lockSwipes();
+                        },
+                        success: function (res) {
+                            $("#loadmask").hide();
+                            mySwiper.unlockSwipes();
+                            flag = true;
+                            if (res.ResultType == 0 && res.AppendData.list.length == 0) {
+                                console.log("没有数据了,只执行一次")
+                                flag = false;
+                            }
+                            console.log(res)
+                            var two_list = res.AppendData.list;
+
+                            for (var a in two_list) {
+                                for (var b in res.AppendData.uuid) {
+
+                                    if (two_list[a].uuuid == res.AppendData.uuid[b].vuuid) {
+                                        two_list[a].isfalg = res.AppendData.uuid[b].vuuid;
+                                
+                                    }
+                                }
+
+                            }
+
+                            console.log(two_list)
+                            var new_list = [];
+                            $.each(two_list, function (i, e) {
+                                var bili = (e.u_vote_num / max_num) * 100;
+                                e.bili = bili;
+                                var page = Math.floor(i / 4);
+                                if (!new_list[page]) {
+                                    new_list[page] = []
+                                }
+                                new_list[page].push(e)
+
+                            })
+                            console.log(new_list)
+                            res.AppendData.list = new_list;
+                            $(".swiper-wrapper").append(template('thorw_data', res.AppendData))
+                            ends();
+
+                        },
+                        error: function () {
+                            $("#loadmask").hide();
+                            mySwiper.unlockSwipes();
+                             ends();
+                        }
+                    })
+
+
+                }
+
+            }
+
+        }
+
+    })
+
+    var max_num;
+    $.ajax({
+        type: "post",
+        url: "/index.php?s=/Api/Vote/f_vote_user",
+        data: {
+            n: 1,
+            s: 8,
+            openid: user_id
+        },
+        success: function (res) {
+            // console.log(res)
+            max_num = parseInt(res.AppendData.maxs.u_vote_num);
+            max_num = max_num+(max_num * 0.1);
+            var two_list = res.AppendData.list;
+            for (var a in two_list) {
+                for (var b in res.AppendData.uuid) {
+
+                    if (two_list[a].uuuid == res.AppendData.uuid[b].vuuid) {
+                        two_list[a].isfalg = res.AppendData.uuid[b].vuuid;
+                       
+                    }
+                }
+
+            }
+            console.log(two_list)
+            var new_list = [];
+            $.each(two_list, function (i, e) {
+                var bili = (e.u_vote_num / max_num) * 100;
+                e.bili = bili;
+                var page = Math.floor(i / 4);
+                if (!new_list[page]) {
+                    new_list[page] = []
+                }
+                new_list[page].push(e)
+
+            })
+            console.log(new_list)
+            res.AppendData.list = new_list;
+            console.log(res)
+            $(".swiper-wrapper").html(template('thorw_data', res.AppendData))
+            animate();
+
+        }
+    })
+
+    function animate() {
+        $(".bottom_bg .top_bg").each(function (i, e) {
+            var width = parseInt($(e).attr("data-width"));
+            $(this).animate({
+                width: width + '%'
+            }, 800);
+
+        })
+
+    }
+
+
+
+    $(".swiper-wrapper").on("click", ".throw_btn", function () {
+        var that = $(this);
+        var throw_id = $(this).parent().attr("data-id");
+        // console.log(throw_id)
+        var thorw_count = that.parent().prev().find("span");
+        var newarr = thorw_count.text().split('票');
+        var count = newarr[0];
+        console.log(count)
+
+        $.ajax({
+            url: "/index.php?s=/Api/Vote/user_vote_log",
+            type: "post",
+            data: {
+                openid: user_id,
+                uuuid: throw_id
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var newcount = parseInt(count) + 1
+                    thorw_count.text(newcount+'票')
+                    if (res.AppendData == 1 && res.Message == '投票成功') {
+                        $("#count").html('恭喜您投票成功，您还有两次的投票机会');
+                        $(".mask").show();
+                        $(".model_totas").show();
+                        that.css({
+                            'display': 'block',
+                            'background': '#fff',
+                            'color': '#4AB0FF'
+                        }).parent().removeAttr('data-id').html(
+                            '<img class="throw_img" src="/Public/Home/images/success.png" alt=""> <span>投票成功</span>'
+                        )
+                    } else if (res.AppendData == 2 && res.Message == '投票成功') {
+                          $(".mask").show();
+                            $(".model_totas").html(
+                                '<div class="del_box"><img src="/Public/Home/images/inco_bianji_de@2x.png" alt=""></div><div class="throw_box"><img src="/Public/Home/images/success_ck.png" alt=""></div><p style="font-size:.25rem;padding-top: .05rem;padding-bottom: .25rem;">投票成功</p><p id="count" style="color:#9E9E9E;width: 2.2rem;margin: 0 auto;padding-bottom: .33rem">恭喜您投票成功，您还有两次的投票机会</p><a href="javascript:void(0)" id="Continue">继续投票</a>'
+                            ).show();
+                            $("#count").html('恭喜您投票成功，您还有一次的投票机会');
+                        that.css({
+                            'display': 'block',
+                            'background': '#fff',
+                            'color': '#4AB0FF'
+                        }).parent().removeAttr('data-id').html(
+                            '<img class="throw_img" src="/Public/Home/images/success.png" alt=""><span>投票成功</span>'
+                        )
+                    } else {
+                                $(".mask").show();
+                               $(".model_totas").html(
+                                '<div class="del_box"><img src="/Public/Home/images/inco_bianji_de@2x.png" alt=""></div><div class="throw_box"><img src="/Public/Home/images/success_ck.png" alt=""></div><p style="font-size:.25rem;padding-top: .05rem;padding-bottom: .25rem;">投票成功</p><p id="count" style="color:#9E9E9E;width: 2.2rem;margin: 0 auto;padding-bottom: .33rem">恭喜您投票成功，您还有两次的投票机会</p><a href="javascript:void(0)" id="Continue">继续投票</a>'
+                            ).show();
+                            $("#count").html('恭喜您投票成功，您还获得了一次<span style="color:#4CB0FF">免费抽奖</span>的机会。');
+                            $("#Continue").html('点击领取')
+                            $("#Continue").attr("href","/index.php?s=/Home/Vote/draw.html&openid=" + user_id + "");
+                        that.css({
+                            'display': 'block',
+                            'background': '#fff',
+                            'color': '#4AB0FF'
+                        }).parent().removeAttr('data-id').html(
+                            '<img class="throw_img" src="/Public/Home/images/success.png" alt=""><span>投票成功</span>'
+                        )
+                    }
+
+                } else if(res.ResultType==3 && res.Message=="活动已截止"){
+                    alert("活动已截止");
+                }
+                else {
+                  $(".mask").show();
+                        $(".model_totas").html(
+                            '<div class="del_box"><img src="/Public/Home/images/inco_bianji_de@2x.png" alt=""></div><h5 style="margin-top:.1rem;margin-bottom:.47rem;">温馨提示</h5><p style="color:#9e9e9e;margin-bottom:1.2rem;padding:0 .2rem;">每人每天只有三次投票机会,不能重复投票同一人。</p><button id="know" style="width:1.27rem;height:.41rem;text-align: center;line-height: .41rem;background:linear-gradient(90deg,rgba(131,217,255,1) 0%,rgba(76,177,255,1) 100%);color: #fff;margin: 0 auto;border:0;outline:none;border-radius: .2rem;">我知道</button>'
+                        )
+                        $(".model_totas").show();
+                }
+
+
+
+            }
+        })
+    })
+
+    $(".model_totas").on("click", '.del_box', function () {
+        $(".mask").hide();
+        $(".model_totas").hide();
+    })
+
+
+    //三次投票完了关闭
+    $(".model_totas").on("click"," #know",function(){
+        $(".mask").hide();
+        $(".model_totas").hide();
+    })
+    //继续投票
+    $(".model_totas").on("click","#Continue", function () {
+        $(".mask").hide();
+        $(".model_totas").hide();
+    })
+
+    //抽奖规则
+    $(".rule").on("click",function(){
+         $(".thorw_rlue").show();
+          $(".mask").show();
+    })
+    $(".thorw_rlue").on("click",".del_bo",function(){
+      $(".thorw_rlue").hide();
+      $(".mask").hide();
+    })
+
+
+
+  
+    var number = 0;
+    function ends (){
+        var get_time = Math.round(new Date() / 1000);  //获取当前时间戳
+        var end_time = 1541865600; //结束时间戳
+        console.log(get_time)
+        if(get_time >= end_time){
+            number++;
+            if(number == 1){
+                alert('投票活动已结束');
+            }
+            $('.throw_btn').css('background','#ccc').attr('disabled','disabled');
+            $('.record a').attr('href','javascript:;') //中奖记录禁止跳转了
+            $('.column .xy').attr('href','javascript:;') //禁止跳转页面了
+            clearInterval(timer)
+            
+        }
+    }
+
+
+    var timer = setInterval(ends,1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // var search_text = '';
+    // $("#search").on("keyup", function (e) {
+    //     search_text = $(this).val();
+    //     if (e.keyCode == '13') {
+
+    //         $.ajax({
+    //             url: "/index.php?s=/Api/Vote/f_vote_user",
+    //             type: "post",
+    //             data: {
+    //                 dname: search_text,
+    //                 s: 8
+    //             },
+    //             success: function (res) {
+    //                 console.log(res)
+    //                 var two_list = res.AppendData.list;
+    //                 for (var a in two_list) {
+    //                     for (var b in res.AppendData.uuid) {
+
+    //                         if (two_list[a].uuuid == res.AppendData.uuid[b].vuuid) {
+    //                             two_list[a].isfalg = res.AppendData.uuid[b].vuuid;
+    //                             break;
+    //                         }
+    //                     }
+
+    //                 }
+    //                 console.log(two_list)
+    //                 var new_list = [];
+    //                 $.each(two_list, function (i, e) {
+    //                     var bili = (e.u_vote_num / max_num) * 100;
+    //                     e.bili = bili;
+    //                     var page = Math.floor(i / 4);
+    //                     if (!new_list[page]) {
+    //                         new_list[page] = []
+    //                     }
+    //                     new_list[page].push(e)
+
+    //                 })
+    //                 console.log(new_list)
+    //                 res.AppendData.list = new_list;
+    //                 console.log(res)
+    //                 $(".swiper-wrapper").html(template('thorw_data', res.AppendData))
+    //                 animate();
+
+    //             }
+    //         })
+    //     }
+    // })
+</script>
+
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>

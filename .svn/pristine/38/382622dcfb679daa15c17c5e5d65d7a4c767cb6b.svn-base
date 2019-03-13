@@ -1,0 +1,42 @@
+<?php
+namespace app\api\controller;
+use app\common\controller\ApiBase;
+
+
+class Capital extends  ApiBase 
+{
+    /**
+     *  搜索V网
+     */
+    public function consume()
+    {
+        if(IS_POST)
+        {
+            $res = $this->request->post();
+            $user_id = $this->userInfo['id'];
+            $map['page'] = $res['page'] ? $res['page'] : 1;
+            $map['pageNum'] = 15;
+            $map['user_id'] = $user_id;
+
+            $consume_list = D("Api/CapitalLog",'Logic')->getConsume($map);
+            foreach ($consume_list as $key=>$value){
+                $consume_list[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
+                if ($value['type'] == 1){
+                    $consume_list[$key]['type'] = '共享广告';
+                }
+            }
+
+            if ($consume_list){
+                $this->array_return['ResultType'] = self::__OK__;
+                $this->array_return['Message'] = "操作成功";
+                $this->array_return['AppendData'] = $consume_list;
+            }else{
+                return json(['ResultType'=>self::__ERROR4__,'Message'=>"未查询到数据"]);
+            }
+            return json($this->array_return);
+        }else{
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"请求类型错误"]);
+        }
+    }
+
+}

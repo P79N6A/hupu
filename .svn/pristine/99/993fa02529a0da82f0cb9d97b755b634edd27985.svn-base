@@ -1,0 +1,290 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>{$title}</h4>
+            <a href="{:U('Article/systemArticleList')}">
+                <button class="btn btn-default"><i class="fa fa-level-up"></i>返回</button>
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="table-margin">
+        <form action="{:U()}" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{$res.id}" />
+            <table class="table table-hover contact-template-form">
+                <tbody>
+                <tr>
+                    <td width="20%" align="right">文章标题：</td>
+                    <td>
+                        <input type="text" name="title" class="form-control w-300" placeholder="" value="{$res.title}">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" align="right">内容：</td>
+                    <td>
+                        <script id="container" name="content" type="text/plain">{$res.content}</script>
+                    </td>
+                </tr>
+                <!--<tr>-->
+                <!--<td width="20%" align="right">是否视频教程</td>-->
+                <!--<td>-->
+                <!--<input type="checkbox" name="is_video" value="1"   <if condition="$res['is_video'] == 1">checked</if> id="">-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="__ADMIN_JS__/ueditor/ueditor.config.js?v=2017516"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="__ADMIN_JS__/ueditor/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var ue = UE.getEditor('container', {
+                        initialFrameWidth:750,
+                        initialFrameHeight:300,
+                        autoHeightEnabled:true,
+                    });
+                </script>
+                <tr>
+                    <td width="20%" align="right">海报背景图：</td>
+                    <td>
+                        <img src="{$res.cover_img}" alt="" id="select_img" width="20%" style="margin-bottom:-7px;">
+                        <input type="hidden" name="pic" value="{$res.pic}">
+                        <input type="file" name="pic" id="upload">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" align="right">文章分类：</td>
+                    <td>
+                        <select name="type_id" id="">
+                            <foreach name="article_type" item="gt">
+                                <option value="{$gt.id}" <if condition="$res['type_id'] == $gt['id']">selected</if>>{$gt.name}</option>
+                            </foreach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%"></td>
+                    <td>
+                        <button class="btn btn-primary">提 交</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <script>
+        $(function() {
+            $("#upload").on("change",function(){
+                var objUrl = getObjectURL(this.files[0]) ; //获取图片的路径，该路径不是图片在本地的路径
+                if (objUrl) {
+                    $("#select_img").attr("src", objUrl) ; //将图片路径存入src中，显示出图片
+                }
+            });
+        });
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+    </script>
+</block>
+
+
+
+
+
+
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>新增</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="add" id="add" method="post" action="{:url('add')}">
+
+
+                        <!--<div class="hr-line-dashed"></div>-->
+                        <!--<div class="form-group">-->
+                        <!--<label class="col-sm-2 control-label">图片上传：</label>-->
+                        <!--<div class="input-group col-sm-4">-->
+                        <!--<div class="layui-upload">-->
+                        <!--<button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>-->
+                        <!--<button type="button" class="layui-btn" id="test9">开始上传</button>-->
+                        <!--</div>-->
+
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图片类型：</label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b chosen-select" name="cid" id="cid">
+                                    <option value="">==请选择==</option>
+
+                                    {foreach name="datalist" item="vo"}
+                                    <option value="{$vo.id}">{$vo.classname}</option>
+                                    {/foreach}
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">照片名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="title" type="text" class="form-control" name="title" value="">
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">图片：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="hidden" id="service_pic" name="picname" value="">
+                                <div id="fileList" class="uploader-list" style="float:right"></div>
+                                <button type="button" class="layui-btn" id="picname" style="float:left">
+                                    上传图片
+                                </button>
+                                <div style="width:50%;color: #999;margin-left:115px;margin-top:-15px;">
+                                    建议图片尺寸为20*25
+                                </div>
+                                <img id="img_data"  style="float:left;    width: 301px;margin-left: 150px;margin-top: 0px;" src="/static/admin/images/no_img.jpg"/>
+                            </div>
+                        </div>
+
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 添加</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+
+    layui.use(['upload', 'laydate'], function () {
+        var upload = layui.upload
+            , laydate = layui.laydate;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#picname' //绑定元素
+            , url: "/admin/Upload/uploadImage" //上传接口
+            // , data: {'position':'images'}
+            // , data: {'position': '/images'}
+            , before: function (obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                console.log(obj);
+                layer.load(); //上传loading
+            }
+            , done: function (res) {
+                console.log(res);
+                $("#service_pic").val(res);
+                $("#img_data").attr('src', '/uploads/images/' + res).show();
+                layer.closeAll('loading'); //关闭loading
+            }
+            , error: function (index, upload) {
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        laydate.render({
+            elem: '#datetime' //指定元素
+        });
+    });
+
+    $(function () {
+        $('#add').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm() {
+            if ('' == $.trim($('#cid').val())) {
+                layer.msg('请选择图片类型', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            //
+            if ('' == $.trim($('#service_pic').val())) {
+                layer.msg('请上传图片', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            //
+            // if ('' == $.trim($('#service_pic').val())) {
+            //     layer.msg('请上传服务设施图片', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+            //         layer.close(index);
+            //     });
+            //     return false;
+            // }
+        }
+
+
+        function complete(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    window.history.go(-1);
+                    // window.location.href="{:url('service/index')}";
+                });
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1});
+                return false;
+            }
+        }
+
+    });
+
+
+    //IOS开关样式配置
+    var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+</script>
+
+</body>
+</html>

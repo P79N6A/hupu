@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分享</title>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <style>
+              body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #f6f6f7;
+            height: 100%;
+        }
+        
+           #content{
+            width: 100%;
+            overflow: hidden;
+            background: #fff;
+             height: 100%;
+        }
+
+        .title{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 1rem;
+            height: 4.5rem;
+        }
+
+        .ulbox li{
+            width: 20%;
+            height: 3rem;
+            text-align: center;
+        }
+
+        .ulbox li p{
+            font-size: 0.6rem;
+        }
+
+        .ulbox li img{
+            width: 70%;
+        }
+
+        .share{
+            height: 2rem;
+            line-height: 2rem;
+            border-top: 1px solid #eee;
+            text-indent: 0.5rem;
+            font-size: 0.7rem;
+            
+        }
+
+        .share_box{
+            border-top: 1px solid #eee;
+            height: 2rem;
+            padding: 0.5rem 0.5rem ;
+        }
+
+        .share_box input{
+            border: 0;
+            outline: none;
+            background: #fafafa;
+            height: 100%;
+            width: 100%;
+            text-indent: 0.5rem;
+        }
+
+        .describe{
+            height: 6rem;
+            width: 100%;
+            padding: 0.5rem 0.5rem;
+            box-sizing: border-box;
+            border-bottom: 1px solid #eee;
+        }
+
+        .describe .fl{
+            width: 30%;
+            height: 100%;
+            position: relative;
+
+        }
+        .describe .fl img{
+            width: 5rem;
+            height: 100px;
+        }
+
+        .describe input{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .describe .fr{
+            width: 67%;
+
+        }
+
+         .describe .fr textarea{
+             width: 100%;
+             border: 0;
+             outline: none;
+             resize:none; 
+             border: 1px solid #eee;
+             height: 5rem;
+             font-size: 0.8rem;
+             background: #f6f6f7;
+             padding: 0.5rem 0.5rem;
+             box-sizing: border-box;
+         }
+
+         .tips{
+             height: 8rem;
+             padding: 0.5rem 0.5rem;
+         }
+
+         .tips .fl{
+            font-size: 0.7rem;
+            color: #666;
+         }
+
+         .tipbox{
+             width: 10rem;
+             height: 100%;
+         }
+
+         .tipbox img{
+             width: 80%;
+             margin-left: 2rem;
+            
+         }
+
+            .fx{
+              width: 100%;
+              position: fixed;
+              bottom: 0;
+              left: 0;
+              
+          }
+
+           .fx button{
+               width: 50%;
+               height: 2.5rem;
+               border: 0;
+           }
+
+            .fx .yl{
+               background: #eee;
+           }
+            .fx .confirm{
+                color: #fff;
+                background: #2FB3D3;
+            }
+                 .save_check{
+                 width: 8rem;
+                 height: 1.8rem;
+                 line-height: 1.8rem;
+                 color: #fff;
+                 font-size: 0.9rem;
+                 background:rgba(0,0,0,.5);
+                 position: fixed;
+                 bottom: 4rem;
+                 left: 50%;
+                 margin-left: -4rem;
+                 text-align: center;
+                 border-radius: 3px;
+                 display: none;
+             }
+
+
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="title">
+            <ul class="ulbox clearfix">
+                <li class="fl">
+                    <a id="href_one" href="index.php?s=/Home/Holidaycard/grats">
+                        <img src="/Public/Home/images/h_icon_1.png" alt="">
+                        <p>贺词</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_two" href="index.php?s=/Home/Holidaycard/beijing">
+                        <img src="/Public/Home/images/h_icon_2.png" alt="">
+                        <p>背景</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_three" href="index.php?s=/Home/Holidaycard/music">
+                        <img src="/Public/Home/images/h_icon_3.png" alt="">
+                        <p>音乐</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_four" href="index.php?s=/Home/Holidaycard/share">
+                        <img src="/Public/Home/images/h_icon_4_on.png" alt="">
+                        <p>分享</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_five" href="index.php?s=/Home/Holidaycard/layout">
+                        <img src="/Public/Home/images/h_icon_5.png" alt="">
+                        <p>布局</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="share">
+            分享设置
+        </div>
+        <div class="user_shares">
+            <!-- <div class="share_box">
+                <input type="text" placeholder="请输入分享的标题">
+            </div>
+            <div class="describe clearfix">
+                <div class="fl">
+                    <img src="__HOME_IMAGES__/timg.jpg" alt="">
+                    <input type="file" value="">
+                </div>
+                <div class="fr">
+                    <textarea placeholder="请输入描述"></textarea>
+                </div>
+            </div> -->
+        </div>
+        <div class="tips clearfix">
+            <div class="fl">
+                <p>您将贺卡分享给别人时</p>
+                <p>对方看到的封面</p>
+                <span style="color:#2fb3d3;display:inline-block;margin-top:0.5rem;">右侧为示例</span>
+            </div>
+            <div class="fl tipbox">
+                <img src="/Public/Home/images/test.png" alt="">
+            </div>
+        </div>
+        <div class="fx clearfix">
+            <button class="yl fl">预览</button>
+            <button class="confirm fl">保存</button>
+        </div>
+    </div>
+    <div class="save_check">保存成功</div>
+</body>
+</html>
+<script type="text/html" id="user_share">
+    {{each AppendData v i}}
+      <div class="share_box">
+            <input class="share_title" type="text" placeholder="请输入分享的标题" value="{{v.share_title}}">
+            </div>
+            <div class="describe clearfix">
+            <div class="fl">
+                    <img id="backimg" src="{{v.share_thumb}}" alt="">
+                    <input id="imgfile" type="file" value="" accept="image/*">
+            </div>
+            <div class="fr">
+                <textarea placeholder="请输入描述">{{v.share_content}}</textarea>
+            </div>
+    </div>
+    {{/each}}
+</script>
+<script>
+    var id= '{$id}';
+    var sltimg;
+    $('body').height($('body')[0].clientHeight);
+       function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return '';//便于容错处理
+        }
+
+        var gid = GetQueryString("gid");
+        console.log(gid)
+
+        $("#href_one").attr("href", "index.php?s=/Home/Holidaycard/grats&gid=" + gid + "");
+        $("#href_two").attr("href", "index.php?s=/Home/Holidaycard/beijing&gid=" + gid + "");
+        $("#href_three").attr("href", "index.php?s=/Home/Holidaycard/music&gid=" + gid + "");
+        $("#href_four").attr("href", "index.php?s=/Home/Holidaycard/share&gid=" + gid + "");
+        $("#href_five").attr("href", "index.php?s=/Home/Holidaycard/layout&gid=" + gid + "");
+
+     $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IndexApi/get_gcard",
+            data: {
+                id: id,
+                cardid: gid,
+            },
+            success: function (res) {
+                console.log(res)
+                $(".user_shares").html(template("user_share",res));
+                
+            }
+        });
+        var imgsrc;
+        $(".user_shares").on("change","#imgfile",function(){
+                if(window.FileReader){
+                    var filepath = $(this).val();
+                    var file = this.files[0];
+                    var render = new FileReader();
+                    render.readAsDataURL(file);
+                    render.onload = function(e){
+                        imgsrc = e.target.result
+                        console.log(e)
+                        $("#backimg").attr("src", imgsrc);
+
+                        $.ajax({
+                            url:"index.php?s=/Api/IndexApi/uploads_img",
+                            type:"post",
+                            data:{
+                                id:id,
+                                img: imgsrc,
+                                start_name: "share_img"
+
+                            },
+                            success:function(res){
+                                console.log(res);
+                                sltimg = res.AppendData;
+
+                            }
+                        })
+                    }
+
+                }else{
+                    alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+                }
+
+        })
+
+        $(".confirm").on("click",function(){
+           var share_title = $(".share_title").val();
+           var share_content = $("textarea").val();
+            
+            $.ajax({
+                url:"index.php?s=/Api/IndexApi/addGcard",
+                type:"post",
+                data:{
+                    id:id,
+                    card_id: gid,
+                    share_title: share_title,
+                    share_content: share_content,
+                    share_thumb: sltimg
+                },
+                success:function(res){
+                    console.log(res)
+                    $(".save_check").text("保存成功").stop(true).fadeIn(500);
+                    $(".save_check").fadeOut(2000);
+
+                }
+            });
+
+
+
+        })
+
+          $(".yl").on("click", function () {
+                location.href = "index.php?s=/Home/Holidaycard/showview/gid/" + gid + "/id/" + id + "";
+            })
+
+
+
+
+
+
+
+</script>

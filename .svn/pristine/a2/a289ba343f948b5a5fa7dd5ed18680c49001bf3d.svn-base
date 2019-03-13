@@ -1,0 +1,99 @@
+<?php
+
+namespace app\admin\model;
+
+use think\Model;
+
+/**
+ * Created by PhpStorm.
+ * User: darren
+ * Date: 2019-01-15
+ * Time: 15:35
+ */
+
+class Common extends Model{
+
+    /**
+     * 根据搜索条件获取用户列表信息
+     */
+    public function getMemberByWhere($map, $Nowpage, $limits)
+    {
+        $pk = $this->pk;
+        return $this->where($map)->order($pk.' desc')
+            ->page($Nowpage, $limits)
+            ->select();
+    }
+
+    /**
+     * 根据搜索条件获取所有的用户数量
+     * @param $where
+     */
+    public function getAllCountByWhere($map)
+    {
+        return $this->where($map)->count();
+    }
+
+
+    /**
+     * 根据id获取会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOneMember($id)
+    {
+        return $this->find($id);
+    }
+
+    /**
+     * 根据条件获取单条会员信息
+     * @param $id
+     * @return array|false|\PDOStatement|string|Model
+     */
+    public function getOnesMember($map)
+    {
+        return $this->where($map)->find();
+    }
+
+
+    /**
+     * 插入信息
+     */
+    public function insertMember($param)
+    {
+        try {
+            if(!is_array($param)){
+                $param = json_decode($param);
+            }
+            $result = $this->allowField(true)->save($param);
+            if (false === $result) {
+                return ['code' => 0, 'data' => '', 'msg' => $this->getError()];
+            } else {
+                return ['code' => 1, 'data' => '', 'msg' => '添加成功'];
+            }
+        } catch (\Exception $e) {
+            return ['code' => -1, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+
+
+    /**
+     * 删除会员信息
+     * @param $id
+     * @return array
+     */
+    public function delMember($id,$pk='id')
+    {
+        //注意这里是假删
+        try {
+            $map['del'] = 1;
+            $this->save($map, [$pk => $id]);
+            return ['code' => 1, 'data' => '', 'msg' => '删除成功'];
+        } catch (\Exception $e) {
+            return ['code' => 0, 'data' => '', 'msg' => $e->getMessage()];
+        }
+    }
+
+
+}

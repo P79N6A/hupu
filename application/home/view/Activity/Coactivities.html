@@ -1,0 +1,147 @@
+<extend name="./base" />
+<block name="css_extend">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <script src="__HOME_JS__/rem.js"></script>
+        <link rel="stylesheet" href="__HOME_CSS__/rjl/Coactivities.css">
+        <title>添加活动</title>
+    </head>
+</block>
+<block name="body">
+
+    <body>
+        <div class="conter">
+            <div class="first">
+            </div>
+
+            <div class="seccond">
+                <div class="sec_tit">
+                    <span>报名表</span>
+                </div>
+                <div class="bmlist">
+
+                </div>
+
+            </div>
+
+            <div class="rjl_thir">
+                <a href="javascript:;">提交</a>
+                <!-- /index.php?s=/Home/Activity/Fullpreview.html  EventsPlaza javascript:;-->
+            </div>
+        </div>
+        <script>
+            var user_id = '{$unionid}';
+            console.log(user_id)
+
+            function GetQueryString(name) {
+                if (window.location.href.indexOf('?') > -1) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                    var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                    if (r != null) return unescape(r[2]);
+                }
+                return ''; //便于容错处理
+            }
+            // 开始添加报名内容
+            var titleara = [];
+            $('.rjl_thir').on('click', function () {
+               
+                if( $(".rjlkk0").val() == '' || $(".rjlkk1").val() == '' || $(".rjlkk2").val() == '' ||  $(".rjlkk3").val() == '' ||  $(".rjlkk4").val() == '' ||  $(".rjlkk5").val() == '' ||  $(".rjlkk6").val() == '' ||  $(".rjlkk7").val() == '' ||  $(".rjlkk8").val() == '' ||  $(".rjlkk9").val() == '' ||  $(".rjlkk10").val() == '' ||  $(".rjlkk11").val() == '' ||  $(".rjlkk12").val() == ''){
+                        mui.alert("请输入完整信息");
+                        return false;
+                }
+                
+                $(".item_input").each(function (i, e) {
+                    titleara.push($(e).val());
+                })
+                
+                $.ajax({
+                    type: 'post',
+                    url:"index.php?s=/Api/SignUpApi/add_sign_user",
+                    data: {
+                        sign_id: getid,
+                        content: titleara,
+                    },
+                    success: function (res) {
+                        mui.alert('提交成功！',function(){
+                            window.history.back(-1);
+                        })
+                    },
+                    error: function () {
+                        // mui.alert("异常！");
+                    }
+                })
+            })
+            //结束
+
+
+
+            // var is_my = 1;
+            var getid = GetQueryString("id");
+            console.log(getid);
+
+            $.ajax({
+                type: 'post',
+                url: "index.php?s=/Api/SignUpApi/sign_detail",
+                data: {
+                    unionid: user_id,
+                    sign_id: getid,
+                    //  is_my :1,
+                },
+                success: function (res) {
+                    console.log(res)
+
+                    var detail = res.AppendData.detail;
+                    console.log(detail)
+                    var list = '';
+                    list += '<div class="first">'
+                    list += '<div class="rjl_fst">'
+                    list += '<span>' + res.AppendData.title + '</span>'
+                    list += '</div>'
+                    list += '<div class="rjl_fist">'
+                    list += '<span>' + res.AppendData.addtime + '</span>'
+                    list += '<span class="r">' + res.AppendData.join_count + '人参与</span>'
+                    list += '<span class="ry">' + res.AppendData.look + '人查看</span>'
+                    list += '</div>'
+                    list += '</div>'
+
+                    $(".first").html(list)
+
+
+                    var baoming = '';
+                    $.each(detail, function (k, v) {
+                        baoming += '<div class="sec_one">'
+                        baoming += '<input type="text" class="rjlkk'+k+' item_input" placeholder="请输入' + v.title +
+                            '">'
+                        baoming += '<div class="sec_onet">' + v.title + '</div>'
+                        baoming += '</div>'
+                    })
+                    $(".bmlist").html(baoming)
+                },
+                error: function () {
+                    // mui.alert("异常！")
+                },
+
+            })
+
+             
+            var h = $(window).height();    
+            $(window).resize(function () {        
+                if ($(window).height() < h) {            
+                    $('.rjl_thir').hide();        
+                }        
+                if ($(window).height() >= h) {            
+                    $('.rjl_thir').show();        
+                }    
+            });
+        </script>
+        <!-- 禁止分享 -->
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+    </body>
+</block>

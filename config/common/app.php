@@ -1,0 +1,55 @@
+<?php
+//配置文件
+return [
+    'withdraw_rate'=>0.036,//提现手续费比例
+
+    'img_save'=>[
+		'size' =>[
+			'user_bg_img'=>[
+				'page_size'=>array(
+                    'w'=> 720,
+                    'h'=> 520
+                ),
+			],
+            'xcx_user_nav_img'=>[
+                'compress'=>array(
+                    'w'=> 720,
+                    'h'=> 520
+                ),
+            ],
+            'xcx_user_content_img'=>[
+                'compress'=>array(
+                    'w'=> 720,
+                    'h'=> 520
+                ),
+            ],
+            'xcx_user_img'=>[
+                'compress'=>array(
+                    'w'=> 720,
+                    'h'=> 520
+                ),
+            ]
+		],
+		'save_path'=>[
+			'app_user_head_img' => array(
+                'origin'            => './Uploads/user_bg_img/origin/',
+                'page_size'    => './Uploads/user_bg_img/page_size/',
+            ),
+            'xcx_user_nav_img' => array(
+                'origin'            => './Uploads/xcx_nav_img/origin/',
+                'compress'    => './Uploads/xcx_nav_img/compress/',
+            ),
+            'xcx_user_nav_video'=>'./Uploads/xcx_nav_video/',
+            'xcx_user_content_img' => array(
+                'origin'            => './Uploads/xcx_content_img/origin/',
+                'compress'    => './Uploads/xcx_content_img/compress/',
+            ),
+            'xcx_user_img' => array(
+                'origin'            => './Uploads/xcx_user_img/origin/',
+                'compress'    => './Uploads/xcx_user_img/compress/',
+            ),
+            'xcx_user_content_video'=>'./Uploads/xcx_content_video/',
+            'xcx_user_photo2card'=>'./Uploads/xcx_user_photo2card/'
+		]
+	]
+];

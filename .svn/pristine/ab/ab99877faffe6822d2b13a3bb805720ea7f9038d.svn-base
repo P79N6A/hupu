@@ -1,0 +1,174 @@
+<extend name="./base" />
+<block name="title">
+	<title>{$title}</title>
+</block>
+<block name="body">
+
+	<body class="ren_logo_bg">
+		<style>
+				.ren_logo_editpad_input {
+				left: 0;
+			}
+			
+			.hao_code .ren_logo_input {
+				float: left;
+				width: 100%;
+			}
+			
+			.hao_code .ren_login_submit {
+				float: right;
+				width: 25%;
+				border-radius: 10px;
+				margin-top: 25px;
+				margin-left: 72%;
+				z-index: 9999;
+				position: absolute;
+			}
+			
+			.zzc_login_submit1 {
+				width: 30%;
+				height: 48px;
+				text-align: center;
+				font-size: 16px;
+				color: #D85F6E;
+				background: none;
+				margin: 75px auto;
+				line-height: 48px;
+				/*border: 1px solid #3BB7CF;*/
+				overflow: hidden;
+				z-index: 9999;
+				position: absolute;
+				margin-top: 6%;
+				margin-left: 65%;
+			}
+			
+			.ren_logo_bg {
+				background: #fff;
+			}
+			
+			.ren_login_submit {
+				width: 100%;
+				height: 50px;
+				text-align: center;
+				font-size: 16px;
+				color: #FFFFFF;
+				background: #3BB7CF;
+				margin: 20px auto;
+				line-height: 50px;
+				border-radius: 30px;
+				/*border: 1px solid #CCCCCC;*/
+				overflow: hidden;
+				box-shadow: 0px 5px 6px #3bb7cf61;
+			}
+			
+			.ren_logo_div {
+				width: 85%;
+				margin: 0px auto;
+				height: 100%;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.ren_logo_input {
+				margin: 10px auto;
+				position: relative;
+				width: 100%;
+				height: 60px;
+				line-height: 60px;
+				overflow: hidden;
+				background: #F7F7F7;
+				color: #666;
+			}
+			
+			.ren_logo_editpad_input {
+				height: 60px!important;
+				font-size: 16px;
+				width: 85%!important;
+				background: #f7f7f7!important;
+				border: none!important;
+				position: absolute!important;
+				left: 10%;
+				top: 0;
+		</style>
+		<div class="mui-content ren_logo_bg">
+			<div class="ren_logo_div">
+				<div class="zzc_logo_img">
+					<img src="__HOME_IMAGES__/yyyxxm.png" height="144" width="129" alt="" />
+				</div>
+				<div class="ren_logo_input">
+					<input type="text" name="phone" class="ren_logo_editpad_input" id="" value="" placeholder="请输入手机号" />
+				</div>
+				<div class="hao_code">
+					<div class="ren_logo_input">
+						<input type="text" name="code" class="ren_logo_editpad_input" id="" value="" placeholder="验证码" />
+					</div>
+					<div class="zzc_login_submit1" id="getcode">获取验证码</div>
+				</div>
+				<div class="ren_logo_input">
+					<input type="password" name="password1" class="ren_logo_editpad_input" id="" value="" placeholder="设置密码" />
+				</div>
+				<div class="ren_logo_input">
+					<input type="password" name="password2" class="ren_logo_editpad_input" id="" value="" placeholder="确认密码" />
+				</div>
+				<div class="ren_login_submit" id="submit">确定</div>
+
+			</div>
+		</div>
+	</body>
+	<script>
+		$(function() {
+			$("#getcode").on("click", function() {
+				var phone = $("input[name=phone]").val();
+				if(phone.length == 0) {
+					mui.toast("请输入手机号");
+					return;
+				}
+				// $.post("{:U('Home/User/is_user')}",{"phone":phone},function(ress) {
+				//     if (ress.status == 1) {
+				//         var phone=$("input[name=phone]").val();
+				var type = 2;
+				$.post("{:U('Home/User/sendCode')}", {
+					"phone": phone,
+					"type": type
+				}, function(res) {
+					if(res.status == 1) {
+						mui.toast("获取成功");
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+				// } else {
+				//     mui.toast(ress.msg);
+				// }
+				// });
+			});
+			$("#submit").on("click", function() {
+				var phone = $("input[name=phone]").val();
+				var password1 = $("input[name=password1]").val();
+				var password2 = $("input[name=password2]").val();
+				var code = $("input[name=code]").val();
+				$.post("{:U('Home/User/findPassword')}", {
+					"password1": password1,
+					"password2": password2,
+					"phone": phone,
+					"code": code
+				}, function(res) {
+					if(res.status == 1) {
+						top.location.href = "/Home/Mycenter/login";
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+			});
+		})
+	</script>
+</block>
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

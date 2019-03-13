@@ -1,0 +1,1022 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script>
+		(function flexible(window, document) {
+			var docEl = document.documentElement
+			var dpr = window.devicePixelRatio || 1
+
+			// adjust body font size
+			function setBodyFontSize() {
+				if(document.body) {
+					document.body.style.fontSize = (12 * dpr) + 'px'
+				} else {
+					document.addEventListener('DOMContentLoaded', setBodyFontSize)
+				}
+			}
+			setBodyFontSize();
+
+			// set 1rem = viewWidth / 10
+			function setRemUnit() {
+				var rem = docEl.clientWidth / 10
+				//1rem=75px
+				docEl.style.fontSize = rem + 'px'
+			}
+
+			setRemUnit()
+
+			// reset rem unit on page resize
+			window.addEventListener('resize', setRemUnit)
+			window.addEventListener('pageshow', function(e) {
+				if(e.persisted) {
+					setRemUnit()
+				}
+			})
+
+			// detect 0.5px supports
+			if(dpr >= 2) {
+				var fakeBody = document.createElement('body')
+				var testElement = document.createElement('div')
+				testElement.style.border = '.5px solid transparent'
+				fakeBody.appendChild(testElement)
+				docEl.appendChild(fakeBody)
+				if(testElement.offsetHeight === 1) {
+					docEl.classList.add('hairlines')
+				}
+				docEl.removeChild(fakeBody)
+			}
+		}(window, document))
+	</script>
+	<style>
+		body {
+			background-color: #fff;
+		}
+		
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
+		.top,
+		.basics,
+		.basics_infor_ed,
+		.adv_banner_tit,
+		.banner_photo_cen,
+		.link_photo_cen {
+			margin: 0 auto;
+		}
+		
+		.max_top {
+			width: 100%;
+			height: 2.333rem;
+		}
+		
+		.top {
+			width: 9.133rem;
+			height: 2.333rem;
+			background-color: #fff;
+			border-radius: 0px 0px 20px 20px;
+			box-shadow: 4px 4px 10px rgba(42, 183, 207, 0.1), -4px 4px 10px rgba(42, 183, 207, 0.1);
+			font-size: 0;
+		}
+		
+		.top_span {
+			display: inline-block;
+			width: 50%;
+			height: 100%;
+			font-size: 0.373rem;
+			text-align: center;
+		}
+		
+		.top_span>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			padding-top: 0.306rem;
+		}
+		
+		.Img {
+			width: 1rem;
+			height: 1rem;
+			margin: 0 auto;
+		}
+		
+		.Img>img {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.item {
+			width: 100%;
+			height: 0.5rem;
+			line-height: 0.5rem;
+			font-size: 0.373rem;
+			color: #2FB3D3;
+			margin-top: 0.2rem;
+		}
+		
+		.max_basics {
+			width: 100%;
+			margin-top: 0.666rem;
+			margin-bottom: 0.2rem;
+		}
+		
+		.basics {
+			width: 90%;
+			height: 1.333rem;
+			color: #414141;
+			font-size: 0.48rem;
+			line-height: 1.333rem;
+			font-weight: 700;
+			letter-spacing: 0.04rem;
+		}
+		
+		.max_basics_infor_ed {
+			width: 100%;
+			height: 2rem;
+		}
+		
+		.basics_infor_ed {
+			width: 90%;
+			height: 100%;
+			border-radius: 1rem;
+			box-shadow: 0px -0.01px 1px 0px rgba(42, 183, 207, 0.1), 0.1px 0px 1px 0px rgba(42, 183, 207, 0.1), 0px 5px 10px 0px rgba(42, 183, 207, 0.1), -0.1px 0px 1px 0px rgba(42, 183, 207, 0.1);
+			padding: 0.333rem 0.4rem;
+		}
+		
+		.basics_infor_ed>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.via {
+			display: inline-block;
+			width: 1.333rem;
+			height: 1.333rem;
+			border-radius: 50%;
+			float: left;
+			margin-right: 0.5rem;
+		}
+		
+		.via>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+		
+		.name {
+			display: inline-block;
+			width: 77%;
+			height: 100%;
+			float: left;
+		}
+		
+		.name_top {
+			width: 100%;
+			height: 60%;
+		}
+		
+		.name_bottom {
+			width: 100%;
+			height: 40%;
+			color: #999999;
+			font-size: 0.346rem;
+			line-height: 0.6rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		.name_mz {
+			display: inline-block;
+			width: 4.7rem;
+			height: 0.8rem;
+			font-size: 0.533rem;
+			color: #414141;
+			float: left;
+			line-height: 0.9rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		.name_ed {
+			display: inline-block;
+			width: 1.6rem;
+			height: 0.5rem;
+			line-height: 0.5rem;
+			font-size: 0.213rem;
+			color: #414141;
+			background: rgba(192, 192, 192, 0.5);
+			text-align: center;
+			border-radius: 0.25rem;
+			float: left;
+			margin-top: 0.2rem;
+			padding: 0 0.1rem;
+		}
+		
+		.name_Img {
+			float: left;
+			width: 30%;
+			height: 100%;
+			text-align: center;
+		}
+		
+		.name_Img>img {
+			width: 0.25rem;
+			height: 0.25rem;
+			margin: 0.08rem 0 0 0.08rem;
+		}
+		
+		.name_do {
+			display: block;
+			width: 70%;
+			height: 100%;
+			text-align: left;
+			float: left;
+		}
+		/*轮播图*/
+		
+		.adv_banner {
+			width: 100%;
+			height: 1.333rem;
+			line-height: 1.333rem;
+			margin-top: 0.666rem;
+			margin-bottom: 0.2rem;
+		}
+		
+		.adv_banner_tit {
+			width: 90%;
+			height: 1.333rem;
+			line-height: 1.333rem;
+		}
+		
+		.adv_banner_tit>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			font-size: 0;
+		}
+		
+		.banner_bar {
+			float: left;
+			width: 70%;
+			height: 1.333rem;
+			color: #414141;
+			font-size: 0.48rem;
+			font-weight: 700;
+			letter-spacing: 0.04rem;
+		}
+		
+		.banner_ed {
+			float: left;
+			width: 30%;
+			height: 1.333rem;
+			line-height: 1.78rem;
+			font-size: 0.213rem;
+			text-align: right;
+		}
+		
+		.banner_cen {
+			display: inline-block;
+			width: 1.8rem;
+			height: 0.6rem;
+			line-height: 0.6rem;
+			font-size: 0.213rem;
+			color: #414141;
+			background: rgba(192, 192, 192, 0.5);
+			text-align: center;
+			border-radius: 0.3rem;
+			padding: 0 0.1rem;
+		}
+		
+		.hint {
+			width: 100%;
+			height: 100%;
+			/*display: none;*/
+		}
+		
+		.hint>img {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.banner_Img {
+			float: left;
+			width: 30%;
+			height: 100%;
+			text-align: center;
+		}
+		
+		.banner_Img>img {
+			width: 0.25rem;
+			height: 0.25rem;
+			margin: 0.13rem 0 0 0.13rem;
+		}
+		
+		.banner_do {
+			width: 70%;
+			height: 100%;
+			text-align: left;
+			float: left;
+		}
+		
+		.banner_photo {
+			width: 100%;
+			height: 2.306rem;
+			line-height: 2.306rem;
+		}
+		
+		.banner_photo_cen {
+			width: 90%;
+			height: 2.306rem;
+			line-height: 2.306rem;
+		}
+		
+		.banner_tu {
+			width: 22.35%;
+			height: 2.306rem;
+			border-radius: 6px;
+			float: left;
+			margin-right: 3.5%;
+			position: relative;
+			/*display: none;*/
+		}
+		
+		.banner_tu_top {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+		}
+		
+		.banner_tu_top>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+		}
+		
+		.banner_tu:last-child {
+			margin-right: 0;
+		}
+		
+		.more {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
+		.more>a {
+			display: block;
+			background-color: rgba(0, 0, 0, 0.5);
+			font-size: 0.293rem;
+			color: #fff;
+			width: 100%;
+			height: 100%;
+			line-height: 2.306rem;
+			text-align: center;
+			border-radius: 6px;
+		}
+		
+		.preview {
+			width: 100%;
+			height: 1.333rem;
+			line-height: 1.333rem;
+			background-color: #2FB3D3;
+			text-align: center;
+			font-size: 0.5rem;
+			letter-spacing: 0.066rem;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+		}
+		
+		.preview>a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+		}
+		/*链接一切*/
+		
+		.link_photo {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.link_photo_cen {
+			width: 90%;
+			height: 2.133rem;
+		}
+		
+		.link_tu {
+			width: 2.81rem;
+			height: 2.133rem;
+			border-radius: 6px;
+			margin-right: 0.28rem;
+			float: left;
+			position: relative;
+			/*display: none;*/
+		}
+		
+		.link_tu_top {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+		}
+		
+		.link_tu_top>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+		}
+		
+		.link_tu:last-child {
+			margin-right: 0;
+		}
+		
+		.link_tu_bot {
+			width: 100%;
+			height: 0.5rem;
+			line-height: 0.5rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 0.293rem;
+			color: #fff;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+		
+		.link_more {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
+		.link_more>a {
+			display: block;
+			background-color: rgba(0, 0, 0, 0.5);
+			font-size: 0.293rem;
+			color: #fff;
+			width: 100%;
+			height: 100%;
+			line-height: 2.133rem;
+			text-align: center;
+			border-radius: 6px;
+		}
+		
+		.show {
+			margin-bottom: 2rem;
+		}
+		
+		.show_thing {
+			border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+		}
+		
+		.show_tab {
+			width: 90%;
+			height: 1.3rem;
+			margin: 0 auto;
+		}
+		
+		.show_tab>div {
+			float: left;
+		}
+		
+		.arrange>div {
+			float: left;
+			height: 0.8rem;
+			font-size: 0.35rem;
+			border: 1px solid #2FB3D3;
+			border-radius: 0.5rem;
+			line-height: 0.8rem;
+			width: 45%;
+			text-align: center;
+		}
+		
+		.arr {
+			color: #2FB3D3;
+			margin-top: 0.25rem;
+		}
+		
+		.arrange {
+			width: 50%;
+		}
+		
+		.mode {
+			width: 50%;
+			color: #666;
+			font-size: 0.45rem;
+			line-height: 1.3rem;
+		}
+		
+		.hits {
+			background-color: #2FB3D3;
+			color: #fff;
+		}
+		
+		.first {
+			margin-right: 10%;
+		}
+		
+		.lie {
+			width: 90%;
+			height: auto;
+			margin: 0 auto;
+		}
+		
+		.show>div {
+			display: none;
+		}
+		
+		.look_tu {
+			width: 100%;
+			height: 100%;
+			margin-bottom: 0.125rem;
+			border-radius: 6px;
+			position: relative;
+		}
+		
+		.look_tu_top>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+		}
+		
+		.look_more {
+			width: 100%;
+			height: 100%;
+			border-radius: 6px;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		
+		.look_more>a {
+			display: block;
+			background-color: rgba(0, 0, 0, 0.5);
+			font-size: 0.6rem;
+			color: #fff;
+			width: 100%;
+			height: 100%;
+			line-height: 280px;
+			text-align: center;
+			border-radius: 6px;
+		}
+		
+		.look_tu_bot {
+			width: 100%;
+			height: 1rem;
+			line-height: 1rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 0.5rem;
+			color: #fff;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			padding: 0 10px;
+			border-radius: 6px;
+			background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+		}
+		
+		.privacy {
+			width: 8rem;
+			height: 5rem;
+			background: #fff;
+			border-radius: 0.25rem;
+			font-size: 0.5rem;
+			text-align: center;
+			background: #fff;
+			color: #000;
+			margin-bottom: 3rem;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin: -2.5rem 0 0 -4rem;
+			z-index: 100;
+			display: none;
+		}
+		
+		.allcity-masks {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #000;
+			opacity: .8;
+			width: 100%;
+			z-index: 100;
+			cursor: pointer;
+			height: 100%;
+		}
+		
+		.up {
+			width: 100%;
+			height: 2rem;
+			line-height: 3rem;
+			text-align: center;
+			font-size: 0.5rem;
+		}
+		
+		.down {
+			width: 100%;
+			height: 3rem;
+			line-height: 2.5rem;
+			text-align: center;
+			font-size: 0.55rem;
+			color: #000;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body>
+		<div class="max_top">
+			<div class="top">
+				<span class="top_span">
+				<a href="{:U('Home/Card/styleCard')}">
+					<div class="Img">
+						<img src="__HOME_IMAGES__/menu.png" alt="" />
+					</div>
+					<div class="item">风格设置</div>
+				</a>
+			</span>
+				<span class="top_span">
+				<a href="{:U('Home/Card/musicCard')}">
+					<div class="Img">
+						<img src="__HOME_IMAGES__/music1.png" alt="" />
+					</div>
+					<div class="item">音乐设置</div>
+				</a>
+			</span>
+			</div>
+			<!--<div class="allcity-masks"></div>
+			<div class="privacy">
+				<div class="up">温馨提示</div>
+				<div class="down">此功能正在升级，敬请期待</div>
+			</div>-->
+
+		</div>
+		<div class="max_basics">
+			<div class="basics">
+				基本资料编辑
+			</div>
+		</div>
+		<div class="max_basics_infor_ed">
+			<div class="basics_infor_ed">
+				<a href="{:U('Home/Card/Basicinfor')}">
+					<span class="via">
+						<img src="{$data.headimg}" alt="" />
+					</span>
+					<span class="name">
+						<div class="name_top">
+							<span class="name_mz">{$data.nick_name}</span>
+					<span class="name_ed">
+								<span class="name_Img">
+									<img src="__HOME_IMAGES__/Group4.png" alt="" />
+								</span>
+					<span class="name_do">点击编辑</span>
+					</span>
+			</div>
+			<div class="name_bottom">{$data.position}</div>
+			</span>
+			</a>
+		</div>
+		</div>
+		<div class="adv_banner">
+			<div class="adv_banner_tit">
+				<a href="{:U('Home/Card/showBanner')}">
+					<span class="banner_bar">广告轮播图</span>
+					<span class="banner_ed">
+						<div class="banner_cen">
+							<span class="banner_Img">
+								<img src="__HOME_IMAGES__/Group4.png" alt="" />
+							</span>
+					<span class="banner_do">点击编辑</span>
+			</div>
+			</span>
+			</a>
+		</div>
+		</div>
+		<div class="banner_photo">
+			<div class="banner_photo_cen">
+				<if condition="$data['banner_img'][0]['img_url'] eq ''">
+					<div class="hint">
+						<img src="__HOME_IMAGES__/hint.png" alt="" />
+					</div>
+					<else/>
+					<div class="banner_tu">
+						<div class="banner_tu_top">
+							<img src="{$data['banner_img'][0]['img_url']}" alt="" />
+						</div>
+					</div>
+					<if condition="$data['banner_img'][1]['img_url'] neq ''">
+						<div class="banner_tu">
+							<div class="banner_tu_top">
+								<img src="{$data['banner_img'][1]['img_url']}" alt="" />
+							</div>
+						</div>
+					</if>
+					<if condition="$data['banner_img'][2]['img_url'] neq ''">
+						<div class="banner_tu">
+							<div class="banner_tu_top">
+								<img src="{$data['banner_img'][2]['img_url']}" alt="" />
+							</div>
+						</div>
+					</if>
+					<if condition="$data['banner_img'][3]['img_url'] neq ''">
+						<div class="banner_tu">
+							<div class="banner_tu_top">
+								<img src="{$data['banner_img'][3]['img_url']}" alt="" />
+							</div>
+							<div class="more">
+								<a href="{:U('Home/Card/showBanner')}">查看更多</a>
+							</div>
+						</div>
+					</if>
+				</if>
+
+			</div>
+		</div>
+		<div class="adv_banner">
+			<div class="adv_banner_tit">
+				<a href="{:U('Home/Card/menuCard')}">
+					<span class="banner_bar">链接一切</span>
+					<span class="banner_ed">
+						<div class="banner_cen">
+							<span class="banner_Img">
+								<img src="__HOME_IMAGES__/Group4.png" alt="" />
+							</span>
+					<span class="banner_do">点击编辑</span>
+			</div>
+			</span>
+			</a>
+		</div>
+		</div>
+		<div class="link_photo">
+			<div class="link_photo_cen">
+				<if condition="$data['nav_img'][0]['icon_url'] eq ''">
+					<div class="hint">
+						<img src="__HOME_IMAGES__/hint.png" alt="" />
+					</div>
+					<else/>
+					<div class="link_tu">
+						<div class="link_tu_top">
+							<img src="{$data['nav_img'][0]['icon_url']}" alt="" />
+						</div>
+						<div class="link_tu_bot">{$data['nav_img'][0]['name']}</div>
+					</div>
+					<if condition="$data['nav_img'][1]['icon_url'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['nav_img'][1]['icon_url']}" alt="" />
+							</div>
+							<div class="link_tu_bot">{$data['nav_img'][1]['name']}</div>
+						</div>
+					</if>
+					<if condition="$data['nav_img'][2]['icon_url'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['nav_img'][2]['icon_url']}" alt="" />
+							</div>
+							<!--<div class="link_tu_bot">{$data['nav_img'][2]['name']}</div>-->
+							<div class="link_more">
+								<a href="{:U('Home/Card/menuCard')}">查看更多</a>
+							</div>
+						</div>
+					</if>
+				</if>
+			</div>
+		</div>
+		<div class="adv_banner">
+			<div class="adv_banner_tit">
+				<a href="{:U('Home/Chat/product')}">
+					<span class="banner_bar">产品中心</span>
+					<span class="banner_ed">
+						<div class="banner_cen">
+							<span class="banner_Img">
+								<img src="__HOME_IMAGES__/Group4.png" alt="" />
+							</span>
+					<span class="banner_do">点击编辑</span>
+			</div>
+			</span>
+			</a>
+		</div>
+		</div>
+		<div class="link_photo">
+			<div class="link_photo_cen">
+				<if condition="$data['product_img'][0]['cover_img'] eq ''">
+					<div class="hint">
+						<img src="__HOME_IMAGES__/hint.png" alt="" />
+					</div>
+					<else/>
+					<div class="link_tu">
+						<div class="link_tu_top">
+							<img src="{$data['product_img'][0]['cover_img']}" alt="" />
+						</div>
+						<div class="link_tu_bot">{$data['product_img'][0]['title']}</div>
+					</div>
+					<if condition="$data['product_img'][1]['cover_img'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['product_img'][1]['cover_img']}" alt="" />
+							</div>
+							<div class="link_tu_bot">{$data['product_img'][1]['title']}</div>
+						</div>
+					</if>
+					<if condition="$data['product_img'][2]['cover_img'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['product_img'][2]['cover_img']}" alt="" />
+							</div>
+							<!--<div class="link_tu_bot">{$data['product_img'][2]['title']}</div>-->
+							<div class="link_more">
+								<a href="{:U('Home/Chat/product')}">查看更多</a>
+							</div>
+						</div>
+					</if>
+				</if>
+			</div>
+		</div>
+		<div class="adv_banner show_thing">
+			<div class="adv_banner_tit">
+				<a href="{:U('Home/Card/showCard')}">
+					<span class="banner_bar">展示一切</span>
+					<span class="banner_ed">
+						<div class="banner_cen">
+							<span class="banner_Img">
+								<img src="__HOME_IMAGES__/Group4.png" alt="" />
+							</span>
+					<span class="banner_do">点击编辑</span>
+			</div>
+			</span>
+			</a>
+		</div>
+		</div>
+		<div class="show_tab">
+			<div class="mode">排列方式</div>
+			<div class="arrange">
+				<if condition="$data['show_list'] eq 0">
+					<div class="one arr first hits" data-id="0">九宫格排列</div>
+					<div class="two arr" data-id="1">列表排列</div>
+					<else/>
+					<div class="one arr first" data-id="0">九宫格排列</div>
+					<div class="two arr hits" data-id="1">列表排列</div>
+				</if>
+			</div>
+		</div>
+		<div class="link_photo show">
+			<div class="link_photo_cen" style="display: block;">
+				<if condition="$data['card_img'][0]['thumb'] eq ''">
+					<div class="hint">
+						<img src="__HOME_IMAGES__/hint.png" alt="" />
+					</div>
+					<else/>
+					<div class="link_tu">
+						<div class="link_tu_top">
+							<img src="{$data['card_img'][0]['thumb']}" alt="" />
+						</div>
+						<div class="link_tu_bot">{$data['card_img'][0]['title']}</div>
+					</div>
+					<if condition="$data['card_img'][1]['thumb'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['card_img'][1]['thumb']}" alt="" />
+							</div>
+							<div class="link_tu_bot">{$data['card_img'][1]['title']}</div>
+						</div>
+					</if>
+					<if condition="$data['card_img'][2]['thumb'] neq ''">
+						<div class="link_tu">
+							<div class="link_tu_top">
+								<img src="{$data['card_img'][2]['thumb']}" alt="" />
+							</div>
+							<!--<div class="link_tu_bot">{$data['card_img'][2]['title']}</div>-->
+							<div class="link_more">
+								<a href="{:U('Home/Card/showCard')}">查看更多</a>
+							</div>
+						</div>
+					</if>
+				</if>
+			</div>
+			<div class="lie">
+				<if condition="$data['card_img'][0]['thumb'] eq ''">
+					<div class="hint">
+						<img src="__HOME_IMAGES__/hint.png" alt="" />
+					</div>
+					<else/>
+					<div class="look_tu">
+						<div class="look_tu_top">
+							<img src="{$data['card_img'][0]['thumb']}" alt="" />
+						</div>
+						<div class="look_tu_bot">{$data['card_img'][0]['title']}</div>
+					</div>
+					<if condition="$data['card_img'][1]['thumb'] neq ''">
+						<div class="look_tu">
+							<div class="look_tu_top">
+								<img src="{$data['card_img'][1]['thumb']}" alt="" />
+							</div>
+							<div class="look_tu_bot">{$data['card_img'][1]['title']}</div>
+						</div>
+					</if>
+					<if condition="$data['card_img'][2]['thumb'] neq ''">
+						<div class="look_tu">
+							<div class="look_tu_top">
+								<img src="{$data['card_img'][2]['thumb']}" alt="" />
+							</div>
+							<!--<div class="link_tu_bot">{$data['card_img'][2]['title']}</div>-->
+							<div class="look_more">
+								<a href="{:U('Home/Card/showCard')}">查看更多</a>
+							</div>
+						</div>
+					</if>
+				</if>
+			</div>
+		</div>
+		<div class="preview">
+			<a href="{:U('Home/Nologin/card_jump/id/'.$userInfo['id'])}">预览</a>
+		</div>
+	</body>
+	<script>
+		var check = window.localStorage.getItem('check');
+		console.log(check)
+
+		window.onload = function() {
+			if(check == 0) {
+				$(".one").click()
+			}
+
+			if(check == 1) {
+				$(".two").click()
+			}
+		}
+		var isPageHide = false;
+		window.addEventListener('pageshow', function() {
+			if(isPageHide) {
+				window.location.reload();
+			}
+		});
+		window.addEventListener('pagehide', function() {
+			isPageHide = true;
+		});
+		//选项卡
+
+		$('.arrange').find('div').click(function() {
+			//			if($(this).hasClass("hits")){
+			//				return false;
+			//			}
+
+			var index = $(this).index();
+			$(this).addClass('hits').siblings().removeClass('hits');
+			$('.show>div').eq(index).show().siblings().hide();
+			var num = $(this).attr("data-id")
+			window.localStorage.setItem('check', num);
+			$(function() {
+				var id = '{$unionid}';
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/show_style", //url 
+					data: {
+						"unionid": id,
+						"show_list": num
+					},
+					success: function(result) {
+
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			})
+
+		})
+//		$(".top_span").click(function() {
+//			$('.allcity-masks').show();
+//			$(".privacy").show();
+//
+//			setTimeout(function() {
+//				$('.privacy').hide();
+//				$('.allcity-masks').hide();
+//			}, 1500);
+//		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

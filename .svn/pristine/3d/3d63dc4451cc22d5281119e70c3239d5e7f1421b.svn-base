@@ -1,0 +1,594 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<style>
+		.top_max {
+			width: 100%;
+			height: 70px;
+			background-color: #fff;
+			z-index: 100;
+			position: fixed;
+			top: 0;
+			left: 0;
+		}
+		
+		.zzc_myruanwen_cat_li {
+			width: 90%;
+			height: 70px;
+			line-height: 70px;
+			margin: 0 auto;
+			padding: 0;
+			border: none;
+			overflow: hidden;
+		}
+		
+		.nums {
+			width: 80%;
+			height: 100%;
+			float: left;
+			text-align: left;
+			font-size: 30px;
+			color: #2FB3D3;
+		}
+		
+		#btnShow {
+			width: 50px;
+			height: 50px;
+			line-height: 44px;
+			font-size: 50px;
+			background-color: #fff;
+			color: #000;
+			text-align: center;
+			position: fixed;
+			right: 20px;
+			bottom: 50px;
+			border-radius: 50%;
+			box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.16);
+			z-index: 500;
+			font-weight: 500;
+		}
+		
+		#btnShow>img {
+			width: 20px;
+			height: 20px;
+		}
+		
+		.zzc_myruanwen_cat_li2 {
+			border-bottom: none;
+			position: relative;
+			overflow: hidden;
+			width: 90%;
+			height: 65px;
+			margin: 20px auto 0;
+			padding: 0 0 0 5%;
+			line-height: 65px;
+			box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.17);
+			border-radius: 9px;
+		}
+		
+		.max {
+			width: 200%;
+			height: 100%;
+		}
+		
+		.max>div {
+			float: left;
+		}
+		
+		.max_left {
+			width: 50.5%;
+			height: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 17px;
+			color: #333;
+		}
+		
+		.max_right {
+			width: 40%;
+			height: 100%;
+			font-size: 0;
+			line-height: 65px;
+		}
+		
+		.max_right>span {
+			display: inline-block;
+			height: 100%;
+			text-align: center;
+		}
+		
+		.num_art {
+			font-size: 15px;
+			color: #999;
+			width: 40%;
+			line-height: 65px;
+		}
+		
+		.edits {
+			width: 30%;
+			font-size: 14px;
+			color: #fff;
+			background-color: #2FB3D3;
+			line-height: 65px;
+		}
+		
+		.dele {
+			width: 30%;
+			font-size: 14px;
+			color: #fff;
+			background-color: #DC4B3E;
+			line-height: 65px;
+		}
+		
+		.header-title {
+			font-size: 18px;
+			color: #333333;
+		}
+		
+		.bui-dialog .bui-stdmod-body {
+			padding: 0 15px;
+		}
+		
+		#name {
+			height: 50px;
+		}
+		
+		.button {
+			margin: 0;
+		}
+		
+		.bui-stdmod-footer button:first-child {
+			width: 100px;
+			height: 40px;
+			float: right;
+		}
+		
+		.bui-stdmod-footer button:last-child {
+			width: 100px;
+			height: 40px;
+			float: left;
+			background-color: #5C5C5C;
+			border: none;
+			opacity: 0.4;
+		}
+		/*.x-align-cc-cc{
+			height: 200px;
+		}*/
+		
+		.bui-stdmod-body {
+			height: 70px !important;
+			line-height: 70px !important;
+		}
+		
+		.qx {
+			float: left !important;
+			background-color: #5C5C5C !important;
+			opacity: 0.4;
+			color: #fff;
+			width: 65px !important;
+			height: 30px !important;
+			margin-right: 60px;
+			padding: 0 !important;
+		}
+		
+		.qd {
+			float: right !important;
+			background-color: #2FB3D3 !important;
+			opacity: 1 !important;
+			width: 65px !important;
+			height: 30px !important;
+			padding: 0 !important;
+		}
+		
+		.max_bl {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #333;
+			opacity: 0.5;
+			z-index: 300;
+			display: none;
+		}
+		
+		.max_cen {
+			background-color: #fff;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-left: -150px;
+			margin-top: -100px;
+			width: 300px;
+			height: 200px;
+			z-index: 999999;
+			opacity: 1;
+			display: none;
+			box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+			border-radius: 6px;
+		}
+		
+		.edit_name {
+			width: 100%;
+			height: 70px;
+			line-height: 50px;
+			font-size: 18px;
+			color: #333;
+			text-align: center;
+		}
+		
+		.edit_ipt {
+			width: 90%;
+			height: 60px;
+			margin: 0 auto;
+			border-radius: 4px;
+		}
+		
+		.edit_ipt>input {
+			width: 100%;
+			height: 50px;
+			margin: 0;
+		}
+		
+		.max_btm {
+			width: 90%;
+			margin: 0 auto;
+			height: 70px;
+			padding: 15px 0px;
+		}
+		
+		.max_btm>button {
+			width: 100px;
+			height: 40px;
+			border-radius: 20px;
+			border: none;
+			font-size: 14px;
+		}
+		
+		.max_qx {
+			width: 100px;
+			height: 40px;
+			float: left;
+			background-color: #5C5C5C;
+			border: none;
+			opacity: 0.4;
+			color: #ffffff;
+		}
+		
+		.max_qd {
+			width: 100px;
+			height: 40px;
+			float: right;
+			color: #ffffff;
+			background-color: #2fb3d3;
+		}
+	</style>
+</block>
+
+<block name="body">
+
+	<body>
+		<div id="btnShow">
+			<img src="__HOME_IMAGES__/add_jia.png" alt="" />
+		</div>
+		<div class="max_bl"></div>
+		<!-- <div class="max_cen">
+			<div class="edit_name">修改分类名称</div>
+			<div class="edit_ipt">
+				<input type="text" id="typename" value=""/>
+				<input type="hidden" id="typenames" value=""/>
+				<input type="hidden"  id="typeid"/>
+			</div>
+			<div class="max_btm">
+				<button class="max_qx">取消</button>
+				<button class="max_qd">确定</button>
+			</div>
+		</div> -->
+		<div class="max_cen">
+			<div class="edit_name">修改分类名称</div>
+			<div class="edit_ipt">
+				<!--<input type="text" id="typename" value=""/>-->
+				<input type="text" placeholder="请输入分类名称" class="edit_txt" value="" />
+				<input type="hidden" id="typeid" />
+			</div>
+			<div class="max_btm">
+				<button class="max_qx">取消</button>
+				<button class="max_qd">确定</button>
+			</div>
+		</div>
+
+		<div class="mui-content">
+			<div id="zzc_cat" class="hidden zzc_display">
+				<div class="zzc_myruanwen_cat_from">
+					<form id="form" class="form-horizontal">
+						<input type="text" name="name" id="name" value="" class="zzc_input" placeholder="填写分类名称" />
+						<!--<div class="zzc_button">在主页菜单区显示：
+							<div class="mui-switch mui-active mui-switch-mini  zzc_ico">
+								<div class="mui-switch-handle"></div>
+							</div>
+						</div>-->
+					</form>
+				</div>
+			</div>
+			<notempty name="article_type">
+				<foreach name="article_type" item="type">
+					<div class="zzc_myruanwen_cat_li2">
+						<div class="max">
+							<div class="max_left">
+								{$type.name}
+							</div>
+
+							<div class="max_right">
+								<!-- <span class="num_art">10篇文章</span> -->
+								<span class="edits">修改</span>
+								<!-- onclick="edit({$type.id})" -->
+								<span class="dele" onclick="zzc_dialog_title({$type.id})">删除</span>
+								<input type="hidden" class="ids" value="{$type.id}" />
+							</div>
+						</div>
+					</div>
+				</foreach>
+			</notempty>
+		</div>
+	</body>
+
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript">
+		//   $(document).on('click','.edits',function (e) {
+		//   	// var name=$(e.target).parent().parent().children('.max_left').html();
+		//   	var id=$(e.target).parent().parent().children('.ids').val();
+		//   	$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typeid").val(id);
+		//   	// $(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typenames").val(name);
+		//   	var hah = $(this).parent().prev().html();
+		// $(".edit_txt").val(hah);
+		//   	// $(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val('44');
+		//       // alert($(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val('22'));
+		//       // if(name){
+		//       // 	$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val(name);
+		//       // }
+		//       $(".max_bl").show();
+		// $(".max_cen").show();
+		//    })
+		$(document).on('click', '.edits', function(e) {
+			//	    	var name=$(e.target).parent().parent().children('.max_left').html();
+			var id = $(e.target).parent().children('.ids').val();
+			// alert(id);
+			$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typeid").val(id);
+			//	    	$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typenames").val(name);
+			var hah = $.trim($(this).parent().prev().html());
+			$(".edit_txt").val(hah);
+			// $(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val('44');
+			// alert($(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val('22'));
+			// if(name){
+			// 	$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val(name);
+			// }
+			$(".max_bl").show();
+			$(".max_cen").show();
+		})
+
+		$(document).on('click', '.max_qd', function(e) {
+			// var name=$(e.target).parent().parent().html();
+			var name = $.trim($(e.target).parent().parent().children('.edit_ipt').children(".edit_txt").val().trim());
+			var id = $(e.target).parent().parent().children('.edit_ipt').children('#typeid').val();
+			$(e.target).parent().parent().parent().parent().parent().children(".max_cen").children(".edit_ipt").children("#typename").val(name);
+			var user_id = '{$user_id}';
+			// alert(name);
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "index.php?s=/Api/IndexApi/editArticleType", //url 
+				data: {
+					"id": user_id,
+					"name": name,
+					"typeid": id
+				},
+				async: false,
+				success: function(result) {
+					// console.log(result);
+					if(result.ResultType == 0) {
+						window.location.reload();
+						//     $(e.target).parent().parent().parent().after('<div style="text-align: center;" class="editBox"><img data-type="gif" class="" data-ratio="0.18125" data-w="640" src="'+result.AppendData+'"></div>')
+						//     // console.log($(e.target).parent().parent().parent().parent().after('12321'));
+						//     // $(e.target).parent().parent().parent().parent().next('<div class="editBox"><br></div>');
+						//     // alert($(e.target).parent().parent().parent().parent().html());
+						//     // console.log($(e.target).parent().parent().parent().parent().html());
+					}
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		})
+
+		function edit(name) {
+
+			var name = $(this).html();
+			alert(name);
+			// 
+
+		}
+
+		function oncats_click() {
+			mui.confirm('确定要删除么？', "提示");
+		}
+
+		function oncats2_click() {
+			mui.back();
+		}
+
+		BUI.use(['bui/overlay', 'bui/form'], function(Overlay, Form) {
+			var form = new Form.HForm({
+				srcNode: '#form'
+			}).render();
+			var dialog = new Overlay.Dialog({
+				title: '添加分类',
+				width: 300,
+				height: 200,
+				//配置DOM容器的编号
+				contentId: 'zzc_cat',
+				success: function() {
+
+					var _name = $('#name').val();
+					if(_name.length <= 0) {
+						mui.toast('分类名称不能为空');
+						return false;
+					}
+
+					var _url = "{:U('Home/Article/addArticleCategory')}";
+					var id = '{$user_id}';
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "index.php?s=/Api/IndexApi/articleTypeList", //url 
+						data: {
+							"id": id
+						},
+						async: false,
+						success: function(result) {
+							// console.log(result);
+							if(result.ResultType == 0 || result.ResultType == 3) {
+								if(result.count > 11) {
+									// alert("最多可以添加12个分类");
+									mui.toast("最多可以添加12个分类");
+									return false;
+								}
+								$.post(_url, {
+									"name": _name
+								}, function(res) {
+									if(res.status == 1) {
+										mui.toast(res.msg);
+										setTimeout(function() {
+											top.location.href = _url;
+										}, 1000);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					})
+
+				}
+			});
+			//dialog.show();
+			$('#btnShow').on('click', function() {
+				dialog.show();
+			});
+			$(document).on('click', '.bui-ext-mask', function() {
+				dialog.hide();
+			});
+		});
+
+		function zzc_dialog_title(id) {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '确定要删除么?',
+					icon: 'question',
+					buttons: [
+
+						{
+							text: '取消',
+							elCls: 'button qx',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary qd',
+							handler: function() {
+								var _url = "{:U('Home/Article/delArticleCategory')}";
+								$.post(_url, {
+									"id": id
+								}, function(res) {
+									if(res.status == 1) {
+										mui.toast(res.msg);
+
+										setTimeout(function() {
+											top.location.href = "{:U('Home/Article/addArticleCategory')}";
+										}, 1000);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						}
+					]
+				});
+				//				show();
+			});
+		}
+
+		$("#back").on("click", function() {
+			location.href = "{:U('Home/Article/myListArticle')}&" + (new Date().getTime());
+			console.log(1111);
+		})
+	</script>
+	<script>
+		var x1, x2, bl;
+		var p = 0;
+		$(".max").on("touchstart", function() {
+			x1 = event.targetTouches[0].pageX;
+			// console.log(x1)
+			bl = true;
+		})
+		$(".max").on("touchmove", function() {
+			// console.log(event.targetTouches[0].pageX);
+			if(bl) {
+				x2 = event.targetTouches[0].pageX;
+				if(x2 - x1 < -20) {
+					$(this).css({
+						"transform": 'translateX(-24%)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+
+				if(x2 - x1 > 20) {
+					$(this).css({
+						"transform": 'translateX(0rem)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+			}
+		});
+	</script>
+	<script>
+		// $(".edits").click(function(){
+		// 	$(".max_bl").show();
+		// 	$(".max_cen").show();
+		// })
+		$(".max_bl").click(function() {
+			$(".max_bl").hide();
+			$(".max_cen").hide();
+		})
+		$(".max_btm>button").click(function() {
+			$(".max_bl").hide();
+			$(".max_cen").hide();
+		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+</block>

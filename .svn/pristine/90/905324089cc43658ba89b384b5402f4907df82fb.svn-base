@@ -1,0 +1,120 @@
+<extend name="./base" />
+<block name="title">
+	<title>{$title}</title>
+</block>
+<block name="body">
+
+	<body class="zzc_body_bg">
+		<style>
+			.zzc_reg_from textarea {
+				border: 0;
+			}
+			
+			.info {
+				width: calc(80% - 2.1rem);
+				padding-left: .666rem;
+				margin: .537rem 0;
+			}
+			
+			.info h4 {
+				font-size: .625rem;
+			}
+			
+			.text-hidden {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				-o-text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.f-c4{
+				line-height: 1.65rem;
+				font-size: 0.95rem;
+			}
+			.fs-28 {
+				font-size: 1rem;
+				
+			}
+			.zzc_reg_submit{
+				font-size: 1.25rem;
+			}
+			.text-hidden{
+				font-size: 1.25rem;
+			}
+			/* .zzc_qiehuan_li_img{border: 1px solid #ccc;} */
+		</style>
+		<div class="mui-content zzc_mui_content_bg">
+			<div class="zzc_qiehuan_div" style="margin-top: 0px;">
+				<div class="zzc_qiehuan_li">
+					<div class="zzc_qiehuan_li_img"><img class="" src="{$result.headimg}"></div>
+					<div class="info fl">
+						<h4 class="text-hidden">{$result.telephone}</h4>
+						<p class="text-hidden">{$result.nick_name}</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="zzc_reg_from">
+				<p>填写验证信息</p>
+				<div class="zzc_reg_input">
+					<textarea type="text" name="content" value="" placeholder="给对方说点什么吧"></textarea>
+				</div>
+				<div class="clear" style="height:20px;"></div>
+				<div class="zzc_reg_input">
+					<h3 class="ptb20 plr32 fs-28">说明</h3>
+					<div class="plr32 pb40 f-c4">
+						1.当您提交该申请即可收藏对方V网到V网夹，对方同意则交换成功，同时也会收藏您的V网；<br/> 
+						<!--2.交换成功即可互相看到隐私保护部分的内容；<br />-->
+						2.添加好友等待对方同意之后；可与对方在线聊天
+					</div>
+				</div>
+				<if condition="isCollection eq 1">
+					<div class="zzc_reg_submit" style="background-color: grey">已关注</div>
+					<else />
+					<div class="zzc_reg_submit" id="next">确定</div>
+				</if>
+			</div>
+
+		</div>
+	</body>
+</block>
+<block name="js_extend">
+	<script type="text/javascript">
+		$(function() {
+
+			$("#next").on("click", function() {
+				var id = "{$id}";
+				var user_id = "{$user_id}";
+				var text = $("textarea[name=content]").val();
+				if(text == '') {
+					mui.alert('验证信息不能为空');
+					return;
+				}
+				var visit_id = "{$Think.get.visit_id}";
+				$.post("{:url('Home/User/addCard')}", {
+					"id": id,
+					"text": text,
+					"visit_id": visit_id
+				}, function(res) {
+					if(res.status == 1) {
+						$.post("{:url('Home/User/sendApplyMsg')}", {
+							"id": id,
+							"user_id": user_id,
+						}, function (res) {
+
+						});
+						top.location.href = res.url;
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+			});
+		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

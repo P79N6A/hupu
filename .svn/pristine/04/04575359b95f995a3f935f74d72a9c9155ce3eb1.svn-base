@@ -1,0 +1,146 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <style type="text/css">
+        .zzc_myruanwen_from_input{height: auto;}
+        .zzc_saomiaoxiangqing_img{
+        	position: relative;
+        }
+        .up{
+        		width: 2rem;
+        		height: 2rem;
+        		position: absolute;
+        		bottom:0;
+        		right:0;
+        		background-color:rgba(255,255,255,0.5);
+        	}
+        	.up>img{
+        		width: 100%;
+        		height: 100%;
+        	}
+        	.zzc_myranwen_bottom>a{
+        		display: block;
+        		width: 50%;
+        		height: 100%;
+        		float: left;
+        		text-align: center;
+        		background-color: #fff;
+        		line-height: 60px;
+        		color:#000;
+        	}
+        	.Img{
+        		position: fixed;
+        		top:0;
+        		left:0;
+        		width: 100%;
+        		height: 100%;
+        		background-color: #fff;
+        		display: none;
+        	}
+        	.Img>img{
+        		width: 100%;
+        		height:auto;
+        		position: absolute;
+        		top:50%;
+        		left:50%;
+        		-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+        	}
+    </style>
+</block>
+<block name="body">
+    <body>
+    <!--<header class="mui-bar mui-bar-nav zzc_header">-->
+        <!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>-->
+        <!--<h1 class="mui-title zzc_header_title">个人详情</h1>-->
+        <!--<span class="mui-icon mui-icon-more zzc_right" ></span>-->
+    <!--</header>-->
+    <form action="{:url('Home/Cardwallet/info')}" method="post">
+        <div class="mui-content">
+            <div class="zzc_saomiaoxiangqing_img">
+            	<div class="up">
+					<img src="__HOME_IMAGES__/fanda.png" alt="" />
+				</div>
+                <img src="<if condition="$result.thumb neq ''">{$result.thumb}<else />__HOME_IMAGES__/muwu.jpg</if>" width="100%" />
+                <input type="hidden" value="{$result.thumb}" name="thumb">
+                <input type="hidden" value="{$result.id}" name="id">
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-person zzc_editpad_ico" >
+                    <input type="text" name="realname" class="zzc_editpad_input" id="" value="<if condition="$result.type eq  2">{$result.realname}<else />{$result.user_info.nick_name}</if>" placeholder="姓名" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                     <!--<span class="mui-icon mui-icon-phone zzc_editpad_ico" >-->
+                <span class="mui-icon  zzc_editpad_ico"><img src="__PUBLIC__/Home/images/tel.png" width="24" height="24" /> </span>
+                    <input type="text" name="phone" class="zzc_editpad_input" id="" value="<if condition="$result.type eq  2">{$result.phone}<else />{$result.user_info.telephone}</if>" placeholder="电话" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-home zzc_editpad_ico" >
+                    <input type="text" name="company" class="zzc_editpad_input" id="" value="{$result.company}" placeholder="公司" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-locked zzc_editpad_ico" >
+                    <input type="text" name="position" class="zzc_editpad_input" id="" value="{$result.position}" placeholder="职务" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-phone zzc_editpad_ico" >
+                    <input type="text" name="telephone" class="zzc_editpad_input" id="" value="<if condition="$result.type eq  2">{$result.telephone}<else />{$result.user_info.mobile}</if>" placeholder="手机号码" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-email zzc_editpad_ico" >
+                    <input type="text" name="email" class="zzc_editpad_input" id="" value="{$result.email}" placeholder="邮箱" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-weixin zzc_editpad_ico" >
+                    <input type="text" name="wxnum" class="zzc_editpad_input" id="" value="{$result.wxnum}" placeholder="微信" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-qq zzc_editpad_ico" >
+                    <input type="text" name="qq" class="zzc_editpad_input" id="" value="{$result.qq}" placeholder="QQ" />
+            </div>
+
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-star zzc_editpad_ico" >
+                    <input type="text" name="site" class="zzc_editpad_input" id="" value="{$result.site}" placeholder="网址" />
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                    <span class="mui-icon mui-icon-map zzc_editpad_ico" >
+                    <input type="text" name="address" class="zzc_editpad_input" id="" value="{$result.address}" placeholder="地址" />
+            </div>
+            <if condition="$result.type eq  2">
+            <div class="zzc_myruanwen_from_input" style="height: 50px;"></div>
+            <div class="zzc_myranwen_bottom">
+                <a href="{:url('Home/Cardwallet/preview',array('id'=>$result['id']))}">
+              		  预览
+                </a>
+                <input type="submit" name="保存" id="" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+            </div>
+            </if>
+        </div>
+        <div class="Img">
+			<img src="<if condition="$result.thumb neq ''">{$result.thumb}<else />__HOME_IMAGES__/muwu.jpg</if>" alt="" />
+		</div>
+    </form>
+    </body>
+</block>
+
+<block name="js_extend">
+	<script>
+			$(".zzc_saomiaoxiangqing_img").click(function(){
+				$(".Img").show();
+			})
+			$(".Img").click(function(){
+				$(".Img").hide();
+			})
+		</script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

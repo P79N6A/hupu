@@ -1,0 +1,263 @@
+<extend name="./base" />
+<block name="title">
+	<title>{$title}</title>
+</block>
+<block name="body">
+	<style>
+		.zzc_reg_span span,
+		.zzc_reg_span a {
+			color: #E0838E;
+		}
+		
+		.ren_rg_span {
+			color: #ccc;
+			text-align: center;
+			font-size: 16px;
+		}
+		
+		.ren_rg_span a {
+			color: #E0838E;
+		}
+		
+		.ren_reg_submit {
+			height: 50px;
+			border-radius: 25px;
+			font-size: 16px;
+			display: block;
+			border: none;
+			background: #2FB3D3;
+			clear: both;
+			margin: 20px auto;
+			color: #FFFFFF;
+			line-height: 50px;
+			text-align: center;
+			width: 85%;
+			box-shadow: 0px 10px 15px #3bb7cf61;
+			margin-top: 10%;
+		}
+		
+		.ren_reg_submit a {
+			color: #fff;
+		}
+		
+		.ren_rg_input {
+			background: #F7F7F7;
+			position: relative;
+			/*border-bottom: 1px solid #CCCCCC;*/
+			overflow: hidden;
+			width: 90%;
+			padding: 5px 10px;
+			margin-left: 5%;
+			margin-top: 3%;
+		}
+		
+		.ren_logo_editpad_ico {
+			width: 100%;
+			font-size: 25px;
+			display: block;
+			float: left;
+			vertical-align: middle;
+			margin: 0px auto;
+			/*padding-left: 8px;*/
+		}
+		
+		.ren_rg_input label {
+			width: 40%;
+			height: 100%;
+			line-height: 40px;
+			overflow: hidden;
+			display: block;
+			float: left;
+			vertical-align: middle;
+		}
+		
+		.ren_rg_input input {
+			border: none!important;
+			box-shadow: none;
+			width: 50%;
+			margin: 0px;
+			display: inline-block;
+			background: #f7f7f7;
+			/*float: left;*/
+		}
+		
+		.ren_rg_input>a {
+			position: absolute;
+			right: 0px;
+			display: block;
+			height: 50px;
+			top: 0px;
+			border-radius: 8px;
+			font-size: 14px;
+			background: #2FB3D3;
+			color: #FFFFFF;
+			line-height: 50px;
+			text-align: center;
+			padding: 0px 15px;
+		}
+		
+		.ren_rg_input a {
+			color: #E0838E;
+			font-size: 16px;
+			padding: 2px;
+		}
+		
+		.ren_body_bg {
+			background: #fff!important;
+		}
+		
+		.ren_mui_content_bg {
+			background: #fff!important;
+		}
+		
+		.renn {
+			margin-top: 20%;
+		}
+	</style>
+
+	<body class="ren_body_bg">
+		<div class="mui-content ren_mui_content_bg">
+			<div class="zzc_qiehuan_div" style="margin-top: 0px;">
+				<div class="zzc_qiehuan_li">
+					<div class="zzc_qiehuan_li_img"><img class="" src="{$headimg}"></div>
+					<div class="zzc_qiehuan_li_body" style="font-size:14px;">
+						{$content}
+					</div>
+				</div>
+			</div>
+			<div class="zzc_reg_from">
+				<div class="ren_rg_input">
+					<!-- <label class="">手机</label> -->
+					<span class="mui-icon mui-icon mui-icon-compose ren_logo_editpad_ico">
+                <input class="renjl" type="text" name="phone" value="" placeholder="请输入手机号" />
+            </div>
+            <div class="ren_rg_input" style="border: none;">
+               <!--  <label class="">验证码</label> -->
+                <span class="mui-icon mui-icon-locked zzc_lg_editpad_ico" >
+                <input type="text" name="code" value="" placeholder="验证码" />
+                <a href="javascript:;" id="getcode" style="width: 135px;"><span class="rss" id="code">获取验证码</span></a>
+				</div>
+				<div class="zzc_reg_span">
+					<span>初始密码为注册手机号</span><br/>
+
+				</div>
+				<div class="renn">
+					<div class="ren_reg_submit" id="next">下一步</div>
+					<!--<div class="ren_reg_submit">-->
+						<!--<a href="{:U('Home/Mycenter/login')}">返回老用户登录</a>-->
+					<!--</div>-->
+					<div class="ren_rg_span"> 点击注册即代表已经阅读并同意
+						<a href="http://wx.yxm360.com/Public/user_knowledge.html">《用户协议》</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</block>
+<block name="js_extend">
+
+	<script type="text/javascript">
+		$(function() {
+			$("#getcode").on("click", function() {
+				var phone = $("input[name=phone]").val();
+				if(phone.length == 0) {
+					mui.toast("请输入手机号");
+					return;
+				}
+				$.post("{:U('Home/User/is_user')}", {
+					"phone": phone
+				}, function(res) {
+					if(res.status == 1) {
+						mui.toast(res.msg);
+					} else {
+						var code = document.getElementById('code');
+						if(code.innerHTML != '获取验证码') {
+							return;
+						}
+						var time = 59;
+						var h;
+						var flag;
+						if(flag) {
+							return false;
+						}
+						flag = true;
+						h = setInterval(function() {
+							if(time < 10) {
+								time = '0' + time;
+							}
+							code.innerHTML = time + '秒后重新获取';
+							time--;
+							if(time < 0) {
+								clearInterval(h);
+								flag = false;
+								code.innerHTML = '获取验证码';
+							}
+						}, 1000);
+						var phone = $("input[name=phone]").val();
+						var type = 1;
+						$.post("{:U('Home/User/sendCode')}", {
+							"phone": phone,
+							"type": type
+						}, function(res) {
+							if(res.status == 1) {
+								mui.toast("获取成功");
+							} else {
+								mui.toast(res.msg);
+							}
+						});
+					}
+				});
+			});
+			$("#next").on("click", function() {
+				var phone = $("input[name=phone]").val();
+				var code = $("input[name=code]").val();
+				var type = 1;
+				$.post("{:U('Home/User/checkPhone')}", {
+					"phone": phone,
+					"type": type,
+					"code": code
+				}, function(res) {
+					if(res.status == 1) {
+						top.location.href = "/Home/User/selectRegion?phone=" + phone + "&share_id={$Think.get.share_id}";
+					} else {
+						mui.toast(res.msg);
+					}
+				});
+			});
+		})
+
+		function zzc_dialog_title() {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '切换成功?',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+								this.close();
+							}
+						}
+					]
+				});
+				show();
+			});
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

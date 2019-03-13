@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>个人中心</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background: #fff;
+			}
+			.top{
+				width: 100%;
+				height:9rem;
+				background: url(__HOME_IMAGES__/meeting/top.png) no-repeat;
+				background-size: 100% 100%;
+			}
+			.top_cen{
+				width: 5rem;
+				height: 6.5rem;
+				margin: 0 auto;
+				padding-top: 1.75rem;
+			}
+			.top_img{
+				width: 4.5rem;
+				height: 4.5rem;
+				border-radius: 50%;
+				border:0.025rem solid #fff;
+				margin: 0 auto;
+			}
+			.top_img>img{
+				width: 4.3rem;
+				height: 4.3rem;
+				border-radius: 50%;
+				margin: 0.1rem;
+			}
+			.top_name{
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 1.2rem;
+				text-align: center;
+				color:#fff;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.bot{
+				width: 100%;
+				height: auto;
+				display: flex;
+				margin-top: 3rem;
+			}
+			.bot>div{
+				width: 50%;
+				height: 10rem;
+				text-align: center;
+			}
+			.bot>div>a{
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+			}
+			.bot_img{
+				width: 3rem;
+				height: 3rem;
+				margin: 0 auto;
+			}
+			.bot_img>img{
+				width: 100%;
+				height: 100%;
+			}
+			.bot_name{
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				font-size: 0.75rem;
+				color:#391705;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="top">
+			<div class="top_cen">
+				<div class="top_img">
+					<img src="__HOME_IMAGES__/meeting/top.png" alt="" />
+				</div>
+				<div class="top_name">yaobo</div>
+			</div>
+		</div>
+		<div class="bot">
+			<div>
+				<a href="javascript:;">
+					<div class="bot_img">
+						<img src="__HOME_IMAGES__/meeting/jl.png" alt="" />
+					</div>
+					<div class="bot_name">接待记录</div>
+				</a>
+			</div>
+			<div>
+				<a href="javascript:;">
+					<div class="bot_img">
+						<img src="__HOME_IMAGES__/meeting/wt.png" alt="" />
+					</div>
+					<div class="bot_name">问题解答</div>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

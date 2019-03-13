@@ -1,0 +1,456 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 邱明振
+ * Date: 2017/8/27
+ * Time: 23:32
+ */
+
+namespace Admin\Controller;
+use Common\Controller\AdminBaseController;
+/**
+ * 资金列表
+ */
+class CapitalController extends AdminBaseController
+{
+
+    /**
+     * 提现列表
+     */
+    public function index() {
+
+        $name = I('name', '', 'trim');
+        $money = I('money', '', 'trim');
+        $type = I('type', '', 'trim');
+        $status = I('status', '', 'trim');
+//        var_dump($status);die;
+        $start_at = strtotime(I('start_at'));
+        $end_at =strtotime(I('end_at'));
+        $map = array();
+        if ( $name ) {$map['u.nick_name | m.phone'] = $name;$this->assign('name', $name);}
+        if ( $money ) {$map['w.money'] = $money;$this->assign('money', $money);}
+        if ( $type ) {
+            if($type == 3){
+                $map['b.bank_name | b.branch_name'] = array('like','%邮政%');
+            }else{
+                $map['w.type'] = $type;
+            }
+            $this->assign('type', $type);
+        }
+        if ( $start_at ) {$map['w.add_time'] = array('egt', $start_at);$this->assign('start_at', $start_at);}
+        if ( $end_at ) {$map['w.add_time'] = array('elt', $end_at);$this->assign('end_at', $end_at);}
+        if ( $start_at && $end_at){$map['w.add_time'] = array('between', array($start_at,$end_at));$this->assign('start_at', $start_at);$this->assign('end_at', $end_at);}
+        if ( $status ) {$map['w.status'] = $status;$this->assign('status', $status);}
+//        $map['l.type'] = 0;
+        if($status == 2){
+            $order = 'w.type asc,w.id asc';
+        }else{
+            $order = 'w.id desc';
+        }
+
+        $fields = ['w.*', 'u.nick_name','m.phone','b.bank_name as bankname','b.name as bname','b.branch_name as branchname','b.number as bnumber'];
+        $withdrawMod = M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id');
+        $list = $this->lists($withdrawMod, $map, $order, null, $fields);
+
+        foreach ($list as $k => $l) {
+            $list[$k]['fee'] = $l['money'] * C('withdraw_rate');
+            $list[$k]['true_money'] = $l['money'] - $list[$k]['fee'];
+            $admin_log = M('admin_log')->alias('al')->join('left join s_admin_user au on au.user_id = al.admin_id')->where(array('al.object_id'=>$l['id'],'al.type'=>0))->field('al.addtime,au.username')->find();
+            $list[$k]['audit_time'] = $admin_log['addtime'];
+            $list[$k]['admin_name'] = $admin_log['username'];
+        }
+        $total_money = (M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id')->where($map)->sum('w.money')) *(1- C('withdraw_rate'));
+        $this->assign('_list', $list);
+        $this->assign('total_money', $total_money);
+        $this->display();
+
+    }
+
+    /**
+     * 提现到微信
+     */
+
+    public function handle_wx(){
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        $status = I('status', 0, 'intval');
+        $withdraw = M('withdraw')->alias('w')
+            ->join('left join s_user_info u on u.id = w.user_id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->field('w.user_id,w.add_time,m.bind_wechat,w.status,w.money')
+            ->where(array('w.id'=>$id))
+            ->find();
+        $openid = json_decode($withdraw['bind_wechat'],true)['openid'];
+        $out_money = $withdraw['money'] * (1-C('withdraw_rate'));
+        if($withdraw['status'] == 2 && $openid){
+
+            $put_forward = new PutForwardController();
+            $res = $put_forward->put_forward($openid,$out_money);
+
+            if($res['result_code'] == 'SUCCESS'){
+                $user = M('user_info')->find($withdraw['user_id']);
+                $user['frozen_money'] -= $withdraw['money'];
+                $user['already_money'] += $withdraw['money'];
+                $result = M('user_info')->save($user);
+                if ($result === false) {
+                    $this->error('失败');exit;
+                }else{
+                    $this->admin_log(0,$id,'微信提现审核通过');
+                }
+                $res = M('withdraw')->where(array('id'=>$id))->save(array('status' => $status));
+                //保存审核状态
+                if ($res) {
+                    $this->setMsg($openid,$user['nick_name'],date('Y-m-d H:i:s',$withdraw['add_time']),0,1);
+                    $this->success('操作成功');
+                } else {
+                    $this->error('转账成功,状态更新失败');
+                }
+            }else{
+                $this->error($res[0]);
+            }
+        }else{
+            $this->error('未绑定微信');
+        }
+    }
+    /**
+     * 处理提现
+     */
+    public function handle() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        $status = I('status', 0, 'intval');
+        if ( $status == 1 ) {
+            //审核通过
+            $withdraw = M('withdraw')->find($id);
+            $user = M('user_info')->find($withdraw['user_id']);
+            $user['frozen_money'] -= $withdraw['money'];
+            $user['already_money'] += $withdraw['money'];
+            $result = M('user_info')->save($user);
+            if ($result === false) {
+                $this->error('失败');exit;
+            }else{
+                $this->admin_log(0,$id,'提现审核通过');
+            }
+        } else if ( $status == 3 ) {
+            //审核不通过
+            $withdraw = M('withdraw')->find($id);
+            $user = M('user_info')->find($withdraw['user_id']);
+            $user['frozen_money'] -= $withdraw['money'];
+            $user['money'] += $withdraw['money'];
+            $result = M('user_info')->save($user);
+            if ($result === false) {
+                $this->error('失败');exit;
+            }
+            $this->admin_log(0,$id,'提现审核不通过');
+
+        }elseif($status == 4){
+            //转账中   只改变提交信息的状态
+        } else {
+            $this->error('参数错误');
+        }
+        $res = M('withdraw')->where(array('id'=>$id))->save(array('status' => $status));
+        //保存审核状态
+        if ($res) {
+            $openid = M('member')->where(array('id'=>$user['member_id']))->getField('openid');
+            if($openid){
+                if($status == 4){
+                    $this->setMsg($openid,$user['nick_name'],date('Y-m-d H:i:s',$withdraw['add_time']));
+                }elseif($status == 3){
+                    $this->setMsg($openid,$user['nick_name'],date('Y-m-d H:i:s',$withdraw['add_time']),1);
+                }
+            }
+            $this->success('操作成功');
+        } else {
+            $this->error('操作失败');
+        }
+
+    }
+    /**
+     * 批量处理提现
+     */
+    public function all_handle() {
+        $id_arr = explode('-',I('get.ids'));
+        $status = I('status', 0, 'intval');
+        $withdraws = M('withdraw')->where(array('id'=>array('in',$id_arr)))->select();
+//                var_dump($withdraws);die;
+        if ( $status == 1 ) {
+            //审核通过
+            foreach ($withdraws as $withdraw) {
+                $user = M('user_info')->find($withdraw['user_id']);
+                $user['frozen_money'] -= $withdraw['money'];
+                $user['already_money'] += $withdraw['money'];
+                $result = M('user_info')->save($user);
+                if ($result) {
+                    $res = M('withdraw')->where(array('id'=>$withdraw['id']))->save(array('status' => $status));
+                    $this->admin_log(0, $withdraw['id'], '批量提现审核通过');
+                }
+            }
+        } else if ( $status == 3 ) {
+            foreach ($withdraws as $withdraw) {
+                $user = M('user_info')->find($withdraw['user_id']);
+                $user['frozen_money'] -= $withdraw['money'];
+                $user['money'] += $withdraw['money'];
+                $result = M('user_info')->save($user);
+                if ($result) {
+                    $res = M('withdraw')->where(array('id'=>$withdraw['id']))->save(array('status' => $status));
+                    $this->admin_log(0, $withdraw['id'], '批量提现审核不通过');
+                    $openid = M('member')->where(array('id'=>$user['member_id']))->getField('openid');
+                    if($openid){
+                        $this->setMsg($openid,$user['nick_name'],date('Y-m-d H:i:s',$withdraw['add_time']),1);
+                    }
+                }
+            }
+        }elseif($status == 4){
+            //转账中   只改变提交信息的状态
+            $res = M('withdraw')->where(array('id'=>array('in',$id_arr)))->save(array('status'=>$status));
+            foreach ($withdraws as $withdraw) {
+                $user = M('user_info')->alias('u')
+                    ->join('left join s_member m on m.id = u.member_id')
+                    ->field('m.openid,u.nick_name')
+                    ->where(array('u.id'=>$withdraw['user_id']))
+                    ->find();
+                if($user){
+                    $this->setMsg($user['openid'],$user['nick_name'],date('Y-m-d H:i:s',$withdraw['add_time']));
+                }
+            }
+        } else {
+            $this->error('参数错误');
+        }
+        //保存审核状态
+        if ($res) {
+            $this->success('操作成功');
+        } else {
+            $this->error('操作失败');
+        }
+
+
+    }
+    /**
+     * 删除用户提现申请
+     */
+    public function delWithdraw() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('withdraw')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+    /**
+     * 导出Excel
+     */
+    public function excel(){
+        set_time_limit(0);
+
+
+        $name = I('name', '', 'trim');
+        $money = I('money', '', 'trim');
+        $type = I('type', '', 'trim');
+        $status = I('status', '', 'trim');
+        $start_at = strtotime(I('start_at'));
+        $end_at =strtotime(I('end_at'));
+        $map = [];
+        if ( $name ) {$map['b.name | m.phone'] = $name;$this->assign('name', $name);}
+        if ( $money ) {$map['w.money'] = $money;$this->assign('money', $money);}
+        if ( $type ) {$map['w.type'] = $type;$this->assign('type', $type);}
+        if ( $start_at ) {$map['w.add_time'] = array('egt', $start_at);$this->assign('start_at', $start_at);}
+        if ( $end_at ) {$map['w.add_time'] = array('elt', $end_at);$this->assign('end_at', $end_at);}
+        if ( $start_at && $end_at){$map['w.add_time'] = array('between', array($start_at,$end_at));$this->assign('start_at', $start_at);$this->assign('end_at', $end_at);}
+        if ( $status ) {$map['w.status'] = $status;$this->assign('status', $status);}
+        if($status == 2){
+            $order = 'w.id asc';
+        }else{
+            $order = 'w.id desc';
+        }
+        //导出全部   不按分页
+        $list = M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id')->where($map)->field('w.*,u.nick_name,m.phone')->order($order)->select();
+        foreach ($list as $k => $l) {
+            $list[$k]['bank'] = [];
+            if ($l['bank_id']) {
+                $bank = M('users_bank')->find($l['bank_id']);
+                $list[$k]['bank'] = $bank;
+            }
+            $list[$k]['fee'] = $l['money'] * C('withdraw_rate');
+            $list[$k]['true_money'] = $l['money'] - $list[$k]['fee'];
+        }
+        $data = array();
+        $headArr[]='用户名';
+        $headArr[]='注册手机号';
+        $headArr[]='金额';
+        $headArr[]='提现类型';
+        $headArr[]='银行类型';
+        $headArr[]='开户名';
+        $headArr[]='开户支行';
+        $headArr[]='卡号';
+        $headArr[]='手续费';
+        $headArr[]='应付提现金额';
+        $headArr[]='状态';
+//        $headArr[]='ip';
+        $headArr[]='申请时间';
+        $data[] = $headArr;
+        foreach ($list as $k=>$v){
+            $tmp = array();
+            $tmp['nick_name'] = $v['nick_name'];
+            $tmp['phone'] = $v['phone'];
+            $tmp['money'] = $v['money'];
+            $tmp['type'] = $v['type'] == 1 ? '微信钱包' : '银行卡';
+            $tmp['bank_name'] = $v['bank']['bank_name'];
+            $tmp['name'] = $v['bank']['name'];
+            $tmp['branch_name'] = $v['bank']['branch_name'];
+            $tmp['number'] = $v['bank']['number'];
+            $tmp['fee'] = $v['fee'];
+            $tmp['true_money'] = $v['true_money'];
+            $tmp['status'] = $v['status'];
+            if ($v['status'] == 1) {
+                $tmp['status'] = '已审核';
+            }
+            if ($v['status'] == 2) {
+                $tmp['status'] = '审核中';
+            }
+            if ($v['status'] == 3) {
+                $tmp['status'] = '审核不通过';
+            }
+//            $tmp['ip'] = $v['ip'];
+            $tmp['time'] = date('Y-m-d H:i:s',$v['add_time']);
+            $data[] = $tmp;
+        }
+        $total_money = (M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id')->where($map)->order('w.id DESC')->sum('w.money')) *(1- C('withdraw_rate'));
+        $data[] = array();//空一格
+        $data[] = array(
+            'nick_name'=>'总金额',
+            'phone'=>'',
+            'money'=>'',
+            'type'=>'',
+            'bank_name'=>'',
+            'name'=>'',
+            'branch_name'=>'',
+            'number'=>'',
+            'fee'=>'',
+            'true_money'=>$total_money
+        );
+        $filename="提现列表";
+
+        create_xls($data, $filename);
+    }
+    /**
+     * 银行导出
+     */
+    public function bank_excel(){
+        set_time_limit(0);
+
+
+        $name = I('name', '', 'trim');
+        $money = I('money', '', 'trim');
+        $type = I('type', '', 'trim');
+        $status = I('status', '', 'trim');
+        $start_at = strtotime(I('start_at'));
+        $end_at =strtotime(I('end_at'));
+        $map = [];
+        if ( $name ) {$map['u.nick_name'] = ['like', "%{$name}%"];$this->assign('name', $name);}
+        if ( $money ) {$map['w.money'] = $money;$this->assign('money', $money);}
+        if ( $type ) {$map['w.type'] = $type;$this->assign('type', $type);}
+        if ( $start_at ) {$map['w.add_time'] = array('egt', $start_at);$this->assign('start_at', $start_at);}
+        if ( $end_at ) {$map['w.add_time'] = array('elt', $end_at);$this->assign('end_at', $end_at);}
+        if ( $start_at && $end_at){$map['w.add_time'] = array('between', array($start_at,$end_at));$this->assign('start_at', $start_at);$this->assign('end_at', $end_at);}
+        if ( $status ) {$map['w.status'] = $status;$this->assign('status', $status);}
+        if($status == 2){
+            $order = 'w.id asc';
+        }else{
+            $order = 'w.id desc';
+        }
+        //导出全部   不按分页
+        $list = M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id')->where($map)->field('b.number,b.name,w.money,w.add_time,b.bank_name,b.branch_name,b.province,b.city')->order($order)->select();
+        foreach ($list as $k => $l) {
+//            $list[$k]['bank'] = [];
+//            if ($l['bank_id']) {
+//                $bank = M('users_bank')->find($l['bank_id']);
+//                $list[$k]['bank'] = $bank;
+//            }
+            $list[$k]['fee'] = $l['money'] * C('withdraw_rate');
+            $list[$k]['true_money'] = $l['money'] - $list[$k]['fee'];
+        }
+        $data = array();
+        $headArr[]='银行账号';
+        $headArr[]='用户名';
+        $headArr[]='金额';
+        $headArr[]='备注（用户申请时间）';
+        $headArr[]='开户行';
+        $headArr[]='开户支行';
+        $headArr[]='收款省';
+        $headArr[]='收款市';
+        $data[] = $headArr;
+        foreach ($list as $k=>$v){
+            $tmp = array();
+            $tmp['number'] = "\t".$v['number'];
+            $tmp['name'] = $v['name'];
+            $tmp['true_money'] = $v['true_money'];
+            $tmp['time'] = date('Y-m-d H:i:s',$v['add_time']);
+            $tmp['bank_name'] = $v['bank_name'];
+            $tmp['branch_name'] = $v['branch_name'];
+            $tmp['province'] = $v['province'];
+            $tmp['city'] = $v['city'];
+            $data[] = $tmp;
+        }
+        $total_money = (M('withdraw')->alias('w')->join('left join s_user_info u ON u.id = w.user_id')->join('left join s_member m on m.id = u.member_id')->join('left join s_users_bank b on b.id = w.bank_id')->where($map)->order('w.id DESC')->sum('w.money')) *(1- C('withdraw_rate'));
+        $data[] = array();//空一格
+        $data[] = array(
+            'number'=>'总金额',
+            'name'=>'',
+            'true_money'=>'',
+            'time'=>'',
+            'bank_name'=>'',
+            'branch_name'=>'',
+            'province'=>'',
+            'city'=>$total_money
+        );
+        $filename="银行提现列表";
+
+        create_xls($data, $filename);
+    }
+    /**
+     * 发送短信
+     * @param $phone
+     * @param $code
+     * @return array
+     */
+    private function setMsg($openid,$nick_name,$time,$type=0,$is_wx=0){
+        if($type == 0){//审核通过
+//            $content="您的小秘币兑换申请已由银行发放到您绑定的银行卡账户，24小时内请注意查收，退订回复TD";//要发送的短信内容
+            $content = "您的小秘币兑换申请已由银行发放到您绑定的银行卡账户";
+            $remark = "24小时内请注意查收";
+            if($is_wx){
+                $content = "您的小秘币兑换申请已发送到您的微信钱包";
+                $remark = "2小时内请注意查收";
+            }
+            sendWxTemplateMessages('SendPutForward',array( 'wecha_id' => $openid,'href'=>get_current_Host().U('/Home/Income/income'), 'first' => $content, 'keyword1' =>$nick_name, 'keyword2' => $time, 'keyword3'=> '小秘币兑换','remark' => $remark));
+        }elseif($type == 1){//审核不通过
+//            $content="您的小秘币兑换申请未通过，可能原因是您的银行卡信息填写错误，如有疑问请咨询4009201127，退订回复TD";//要发送的短信内容
+            $content = "您的小秘币兑换申请未通过";
+
+            sendWxTemplateMessages('SendPutForward',array( 'wecha_id' => $openid,'href'=>get_current_Host().U('/Home/Income/income'), 'first' => $content, 'keyword1' =>$nick_name, 'keyword2' => $time, 'keyword3'=> '小秘币兑换','remark' => '如有疑问请咨询021-64889537'));
+        }
+
+//        $url = 'http://intapi.253.com/send/json';
+//        $post_data['account']       = 'I4612514';
+//        $post_data['password']      = 'b8fW1R4HZkd53e';
+//        $post_data['msg'] = '【洋小秘】'.$content;
+//        $post_data['mobile']    = '86'.$phone;
+//        $res = $this->request_post($url, $post_data,true);
+//        if($res['code'] == 0){
+//            M('new_msg')->add(array('msgid'=>$res['msgid'],'mobile'=>$post_data['mobile'],'code'=>$content,'addtime'=>time()));
+//        }
+//        $smsapi = "http://47.94.241.105:9001/";
+//        $user = "shmingxin"; //短信平台帐号
+//        $pass = 'shmingxin@123'; //短信平台密码
+//        $sendurl = $smsapi."sms.aspx?action=send&userid=315&&account=".$user."&password=".$pass."&mobile=".$phone."&content=".$content."&sendTime=&extno=";
+//        simplexml_load_string(file_get_contents($sendurl)) ;
+    }
+
+
+}

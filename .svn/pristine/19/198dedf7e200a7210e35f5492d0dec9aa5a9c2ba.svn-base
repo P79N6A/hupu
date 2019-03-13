@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>小秘币充值</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        .top {
+            width: 100%;
+            height: .6rem;
+            position: relative;
+        }
+
+        .chosefs {
+            /* width: .6rem; */
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            top: .24rem;
+            left: .15rem;
+        }
+        .toptwo {
+            width: 3.42rem;
+            height: .75rem;
+            background: #F7F7F7;
+            border-radius: .02rem;
+            border: 1px solid #F7F7F7;
+            position: absolute;
+            bottom: .2rem;
+            left: .15rem;
+            display: none;
+        }
+
+        
+        .toptwo img {
+            width: .4rem;
+            height: .4rem;
+            top: .17rem;
+            left: .17rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .wzjs {
+            height: .18rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #46D1A9;
+            line-height: .18rem;
+            position: absolute;
+            left:.73rem;
+            top:.27rem;
+        }
+        .secd{
+            width:100%;
+            height:.99rem;
+            background: #fff;
+            margin-top:.08rem;
+            position: relative;
+        }
+        .slj{
+            height:.21rem;
+            font-size:.15rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:rgba(43,43,43,1);
+            line-height:.21rem;
+            position: absolute;
+            top:.18rem;
+            left:.16rem;
+        }
+        .one{
+            width:.19rem;
+            height:.28rem;
+            font-size:.2rem;
+            font-family:PingFangSC-Medium;
+            font-weight:500;
+            color:rgba(43,43,43,1);
+            line-height:.28rem;
+            position: absolute;
+            top:.52rem;
+            left:.21rem;
+        }
+        .jinesr{
+            height:.2rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(43,43,43,1);
+            line-height:.2rem;
+            border:none;
+            outline: none;
+            position: absolute;
+            /* background: #fff; */
+            top:.56rem;
+            left:.4rem;
+        }
+        .wwb{
+            width:.52rem;
+            height:.18rem;
+            font-size:.13rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:rgba(43,43,43,1);
+            line-height:.18rem;
+            position: absolute;
+            left:.68rem;
+            top:.2rem;
+        }
+        .zby{
+            width:.83rem;
+            height:.18rem;
+            font-size:.13rem;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(43,43,43,1);
+            line-height:.18rem;
+            position: absolute;
+            left:.68rem;
+            top:.38rem;
+        }
+        .djgh{
+            width: .72rem;
+            height: .5rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(70,209,169,1);
+            line-height: .5rem;
+            position: absolute;
+            right: .18rem;
+            top: .14rem;
+        }
+        .review{
+            width:3.26rem;
+            height:.4rem;
+            background:rgba(50,206,160,1);
+            border-radius:.04rem;
+            border:none;
+            outline: none;
+            position: fixed;
+            left:.25rem;
+            bottom:.56rem;
+            font-size:.14rem;
+            font-family:PingFangSC-Semibold;
+            font-weight:600;
+            color:#fff;
+        }
+        .detail{
+        width:.62rem;
+        height:.24rem;
+        background:rgba(255,157,73,1);
+        border-radius:.12rem 0px 0px .12rem;
+        position: absolute;
+        right:0;
+        top:.2rem;
+        /* position: relative; */
+    }
+    .detail img{
+        width:.11rem;
+        height:.14rem;
+        position: absolute;
+        background-size: 100% 100%;
+        top:.05rem;
+        right:.36rem;
+    }
+    .detail span{
+        width:.3rem;
+        height:.16rem;
+        font-size:.11rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color: #fff;
+        position: absolute;
+        line-height: .24rem;
+        right:.02rem;
+    }
+    .tipmoney{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 999;
+        background: rgba(0,0,0,0.7);
+        color: #fff;
+        text-align: center;
+        width: 1.8rem;
+        font-size: .12rem;
+        padding: 0.05rem 0 ;
+        margin-left: -0.9rem;
+        border-radius: .05rem;
+        display: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top">
+            <span class="chosefs">小秘币充值</span>
+            <div class="detail">
+                <img src="Public/Home/images/slicesrjl/copyrjl.png" alt="">
+                <span>记录</span>
+            </div>
+
+            <div class="toptwo">
+                <img src="Public/Home/images/slicesrjl/kzer2x.png" alt="">
+                <span class="wwb">微信充值</span>
+                <span class="zby">13838273892</span>
+                <div class="djgh">更换绑定微信</div>
+            </div>
+        </div>
+        <div class="secd">
+            <span class="slj">充值金额</span>
+            <span class="one">￥</span>
+            <input type="text" class="jinesr" placeholder="请输入充值金额" name="money">
+        </div>
+        <button class="review" value="">确定充值</button>
+        <div class="tipmoney"></div>
+    </div>
+</body>
+<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>-->
+<!--<script>eruda.init();</script>-->
+<script>
+    $(function () {
+            var user_id = '{$unionid}'; //'{$unionid}';kxYCBnzDicE
+            var openid = '{$openid}'; //'{$unionid}';kxYCBnzDicE
+        console.log(openid);
+            $('button.review').on('click', function () {
+                    var money = $("input[name=money]").val();
+                   if(money==null | money.trim().length==0 || money=='null' || money==undefined) {
+                        $(".tipmoney").text("请输入充值金额").stop(true).fadeIn(1000).fadeOut(2000);
+                        return;
+                    }
+                    var newmoney = parseInt(money);
+                    if (newmoney % 100 != 0) {
+                        $(".tipmoney").text("充值金额必须是100的整数倍").stop(true).fadeIn(1000).fadeOut(2000);
+                        return;
+                    }
+                   var data = {
+                        'unionid': user_id,
+                        'money': $("input.jinesr").val(),
+                        'openid': openid,
+                   };
+
+                    $.post("/index.php?s=/Api/AppApi/xmb_pay_package", data, function (res) {
+                        console.log(res);
+                        jsApiCall(res.data);
+                    });
+            })
+            //调用微信JS api 支付
+            function jsApiCall(data) {
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+                        "appId": data.appId, //公众号名称，由商户传入
+                        "timeStamp": data.timeStamp, //时间戳，自1970年以来的秒数
+                        "nonceStr": data.nonceStr, //随机串
+                        "package": data.package,
+                        "signType": data.signType, //微信签名方式：
+                        "paySign": data.paySign //微信签名
+                    },
+                    function (res) {
+                        WeixinJSBridge.log(res.err_msg);
+                        if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                            alert("支付成功");
+                        }
+                    }
+                );
+            }
+            // 点击绑定微信
+            $('.top').on('click', '.topfst', function () {
+                //var user_id='kxYCBnzDicE';
+                console.log(user_id);
+                $.ajax({
+                    url: '/index.php?s=/Api/Wechat/is_wechat',
+                    type: 'post',
+                    data: {
+                        unionid: user_id,
+                    },
+                    success: function (res) {
+                        console.log(res)
+                    }
+                })
+
+                $('.toptwo').show();
+            })
+
+            //点击记录查看详情detail
+            $('.top').on('click', '.detail', function () {
+                window.location.href = "/index.php?s=/Home/income/chongzhi.html"
+            })
+    })
+</script>
+
+</html>

@@ -1,0 +1,401 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 邱明振
+ * Date: 2017/8/25
+ * Time: 21:59
+ */
+
+namespace Admin\Controller;
+use Common\Controller\AdminBaseController;
+
+/**
+ * 文章管理
+ *
+ * Class ArticleController
+ * @package Admin\Controller
+ */
+class ArticleController extends AdminBaseController
+{
+
+
+    /**
+     * 文章分类列表
+     */
+    public function articleCategory() {
+
+        $name = I('mobile', '', 'trim');
+        $type_id = I('type_id', '', 'trim');
+        $where = array();
+
+        if($name) {
+            $userList = M('user_info')->where(array('mobile'=>$name))->select();
+            $userIds = array();
+            foreach($userList as $v){
+                $userIds[] = $v['id'];
+            }
+            if($userIds)
+                $where['user_id'] = array('in',$userIds);
+        }else{
+            if($type_id){
+                $where['user_id'] = array('neq'=>0);
+            }else{
+                $where['user_id'] = 0;
+            }
+        }
+        $Page       = new \Think\Page(D('ArticleType')->where($where)->relation(true)->count(),20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();// 分页显示输出
+        $list = D('ArticleType')->where($where)->relation(true)->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        $this->assign('_list', $list);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->display();
+    }
+
+    /**
+     * 添加与编辑 文章分类
+     */
+    public function addArticleCategory() {
+
+        if ( IS_POST ) {
+
+            $rules = [
+                ['name', 'require', '分类名称不能为空'],
+            ];
+            $articleTypeMod = M('article_type');
+            $data = $articleTypeMod->validate($rules)->create();
+            if ( !$data ) $this->error( $articleTypeMod->getError() );
+
+            if ( $data['id'] > 0 ) {
+                //编辑
+                if ( $articleTypeMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Article/articleCategory'));
+                $this->error( $articleTypeMod->getError() );
+
+            } else {
+                //添加
+                unset( $data['id'] );
+                $data['add_time'] = time();
+                if ( $articleTypeMod->add($data) ) $this->success('添加成功', U('Article/articleCategory') );
+                $this->error( $articleTypeMod->getError() );
+            }
+
+        } else {
+
+            $id = I('get.id', 0, 'intval');
+            $title = '添加分类';
+            if ( $id ) {
+                $res = M('article_type')->where(['id' => $id])->find();
+                $this->assign('res', $res);
+                $title = '编辑分类';
+            }
+            $this->assign('title', $title);
+            $this->display();
+
+        }
+
+    }
+
+    /**
+     * 删除文章分类
+     */
+    public function delArticleCategory() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('article_type')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+    /**
+     * 文章列表
+     */
+    public function articleList() {
+
+        $phone = I('phone', '', 'trim');
+        $title = I('title', '', 'trim');
+        $nick_name = I('nick_name', '', 'trim');
+        $atype_id = I('atype_id', 0, 'intval');
+        $map = [];
+        if ( $atype_id != 0 ) $map['al.atype_id'] = $atype_id;
+        if($phone) $map['m.phone'] = $phone;
+        if($title) $map['al.title'] = array('like','%'.$title.'%');
+        if($nick_name) $map['u.nick_name'] = $nick_name;
+
+        $fields = ['al.*', 'at.name as at_name', 'u.nick_name','m.phone'];
+        $articleMod = M('article_list')->alias('al')->join('left join s_article_type at ON at.id = al.atype_id')->join('left join s_user_info u ON u.id = al.user_id')->join('left join s_member m on m.id = u.member_id');
+
+        $list = $this->lists($articleMod, $map, 'al.is_video desc,al.id DESC', null, $fields);
+        $this->assign('_list', $list);
+        $this->display();
+
+    }
+
+    /**
+     * 添加与编辑 文章
+     */
+    public function addArticle() {
+        if ( IS_POST ) {
+
+            $rules = [
+                ['title', 'require', '文章标题不能为空'],
+                ['content', 'require', '文章内容不能为空'],
+            ];
+            $articleListMod = M('system_article');
+
+            $data = $articleListMod->validate($rules)->create();
+            if ( !$data ) $this->error( $articleListMod->getError() );
+            //图片上传
+            $img = '';
+            if($_FILES['pic']['name'] != null){
+                if(substr($_SERVER['HTTP_HOST'],0,1) == 'w'){
+                    $start_name = 'article';
+                }else{
+                    $start_name = 'test';
+                }
+                $end_name = trim(strrchr($_FILES['pic']['name'], '.'),'.');
+                if($end_name == 'jpeg'){
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.jpg';
+                }else{
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.'.$end_name;
+                }
+                $Upload = new \Admin\Controller\UploadsController();
+                $img = $Upload->Uploads($save_name,$_FILES['pic']);
+//                if($res->rt){
+//                    $img = str_replace(C('UPLOADS_IMAGE')['name1'],C('UPLOADS_IMAGE')['name2'],$res->objUrl);
+//                }
+            }
+            $data['content'] = html_entity_decode($data['content']);
+
+            if ( $data['id'] > 0 ) {
+                if ( $img ) {
+//                    unlink($data['pic']);
+                    $data['cover_img'] = $img;
+                }
+                //编辑
+                if ( $articleListMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Article/systemArticleList'));
+                $this->error( $articleListMod->getError() );
+
+            } else {
+                //添加
+                if ( !$img ) $this->error('请上传图片');
+                unset( $data['id'] );
+
+                $data['cover_img'] = $img;
+                $data['addtime'] = time();
+                $data['admin_id'] = session('admin')['user_id'];
+                if ( $articleListMod->add($data) ) $this->success('添加成功', U('Article/systemArticleList') );
+                $this->error( $articleListMod->getError() );
+            }
+
+        } else {
+
+            $id = I('get.id', 0);
+            $title = '添加文章';
+            if ( $id ) {
+                $res = M('system_article')->where(['id' => $id])->find();
+                $this->assign('res', $res);
+                $title = '编辑文章';
+            }
+
+            $article_type = M('article_type')->where(array('user_id'=>0))->select();
+
+            $this->assign('article_type', $article_type);
+            $this->assign('title', $title);
+            $this->display();
+
+        }
+
+    }
+
+    /**
+     * 删除文章
+     */
+    public function delArticle() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('article_list')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+    /**
+     * 视频教程列表
+     */
+    public function videoList() {
+
+        $name = I('name', '', 'trim');
+        $map = [];
+        if ( $name ) $map['title'] = ['like', "%{$name}%"];
+
+
+        $list = $this->lists('video_courses', $map, 'id DESC', null);
+        $this->assign('_list', $list);
+        $this->display();
+
+    }
+
+    /**
+     * 添加与编辑视频教程
+     */
+    public function addVideo() {
+
+        if ( IS_POST ) {
+
+            $rules = [
+                ['title', 'require', '视频名称不能为空'],
+            ];
+            $videoCoursesMod = M('video_courses');
+            $data = $videoCoursesMod->validate($rules)->create();
+            if ( !$data ) $this->error( $videoCoursesMod->getError() );
+
+            if ( $data['id'] > 0 ) {
+                //编辑
+                if ( $videoCoursesMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Article/videoList'));
+                $this->error( $videoCoursesMod->getError() );
+
+            } else {
+                //添加
+                unset( $data['id'] );
+                $data['add_time'] = time();
+                if ( $videoCoursesMod->add($data) ) $this->success('添加成功', U('Article/videoList') );
+                $this->error( $videoCoursesMod->getError() );
+            }
+
+        } else {
+
+            $id = I('get.id', 0);
+            $title = '添加视频';
+            if ( $id ) {
+                $res = M('video_courses')->where(['id' => $id])->find();
+                $this->assign('res', $res);
+                $title = '编辑视频';
+            }
+
+            $this->assign('title', $title);
+            $this->display();
+
+        }
+
+    }
+
+    /**
+     * 删除视频教程
+     */
+    public function delVideo() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('video_courses')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+    /**
+     * 经典案例列表
+     */
+    public function caseList() {
+
+    }
+
+    /**
+     * 添加与编辑 案例
+     */
+    public function addCase() {
+
+        if ( IS_POST ) {
+
+            $rules = [
+                ['title', 'require', '名称不能为空'],
+            ];
+            $caseMod = M('case');
+            $data = $caseMod->validate($rules)->create();
+            if ( !$data ) $this->error( $caseMod->getError() );
+
+            if ( $data['id'] > 0 ) {
+                //编辑
+                if ( $caseMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Article/caseList'));
+                $this->error( $caseMod->getError() );
+
+            } else {
+                //添加
+                unset( $data['id'] );
+                $data['add_time'] = time();
+                if ( $caseMod->add($data) ) $this->success('添加成功', U('Article/caseList') );
+                $this->error( $caseMod->getError() );
+            }
+
+        } else {
+
+            $id = I('get.id', 0);
+            $title = '添加案例';
+            if ( $id ) {
+                $res = M('case')->where(['id' => $id])->find();
+                $this->assign('res', $res);
+                $title = '编辑案例';
+            }
+            $this->assign('title', $title);
+            $this->display();
+
+        }
+
+    }
+
+    /**
+     * 删除案例
+     */
+    public function delCase() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('case')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+
+    /********************************************************   推广文章    ******************************************/
+    /**
+     * 系统文章列表
+     */
+    public function systemArticleList(){
+
+        $title = I('title', '', 'trim');
+        $nick_name = I('username', '', 'trim');
+        $type_id = I('type_id', 0, 'intval');
+        $map = [];
+        $map['status'] = 1;
+        if ( $atype_id != 0 ) $map['sa.type_id'] = $type_id;
+        if($title) $map['sa.title'] = array('like','%'.$title.'%');
+        if($nick_name) $map['u.username'] = $nick_name;
+        $fields = ['sa.*','at.name as at_name', 'u.username'];
+
+
+        $articleMod = M('system_article')->alias('sa')->join('left join s_article_type at ON at.id = sa.type_id')->join('left join s_admin_user u ON u.user_id = sa.admin_id');
+
+        $list = $this->lists($articleMod, $map, 'sa.id DESC', null, $fields);
+        $article_type = M('article_type')->where(array('user_id'=>0))->select();
+
+        $this->assign('article_type', $article_type);
+        $this->_list = $list;
+        $this->display();
+    }
+    /**
+     * 隐藏系统文章
+     */
+    public function hidden_systemarticle(){
+        $id = I('get.id');
+        $res = M('system_article')->save(array('id'=>$id,'status'=>0));
+        if($res){
+            $this->success('删除成功');
+        }else{
+            $this->error('删除失败');
+        }
+    }
+
+}

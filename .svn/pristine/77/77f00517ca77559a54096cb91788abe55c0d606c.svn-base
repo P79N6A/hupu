@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<title>参会登录页面</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+		 	html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: url(__HOME_IMAGES__/meeting/back.png) no-repeat;
+				background-size: 100% 100%;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			.top {
+				margin-top: 6rem;
+				margin-bottom: 8rem;
+			}
+			
+			.ipt {
+				width: 90%;
+				height: 3.5rem;
+				background: rgba(247, 247, 247, 0.7);
+				border-radius: 2px;
+				margin: 0 auto 1rem;
+				display: flex;
+			}
+			
+			.ipt_img {
+				display: block;
+				width: 20%;
+				height: 100%;
+				text-align: center;
+			}
+			
+			.ipt_img>img {
+				width: 1rem;
+				height: 1.5rem;
+				margin: 1rem 0;
+			}
+			
+			.iput {
+				width: 80%;
+				height: 100%;
+			}
+			
+			.iput>input {
+				width: 100%;
+				height: 100%;
+				background: none;
+				border: none;
+				font-size: 1.25rem;
+				color: #333;
+				outline: none;
+			}
+			
+			input::-webkit-input-placeholder {
+				color: #5F5D70;
+				font-size: 0.85rem;
+			}
+			.login_dl{
+				width: 90%;
+				height: 3rem;
+				text-align: center;
+				font-size: 1.25rem;
+				line-height: 3rem;
+				color:#fff;
+				background: #2FB3D3;
+				margin: 0 auto;
+				border-radius: 1.5rem;
+				
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+
+			<div class="ipt">
+				<span class="ipt_img">
+					<img src="__HOME_IMAGES__/meeting/inco_zhu_phone@2x.png" alt="" />
+				</span>
+				<span class="iput">
+					<input type="text" placeholder="请输入账号" />
+				</span>
+			</div>
+			<div class="ipt">
+				<span class="ipt_img">
+					<img src="__HOME_IMAGES__/meeting/inco_zhu_suo@2x.png" alt="" />
+				</span>
+				<span class="iput">
+					<input type="text" placeholder="请输入密码" />
+				</span>
+			</div>
+		</div>
+		<div class="login_dl">登录</div>
+	</body>
+
+</html>

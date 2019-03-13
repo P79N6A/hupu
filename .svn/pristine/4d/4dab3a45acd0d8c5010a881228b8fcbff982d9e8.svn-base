@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/photo_sort.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__HOME_JS__/whjs/js/Sortableone.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="content">
+        <div class="sort_box">
+            <ul id="so_box">
+                <!-- img数据 -->
+
+            </ul>
+        </div>
+
+        <div class="footer_sort">
+            <button class="check">确定排序</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script type="text/html" id="img_sort">
+
+    {{each content_detail v i}}
+    <li class="item" style="background-image:url({{v.img}})" data-id="{{v.id}}">
+        <div class="item_text" style="color:{{v.font_color}}"></div>
+        <img class="del" src="__HOME_IMAGES__/wh/sort.png" data-id="{{v.id}}" alt="">
+    </li>
+    {{/each}}
+
+
+</script>
+
+<script>
+    $(function () {
+
+        var userid = '{$id}';
+        var num ;
+
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        // 点击back返回
+        // $(".chose").on("click", function () {
+        //     mui.confirm("正在编辑状态，是否要返回？", "", ["否", "是"], function (res) {
+        //         if (res.index == 1) {
+        //             top.location.href = "/index.php?s=/Home/Photo/album_edit&id=" + Albumid +
+        //                 "&cids=" + cids + "&typeid=" + typeid + "&musicid=" + musicid + "";
+        //         }
+        //     });
+
+        // })
+
+        var Albumid = GetQueryString("id");
+        var cids = GetQueryString("cids");
+
+        var typeid = GetQueryString("typeid");
+        var musicid = GetQueryString("musicid");
+
+        console.log(typeid)
+        console.log(musicid)
+
+        console.log(Albumid)
+        console.log(cids)
+
+        // 排序的数据渲染
+        $.ajax({
+            type: "post",
+            url: "index.php?s=/Api/IndexApi/get_album_list",
+            data: {
+                unionid: userid,
+                my_id: Albumid
+            },
+            success: function (res) {
+                console.log(res)
+                $("#so_box").html(template("img_sort", res.AppendData))
+
+            }
+        });
+
+        Sortable.create(so_box, {
+            group: "words",
+            draggable: ".item",
+            animation: 300,
+            filter: '.del',
+            onFilter: function (evt) {
+                // var currentid = evt.item.children[1].dataset.id
+                // mui.confirm("提示", "是否删除", ["否", "是"], function (res) {
+                //     if (res.index == 1) {
+                //         evt.item.parentNode.removeChild(evt.item);
+                //         $.ajax({
+                //             type: "post",
+                //             url: "index.php?s=/Api/IndexApi/del_user_album_detail",
+                //             data: {
+                //                 unionid: userid,
+                //                 user_content_id: currentid
+                //             },
+                //             success: function (res) {
+                //                 console.log(res)
+                //                 mui.toast("删除成功");
+                //             },
+                //             error: function () {
+                //                 mui.toast("删除失败，服务器繁忙请稍后再试")
+                //             }
+
+                //         })
+                //     }
+                // });
+
+
+
+            },
+            onEnd: function (res) {
+                 num = [];
+                $(".item").each(function (i, e) {
+                    // console.log($(e).attr("data-id"));
+                    num.push($(e).attr("data-id"));
+
+                })
+
+
+
+            }
+        });
+
+
+        // // 点击保存调用保存的接口
+        $(".check").on("click", function () {
+            console.log(num)
+
+            $.ajax({
+                type: "post",
+                url: "index.php?s=/Api/IndexApi/edit_album_sort",
+                data: {
+                    unionid: userid,
+                    content_id: num
+                },
+                success: function (res) {
+                    console.log(res)
+                    mui.toast("保存成功");
+                    setTimeout(function(){
+                    window.location = "/index.php?s=/Home/Android/photo_edit&preview="+Albumid+"&cids="+cids+"&unionid="+userid;
+                    },1000)
+                }
+            })
+
+
+        })
+
+
+
+
+
+
+    })
+</script>

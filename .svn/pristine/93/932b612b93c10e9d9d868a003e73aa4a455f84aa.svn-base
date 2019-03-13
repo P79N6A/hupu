@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>规格设置</title>
+		<script src="/Public/Home/js/whjs/js/newrem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				background: #F6F6F6;
+			}
+			.can{
+				width: 100%;
+				height: 100%;
+				background: #fff;
+				display: none;
+				position: fixed;
+				top:0;
+				left:0;
+				z-index: 1000;
+			}
+			.add{
+				width: 90%;
+				height: 0.55rem;
+				line-height: 0.55rem;
+				background: #fff;
+				margin: 0 auto 0.7rem;
+				font-weight: 500;
+				font-size: 0.16rem;
+				color:#F8C85E;
+				text-align: center;
+				border-bottom-left-radius: 0.04rem;
+				border-bottom-right-radius: 0.04rem;
+			}
+			.max{
+				width: 90%;
+				height: auto;
+				margin: 0.12rem auto 0;
+				border-top-left-radius: 0.04rem;
+				border-top-right-radius: 0.04rem;
+				z-index: 100;
+			}
+			.tab{
+				width: 100%;
+				height: 0.46rem;
+				line-height: 0.46rem;
+				font-size: 0.16rem;
+				font-weight: 600;
+				color:#333;
+				display: flex;
+				background: #fff;
+				padding-bottom: 0.01rem;
+				border-bottom: 0.01rem solid #F8F8F8;
+				
+			}
+			.tab_left{
+				width: 25%;
+				height: 100%;
+				padding:0 3.5%;
+				
+			}
+			input{
+				width: 100%;
+				height: 100%;
+				border:none;
+				outline: none;
+				
+			}
+			input::-webkit-input-placeholder {
+				/* placeholder颜色  */
+				color: #C5C5C5;
+				/* placeholder字体大小  */
+				font-size: 0.14rem;
+			}
+			.tab_cen{
+				width: 60.5%;
+				height: 100%;
+				text-align: center;
+			}
+			.tab_right{
+				width: 12.5%;
+				height: 100%;
+				text-align: center;
+				background: #fff;
+			}
+			.tab_right>img{
+				width: 0.2rem;
+				height: 0.2rem;
+				margin: 0.13rem 0;
+			}
+			.confirm{
+				width: 100%;
+				height: 0.4rem;
+				background: #fff;
+				padding: 0.08rem 0;
+				position: fixed;
+				bottom:0;
+				left:0;
+			}
+			.save{
+				width: 90%;
+				height: 0.4rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.16rem;
+				font-weight: 600;
+				text-align: center;
+				color:#fff;
+				letter-spacing: 0.1rem;
+				line-height: 0.4rem;
+				border-radius: 0.04rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="can">
+			<div class="max">
+				<div class="tab">
+					<div class="tab_left">
+						<input type="text" placeholder="标题" />
+					</div>
+					<div class="tab_cen">
+						<input type="text"  placeholder="参数"/>
+					</div>
+					<div class="tab_right">
+						<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />
+					</div>
+				</div>
+			</div>
+			<div class="add">+&nbsp;添加更多规格</div>
+			<div class="confirm">
+				<div class="save">
+					确定
+				</div>
+			</div>
+		</div>
+		<script>
+			$(".add").on("click",function(){
+				$(".max").append(
+					'<div class="tab">'+
+						'<div class="tab_left">'+
+							'<input type="text" placeholder="标题" />'+
+						'</div>'+
+						'<div class="tab_cen">'+
+							'<input type="text"  placeholder="参数"/>'+
+						'</div>'+
+						'<div class="tab_right">'+
+							'<img src="__HOME_IMAGES__/newvnet/apro/del.png" alt="" />'+
+						'</div>'+
+					'</div>'
+				)
+			})
+		</script>
+	</body>
+</html>

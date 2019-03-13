@@ -1,0 +1,783 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+
+	<style>
+		body {
+			font-size: 16px;
+		}
+		
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		
+		h3 {
+			font-size: 17px;
+		}
+		
+		ul {
+			list-style: none;
+		}
+		
+		li {
+			list-style: none;
+		}
+		
+		.tit {
+			width: 90%;
+			margin: 0 auto;
+			height: auto;
+			padding: 10px 0;
+		}
+		
+		.title {
+			width: 100%;
+			height: auto;
+			line-height: 30px;
+		}
+		
+		.date {
+			margin-right: 10px;
+		}
+		
+		.Img {
+			float: left;
+			width: 25%;
+			height: 100%;
+			border-radius: 50%;
+		}
+		
+		.Img>img {
+			width: 62px;
+			height: 62px;
+			border-radius: 50%;
+		}
+		
+		.rank {
+			float: left;
+			width: 45%;
+			height: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 16px;
+			color: #333;
+		}
+		
+		.brief {
+			padding: 10px;
+			width: 90%;
+			margin: 0 auto;
+			height: 82px;
+			line-height: 40px;
+			box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+			border-radius: 4px;
+			position: relative;
+		}
+		
+		#nick_names {
+			width: 100%;
+			height: 50%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		#companys {
+			width: 100%;
+			height: 50%;
+			margin-bottom: 0;
+			line-height: 31px;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		h3 {
+			line-height: 0;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			line-height: 31px;
+		}
+		
+		.con {
+			padding: 10px 0;
+			height: auto;
+			width: 90%;
+			margin: 0 auto;
+			font-size: 20px;
+		}
+		
+		.person {
+			width: 90%;
+			margin: 0 auto;
+			position: relative;
+			margin-bottom: 60px;
+		}
+		
+		.mess {
+			color: #000;
+		}
+		
+		.allcity-boxss {
+			text-align: center;
+			width: 80%;
+			height: 335px;
+			background: #fff;
+			position: fixed;
+			top: 50%;
+			left: 0;
+			right: 0;
+			margin: -152.5px auto 0;
+			border-radius: 4px;
+			z-index: 101;
+			padding-top: 30px;
+			display: none;
+		}
+		
+		.tab:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		.tab {
+			width: 90%;
+			height: 42px;
+			line-height: 42px;
+			display: flex;
+			margin: 0 auto;
+			border: 1px solid #32CEA0;
+			border-radius: 4px;
+		}
+		
+		.tab li {
+			width: 35%;
+			height: 40px;
+			float: left;
+			line-height: 40px;
+			margin: 0 auto;
+			color: #32CEA0;
+			background: #fff;
+			font-size: 12px;
+		}
+		
+		.card_button:nth-of-type(1) {
+			border-bottom-left-radius: 4px;
+			border-top-left-radius: 4px;
+		}
+		
+		.card_button:nth-of-type(2) {
+			border-left: 1px solid #32CEA0;
+			border-right: 1px solid #32CEA0;
+		}
+		
+		.card_button:nth-of-type(3) {
+			border-bottom-right-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+		
+		.tab li.dian {
+			background: #32CEA0;
+			color: #fff;
+		}
+		
+		.content{
+			width: 100%;
+			height: 220px;
+		}
+		
+		.content:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		.content li {
+			width: 200px;
+			height: 200px;
+			margin: 0 auto;
+			display: none;
+		}
+		
+		.content li>img {
+			width: 100%;
+			height: 100%;
+		}
+		
+		.er {
+			width: 100%;
+			height: auto;
+			text-align: center;
+			font-size: 0.6rem;
+			color: #999999;
+		}
+		
+		.allcity-masks {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #000;
+			opacity: .8;
+			width: 100%;
+			z-index: 100;
+			cursor: pointer;
+			height: 100%;
+		}
+		
+		.add {
+			width: 3rem;
+			height: 1.5rem;
+			line-height: 1.5rem;
+			border-radius: 5px;
+			position: absolute;
+			right: 5px;
+			top: 20px;
+			background-color: #2FB3D3;
+			color: #fff;
+			font-size: 0.5rem;
+			text-align: center;
+		}
+		
+		.con img {
+			max-width: 100%;
+		}
+		
+		.con video {
+			max-width: 100%;
+		}
+		
+		
+		.add_v {
+			float: left;
+			width: 78px;
+			height: 32px;
+			background-color: #32CEA0;
+			color: #fff;
+			text-align: center;
+			line-height: 32px;
+			border-radius: 2px;
+			font-size: 12px;
+			position: absolute;
+			top: 26px;
+			right: 5%;
+		}
+		
+		.wzgc_bottom {
+			color: #333333;
+			border: none;
+			width: 90%;
+			height: 450px;
+			margin: 0 auto;
+			box-shadow: 0px 2px 6px 0px rgba(192, 192, 192, 0.39);
+			position: relative;
+			margin: 20px auto;
+			padding: 0 0;
+		}
+		
+		.v_top {
+			width: 100%;
+			height: 106px;
+			background: url(/Public/Home/images/newvnet/article/inco_background.png) no-repeat;
+			background-size: 100% 100%;
+		}
+		
+		.wzgc_bottom h1 {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			display: block;
+			width: 100%;
+			height: 40px;
+			line-height: 50px;
+			text-align: center;
+			font-size: 20px;
+			color: #fff;
+			font-weight: 550;
+		}
+		
+		.v_phone {
+			width: 100%;
+			height: 25px;
+			line-height: 25px;
+			font-size: 14px;
+			font-weight: 550;
+			text-align: center;
+			color: #fff;
+		}
+		
+		.v_img {
+			width: 76px;
+			height: 76px;
+			border-radius: 50%;
+			position: absolute;
+			top: 72px;
+			left: 50%;
+			margin-left: -38px;
+		}
+		
+		.v_img>img {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+		}
+		
+		.v_info {
+			width: 90%;
+			height: 203px;
+			margin: 50px auto 0;
+		}
+		
+		.lst {
+			width: 100%;
+			height: 25px;
+			line-height: 25px;
+			font-size: 16px;
+			color: #333;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		.lst>span {
+			font-size: 14px;
+			color: #777;
+		}
+		
+		.wzgc_bottom .wzgc_shoucang {
+			padding: 0 0;
+			position: absolute;
+			left: 50%;
+			bottom: 24px;
+			background: #32CEA0;
+			border-radius: 5px;
+			width: 106px;
+			height: 38px;
+			text-align: center;
+			line-height: 38px;
+			color: #FFFFFF;
+			margin-left: -53px;
+			font-size: 16px;
+			
+		}
+		
+		h1 {
+			line-height: 0;
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		
+		.v_desc {
+			width: 100%;
+			height: 128px;
+			overflow: auto;
+			font-size: 14px;
+			color: #777;
+		}
+		
+		p {
+			font-size: 14px;
+			margin-top: 0;
+			margin-bottom: 0px;
+			color: #8f8f94;
+		}
+		.jump{
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</block>
+<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+<block name="body">
+
+	<body class="">
+
+		<div class="tit">
+			<h3 class="title"></h3>
+			<p>
+				<span class="date">
+    				<!-- <span>2018-03-19</span>
+				<span>10:21</span> -->
+				</span>
+				<span>浏览量：</span>
+				<span id="visit"></span>
+			</p>
+		</div>
+		<div class="brief">
+			<a class="jump">
+				<span class="Img">
+					<img src=""  id="cover_img" alt="" />
+				</span>
+				<span class="rank">
+					<h3 id="nick_names" style="color: #000;"></h3>
+					<p id="companys"></p>
+				</span>
+				<span class="add_v">添加V网</span>
+			</a>
+		</div>
+		<div class="con">
+			<!--<img src="__HOME_IMAGES__/tixiantongzhi.png" alt="" />-->
+			<!--<img src="__HOME_IMAGES__/muwu.jpg" />-->
+		</div>
+		<!--<div class="person">
+			<p>
+				<span id="nick_name"></span>
+			</p>
+			<p>
+				<span id="mobile"></span>
+			</p>
+			<p>
+				<span class="mess">公司：</span>
+				<span id="company"></span>
+			</p>
+			<p>
+				<span class="mess">邮箱：</span>
+				<span id="email"></span>
+			</p>
+			<p class="mess">简介：</p>
+			<p id="share_my_introduct"></p>
+			<input type="hidden" value="" id="aid" />
+			<div class="add">加我V网</div>
+		</div>-->
+		<div class="wzgc_bottom">
+			<div class="v_top">
+				<h1 id="nick_name"></h1>
+				<div class="v_phone"></div>
+				<div class="v_img">
+					<img class="headimgs" src="" alt="" />
+				</div>
+			</div>
+			<div class="v_info">
+				<p class="lst">公司：<span class="company"></span></p>
+				<p class="lst">邮箱：<span class="email"></span></p>
+				<p class="lst">简介：</p>
+				<p class="v_desc"><span></span></p>
+			</div>
+			<a href="javascript:;" class="wzgc_shoucang">收藏V网</a>
+		</div>
+
+		<div class="allcity-boxss">
+			<div class="er">长按识别二维码</div>
+			<ul class="content">
+				<li  style="display: block;">
+					<img src="{:U('Home/Card/myCode?id='.$id)}" style="width:100%;height: 100%" alt="" />
+				</li>
+				<li>
+					<img src="__PUBLIC__/Home/images/8.jpg" style="width:100%;height: 100%" alt="" />
+				</li>
+				<li>
+					<img src="{$erweima}" style="width:100%;height: 100%" alt="" />
+				</li>
+			</ul>
+
+			<ul class="tab">
+				<li class="card_button dian">v网二维码</li>
+				<li class="card_button">洋小秘公众号</li>
+				<li class="card_button">微信二维码</li>
+			</ul>
+
+		</div>
+		<div class="allcity-masks"></div>
+		<div class="zzc_myranwen_bottom">
+			<!-- <input type="hidden" name="music_id" value="{$data.music_id}">
+				<input type="button" name="返回" id="yulan" value="返回" style="background:#ffffff!important" class="zzc_myruanwen_bottom_button" onclick="returns()"/>
+				<input type="button" name="保存" id="save" onclick="extension()" value="推广" class="zzc_myruanwen_bottom_button zzc_blue_bg" /> -->
+		</div>
+		<script>
+			$('.tab').find('li').click(function() {
+				var index = $(this).index();
+				$(this).addClass('dian').siblings().removeClass('dian');
+				$('.content').find('li').eq(index).show().siblings().hide();
+			})
+			$(".wzgc_shoucang,.add_v").click(function() {
+				$(".allcity-masks").show();
+				$(".allcity-boxss").show();
+				$('.jump').attr("href", "javascript:;")
+			})
+			$(".allcity-masks").click(function() {
+				$(".allcity-masks").hide();
+				$(".allcity-boxss").hide();
+			})
+			$(".allcity-boxss").click(function(e) {
+				e.stopPropagation();
+			})
+			$(function() {
+				var id = '{$id}';
+				var article_id = '{$sid}';
+				var kid = '{$kid}';
+				// alert(article_id);
+				if(kid == 2) {
+					var aid = '{$aid}';
+
+					$.ajax({
+						//几个参数需要注意一下
+						type: "POST", //方法类型
+						dataType: "json", //预期服务器返回的数据类型
+						url: "/index.php?s=/Api/IndexApi/my_extend_detail", //url
+						data: {
+							"id": id,
+							"aid": aid
+						},
+						success: function(result) {
+							if(result.ResultType == 0) {
+								$("#nick_name").html(result.AppendData.user.nick_name);
+								$("#nick_names").html(result.AppendData.user.nick_name);
+								$(".v_phone").html(result.AppendData.user.mobile);
+								$(".company").html(result.AppendData.user.company);
+								$("#companys").html(result.AppendData.user.company);
+								$(".email").html(result.AppendData.user.email);
+								$(".v_desc span").html(result.AppendData.user.share_my_introduct);
+								// alert(result.AppendData.article_content.content);
+								$(".con").html(result.AppendData.article_content.content);
+								$(".title").html(result.AppendData.article_content.title);
+								$(".date").html(result.AppendData.article_content.addtime);
+								$("#visit").html(result.AppendData.article_content.visit);
+								$("#aid").val(result.AppendData.article_content.id);
+								$("#cover_img").attr("src", result.AppendData.user.headimg);
+								$(".headimgs").attr("src", result.AppendData.user.headimg);
+								$(".jump").on("click",function(){
+									$('.jump').attr("href", 'http://' + window.location.host + '/index.php?s=/Home/Nologin/card_jump/id/' + result.AppendData.user.id)
+								})
+							}
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+					});
+				}
+
+			})
+
+			function returns() {
+				// window.location.href='http://www.ddhbb.com';
+				window.location.href = "__ROOT__/index.php?s=/Home/Article/get";
+			}
+
+			function extension() {
+				var id = '{$id}';
+				var article_id = $("#aid").val();
+				var kid = '{$kid}';
+				var sid = '{$sid}';
+				var aid = '{$aid}';
+				mui.confirm("是否要跳到分享页？", "", ["否", "是"], function(res) {
+					if(res.index == 1) {
+						$.ajax({
+							//几个参数需要注意一下
+							type: "POST", //方法类型
+							dataType: "json", //预期服务器返回的数据类型
+							url: "index.php?s=/Api/IndexApi/extend_system_article", //url
+							data: {
+								"id": id,
+								"article_id": article_id
+							},
+							success: function(result) {
+								if(result.ResultType == 2) {
+									mui.alert("您已推广！");
+								}
+								if(result.ResultType == 0) {
+									// mui.alert("推广成功！");
+									var aid = result.AppendData;
+									window.location.href = "__ROOT__/index.php?s=/Home/Article/detail/id/" + sid + "/kid/2/aid/" + aid + "";
+								}
+							},
+							error: function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+
+					} else {
+						$.ajax({
+							//几个参数需要注意一下
+							type: "POST", //方法类型
+							dataType: "json", //预期服务器返回的数据类型
+							url: "index.php?s=/Api/IndexApi/extend_system_article", //url
+							data: {
+								"id": id,
+								"article_id": article_id
+							},
+							success: function(result) {
+								if(result.ResultType == 2) {
+									mui.alert("您已推广！");
+								}
+								if(result.ResultType == 0) {
+									mui.alert("推广成功！");
+									// var aid=result.AppendData;
+									// window.location.href="__ROOT__/index.php/Home/Article/detail/id/"+sid+"/kid/2/aid/"+aid+"";
+								}
+							},
+							error: function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+					}
+				});
+
+			}
+		</script>
+
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			$(function() {
+
+				var share_url = "{$share_url}";
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/WeShare/getSignPackage", //url
+					data: {
+						share_url: share_url
+					},
+					async: true,
+
+					// async: false,
+					success: function(result) {
+
+						var kid = '{$kid}';
+						if(kid == 1) {
+							document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+								// 通过下面这个API隐藏右上角按钮hideOptionMenu
+								WeixinJSBridge.call('hideOptionMenu');
+							});
+						} else {
+
+							wx.config({
+								debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+								appId: result.AppendData.appId,
+								timestamp: result.AppendData.timestamp,
+								nonceStr: result.AppendData.nonceStr,
+								signature: result.AppendData.signature,
+								jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+									'checkJsApi',
+									'onMenuShareTimeline', //
+									'onMenuShareAppMessage',
+									'onMenuShareQQ',
+									'onMenuShareWeibo',
+									'getLocation'
+								]
+							});
+
+							wx.ready(function() {
+								//分享到朋友圈
+								wx.onMenuShareTimeline({
+									title: "{$sharetitle}", // 分享标题
+									desc: "{$desc}", // 分享内容
+									link: "{$link}", //分享链接
+									imgUrl: "{$imgUrl}", // 分享封面
+									success: function() {
+										// 用户确认分享后执行的回调函数
+										// sharePush();
+									},
+									cancel: function() {
+										// 用户取消分享后执行的回调函数
+									}
+								});
+
+								//分享给朋友
+								wx.onMenuShareAppMessage({
+									title: "{$sharetitle}", // 分享链接
+									desc: "{$desc}", // 分享链接
+									link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+									imgUrl: "{$imgUrl}", // 分享链接
+									type: '', // 分享类型,music、video或link，不填默认为link
+									dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+									success: function() {
+										// 用户确认分享后执行的回调函数
+										// sharePush();
+									},
+									cancel: function() {
+										// 用户取消分享后执行的回调函数
+									}
+								});
+								//分享到QQ
+								wx.onMenuShareQQ({
+									title: "{$sharetitle}", // 分享链接
+									desc: "{$desc}", // 分享链接
+									link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+									imgUrl: "{$imgUrl}", // 分享链接
+									success: function() {
+										// 用户确认分享后执行的回调函数
+										// sharePush();
+									},
+									cancel: function() {
+										// 用户取消分享后执行的回调函数
+									}
+								});
+								//分享到腾讯微博
+								wx.onMenuShareWeibo({
+									title: "{$sharetitle}", // 分享链接
+									desc: "{$desc}", // 分享链接
+									link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+									imgUrl: "{$imgUrl}", // 分享链接
+									success: function() {
+										// 用户确认分享后执行的回调函数
+										// sharePush();
+									},
+									cancel: function() {
+										// 用户取消分享后执行的回调函数
+									}
+								});
+								//分享到QQ空间
+								wx.onMenuShareQZone({
+									title: "{$sharetitle}", // 分享链接
+									desc: "{$desc}", // 分享链接
+									link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+									imgUrl: "{$imgUrl}", // 分享链接
+									success: function() {
+										// 用户确认分享后执行的回调函数
+										// sharePush();
+									},
+									cancel: function() {
+										// 用户取消分享后执行的回调函数
+									}
+								});
+
+							});
+
+						}
+
+					},
+					error: function() {
+						//                    alert("服务器繁忙，请稍后再试！");
+					}
+				});
+
+			});
+
+			//			var kid = '{$kid}';
+			//			if(kid == 1){
+			//                document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			//                    // 通过下面这个API隐藏右上角按钮hideOptionMenu
+			//                    WeixinJSBridge.call('hideOptionMenu');
+			//                });
+			//			}else{
+			//                wx.config({
+			//                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+			//                    appId: "{$signPackage['appId']}",
+			//                    timestamp: "{$signPackage['timestamp']}",
+			//                    nonceStr: "{$signPackage['nonceStr']}",
+			//                    signature: "{$signPackage['signature']}",
+			//                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+			//                        'checkJsApi',
+			//                        'onMenuShareTimeline', //
+			//                        'onMenuShareAppMessage',
+			//                        'onMenuShareQQ',
+			//                        'onMenuShareWeibo'
+			//                    ]
+			//                });
+			//
+
+			//                });
+			//			}
+		</script>
+	</body>
+</block>

@@ -1,0 +1,130 @@
+<?php
+/** v网共享平台 */
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+class Sharingplatform extends HomeBase
+{
+    // 首页
+    public function index()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+
+    // 发布广告
+    public function Advertise()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        $this->assign('nick_name',$this->userInfo['nick_name']);
+        $this->assign('headimg',$this->userInfo['headimg']);
+        $user_info = Db::table('s_user_info')->where(['id'=>$this->userInfo['id']])->field('money')->find();
+        $this->assign('money',$user_info['money']);
+        return  $this->fetch();
+    }
+
+    // 与我相关
+    public function MyRelevant()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+
+    // 领取详情页
+    public function Detailspage()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+
+    // 佣金来源
+    public function Commission()
+    {
+        $this->id=$this->userInfo['unionid'];
+        return  $this->fetch();
+    }
+
+    // 我的佣金
+    public function MyCommission()
+    {
+        $this->assign('nick_name',$this->userInfo['nick_name']);
+        $this->assign('headimg',$this->userInfo['headimg']);
+        $this->id=$this->userInfo['unionid'];
+        return  $this->fetch();
+    }
+
+    // 完善信息
+    public function PerfectInformation()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+
+    // 充值中心
+    public function Recharge()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+
+    // 相册推广
+    public function albumpromotion()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+    
+    // 软文推广
+    public function advertorial()
+    {
+        $this->assign('user_id',$this->userInfo['id']);
+        $this->id=$this->userInfo['unionid'];
+        return  $this->fetch();
+    }
+
+    // 首页
+    public function select()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+    
+    // 活动首页
+    public function EventsPlaza()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+
+    //报名我的列表
+    public function my_Activity_list()
+    {
+        $this->id=$this->userInfo['unionid'];
+        $this->assign('user_id',$this->userInfo['id']);
+        return  $this->fetch();
+    }
+    
+	// 佣金消耗明细
+    public function consume_detail()
+    {    
+     	if(!$this->userInfo) {
+        	return;
+        }
+        
+        $user_id = $this->userInfo['id'];
+    	$ad_money = Db::table('s_user_info')->where(['id'=>$user_id])->getField('ad_money');
+    	$list = Db::table('s_ad_consume')->where(array('user_id'=>$user_id))->select();
+    	
+    	$this->assign('ad_money',$ad_money);
+        $this->assign('list',$list);
+        return  $this->fetch();
+    }
+}

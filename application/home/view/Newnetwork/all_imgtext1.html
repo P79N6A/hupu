@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/tool.js"></script>
+    <title>{$title}</title>
+    <style>
+        html,
+        body {
+            background: #fff;
+        }
+
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #f6f6f6;
+            width: 100%;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            position: fixed;
+            z-index: 1000;
+        }
+
+        .header .list {
+            height: 100%;
+            width: 100%;
+            height: .46rem;
+            white-space: nowrap;
+            display: block;
+            overflow-x: scroll;
+            position: relative;
+            font-size: 0;
+
+
+
+        }
+
+
+        .header .list li {
+            width: 100px;
+            height: 100%;
+            line-height: .46rem;
+            color: #777777;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: 5px;
+            font-size: .14rem;
+
+        }
+
+        .line {
+            width: 100px;
+            height: .03rem;
+            background: #32CEA0;
+            position: absolute;
+            bottom: .01rem;
+            left: 0;
+            z-index: 2;
+            background: linear-gradient(80deg, transparent 30%, #32CEA1 20%, #32CEA0 70%, transparent 40%) !important;
+        }
+
+        .active {
+            color: #32CEA0 !important;
+            font-size: .18rem !important;
+        }
+
+
+
+        .main .imgtext {
+            background: #fff;
+            float:left;
+            width: 33.1%;
+            height: 1.1802rem;
+            box-sizing: border-box;
+           	margin-bottom: 0.35%;
+           	position: relative;
+        }
+        
+        .imgtext:nth-child(3n-1) {
+    		margin: 0 0.35% 0.35% 0.35%;
+		}
+
+        .main .imgtext .item {
+        	position: absolute;
+        	bottom:0;
+        	left:0;
+        	padding: 0 5%;
+            width: 90%;
+            height: 0.20rem;
+            line-height: 0.20rem;
+            background: rgba(0,0,0,0.3);
+            color:#fff;
+            font-size: 0.14rem;
+        }
+
+        .main .imgtext .item p {
+            width: 100%;
+            height: 100%;
+            color:#fff;
+            font-size: 0.14rem;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            text-align: center;
+
+        }
+
+
+        .main .imgtext .item .listh {
+            width: 100%;
+        }
+
+        .main .imgtext .item .listh a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main .imgtext .item .listh li {
+            width: 30%;
+            margin: .02rem;
+
+        }
+
+        .main .imgtext .item .listh li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .main .imgtext .item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .main {
+        	width: 95%;
+        	height: auto;
+        	overflow: hidden;
+            margin: 0 auto;
+            padding-top: .46rem;
+            background: #fff;
+            box-sizing: border-box;
+        }
+
+        .img_box{
+            width: 100%;
+            height: 100%;
+        }
+        .img_box img{
+            width: 100%;
+            height: 100%;
+        }
+
+
+           /* 加载中 */
+        .loading{
+            width: 100%;
+            height: .4rem;
+            display: none;
+
+        }
+
+        .loading .load_box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+         .load_box img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             top: 50%;
+             margin-top: -.1rem;
+             margin-left: -.1rem;
+             left: 40%;
+         }
+
+        .load_box p{
+            font-size: .16rem;
+            height: .2rem;
+            width: .6rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.1rem;
+            left: 50%;
+            margin-left: -0.1rem;
+
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <ul class="list">
+
+        </ul>
+    </div>
+    <div class="main">
+  
+        
+    </div>
+    <div class="loading">
+        <div class="load_box">
+            <img src="__HOME_IMAGES__/loadad.gif" alt="">
+            <p>加载中...</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+        var ids;
+        var i = 0;
+        var tit;
+        $(".list").on("click", "li", function () {
+            var index = $(this).index();
+            $(this).addClass("active").siblings().removeClass("active");
+            var li_width = ($(this).width() + 5);
+            $(".list .line").stop(false, true).animate({
+                'left': index * li_width + "px",
+                'bottom': '0px'
+            }, 100);
+
+            var tip = '';
+            tip+= '<div class="load_box">'
+            tip+= '<img src="__HOME_IMAGES__/loadad.gif" alt="">'
+            tip+= '<p>加载中...</p>'
+            tip+= '</div>'
+            $('.loading').html(tip).hide();
+            $('body,html').scrollTop('0px');
+            tit = $(this).text()
+            i = 0;
+            ids = $(this).attr('data-tyid');
+            render(ids, i)
+        })
+        var showlist = 2;
+
+        function callback(res) {
+            console.log(res)
+             tit = res[0].title;
+             ids = res[0].id;
+            render(ids, i)
+        }
+        tools.render_type(unionid, showlist, callback);
+
+
+        function render(type, index) {
+
+            $.ajax({
+                url: '/index.php?s=/Api/AppApi/show_list',
+                type: 'post',
+                data: {
+                    unionid: unionid,
+                    type_id: type,
+                    start: index,
+                    length: 18
+                },
+                beforeSend:function(){
+                    $('.loading').show();
+                },
+                success: function (res) {
+                    console.log(res)
+                     $('.loading').hide();
+                     scrollFlag = true;
+                    if (res.AppendData.length == 0 && i == 0) {
+                        $('.main').html(
+                            '<p style="text-align:center;margin-top: 50px;">您的当前分类下暂时没有数据哦</p>'
+                        )
+                    } else if (res.AppendData.length == 0 && i > 0) {
+                        scrollFlag = false;
+                        $('.loading').html(
+                            '<p style="text-align:center;line-height:0.4rem;">没有更多数据了</p>').show();
+                    }
+
+                    if (res.ResultType == 0) {
+                        var resdata = res.AppendData;
+                        var list = '';
+                        $.each(resdata, function (k, v) {
+                            list+='<div class="imgtext">'
+                            list+='<a href="/index.php?s=/Home/Nologin/preview/unionid/'+unionid+'/show_id/'+v.id+'/title/'+tit+'/type_id/'+ids+'">'
+                            list+= '<div class="img_box">'
+                            list+= '<img src="'+v.thumb+'" alt="">'
+                            list+= '</div>'
+                            list+='<div class="item">'
+                            list+='<p>'+v.title+'</p>'
+                            // list+= '<p>'+v.content+'</p>'
+                            list+= '</div>'
+                            list+='</a>'
+                            list+='</div>'
+                        })
+
+                        if (!index == 0) {
+                            $('.main').append(list);
+                        } else {
+                            $('.main').html(list)
+                        }
+
+                       
+                    }
+                },
+                error:function(){
+                    console.log('走了错误')
+                    $('.loading').hide();
+                }
+
+            })
+
+        }
+
+        var scrollFlag = true;
+        $(window).scroll(function () {
+
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if (!scrollFlag) {
+                return false
+            }
+            if (scrollTop + windowHeight >= scrollHeight) {
+                console.log('到底了')
+                i += 18;
+                scrollFlag = false;
+                render(ids,i)
+                
+
+
+            }
+
+
+        })
+
+
+
+
+    })
+</script>

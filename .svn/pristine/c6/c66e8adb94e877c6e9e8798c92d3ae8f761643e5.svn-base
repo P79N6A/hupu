@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$_card.title}</title>
+    <link rel="stylesheet" href="__HOME_CSS__/contentDetail.css" />
+    <script src="__HOME_JS__/rem.js"></script>
+    <script src="__HOME_JS__/jquery.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/swiper.min.css">
+    <style>
+        .word{
+            width: 17.5rem;
+            height: auto;
+            margin: 1rem auto;
+            font-size: 0.75rem;
+        }
+        .allcity-mask {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #000;
+            opacity: .7;
+            width: 100%;
+            z-index: 1;
+            cursor: pointer;
+            height: 100%;
+        }
+        .swiper-container {
+            margin: 0 auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            list-style: none;
+            padding: 0;
+            z-index: -2;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide>img {
+            width: 100%;
+            height: auto;
+        }
+        .base {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2.45rem;
+            line-height: 2.45rem;
+            z-index: 600;
+            color: #fff;
+            background-color: #2AB7CF;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .blank {
+            width: 100%;
+            height: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+<div id="id1">{$_card.title}</div>
+<div class="word">{$_card.content}</div>
+<div class="title">
+    <ul>
+        <foreach name="_content_detail" item="vo">
+            <li class="tit-li">
+                <if condition="$vo.type eq 1">
+                    <img src="{$vo.data_url}" alt="" />
+                <else/>
+                    <video width="750" height="500" controls>
+                        <source src="{$vo.data_url}" type="video/mp4">
+                    </video>
+                </if>
+            </li>
+        </foreach>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <foreach name="_content_detail" item="vo">
+            <if condition="$vo.type eq 1">
+                <div class="swiper-slide">
+                    <img src="{$vo.data_url}" alt="" />
+                </div>
+            </if>
+        </foreach>
+    </div>
+</div>
+<a href="{:U('Home/User/register',array('share_id'=>$_card['user_id']))}"><div class="base">点击制作微网</div></a>
+<div class="allcity-mask"></div>
+<script src="__HOME_JS__/swiper.min.js"></script>
+<script src="__HOME_JS__/contentDetail.js"></script>
+<script>
+    $(".tit-li").on('click', function() {
+        event.stopPropagation();
+        $(".swiper-container").css({
+            "z-index": '10',
+            "opacity": '1'
+        });
+        $(".allcity-mask").show();
+    });
+    $(".allcity-mask,.swiper-slide>img,.swiper-container").on('click', function() {
+        $(".allcity-mask").hide();
+        $(".swiper-container").css({
+            "z-index": '-2',
+            "opacity": '0'
+        });
+    });
+
+</script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    function sharePush() {
+        var id = "{$visit_id}";
+        $.post("{:U('Home/Card/sharePush')}", {
+            'id': id
+        }, function() {});
+    }
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+        appId: "{$signPackage['appId']}",
+        timestamp: "{$signPackage['timestamp']}",
+        nonceStr: "{$signPackage['nonceStr']}",
+        signature: "{$signPackage['signature']}",
+        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+            'checkJsApi',
+            'onMenuShareTimeline', //
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+        ]
+    });
+    wx.ready(function() {
+        //分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: "{$sharetitle}", // 分享链接
+            desc: "{$desc}", // 分享链接
+            link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+            imgUrl: "{$imgUrl}", // 分享链接
+            success: function() {
+                // 用户确认分享后执行的回调函数
+                sharePush();
+            },
+            cancel: function() {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: "{$sharetitle}", // 分享链接
+            desc: "{$desc}", // 分享链接
+            link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+            imgUrl: "{$imgUrl}", // 分享链接
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function() {
+                // 用户确认分享后执行的回调函数
+                sharePush();
+            },
+            cancel: function() {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享到QQ
+        wx.onMenuShareQQ({
+            title: "{$sharetitle}", // 分享链接
+            desc: "{$desc}", // 分享链接
+            link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+            imgUrl: "{$imgUrl}", // 分享链接
+            success: function() {
+                // 用户确认分享后执行的回调函数
+                sharePush();
+            },
+            cancel: function() {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享到腾讯微博
+        wx.onMenuShareWeibo({
+            title: "{$sharetitle}", // 分享链接
+            desc: "{$desc}", // 分享链接
+            link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+            imgUrl: "{$imgUrl}", // 分享链接
+            success: function() {
+                // 用户确认分享后执行的回调函数
+                sharePush();
+            },
+            cancel: function() {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享到QQ空间
+        wx.onMenuShareQZone({
+            title: "{$sharetitle}", // 分享链接
+            desc: "{$desc}", // 分享链接
+            link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+            imgUrl: "{$imgUrl}", // 分享链接
+            success: function() {
+                // 用户确认分享后执行的回调函数
+                sharePush();
+            },
+            cancel: function() {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

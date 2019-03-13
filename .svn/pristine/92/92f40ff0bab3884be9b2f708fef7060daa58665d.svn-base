@@ -1,0 +1,772 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="never">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>编辑文章</title>
+    <link rel="stylesheet" type="text/css" href="https://sixi.sxvt58.com/Public/wx/css/wx.css"/>
+    <style type="text/css">
+        body {
+            background-color: #f1f1f1;
+            text-shadow: 0 0 2px #ccc;
+            font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        }
+        .mui-bar-nav {
+            /*box-shadow: none;
+            -webkit-box-shadow: none;
+            background-color: inherit;*/
+        }
+        a {
+            text-decoration: none;
+        }
+        .container {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            text-align: left;
+            box-shadow: 0 0 10px #ccc;
+            text-shadow: none;
+            overflow: hidden;
+            margin: 5px;
+            padding: 5px;
+        }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+        .rich_media_content .editor-mode {
+            /*border: dashed 1px red;*/
+            padding: 5px;
+           /*position: relative;*/
+        }
+        .rich_media_content span.editor-mode,
+        .rich_media_content strong.editor-mode {
+            display: inline-block;
+            margin: 1px;
+        }
+        .rich_media_content .editor-mode:after {
+            font-family: Muiicons;
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            color: red;
+            font-size: 24px;
+            content: '\e400';
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+        }
+        .layui-m-layer textarea {
+            width: 92%;
+        }
+        .mui-bar-tab-button-group {
+            text-align: center;
+            height: 50px;
+        }
+        .mui-bar-tab-button-group span {
+            display: inline-block;
+            line-height: 50px;
+        }
+        .mui-bar-tab-button-group span.tag-article-save {
+            background-color: #007aff;
+            color: #fff;
+        }
+        .mui-bar-tab-button-group span.tag-article-preview {
+            background-color: #4cd964;
+            color: #fff;
+        }
+        .mui-bar-tab-button-group span.tag-text-del,
+        .mui-bar-tab-button-group span.tag-picture-del {
+            background-color: #dd524d;
+            color: #fff;
+        }
+        .mui-bar-tab-button-group span.tag-text-modify {
+            background-color: #007aff;
+            color: #fff;
+        }
+
+        .mui-bar-tab-button-group span.tag-text-insert-ad {
+        }
+
+        .mui-bar-tab-button-group span.tag-picture-insert-ad,
+        .mui-bar-tab-button-group span.tag-ad-insert {
+            background-color: #007aff;
+            color: #fff;
+        }
+
+        .mui-bar-tab-button-group span.tag-text-cancel,
+        .mui-bar-tab-button-group span.tag-picture-cancel,
+        .mui-bar-tab-button-group span.tag-ad-cancel {
+            background-color: #c7c7cc;
+            color: #fff;
+        }
+
+        .mui-control-content {
+            background-color: white;
+            min-height: 215px;
+        }
+
+        .mui-control-content .mui-loading {
+            margin-top: 50px;
+        }
+
+        #itemAdEdit > div {
+            padding: 10px;
+        }
+
+        #itemAdEdit h5 {
+            color: #000;
+            line-height: 20px;
+            border-left: 3px solid #007aff;
+            padding-left: 6px;
+            margin: 10px 0px;
+        }
+
+        #itemAdEdit img {
+            width: 80px;
+            height: 80px;
+            border: 1px dashed #999;
+        }
+
+        #itemAdEdit textarea {
+            width: 88%;
+        }
+
+        #itemAdEdit span.progress-mask {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 80px;
+            height: 80px;
+            opacity: 0.8;
+            display: block;
+            background-color: #ccc;
+            line-height: 80px;
+            text-align: center;
+            /*z-index: 1;*/
+        }
+
+        #itemAdEdit span.progress-text {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 80px;
+            height: 80px;
+            display: block;
+            color: #007aff;
+            font-weight: bold;
+            line-height: 80px;
+            text-align: center;
+            font-size: 30px;
+            /*z-index: 1;*/
+        }
+
+        #itemAdTemplate .mui-scroll-wrapper {
+            height: 320px;
+            overflow-y: scroll;
+        }
+         .zzc_myruanwen_from_input input[type=text],#content{width: 100%;}
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 id="title" class="mui-title">文章编辑器</h1>
+    <a href="/index.php/wx" class="mui-icon mui-icon-closeempty mui-pull-right"></a>
+</header>
+<nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+    <span class="mui-col-xs-6 tag-article-save">保存</span>
+    <span class="mui-col-xs-6 tag-article-preview">预览</span>
+</nav>
+<div class="mui-content">
+    <div class="container">
+        <h5>标题：</h5>
+        <div class="zzc_myruanwen_from_input">
+            <input type="text" name="title" class="zzc_from_text" id="article_id" value="18个同事合起来随礼1314元 新娘：这不是欺负人吗" placeholder="填写标题" />
+            <input type="hidden" name="id" id="id" value="99213">
+            <input type="hidden" name="atype_id" id="atype_id" value="0" />
+        </div>
+    </div>
+    <div class="container">
+        <h5>内容：</h5>
+        <div class="rich_media_content " id="article_content">
+            <div class="tag-container">
+		 			<section class="xmteditor" style="display:none;" data-tools="新媒体管家" data-label="powered by xmt.cn"></section><p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="color: rgb(76, 76, 76);font-size: 15px;">结婚摆宴席请大家吃饭，本来是件高兴事，可新娘小徐却因此有些不快乐——公司里18个同事，大家合起来给她发了1314元的红包，并祝她和丈夫一生一世。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">“他们结婚的时候，我最少也要随礼300块钱，可如今到我结婚，却来这么一出。”小徐说，自己看到红包的那一刻，顿时有种被欺负的感觉。</span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;margin-left: 16px;margin-right: 16px;"><img class="" data-backh="458" data-backw="558" data-before-oversubscription-url="http://mmbiz.qpic.cn/mmbiz_png/x6iaHWKibUzk2AerSXoBHZ1BCU9NClLzwxguO1ErxVHlRhKyphE1OpicEq89f6u4FzM6gTVrsp6LvqpPPCHlU6Lyw/0?wx_fmt=png" data-ratio="0.8204724409448819" data-s="300,640" data-type="png" data-w="635" style="width: 100%;height: auto;" src="http://mmbiz.qpic.cn/mmbiz_png/x6iaHWKibUzk2AerSXoBHZ1BCU9NClLzwxguO1ErxVHlRhKyphE1OpicEq89f6u4FzM6gTVrsp6LvqpPPCHlU6Lyw/640"></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"></span><br></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;color: rgb(160, 80, 77);"><strong>大多数同事没到场，联合转账</strong></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">小徐是湖北人，今年26岁，在渝北光电园一家企业的人力资源部上班，同部门加领导共有20人。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">小徐说，部门平时琐事多，压力大，同事之间偶尔因为工作发生摩擦，但表面上都还过得去。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">10月中旬，小徐和相恋多年的男友结婚，男友家在重庆区县，双方在老家都举行了婚礼宴请亲朋。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">几天后，两人回到重庆，准备再摆一台，宴请一下各自在重庆的同事和朋友。小徐提前很多天就给同事们发了礼包、请帖，同事们也都纷纷表示恭喜，并且一定会赴宴。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><strong><span style="font-size: 15px;color: rgb(76, 76, 76);">结果，婚宴当天，只有部门领导和一个同事代表出席，其余的人都没有到场，原本一张大桌只孤零零坐了两个人，相比丈夫同事那边热闹的情景，顿时让小徐觉得有些下不来台。</span></strong></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><strong><span style="font-size: 15px;color: rgb(76, 76, 76);">不过这还不算什么，等到婚宴结束，小徐收到到场的那位同事发来的转账，写明金额1314元（谐音“一生一世”），同事还告诉小徐，这是部门所有同事集体随礼，祝愿他们“一生一世都相爱”。</span></strong></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: center;margin-left: 16px;margin-right: 16px;"><img class="" data-backh="220" data-backw="338" data-before-oversubscription-url="http://mmbiz.qpic.cn/mmbiz_jpg/x6iaHWKibUzk2AerSXoBHZ1BCU9NClLzwxic6rZ19Q53lkrOYV9tOib5p1PEvHGK3oWScicQdZpJKhN13iab3hASbs9w/0?wx_fmt=jpeg" data-copyright="0" data-oversubscription-url="http://mmbiz.qpic.cn/mmbiz_jpg/x6iaHWKibUzk2AerSXoBHZ1BCU9NClLzwxSM49rxMC90hicSSTmxwtMzxMOtjWZpqLmprribDADqHMJ2QqJWxMycrg/0?wx_fmt=jpeg" data-ratio="0.650887573964497" data-s="300,640" data-type="jpeg" data-w="338" style="width: 100%;height: auto;" src="http://mmbiz.qpic.cn/mmbiz_jpg/x6iaHWKibUzk2AerSXoBHZ1BCU9NClLzwxSM49rxMC90hicSSTmxwtMzxMOtjWZpqLmprribDADqHMJ2QqJWxMycrg/640"></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><br><span style="font-size: 15px;color: rgb(76, 76, 76);"></span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="color: rgb(160, 80, 77);"><strong><span style="font-size: 16px;">丈夫询问“同事关系是有多差”</span></strong></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">1314元，平均下来一个同事不到100元，丈夫笑称这么个随礼法还是第一</span><span style="font-size: 15px;color: rgb(76, 76, 76);">次见到，不晓得同事关系是有多差。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">“这是不是有点欺负人了？”这样的情况让小徐一下子冒了火，看着那句“一生一世”都觉得是讽刺。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><strong><span style="font-size: 15px;color: rgb(76, 76, 76);">小徐说，之前同事结婚，她都尽可能地到场参加，哪怕不是很熟的人，礼金至少也给了300元，少于300元她都觉得拿不出手。</span></strong></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">可如今轮到自己摆宴席，同事们却合伙整来这么一出，让她觉得实在是有些过分。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">小徐觉得，这件事一定是一个之前因工作和她闹纠纷的同事策划的，撺掇大家伙一起，表面上是祝福“一生一世”，其实就是来故意气她的。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;color: rgb(160, 80, 77);"><strong>委屈发朋友圈，屏蔽了送礼者</strong></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">随后，小徐把这件事发到朋友圈里，虽然咽不下这口气，思虑再三她还是屏蔽了同事们，“毕竟还要在这上班，不想撕破脸。”</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">亲戚朋友们留言，大多是安慰小徐不要太在意，“同事们都是表面朋友，不要对他们太实在”“以后他们还有谁结婚，你也这么搞”“同事关系表面上过得去就行，不必较真”……</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">小徐又把这件事情发到贴吧里，马上引起了网友们的讨论。有些人觉得小徐的同事们太不厚道；也有人觉得结婚就是图个大家的祝福，小徐太看重对方的随礼，所以才会因此生气。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;color: rgb(160, 80, 77);"><strong>○网友讨论</strong></span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;color: rgb(160, 80, 77);"><strong>婚宴应更看重</strong></span></p>
+<p style="text-align: center;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;color: rgb(160, 80, 77);"><strong>分享喜悦幸福</strong></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 16px;"><strong><span style="font-size: 16px;color: rgb(76, 76, 76);"><br></span></strong></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">大家普遍讨论的还是一个老话题：同事结婚，到底该随多少钱合适？</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">大部分网友觉得，同事结婚，关系好的300元至500元，不熟的200元，按照目前的标准，200元以下一般拿不出手，实在是关系不好的，干脆不要去也不随礼，何必委屈自己。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">有网友觉得，小徐同事的做法有些欠妥，毕竟礼尚往来，别人在你的婚礼上随了多少，还礼应该差不多，这种集体随礼虽然名头上好听，确实让新娘有些寒心了。</span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);"><br></span></p>
+<p style="text-align: justify;padding-left: 1em;padding-right: 1em;letter-spacing: 1px;line-height: 1.75em;"><span style="font-size: 15px;color: rgb(76, 76, 76);">不过，更有部分网友认为，结婚摆宴席，本意是接受大家的祝福，并把这份幸福喜悦分享给大家，太看重随礼，反而搞丢了婚宴的本来意义，甚至成了“死要钱”，让婚宴完全变了味。</span></p>
+<p img-box="img-box" class="picbox" style="padding-right: 1em;padding-left: 1em;white-space: normal;"><strong><span style="font-size: 13px;color: rgb(136, 136, 136);"><br></span></strong></p>
+<p img-box="img-box" class="picbox" style="padding-right: 1em;padding-left: 1em;white-space: normal;"><strong><span style="font-size: 13px;color: rgb(136, 136, 136);">来源：重庆晨报</span></strong></p>
+<p style="padding-right: 1em;padding-left: 1em;white-space: normal;"><strong><span style="font-size: 13px;color: rgb(136, 136, 136);"><br></span></strong></p>
+<p style="padding-right: 1em;padding-left: 1em;white-space: normal;"><strong><span style="font-size: 13px;color: rgb(136, 136, 136);">更多新闻</span></strong></p>
+<section style="padding-right: 1em;padding-left: 1em;font-size: 16px;white-space: normal;font-family: 微软雅黑;color: rgb(51, 51, 51);max-width: 100%;"><section style="max-width: 100%;width: 556px;height: 2px;background-color: rgb(102, 102, 102);overflow-wrap: break-word;box-sizing: border-box !important;word-wrap: break-word !important;"><p style="max-width: 100%;min-height: 1em;overflow-wrap: break-word;box-sizing: border-box !important;word-wrap: break-word !important;"><br style="max-width: 100%;box-sizing: border-box !important;word-wrap: break-word !important;"></p></section><p><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652288918&idx=1&sn=ea3303937eccf6b5cfad4ce8be0cd62e&chksm=8090e4d7b7e76dc1e99016254e62600a817db51be54d97d5fe13e9ef92372e77ffd2c2aaadeb&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">●</a><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652288932&idx=1&sn=e92ba726328d0575c4c254da62f22885&chksm=8090e4e5b7e76df3b5488c87135215ac7e63079561dfbdf017d25de372aa8cbe9b3b2911dcc0&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">云南白药牙膏被指止血是靠西药，氨甲环酸到底是什么？</a></p>
+<p style="margin-top: 5px;margin-bottom: 5px;text-align: justify;letter-spacing: 1.5px;line-height: normal;"><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652287373&idx=1&sn=e478fd5d8b5f9fb1a7fd5b7178d63455&chksm=8090e2ccb7e76bdaf2002e8dc61e5e087338f3daada63de0e3fc8fc23a38ff8732e82f0d521d&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">●</a><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652288918&idx=2&sn=c253a05482d77ec4dd9d0ccc2813c618&chksm=8090e4d7b7e76dc1f12ad0e8f044478e024fc9f1f45bb6c14c1dbd9dabbd1ea3c413acc7a6e1&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">95后女生下晚班滴滴打车被带至墓园?警方介入调查</a><br></p>
+<p style="margin-top: 5px;margin-bottom: 5px;text-align: justify;letter-spacing: 1.5px;line-height: normal;"><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652287373&idx=2&sn=9d2f4e2d0a85802a4a3b70497c0eaf6d&chksm=8090e2ccb7e76bda7c4d835e74c55ee6517cabbfc565046fefb52655800eae93b21ed1bdc228&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">●</a><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652288932&idx=2&sn=7ed9496fa0b4f04fbf3cebc6d4a1e319&chksm=8090e4e5b7e76df3d946664eac01c7de7ea38fefe5a432f115fcc5bf32aa2a239feaea1f6328&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">视频曝光！台铁事故已致18死187伤，17人吃喜酒8人遇难</a></p>
+<p style="margin-top: 5px;margin-bottom: 5px;text-align: justify;letter-spacing: 1.5px;line-height: normal;"><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652287373&idx=2&sn=9d2f4e2d0a85802a4a3b70497c0eaf6d&chksm=8090e2ccb7e76bda7c4d835e74c55ee6517cabbfc565046fefb52655800eae93b21ed1bdc228&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">●</a><a href="http://mp.weixin.qq.com/s?__biz=MzAwODE2OTAwNg==&mid=2652288906&idx=1&sn=cca88aca5e13cbe1e945f43b9400fb75&chksm=8090e4cbb7e76dddc6077bcb5f5109d227a8bb569952b7d73249a29673e28554b6ac48afc3ee&scene=21#wechat_redirect" target="_blank" style="color: rgb(136, 136, 136);text-decoration: underline;font-size: 13px;">罚站学生几分钟 老师被关7小时 官方：抓人副所长系学生父亲</a></p></section>			</div>
+        </div>
+
+    </div>
+</div>
+<footer>
+    &copy; 2016
+</footer>
+
+<div id="modal-text" style="display:none;">
+    <header class="mui-bar mui-bar-nav">
+        <h1 id="title" class="mui-title">文本操作</h1>
+    </header>
+    <div class="mui-content mui-content-padded">
+        <div class="mui-input-row">
+            <textarea class="tag-text-teaxarea" rows="8" placeholder=""></textarea>
+        </div>
+        <!--<div class="mui-button-row">
+            <button class="mui-btn mui-btn-primary tag-text-modify" type="button" onclick="return false;">修改</button>&nbsp;&nbsp;
+            <button class="mui-btn mui-btn-grey tag-text-cancel" type="button" onclick="return false;">取消</button>
+        </div>-->
+    </div>
+    <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+        <span class="mui-col-xs-3 tag-text-del">删除</span>
+        <span class="mui-col-xs-3 tag-text-modify">修改</span>
+        <span class="mui-col-xs-3 tag-text-insert-ad">插入广告</span>
+        <span class="mui-col-xs-3 tag-text-cancel">取消</span>
+    </nav>
+</div>
+<div id="modal-picture" style="display:none;">
+    <header class="mui-bar mui-bar-nav">
+        <h1 id="title" class="mui-title">图片操作</h1>
+    </header>
+    <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+        <span class="mui-col-xs-4 tag-picture-del">删除</span>
+        <span class="mui-col-xs-4 tag-picture-insert-ad">插入广告</span>
+        <span class="mui-col-xs-4 tag-picture-cancel">取消</span>
+    </nav>
+</div>
+
+<!--<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/zepto.js"></script>-->
+<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/mui.min.js"></script>
+<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/api.js?t=20160908"></script>
+<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/layer.js"></script>
+<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/plupload.full.min.js?t=20160907"></script>
+<script type="text/javascript" src="https://sixi.sxvt58.com/Public/wx/js/qiniu.js?t=20161026"></script>
+<script src="https://sixi.sxvt58.com/Public/wx/js/jquery-3.3.1.js"></script>
+<script id="modal-ad" type="text/html">
+    <header class="mui-bar mui-bar-nav">
+        <h1 id="title" class="mui-title">插入广告</h1>
+    </header>
+    <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+        <span class="mui-col-xs-6 tag-ad-insert">插入</span>
+        <span class="mui-col-xs-6 tag-ad-cancel">取消</span>
+    </nav>
+    <div class="mui-content">
+        <div id="slider" class="mui-slider">
+            <div id="sliderSegmentedControl"
+                 class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                <a class="mui-control-item" href="#itemAdEdit">
+                    编辑图文
+                </a>
+                <a class="mui-control-item" href="#itemAdTemplate">
+                    广告管理
+                </a>
+            </div>
+            <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+            <div class="mui-slider-group">
+                <div id="itemAdEdit" class="mui-slider-item mui-control-content mui-active">
+                    <div>
+                        <h5>广告图片：</h5>
+                        <div id='container' class="mui-input-row">
+                            <img id="pickfiles" src="" style="z-index: 1;">
+                            <span class="progress-text"></span>
+                            <span class="progress-mask"></span>
+                        </div>
+                        <h5>文本内容：</h5>
+                        <div class="mui-input-row">
+                            <input id="ad_picture_url" type="hidden">
+                            <textarea id="ad_text" rows="5" placeholder="广告文本内容"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div id="itemAdTemplate" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view mui-table-view-radio">
+                                <li class="mui-table-view-cell" data-picture="https://qiniu.sxvt58.com/https://qiniu.sxvt58.com/video/20180604133110-1540149945.mp4?vframe/jpg/offset/1"
+                                        data-content="&lt;video poster='https://qiniu.sxvt58.com/video/20180604133110-1540149945.mp4?vframe/jpg/offset/1' src='https://qiniu.sxvt58.com/video/20180604133110-1540149945.mp4' controls='controls'&gt;您的浏览器不支持 video 标签。&lt;/video&gt;">
+                                        <a class="mui-navigate-right ">
+                                            <span>2018-06-04 13:31:15</span>
+                                            <p>2018-06-04 13:31:15</p>
+                                        </a>
+                                    </li><li class="mui-table-view-cell" data-picture="https://qiniu.sxvt58.com/https://qiniu.sxvt58.com/card/20180604133054-707603934.jpg"
+                                        data-content="&lt;img class=&quot;editor-mode&quot; img_width=&quot;355&quot; img_height=&quot;472&quot; src='https://qiniu.sxvt58.com/card/20180604133054-707603934.jpg'&gt;">
+                                        <a class="mui-navigate-right ">
+                                            <span>2018-06-04 13:30:55</span>
+                                            <p>2018-06-04 13:30:55</p>
+                                        </a>
+                                    </li>                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    mui.init();
+    var cover;
+    mui.ready(function () {
+
+        //递归选择可编辑的内容
+        recursive(document.querySelector("#article_content div"));
+
+        //去除img的边框
+        mui('#article_content img').each(function (index, item) {
+            item.style.border = null;
+        });
+        //
+        videoHeight();
+
+        //修正视频高宽
+        var width = document.documentElement.clientWidth;
+        [].forEach.call(document.querySelectorAll("iframe.video_iframe"), function (item, index) {
+            item.width = width;
+            item.height = width / 1.33;
+            item.src = item.getAttribute('data-src').replace('preview', 'player')
+                .replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+            item.style.width = width + 'px';
+            item.style.height = width / 1.33 + 'px';
+        });
+
+    });
+
+    function videoHeight() {
+        //修正视频高宽
+        var width = document.documentElement.clientWidth - 50;
+        [].forEach.call(document.querySelectorAll("iframe"), function (item, index) {
+            item.width = width + 50;
+            item.height = width / 1.33;
+            item.src = item.getAttribute('data-src').replace('preview', 'player')
+                .replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+            item.style.width = width + 'px';
+            item.style.height = width / 1.33 + 'px';
+        });
+    }
+
+    /*
+     * 递归选择可编辑的内容
+     */
+    function recursive(element) {
+        var childrens = element.children;
+        if (childrens && childrens.length > 0) {
+            for (var i = 0; i < childrens.length; i++) {
+                recursive(childrens[i]);
+            }
+        } else {
+            if (element.tagName == "IMG") {
+                element.classList.add("editor-mode");
+                element.classList.add("editor-mode-picture");
+                element.style.zIndex = 1;
+            } else if (element.tagName == "IFRAME") {
+                element.parentNode.classList.add("editor-mode");
+                element.parentNode.classList.add("editor-mode-picture");
+            } else if (element.tagName == 'BR') {
+                element.parentNode.classList.add("editor-mode");
+                element.parentNode.classList.add("editor-mode-text");
+            }
+            else {
+                if (element.textContent.trim() != '') {
+                    element.classList.add("editor-mode");
+                    element.classList.add("editor-mode-text");
+                }
+                else {
+                    var parent = element.parentNode;
+                    element.remove();
+                    recursive(parent);
+                }
+            }
+        }
+    }
+    ;
+
+    /*
+     * 文本编辑-点击事件
+     */
+    mui('#article_content').on('tap', '.editor-mode', function (e) {
+
+        e.stopPropagation();
+
+        $target = e.target;
+
+        if ($target.classList.contains('editor-mode-picture')) {
+            showImgEditor($target);
+        } else {
+            showTextEditor($target);
+        }
+    });
+
+    /*
+     * 弹出文本编辑框
+     */
+    function showTextEditor(target) {
+        //弹出编辑窗
+        layer.open({
+            type: 1,
+            content: document.getElementById('modal-text').innerHTML,
+            anim: 'up',
+            style: 'position:fixed; bottom:0; left:0; width: 100%; height: 300px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+        //文本赋值
+        document.querySelector('.layui-m-layer textarea').value = target.innerText;
+
+        //文本编辑-点击事件-修改按钮
+        mui('.layui-m-layer').on('tap', '.tag-text-modify', function (e) {
+            target.innerText = document.querySelector('.layui-m-layer textarea.tag-text-teaxarea').value;
+            layer.closeAll();
+        });
+        //文本编辑-点击事件-取消按钮
+        mui('.layui-m-layer').on('tap', '.tag-text-cancel', function (e) {
+            layer.closeAll();
+        });
+        //文本编辑-点击事件-删除按钮
+        mui('.layui-m-layer').on('tap', '.tag-text-del', function (e) {
+            var parent = target.parentNode;
+            parent.removeChild(target);
+            recursive(parent);
+            layer.closeAll();
+        });
+        //文本编辑-点击事件-插入广告
+        mui('.layui-m-layer').on('tap', '.tag-text-insert-ad', function (e) {
+            layer.closeAll();
+            showAdEditor(target);
+        });
+    }
+
+    /*
+     * 弹出图片编辑框
+     */
+    function showImgEditor(target) {
+        //弹出编辑窗
+        layer.open({
+            type: 1,
+            content: document.getElementById('modal-picture').innerHTML,
+            anim: 'up',
+            style: 'position:fixed; bottom:0; left:0; width: 100%; height: 150px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+
+        //图片编辑-点击事件-取消按钮
+        mui('.layui-m-layer').on('tap', '.tag-picture-cancel', function (e) {
+            layer.closeAll();
+        });
+        //图片编辑-点击事件-删除按钮
+        mui('.layui-m-layer').on('tap', '.tag-picture-del', function (e) {
+            target.parentNode.removeChild(target);
+            layer.closeAll();
+        });
+        //图片编辑-点击事件-插入广告
+        mui('.layui-m-layer').on('tap', '.tag-picture-insert-ad', function (e) {
+            layer.closeAll();
+            showAdEditor(target);
+        });
+    }
+
+    /*
+     * 弹出广告编辑框
+     */
+    function showAdEditor(target) {
+        var $target = target,$other_target= target;
+        //弹出编辑窗
+        layer.open({
+            type: 1,
+            content: document.getElementById('modal-ad').innerText,
+            anim: 'up',
+            shadeClose: false,
+            style: 'position:fixed; bottom:0; left:0; width: 100%; height: 450px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+        //禁用背景滚动
+        document.querySelector('body').style.overflow = 'hidden';
+        mui('.mui-slider').slider();
+        mui('.mui-scroll-wrapper.mui-slider-indicator.mui-segmented-control').scroll({
+            scrollY: false,
+            scrollX: true,
+            indicators: false,
+            snap: '.mui-control-item'
+        });
+
+        //广告编辑-点击事件-插入按钮
+        mui('.layui-m-layer').on('tap', '.tag-ad-insert', function (e) {
+
+            while (!$target.parentNode.classList.contains('tag-container') || target.parentNode.tagName == 'BODY') {
+                $target = $target.parentNode;
+            }
+
+            //获取广告图片与文字内容
+            var content, picture_url;
+            if (document.getElementById("itemAdEdit").classList.contains('mui-active')) {
+                content = document.querySelector("#ad_text").value.trim();
+                picture_url = document.querySelector("#ad_picture_url").value.trim();
+                if ('' == picture_url) {
+                    layer.open({
+                        content: '请上传广告图片！',
+                        skin: 'msg',
+                        time: 2 //2秒后自动关闭
+                    });
+                    return;
+                }
+            } else {
+                //获取选取的模版
+                var li = document.querySelector("#itemAdTemplate li.mui-selected");
+                if (!li) {
+                    layer.open({
+                        content: '请选择广告！',
+                        skin: 'msg',
+                        time: 2 //2秒后自动关闭
+                    });
+                    return;
+                }
+                content = li.getAttribute('data-content');
+                picture_url = li.getAttribute('data-picture');
+            }
+
+            //插入广告图片节点
+            var p = document.createElement('p');
+            var img = document.createElement('img');
+            img.src = picture_url;
+            img.className = 'editor-mode';
+            p.appendChild(img);
+
+            console.log($other_target);
+            console.log($target.nextSibling);
+            console.log($target.parentNode);
+            console.log($target);
+            console.log('99');
+            console.log($target.childNodes);
+
+            // 2018 9 14 old
+            // $target.parentNode.insertBefore(p, $target.nextSibling);
+
+            // 2018 9 14 xz
+            // $other_target.parentNode.append(p);
+            $($other_target).after(p);
+
+
+
+            //插入广告文本节点
+            var p2 = document.createElement('p');
+            p2.innerHTML = content;
+            p2.className = 'editor-mode';
+            if (p2.innerHTML != '') {
+                // 2018 9 14 old
+                // $target.parentNode.insertBefore(p2, p.nextSibling);
+                // 2018 9 14xz
+                // $other_target.parentNode.append(p2);
+                $($other_target).after(p2);
+                //2018 9 14 zsy
+                // $target.insertBefore(p2, $target.childNodes[1]);
+            }
+            //2018 9 14 zsy
+           // $target.insertBefore(p, $target.childNodes[1]);
+
+
+            layer.closeAll();
+            //开启背景滚动
+            document.querySelector('body').style.overflow = '';
+            //调高度
+            videoHeight();
+        });
+        //广告编辑-点击事件-取消按钮
+        mui('.layui-m-layer').on('tap', '.tag-ad-cancel', function (e) {
+            layer.closeAll();
+            //开启背景滚动
+            document.querySelector('body').style.overflow = '';
+        });
+        //绑定七牛上传
+        bindQiniu();
+    }
+
+    /*
+     * 七牛上传图片
+     */
+    function bindQiniu() {
+        var uploader = Qiniu.uploader({
+            runtimes: 'html5',
+            browse_button: 'pickfiles',
+            container: 'container',
+            drop_element: 'container',
+            max_file_size: '10mb',
+            dragdrop: true,
+            chunk_size: '4mb',
+            //uptoken_url: api.server_url_prefix + '/qiniu/uptoken',
+            uptoken: 'QAL-CN3yXZl6X4yln0A4xrD2DmFXVzFojzeg7-gz:tccG47kw7pL0VHGc39f3GRiY9ew=:eyJzY29wZSI6InN4Y2FyZCIsImRlYWRsaW5lIjoxNTM4MTE1NjUzLCJ1cEhvc3RzIjpbImh0dHA6XC9cL3VwLnFpbml1LmNvbSIsImh0dHA6XC9cL3VwbG9hZC5xaW5pdS5jb20iLCItSCB1cC5xaW5pdS5jb20gaHR0cDpcL1wvMTgzLjEzMS43LjE4Il19',
+            domain: 'https://upload.qiniu.com/',
+//            filters: {
+//                mime_types: [ //只允许上传图片文件
+//                    {
+//                        title: "图片文件",
+//                        extensions: "jpg,png,jpeg,exif,gif,raw"
+//                    }
+//                ]
+//            },
+            resize: {
+              preserve_headers : false,
+              // width: 1024
+            },
+            get_new_uptoken: false,
+            auto_start: true,
+            unique_names: false,
+            save_key: false,
+            multi_selection: false,
+            init: {
+                'FilesAdded': function (up, files) {
+                    plupload.each(files, function (file) {
+                        var preloader = new mOxie.Image();
+                        preloader.onload = function () {
+                            preloader.downsize(240, 240);
+                            var imgsrc = preloader.type == 'image/jpeg' ? preloader.getAsDataURL('image/jpeg', 80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+                            document.getElementById("pickfiles").src = imgsrc;
+                            preloader.destroy();
+                            preloader = null;
+                        };
+                        preloader.load(file.getSource());
+
+                    });
+                },
+                'BeforeUpload': function (up, file) {
+                    console.log(file);
+                },
+                'UploadProgress': function (up, file) {
+                    document.querySelector("#itemAdEdit span.progress-mask").style.height = (100 - file.percent) * 80 / 100 + 'px';
+                    document.querySelector("#itemAdEdit span.progress-text").innerText = file.percent + '%';
+                },
+                'UploadComplete': function () {
+                    document.querySelector("#itemAdEdit span.progress-mask").style.height = '0px';
+                    document.querySelector("#itemAdEdit span.progress-text").innerText = '';
+                },
+                'FileUploaded': function (up, file, info) {
+                    var key = mui.parseJSON(info).key;
+                    document.querySelector("#ad_picture_url").value = api.qiniu.domain + key;
+                    document.getElementById("pickfiles").src = api.qiniu.domain + key + '?imageView2/1/w/120/h/120';
+                },
+                'Error': function (up, err, errTip) {
+                    console.log(err);
+                    mui.alert(errTip);
+                },
+                'Key': function (up, file) {
+                    var key = api.qiniu.type.article + '/' + Date.parse(new Date()) + '-' + file.name;
+                    return key;
+                }
+            }
+        });
+        setTimeout(function () {
+            document.getElementById("pickfiles").style.zIndex = null; //解决微信上遮罩进度条无法显示的问题
+        }, 200);
+
+    }
+
+    /*
+     * 保存
+     */
+    document.querySelector(".tag-article-save").addEventListener('tap', function () {
+        submit_ariticle(function (id) {
+            location.href = "/index.php/wx/article/lists?id=" + id;
+        }, function () {
+            mui.toast('保存失败');
+        })
+    });
+
+    /*
+     * 预览
+     */
+    document.querySelector(".tag-article-preview").addEventListener('tap', function () {
+        submit_ariticle(function (id) {
+            window.history.replaceState({}, 0, location.origin + location.pathname + '?id=' + id);
+            location.href = "/index.php/wxhttps://sixi.sxvt58.com/Public/article?id=" + id;
+        }, function () {
+            mui.toast('预览失败');
+        })
+    });
+
+    /*
+     * 提交编辑内容
+     */
+    function submit_ariticle(success, fail) {
+        mui.showWaiting();
+
+        if (!cover) {
+            //获取第一张图片
+            var img = document.querySelector("#article_content div img");
+            if (img) {
+                cover = img.src.replace('https://qiniu.sxvt58.com/', '');
+            }
+        }
+
+        api.request('article/ajax_save', {
+            'id': '40c65b645eb5ca78aa076d80dca8bb09',
+            'title': document.getElementById("article_id").value,
+            'cover': cover,
+            'content': encodeURIComponent(document.querySelector(".tag-container").innerHTML)
+        }, function (result) {
+            mui.closeWaiting();
+            if (result.status == 1) {
+                success(result.data);
+            } else {
+                fail();
+            }
+        }, function () {
+            fail();
+        });
+    }
+</script>
+</body>
+</html>

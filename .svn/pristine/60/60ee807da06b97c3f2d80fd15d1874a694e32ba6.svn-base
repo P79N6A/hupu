@@ -1,0 +1,25 @@
+<?php/** 下载中心*/namespace app\home\controller;use app\common\controller\HomeBase;
+class Downloadcenter extends HomeBase{	//首页
+    public function index()    {
+    	$this->unionid=$this->userInfo['unionid'];						
+        return json();
+    }         public function Download()    {    	$this->unionid=$this->userInfo['unionid'];    	$this->id = Input('get.id');							        return json();      }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

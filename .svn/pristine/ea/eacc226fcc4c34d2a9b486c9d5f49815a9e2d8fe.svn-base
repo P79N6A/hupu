@@ -1,0 +1,45 @@
+<?php
+
+namespace app\admin\controller;
+
+use app\admin\model\AdminUser;
+use think\Controller;
+use think\Db;
+use think\Request;
+
+class Admin extends Controller
+{
+    public function index(){
+
+
+
+        return $this->fetch('');
+
+    }
+
+    public function getList()
+    {
+//        分页必备参数
+        $Nowpage = input('get.page') ? input('get.page'):1;
+        $limits = input('get.limit');// 获取总条数
+
+        $AdminUser = new AdminUser();
+
+        $lists = $AdminUser->getMemberByWhere([],$Nowpage,$limits);
+
+        $count = $AdminUser->getAllCountByWhere([]);
+
+//        $lists = $member
+//            ->alias('A')
+//            ->field('A.*,B.classname')
+//            ->where($map)
+//            ->order('id desc')
+//            ->join('photo_class B','A.cid=B.id','left')
+//            ->select();
+
+        return toJson(0,'',$count,$lists);
+
+    }
+
+
+}

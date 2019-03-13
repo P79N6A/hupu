@@ -1,0 +1,69 @@
+/**
+ *createUser:JAVA_TOM
+ * FileName: ysImg.js 封装一下img 压缩
+ * Author:   14562
+ * Date:     2019/1/24 14:26
+ * Description:
+ *
+ */
+function fileResizetoFile(file,quality,fn){
+    filetoDataURL (file,function(dataurl){
+        dataURLtoImage(dataurl,function(image){
+            canvasResizetoFile(imagetoCanvas(image),quality,fn);
+        })
+    })
+}
+
+/**
+ * 
+ * @param file
+ * @param fn
+ */
+function filetoDataURL(file,fn){
+    var reader = new FileReader();
+    reader.onloadend = function(e){
+        fn(e.target.result);
+    };
+    reader.readAsDataURL(file);
+};
+
+/**
+ *
+ * @param dataurl
+ * @param fn
+ */
+function dataURLtoImage(dataurl,fn){
+    var img = new Image();
+    img.onload = function() {
+        fn(img);
+    };
+    img.src = dataurl;
+};
+
+/**
+ *
+ * @param canvas
+ * @param quality
+ * @param fn
+ */
+function canvasResizetoFile(canvas,quality,fn){
+    canvas.toBlob(function(blob) {
+        console.log(blob);
+        fn(blob);
+
+    },'image/jpeg',quality);
+};
+
+/**
+ *
+ * @param image
+ * @returns {HTMLCanvasElement}
+ */
+function imagetoCanvas(image){
+    var cvs = document.createElement("canvas");
+    var ctx = cvs.getContext('2d');
+    cvs.width = image.width;
+    cvs.height = image.height;
+    ctx.drawImage(image, 0, 0, cvs.width, cvs.height);
+    return cvs ;
+};

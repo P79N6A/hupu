@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/Sortable.js"></script>
+    <title>{$title}</title>
+    <style>
+        body,
+        html {
+            padding-top: 1.4rem;
+        }
+
+        .header {
+            width: 100%;
+            background: #f6f6f6;
+            padding: 0 .16rem;
+            padding-bottom: .16rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            height: 1.5rem;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+
+        }
+
+        .header .my_text {
+            font-size: .18rem;
+            font-weight: bold;
+            /* padding-top: .24rem; */
+            margin-top: .24rem;
+        }
+
+        .header .count {
+            margin: .08rem 0 .18rem 0;
+        }
+
+        .header .count .all {
+            font-size: .14rem;
+            width: 30%;
+        }
+
+        .header .count .edit {
+            height: .2rem;
+            line-height: .2rem;
+        }
+
+        .header .count .edit img {
+            width: .14rem;
+            height: .15rem;
+            margin-top: 1px;
+        }
+
+        .header .count .edit .del {
+            margin-right: .2rem;
+        }
+
+        .add_video {
+            width: 3.43rem;
+            position: relative;
+
+        }
+
+        .add_video button {
+            width: 100%;
+            height: .4rem;
+            line-height: .4rem;
+            background: #F8C85E;
+            color: #fff;
+            border-radius: .05rem;
+            border: 0;
+            outline: none;
+            text-indent: .2rem;
+            display: block;
+        }
+
+        .add_video img {
+            position: absolute;
+            width: .16rem;
+            height: .16rem;
+            top: 50%;
+            margin-top: -0.08rem;
+            left: 1.28rem;
+        }
+
+        .main {
+            width: 100%;
+            padding: .16rem 0;
+            box-sizing: border-box;
+        }
+
+        .main .item_box {
+            width: 3.27rem;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .main .item_box .item {
+            width: 100%;
+            height: 1.6rem;
+            margin-bottom: .12rem;
+            position: relative;
+            display: block;
+            /* transform: translateX(-0.8rem); */
+            /* transform: translateX(0.8rem); */
+
+        }
+
+        .main .item_box .item video {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+
+        .main .item_box .item p {
+            color: #fff;
+            background: rgba(0, 0, 0, 1);
+            opacity: 0.5;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            font-size: .15rem;
+        }
+
+        .main .item_box .item .del {
+            width: 50%;
+            height: 100%;
+            background: #FE5F5F;
+            color: #fff;
+            text-align: center;
+            line-height: 1.6rem;
+        }
+
+        .main .item_box .item .sort {
+            width: .18rem;
+            height: .18rem;
+            position: absolute;
+            top: .08rem;
+            right: .08rem;
+            display: none;
+        }
+
+        .sort_sure {
+            width: 3.43rem;
+            height: .4rem;
+            background: #32CEA0;
+            color: #fff;
+            border-radius: .05rem;
+            position: fixed;
+            bottom: .1rem;
+            left: 50%;
+            margin-left: -1.715rem;
+            border: 0;
+            outline: none;
+            display: none;
+        }
+
+        .main .item_box .check_box {
+            width: .8rem;
+            height: 1.6rem;
+            position: absolute;
+            left: -.8rem;
+            top: 0;
+        }
+
+        .main .item_box .check_box img {
+            width: .2rem;
+            height: .2rem;
+            top: 50%;
+            left: 50%;
+            margin-left: -0.1rem;
+            margin-top: -0.1rem;
+            position: absolute;
+        }
+
+        .more_del {
+            width: 100%;
+            height: .56rem;
+            position: fixed;
+            bottom: 0;
+            box-shadow: 1px 1px 5px #ccc;
+            display: none;
+            z-index: 999;
+            background: #fff;
+        }
+
+        .more_del .del_box {
+            width: 50%;
+            height: 100%;
+            position: relative;
+        }
+
+        .more_del .del_box img {
+            width: .2rem;
+            height: .2rem;
+            position: absolute;
+            top: 50%;
+            left: .26rem;
+            margin-top: -.1rem;
+        }
+
+        .more_del .del_box p {
+            color: #777777;
+            height: .2rem;
+            line-height: .2rem;
+            position: absolute;
+            top: 50%;
+            left: .55rem;
+            margin-top: -.1rem;
+        }
+
+        .more_del .sure_box {
+            width: 50%;
+            height: 100%;
+        }
+
+        .more_del .sure_box .sure_con {
+            width: 1.6rem;
+            height: .4rem;
+            line-height: .4rem;
+            outline: none;
+            border: 0;
+            border-radius: .05rem;
+            text-align: center;
+            color: #fff;
+            background: #32CEA0;
+            margin-top: .08rem;
+        }
+
+        /* 提示框 */
+        .tip_msg {
+            background: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -0.57rem;
+            margin-left: -1.24rem;
+            border-radius: .1rem;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .tip_msg p:nth-child(1) {
+            font-size: .16rem;
+            padding: .1rem 1.06rem;
+        }
+
+        .tip_msg p:nth-child(2) {
+            font-size: .12rem;
+            padding: 0 .52rem .215rem .52rem;
+        }
+
+        .tip_msg .check {
+            width: 100%;
+            border-top: 1px solid #979797;
+        }
+
+        .tip_msg .check .cancel {
+            border-right: 1px solid #979797;
+            color: #666666;
+        }
+
+        .tip_msg .check .confirm {
+            color: #34B1D3;
+        }
+
+        .tip_msg .check .cancel,
+        .confirm {
+            padding: .1rem .525rem .1rem .465rem;
+        }
+
+        .ttp {
+            text-align: center;
+            font-size: .15rem;
+        }
+
+        .tipp {
+            width: 1.2rem;
+            padding: .05rem .1rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 2px;
+            position: fixed;
+            bottom: .4rem;
+            left: 50%;
+            margin-left: -0.6rem;
+            display: none;
+
+        }
+
+        .sort_box {
+            width: 100%;
+            height: .56rem;
+            background: #fff;
+            border-top: 1px solid #f6f6f6;
+            padding: .06rem .16rem .1rem .16rem;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            display: none;
+        }
+
+        .sort_box button {
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            color: #fff;
+            background: #32CEA0;
+            border: 0;
+            outline: none;
+        }
+
+        .edit_boxs {
+            width: 1.2rem;
+            height: 100%;
+            background: skyblue;
+            position: absolute;
+            right: -1.2rem;
+            top: 0;
+
+        }
+
+        .edit_bb {
+            display: block;
+            width: 50%;
+            height: 100%;
+            color: #fff !important;
+            line-height: 1.6rem;
+            text-align: center;
+        }
+
+        .move {
+            margin-right: .2rem;
+        }
+
+        .move img {
+            width: .16rem !important;
+        }
+
+        .edit p {
+            margin-left: 5px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <p class="my_text"></p>
+        <div class="clearfix count">
+            <div class="fl all"></div>
+            <div class="fr edit">
+                <div class="fl move">
+                    <a class="go_tomove" href="javascript:;">
+                        <img class="fl" src="Public/Home/images/wh/move_icon@2x.png" alt="">
+                        <p class="fl">移动</p>
+                    </a>
+                </div>
+                <div class="fl del">
+                    <img class="fl" src="__HOME_IMAGES__/newvnet/imgtxt/icon_delete@2x.png" alt="">
+                    <p class="fl">批量删除</p>
+                </div>
+                <div class="fl sort">
+                    <img class="fl" src="__HOME_IMAGES__/sortup.png" alt="">
+                    <p class="fl">手动排序</p>
+                </div>
+            </div>
+        </div>
+        <div class="add_video">
+            <button class="add_video_go">添加视频</button>
+            <img src="__HOME_IMAGES__/v_play.png" alt="">
+        </div>
+        
+    </div>
+    <div class="main" id="main">
+        <!-- 分类下的视频 -->
+    </div>
+    <button class="sort_sure">确定</button>
+    <div class="more_del">
+        <div class="fl del_box">
+            <img src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            <p class="del_tip">全选删除(0)条</p>
+        </div>
+        <div class="fl sure_box">
+            <button class="sure_con">确定</button>
+        </div>
+    </div>
+    <div class="mask"></div>
+    <div class="tip_msg">
+        <p>提示</p>
+        <p>确定删除视频吗?</p>
+        <div class="clearfix check">
+            <div class="fl cancel">取消</div>
+            <div class="fl confirm">确定</div>
+        </div>
+    </div>
+    <div class="tipp">删除成功</div>
+    <div class="sort_box">
+        <button class="con_sure">确定</button>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+        function GetQueryString(name) {
+            if (window.location.href.indexOf('?') > -1) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                if (r != null) return unescape(r[2]);
+            }
+            return ''; //便于容错处理
+        }
+
+        var clickflag = true;
+        var video_type = GetQueryString('typeid');
+        var title = GetQueryString('title');
+        $('.my_text').text(title);
+        console.log(video_type)
+
+
+        $.ajax({   //视频分类下的视频
+            type: 'post',
+            url: '/index.php?s=/Api/AppApi/video_list',
+            data: {
+                unionid: unionid,
+                start: 0,
+                length: 999,
+                type_id: video_type
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var videolist = '';
+                    var data = res.AppendData;
+                    $.each(data, function (k, v) {
+                        videolist += '<div class="item_box clearfix" data-sort="' + v.id + '" >'
+                        videolist += '<div class="item">'
+                        videolist += '<video src="' + v.video + '" controls="controls" poster="' + v.video_cover + '"></video>'
+                        videolist += '<p>' + v.title + '</p>'
+                        videolist += '<img class="sort" src="__HOME_IMAGES__/icon_huise_paixu@2x.png" alt="">'
+                        videolist += '<div class="edit_boxs clearfix">'
+                        videolist += '<a class="edit_bb fl" href="/index.php?s=/Home/Newnetwork/add_video.html&typeid=' + video_type + '&edit_video=' + v.id + '" edit-edit="' + v.id + '">修改</a>'
+                        videolist += '<div class="del fl" data-del="' + v.id + '">删除</div>'
+                        videolist += '</div>'
+                        videolist += '</div>'
+
+                        videolist += '<div class="check_box" data-del="' + v.id + '" >'
+                        videolist += ' <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">'
+                        videolist += ' </div>'
+                        videolist += '</div>'
+                        videolist += '</div>'
+                    })
+
+                    $('.main').html(videolist);
+
+
+
+                } else {
+                    $('.main').html('<p class="ttp" >您的这个分类下暂时还没有视频呢</p>')
+                }
+
+                var len = $('.main .item_box').length;
+                $('.all').text(len + '个视频');
+                if (len == 0) {
+                    clickflag = false;
+                    $('.go_tomove').attr('href', 'javascript:;')
+                } else {
+                    clickflag = true;
+                    $('.go_tomove').attr('href', '/index.php?s=/Home/Newnetwork/move_video&video_type=' + video_type + '')
+                }
+
+            }
+        })
+
+
+        var st_x;
+        var flage = true;
+        $(".main").on("touchstart", ".item", function (e) {
+            st_x = e.originalEvent.changedTouches[0].pageX
+        })
+
+        $(".main").on("touchmove", ".item", function (e) {
+            var mv_x = e.originalEvent.changedTouches[0].pageX;
+
+            if (!flage) {
+                return
+            } else {
+                if (st_x - mv_x > 100) {
+                    $(this).css({
+                        'transform': 'translateX(-1.2rem)',
+                        'transition': 'all 0.5s'
+                    })
+                } else {
+                    $(this).css({
+                        'transform': 'translateX(0px)',
+                        'transition': 'all 0.5s'
+                    })
+                }
+
+            }
+
+        })
+
+
+
+        $(".edit .del").on("click", function () {
+            if (!clickflag) {
+                return false;
+            }
+            flage = false;
+            $(".header").animate({
+                'height': "0px",
+                'padding-bottom': '0px'
+            });
+            $(".more_del").show();
+            $(".main .item_box").css("width", "100%");
+            $(".main .item").css({
+                'transform': 'translateX(0.8rem)',
+                'transition': 'all 0.5s'
+            })
+            $('.check_box').css('left', '0px')
+            $("html,body").css({
+                "padding-bottom": "0.56rem",
+                'padding-top': '0'
+            });
+
+        })
+
+        // 批量删除
+        $(".sure_con").on("click", function () {
+            flage = true;
+            var delarrs = [];
+            $(".main .item").css({
+                'transform': 'translateX(0px)',
+                'transition': 'all 0.5s'
+            })
+            $(".main .item_box").css("width", "3.27rem");
+            $(".more_del").hide();
+            $(".header").animate({
+                'height': "1.5rem",
+                'padding-bottom': '0.16rem'
+            });
+            $('.check_box').css('left', '-0.8rem')
+            $("html,body").css({
+                "padding-bottom": "0",
+                'padding-top': '1.5rem'
+            });
+
+
+            $('.check_box').each(function (k, v) {
+                if ($(v).hasClass('checked')) {
+                    delarrs.push($(this).attr('data-del'));
+                }
+            })
+
+            var arrstrs = delarrs.join(',');
+            console.log(arrstrs);
+            if (!arrstrs == '') {
+
+                $.ajax({
+                    url: '/index.php?s=/Api/UserVideoApi/user_video_del',
+                    type: 'post',
+                    data: {
+                        unionid: unionid,
+                        video_ids: arrstrs
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $('.check_box').each(function (k, v) {
+                            if ($(v).hasClass('checked')) {
+                                $(this).parent().remove();
+                            }
+                        })
+                        $('.tip_msg').hide();
+                        $('.mask').hide();
+                        $('.tipp').text('删除成功').fadeIn(500).fadeOut('1500');
+                        var len = $('.main .item_box').length;
+                        $('.all').text(len + '个视频');
+                        if (len == 0) {
+                            clickflag = false;
+                            $('.go_tomove').attr('href', 'javascript:;')
+                        } else {
+                            clickflag = true;
+                            $('.go_tomove').attr('href', '/index.php?s=/Home/Newnetwork/move_video&video_type=' + video_type + '')
+                        }
+
+                    },
+                    error: function () {
+                        console.log('走了错误')
+                        $('.tip_msg').hide();
+                        $('.mask').hide();
+                    }
+                })
+
+            }
+
+
+
+        })
+
+        function dels() {
+            $(".del_tip").text("全选删除(" + num + ")条");
+        }
+        var num = 0;
+        $(".main").on("click", ".check_box", function () {
+            $(this).toggleClass("checked");
+
+            if ($(this).hasClass("checked")) {
+                $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+                num++;
+                dels()
+            } else {
+                $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+                num--;
+                dels()
+
+            }
+
+            var checked = $(".checked");
+            var alls = $(".check_box");
+            if (checked.length == alls.length) {
+                $(".del_box").addClass("checked_all").find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+            } else {
+                $(".del_box").removeClass("checked_all").find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+            }
+        })
+
+
+        $(".del_box ").on("click", function () {
+            $(this).toggleClass("checked_all");
+            var all;
+            if ($(this).hasClass("checked_all")) {
+                $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+                $(".check_box").each(function (i, e) {
+                    $(e).addClass("checked").find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png");
+                    all = i
+                })
+                num = all + 1
+                dels();
+
+            } else {
+                $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+                $(".check_box").each(function (i, e) {
+                    $(e).removeClass("checked").find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png");
+                })
+                num = 0;
+                dels();
+
+            }
+
+        })
+
+
+
+        // 删除视频
+        var delid;
+        var that;
+        $('.main').on('click', '.del', function () {
+           
+            that = $(this);
+            delid = $(this).attr('data-del');
+            $('.tip_msg').show();
+            $('.mask').show();
+        })
+        $('.cancel').on('click', function () {
+            $('.tip_msg').hide();
+            $('.mask').hide();
+        })
+        $('.confirm').on('click', function () {
+            $.ajax({
+                url: '/index.php?s=/Api/UserVideoApi/user_video_del',
+                type: 'post',
+                data: {
+                    unionid: unionid,
+                    video_ids: delid
+                },
+                success: function (res) {
+                    console.log(res)
+                    that.parent().parent().parent().remove();
+                    $('.tipp').text('删除成功').fadeIn(500).fadeOut('1500');
+                    $('.tip_msg').hide();
+                    $('.mask').hide();
+                    var len = $('.main .item_box').length;
+                    $('.all').text(len + '个视频');
+                    if (len == 0) {
+                        clickflag = false;
+                        $('.go_tomove').attr('href', 'javascript:;')
+                    } else {
+                        clickflag = true;
+                        $('.go_tomove').attr('href', '/index.php?s=/Home/Newnetwork/move_video&video_type=' + video_type + '')
+                    }
+
+                    console.log(clickflag)
+                },
+                error: function () {
+                    console.log('走了错误')
+                }
+            })
+        })
+
+        //添加视频
+        $('.add_video_go').on('click', function () {
+            location.href = '/index.php?s=/Home/Newnetwork/add_video.html&typeid=' + video_type + '&title=' + title + ''
+        })
+
+        // 排序
+        var sort;
+        $('.edit').on('click', '.sort', function () {
+            if (!clickflag) {
+                return false;
+            }
+            $('.item_box .item').css('transform', 'translateX(0px)');
+            $('.header').slideUp();
+            $('.sort_box').show();
+            $('.sort').show();
+            $('body,html').css({
+                'padding-bottom': '56px',
+                'padding-top': '0'
+            });
+            flage = false;
+            sort = Sortable.create(main, {
+                group: "sort",
+                draggable: ".item_box",
+                animation: 500,
+                onMove: function (evt) {
+                    $('.sort_box').hide()
+                },
+                onEnd: function () {
+                    $('.sort_box').show()
+                }
+            });
+
+        })
+        $('.con_sure').on('click', function () {
+            var sortarr = [];
+            sort.destroy();
+            $('.header').slideDown();
+            $('.sort_box').hide();
+            $('.main .sort').hide();
+            $('body,html').css({
+                'padding-bottom': '0',
+                'padding-top': '1.4rem'
+            });
+            var index = 0;
+            $('.main .item_box').each(function (i, e) {
+                index++;
+                var id = $(e).attr('data-sort')
+                console.log(id)
+                sortarr.push('' + id + '=' + index + '')
+                console.log(sortarr)
+            })
+
+            var strarr = sortarr.join(',');
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/UserVideoApi/user_video_sort',
+                data: {
+                    content: strarr,
+                    unionid: unionid
+                },
+                success: function (res) {
+                    console.log(res)
+                    $('.tipp').text('排序成功').fadeIn(500).fadeOut('1500');
+                    flage = true;
+
+                },
+                error: function () {
+                    console.log('走了错误')
+                }
+            })
+        })
+    })
+
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 通过下面这个API隐藏右上角按钮hideOptionMenu
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>

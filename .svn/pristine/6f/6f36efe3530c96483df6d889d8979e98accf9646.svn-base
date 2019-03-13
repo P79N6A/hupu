@@ -1,0 +1,144 @@
+{include file="Public/header"}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加</h5>
+                    {include file="Public/toolbar"}
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="userAdd" id="edit" method="post" action="{:url('add')}">
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">油卡码：</label>
+                            <div class="input-group col-sm-4">
+
+                                <input id="code" type="text" class="form-control" name="code">
+
+
+                            </div>
+                        </div>
+
+
+                        <!--<input id="user_id" type="hidden" class="form-control" value="0" name="user_id">-->
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);">
+                                    <i class="fa fa-close"></i>
+                                    返回</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{include file="Public/footer"}
+
+
+<script type="text/javascript">
+
+    layui.use(['upload', 'laydate'], function () {
+        var upload = layui.upload
+            , laydate = layui.laydate;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#picname' //绑定元素
+            , url: "/{:url('admin/Upload/uploadImage')}" //上传接口
+            // , data: {'position':'images'}
+            // , data: {'position': '/images'}
+            , before: function (obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                console.log(obj);
+                layer.load(); //上传loading
+            }
+            , done: function (res) {
+                console.log(res);
+                $("#service_pic").val(res);
+                $("#img_data").attr('src', res).show();
+                layer.closeAll('loading'); //关闭loading
+            }
+            , error: function (index, upload) {
+                layer.closeAll('loading'); //关闭loading
+            }
+        });
+
+        laydate.render({
+            elem: '#datetime' //指定元素
+        });
+    });
+
+
+    $(function () {
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm() {
+
+            if ('' == $('#title').val()) {
+                layer.msg('请填写名称', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+
+            if ('' == $('#inte').val()) {
+                layer.msg('请填写积分', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+
+            if ('' == $('#type').val()) {
+                layer.msg('请填写类型', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+                    layer.close(index);
+                });
+                return false;
+            }
+            // if ('' == $.trim($('#cid').val())) {
+            //     layer.msg('请选择图片类型', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+            //         layer.close(index);
+            //     });
+            //     return false;
+            // }
+            //
+            // if ('' == $.trim($('#service_pic').val())) {
+            //     layer.msg('请上传图片', {icon: 2, time: 1500, shade: 0.1}, function (index) {
+            //         layer.close(index);
+            //     });
+            //     return false;
+            // }
+
+        }
+
+
+        function complete(data) {
+            if (data.code == 1) {
+                layer.msg(data.msg, {icon: 6, time: 1500, shade: 0.1}, function (index) {
+                    window.location.href = "{:url('index')}";
+                });
+            } else {
+                layer.msg(data.msg, {icon: 5, time: 1500, shade: 0.1});
+                return false;
+            }
+        }
+
+    });
+
+</script>
+
+
+</body>
+</html>

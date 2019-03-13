@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>添加好友</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #F6F6F6;
+			}
+			
+			.user_msg {
+				width: 100%;
+				height: 4.9rem;
+				background: #fff;
+				margin-bottom: 1rem;
+			}
+			
+			.user_msg>a {
+				display: block;
+				width: 90%;
+				height: 100%;
+				margin: 0 auto;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.img_box {
+				width: 25%;
+				height: 100%;
+			}
+			
+			.img_box>img {
+				width: 3.3rem;
+				height: 3.3rem;
+				border-radius: 50%;
+				margin: 0.8rem 0;
+			}
+			
+			.u_infor {
+				width: 75%;
+				height: 3.3rem;
+				margin: 0.8rem 0;
+			}
+			
+			.user_msg_box {
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1rem;
+				font-weight: 550;
+				font-size: 0.8rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				color: #333;
+			}
+			
+			.user_bottom {
+				width: 100%;
+				height: 1rem;
+				line-height: 1rem;
+				color: #B2B2B2;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				float: left;
+				font-size: 0.6rem;
+			}
+			
+			.here {
+				width: 8.5rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				height: 1rem;
+				line-height: 1rem;
+				font-size: 0.6rem;
+			}
+			
+			.here .imgs {
+				width: 0.6rem;
+				height: 0.7rem;
+				margin-top: 0.15rem;
+				margin-right: 3%;
+			}
+			
+			.len {
+				font-size: 0.6rem;
+				width: 85%;
+				height: 100%;
+				color: #777;
+			}
+			
+			.info {
+				width: 90%;
+				height: 9.15rem;
+				background: #fff;
+				margin: 0 auto;
+			}
+			
+			.info>textarea {
+				display: block;
+				width: 90%;
+				height: 85%;
+				padding: 5%;
+				background: #fff;
+				border: none;
+				outline: none;
+				font-size: 0.8rem;
+				color: #333;
+			}
+			
+			.confirm {
+				width: 100%;
+				height: 2rem;
+				background: #fff;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.save {
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.1rem;
+				line-height: 2rem;
+				border-radius:0.2rem;
+			}
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			.hint{
+				width: 90%;
+				height: 2rem;
+				line-height: 2.2rem;
+				font-size: 0.7rem;
+				margin: 0 auto;
+				color:#777;
+			}
+			.hints{
+				width: 90%;
+				height: 1.5rem;
+				font-size: 0.7rem;
+				margin: 0 auto;
+				color:#777;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="user_msg">
+			<a href="/index.php?s=/Home/Nologin/card_jump/id/70747">
+				<div class="img_box fl">
+					<img class="nick_msg" src="{$img}" alt="">
+				</div>
+				<div class="u_infor fl">
+					<div class="user_msg_box">
+						<div class="nick_name">{$name}</div>
+					</div>
+					<div class="clearfix user_bottom">
+						<div class="text">{$here}</div>
+					</div>
+
+					<div class="here">
+						<img class="fl imgs" src="__HOME_IMAGES__/newvnet/business/shangquan_nearby_icon@2x.png" alt="">
+						<div class="len fl">{$len}</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="info">
+			<textarea class="con" name="" rows="" cols="" placeholder="请填写验证信息"></textarea>
+		</div>
+		<div class="hint">温馨提示</div>
+		<div class="hints">1.添加好友等待对方同意之后；可与对方在线聊天</div>
+		<div class="confirm">
+			<div class="save">
+				发送请求
+			</div>
+		</div>
+		<div class="model"></div>
+		<script>
+			var unionid = "{$unionid}";
+			var o_id="{$o_id}"
+			$(".save").on("click",function(){
+				var con = $(".con").val();
+				console.log(unionid)
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/User/AddTrading',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						object_unionid: o_id,
+						notice:con
+					},
+					success: function(res) {
+						console.log(res);
+						if(res.ResultType == 0) {
+							$(".model").show();
+							$(".model").html("好友添加成功");
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							
+							setTimeout(function() {
+								window.history.back(-1); 
+							}, 1600)
+						}
+						if(res.ResultType == 1) {
+							$(".model").show();
+							$(".model").html(res.Message);
+							setTimeout(function() {
+								$(".model").hide();
+							}, 1500)
+							setTimeout(function() {
+								window.history.back(-1); 
+							}, 1600)
+
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

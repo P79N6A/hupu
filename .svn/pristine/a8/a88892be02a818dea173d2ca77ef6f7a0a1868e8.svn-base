@@ -1,0 +1,477 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.dn {
+			display: none;
+		}
+		
+		.zzc_paizhao_bg {
+			background: #2c3239!important;
+		}
+		
+		.zzc_mingpfuzhi_body {
+			background: #FFFFFF;
+			overflow: hidden;
+		}
+		
+		.zzc_mingpfuzhi_input_div {
+			float: left;
+			margin: 10px 5%;
+			width: 40%;
+			overflow: hidden;
+			text-align: center;
+			border-radius: 5px;
+			height: 50px;
+			line-height: 50px;
+			border-radius: 0px;
+		}
+		
+		.zzc_mingpfuzhi_input {
+			width: 80%!important;
+			float: left;
+			font-size: 14px;
+			height: 50px;
+			margin: auto;
+			line-height: 50px;
+			color: #666666!important;
+			overflow: hidden;
+			border: none!important;
+			background: #f7f7f8!important;
+		}
+		
+		.zzc_mingpfuzhi_sub {
+			width: 20%;
+			background: #d6ebf0;
+			float: right;
+			text-align: center;
+			height: 50px;
+			line-height: 50px;
+			color: #2fb3d3;
+		}
+		
+		.zzc_mingpfuzhi {
+			width: 90%;
+			overflow: hidden;
+			margin: auto;
+			background: #FFFFFF;
+		}
+		
+		.zzc_mingpfuzhi_div {
+			width: 100%;
+			font-size: 16px;
+			color: #8e8e90;
+			overflow: hidden;
+			background: #f0eff6;
+		}
+		
+		.zzc_mingpfuzhi_div p {
+			font-size: 16px;
+			padding: 10px 5%;
+			margin: 0px;
+		}
+		
+		.zzc_mingpfuzhi_ul {
+			background: #FFFFFF;
+			width: 100%;
+			overflow: hidden;
+			font-size: 14px;
+			margin: auto;
+		}
+		
+		.zzc_mingpfuzhi_li {
+			width: 90%;
+			height: 50px;
+			line-height: 50px;
+			margin: 0 auto;
+			border-bottom: 1px solid #f0eff6;
+		}
+		
+		.zzc_mingpfuzhi_li span {
+			color: #333333;
+			margin-right: 20px;
+		}
+		
+		.zzc_mingpfuzhi_li a {
+			float: right;
+			display: inline-block;
+			border-radius: 3px;
+			height: 35px;
+			padding: 0 15px;
+			margin-top: 5px;
+			line-height: 35px;
+			color: #FFFFFF;
+			background: #2FB3D3;
+		}
+		
+		.zzc_zhifudashang {
+			overflow: hidden;
+			width: 100%;
+		}
+		
+		.zzc_zhifudashang a {
+			border: 1px solid #CCCCCC;
+			text-align: center;
+			color: #CCCCCC;
+			width: 46%;
+			padding: 10px 0px;
+			margin: 2%;
+			float: left;
+		}
+		
+		.zzc_zhifudashang a.on {
+			border: 1px solid #b6cd62;
+			color: #b6cd62;
+		}
+		
+		.zzc_xuanzetup {
+			text-align: center;
+			margin-bottom: 10px;
+			color: #333333;
+			font-size: 14px;
+		}
+		
+		.zzc_xuanzetup a {
+			border: 2px solid #2FB3D3;
+			display: inline-block;
+			border-radius: 50%;
+			height: 30px;
+			width: 30px;
+			line-height: 30px;
+			text-align: center;
+			color: #2FB3D3;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		
+		.nav_box {
+			text-align: center;
+			width: 300px;
+			background: #fff;
+			position: fixed;
+			top: 12%;
+			left: 0;
+			right: 0;
+			margin: auto;
+			border-radius: 15px;
+			z-index: 100;
+			padding: 10px;
+		}
+		
+		.nav_panel .bg {
+			background: rgba(0, 0, 0, .7);
+			z-index: 98;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+		}
+		
+		.nav_title {
+			text-align: left;
+			font-weight: bold;
+		}
+		
+		.nav_select_icon {
+			margin-bottom: 20px;
+			padding-top: 10px;
+		}
+		
+		.nav_select_icon .mui-icon-plusempty {
+			font-size: 48px;
+			color: #2fb3d3;
+		}
+		
+		.nav_content input[type=text] {
+			background: #f7f7f8;
+			border: 0;
+			color: #6a6e70;
+		}
+		
+		.nav_btns button {
+			width: 40%;
+			height: 42px;
+		}
+		
+		.nav_btns .nav_btns_yes {
+			border: 0;
+			color: #fff;
+			background: #2fb3d3;
+		}
+		
+		.nav_select_img {
+			text-align: center;
+			width: 300px;
+			background: #fff;
+			position: fixed;
+			top: 12%;
+			left: 0;
+			right: 0;
+			margin: auto;
+			border-radius: 15px;
+			z-index: 101;
+			padding: 10px;
+		}
+		
+		.nav_select_list img {
+			float: left;
+			width: 50%;
+			border: 5px solid #ffffff;
+		}
+		
+		.nav_select_list img.on {
+			border: 5px solid #2fb3d3;
+		}
+		
+		.nav_select_list {
+			margin-top: 40px;
+			overflow: auto;
+			height: 400px;
+		}
+	</style>
+</block>
+
+<block name="body">
+
+	<body>
+		<script src="__PUBLIC__/Home/js/mui.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">广告选择</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content">
+			<div class="myguanggao_li">在文章底部显示
+				<if condition="($article_advert eq 1)  ">
+					<div class="mui-switch  mui-active muguanggao_but" id="mySwitch">
+						<div class="mui-switch-handle"></div>
+					</div>
+					<else />
+					<div class="mui-switch  muguanggao_but" id="mySwitch">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</if>
+
+			</div>
+			<div class="mui-content " style="min-height: 500px;">
+				<div class="zzc_mingpfuzhi_li" style="border: none;">
+					<a id="btnShow">添加</a>
+				</div>
+				<volist name="list" id="vo">
+					<div class="zzc_mingpfuzhi_input_div" data-id="{$vo.id}">
+						<a class="zzc_mingpfuzhi_input" href="#"><img src="../../{$vo.thumb}" width="120" height="50" /></a>
+						<span class="zzc_mingpfuzhi_sub">x</span>
+					</div>
+				</volist>
+			</div>
+
+			<div class="nav_panel dn">
+				<!-- 导航选择器 -->
+				<div class="bg"></div>
+
+				<div class="nav_box">
+					<div class="nav_title">广告设置</div>
+					<div class="nav_select_icon">
+						<div><img src="" id="nav_img" alt="" width="48" height="49"></div>
+						<div class="mui-icon mui-icon-plusempty">
+							<input type="file" id="imgTest" class="file" name="logo" onchange="imgChange(event)" accept="image/*;capture=camera" id="imgTest" value="" style="display: none;" />
+						</div>
+						<div>选择图片</div>
+					</div>
+					<div class="nav_content">
+						<input type="text" placeholder="请输入标题" name="title" id="title">
+						<input type="text" placeholder="请输入网址" name="url" id="url">
+						<input type="hidden" name="image" id="image" value="" />
+						<input type="hidden" name="edit_id" id="edit_id" value="{$vo.id}">
+					</div>
+					<div class="nav_btns">
+						<button class="nav_btns_canel">取消</button>
+						<button class="nav_btns_yes" id="ok">确定</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="myguanggao_bottom">
+				<input type="" name="save" id="save" onclick="adSave()" value="保存" />
+			</div>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+	<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		function imgChange(e) {
+			console.info(e.target.files[0]); //图片文件
+			var dom = $("input[id^='imgTest']")[0];
+			console.info(dom.value); //这个是文件的路径 C:\fakepath\icon (5).png
+			console.log(e.target.value); //这个也是文件的路径和上面的dom.value是一样的
+			var reader = new FileReader();
+			reader.onload = (function(file) {
+				return function(e) {
+					console.info(this.result); //这个就是base64的数据了
+					var img = document.getElementById('nav_img');
+					img.src = this.result;
+					$("#image").val(this.result);
+				};
+			})(e.target.files[0]);
+			reader.readAsDataURL(e.target.files[0]);
+		}
+
+		$(function() {
+			$('.nav_select_list img').on('touchend', function() {
+				$('.nav_select_list img').removeClass('on');
+				$(this).addClass('on');
+
+			});
+			//            打开图片
+			$('.nav_select_icon').on('touchend', function() {
+				document.getElementById("imgTest").click();
+			});
+			$('.nav_select_img a.fr').on('touchend', function() {
+				//选择导航图片确定
+				var url = $('.nav_select_list img.on').attr('src');
+				$('.nav_content input[name=img]').val(url);
+				$('.nav_select_icon img').attr('src', url);
+				$('.nav_select_img').hide();
+				$('body').css('overflow', 'auto');
+			});
+			//            添加
+			$('#btnShow').on('touchend', function() {
+				$('.nav_panel').show();
+				$('body').css('overflow', 'hidden');
+			});
+			//编辑
+			$('.zzc_mingpfuzhi_input').on('touchend', function() {
+				var panel = $(this).parent();
+				var id = panel.attr('data-id');
+				var nav_img = document.getElementById('nav_img');
+				var ok = document.getElementById('ok');
+				$.post('{:url("Home/Advertisement/getArticleAD")}', {
+					id: id
+				}, function(res) {
+					var advert = res.data;
+					if(res.status == 1) {
+						$("#title").val(advert.title);
+						$("#url").val(advert.jump_url);
+						$("#edit_id").val(advert.id);
+						nav_img.src = '../../' + advert.thumb;
+						ok.innerHTML = '编辑';
+					}
+
+				});
+				$('.nav_panel').show();
+				$('body').css('overflow', 'hidden');
+			});
+			$('.nav_box .nav_btns_canel').on('touchend', function() {
+				//导航取消
+				$('.nav_panel').hide();
+				$('body').css('overflow', 'auto');
+			});
+			$('.nav_box .nav_btns_yes').on('touchend', function() {
+				var id = $('.nav_content input[name=edit_id]').val();
+				//导航确认
+				var title = $('.nav_content input[name=title]').val();
+				var url = $('.nav_content input[name=url]').val();
+				var img = $('.nav_content input[name=image]').val();
+				//                if(name.length<=0){
+				//                    mui.toast('导航名称不能为空');return;
+				//                }
+				//                if(url.length<=0){
+				//                    mui.toast('链接不能为空');return;
+				//                }
+				if(!img) {
+					mui.toast('请选择图片');
+					return;
+				}
+				if(id > 0 && document.getElementById('ok').innerHTML == '编辑') {
+					$.post('{:url("Home/Advertisement/edit")}', {
+						id: id,
+						title: title,
+						url: url,
+						img: img
+					}, function(res) {
+						if(res.status == 1) {
+							top.location.href = "/Home/Advertisement/listArticleAD";
+						}
+
+					});
+				} else {
+					$.post('{:url("Home/Advertisement/addArticleAD")}', {
+						img: img,
+						title: title,
+						url: url
+					}, function(res) {
+						if(res.status == 1) {
+							top.location.href = "/Home/Advertisement/listArticleAD";
+						}
+					});
+				}
+
+			});
+
+			$(document).on('touchend', '.zzc_mingpfuzhi_sub', function() {
+				var panel = $(this).parent();
+				var id = panel.attr('data-id');
+				$.post('{:url("Home/Advertisement/delArticleAD")}', {
+					id: id
+				}, function(res) {
+					if(res.status == 1) {
+						panel.remove();
+					} else {
+						mui.toast("删除失败");
+					}
+
+				});
+			});
+		});
+
+		function adSave() {
+			var isActive = document.getElementById("mySwitch").classList.contains("mui-active");
+			var article_advert = 0;
+			if(isActive) {
+				article_advert = 1;
+			}
+			$.post('{:url("Home/Advertisement/setArticleAD")}', {
+				article_advert: article_advert
+			}, function(res) {
+				if(res.status == 1) {
+					top.location.href = "/Home/Article/addArticle";
+				} else {
+					mui.toast("保存失败");
+				}
+
+			});
+
+		}
+	</script>
+	<script type="text/javascript">
+		function fromcat_click() {
+
+			$(".zzc_from_cat_tan").toggle();
+			$(".zzc_from_cat_hidden").toggle();
+		}
+
+		function sumit_click() {
+			mui.confirm("你正在编辑状态，是否保存修改？", "提示");
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

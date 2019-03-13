@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>交换V网</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 90%;
+            height: 1.62rem;
+            position: relative;
+            ;
+            /* background: pink; */
+            margin: 0 auto;
+            border-bottom: 1px solid #F1F1F1;
+        }
+
+        .top img {
+            width: .37rem;
+            height: .37rem;
+            position: absolute;
+            top: .18rem;
+            border-radius: 50%;
+            background-size: 100% 100%;
+        }
+
+        .one {
+            width: 1rem;
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #2b2b2b;
+            line-height: .2rem;
+            position: absolute;
+            left: .45rem;
+            top: .18rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .masg {
+            width: 87%;
+            height: .55rem;
+            margin: 0 13%;
+            position: absolute;
+            top: .51rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(43, 43, 43, 1);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .secd {
+            height: .13rem;
+            font-size: .09rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(155, 155, 155, 1);
+            line-height: .13rem;
+            position: absolute;
+            margin: 0 13%;
+            bottom: .35rem;
+        }
+
+        .agree {
+            width: .64rem;
+            height: .26rem;
+            background: #32cea0;
+            border-radius: .02rem;
+            color: #fff;
+            font-size: .13rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            text-align: center;
+            line-height: .26rem;
+            position: absolute;
+            right: .15rem;
+            bottom: .09rem;
+            cursor: pointer;
+        }
+
+        .notagree {
+            width: .64rem !important;
+            height: .26rem !important;
+            background: #E2E2E2 !important;
+            border-radius: .02rem !important;
+            color: #fff !important;
+            font-size: .13rem !important;
+            font-family: PingFangSC-Medium !important;
+            font-weight: 500 !important;
+            text-align: center !important;
+            line-height: .26rem !important;
+            position: absolute !important;
+            right: .15rem !important;
+            bottom: .09rem !important;
+        }
+
+        /* 顶部标题栏 */
+        .extitlt {
+            width: 100%;
+            height: .33rem;
+            border-bottom: 1px solid #ECECEC;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .extop {
+            width: 100%;
+        }
+
+        .extop li {
+            width: 33.3%;
+            height: .33rem;
+            float: left;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #777777;
+            line-height: .33rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .changeli {
+            font-size: .16rem !important;
+            font-family: PingFangSC-Medium !important;
+            font-weight: 500 !important;
+            color: #32CEA0 !important;
+            line-height: .33rem !important;
+            text-align: center !important;
+        }
+
+        .on {
+            width: .32rem;
+            height: .02rem;
+            background: #32CEA0;
+            border-radius: .01rem;
+            position: absolute;
+            bottom: 0;
+            left: .5rem;
+            display: none;
+        }
+
+        .receive {
+            /* display: none; */
+        }
+
+        .application {
+            display: none;
+        }
+
+        .success {
+            display: none;
+        }
+
+        .loading {
+            width: 7.5rem;
+            height: 4.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            font-size: 0.8rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -3.75rem;
+            margin-top: -2.25rem;
+            border-radius: .5rem;
+            display: none;
+        }
+
+        .loading p {
+            color: #fff;
+            font-size: 0.6rem;
+        }
+
+        .loading img {
+            width: 1.4rem;
+            height: 1.4rem;
+            display: block;
+            margin: .5rem auto;
+        }
+
+        .dx {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: #00000085;
+            position: fixed;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+
+        .qs {
+            width: 50%;
+            height: 1rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: 1rem;
+            background: #a3a2a2;
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conent">
+        <div class="extitlt">
+            <ul class="extop">
+                <li class="onen changeli" data-type="mine">收到的申请
+                    <span class="on"></span>
+                </li>
+                <li class="two" data-type="apply">我的交换申请
+                    <span class="on "></span>
+                </li>
+                <li class="three" data-type="success">交换成功
+                    <span class="on"></span>
+                </li>
+            </ul>
+        </div>
+        <!--<div class="qs">-->
+            <!--<p>我是有底线的哟</p>-->
+        <!--</div>-->
+        <div class="receive">
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+
+        var user_id = '{$unionid}';
+        var typemsg = 'mine';
+        var index = 1;
+
+        var objList=[];
+        function render(type, index) {
+            console.log(type);
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/Friend/GetCardExchangeList',
+                data: {
+                    unionid: user_id,
+                    type: type,
+                    current_page_number: index,
+                    page_size: 10,
+                },
+                success: function (res) {
+                    console.log(res)
+                    var data = res.AppendData;
+                    if (type == 'mine') {
+                        scrollFlag = true;
+                        var list = '';
+                        if (data == null) {
+                            scrollFlag = false;
+                            //$(".qs").text("我是有底线的哟").stop(true).fadeIn(1000).fadeOut(2000);
+                            return false;
+                        }
+                        objList=data;
+                        $.each(data, function (k, v) {
+                            var time = timestampToTime(v.add_time);
+                            var status = v.status;
+                            var agree = '已拒绝';
+                            if (status == 1) {
+                                agree = '已同意';
+
+                            } else if (status == 2) {
+                                agree = '同意';
+
+                            }
+
+                            list += '<div class="top">'
+                            list += '<img src="' + v.user_info.headimg + '" alt="">'
+                            list += '<span class="one">' + v.user_info.nick_name +
+                                '</span>'
+                            list += '<span class="masg">' + v.msg + '</span>'
+                            list += '<div class="secd">' + v.add_time_xcx + '</div>'
+                            if (status == 1) {
+                                list += '<div class="agree " style="background:#E2E2E2">' + agree + '</div>'
+                            } else if (status == 2) {
+                                list += '<div class="agree myclick" style="background:#32cea0" data-id="' + v.id + '">' +agree + '</div>'
+                            }else{
+                                list += '<div class="agree " style="background:#E2E2E2">' + agree + '</div>'
+                            }
+
+                            list += '</div>'
+                        })
+
+                        if (index == 1) {
+                            $('.receive').html(list)
+                        } else {
+                            $('.receive').append(list)
+                        }
+                    }
+
+                    if (type == 'apply') {
+                        var lost = '';
+                        scrollFlag = true;
+                        if (data == null) {
+                            scrollFlag = false;
+                            // console.log('没有数据了')
+                           // $(".qs").text("我是有底线的哟").stop(true).fadeIn(1000).fadeOut(2000);
+                            return false;
+                        }
+                        $.each(data, function (k, v) {
+                            var status = v.status;
+                            var agree = '未同意';
+                            if (status == 1) {
+                                agree = '已同意';
+                            } else if (status == 2) {
+                                agree = '待审核';
+                            }
+
+                            lost += '<div class="top">'
+                            lost += '<img src="' + v.user_info.headimg + '" alt="">'
+                            lost += '<span class="one">' + v.user_info.nick_name +
+                                '</span>'
+                            lost +=
+                                '<span class="masg">' + v.msg + '</span>'
+                            lost += '<div class="secd">' + v.add_time_xcx + '</div>'
+                            if (status == 1) {
+                                lost += '<div class="agree" style="background:#E2E2E2">' +agree + '</div>'
+                            } else if (status == 2) {
+                                lost += '<div class="agree" style="background:#32cea0">' +agree + '</div>'
+                            }
+                            lost += '</div>'
+                        })
+
+                        if (index == 1) {
+                            objList=data;
+                            $('.receive').html(lost)
+                            console.log('渲染')
+                        } else {
+                            $.each(data, function (k, v) {
+                                objList.push(v)
+                            })
+                            $('.receive').append(lost)
+                            console.log('追加')
+                        }
+
+                    }
+
+                    if (type == 'success') {
+                        var lost = '';
+                        scrollFlag = true;
+                        if (data == null) {
+                            scrollFlag = false;
+                            // console.log('没有数据了')
+                          //  $(".qs").text("我是有底线的哟").stop(true).fadeIn(1000).fadeOut(2000);
+                            return false;
+                        }
+
+                        $.each(data, function (k, v) {
+                            var status = v.status;
+                            var agree = '未同意';
+                            if (status == 1) {
+                                agree = '已同意';
+                            } else if (status == 2) {
+                                agree = '待审核';
+                            }
+
+                            lost += '<div class="top">'
+                            lost += '<img src="' + v.user_info.headimg + '" alt="">'
+                            lost += '<span class="one">' + v.user_info.nick_name +
+                                '</span>'
+                            lost +=
+                                '<span class="masg">' + v.msg + '</span>'
+                            lost += '<div class="secd">' + v.add_time_xcx + '</div>'
+                            if (status == 1) {
+                                lost += '<div class="agree" style="background:#E2E2E2">' +agree + '</div>'
+                            } else if (status == 2) {
+                                lost += '<div class="agree" style="background:#32cea0">' +agree + '</div>'
+                            }
+                            lost += '</div>'
+
+                        })
+                        if (index == 1) {
+                            objList=data;
+                            $('.receive').html(lost)
+                            console.log('渲染')
+                        } else {
+                            $.each(data, function (k, v) {
+                                objList.push(v)
+                            })
+                            $('.receive').append(lost)
+                            console.log('追加')
+                        }
+
+                        // if (index == 1) {
+                        //     $('.receive').html(lost)
+                        //     console.log('渲染')
+                        // } else {
+                        //     $('.receive').append(lost)
+                        //     console.log('追加')
+                        // }
+                    }
+                }
+            })
+        }
+
+
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '年';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) :
+                date.getMonth() + 1) + '月';
+            var D = (date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() +
+                '日');
+            var h = (date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() +
+                ':');
+            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' :
+                date.getMinutes() + ':');
+            var s = date.getSeconds();
+            return Y + M + D + h + m + s;
+        }
+
+        render(typemsg, index)
+
+
+        $('.extop li').click(function () {
+            var atypemsg = $(this).attr('data-type');
+            if(atypemsg==typemsg){
+                return;
+            }
+            $(this).addClass("changeli").siblings().removeClass("changeli");
+            $(this).parent().parent().next().css('display', 'block');
+            index = 1;
+            scrollFlag = true;
+            typemsg= $(this).attr('data-type');
+            render(typemsg, index);
+        })
+        // 横线
+        $('.extop li span').click(function () {
+            $(this).addClass("changeli").siblings().removeClass("changeli");
+        });
+        // 点击同意切换已同意
+        $("body").on('click', '.agree.myclick', function () {
+            // $("#btn").attr("disabled", true);
+            var $agree = $(this);
+            var data_id=$agree.attr("data-id");
+                //id: this.data.infos[this.data.changeIdIndex].id, status: '同意'
+            console.log(1)
+            if(confirm("是否同意")){
+                $.ajax({
+                    url:"/index.php?s=/Api/Friend/ValidateExchange",
+                    type:"post",
+                    data:{
+                        unionid:user_id,
+                        id:data_id,
+                        status:'同意'
+                    },
+
+                    success:function(res){
+                        console.log(res)
+                        if(res.ResultType==0){
+                            var $others = $agree.siblings();
+                            if ($agree.hasClass('agree')) {
+                                $agree.removeClass('agree').addClass('notagree').html('已同意');
+                            } else if ($agree.hasClass('agree')) {
+                                $agree.removeClass('notagree').addClass('agree').html('待审核');
+                            } else {
+                                $agree.addClass('agree').removeClass('notagree').html('同意');
+                            }
+                        }else{
+
+
+                        }
+                    },
+                    error:function () {
+                    }
+                })
+            }
+
+
+
+        });
+        // 页面初始化数据
+
+
+        // 收到的申请 mine   我的交换申请 apply   成功交换 success
+
+
+        var scrollFlag = true;
+        $(window).scroll(function () {
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if (!scrollFlag) {
+                return false;
+            }
+            if (scrollTop + windowHeight == scrollHeight) {
+                console.log('到底了')
+                scrollFlag = false;
+                index += 1;
+                console.log(index)
+                render(typemsg, index)
+            }
+        })
+    })
+</script>
+
+</html>

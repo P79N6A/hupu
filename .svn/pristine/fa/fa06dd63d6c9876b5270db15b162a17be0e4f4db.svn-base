@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Expires" CONTENT="0">
+		<meta http-equiv="Cache-Control" CONTENT="no-cache">
+		<meta http-equiv="Pragma" CONTENT="no-cache">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>文章编辑</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 110%;
+				background: #fff;
+			}
+			
+			.lst .top {
+				width: 90%;
+				height: 2.7rem;
+				line-height: 2.7rem;
+				background: #fff;
+				margin: 0 auto;
+				border-bottom: 0.025rem solid #f6f6f6;
+				display: flex;
+			}
+			
+			.t_left {
+				font-size: 0.8rem;
+				color: #333;
+				font-weight: 550;
+				width: 40%;
+				height: 100%;
+			}
+			
+			.t_right {
+				width: 60%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #c5c5c5;
+			}
+			
+			.t_right>select {
+				width: 100%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #c5c5c5;
+				border: none;
+				text-align: center;
+				text-align-last: right;
+				background: #fff;
+			}
+			
+			.t_right>select>option {
+				text-align: right;
+				font-size: 0.6rem;
+			}
+			
+			.title {
+				width: 90%;
+				height: 2rem;
+				line-height: 2.5rem;
+				margin: 0 auto;
+				font-size: 0.8rem;
+				color: #333;
+				font-weight: 600;
+			}
+			
+			.lst .txt {
+				width: 90%;
+				height: 1.6rem;
+				margin: 0 auto;
+				font-weight: 400;
+				padding-bottom: 0.8rem;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.txt>input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				outline: none;
+				font-size: 0.7rem;
+				font-weight: 400;
+				text-align: top;
+			}
+			
+			.cover {
+				width: 90%;
+				height: 3.175rem;
+				line-height: 3.175rem;
+				margin: 0 auto;
+				display: flex;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.c_cen {
+				width: 50%;
+				height: 100%;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.c_img {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				position: relative;
+			}
+			
+			.c_img>input {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.c_img>img {
+				width: 2.05rem;
+				height: 2.05rem;
+				margin: 0.5625rem 0;
+				border-radius: 0.25rem;
+			}
+			
+			.tu_img {
+				width: 90%;
+				height: 2.275rem;
+				line-height: 2.275rem;
+				margin: 0 auto;
+				display: flex;
+				border-bottom: 0.025rem solid #f6f6f6;
+			}
+			
+			.tu_tit {
+				width: 50%;
+				height: 100%;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+			}
+			
+			.tu_kai {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #C5C5C5;
+				font-size: 0.7rem;
+			}
+			
+			.v_kai {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #C5C5C5;
+				font-size: 0.7rem;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			.tu_kai>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #C5C5C5;
+			}
+			.v_kai>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				color: #C5C5C5;
+			}
+			
+			.tu_word {
+				width: 90%;
+				float: left;
+			}
+			
+			.tu_fu {
+				width: 0.4rem;
+				height: 0.7rem;
+				float: right;
+				margin: 0.8rem 0 0.725rem;
+			}
+			
+			.tu_fu>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.confirm {
+				width: 100%;
+				height: 2rem;
+				background: #fff;
+				padding: 0.2rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				z-index: 10;
+			}
+			
+			.save {
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.25rem;
+				line-height: 2rem;
+				border-radius: 0.2rem;
+			}
+			
+			.mask {
+				width: 7.5rem;
+				height: 6rem;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 0.125rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -3rem;
+				margin-left: -3.75rem;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mask img {
+				width: 2rem;
+				height: 2rem;
+				display: block;
+				margin: 0 auto;
+				margin-top: 1rem;
+				margin-bottom: 1rem;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mask p {
+				color: #fff;
+				text-align: center;
+				font-size: 0.75rem;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			.lst {
+				width: 100%;
+				height: 100%;
+				background: #fff;
+				position: fixed;
+				top: 0;
+				left: 0;
+			}
+			
+			.outs {
+				width: 100%;
+				height: 100%;
+				display: none;
+				background: #fff;
+				position: fixed;
+				top: 0;
+				left: 0;
+				overflow: auto;
+			}
+			/*内容*/
+			
+			.max {
+				width: 100%;
+				height: 5.275rem;
+				box-shadow: 0px 0.1rem 0.5rem 0px rgba(191, 191, 191, 0.25);
+				margin-bottom: 0.6rem;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background: #fff;
+				z-index: 1000000;
+			}
+			
+			.outs .top {
+				width: 90%;
+				height: 2.1rem;
+				/*line-height: 2.5rem;*/
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.top_left {
+				width: 50%;
+				height: 100%;
+				font-weight: 600;
+				color: #333;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+			}
+			
+			.top_right {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #777;
+				font-size: 0.6rem;
+			}
+			
+			.tab {
+				width: 90%;
+				height: 3.175rem;
+				line-height: 3.175rem;
+				border-top: 0.025rem solid #F6F6F6;
+				display: flex;
+				margin: 0 auto;
+			}
+			
+			.add {
+				width: 28.5%;
+				height: 1.6rem;
+				line-height: 1.6rem;
+				margin-top: 0.7875rem;
+				margin-bottom: 0.7875rem;
+				border-radius: 0.8rem;
+				text-align: center;
+				font-size: 0.6rem;
+				font-weight: 600;
+				letter-spacing: 0.05rem;
+			}
+			
+			.word {
+				background: #FFCEC7;
+				color: #EF7B6B;
+			}
+			
+			.imgs {
+				background: #C3E1FF;
+				color: #57A9F9;
+				margin-left: 7.25%;
+				margin-right: 7.25%;
+			}
+			
+			.vdo {
+				background: #FFF3C5;
+				color: #E6B600;
+			}
+			
+			.outs .txt {
+				width: 100%;
+				height: 4.8rem;
+				background: #fff;
+				box-shadow: 0px 0.1rem 0.5rem 0px rgba(191, 191, 191, 0.25);
+				position: relative;
+				margin-bottom: 0.6rem;
+			}
+			
+			.txt_cen {
+				width: 92%;
+				height: 3.6rem;
+				padding: 0.6rem 0;
+				display: flex;
+				margin-left: 5%;
+			}
+			
+			.txt_cens {
+				width: 92%;
+				height: 3.6rem;
+				padding: 0.6rem 0;
+				display: flex;
+				margin-left: 5%;
+			}
+			
+			.tra {
+				width: 90%;
+				height: 3.6rem;
+				border: none;
+				font-size: 0.6rem;
+				color: #333;
+				outline: none;
+				line-height: 1rem;
+				letter-spacing: 0.08rem;
+				z-index: 9999;
+				overflow: auto;
+			}
+			
+			.tra:empty::before {
+				color: #C5C5C5;
+				content: attr(placeholder);
+			}
+			
+			.del {
+				width: 10%;
+				height: 4.05rem;
+			}
+			
+			.del_img {
+				width: 100%;
+				height: 3.23rem;
+				text-align: right;
+			}
+			
+			.del_img>img {
+				width: 0.6rem;
+				height: 0.6rem;
+			}
+			
+			.words {
+				width: 1.6rem;
+				height: 0.85rem;
+				background: #FFCEC7;
+				color: #666;
+				font-size: 0.5rem;
+				text-align: center;
+				line-height: 0.85rem;
+				border-bottom-left-radius: 0.425rem;
+				border-top-left-radius: 0.425rem;
+				position: absolute;
+				bottom: 0.6rem;
+				right: 0;
+			}
+			
+			.txt_left {
+				width: 90%;
+				height: 100%;
+			}
+			
+			.txt_left>img {
+				width: 6rem;
+				height: 100%;
+			}
+			
+			.txt_left>video {
+				width: 6rem;
+				height: 100%;
+			}
+			
+			.words_img {
+				background: #C3E1FF;
+			}
+			
+			.words_vdo {
+				background: #FFEB9D;
+			}
+			
+			.big {
+				width: 100%;
+				height: auto;
+				margin-bottom: 3.5rem;
+				margin-top: 5.875rem;
+			}
+			
+			#file {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.fil_vdo {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.complete {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-top: 0.05rem solid #F6F6F6;
+				z-index: 100000000;
+			}
+			
+			.comp_cen {
+				width: 90%;
+				height: 100%;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.preview {
+				width: 36%;
+				height: 100%:
+			}
+			
+			.preview>a {
+				display: block;
+				text-decoration: none;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				color: #333;
+			}
+			
+			.com_cen {
+				width: 64%;
+				height: 100%;
+				border-radius: 0.2rem;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+				letter-spacing: 0.25rem;
+			}
+			
+			.top_rcen {
+				width: 2.5rem;
+				height: 1.6rem;
+				border-radius: 0.2rem;
+				color: #777;
+				border: 0.05rem solid #C5C5C5;
+				float: right;
+				text-align: center;
+				margin: 0.25rem 0 0;
+				line-height: 1.6rem;
+				font-size: 0.7rem;
+			}
+			
+			.completes {
+				width: 100%;
+				height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #fff;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-top: 0.05rem solid #F6F6F6;
+				display: none;
+			}
+			
+			.com_cens {
+				width: 90%;
+				height: 2rem;
+				line-height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				border-radius: 0.2rem;
+				color: #fff;
+				letter-spacing: 0.25rem;
+			}
+			
+			.com_cens>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+				color: #fff;
+			}
+			.qi{
+				color:#32CEA0;
+			}
+			.mesk {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.7);
+				position: fixed;
+				left: 0;
+				top: 0;
+				z-index: 9999998;
+				display: none;
+			}
+			.tip_mssg{
+				background: #fff;
+				position: fixed;
+				width: 12rem;
+				height: 6.5rem;
+				top: 50%;
+				left: 50%;
+				margin-top: -3.25rem;
+				margin-left: -6rem;
+				border-radius: .2rem;
+				text-align: center;
+				z-index: 9999999;
+			}
+			.t_tit{
+				width: 100%;
+				height: 3rem;
+				line-height: 3.5rem;
+				font-size: 0.8rem;
+				color:#333;
+				font-weight: 550;
+				text-align: center;
+			}
+			.text{
+				width: 100%;
+				height: 3.5rem;
+				font-size: 0.8rem;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="lst">
+			<!--<div class="top">
+				<div class="t_left">选择分类</div>
+				<div class="t_right">
+					<select class="sel" name="">
+
+					</select>
+				</div>
+			</div>-->
+			<div class="title">文章标题</div>
+			<div class="txt">
+				<input class="tit" type="text" value="" placeholder="点此输入标题" />
+			</div>
+			<div class="cover">
+				<div class="c_cen">封面</div>
+				<div class="c_img">
+					<input type="file" accept="image/*" id="up">
+					<img class="cover_img" src="__HOME_IMAGES__/newvnet/vhome/cover.png" alt="">
+				</div>
+			</div>
+			<div class="tu_img">
+				<div class="tu_tit">文章内容</div>
+				<div class="tu_kai">
+					<a href="javascript:;">
+						<div class="tu_word">开始编辑</div>
+						<div class="tu_fu">
+							<img src="__HOME_IMAGES__/newvnet/vhome/shape2x.png" alt="" />
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="tu_img">
+				<div class="tu_tit">微缩V网</div>
+				<div class="v_kai">
+					<if condition="$article_cards eq 0">
+					<a href="/index.php?s=/Home/Articlegrab/vnote.html">
+						<div class="tu_word">已关闭</div>
+						<div class="tu_fu">
+							<img src="__HOME_IMAGES__/newvnet/vhome/shape2x.png" alt="" />
+						</div>
+					</a>
+					<else />
+					<a href="/index.php?s=/Home/Articlegrab/vnote.html">
+						<div class="tu_word qi">已开启</div>
+						<div class="tu_fu">
+							<img src="__HOME_IMAGES__/newvnet/vhome/shape2x.png" alt="" />
+						</div>
+					</a>
+					</if>
+				</div>
+			</div>
+			<div class="confirm">
+				<div class="save">
+					保存
+				</div>
+			</div>
+		</div>
+		<div class="outs">
+			<div class="max">
+				<div class="top">
+					<div class="top_left">添加内容</div>
+					<div class="top_right">
+						<div class="top_rcen">拖动</div>
+					</div>
+				</div>
+				<div class="tab">
+					<div class="add word">添加文字</div>
+					<div class="add imgs">添加图片</div>
+					<input type="file" id="file" accept="image/*" />
+					<div class="add vdo">添加视频</div>
+					<input id="file_v" class="fil_vdo" type="file" accept="video/*" />
+				</div>
+			</div>
+			<div id="out" class="big">
+
+			</div>
+			<div class="complete">
+				<div class="comp_cen">
+					<div class="preview">
+						<a href="javascript:;">预览</a>
+					</div>
+					<div class="com_cen">
+						保存
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="completes">
+			<div class="com_cens">
+				<a href="javascript:;">
+					完成
+				</a>
+			</div>
+		</div>
+
+		<div class="mask">
+			<img src="/Public/Home/images/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<div class="mesk">
+			<div class="tip_mssg">
+				<p class="t_tit">提示</p>
+				<p class="text">312321341324</p>
+			</div>
+		</div>
+		<div class="model"></div>
+		<input class="y_img" type="hidden" value="" />
+		<script src="__HOME_JS__/yb/js/sortable.js"></script>
+		<script>
+			$(".top_rcen").on("click", function() {
+				if($(".big").height() == "") {
+					$(".model").show();
+					$(".model").html("请编辑内容");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+
+				sort = Sortable.create(out, {})
+				$(".complete").hide();
+				$(".completes").show();
+			})
+			$(".completes").on("click", function() {
+				sort.destroy();
+				$(".completes").hide();
+				$(".complete").show();
+			})
+		</script>
+		<script>
+			var ar_id = "{$ar_id}";
+			var unionid = "{$unionid}";
+			$(function() {
+				if(ar_id != '' && ar_id != null) {
+					$.ajax({
+						type: 'Get',
+						url: '/index.php?s=/Api/Article/get_article_info',
+						//					dataType: '',
+						data: {
+							unionid: unionid,
+							art_id: ar_id, //文章id
+						},
+						success: function(result) {
+							console.log(result)
+							//								console.log(i)
+							$(".tit").val(result.AppendData.res.title);
+							$(".cover_img").attr("src", result.AppendData.res.thumb);
+							$(".y_img").val(result.AppendData.res.thumb);
+							
+							$(".big").html(result.AppendData.res.content)
+
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+					//					
+				}
+
+			})
+			$("#up").change(function() {
+				var that = $(this)
+				var file_img = this.files[0];
+
+				var formdata = new FormData();
+				formdata.append("img", file_img);
+				formdata.append("start_name", 'Cards');
+				formdata.append("unionid", unionid);
+				var render = new FileReader();
+				render.readAsDataURL(file_img)
+				render.onload = function(res) {
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/IndexApi/uploads_img',
+						dataType: 'json',
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".mask").show();
+							$(".mask").show().find('p').text("图片上传中");
+						},
+						success: function(result) {
+							$(".mask").hide();
+							if(result.ResultType == 0) {
+								$(".cover_img").attr("src", result.AppendData)
+								$(".y_img").val(result.AppendData);
+							}
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			})
+			$(".c_img img").on("click", function() {
+				$("#up").click()
+			});
+
+			//分类
+			//var unionid = "{$unionid}";
+//			var lista = "";
+//			$.ajax({
+//				type: 'post',
+//				url: 'index.php?s=/Api/IndexApi/system_article_type',
+//				dataType: 'json',
+//				data: {
+//					unionid: unionid,
+//				},
+//				success: function(res) {
+//					lista += '<option value="">请选择</option>'
+//					$.each(res.AppendData, function(a, b) {
+//						lista += '<option value="' + b.id + '">' + b.name + '</option>'
+//					})
+//					$(".sel").html(lista);
+//
+//				},
+//				error: function() {
+//					console.log("错误")
+//				}
+//			});
+			//分类
+//			var typeid = ""
+//			$(".sel").change(function() {
+//				$(this).css("color", '#32CEA0');
+//				typeid = $(this).val();
+//			});
+
+			$(".tu_kai").on("click", function() {
+				$(".outs").show();
+				$(".lst").hide();
+			})
+			//保存
+			$(".save,.v_kai").on("click", function() {
+				var content = $(".big").html();
+				var article_cards= "{$article_cards}";
+				var title = $(".tit").val();
+				var thumb = $(".y_img").val();
+				if($(".tit").val() == "") {
+					$(".model").show();
+					$(".model").html("请输入标题");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($(".y_img").val() == "") {
+					$(".model").show();
+					$(".model").html("请上传封面");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/Article/addArticle',
+					//					dataType: '',
+					data: {
+						unionid: unionid,
+						title: title,
+						thumb: thumb,
+//						atype_id: typeid,
+						id: ar_id, //文章id
+						content:content,
+						article_reward:article_cards
+					},
+					success: function(res) {
+						console.log(res);
+						$(".outs").css("z-index", "-1");
+						$(".lst").show();
+						if(res.msg == '编辑文章成功') {
+
+						} else {
+							ar_id = res.art_id;
+						}
+						
+						if(res.status==1||res.status==0){
+							
+							window.location.href = '/index.php?s=/Home/Articlegrab/articlelist.html'
+						
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+
+			$(".word").on("click", function() {
+
+				$(".big").append(
+					'<div class="txt">' +
+					'<div class="txt_cens">' +
+					'<div class="tra" contenteditable="true" placeholder="请输入内容"></div> ' +
+					'<div class="del">' +
+					'<div class="del_img">' +
+					'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+					'</div>' +
+					'<div class="words">文字</div>' +
+					'</div>' +
+					'</div>' +
+					'</div>'
+				)
+
+			});
+
+			//添加图片
+			$(".imgs").click(function() {
+				$("#file").click();
+			})
+			$("#file").change(function() {
+				var that = $(this)
+				var file_img = this.files[0];
+				var i_size=this.files[0].size/1024;
+				if(i_size>10240){
+					$(".mesk").show();
+					$(".text").html("请上传小于10M的图片")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				//	var unionid = "{$unionid}";
+				var formdata = new FormData();
+				formdata.append("img", file_img);
+				formdata.append("start_name", 'Cards');
+				formdata.append("unionid", unionid);
+				var render = new FileReader();
+				render.readAsDataURL(file_img)
+				render.onload = function(res) {
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/IndexApi/uploads_img',
+						dataType: 'json',
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".mask").show();
+							$(".mask").show().find('p').text("图片上传中");
+						},
+						success: function(result) {
+							$(".mask").hide();
+							if(result.ResultType == 0) {
+								$(".big").append(
+									'<div class="txt">' +
+									'<div class="txt_cen">' +
+									'<div class="txt_left">' +
+									'<img src="' + result.AppendData + '" alt="" />' +
+									'</div>' +
+									'<div class="del">' +
+									'<div class="del_img">' +
+									'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+									'</div>' +
+									'<div class="words words_img">图片</div>' +
+									'</div>' +
+									'</div>' +
+									'</div>'
+								)
+							}
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			})
+
+			$(".vdo").click(function() {
+				$(".fil_vdo").click();
+
+			})
+
+			$('.fil_vdo').change(function() {
+				var videosize = document.getElementById("file_v").files[0].size;
+				var type = $("#file_v").val();
+				console.log(type)
+				//	var unionid = '{$unionid}';
+				var files = this.files[0];
+				var v_size=this.files[0].size/1024;
+				if(v_size>30720){
+					$(".mesk").show();
+					$(".text").html("请上传小于30M的视频")
+					setTimeout(function() {
+						$(".mesk").hide();
+					}, 1500);
+					return false;
+				}
+				var formdata = new FormData();
+				formdata.append("img", files);
+				formdata.append("start_name", 'Cards');
+				formdata.append("unionid", unionid);
+
+				$.ajax({
+					type: "post",
+					url: "/index.php?s=/Api/IndexApi/upload_video",
+					data: formdata,
+					processData: false,
+					contentType: false,
+					beforeSend: function() {
+						$(".mask").show();
+						$(".mask").show().find('p').text("视频上传中");
+					},
+					success: function(res) {
+						console.log(res)
+						$(".mask").hide();
+						type = type.substr(type.lastIndexOf('.'));
+						if(type == '.quicktime') {
+							mui.toast("不支持此视频格式，请上传其他视频格式视频");
+							return false;
+						}
+						if(videosize > 1024 * 1024 * 30) {
+							alert("请上传小于30M的视频");
+							return false;
+						}
+						$(".big").append(
+							'<div class="txt">' +
+							'<div class="txt_cen">' +
+							'<div class="txt_left">' +
+							'<video src="' + res.AppendData + '"  controls="controls"></video>' +
+							'</div>' +
+							'<div class="del">' +
+							'<div class="del_img">' +
+							'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+							'</div>' +
+							'<div class="words words_vdo">视频</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>'
+						)
+					}
+				})
+
+			});
+
+			$(".com_cen").on("click", function() {
+				var content = $(".big").html();
+				//	var unionid = '{$unionid}';
+				//	var unionid = "{$unionid}";
+				console.log(content)
+				var title = $(".tit").val();
+				var thumb = $(".y_img").val();
+				console.log(content)
+
+				if($(".big").height() == "") {
+					$(".model").show();
+					$(".model").html("请编辑内容");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/Article/addArticle',
+					//					dataType: '',
+					data: {
+						unionid: unionid,
+//						atype_id: typeid,
+						id: ar_id, //文章id
+						content: content
+					},
+					success: function(res) {
+						console.log(res);
+
+						$(".outs").css("z-index", "-1");
+						$(".lst").show();
+						if(res.msg == '编辑文章成功') {
+
+						} else {
+							ar_id = res.art_id;
+						}
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+			
+			$(".preview").on("click", function() {
+				var content = $(".big").html();
+				var title = $(".tit").val();
+				var thumb = $(".y_img").val();
+				var title = $(".tit").val();
+				var thumb = $(".y_img").val();
+//				console.log($(".big").height());
+				if($(".tit").val() == "") {
+					$(".model").show();
+					$(".model").html("请输入标题");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($(".y_img").val() == "") {
+					$(".model").show();
+					$(".model").html("请上传封面");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				if($(".big").height() == "") {
+					$(".model").show();
+					$(".model").html("请编辑内容");
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+//  			console.log(ar_id);
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/Article/addArticle',
+					//					dataType: '',
+					data: {
+						unionid: unionid,
+//						atype_id: typeid,
+						title: title,
+						thumb: thumb,
+						id: ar_id, //文章id
+						content: content
+					},
+					success: function(res) {
+						if(res.msg == '编辑文章成功') {
+							
+						} else {
+							if(res.status!=0){
+									ar_id = res.art_id;
+							}
+						
+						}
+						
+						window.location.href = '/index.php?s=/Home/Articlegrab/previewArticle/id/' + ar_id + ''
+
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+			//删除
+			$(document).on("click",".del",function(){
+				$(this).parent().parent().remove();
+			})
+
+		</script>
+		<script>
+			if(window.name != "bencalie") {
+				location.reload();
+				window.name = "bencalie";
+			} else {
+				window.name = "";
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,329 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+	<style>
+		.code_input {
+			height: 60px!important;
+			width: 50%!important;
+			background-color: #fafafa!important;
+			border: none!important;
+			position: absolute;
+			!important;
+			left: 14%;
+			top: 0;
+		}
+		
+		.code_button {
+			position: absolute;
+			!important;
+			left: 64%;
+			top: 0;
+			width: 30%;
+			border-radius: 10px;
+			margin-top: 10px;
+		}
+		
+		.zzc_myruanwen_from_input span {
+			float: left;
+		}
+		
+		.zzc_editpad_ico {
+			width: 18%;
+		}
+		
+		.sel {
+			width: 80%;
+			height: 100%;
+		}
+		
+		.pro {
+			width: 35%;
+			height: 100%;
+			margin-right: 3%;
+		}
+		
+		.city {
+			width: 35%;
+			height: 100%;
+			margin-right: 3%;
+		}
+		
+		.sele {
+			width: 100%;
+			height: 100%;
+			background-color: #FAFAFA;
+			font-size: 17px;
+			background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 90% 25px;
+			background-size: 6% 15%;
+			margin-bottom: 0;
+			padding: 0;
+		}
+		
+		.slt {
+			width: 100%;
+			height: 100%;
+			background-color: #FAFAFA;
+			font-size: 17px;
+			background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 100% 25px;
+			background-size: 13% 15%;
+			margin-bottom: 0;
+			padding: 0;
+			overflow: hidden;
+			padding-right: 21.5%;
+		}
+		
+		.selt {
+			width: 100%;
+			height: 100%;
+			background-color: #FAFAFA;
+			font-size: 17px;
+			background: url(__HOME_IMAGES__/inco_fenlei_grey.png) no-repeat 100% 25px;
+			background-size: 13% 15%;
+			margin-bottom: 0;
+			padding: 0;
+			overflow: hidden;
+			padding-right: 21.5%;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav zzc_header">-->
+		<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>-->
+		<!--<h1 class="mui-title zzc_header_title">绑定银行卡</h1>-->
+		<!--<span class="mui-icon mui-icon-more zzc_right" ></span>-->
+		<!--</header>-->
+		<div class="mui-content">
+			<form action="{:U('Home/User/banks')}" method="post">
+				<input type="hidden" name="bankid" value="{$banks.id}" />
+				<div class="zzc_bangding_zhanghu">
+					请输入需要绑定的银行卡所属银行（目前平台仅支持七大行）、开户行（尽量填写）、开户名、银行卡号<br/>
+				</div>
+				<div class="zzc_myruanwen_from_input">
+					<span class="mui-icon mui-icon-person zzc_editpad_ico">
+                <input type="text" name="uname" class="zzc_editpad_input"  value="{$banks.name}" placeholder="请输入姓名" />
+            </span>
+				</div>
+				<div class="zzc_myruanwen_from_input">
+					<span class="mui-icon mui-icon-locked zzc_editpad_ico"></span>
+					<span class="sel">
+            		<select name="bankname" class="sele">
+		            	<option value="中国银行" <?php echo $banks['bank_name']=='中国银行'?'selected':'';?>>中国银行</option>
+		            	<option value="交通银行"<?php echo $banks['bank_name']=='交通银行'?'selected':'';?>>交通银行</option>
+		            	<option value="招商银行"<?php echo $banks['bank_name']=='招商银行'?'selected':'';?>>招商银行</option>
+						<option value="中国建设银行"<?php echo $banks['bank_name']=='中国建设银行'?'selected':'';?>>中国建设银行</option>
+						<option value="中国工商银行"<?php echo $banks['bank_name']=='中国工商银行'?'selected':'';?>>中国工商银行</option>
+		            	<option value="中国农业银行"<?php echo $banks['bank_name']=='中国农业银行'?'selected':'';?>>中国农业银行</option>
+		            	<option value="中国邮政储蓄银行"<?php echo $banks['bank_name']=='中国邮政储蓄银行'?'selected':'';?>>中国邮政储蓄银行</option>
+            		</select>
+            		</span>
+				</div>
+				<div class="zzc_myruanwen_from_input">
+					<span class="mui-icon mui-icon-locked zzc_editpad_ico">
+						<input type="text" name="branchname" class="zzc_editpad_input" value="{$banks.branch_name}" placeholder="请输入开户支行" />
+					</span>
+				</div>
+				<!--<div class="zzc_myruanwen_from_input">-->
+					<!--<span class="mui-icon mui-icon-locked zzc_editpad_ico"></span>-->
+					<!--<span class="pro">-->
+               		<!--<select name="province" class="slt">-->
+
+               			<!--&lt;!&ndash;地区渲染内容&ndash;&gt;-->
+               		<!--</select>-->
+               <!--</span>-->
+					<!--<span class="city">-->
+               		<!--<select name="city" class="selt">-->
+
+               		<!--</select>-->
+               <!--</span>-->
+					<input type="hidden" value="{$banks.user_id}" class="id">
+				</div>
+				<div class="zzc_myruanwen_from_input">
+					<span class="mui-icon mui-icon-locked zzc_editpad_ico">
+                		<input type="text" name="banknumber" class="zzc_editpad_input" value="{$banks.number}" placeholder="请输入银行卡号" />
+                	</span>
+				</div>
+				<div class="zzc_myruanwen_from_input" style="margin-bottom: 5rem;">
+					<span class="mui-icon mui-icon-locked zzc_editpad_ico">
+                <input type="text" name="code" class="code_input" placeholder="请输入验证码" />
+                <button class="code_button" id="getcode">获取验证码</button>
+            </span>
+				</div>
+				<input type="hidden" name="zc_phone" value="{$banks.zc_phone}">
+				<div class="myguanggao_bottom">
+					<input type="submit" name="" id="submit" value="确定" />
+				</div>
+			</form>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script type="text/javascript">
+		$("#getcode").on("click", function() {
+			stopDefault();
+			stopBubble();
+			var phone = $("input[name=zc_phone]").val();
+			var type = 5;
+			$.post("{:U('Home/User/sendCode')}", {
+				"phone": phone,
+				"type": type
+			}, function(res) {
+				if(res.status == 1) {
+					mui.alert("获取成功");
+				} else {
+					mui.alert(res.msg);
+				}
+			});
+		});
+		$("#submit").on("click", function() {
+			stopDefault();
+			stopBubble();
+			var id = $("input[name=bankid]").val();
+			var name = $("input[name=uname]").val();
+			var bankname = $("select[name=bankname]").val();
+			var branchname = $("input[name=branchname]").val();
+			var province = $("select[name=province]").val()=='开户省'?'':$("select[name=province]").val();
+			var city = $("select[name=city]").val()=='开户市'?'':$("select[name=city]").val();
+			var banknumber = $("input[name=banknumber]").val();
+			var code = $("input[name=code]").val();
+			var phone = $("input[name=zc_phone]").val();
+
+			if(!name) {
+				mui.alert("请输入开户姓名！");
+				return false;
+			}
+			if(!banknumber) {
+				mui.alert("请输入银行卡号！");
+				return false;
+			}
+			if(!code) {
+				mui.alert("请输入验证码！");
+				return false;
+			}
+
+			$.post("{:U('Home/User/banks')}", {
+				"type": 1,
+				"id": id,
+				"name": name,
+				"bankname": bankname,
+				"branchname": branchname,
+				"province": province,
+				"city": city,
+				"banknumber": banknumber,
+				'code': code,
+				'phone': phone
+			}, function(res) {
+				if(res.status == 1) {
+					mui.toast(res.msg);
+					setTimeout("top.location.href='/Home/User/usercenter'", 2000);
+				} else {
+					mui.toast(res.msg);
+				}
+			});
+		});
+
+		function stopDefault(e) {
+			// 阻止默认浏览器动作(W3C)
+			if(e && e.preventDefault) {
+				e.preventDefault();
+			} else {
+				// IE中阻止函数器默认动作的方式
+				window.event.returnValue = false;
+			}
+			return false;
+		}
+
+		function stopBubble(e) {
+			// 如果提供了事件对象，则这是一个非IE浏览器
+			if(e && e.stopPropagation) {
+				// 因此它支持W3C的stopPropagation()方法
+				e.stopPropagation();
+			} else {
+				// 否则，我们需要使用IE的方式来取消事件冒泡
+				window.event.cancelBubble = true;
+			}
+		}
+	</script>
+	<script type="text/html" id="dq">
+		<if condition="$banks.province neq ''">
+			<option data-id="{$banks.region_id}" value="{$banks.province}" selected>{$banks.province}</option>
+			<else/>
+			<option value="开户省">开户省</option>
+		</if>
+		{{each AppendData v i}}
+		<option data-id="{{v.region_id}}" value="{{v.region_name}}" >
+			{{v.region_name}}
+		</option>
+		{{/each}}
+	</script>
+
+	<script>
+		var id = $(".id").attr('value');
+		$.ajax({
+			url: "index.php?s=/Api/IndexApi/region_list",
+			type: "post",
+			data: {
+				id: id
+			},
+			success: function(res) {
+				//				 console.log(res)
+				$(".slt").html(template('dq', res));
+                var region_id = $(".slt").find("option:selected").attr("data-id");
+                if(region_id != '开户省'){
+                    $.ajax({
+                        url: "index.php?s=/Api/IndexApi/region_list",
+                        type: "post",
+                        data: {
+                            id: id,
+                            region_id: region_id
+                        },
+                        success: function(res) {
+                            $(".selt").html(template('shi', res));
+                        }
+                    });
+                }
+			}
+		});
+
+	</script>
+	<script type="text/html" id="shi">
+		<if condition="$banks.city neq ''">
+			<option data-id="{$banks.region1_id}" value="{$banks.city}" selected>{$banks.city}</option>
+			<else/>
+			<option value="开户省">开户市</option>
+		</if>
+		{{each AppendData v i}}
+		<option data-id="{{v.region_id}}" value="{{v.region_name}}">
+			{{v.region_name}}
+		</option>
+		{{/each}}
+	</script>
+	<script>
+		$(".slt").on("change", function() {
+			var region_id = $(".slt").find("option:checked").attr("data-id");
+			if(region_id != '开户省'){
+                $.ajax({
+                    url: "index.php?s=/Api/IndexApi/region_list",
+                    type: "post",
+                    data: {
+                        id: id,
+                        region_id: region_id
+                    },
+                    success: function(res) {
+                        $(".selt").html(template('shi', res));
+                    }
+                });
+			}
+		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

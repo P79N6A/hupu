@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <title>{$title}</title>
+    <style>
+        body,html{
+            background: #eeeeee;        
+        }
+
+        .chiose{
+            margin-top: .15rem;
+        }
+
+         .item{
+            width: 100%;
+            padding: .24rem .16rem .24rem .2rem;
+            box-sizing: border-box;
+            background: #fff;
+            position: relative;    
+        }
+
+           .item button{
+              width: .44rem;
+              height: .24rem;
+              outline: none;
+              border: 0;
+              border-radius: .12rem;
+              background: #c6c6cc;
+              position: absolute;
+              top: 50%;
+              right: .16rem;
+              margin-top: -.12rem;
+              padding: .005rem 0 .005rem .01rem;
+              box-sizing: border-box;
+          }
+
+           .item button span{
+               width: .2rem;
+               height: .2rem;
+               background: #fff;
+               display: block;
+               border-radius: 50%;
+               margin-left: .02rem; 
+               margin-top: 0.005rem
+           }
+
+         .item div{
+              width: 40%;
+              height: 100%;
+          }
+
+            .item input{
+                width: 55%;
+                height: 100%;
+                border: 0;
+                outline: none;
+                padding-top: .02rem;
+                text-align: right;
+
+            }
+
+            .gr .msg{
+                padding: .21rem 0 .1rem .2rem;
+                box-sizing: border-box;
+                color: #a3a3a3;
+            }
+
+            .complete{
+                width: 3.26rem;
+                height: .4rem;
+                line-height: .4rem;
+                text-align: center;
+                border-radius: .04rem;
+                position: fixed;
+                bottom: .4rem;
+                left: 50%;
+                margin-left: -1.63rem;
+                background: #32CEA0;
+                color: #fff;
+                outline: none;
+                border: 0;
+            }
+    
+    </style>
+</head>
+
+<body>
+    <!-- <if condition=" $info.sq_is_search eq 1 ">active</if> -->
+    <div class="chiose">
+        <div class="item">
+            允许别人在商圈中搜索
+            <button value='0' class="switch" name="sq_is_search">
+                <span></span>
+            </button>
+        </div>
+        <div class="item clearfix">
+            <div class="fl">搜索设置</div>
+            <input class="fl keyword" type="text" value="" placeholder="请输入搜索关键字">
+        </div>
+        <div class="item">
+            允许被别人复制V网
+            <button class="switch" value='0'>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    <div class="gr">
+        <div class="msg">允许访问个人信息</div>
+        <div class="item">
+            手机号码
+            <button class="switch" value='0'>
+                <span></span>
+            </button>
+        </div>
+        <div class="item">
+            微信
+            <button class="switch" value='0'>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    <button class="complete">完成</button>
+</body>
+
+</html>
+<script>
+    var user_id = "{$unionid}";
+    $(function () {
+        var that;
+        $(".switch").on("click", function () {
+            that = $(this);
+            that.toggleClass('active');
+            toggle(that);
+
+        })
+        initData();
+        function initData() {
+            $.ajax({
+                type: 'post',
+                url: "/index.php?s=/Api/AppApi/user_detail",
+                data: {
+                    unionid: user_id
+                },
+                success: function (res) {
+                	console.log(res)
+                    if(res.ResultType==0){
+                        var obj_list = $("button.switch");
+                       
+                        if(res.AppendData.is_phone=="1"){
+                            toggle1( $(obj_list[2]));
+                        }
+                        if(res.AppendData.is_wechat=="1"){
+                            toggle1( $(obj_list[3]));
+                        }
+                        if(res.AppendData.sq_is_search=="1"){
+                            toggle1( $(obj_list[0]));
+                        }
+                        if(res.AppendData.is_copy_cards=="1"){
+                            toggle1( $(obj_list[1]));
+                        }
+                        $(".keyword").val(res.AppendData.sq_keyword)
+                    }
+                },
+            });
+        }
+        function toggle1(that) {
+            $(that).addClass("active");
+                $(that).attr('value', '1');
+                that.find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0.19rem)'
+                }).end().delay(300).css('background', '#32CEA0');
+        }
+        function toggle(that) {
+            if (that.hasClass('active')) {
+                $(that).attr('value', '1');
+                that.find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0.19rem)'
+                }).end().delay(300).css('background', '#32CEA0');
+            } else {
+                // $(that).attr('value', '0');
+                that.find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0px)'
+                }).end().delay(300).css('background', '#c6c6c6');
+            }
+        }
+
+        $('.switch').each(function (i, e) {
+            //点击是否设置隐私保
+            if ($(e).hasClass('active')) {
+                $(this).find("span").css({
+                    'transition': 'all 0.3s',
+                    'transform': 'translateX(0.19rem)'
+                }).end().delay(300).css('background', '#32CEA0');
+            }
+        })
+
+
+
+        $("button.complete").on("click", function () {
+
+            var obj_list = $("button.switch");
+            var is_search = $(obj_list[0]).hasClass("active") ? 1 : 0;
+            var is_copy = $(obj_list[1]).hasClass("active") ? 1 : 0;
+            var is_phone = $(obj_list[2]).hasClass("active") ? 1 : 0;
+            var is_wechat = $(obj_list[3]).hasClass("active") ? 1 : 0;
+          	var keyword = $(".keyword").val();
+          	console.log(keyword);
+            $.ajax({
+                type: 'post',
+                url: "/index.php?s=/Api/AppApi/privacy_protection",
+                data: {
+                    unionid: user_id,
+                    is_search:is_search,
+                    is_copy:is_copy,
+                    is_phone:is_phone,
+                    is_wechat:is_wechat,
+                    keyword:keyword,
+                },
+                success: function (res) {
+                    if(res.ResultType==0){
+                       location.href = '/index.php?s=/Home/User/usercenter'
+                    }
+                },
+            });
+
+        })
+    })
+
+    var h=$(window).height();
+    $(window).resize(function() {
+        if($(window).height()<h){
+            $('.complete').hide();  //定位的元素隐藏
+        }
+        if($(window).height()>=h){
+            $('.complete').show();  //定位的元素显示
+        }
+    });
+
+</script>

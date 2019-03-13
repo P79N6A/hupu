@@ -1,0 +1,207 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>订单列表</h4>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">内容查询</div>
+        <div class="panel-body">
+            <form method="post" name="myForm" action="{:U('Order/index')}">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">开始时间</label>
+                            <if condition="$start_at neq 0">
+                                <input type="text" name="start_at" value="{$start_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="start_at"  class="form-control"  placeholder="开始时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">结束时间</label>
+                            <if condition="$end_at neq 0">
+                                <input type="text" name="end_at" value="{$end_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="end_at"  class="form-control"  placeholder="结束时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">地区</label>
+                            <select name="province_id" id="province_id"  class="form-control">
+                                <option value=""  <if condition="I('province_id') eq '' ">selected</if>>全部</option>
+                                <foreach name="province_list" item="vo">
+                                    <option value="{$vo.region_id}" <if condition="$vo['region_id'] eq $province_id">selected</if>>{$vo.region_name}</option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">县</label>
+                            <select name="city_id" id="city_id"  class="form-control">
+                                <option value=""  <if condition="I('city_id') eq '' ">selected</if>>全部</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">充值金额</label>
+                            <select name="price"  class="form-control">
+                                <option value=""  <if condition="I('price') eq '' ">selected</if>>全部</option>
+                                <foreach name="price_list" item="vo">
+                                    <option value="{$vo.price}" <if condition="$vo['price'] eq $price">selected</if>>{$vo.price}</option>
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">会员名</label>
+                            <input type="text" class="form-control" name="nick_name" value="{$nick_name}">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">注册手机号</label>
+                            <input type="text" class="form-control" name="phone" value="{$phone}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">微信交易单号</label>
+                            <input type="text" class="form-control" name="order_no" value="{$order_no}">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a class="btn btn-success" onclick="exportExcel()">导出Excel</a>
+                        <input class="btn btn-info" type="submit">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th width="10%">用户名</th>
+                <th width="10%">注册手机号</th>
+                <th>地区</th>
+                <th>充值金额</th>
+                <th>vip类型</th>
+                <th>订单号</th>
+                <th>微信交易单号</th>
+                <th>交易时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.nick_name}</td>
+                    <td>{$vo.phone}</td>
+                    <td>{$vo.province_name}-{$vo.city_name}-{$vo.district_name}</td>
+                    <td>￥{$vo.price}</td>
+                    <td>{$vo.vip_name}</td>
+                    <td>{$vo.order_no}</td>
+                    <td>{$vo.pay_sn}</td>
+                    <td>{$vo.add_time|date="Y-m-d H:i:s",###}</td>
+                </tr>
+            </foreach>
+            <tr>
+                <td colspan="2">总数量：{$total_num} 条</td>
+
+                <td colspan="2">总金额：￥{$total_money}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$show}</div>
+
+    <script src="__PUBLIC__/Admin/js/My97DatePicker/WdatePicker.js"></script>
+    <script>
+        var pro = $("#province_id").val();
+        if(pro >0){
+            var province_id=pro;
+            $.ajax({
+                url:'{:U("Admin/Public/get_citys")}',
+                Type:"POST",
+                data:"province_id="+province_id,
+                dataType:"json",
+                success:function(data){
+                    var selectedCity = <if condition="$city_id gt 0 ">{$city_id}<else />0</if>;
+                    var city = data.city;
+                    var option=$("<option></option>");
+                    $(option).val("0");
+                    $(option).html("请选择");
+                    var option1=$("<option></option>");
+                    $(option1).val("0");
+                    $(option1).html("请选择");
+                    $("#city_id").html(option);
+                    $("#district_id").html(option1);
+                    for(var i in city){
+                        var option=$("<option></option>");
+                        $(option).val(city[i]['region_id']);
+                        $(option).html(city[i]['region_name']);
+                        if(selectedCity == city[i]['region_id'])
+                            $(option).attr('selected','selected');
+                        $("#city_id").append(option);
+                    }
+                }
+
+            });
+        }
+        $("#province_id").change(function(){
+            var province_id=$(this).val();
+            $.ajax({
+                url:'{:U("Admin/Public/get_citys")}',
+                Type:"POST",
+                data:"province_id="+province_id,
+                dataType:"json",
+                success:function(data){
+                    var selectedCity = <if condition="$city_id gt 0 ">{$city_id}<else />0</if>;
+                    var city = data.city;
+                    var option=$("<option></option>");
+                    $(option).val("0");
+                    $(option).html("请选择");
+                    var option1=$("<option></option>");
+                    $(option1).val("0");
+                    $(option1).html("请选择");
+                    $("#city_id").html(option);
+                    $("#district_id").html(option1);
+                    for(var i in city){
+                        var option=$("<option></option>");
+                        $(option).val(city[i]['region_id']);
+                        $(option).html(city[i]['region_name']);
+                        if(selectedCity == city[i]['region_id'])
+                            $(option).attr('selected','selected');
+                        $("#city_id").append(option);
+                    }
+                }
+            });
+        });
+
+
+    </script>
+</block>

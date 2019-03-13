@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <title>{$title}</title>
+    <style>
+        body,html{
+        background: #eee;
+        }
+        .header{
+            width: 100%;
+            height: .62rem;
+            background: #fff;
+            padding: 0 .16rem;
+            box-sizing: border-box;
+            margin-bottom: .04rem;
+            /* box-shadow:0px 2px 4px 0px rgba(242,242,242,0.5); */
+        }
+
+        .header .user{
+            width: 30%;
+            height: 100%;
+            line-height: .62rem;
+        }
+
+        .header .search-input{
+            width: 70%;
+            border: 0;
+            outline: none;
+            font-size: .14rem;
+            height: .4rem;
+            margin-top: .11rem;
+        }
+
+        .upload{
+            width: 100%;
+           
+        }
+
+        .upload .id-card{
+            width: 100%;
+            height: 100%;
+            padding: .22rem 0;
+            margin-bottom: .06rem;
+             background: #fff;
+        }
+
+        .id-card .tip{
+            font-size: .15rem;
+            padding-left: .16rem;
+            box-sizing: border-box;
+        }
+        .id-card .up-box{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .id-card .up-box li{
+            width: 1.6rem;
+            height: 1.05rem;
+            margin: .24rem 0 .14rem 0;
+        }
+
+        .up-box li .box{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            
+        }
+         .up-box li p{
+             text-align: center;
+             margin-top: .14rem;
+         }
+
+         .up-box li .box input{
+             width: 100%;
+             height: 100%;
+             position: absolute;
+             top: 0;
+             left: 0;
+             opacity: 0;
+             z-index: 10;
+         }
+
+           .up-box li .box img{
+               width: 100%;
+               height: 100%;
+               position: absolute;
+               top: 0;
+               left: 0;
+           }
+           #spot{
+               width: 1.3rem;
+               height: .36rem;
+               text-align: center;
+               margin: 0 auto;
+               margin-top: .48rem;
+               font-size: .14rem;
+               color: #fff;
+               background: #86ADFF;
+               border: 0;
+               outline: none;
+               opacity:0.6171;
+               border-radius: .01rem;
+           }
+
+           .ipt-mob{
+               background: #fff;
+               height: 1.48rem;
+               padding: .16rem 0 0 .16rem;
+           }
+
+            .ipt-mob .tips{
+                font-size: .15rem;
+            }
+
+            .ipt-mob .mo-box{
+                width: 100%;
+                height: .5rem;
+            }
+
+             .ipt-mob .mo-box input{
+                 width: 65%;
+                 height: 100%;
+                outline: none;
+                box-sizing: border-box;
+                border: 0;
+             }
+
+               .ipt-mob .mo-box button{
+                   width: 35%;
+                   height: 100%;
+                   outline: none;
+                   box-sizing: border-box;
+                   border: 0;
+               }
+ 
+    
+    </style>
+</head>
+<body>
+    <div class="header clearfix">
+        <div class="fl user">推荐人姓名</div>
+        <input class="search-input fl" type="search" placeholder="请输入推荐人姓名">
+    </div>
+    <div class="upload">
+        <div class="id-card">
+            <p class="tip">请拍摄并上传你的身份证照片</p>
+            <ul class="up-box">
+                <li>
+                    <div class="box">
+                        <input class="id_imgurl_jusi up-data jusi" type="file" accept="image/*" capture="camera">
+                        <img src="/Public/Home/images/wh/icon_shenfenzheng@2x.png" alt="">
+                    </div>
+                    <p class="id_imgurl_jusi jusi">拍摄正面</p>
+                </li>
+                <li>
+                    <div class="box">
+                        <input class="up-data" type="file" accept="image/*">
+                        <img src="/Public/Home/images/wh/icon_sfz@2x.png" alt="">
+                    </div>
+                    <p>拍摄反面</p>
+                </li>
+                <button id="spot">点击识别</button>
+            </ul>
+        </div>
+        <div class="id-card visa">
+            <p class="tip">签证</p>
+            <ul class="up-box">
+                <li>
+                    <div class="box">
+                        <input class="up-data" type="file" accept="image/*" capture="camera">
+                        <img src="/Public/Home/images/wh/icon_shenfenzheng@2x.png" alt="">
+                    </div>
+                    <p>拍摄正面</p>
+                </li>
+                <li>
+                    <div class="box">
+                        <input class="up-data" type="file" accept="image/*">
+                        <img src="/Public/Home/images/wh/icon_sfz@2x.png" alt="">
+                    </div>
+                    <p>拍摄反面</p>
+                </li>
+            </ul>
+        </div>
+        
+
+    </div>
+    <div class="ipt-mob">
+        <p class="tips">验证手机号</p>
+        <div class="mo-box clearfix">
+                <input class="fl" type="number" placeholder="请输入手机号码">
+                <button class="fl send">发送验证码</button>
+        </div>
+        <div>
+             <input type="number"  placeholder="请输入验证码">
+        </div>
+        <input type="button"  placeholder="Test">
+    </div>
+<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>
+    eruda.init();
+</script>
+<script>
+    
+
+    /**
+     * 身份证正面js代码
+     */
+    $("p.id_imgurl_jusi.jusi").on("click",function () {
+        console.log("点击上传");
+        $("input.id_imgurl_jusi.jusi").click();
+    })
+
+
+
+    $("input.id_imgurl_jusi.jusi").on("change" ,function () {
+        console.log("文件已选择");
+        var file = $("input.id_imgurl_jusi.jusi")[0].files[0];
+        var render = new FileReader();
+        render.readAsDataURL(file);
+        render.onload = function(res){
+            // console.log(res)
+            var file = res.target.result;
+            var newfile = file.toString();
+            var zh = newfile.substring(newfile.indexOf(',')+1);
+            // console.log(file);
+            // console.log(zh)
+        
+    
+        var formObj = new FormData();
+        formObj.set('image', zh);
+        formObj.set('detect_direction', true);
+        formObj.set('id_card_side', "front");
+        formObj.set("access_token","24.59544f9bc4083dce124b70f34a744df0.2592000.1544772210.282335-14464974")
+
+        $.ajax({
+                url:'https://aip.baidubce.com/rest/2.0/ocr/v1/business_card',
+                data:formObj,
+                type: 'POST',
+                dataType:'json',
+                processData:false,
+                contentType:false,
+                success:function (res) {
+                    console.log(res)
+                },
+                fail : function (res) {
+                    console.log(res)
+                }
+        });
+    }
+});
+
+    //测试一
+    function Test() {
+
+    }
+
+
+</script>
+
+</body>
+</html>

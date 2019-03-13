@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的软文</title>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/mytext.css">
+
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery-3.2.1.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/mytext.js"></script>
+</head>
+<body>
+    <div id="content">
+        <div class="fl_box clearfix">
+            <div class="fl item fk">分类<img class="down" src="__HOME_IMAGES__/inco_down.png" alt=""></div>
+            <a class="fl item" href="javascript:;"> <span>抓取</span> <img class="zhua" src="__HOME_IMAGES__/inco_shou.png" alt=""></a>
+            <a class="fl item" href="javascript:;"> <span>撰写</span> <img class="xie" src="__HOME_IMAGES__/inco_draw.png" alt=""></a>
+        </div>
+        <div id="Article">
+            <a class="Article_box clearfix" href="javascript:;">
+                <div class="title fl">
+                    <p class="nick_name">真寻小哥哥</p>
+                    <p class="text">莫扎特曾经说过大胆地踏上旅途吧，我不知道路途的前方究竟有什么，但是，我们还是迈出了步伐，我们仍在旅途之中。 ——有马公生</p>
+                    <div class="img_tips clearfix">
+                        <div class="fl box">
+                            <img class="img_item fl" src="__HOME_IMAGES__/liulan.png" alt="">
+                            <div class="bk fr">1000次</div>
+                        </div>
+                        <div class="fl box">
+                            <img class="img_item fl" src="__HOME_IMAGES__/tuiguang.png" alt="">
+                            <div class="bk fr">26次</div>
+                        </div>
+                        <div class="fl box">
+                            <img class="img_item fl" src="__HOME_IMAGES__/inco_time.png" alt="">
+                            <div class="bk fr">3分钟</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fr right">
+                    <img src="__HOME_IMAGES__/timg.jpg" alt="">
+                    <p>分类</p>
+                </div>
+            </a>
+        </div>
+        <!-- 分类弹框 -->
+        <div id="classification">
+            <div class="title_name clearfix">
+                <p class="fl">分类夹</p>
+                <p class="fr">
+                    <a href="javascript:;"> 管理</a>
+                </p>
+            </div>
+            <ul class="ul_box clearfix">
+                <li class="fl">
+                    <p>分类拉萨看到了撒旦撒旦</p>
+                    <p>20</p>
+                </li>
+                <li class="fl">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <li class="fl active">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <li class="fl">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <li class="fl">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <li class="fl">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <li class="fl">
+                    <p>分类1</p>
+                    <p>20</p>
+                </li>
+                <!-- <img id="add_li" src="__HOME_IMAGES__/inco_add.png" alt=""> -->
+            </ul>
+            <div class="close">
+                <img src="__HOME_IMAGES__/inco_det.png" alt="">
+            </div>
+           
+        </div>
+    </div>
+    <script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</body>
+</html>

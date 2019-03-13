@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <link rel="stylesheet" href="/Public/Home/css/wh/loading.css">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <script src="__AGENCY__/wap/public.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <title>个人中心</title>
+    <style>
+
+        .header{
+            width: 100%;
+            height: 1.8rem;
+            background: -webkit-linear-gradient(#185c9d, #41cca2);
+             padding-top: .8rem;
+        }
+
+        .content_box{
+            width: 100%;
+            height: 100%;
+            display: flex;
+           
+        }
+
+          .content_box .left{
+              width: 30%;
+              height: 1.5rem;
+              overflow: hidden;
+          }
+
+            .content_box .left img{
+                width: .8rem;
+                height: 1rem;
+                display: block;
+                margin: 0 auto;
+            }
+
+            .content_box .right{
+                width: 70%;
+                height: 1.5rem;
+          }
+
+           .content_box .right .p1 , .p2 , .p3{
+               color: #fff;
+               width: 100%;
+               overflow: hidden;
+               text-overflow: ellipsis;
+               white-space: nowrap;
+           }
+
+           .p1{
+               font-size: .13rem;
+           }
+           .p2{
+               font-size: .14rem;
+               margin: .02rem 0;
+           }
+           .p3{
+               font-size: .16rem;
+                margin: .02rem 0;
+           }
+
+           .p4{
+               width: 100%;
+               display: block;
+               padding-right: .5rem;
+               box-sizing: border-box;
+               color: rgb(248, 42, 27);
+               
+
+           }
+
+        .list{
+            width: 100%;
+        }
+
+         .list .item{
+             position: relative;
+             width: 100%;
+             height: .5rem;
+             line-height: .5rem;
+             border-bottom: 1px solid #eee;
+             padding: 0 .1rem;
+             box-sizing: border-box;
+         }
+
+          .list .item a{
+              display: block;
+              width: 100%;
+              height: 100%;
+              line-height: .5rem;
+          }
+
+           .list .item img{
+               width: .12rem;
+               height: .18rem;
+               position: absolute;
+               top: 50%;
+               right: .1rem;
+               margin-top: -0.09rem;
+               margin-left: -0.06rem;
+           }
+
+           .logout{
+               display: block;
+               width: 95%;
+               margin: .15rem auto;
+               height: .5rem;
+               text-align: center;
+               color: #fff;
+               background: #41cca2;
+               outline: none;
+               border: 0;
+               border-radius: .25rem;
+           }
+            
+    
+    </style>
+</head>
+<body class="hide">
+<div id="app">
+    <!--<div class="go">-->
+        <!--<a class="back" href="javascript:history.go(-1)">-->
+            <!--<img src="/Public/Home/images/wh/back.png" alt="">-->
+            <!--返回-->
+        <!--</a>-->
+    <!--</div>-->
+    <div class="header">
+        <div class="content_box">
+            <div class="left">
+                <!--<img src="/Public/Home/images/mplogobackup.jpg" alt="">-->
+            </div>
+            <div class="right">
+                <p class="p1" v-text="nagent_account">*******</p>
+                <p class="p2" v-text="nagent_type">*******</p>
+                <p class="p3" v-text="nagent_name">*******</p>
+                <p class="p4">提交成功后，审核周期为24小时，如超过24小时未处理,请咨询您的专属客服</p>
+            </div>
+        </div>
+    </div>
+    <div class="list">
+        <div class="item" @click="showaction">
+            <a href="javascript:;">申请代理商</a>
+            <img src="/Public/Home/images/icon1.png" alt="">
+        </div>
+
+        <div class="item">
+            <a href="/index.php?s=/Home/WapAgent/AgentList">我的申请</a>
+            <img src="/Public/Home/images/icon1.png" alt="">
+        </div>
+        <div class="item">
+            <a href="/index.php?s=/Home/WapAgent/ContractList">我的合同</a>
+            <img src="/Public/Home/images/icon1.png" alt="">
+        </div>
+        <div class="item">
+            <a href="/index.php?s=/Home/WapAgent/DraftList">草稿箱</a>
+            <img src="/Public/Home/images/icon1.png" alt="">
+        </div>
+        <!--<div class="item">-->
+            <!--<a href="/index.php?s=/Home/WapAgent/ContractList">自助问题查询</a>-->
+            <!--<img src="/Public/Home/images/icon1.png" alt="">-->
+        <!--</div>-->
+
+        <div class="item">
+            <a href="index.php?s=/Home/WapAgent/passreset.html">密码重置</a>
+            <img src="/Public/Home/images/icon1.png" alt="">
+        </div>
+        <!--<div class="item">-->
+            <!--<a href="javascript:;">申请代理教程</a>-->
+            <!--<img src="/Public/Home/images/icon1.png" alt="">-->
+        <!--</div>-->
+
+    </div>
+    <!-- 加载动画 -->
+    <div class="loading_box">
+        <div id="colorfulPulse">
+            <span class="item-1"></span>
+            <span class="item-2"></span>
+            <span class="item-3"></span>
+            <span class="item-4"></span>
+            <span class="item-5"></span>
+            <span class="item-6"></span>
+            <span class="item-7"></span>
+        </div>
+    </div>
+    <button class="logout" @click="logout">退出登录</button>
+    <mt-actionsheet
+            :actions="click_typelist"
+           v-model="sheetVisible">
+    </mt-actionsheet>
+</div>
+</body>
+</html>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            nagent_name:'',
+            nagent_account:'',
+            nagent_type:'',
+            click_typelist:[],
+            sheetVisible: false
+
+        },
+        methods:{
+            hrefone:function(){
+                console.log("78111");
+                window.location.href="/index.php?s=/Home/WapAgent/Agent_open"; return;
+
+            },
+            hreftwo:function(){
+                console.log("262622");
+                window.location.href="/index.php?s=/Home/WapAgent/Agent_open_goup"; return;
+
+            },
+            showaction:function(){
+                console.log("11");
+                var t=this;
+                t.sheetVisible=true;
+                console.log(t.sheetVisible)
+            },
+            logout:function(){
+                $.cookie('wapuuid', "");
+                $.cookie('mydatetime', "");
+                window.location.href="/index.php?s=/Home/WapAgent/sign"; return;
+            },
+            initdata:function () {
+                var t=this;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/init_vip_center",
+                    data: {
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        isRole(res);
+                        if(res.ResultType==0){
+                            t.nagent_name=res.AppendData.nagent_name;
+                            t.nagent_account=res.AppendData.nagent_account
+                            t.nagent_type=res.AppendData.nagent_type
+
+                        }else{
+
+                        }
+                    },
+                    error: function () {
+                        //console.log(313)
+                    }
+                })
+            }
+        },
+        mounted:function () {
+            var t=this;
+            t.click_typelist = [{
+                name: '代理商申请',
+                method : t.hrefone
+            }, {
+                name: '代理商升级',
+                method : t.hreftwo
+            }];
+            t.initdata();
+
+
+
+        }
+    })
+</script>
+<script>
+        $(window).load(function(){
+            $("body").removeClass("hide");
+            $(".loading_box").show().delay(1000).fadeOut(1000);
+
+        })
+
+
+
+
+</script>

@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="zh-CN" id="index">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title>展示一切</title>
+
+	<link title="" rel="stylesheet" type="text/css" href="__ADMIN__/Lay/css/layui.css">
+
+	<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+	<link type="text/css" rel="stylesheet" href="__HOME_CSS__/add/css//trumbowyg.css?v=2" />
+	<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+	<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+	<script src="__HOME_CSS__/add/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="__COM_JS__/layer.js"></script>
+	<script type="text/javascript" src="__ADMIN__/Lay/layui.js"></script>
+	<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__HOME_CSS__/add/js/trumbowyg.min.js"></script>
+	<script src="__HOME_CSS__/add/js/trumbowyg.upload.js"></script>
+	<script src="__HOME_CSS__/add/js/trumbowyg.base64.js"></script>
+	<script src="__HOME_JS__/whjs/js/Sortable.js"></script>
+
+	<style type="text/css">
+		body {
+			background: #f0eff6;
+			margin: 0;
+		}
+
+		.in {
+			width: 90%;
+			margin: 0 auto;
+			height: 1rem;
+			background: #fff;
+			margin-top: 0.3rem;
+			line-height: 1rem;
+		}
+
+		.in span {
+			margin-left: 0.3rem;
+			color: #4e4b4b;
+		}
+
+		.in1 input,
+		.in2 input {
+			width: 2.3rem;
+			height: 0.9rem;
+			float: right;
+			margin-right: 0.2rem;
+			border: none;
+		}
+
+		.in1 input::placeholder,
+		.in2 input::placeholder {
+			color: #C8C7CC;
+			font-size: 0.22rem
+		}
+
+		.in3 select {
+			width: 2rem;
+			float: right;
+			margin-right: 0.5rem;
+			margin-top: 0.3rem;
+		}
+
+		.in4 {
+			height: 5rem;
+		}
+
+		textarea {
+			background: #fff;
+			color: #9CA1A6;
+			border: 0;
+			height: 4rem;
+			font-size: 0.16rem;
+			margin: 0;
+			padding: 0.2rem;
+			/*width: 90%;
+        margin: 0 auto;*/
+		}
+
+		.btnbom {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+		}
+
+		.btnbom input {
+			width: 50%;
+			float: left;
+			text-align: center;
+			height: 0.9rem;
+			border: none;
+		}
+
+		.btnbom input:nth-child(1) {
+			background: #fff;
+			color: #4e4b4b;
+		}
+
+		.btnbom input:nth-child(2) {
+			background: #2FB3D3;
+			color: #fff;
+		}
+
+		.all_info {
+			width: 90%;
+			margin: 0 auto;
+			margin-top: 0.3rem;
+			line-height: 2rem;
+		}
+
+		.info {
+			width: 90%;
+			position: absolute;
+			margin: 0 auto;
+			margin-top: 0.3rem;
+			line-height: 2rem;
+			padding-bottom: 2rem
+		}
+
+		.preview {
+			width: 100%;
+			height: 2rem;
+		}
+
+		.photo,
+		.video,
+		.link {
+			width: 31%;
+			height: 2rem;
+			margin: 0 9%;
+		}
+
+		.xx {
+			width: 0.3rem;
+			/* margin-top: -1.5rem;
+            margin-left: -0.4rem;
+            margin-right: 0.1rem; */
+			position: absolute;
+			top: 0.1rem;
+			right: 0.1rem;
+			z-index: 201;
+		}
+
+		.xxx {
+			width: 0.3rem;
+			margin-top: -3.5rem;
+		}
+
+		.cover {
+			width: 0.5rem;
+			margin-left: 50%;
+		}
+
+		.big_box {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0rem;
+			z-index: 2;
+			background: rgba(0, 0, 0, 0.5);
+			display: none;
+		}
+
+		.link_div {
+			width: 80%;
+			position: fixed;
+			background: #fff;
+			z-index: 999;
+			top: 30%;
+			left: 10%;
+			border-radius: 10px;
+			display: none;
+		}
+
+		#clipArea {
+			/*margin-top: 100px;*/
+			height: 85%;
+		}
+
+		#file {
+			margin: 20px;
+		}
+
+		input {
+			-webkit-appearance: none;
+			border-radius: 0;
+			margin-bottom: 5px !important;
+		}
+
+		.clip {
+			background-color: #000;
+			display: none;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			z-index: 10000;
+		}
+
+		.photo-clip-view {
+			background-color: #fff;
+		}
+
+		.btun {
+			width: 262px;
+			height: 10%;
+			margin: 0 auto;
+		}
+
+		#clipBtn {
+			width: 35%;
+			height: 40px;
+			line-height: 40px;
+			background-color: #2FB3D3;
+			color: #fff;
+			text-align: center;
+			border: none;
+		}
+
+		#cancel {
+			background-color: #fff;
+			color: #000;
+			width: 35%;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 5px;
+			border: none;
+			margin-right: 28%;
+		}
+
+		.gif {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000000;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			display: none;
+		}
+
+		.gif>img {
+			width: 20%;
+			position: absolute;
+			left: 40%;
+			top: 36%;
+		}
+
+		#files1,
+		#files2,
+		#files3 {
+			opacity: 0;
+		}
+
+		.new_pic {
+			display: block;
+		}
+
+		.clearfix:after {
+			clear: both;
+			content: ' ';
+			display: block;
+		}
+
+		.fl {
+			float: left;
+		}
+
+		.fr {
+			float: right;
+		}
+
+		#box {
+			margin-bottom: 0.2rem;
+		}
+
+		#box>div {
+			width: 31%;
+			height: 2rem;
+			position: relative;
+			margin-left: 0.1rem;
+			margin-top: 0.1rem;
+		}
+
+		.item {
+			display: block;
+			width: 31%;
+			position: relative;
+			margin-left: 0.1rem;
+			margin-top: 0.1rem;
+		}
+
+		.mask {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			opacity: 0;
+			z-index: 200;
+			height: 100%;
+		}
+
+		.btnbom {
+			z-index: 999;
+		}
+
+		.btnbom input {
+			margin-bottom: 0px !important;
+		}
+
+		.vdo {
+			width: 100%;
+			height: 100%;
+			display: none;
+		}
+
+		.mesk {
+			width: 150px;
+			height: 120px;
+			background: rgba(0, 0, 0, 0.8);
+			border-radius: 5px;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-top: -60px;
+			margin-left: -75px;
+			display: none;
+			z-index: 100;
+		}
+
+		.mesk img {
+			width: 40px;
+			height: 40px;
+			display: block;
+			margin: 0 auto;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			animation: rotate 3s linear infinite;
+		}
+
+		.mesk p {
+			color: #fff;
+			text-align: center;
+		}
+
+
+
+
+
+	</style>
+	<script type="text/javascript">
+        mui.init();
+	</script>
+</head>
+
+<body ontouchstart="">
+<div class="clip">
+	<div class="gif">
+		<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+	</div>
+	<div id="clipArea"></div>
+	<div class="btun">
+		<button id="cancel" style="padding:0">取消</button>
+		<button id="clipBtn" style="padding:0">截取</button>
+	</div>
+</div>
+<form action="" id="form" method="post" enctype="multipart/form-data">
+	<div class="big_box"></div>
+
+	<input type="hidden" name="id" id="modify_id" value="{$Think.get.id}">
+	<div class="in in1">
+		<span>标题</span>
+		<input type="text" name="title" style="text-align: right;width: 70%" value="{$data.title}" placeholder="请在此输入" />
+	</div>
+	<div class="in in2">
+		<span>封面</span>
+		<if condition="$data.thumb eq null">
+			<img src="__HOME_IMAGES__/h_icon_2_on.png" class="cover" id="cover_img" alt="">
+			<else/>
+			<img src="{$data.thumb}" class="cover" id="cover_img" alt="">
+		</if>
+		<input type="file" id="file" class="cover_file" style="display: none">
+		<input type="hidden" name="thumb" id="cover_input" value="{$data.thumb}" />
+
+	</div>
+	<div class="in in2">
+		<span>排序设置</span>
+		<input type="text" name="sort" style="text-align: right" value="{$data.sort}" placeholder="数字越小越靠前" />
+	</div>
+	<div class="in in4">
+		<span>详细内容</span>
+		<textarea name="content" style="font-size:18px; color: #000000;">{$data.content}</textarea>
+	</div>
+	<div class="all_info">
+		<div class="info">
+					<span class="new_pic clearfix" id="box">
+					<if condition="$data_imgs neq null">
+						<volist name="data_imgs" id="imgs" key="k">
+							<span class="pic_77{$k}" style="margin: 0;">
+								<img src="{$imgs}" class='preview' alt="">
+								<input type="hidden" name="pic_77{$k}" value="{$imgs}">
+								<img src="__HOME_IMAGES__/x.png" alt="" class="xx" onclick="del_img(this)">
+							</span>
+					</volist>
+					</if>
+					<if condition="$data_res neq null">
+						<volist name="data_res" id="res" key="k">
+							<if condition="$res.type eq 1">
+								<span class="item fl pic_99{$k}">
+									<div class="mask"></div>
+									<img  src="{$res.data_url}" class='preview view_img' alt="">
+									<input  class="view" type="hidden" name="pic_99{$k}" data-video="1" value="{$res.data_url}">
+									<img src="__HOME_IMAGES__/x.png" alt="" class="xx" onclick="del_img(this)">
+								</span>
+								<else/>
+								<span class="item fl video_99{$k}">
+									<div class="mask"></div>
+									<img src="__HOME_IMAGES__/play.png" class='preview' alt="">
+									<input class="view" type="hidden" data-video="2" name="video_99{$k}" value="{$res.data_url}">
+									<img src="__HOME_IMAGES__/x.png" alt="" class="xx" onclick="del_img(this)">
+								</span>
+							</if>
+						</volist>
+					</if>
+					</span>
+			<img src="__HOME_IMAGES__/photo.png" class="photo" alt="">
+			<img src="__HOME_IMAGES__/video.png" class="video" alt="">
+			<!--<img src="__HOME_IMAGES__/link.png" class="link" alt="">-->
+			<input type="file" id="files_one" class="file4" name="file4" value="" style="display: none" accept="video/*" />
+			<input type="file" id="files_two" class="file2" name="file2" value="" style="display: none" accept="video/*" />
+			<input type="file" id="files_three" class="file3" name="file3" value="" style="display: none" accept="video/*" />
+			<input type="file" id="files" class="file1" name="file1" onchange="imgPreview(this)" style="display: none" accept="image/*" multiple="multiple" />
+
+		</div>
+	</div>
+	<input type="hidden" name="video_link">
+</form>
+<div class="btnbom">
+	<input type="button" onclick="back();" name="" id="" value="取消" />
+	<input type="button" onclick="submit();" name="" id="" value="保存" />
+</div>
+<div class="mesk">
+	<img src="__HOME_IMAGES__/loadad.gif" alt="">
+	<p>图片上传中</p>
+</div>
+<!--<div class="link_div">
+    <div style="width:90%;text-align: center;margin: 8% auto;">请粘贴视频链接
+        <input type="text" name="link" placeholder="请在链接前加上http://">
+        <div style="color:red;margin-bottom: 10px;">目前只支持：mov、mp4视频格式</div>
+        <button class="but" value="0" style="padding:0;width: 25%;height:35px;border:1px solid #999;margin-right: 30px;">取消</button>
+        <button class="but" value="1" style="padding:0; width: 25%;height:35px;background: #2FB3D3; color:#fff;border:1px solid #2FB3D3;">保存</button>
+    </div>
+</div>-->
+<script src="__HOME_JS__/ljcut/jquery-2.1.3.min.js"></script>
+<script src="__HOME_JS__/ljcut/iscroll-zoom.js"></script>
+<script src="__HOME_JS__/ljcut/hammer.js"></script>
+<script src="__HOME_JS__/ljcut/lrz.all.bundle.js"></script>
+<script src="__HOME_JS__/ljcut/jquery.photoClip.js"></script>
+
+<script>
+    // document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    var el = document.getElementById('box');
+    var sortable = new Sortable(el, {
+        sort: true,
+        animation: 300,
+    });
+
+    var user_id = '{$user_id}';
+    console.log(user_id)
+
+    var clipArea = new bjj.PhotoClip("#clipArea", {
+        size: [274, 277],
+        outputSize: [640, 640],
+        file: "#file",
+        view: "#view",
+        ok: "#clipBtn",
+        loadStart: function() {
+            // console.log("照片读取中");
+            $('.gif').show();
+        },
+        loadComplete: function() {
+            // console.log("照片读取完成");
+            $('.gif').hide();
+        },
+        clipFinish: function(dataURL) {
+            var imgsize = document.getElementById('file').files[0].size;
+            if(imgsize > 1024 * 1024 * 10) {
+                mui.toast("请上传小于10M的图片");
+                return false;
+            } else {
+                //图片路径设置为读取的图片
+                var imgsrc = dataURL;
+                var unionid = '{$unionid}';
+                $.ajax({
+                    type: "post",
+                    url: "/index.php?s=/Api/IndexApi/uploads_img",
+                    data: {
+                        unionid: unionid,
+                        img: imgsrc,
+                        start_name: "Cards",
+                    },
+                    beforeSend: function() {
+                        $(".mesk").show().find('p').text("图片上传中");
+                    },
+                    success: function(res) {
+                        console.log(res)
+                        $(".mesk").hide();
+                        var img = document.getElementById("cover_img");
+                        img.src = res.AppendData;
+                        $('#cover_input').attr('value', img.src);
+
+                    }
+
+                })
+
+            }
+
+        }
+    });
+    $("#cancel,#clipBtn").click(function() {
+        $(".clip").hide();
+    })
+
+    console.log(1111)
+    //clipArea.destroy();
+</script>
+
+<script>
+    var checkSubmitFlg = 1;
+    var num = 1;
+
+    function back() {
+        mui.confirm("正在编写状态，是否要返回？", "", ["否", "是"], function(res) {
+            if(res.index == 1) {
+                top.location.href = "/index.php?s=/Home/Card/newcreateCard";
+            }
+        });
+    }
+    $('.photo').click(function() {
+        var pic_num = 0;
+        for(var i = 0; i < $('.new_pic').children().length; i++) {
+            var name = $('.new_pic').children()[i].className;
+            if(name.substr(0, 4) == 'pic_') {
+                pic_num++;
+            }
+        }
+        if(pic_num >= 20) {
+            mui.toast("每个栏目图片最多20个");
+            return false;
+        }
+        $('.file1').click();
+    });
+
+    $('.video').click(function() {
+        var video_num = 0;
+        for(var i = 0; i < $('.new_pic').children().length; i++) {
+            var name = $('.new_pic').children()[i].className;
+            console.log(name)
+            if(name.substr(8, 4) != 'pic_') {
+                video_num++;
+            }
+        }
+        if(video_num >= 3) {
+            mui.toast("每个栏目视频最多3个");
+            return;
+        }
+        // $('.file').click();
+        if(document.all.file4.value == '') {
+            $('#files_one').click();
+
+        } else if(document.all.file2.value == '') {
+            $('.file2').click();
+        } else if(document.all.file3.value == '') {
+            $('.file3').click();
+        }
+
+    });
+
+    // var videolegth = 0;
+    // $('#files_one').on("change",function() {
+    // 	var filev = document.getElementById("files_one").files
+    // 	for(var i = 0; i<filev.length;i++ ){
+    // 	var videosize = document.getElementById("files_one").files[i].size;
+    // 	if(videosize > 1024*1024*30){
+    // 		mui.toast("请上传小于30M的视频");
+    // 		return false;
+    // 	}
+    // 	if(videolegth + filev.length >3 ){
+    // 		mui.toast("每个栏目视频最多3个");
+    // 		return false;
+    // 	}
+
+    // 	var num = $('.new_pic').children().length;
+    // 	 $('.new_pic').append("<span class='video_" + num + "'><img src='__HOME_IMAGES__/play.png' class='preview' style='margin-left: 0.1rem'/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' id='mp4file"+num+"' name='file_text"+num+"' value=''></span>");
+
+    // }
+    // videolegth = videolegth + filev.length
+    // // console.log(videolegth+"相加的");
+
+    //  });
+
+
+
+    $('#files_one').change(function() {
+        var num = $('.new_pic').children().length;
+        var videosize = document.getElementById("files_one").files[0].size;
+        var type = $("#files_one").val();
+        console.log(type)
+        var unionid = '{$unionid}';
+        var files = this.files[0];
+        var formdata = new FormData();
+        formdata.append("img", files);
+        formdata.append("start_name", 'Cards');
+        formdata.append("unionid", unionid);
+        console.log(files)
+        console.log(unionid)
+        $.ajax({
+            type: "post",
+            url: "/index.php?s=/Api/IndexApi/upload_video",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".mesk").show();
+                $(".mesk").show().find('p').text("视频上传中");
+            },
+            success: function(res) {
+                console.log(res)
+                $(".mesk").hide();
+                type = type.substr(type.lastIndexOf('.'));
+                if(type == '.quicktime') {
+                    mui.toast("不支持此视频格式，请上传其他视频格式视频");
+                    return false;
+                }
+                if(videosize > 1024 * 1024 * 30) {
+                    mui.toast("请上传小于30M的视频");
+                    return false;
+                }
+                console.log(1)
+                $('.new_pic').append("<span class='item fl video_" + num +
+                    "'><input type='hidden' class='hid view' data-src='insImage/menuPic.png' data-video='2' value='" + res.AppendData + "'/><div class='mask'></div><img src='__HOME_IMAGES__/play.png' class='preview' '/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' id='mp4file2' name='fil4_text' value='1'></span>"
+                );
+            }
+        })
+
+    });
+
+    $('.file2').change(function() {
+        var num = $('.new_pic').children().length;
+        var videosize = document.getElementById("files_two").files[0].size;
+        var type = $("#files_two").val();
+        console.log(type)
+        var unionid = '{$unionid}';
+        var files = this.files[0];
+        var formdata = new FormData();
+        formdata.append("img", files);
+        formdata.append("start_name", 'Cards');
+        formdata.append("unionid", unionid);
+
+        $.ajax({
+            type: "post",
+            url: "/index.php?s=/Api/IndexApi/upload_video",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".mesk").show();
+                $(".mesk").show().find('p').text("视频上传中");
+            },
+            success: function(res) {
+                console.log(res)
+                $(".mesk").hide();
+                type = type.substr(type.lastIndexOf('.'));
+                if(type == '.quicktime') {
+                    mui.toast("不支持此视频格式，请上传其他视频格式视频");
+                    return false;
+                }
+                if(videosize > 1024 * 1024 * 30) {
+                    mui.toast("请上传小于30M的视频");
+                    return false;
+                }
+                $('.new_pic').append("<span class='item fl video_" + num +
+                    "'><input type='hidden' class='hid view' data-src='insImage/menuPic.png' data-video='2' value='" + res.AppendData + "'/><div class='mask'></div><img src='__HOME_IMAGES__/play.png' class='preview' '/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' id='mp4file2' name='fil2_text' value='1'></span>"
+                );
+            }
+        })
+
+    });
+
+    $('.file3').change(function() {
+        var num = $('.new_pic').children().length;
+        var videosize = document.getElementById("files_three").files[0].size;
+        var type = $("#files_three").val();
+        console.log(type)
+        var unionid = '{$unionid}';
+        var files = this.files[0];
+        var formdata = new FormData();
+        formdata.append("img", files);
+        formdata.append("start_name", 'Cards');
+        formdata.append("unionid", unionid);
+
+        $.ajax({
+            type: "post",
+            url: "/index.php?s=/Api/IndexApi/upload_video",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".mesk").show();
+                $(".mesk").show().find('p').text("视频上传中");
+            },
+            success: function(res) {
+                console.log(res)
+                $(".mesk").hide();
+                type = type.substr(type.lastIndexOf('.'));
+                if(type == '.quicktime') {
+                    mui.toast("不支持此视频格式，请上传其他视频格式视频");
+                    return false;
+                }
+                if(videosize > 1024 * 1024 * 30) {
+                    mui.toast("请上传小于30M的视频");
+                    return false;
+                }
+                $('.new_pic').append("<span class='item fl video_" + num +
+                    "'><input type='hidden' class='hid view' data-src='insImage/menuPic.png'  data-video='2' value='" + res.AppendData + "'/><div class='mask'></div><img src='__HOME_IMAGES__/play.png' class='preview' '/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' id='mp4file3' name='fil3_text' value='1'></span>"
+                );
+            }
+        })
+
+    });
+    $('.cover').click(function() {
+        $('.cover_file').click();
+        $(".clip").show();
+    });
+    //			$('.link').click(function() {
+    //				$('.big_box').css('display', 'block');
+    //				$('.link_div').css('display', 'block');
+    //			});
+    //			$('.but').click(function() {
+    //				var link = $('input[name=link]').val();
+    //				if(this.value == 1) {
+    //					if(link.substr(link.length - 3) != 'mp4' && link.substr(link.length - 3) != 'mov' && link.substr(link.length - 3) !=
+    //						'3gp' && link.substr(link.length - 3) != 'avi' && link.substr(link.length - 3) != 'mvb') {
+    //						mui.toast("请粘贴视频链接");
+    //						return;
+    //					}
+    //					$('input[name=video_link]').val(link)
+    //
+    //					var unionid = '{$unionid}';
+    //					$.ajax({
+    //						type: "post",
+    //						url: "index.php?s=/Api/User/EditContentXcx",
+    //						data: {
+    //							unionid: unionid,
+    //							data_url: link
+    //						},
+    //						beforeSend: function() {},
+    //						success: function(res) {
+    //							console.log(res)
+    //						}
+    //					})
+    //
+    //				} else {
+    //					$('input[name=video_link]').val('')
+    //				}
+    //				$('.big_box').css('display', 'none');
+    //				$('.link_div').css('display', 'none');
+    //			});
+
+
+
+    var file_length = 0;
+
+    function imgPreview(fileDom) {
+        var file = document.getElementById("files").files;
+        //判断是否支持FileReader
+        if(window.FileReader) {
+            // console.log(file_length)
+            for(var i = 0; i < file.length; i++) {
+                var imgsize = document.getElementById("files").files[i].size;
+                //  console.log(imgsize)
+                if(file.length + file_length > 20) {
+                    mui.toast("每个栏目图片最多20个");
+                    return false;
+                }
+                if(imgsize > 1024 * 1024 * 10) {
+                    mui.toast("图片超过10M请上传小于10M的图片");
+                    return false;
+
+                }
+                var reader = new FileReader();
+                reader.readAsDataURL(file[i]);
+                reader.onload = function(e) {
+                    //$('.new_pic').append("<div class='fl pic_" + num + "'><img id='preview_" + num + "' class='preview' /><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''></div>");
+
+                    //获取图片dom
+                    var img = document.getElementById("preview_" + num);
+                    //图片路径设置为读取的图片
+                    $('.pic_' + num).append("<input type='hidden' name='pic_" + num + "' data-order='" + num + "' value='" + e.target.result + "'>");
+                    num++;
+
+                    var unionid = '{$unionid}';
+                    var urll = e.target.result;
+                    //							console.log(urll);
+                    $.ajax({
+                        type: "post",
+                        url: "/index.php?s=/Api/IndexApi/uploads_img",
+                        data: {
+                            unionid: unionid,
+                            img: urll,
+                            start_name: "Cards",
+                        },
+                        beforeSend: function() {
+                            $(".mesk").show().find('p').text("图片上传中");
+                        },
+                        success: function(res) {
+                            $(".mesk").hide();
+                            $('.new_pic').append("<span class='item fl pic_" + num + "'><input type='hidden' class='hid view' data-video='1' value='" + res.AppendData + "'/><div class='mask'></div><img src='" + res.AppendData + "' id='preview_" + num +
+                                "'  class='preview view_img''/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''></span>");
+                        }
+                    })
+
+                }
+
+            }
+            file_length = file.length + file_length;
+            console.log(file_length)
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+        //获取文件
+        // var file = fileDom.files[0];
+
+        // console.log();return;
+        // var imageType = /^image\//;
+        //是否是图片
+        // if(!imageType.test(file.type)) {
+        // 	alert("请选择图片！");
+        // 	return;
+        // }
+        //读取完成
+        // $(".new_pic span").each(function(e){
+        // 	console.log(e)
+        // })
+
+    }
+    //  function imgPreview_cover(fileDom){
+    //      //判断是否支持FileReader
+    //      if (window.FileReader) {
+    //          var reader = new FileReader();
+    //      } else {
+    //          alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+    //      }
+    //      //获取文件
+    //      var file = fileDom.files[0];
+    //      // console.log();return;
+    //      var imageType = /^image\//;
+    //      //是否是图片
+    //      if (!imageType.test(file.type)) {
+    //          alert("请选择图片！");
+    //          return;
+    //      }
+    //      //读取完成
+    //      reader.onload = function(e) {
+    //          //获取图片dom
+    //          var img = document.getElementById("cover_img");
+    //          //图片路径设置为读取的图片
+    //          img.src = e.target.result;
+    //          $('#cover_input').attr('value',img.src);
+    //      };
+    //      reader.readAsDataURL(file);
+    //  }
+    function del_img(Obj) {
+        file_length = file_length - 1;
+        // videolegth = videolegth -1;
+        Obj.parentNode.remove();
+    };
+
+
+
+    function submit() {
+        var title = $('input[name=title]').val();
+        var content = $('textarea[name=content]').val();
+        var sort = $('input[name=sort]').val();
+        console.log(sort)
+        var thumb = $('input[name=thumb]').val();
+        var modify_id = $("#modify_id").val();
+        console.log(modify_id)
+
+
+        if(title.length <= 0) {
+            mui.toast("请填写标题");
+            return;
+        }
+        if(thumb == "") {
+            mui.toast("请选择封面");
+            return;
+        }
+
+        if(sort.length <= 0) {
+            mui.toast("请填写序号");
+            return;
+        }
+
+        var listarr = [];
+        $(".item .view").each(function(i, e) {
+            listarr.push({
+                data_url: $(e).attr("value"),
+                type: $(e).attr("data-video") == 1? "1":"2",
+                thumb:$(e).attr("data-video") == 1? "" :"insImage/menuPic.png",
+                user_id: user_id,
+                sort: i
+            })
+        });
+
+        console.log(listarr);
+        if(checkSubmitFlg == 1) {
+
+            var unionid = '{$unionid}';
+            $.ajax({
+                type: "post",
+                url: "/index.php?s=/Api/User/EditContentXcx",
+                data: {
+                    unionid: unionid,
+                    title: title,
+                    sort: sort,
+                    content: content,
+                    ResList: listarr,
+                    thumb: thumb,
+                    id: modify_id
+
+                },
+                beforeSend: function() {
+                    $(".mesk").show();
+                    $(".mesk").show().find('p').text("数据保存中");
+                },
+                success: function(res) {
+                    mui.toast("保存成功");
+                    checkSubmitFlg = 0;
+                    console.log(res)
+                    $(".mesk").hide();
+                    top.location.href = "/index.php?s=/Home/Card/showCard.html"
+
+                },
+                error:function(){
+                    mui.toast("服务器繁忙请稍后再试");
+                    $(".mesk").hide();
+                }
+            })
+
+        } else {
+            mui.toast("请勿重复提交");
+        }
+
+    }
+
+
+
+</script>
+
+<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <title>留言消息</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 90%;
+            height: 1.44rem;
+            position: relative;
+            margin: 0 auto;
+            border-bottom: 1px solid #F1F1F1;
+        }
+
+        .top img {
+            width: .37rem;
+            height: .37rem;
+            position: absolute;
+            top: .18rem;
+            border-radius: 50%;
+            background-size: 100% 100%;
+        }
+
+        .one {
+            width: 1rem;
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #2b2b2b;
+            line-height: .2rem;
+            position: absolute;
+            left: .45rem;
+            top: .18rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .masg {
+            width: 87%;
+            height: .6rem;
+            /* background: yellow; */
+            margin: 0 13%;
+            position: absolute;
+            top: .51rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(43, 43, 43, 1)
+        }
+
+        .secd {
+            height: .13rem;
+            font-size: .09rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(155, 155, 155, 1);
+            line-height: .13rem;
+            position: absolute;
+            margin: 0 13%;
+            bottom: 15px;
+        }
+
+        .loading {
+            width: 7.5rem;
+            height: 4.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            font-size: 0.8rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -3.75rem;
+            margin-top: -2.25rem;
+            border-radius: .5rem;
+            display: none;
+        }
+
+        .loading p {
+            color: #fff;
+            font-size: 0.6rem;
+        }
+
+        .loading img {
+            width: 1.4rem;
+            height: 1.4rem;
+            display: block;
+            margin: .5rem auto;
+        }
+        .dx {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: #00000085;
+            position: fixed;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dx"></div>
+    <div class="conent">
+        <!-- <div class="top">
+            <img src="Public/Home/images/slicesrjl/Group4.png" alt="">
+            <span class="one">洋小秘洋小秘</span>
+            <span class="masg">Hello,很高兴认识你，看到你的个人主页，感觉很赞，您也是做健康饮食方面的嚒，稍后我加你V友，后续再沟通。</span>
+            <div class="secd">2018年8月21日 19:00</div>
+        </div> -->
+    </div>
+</body>
+<script>
+    $(function () {
+        var user_id = '{$unionid}';
+        console.log(user_id)
+        $.ajax({
+            url: 'index.php?s=/Api/User/myMessage',
+            type: 'post',
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res);
+                var list = '';
+                $.each(res.AppendData, function (k, v) {
+                    list += '<div class="top">'
+                    list += '<img src="' + v.headimg + '" alt="">'
+                    list += '<span class="one">' + v.nick_name + '</span>'
+                    list +=
+                        '<span class="masg">' + v.content + '</span>'
+                    list += '<div class="secd">' + v.add_time + '</div>'
+                    list += '</div>'
+                })
+                $('.conent').html(list)
+            },
+        })
+
+
+
+        // 下拉加载
+        var index = 0;
+        var scrollFlag = true;
+        $(window).scroll(function () {
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if (!scrollFlag) {
+                return false;
+            }
+            if (scrollTop + windowHeight == scrollHeight) {
+                index += 10;
+                console.log("到底了");
+                $(".dx").text("我是有底线的喔").stop(true).fadeIn(500).fadeOut(3000);
+                scrollFlag = false;
+
+                $.ajax({
+                    url: 'index.php?s=/Api/User/myMessage',
+                    type: 'post',
+                    data: {
+                        unionid: user_id,
+                    },
+                    beforeSend: function () {
+                        $(".loading").show()
+                    },
+                    success: function (res) {
+                        $(".loading").hide()
+                        console.log(res);
+                        scrollFlag = true;
+                        if (res.AppendData.length == 0) {
+                            scrollFlag = false;
+                            $(".loading").show().html("没有更多数据了").css({
+                                color: "#fff",
+                                "line-height": "4.5rem"
+                            }).fadeOut(2000)
+                        }
+                        var list = '';
+                        $.each(res.AppendData, function (k, v) {
+                            list += '<div class="top">'
+                            list += '<img src="' + v.headimg + '" alt="">'
+                            list += '<span class="one">' + v.nick_name + '</span>'
+                            list +=
+                                '<span class="masg">' + v.content + '</span>'
+                            list += '<div class="secd">' + v.add_time + '</div>'
+                            list += '</div>'
+                        })
+                        $('.conent').html(list)
+
+                    },
+                    // error: function () {
+                    //     $(".loading").hide()
+                    //     alert("异常！");
+                    // }
+                });
+            }
+
+        });
+    })
+</script>
+
+</html>

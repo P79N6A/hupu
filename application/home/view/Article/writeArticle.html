@@ -1,0 +1,1032 @@
+<extend name="./base" />
+<block name="css_extend">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<link title="" rel="stylesheet" type="text/css" href="__ADMIN__/Lay/css/layui.css">
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<link href="__HOME_JS__/yb/css/bootstrap.css" rel="stylesheet">
+	<script src="__HOME_JS__/yb/js/jquery.js"></script>
+	<script src="__HOME_JS__/yb/js/bootstrap.js"></script>
+	<link href="__HOME_JS__/yb/css/summernote.css" rel="stylesheet">
+	<script src="__HOME_JS__/summernote.js"></script>
+	<script src="__HOME_JS__/summernote-zh-CN.js"></script>
+
+	<script>
+		//设置rem
+			(function(win) {
+				var doc = win.document;
+				var docEl = doc.documentElement;
+				var tid;
+				//动态设置像素比
+				var iScale = 1 / window.devicePixelRatio;
+				document.write('<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=' + iScale + ',minimum-scale=' + iScale + ',maximum-scale=' + iScale + '">');
+
+				//动态设置body字体大小
+				var dpr = window.devicePixelRatio || 1
+				console.log(dpr);
+
+				function setBodyFontSize() {
+					if(document.body) {
+						document.body.style.fontSize = (12 * dpr) + 'px' //改12为6
+					} else {
+						document.addEventListener('DOMContentLoaded', setBodyFontSize)
+					}
+				}
+				setBodyFontSize();
+
+				//为html设置font-size大小
+				function refreshRem() {
+					//获取可视区
+					var width = docEl.getBoundingClientRect().width;
+					var rem = width / 18.75;
+
+					docEl.style.fontSize = rem + 'px';
+					//rem基准以font-size:40px来进行换算
+				}
+				//onresize事件页面改变大小时
+				win.addEventListener('resize', function() {
+					clearTimeout(tid);
+					tid = setTimeout(refreshRem, 1);
+				}, false);
+				//onpageshow事件,有缓存时不会加载缓存数据,会加载实时数据
+				win.addEventListener('pageshow', function(e) {
+					if(e.persisted) {
+						clearTimeout(tid);
+						tid = setTimeout(refreshRem, 1);
+					}
+				}, false);
+				refreshRem();
+			})(window);
+	</script>
+	<style>
+	.closes {
+				width: 2.25rem;
+				height: 2.25rem;
+				border-radius: 50%;
+				position: fixed;
+				bottom: 4.9rem;
+				right: 1.7rem;
+				box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.16);
+			}
+			
+			.closes img {
+				width: 1rem;
+				height: 1rem;
+				margin-left: .6rem;
+				margin-top: .6rem;
+			}
+		.top {
+				width: 100%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				background-color: #1B1B1F;
+				opacity: 0.8;
+			}
+			
+			.top_cen {
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.top_left {
+				width: 6rem;
+				height: 100%;
+				float: left;
+			}
+			
+			.sel {
+				display: inline-block;
+				width: 4.5rem;
+				height: 100%;
+				font-size: 0.75rem;
+				color: #fff;
+			}
+			
+			.acc {
+				float: right;
+				width: 2.5rem;
+				height: 100%;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+				color: #2FB3D3;
+				text-align: right;
+			}
+			
+			#classification {
+				height: 100%;
+				z-index: 501;
+				width: 100%;
+				position: fixed;
+				background: #fff;
+				top: 2.5rem;
+				display: none;
+			}
+			
+			#classification .title_name {
+				width: 90%;
+				margin: 0 auto;
+				height: 3rem;
+				line-height: 3rem;
+			}
+			
+			p {
+				margin-bottom: 0 !important;
+			}
+			
+			.down {
+				margin-top: -10px;
+			}
+			
+			#classification .title_name p:first-child {
+				font-size: 0.9rem;
+				color: #333;
+			}
+			
+			#classification .title_name a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				;
+				font-size: .75rem;
+				color: #999999;
+			}
+			
+			#classification .ul_box {
+				padding-left: .55rem;
+				padding-right: .65rem;
+			}
+			
+			.ul_box li {
+				width: 31.8%;
+				text-align: center;
+				background: #E8E8E8;
+				border-radius: .125rem;
+				height: 2.1rem;
+				margin-left: .25rem;
+				margin-top: .25rem;
+				color: #000;
+				line-height: 2.1rem;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				cursor: pointer;
+			}
+			
+			.ul_box li p:first-child {
+				font-size: .75rem;
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+				line-height: 2.1rem;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.mui-table-view-cell>a:not(.mui-btn) {
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+			
+			.mui-table-view-cell {
+				padding: 0 !important;
+			}
+			
+			.ul_box li p:last-child {
+				font-size: 0.75rem;
+				overflow: hidden;
+			}
+			
+			.fl {
+				width: 80%;
+				float: left;
+				
+			}
+			
+			.fr {
+				width: 20%;
+				float: left;
+				text-align: right;
+			}
+			
+			#add_li {
+				width: 1.5rem;
+				height: 1.475rem;
+				margin-top: .6rem;
+				margin-left: .8rem;
+				cursor: pointer;
+			}
+			
+			.close {
+				width: 2rem;
+				height: 1.5rem;
+				border-radius: 50%;
+				position: absolute;
+				right:0;
+				top: 0;
+				font-size: 1.5rem;
+				color:#d8d8d8;
+				opacity: 1;
+			}
+			
+			.max_sr {
+				background-color: #fff;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				position: fixed;
+				bottom: 0px;
+				left: 0;
+				font-size: 0;
+				z-index: 510;
+				display: none;
+				padding-top: 0.15rem;
+				border-top: 1px solid #f2f2f2;
+			}
+			
+			.sr_fl {
+				width: 90%;
+				margin: 0 auto;
+				height: 2.5rem;
+				line-height: 2.5rem;
+			}
+			
+			.sr {
+				display: inline-block;
+				width: 80%;
+				height: 2.5rem;
+				border-radius: 0.625rem;
+			}
+			
+			.sr>input {
+				width: 100%;
+				height: 2rem;
+				border-radius: 1rem;
+				font-size: 0.8rem;
+				border 1px solid #999;
+			}
+			
+			input:focus {
+				border-color: #ccc !important;
+				outline: none !important;
+				border 1px;
+				box-shadow: none !important;
+			}
+			
+			.sr_qx {
+				display: inline-block;
+				width: 20%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.tit {
+				width: 90%;
+				height: 2.5rem;
+				margin: 0 auto;
+			}
+			
+			.tit>input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				font-size: 0.875rem;
+			}
+			
+			.tit_txt {
+				min-height: 7.5rem;
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.tit_txt>textarea {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.ipt {
+				width: 100% !important;
+				height: 100% !important;
+				border-top: none !important;
+				border-left: none !important;
+				border-right: none !important;
+				border-bottom: 1px solid #ECECEC !important;
+				font-size: 1.1rem;
+				padding: 0 !important;
+				margin-bottom: 0 !important;
+				line-height: 3rem !important;
+			}
+			
+			.cont {
+				margin-bottom: 2.5rem;
+			}
+			
+			.title {
+				width: 90%;
+				margin: 0 auto;
+				height: 3rem;
+				z-index: 100;
+			}
+			
+			.note-btn {
+				font-size: 0.75rem;
+			}
+			
+			.note-frame {
+				width: 90%;
+				margin: 0 auto;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-toggle,
+			.panel-heading.note-toolbar .note-color .dropdown-toggle {
+				width: 1.125rem;
+				padding-left: 0.35rem;
+			}
+			
+			.note-fontname {
+				display: none;
+			}
+			
+			.note-table {
+				display: none;
+			}
+			
+			.note-view {
+				display: none;
+			}
+			
+			.note-style {
+				display: none;
+			}
+			
+			p {
+				font-size: 0.75rem !important;
+			}
+			
+			.note-placeholder {
+				font-size: 0.75rem !important;
+			}
+			
+			.panel-default {
+				height: auto !important;
+			}
+			
+			.foot {
+				width: 100%;
+				height: 2.5rem;
+				font-size: 0.75rem;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+			}
+			
+			.zx_qx {
+				width: 50%;
+				height: 100%;
+				background-color: #fff;
+				color: #000;
+				float: left;
+				border: none;
+			}
+			
+			.zx_bc {
+				width: 50%;
+				height: 100%;
+				background-color: #2FB3D3;
+				color: #fff;
+				float: left;
+				border: none;
+			}
+			
+			.modal-title {
+				text-align: center;
+				font-size: 0.75rem;
+				line-height: 2.5rem !important;
+			}
+			
+			.note-image-input{
+				width: 5rem !important;
+				height: 5rem !important;
+				line-height: 2rem !important;
+				font-size: 0.75rem !important;
+				margin: -5rem auto 0;
+				opacity: 0;
+				
+			}
+			
+			.note-video-url,.note-link-text,.note-link-url{
+				width: 100% !important;
+				height: 2rem !important;
+				font-size: 0.75rem !important;
+			}
+			
+			.modal-dialog {
+				width: 15rem !important;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -7.5rem;
+				margin-top: -5.1rem;
+			}
+			.modal-content{
+				height:11rem !important;
+				border-radius: 0.25rem;
+			}
+			.note-popover .popover-content .note-color .dropdown-menu,
+			.panel-heading.note-toolbar .note-color .dropdown-menu {
+				min-width: 12.5rem;
+				min-height: 8.5rem;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette:first-child,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette:first-child {
+				width: 48%;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-palette-title,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette .note-palette-title {
+				font-size: 0.75rem;
+			}
+			
+			.note-popover .popover-content .note-color .dropdown-menu .note-palette .note-color-reset,
+			.panel-heading.note-toolbar .note-color .dropdown-menu .note-palette .note-color-reset {
+				font-size: 0.6rem;
+			}
+			
+			.note-popover .popover-content .note-color-palette div .note-color-btn,
+			.panel-heading.note-toolbar .note-color-palette div .note-color-btn {
+				width: 12.5%;
+				height: 100%;
+			}
+			
+			.note-color-row {
+				width: 100%;
+				height: 0.8rem !important;
+			}
+			
+			.note-palette {
+				width: 48% !important;
+			}
+			
+			#sn-checkbox-open-in-new-window {
+				width: 50px;
+				height: 50px;
+				float: right;
+			}
+			
+			.active {
+				background-color: #2FB3D3 !important;
+				color: #fff !important;
+			}
+			.modal-footer{
+				display: none;
+			}
+			.checkbox{
+				display: none;
+			}
+			.add{
+				width: 5rem;
+				height:5rem;
+				line-height: 5rem;
+				text-align: center;
+				margin: 0 auto;
+				font-size: 2rem;
+				border:1px dashed #999;
+			}
+			.modal-header{
+				border:none !important;
+			}
+			.zzc_myruanwen_from_li{
+				width: 90%;
+				margin: 0 auto;
+				height: 2.5rem;
+				line-height:2.5rem;
+			}
+			.zzc_myruanwen_from_li_div{
+				width: 100%;
+				height: 2.5rem;
+				font-size: 0.7rem;
+				overflow: hidden;
+			}
+			.zzc_myruanwen_from_li_div>a{
+				float:right;
+				width: 50%;
+				height: 100%;
+				text-align: right;
+			}
+			.mui-icon{
+				font-size:55px !important; 
+			}
+	</style>
+
+</block>
+<block name="body">
+
+	<body>
+		<!-- <div class="top">
+			<div class="cel"><a href="{:url('Home/Article/myListArticle')}" style="color:#fff">取消</a></div>
+			<div class="click">单击段落即可编辑</div>
+			<div class="save" onclick="sumit_click()">保存</div>
+		</div> -->
+		<div class="top">
+			<div class="top_cen">
+				<div class="top_left">
+					<span class="sel">请选择分类</span>
+					<span class="sel_jt">
+					<img class="down" src="__HOME_IMAGES__/inco_down.png" alt="">
+				</span>
+				</div>
+				<!-- <div class="acc">完成</div> -->
+				<div class="acc accs">完成</div>
+			</div>
+		</div>
+		<div id="classification">
+			<div class="title_name">
+				<p class="fl">分类夹</p>
+				<p class="fr">
+					<!-- <a href="__HOME_IMAGES__/addArticleCategory.html"> 管理</a> -->
+					<a href="/index.php?s=/Home/Article/addArticleCategory.html">管理</a>
+				</p>
+			</div>
+			<ul class="ul_box clearfix" id="typename">
+				<!-- <li class="fl mui-table-view-cell">
+					123
+				</li>
+				<li class="fl mui-table-view-cell">
+					456
+				</li>
+				<li class="fl mui-table-view-cell">
+					789
+				</li>
+				<li class="fl mui-table-view-cell">
+					101112
+				</li>
+				<li class="fl mui-table-view-cell">
+					131415
+				</li>
+				<li class="fl mui-table-view-cell">
+					161718
+				</li>
+				<li class="fl mui-table-view-cell">
+					181920
+				</li> -->
+				<!-- <img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt=""> -->
+			</ul>
+			<div class="closes">
+				<img src="__HOME_IMAGES__/inco_det.png" alt="">
+			</div>
+		</div>
+		
+		<!--  -->
+		<div class="max_sr">
+			<div class="sr_fl">
+			<span class="sr">
+				<input type="text" id="sr_k" placeholder="请输入分类名称" value=""/>
+			</span>
+				<span class="sr_qx">确定</span>
+			</div>
+		</div>
+		<div class="title">
+			<input type="text" class="ipt" placeholder="请输入标题" />
+		</div>
+		<div class="cont">
+			<div id="summernote"></div>
+		</div>
+		<div class="mui-content" style="margin-bottom: 60px;">
+			<input type="hidden" value="" id="typeid"/>
+			<div class="zzc_myruanwen_from_li">
+				<div class="zzc_myruanwen_from_li_div">
+					微缩V网
+					<if condition="$condition['article_cards'] eq 1">
+						<a href="{:url('Home/Article/addMicroCard')}" style="color:green">已开启<span class="mui-icon mui-icon-arrowright"></span></a>
+						<else/>
+						<a href="{:url('Home/Article/addMicroCard')}" class="zzc_a_red">已关闭<span class="mui-icon mui-icon-arrowright"></span></a>
+					</if>
+				</div>
+			</div>
+		</div>
+		<div class="foot">
+			<button class="zx_qx">取消</button>
+			<button class="zx_bc"><span class="accs">保存</span></button>
+		</div>
+	</body>
+</block>
+<block name="js_extend">
+	<script type="text/javascript">
+	$(document).on('click','.fl',function (e) {
+		$("#typeid").val($(e.target).data('id'));
+		$(".fl").removeClass("active");
+		$(e.target).addClass("active").siblings().removeClass("active");
+		$("#classification").hide();
+		$(".sel").css("color", "#fff");
+		$(".sel_jt").find('img').attr("src", "__HOME_IMAGES__/inco_down.png");
+	})
+//	$(".zx_bc").on('click',function () {
+//		
+//		$("#classification").show();
+//		$(".sel").css("color", "#fff");
+//		$(".sel_jt").find('img').attr("src", "__HOME_IMAGES__/inco_down.png");
+//	})
+
+	$(function(){
+		var id = '{$ids}';
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST", //方法类型
+			dataType: "json", //预期服务器返回的数据类型
+			url: "index.php?s=/Api/IndexApi/articleTypeList", //url 
+			data: {"id": id},
+			async: false,
+			success: function(result) {
+				// console.log(result);
+				if(result.ResultType == 0) {
+					htmlstr = '';
+					$.each(result.AppendData, function(idx, item) {
+						htmlstr += '<li class="fl" data-id="'+item.id+'">'+item.name+'</li>';		
+					})
+					$("#typename").empty();
+					$("#typename").append(htmlstr);
+					// if(result.count<12 || result.ResultType == 3){
+						$("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+					// }
+				}
+			},
+			error: function() {
+				alert("服务器繁忙，请稍后再试！");
+			}
+		});
+	})
+	$(document).on('click','.accs',function (e) {
+		var title=$(".ipt").val();
+		var id='{$ids}';
+		if(title==''){ 
+			mui.toast("标题不能为空！");
+		}
+		var typeid=$("#typeid").val();
+		
+		if(typeid==''){
+			mui.toast("请选择分类！");
+		}
+
+	     $($(".note-editable").find("img")).each(function(b,s){
+		    var imgbase = $(this).attr("src");
+		    $.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "index.php?s=/Api/IndexApi/uploads_img", //url 
+				data: {"id":id,"img":imgbase,"start_name":'article'},
+				// async: false,
+				success: function(result) {
+					console.log(result);
+					$(".note-editable").find("img").each(function(i,e){
+						if(i==b){
+							$(this).attr("src",result.AppendData);
+						}
+					})
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		 });
+		var con=$(".note-editable").html(); 
+		var id = '{$ids}';
+		var _article_reward = 0;
+
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST", //方法类型
+			dataType: "json", //预期服务器返回的数据类型
+			url: "index.php?s=/Home/Article/addArticle", //url 
+			data: {"title":title,"content":con,"atype_id":typeid,"article_reward":_article_reward},
+			success: function(result) {
+				console.log(result);
+				if(result.status == 1) {
+					// console.log(result.count<=11);
+					setTimeout(window.location.href="{:url('Home/Article/myListArticle')}",3000); 
+				}
+			},
+			error: function() {
+				alert("服务器繁忙，请稍后再试！");
+			}
+		});
+     })
+
+$(document).on('click','.cr_tu',function(e){
+		$(e.target).children(".add_tp").click(); 
+            $(e.target).children(".add_tp").change(function () {
+                // console.log($(e.target).children(".add_tp").val());
+                var id='{$ids}';
+                var formdata = new FormData();
+                var fileUp = $(e.target).children("#fileToUpload")[0];//jq转js对象
+                var files = fileUp.files[0];
+                formdata.append("file", files);
+                formdata.append("start_name", 'article');
+                formdata.append("id", id);
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "index.php?s=/Api/IndexApi/uploads_img", //url
+                    data:formdata ,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function(result) {
+                        // console.log(result);
+                        if(result.ResultType == 0) {
+                            $(e.target).parent().parent().parent().after('<div style="text-align: center;" class="editBox"><img data-type="gif" class="" data-ratio="0.18125" data-w="640" src="'+result.AppendData+'"></div>');
+                            // console.log($(e.target).parent().parent().parent().parent().after('12321'));
+                            // $(e.target).parent().parent().parent().parent().next('<div class="editBox"><br></div>');
+                            // alert($(e.target).parent().parent().parent().parent().html());
+                            // console.log($(e.target).parent().parent().parent().parent().html());
+                            restoreBlock();
+                        }
+                    },
+                    error: function() {
+                        alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+            });
+
+	})
+$(document).on('click','.cr_sp',function(e){
+    //添加视频
+    $(e.target).children(".add_sp").click(); 
+    $(e.target).children(".add_sp").change(function () {
+        var id='{$ids}';
+        var formdata = new FormData();
+        var fileUp = $(e.target).children("#videoUpload")[0];//jq转js对象
+        var files = fileUp.files[0];
+        formdata.append("file", files);
+        formdata.append("start_name", 'article');
+        formdata.append("id", id);
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "index.php?s=/Api/IndexApi/uploads_img", //url
+            data:formdata ,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function(result) {
+                // console.log(result);return;
+                if(result.ResultType == 0) {
+
+                    $(e.target).parent().parent().parent().after('<video width="100%" height="500" controls poster><source src="'+result.AppendData+'" type="video/mp4"></video>');
+                    // console.log($(e.target).parent().parent().parent().parent().after('12321'));
+                    // $(e.target).parent().parent().parent().parent().next('<div class="editBox"><br></div>');
+                    // alert($(e.target).parent().parent().parent().parent().html());
+                    // console.log($(e.target).parent().parent().parent().parent().html());
+                    restoreBlock();
+                }
+            },
+            error: function() {
+                alert("服务器繁忙，请稍后再试！");
+            }
+        });           
+    });
+})
+	</script>
+	<script>
+		$(".edits").click(function() {
+			$(".max_bl").show();
+			$(".max_cen").show();
+		})
+		$(".max_bl").click(function() {
+			$(".max_bl").hide();
+			$(".max_cen").hide();
+			$(".max_sr").hide();
+		})
+		$(".max_btm>button").click(function() {
+			$(".max_bl").hide();
+			$(".max_cen").hide();
+		})
+		 $(document).on('click','#add_li',function (e) {
+	         $(".max_sr").show();
+			 $("#sr_k").focus();
+	     })
+	</script>
+	<script>
+		 var getParam = function(name){
+		        var search = document.location.search;
+		         var pattern = new RegExp("[?&]"+name+"\=([^&]+)", "g");
+		         var matcher = pattern.exec(search);
+		         var items = null;
+		         if(null != matcher){
+		                try{
+		                         items = decodeURIComponent(decodeURIComponent(matcher[1]));
+		                }catch(e){
+		                        try{
+		                                items = decodeURIComponent(matcher[1]);
+		                         }catch(e){
+		                                items = matcher[1];
+		                        }
+		                }
+		        }
+		         return items;
+		};
+		$(".max_class").click(function() {
+			$(".max_bl").show();
+
+			if($("ul li").hasClass("active")){
+				$(".max_cen").show();
+				return false;
+			}
+			
+			// var typ=getParam('id');
+			var typ=$("#id").val();
+			// alert(typ);
+			if(typ>0){
+				var id = '{$ids}';
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/articleTypeList", //url 
+					data: {"id": id},
+					async: false,
+					success: function(result) {
+						console.log(result);
+						if(result.ResultType == 0 || result.ResultType == 3 ) {
+							htmlstr = '';
+							var typeid=$("#typeid").val();
+							$.each(result.AppendData, function(idx, item) {
+								if(typeid>0){
+									if(typeid==item.id){
+										htmlstr += '<li class="fl active" data-id="'+item.id+'">'+item.name+'</li>';
+									}else{
+										htmlstr += '<li class="fl" data-id="'+item.id+'">'+item.name+'</li>';		
+									}
+									
+								}else{
+									htmlstr += '<li class="fl" data-id="'+item.id+'">'+item.name+'</li>';	
+								}
+							})
+							$("#typename").empty();
+							$("#typename").append(htmlstr);
+							if(result.count<12 || result.ResultType == 3){
+								// if(){
+
+								// }
+								$("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+							}
+							// if(result.count=12){
+							// 	// $(".swiper-slide-active .ul_box li:last").hide();
+							// }
+							
+
+						}else{
+							$("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			}else{
+				var id = '{$ids}';
+				// alert(id);
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/articleTypeList", //url 
+					data: {"id": id},
+					async: false,
+					success: function(result) {
+						//console.log(result);
+						if(result.ResultType == 0 || result.ResultType == 3) {
+							htmlstr = '';
+							$.each(result.AppendData, function(idx, item) {
+								// if(result.count<12){
+									htmlstr += '<li class="fl" data-id="'+item.id+'">'+item.name+'</li>';	
+								// }
+							})
+
+							$("#typename").empty();
+							$("#typename").append(htmlstr);
+                            if(result.count<12 || result.ResultType == 3 ){
+                                $("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+                            }
+
+						}else{
+							$("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			}
+			
+
+			$(".max_cen").show();
+		})
+	</script>
+	<script>
+		
+		$(document).on('click','.sr_qx',function (e) {
+			
+			if($(".swiper-slide-active .ul_box li").length==11) {
+				$("#add_li").hide();
+				// alert($(".swiper-slide-active .ul_box li").length);
+			}
+	        var id = '{$ids}';
+			var name= $("#sr_k").val();
+			if(name==''){
+				alert('分类名称不能为空!');
+			}
+			$.ajax({
+				//几个参数需要注意一下
+				type: "POST", //方法类型
+				dataType: "json", //预期服务器返回的数据类型
+				url: "index.php?s=/Api/IndexApi/addArticleType", //url 
+				data: {"id": id,"name":name},
+				async: false,
+				success: function(result) {
+
+					if(result.ResultType == 0) {
+						// console.log(result.count<=11);
+						// console.log(result.count<=11);
+//						console.log(result.count<=11);
+						if(result.count<=11){
+							$("#sr_k").val("");
+							$(".swiper-slide-active .ul_box li:last").after("<li class='fl'>"+name+"</li>");
+							// $("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+						}else{
+							$(".swiper-slide-active .ul_box li:last").after("<li class='fl'>"+name+"</li>");
+						}
+                        if(result.count == 1){
+                            $("#sr_k").val("");
+                            //$(".swiper-slide-active .ul_box li:last").after("<li class='fl'>"+name+"</li>");
+                            $("#typename").empty();
+                            $("#typename").append("<li class='fl'>"+name+"</li>");
+                            $("#typename").append('<img id="add_li" class="add_lis" src="__HOME_IMAGES__/inco_tianjia.png" alt="">');
+                        }
+						// if(result.count==12){
+						// 	// $(".swiper-slide-active .ul_box li:last").hide();
+						// 	$(".swiper-slide-active .ul_box li:last").after("<li class='fl'>"+name+"</li>");
+						// }
+						
+						// .swiper-wrapper
+					}else{
+						$(".swiper-slide-active .ul_box li:last").after("<li class='fl'>"+name+"</li>");
+					}
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+			$(".max_sr").hide()
+	     })
+
+	</script>
+	<!--  -->
+	<script>
+		//分类点击事件
+		$(function() {
+			$(".top_left").on("click", function() {
+				$("#classification").show();
+				$(".sel").css("color", "#2FB3D3");
+				$(this).find('img').attr("src", "__HOME_IMAGES__/upimg.png");
+			});
+			$(".closes").on("click", function() {
+				$("#classification").hide();
+				$(".sel").css("color", "#fff");
+				$(".sel_jt").find('img').attr("src", "__HOME_IMAGES__/inco_down.png");
+				$(".max_sr").hide();
+
+			}); 
+		})
+		
+		//分类添加
+		$(".sr_qx").on("click", function() {
+			var val = $("#sr_k").val();
+			$(".ul_box li:last").after("<li class='fl'>" + val + "</li>");
+			if($(".ul_box li").length >= 12) {
+				$(".add_lis").hide();
+			}
+			$(".max_sr").hide();
+		})
+		$(document).on('click', '#add_li', function(e) {
+			$(".max_sr").show();
+			$("#sr_k").focus();
+		})
+	</script>
+	<script>
+		$('#summernote').summernote({
+			placeholder: '请输入内容',
+			lang: 'zh-CN',
+			focus: true,
+			minHeight: 500
+		});
+	</script>
+</block>
+
+

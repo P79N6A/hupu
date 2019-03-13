@@ -1,0 +1,287 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>提现列表</h4>
+        </div>
+        <!--<a href="{:U('Greeting/addGreetings')}" class="btn btn-primary pull-right margin-top">添加贺卡</a>-->
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">内容查询</div>
+        <div class="panel-body">
+            <form method="post" name="myForm" action="{:U('Capital/index')}">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">开始时间</label>
+                            <if condition="$start_at neq 0">
+                                <input type="text" name="start_at" value="{$start_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="start_at"  class="form-control"  placeholder="开始时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">结束时间</label>
+                            <if condition="$end_at neq 0">
+                                <input type="text" name="end_at" value="{$end_at|date='Y-m-d H:i:s', ###}" class="form-control" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                                <else />
+                                <input type="text" name="end_at"  class="form-control"  placeholder="结束时间"  onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            </if>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">姓名</label>
+                            <input type="text" name="name" value="{$name}"  placeholder="姓名/手机号"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">金额</label>
+                            <input type="text" name="money" value="{$money}"  placeholder="金额"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">提现方式</label>
+                            <select  class="form-control" name="type">
+                                <option value="0">选择提现方式</option>
+                                <option value="1" <eq name="type" value="1"> selected</eq>>微信钱包</option>
+                                <option value="2" <eq name="type" value="2"> selected</eq>>银行卡</option>
+                                <option value="3" <eq name="type" value="3"> selected</eq>>邮政银行</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--<div class="col-sm-3">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label">状态</label>-->
+                    <!--<select  class="form-control" name="status">-->
+                    <!--<option value="0">选择状态</option>-->
+                    <!--<option value="1" <eq name="status" value="1"> selected</eq>>已审核</option>-->
+                    <!--<option value="2" <eq name="status" value="2"> selected</eq>>审核中</option>-->
+                    <!--<option value="3" <eq name="status" value="3"> selected</eq>>不通过</option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <input type="hidden" name="status" value="{$status}">
+                <div class="row">
+                    <if condition="$status eq 2">
+                        <div class="col-sm-12 text-left">
+                            <a class="btn btn-primary" onclick=id_ok(4,"{:U('Capital/all_handle')}")>批量转账中</a>
+                            <a class="btn btn-warning" onclick=id_ok(3,"{:U('Capital/all_handle')}")>批量不通过</a>
+                        </div>
+                        <elseif condition="$status eq 4"/>
+                        <div class="col-sm-12 text-left">
+                            <a class="btn btn-primary" onclick=id_ok(1,"{:U('Capital/all_handle')}")>批量通过</a>
+                            <a class="btn btn-warning" onclick=id_ok(3,"{:U('Capital/all_handle')}")>批量不通过</a>
+                        </div>
+                    </if>
+                    <div class="col-sm-12 text-right">
+                        <a class="btn btn-success" onclick="exExcel()">导出银行Excel</a>
+                        <a class="btn btn-success" onclick="exportExcel()">导出Excel</a>
+                        <input class="btn btn-info" type="submit">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td><input type="checkbox" name="all"></td>
+                <td>id</td>
+                <td width="10%">用户名</td>
+                <td width="10%">手机号</td>
+                <td>金额</td>
+                <td>提现类型</td>
+                <td>提现信息</td>
+                <td>手续费</td>
+                <td>应付提现金额</td>
+                <td>状态</td>
+                <td>提现地址</td>
+                <td>申请时间</td>
+                <td>操作人</td>
+                <td>操作时间</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>
+                        <if condition="(($status eq 2) or ($status eq 4)) and ($vo['type'] eq 2)">
+                            <input type="checkbox" name="ids" value="{$vo.id}">
+                        </if>
+                    </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.nick_name}</td>
+                    <td>{$vo.phone}</td>
+                    <td>￥{$vo.money}</td>
+                    <td>
+                        <eq name="vo.type" value="1">微信钱包</eq>
+                        <eq name="vo.type" value="2">银行卡</eq>
+                    </td>
+                    <td>
+                        <p>银行类型：{$vo.bankname}</p>
+                        <p>开户名：{$vo.bname}</p>
+                        <p>支行名：{$vo.branchname}</p>
+                        <p>卡号：{$vo.bnumber}</p>
+                    </td>
+                    <td>￥{$vo.fee}</td>
+                    <td>￥{$vo.true_money}</td>
+                    <td>
+                        <if condition="$vo['status'] eq 1">
+                            已审核
+                            <elseif condition="$vo['status'] eq 2" />
+                            审核中
+                            <elseif condition="$vo['status'] eq 4" />
+                            转账中
+                            <else/>
+                            不通过
+                        </if>
+                    </td>
+                    <td>{$vo.ip|getIpAddress}</td>
+                    <td>{$vo.add_time|date='Y-m-d H:i:s', ###}</td>
+                    <td>{$vo.admin_name}</td>
+                    <td>
+                        <if condition="$vo.audit_time neq ''">
+                            {$vo.audit_time|date='Y-m-d H:i:s', ###}
+                        </if>
+                    </td>
+                    <td>
+                        <if condition="$vo['status'] eq 2 && $vo['type'] eq 2">
+                            <a href="javascript:void (0)" onclick=passing("{:U('Capital/handle', array('id' => $vo['id'], 'status' => 4))}")>转账</a>
+                            <span class="text-explode">|</span>
+                            <a href="javascript:void (0)" onclick=unpass("{:U('Capital/handle', array('id' => $vo['id'], 'status' => 3))}")>不通过</a>
+                        </if>
+                        <if condition="$vo['status'] eq 4 && $vo['type'] eq 2">
+                            <a href="javascript:void (0)" onclick=pass("{:U('Capital/handle', array('id' => $vo['id'], 'status' => 1))}")>通过</a>
+                            <span class="text-explode">|</span>
+                            <a href="javascript:void (0)" onclick=unpass("{:U('Capital/handle', array('id' => $vo['id'], 'status' => 3))}")>不通过</a>
+                        </if>
+                        <if condition="$vo['status'] eq 2 && $vo['type'] eq 1">
+                            <a href="javascript:void (0)" onclick=pass("{:U('Capital/handle_wx', array('id' => $vo['id'], 'status' => 1))}")>微信转账</a>
+                            <span class="text-explode">|</span>
+                            <a href="javascript:void (0)" onclick=unpass("{:U('Capital/handle', array('id' => $vo['id'], 'status' => 3))}")>不通过</a>
+                        </if>
+                        <!--<a href="javascript:void (0)" onclick=del("{:U('Capital/delWithdraw', array('id' => $vo['id']))}")>删除</a>-->
+                    </td>
+                </tr>
+            </foreach>
+            <tr>
+                <td>总金额</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>￥ {$total_money}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_page}</div>
+    <script>
+        $("input:checkbox[name='all']").click(function () {
+            if($(this).prop('checked')){
+                $(":checkbox[name='ids']").prop("checked",true);
+            }else{
+                $(":checkbox[name='ids']").prop("checked",false);
+            }
+        });
+        function id_ok(type,url) {
+            var arr = [];
+            if(type == 1){
+                var title = '确定批量通过?';
+            }else if(type == 4){
+                var title = '确定批量转账?';
+            }else{
+                var title = '确定批量不通过?';
+            }
+            $("input:checkbox[name='ids']:checked").each(function(i){
+                arr[i] = $(this).val();
+            });
+            var vals = arr.join("-");
+            // console.log(url);return;
+            layer.confirm(title,{icon: 3, title:'提示'},
+                function () {
+                    self.location = url+'/ids/'+vals+'/status/'+type;
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+
+        }
+        /*删除*/
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        /*审核转账中*/
+        function passing(url) {
+            layer.confirm("确定转账？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        /*审核通过*/
+        function pass(url) {
+            layer.confirm("确定审核通过？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+
+        /*审核不通过*/
+        function unpass(url) {
+            layer.confirm("确定审核不通过？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        function exportExcel() {
+            document.myForm.action ="__APP__/Admin/Capital/excel" ;
+            document.myForm.submit();
+            document.myForm.action ="__APP__/Admin/Capital/index" ;
+        }
+        function exExcel() {
+            document.myForm.action ="__APP__/Admin/Capital/bank_excel" ;
+            document.myForm.submit();
+            document.myForm.action ="__APP__/Admin/Capital/index" ;
+        }
+    </script>
+    <script src="__PUBLIC__/Admin/js/My97DatePicker/WdatePicker.js"></script>
+</block>

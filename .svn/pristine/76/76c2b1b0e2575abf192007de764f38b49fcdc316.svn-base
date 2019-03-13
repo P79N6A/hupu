@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>客服问题录入</title>
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="__AGENCY__/js/vue/index.css">
+    <!-- 引入组件库 -->
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <script src="__HOME_JS__/vue-html5-editor.js"></script>
+    <style>
+        .content img{
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="接待信息列表">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <div style="overflow: scroll;">
+        <mt-field label="标题" type="textarea" rows="2" v-model="ptitie"></mt-field>
+        <mt-field label="详情" type="textarea" rows="4" v-model="pdis"></mt-field>
+        <hr/>
+        <p>解决办法</p>
+        <vue-html5-editor :content="content" :height="500" ref="editor"> </vue-html5-editor>
+        <mt-button type="primary" @click="i_reception" size="large" style="margin-top: 20px">提交</mt-button>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+
+    Vue.use(VueHtml5Editor, {
+        showModuleName: false,
+        // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
+        // global component name
+        name: "vue-html5-editor",
+        // 是否显示模块名称，开启的话会在工具栏的图标后台直接显示名称
+        // if set true,will append module name to toolbar after icon
+        showModuleName: true,
+        // 自定义各个图标的class，默认使用的是font-awesome提供的图标
+        // custom icon class of built-in modules,default using font-awesome
+        icons: {
+            text: "fa fa-pencil",
+            color: "fa fa-paint-brush",
+            font: "fa fa-font",
+            align: "fa fa-align-justify",
+            list: "fa fa-list",
+            link: "fa fa-chain",
+            unlink: "fa fa-chain-broken",
+            tabulation: "fa fa-table",
+            image: "fa fa-file-image-o",
+            hr: "fa fa-minus",
+            eraser: "fa fa-eraser",
+            undo: "fa-undo fa",
+            "full-screen": "fa fa-arrows-alt",
+            info: "fa fa-info",
+        },
+        // 配置图片模块
+        // config image module
+        image: {
+
+            sizeLimit: 512 * 1024*10,
+            upload: {
+                url: "/index.php?s=/Api/IndexApi/uploads_img",
+                headers: {},
+                params: {
+                    "start_name": 'customer',
+                    "id":'468'
+                },
+                fieldName: 'img'
+            },
+            compress: {
+                width: 1600,
+                height: 1600,
+                quality: 80
+            },
+            uploadHandler(responseText){
+
+                var json = JSON.parse(responseText)
+                if (json.ResultType!=0) {
+                    alert("上传图片失败")
+                } else {
+                    return json.AppendData
+                }
+            }
+        },
+
+        language: "zh-cn",
+        // 自定义语言
+        i18n: {
+            "zh-cn": {
+                "align": "对齐方式",
+                "image": "图片",
+                "list": "列表",
+                "link": "链接",
+                "unlink": "去除链接",
+                "table": "表格",
+                "font": "文字",
+                "full screen": "全屏",
+                "text": "排版",
+                "eraser": "格式清除",
+                "info": "关于",
+                "color": "颜色",
+                "please enter a url": "请输入地址",
+                "create link": "创建链接",
+                "bold": "加粗",
+                "italic": "倾斜",
+                "underline": "下换线",
+                "strike through": "删除线",
+                "subscript": "上标",
+                "superscript": "下标",
+                "heading": "标题",
+                "font name": "字体",
+                "font size": "文字大小",
+                "left justify": "左对齐",
+                "center justify": "居中",
+                "right justify": "右对齐",
+                "ordered list": "有序列表",
+                "unordered list": "无序列表",
+                "fore color": "前景色",
+                "background color": "背景色",
+                "row count": "行数",
+                "column count": "列数",
+                "save": "确定",
+                "upload": "上传",
+                "progress": "进度",
+                "unknown": "未知",
+                "please wait": "请稍等",
+                "error": "错误",
+                "abort": "中断",
+                "reset": "重置"
+            }
+        },
+
+        hiddenModules: ["info"],
+        visibleModules: [
+            "text",
+            "color",
+            "font",
+            "align",
+            "list",
+            "link",
+            "unlink",
+            "tabulation",
+            "image",
+            "hr",
+            "eraser",
+            "undo",
+            "full-screen",
+
+        ],
+
+        modules: {
+
+        }
+    })
+
+    new Vue({
+        el: "#app",
+        data: {
+            content: "",
+            showModuleName: false,
+            pid:'',
+            ptitie:'',
+            pdis:'',
+            psolve:'',
+            customer_id:'',
+            createtime:'',
+            isfalg:true
+        },
+        methods: {
+            updateData: function (data) {
+                // sync content to component
+                this.content = data
+            },
+            fullScreen: function () {
+                this.$refs.editor.enableFullScreen()
+            },
+            focus: function () {
+                this.$refs.editor.focus()
+            },
+            i_reception:function(){
+                var t=this;
+
+                if(t.ptitie==''){
+                    t.$toast('问题标题不能为空')
+                    return;
+                    // Toast('提示信息')
+                }
+                if(t.content==''){
+                    t.$toast('请填写如何解决问题')
+                    return;
+                    // Toast('提示信息')
+                }
+                if(!t.isfalg){
+
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/CustomerService/i_reception",
+                    data: {
+
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        //   console.log(res);
+                        if(res.ResultType==1){
+                            t.$toast('上传成功');
+                            window.location.href="/index.php?s=/Home/Customer/center.html";
+                            return;
+                        }
+                    },
+                    error: function () {
+                        console.log(313)
+                    }
+                })
+            },
+        }
+    })
+</script>
+</body>
+
+</html>

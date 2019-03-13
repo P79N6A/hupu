@@ -1,0 +1,296 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>行业详情列表</h4>
+        </div>
+        <a href="{:U('/Admin/Users/industry')}">
+            <button class="btn btn-default pull-left margin-top"><i class="fa fa-level-up"></i>返回</button>
+        </a>
+        <a href="{:U('Users/add_industry&parent_id='.$parent_id.'&type=2')}" class="btn btn-primary pull-right margin-top">添加行业</a>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>行业名</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>
+                        <a href="{:U('Users/add_industry&id='.$vo['id'].'&type=2')}">修改</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_show}</div>
+
+    <script>
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        function user_detail(uid) {
+            var str='user_detail&user_id='+uid;
+            var url = '{:U("'+str+'")}';
+            // alert(url);return;
+            //iframe层
+            layer.open({
+                type: 2,
+                title: '会员详情页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '40%'],
+                content: url//iframe的url
+            });
+        };
+
+        $("#search").click(function(){
+            $("#searchForm").attr('action',"{:U('admin/Users/index')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+
+        $("#export").click(function(){
+            $("#searchForm").attr("action","{:U('admin/Users/export')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+    </script>
+
+</block>
+
+
+
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>行业大类列表</h4>
+        </div>
+        <a href="{:U('Users/add_industry&type=1')}" class="btn btn-primary pull-right margin-top">添加行业</a>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>行业名</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>
+                        <a href="{:U('Users/industry_detail&id='.$vo['id'])}">详情</a>
+                        <span class="text-explode">|</span>
+                        <a href="{:U('Users/add_industry&id='.$vo['id'].'&type=1')}">修改</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_show}</div>
+
+    <script>
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        function user_detail(uid) {
+            var str='user_detail&user_id='+uid;
+            var url = '{:U("'+str+'")}';
+            // alert(url);return;
+            //iframe层
+            layer.open({
+                type: 2,
+                title: '会员详情页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '40%'],
+                content: url//iframe的url
+            });
+        };
+
+        $("#search").click(function(){
+            $("#searchForm").attr('action',"{:U('admin/Users/index')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+
+        $("#export").click(function(){
+            $("#searchForm").attr("action","{:U('admin/Users/export')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+    </script>
+
+</block>
+
+
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>{$title}</h4>
+            <a href="javascript:history.go(-1);">
+                <button class="btn btn-default"><i class="fa fa-level-up"></i>返回</button>
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="table-margin">
+        <form action="{:U()}" class="form-horizontal" method="post">
+            <input type="hidden" name="id" value="{$data.id}" />
+            <input type="hidden" name="parent_id" value="{$data.parent_id}" />
+            <table class="table table-hover contact-template-form">
+                <tbody>
+                <if condition="$type eq 1">
+                    <tr>
+                        <td width="20%" align="right">行业大类：</td>
+                        <td>
+                            <input type="text" name="name" value="{$data.name}">
+                        </td>
+                    </tr>
+                </if>
+
+                <if condition="$type eq 2">
+                    <tr>
+                        <td width="20%" align="right">行业大类：</td>
+                        <td>
+                            <input type="text" name="parent_name" value="{$data.parent_name}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="20%" align="right">行业：</td>
+                        <td>
+                            <input type="text" name="name" value="{$data.name}"/>
+                        </td>
+                    </tr>
+                </if>
+
+                <tr>
+                    <td width="20%"></td>
+                    <td>
+                        <button class="btn btn-primary">提 交</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+</block>
+
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>积分列表</h4>
+        </div>
+        <a href="{:U('Users/add_inte')}" class="btn btn-primary pull-right margin-top">添加</a>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>id</td>
+                <td>标题</td>
+                <td>积分</td>
+                <td>加/减</td>
+                <td>添加时间</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>{$vo.inte}</td>
+                    <td>
+                        <if condition="$vo.type eq 1">
+                            扣除
+                            <else/>
+                            添加
+                        </if>
+                    </td>
+                    <td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+                    <td>
+                        <a href="{:U('Users/add_inte&id='.$vo['id'])}">修改</a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="pages">{$_show}</div>
+
+    <script>
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+        function user_detail(uid) {
+            var str='user_detail&user_id='+uid;
+            var url = '{:U("'+str+'")}';
+            // alert(url);return;
+            //iframe层
+            layer.open({
+                type: 2,
+                title: '会员详情页',
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '40%'],
+                content: url//iframe的url
+            });
+        };
+
+        $("#search").click(function(){
+            $("#searchForm").attr('action',"{:U('admin/Users/index')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+
+        $("#export").click(function(){
+            $("#searchForm").attr("action","{:U('admin/Users/export')}");    //通过jquery为action属性赋值
+            $("#searchForm").submit();
+        });
+    </script>
+
+</block>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=drvice-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/index.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>积分转赠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+body {
+background: #f6f6f6;
+}
+
+.top {
+width:100%;
+height: .69rem;
+background: #fff;
+position: relative;
+}
+
+.seaone {
+width: 3.43rem;
+height: .45rem;
+border: none;
+outline: none;
+left: .16rem;
+top: .12rem;
+background: #F6F6F6;
+position: absolute;
+}
+.search{
+width:2rem;
+height:.3rem;
+font-size:.12rem;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(197,197,197,1);
+line-height:.17rem;
+border:none;
+outline: none;
+position: absolute;
+left:.16rem;
+top:.08rem;
+background: #F6F6F6;
+}
+.sous{
+width:.6rem;
+height:.45rem;
+border:none;
+right:0;
+position: absolute;
+background:rgba(50,206,160,1);
+outline: none;
+}
+.sous img{
+width:.18rem;
+height:.18rem;
+background-size: 100% 100%;
+}
+.secd{
+width:100%;
+margin-top:.08rem;
+position: absolute;
+padding-bottom:.65rem;
+}
+.secdone{
+/* width:90%; */
+height:.88rem;
+margin:0 auto;
+margin-top:.08rem;
+background: #fff;
+position: relative;
+}
+.check_box{
+    width: .18rem;
+    height: .18rem;
+    position: absolute;
+    left: .16rem;
+    top: .35rem;
+}
+.check_box img{
+width: .18rem;
+height: .18rem;
+background-size:100% 100%;
+position: absolute;
+}
+.check_boxd{
+width: .18rem;
+height: .18rem;
+top: .2rem;
+left: .16rem;
+position: absolute;
+}
+.check_boxd img{
+width: .18rem;
+height: .18rem;
+background-size:100% 100%;
+}
+.headimg{
+width:.64rem;
+height:.64rem;
+left:.5rem;
+top:.12rem;
+position: absolute;
+border-radius: 50%;
+
+}
+.szdwm{
+width:.64rem !important;
+height:.64rem !important;
+top:0 !important;
+left:0 !important;
+position: absolute !important;
+border-radius: 50% !important;
+background-size: 100% 100% !important;
+}
+.seaname{
+width:1rem;
+height:.22rem;
+font-size:.16rem;
+font-family:PingFangSC-Medium;
+font-weight:500;
+color:rgba(51,51,51,1);
+line-height:.22rem;
+position: absolute;
+top:.2rem;
+left:1.3rem;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.seanum{
+width:.97rem;
+height:.2rem;
+font-size:.14rem;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(119,119,119,1);
+line-height:.2rem;
+position: absolute;
+top:.48rem;
+left:1.3rem;
+}
+.last{
+width:3.75rem;
+height:.56rem;
+background: #fff;
+position: fixed;
+bottom:0;
+}
+.sure{
+width:3.43rem;
+height:.4rem;
+line-height:.4rem;
+background:rgba(50,206,160,1);
+border-radius:4px;
+position: absolute;
+font-size:16px;
+font-family:PingFangSC-Semibold;
+font-weight:600;
+color: #fff;
+text-align: center;
+top:.08rem;
+left:.16rem;
+}
+.zhaoz{
+width:100%;
+height:100%;
+top:0;
+left:0;
+position: absolute;
+background: #00000052;
+display: none;
+}
+.mac{
+width:2.4rem;
+height:.96rem;
+background:rgba(255,255,255,1);
+border-radius:.04rem;
+border:.01rem solid #979797;
+}
+/* 未搜索到好友提示 */
+.privacy{
+    width:3rem;
+    height:1.5rem;
+    background: #fff;
+    border-radius: .25rem;
+    font-size: .75rem;
+    text-align: center;
+    color:#000;
+    margin-bottom:3rem;
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin:-1rem 0 0 -1.5rem;
+    z-index:101;
+    display: none;
+}
+.up{
+    width:100%;
+    height:2rem;
+    line-height: 1rem;
+    text-align: center;
+    font-size:.14rem;
+}
+.down{
+    width:100%;
+    height:.6rem;
+    line-height:1rem;
+    text-align: center;
+    font-size: .12rem;
+    color:#000;
+    position: absolute;
+    top:.5rem;
+}
+
+a{
+    color:#fff !important;
+    text-decoration:none;
+}
+.allcity-masks{
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+background: rgba(0,0,0,0.5);
+width: 100%;
+z-index: 100;
+cursor: pointer;
+height: 244.5%;
+    display: none;
+}
+.xuanz{
+position: absolute;
+opacity: 0;
+}
+.tipmoney{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    width: 1.8rem;
+    font-size: .12rem;
+    padding: 0.2rem 0 ;
+    margin-left: -0.9rem;
+    border-radius: .05rem;
+
+}
+</style>
+</head>
+
+<body>
+<div id="app">
+    <!-- <div class="tipmoney"></div> -->
+    <div class="content">
+        <div class="top" v-show="istop">
+            <div class="seaone">
+                <input type="search" class="search" placeholder="请输入对方手机号/姓名" v-model="name">
+                <button class="sous"><img src="Public/Home/images/slicesrjl/share_iconrjl.png" alt="" @click="postTableData"></button>
+            </div>
+        </div>
+        <div class="secd" >
+           <div class="secdone" v-for="(item,index) in list">
+                <div class="check_box">
+                    <img class="check" :src="index==thisindex?'__HOME_IMAGES__/icon_lian_lv@2x.png':'__HOME_IMAGES__/icon_lian_gray@2x.png'"  @click="ck(index)" alt="">
+                </div>
+                <div class="headimg"><img :src="item.headimg" alt="" class="szdwm"></div>
+                <span class="seaname">{{item.nick_name}}</span>
+                <span class="seanum">{{item.phone}}</span>
+            </div>
+        </div>
+        <div class="last">
+            <div class="sure">
+                <a href="javascript:;" @click="aclick">确定</a>
+            </div>
+        </div>
+        <div class="zhaoz">
+            <div class="mac">
+
+            </div>
+        </div>
+         <div class="privacy" >
+            <div class="up">温馨提示</div>
+            <div class="down">您还没有选择赠送好友哦！</div>
+        </div>
+        <div class="allcity-masks" ></div>
+    </div>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            dialogVisible: false,
+            name:'',
+            //pojo数据
+            pojo: {
+
+            },
+            search: {
+
+            },
+            list:[],
+            unionid:'',
+            istop:true,
+            isShow:false,
+            thisindex:-1
+        },
+        methods: {
+            aclick:function(){
+                var t=this;
+                if(t.thisindex==-1) {
+                    $('.privacy').show();
+                    $('.allcity-masks').show();
+                    t.hideShow();
+                    return;
+                }
+                window.location.href="/index.php?s=/Home/income/transess.html&nameid="+t.list[t.thisindex].id
+            },
+            hideShow:function(){
+                var t=this;
+                setTimeout(function () {
+                    $('.privacy').hide();
+                                   $('.allcity-masks').hide();
+                                  }, 1500);
+            },
+            ck:function(i){
+                var t=this;
+                if(t.thisindex==i){
+                    t.thisindex=-1;
+                }else{
+                    t.thisindex=i;
+                }
+
+
+            },
+            //简单封装一下请求数据数据
+            postTableData: function () {
+                var _this = this;
+                $.ajax({
+                    type: "POST",
+                    url: '/index.php?s=/Api/IntegralApi/inte_user_list',
+                    data: {
+                        unionid:_this.unionid,
+                        name:_this.name
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (res) {
+                        console.log(res);
+                        if(res.ResultType==0){
+                            _this.list=res.AppendData;
+                        }
+
+                    },
+                    error: function () {
+                    }
+                })
+            },
+
+        },
+
+        mounted: function () {
+            var t = this;
+            var unionid='{$unionid}';
+            t.unionid=unionid;
+          //  t.postTableData();
+        },
+
+    })
+
+
+
+    //
+    // $(function () {
+    //
+    //     //    点击搜索
+    //     var id = '{$unionid}';
+    //     $(".sous").click(function () {
+    //         // var name = $(".search").val();
+    //         var name = $("input[name=phone]").val();
+    //         console.log(name)
+    //         if ((name.indexOf(" ") >= 0 || name == "")) {
+    //             // $('.allcity-masks').show();
+    //             // $(".privacy").show();
+    //             // $(".down").html("输入不能为空，请重新输入");
+    //             $(".tipmoney").text("输入不能为空，请重新输入").stop(true).fadeIn(1000).fadeOut(2000);
+    //             // setTimeout(function () {
+    //             //     $('.privacy').hide();
+    //             //     $('.allcity-masks').hide();
+    //             // }, 1500);
+    //             return false;
+    //         }
+    //         $.ajax({
+    //             type: "post",
+    //             dataType: "json",
+    //             url: "index.php?s=/Api/IntegralApi/inte_user_list",
+    //             data: {
+    //                 "unionid": id,
+    //                 "name": name,
+    //             },
+    //             success: function (result) {
+    //                 console.log(result);
+    //                 var darr = '';
+    //                 $.each(result.AppendData, function (k, v) {
+    //                     darr += '<div class="secdone">'
+    //                     darr += '<div class="check_box">'
+    //                     darr +=
+    //                         '<input type="radio" name="box" id="" value="" class="xuanz">'
+    //                     darr +=
+    //                         '<img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">'
+    //                     darr += '</div>'
+    //                     darr +=
+    //                         '<div class="headimg"><img src="' + v.headimg +
+    //                         '" alt="" class="szdwm"></div>'
+    //                     darr += '<span class="seaname">' + v.nick_name +
+    //                         '</span>'
+    //                     darr += '<span class="seanum">' + v.phone +
+    //                         '</span>'
+    //                     darr += '</div>'
+    //                 })
+    //
+    //                 $('.secd').html(darr);
+    //                 $(".secd").show();
+    //             },
+    //             error: function () {
+    //                 alert("服务器繁忙，请稍后再试！");
+    //             }
+    //         });
+    //     })
+    //
+    //
+    //     // 点击搜索
+    //     var num = 0;
+    //     $(document).on("click", ".check_box", function () {
+    //         console.log(3322111)
+    //         $(this).toggleClass("checked");
+    //         if ($(this).hasClass("checked")) {
+    //             $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+    //             num++;
+    //             // dels()
+    //         } else {
+    //             $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+    //             num--;
+    //             // dels()
+    //
+    //         }
+    //
+    //         var checked = $(".checked");
+    //         var all = $(".check")
+    //         if (checked.length == all.length) {
+    //             $(".del_box").addClass("checked_all").find("img").attr("src",
+    //                 "__HOME_IMAGES__/icon_lian_lv@2x.png")
+    //         } else {
+    //             $(".del_box").removeClass("checked_all").find("img").attr("src",
+    //                 "__HOME_IMAGES__/icon_lian_gray@2x.png")
+    //         }
+    //     })
+    //
+    //     $(".check_box").on("click", function () {
+    //         console.log(1233333333);
+    //         $(this).addClass("checked").parent().siblings().find(".check_box").removeClass("checked")
+    //         $(this).toggleClass("checked_all");
+    //         var all;
+    //         if ($(this).hasClass("checked_all")) {
+    //             $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+    //             $(".check_box").each(function (i, e) {
+    //                 $(e).addClass("checked").find("img").attr("src",
+    //                     "__HOME_IMAGES__/icon_lian_lv@2x.png");
+    //                 all = i
+    //             })
+    //             num = all + 1
+    //             // dels();
+    //
+    //         } else {
+    //             $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+    //             $(".check_box").each(function (i, e) {
+    //                 $(e).removeClass("checked").find("img").attr("src",
+    //                     "__HOME_IMAGES__/icon_lian_gray@2x.png");
+    //             })
+    //             num = 0;
+    //             // dels();
+    //         }
+    //     })
+    //     $(".secdone").on("click", ".check_box", function () {
+    //         $(this).addClass("checked").parent().siblings().find(".check_box").removeClass("checked")
+    //     })
+    //     // 点击确定跳转下一步骤
+    //     $('.last').on('click', '.sure', function () {
+    //         console.log(123)
+    //         // 点击被选中的值
+    //         var arr = [];
+    //         $("input:radio[name='box']:checked").each(function (i) {
+    //             arr[i] = $(this).val();
+    //             // console.log($(this).val());
+    //         });
+    //         if ($(".check_box").hasClass("checked")) {
+    //             $(".sure").find("a").attr("href", "/index.php?s=/Home/income/transess.html&nameid=" + arr + "");
+    //         } else {
+    //             $('.allcity-masks').show();
+    //             $(".privacy").show();
+    //             setTimeout(function () {
+    //                 $('.privacy').hide();
+    //                 $('.allcity-masks').hide();
+    //             }, 1500);
+    //         }
+    //     })
+    // })
+</script>
+
+</html>

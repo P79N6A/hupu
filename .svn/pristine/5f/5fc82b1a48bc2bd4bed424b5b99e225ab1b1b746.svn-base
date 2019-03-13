@@ -1,0 +1,224 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.zzc_heka_nav {
+			overflow: hidden;
+			width: 100%;
+			position: relative;
+			padding: 10px 5%;
+			margin: 10px auto 0px auto;
+		}
+		
+		.zzc_heka_nav_li {
+			width: 20%;
+			float: left;
+			list-style: none;
+			text-align: center;
+		}
+		
+		.zzc_heka_nav_li img {
+			border-radius: 50%;
+			width: 70%;
+			margin: auto;
+			font-size: 13px;
+		}
+		
+		.zzc_heka_nav_li_title {
+			font-size: 13px;
+			color: #333333;
+		}
+		
+		.zzc_heka_nav_textarea {
+			width: 90%;
+			margin: auto;
+		}
+		
+		.zzc_heka_nav_textarea textarea {
+			font-size: 14px;
+			border: none;
+			background: #f6f6f7;
+			color: #333333;
+			border-radius: 0px;
+		}
+		
+		.zzc_heka_nav_textarea input {
+			background: #AAAAAA;
+			color: #FFFFFF;
+			font-size: 14px;
+			border-radius: 5px;
+			padding: 3px 15px;
+		}
+		
+		.zzc_heka_title {
+			width: 90%;
+			margin: 0px auto;
+			padding: 10px 0px;
+			border-bottom: 1px solid #EEEEEE;
+		}
+		
+		.zzc_heka_buju {
+			width: 100%;
+			margin: 10 auto;
+			height: 570px;
+			overflow: auto;
+			margin-bottom: 60px;
+			background-size: 100%;
+			background-repeat: no-repeat;
+		}
+		
+		.zzc_heka_buju img {
+			width: 100%;
+		}
+		
+		#moveid {
+			top: {
+				$data.content_y
+			}
+			px;
+			width: 100%;
+		}
+		
+		#moveid>* {
+			color: {
+				$data.font_color
+			}
+			;
+			font-size: 20px;
+			text-shadow: 1px 0px 0px {
+				$data.font_border_color
+			}
+			,
+			-1px 0px 0px {
+				$data.font_border_color
+			}
+			,
+			0px 1px 0px {
+				$data.font_border_color
+			}
+			,
+			0px -1px 0px {
+				$data.font_border_color
+			}
+			;
+		}
+		
+		.greeting_card_preview_make input {
+			background: rgba(255, 255, 255, 0);
+			width: 100%;
+			height: 30px;
+			border: 0;
+			font-size: 14px;
+			outline: 0;
+			padding: 5px 0;
+			text-align: left;
+			margin-bottom: 10px;
+			margin-left: 30px;
+			color: #fff;
+			text-shadow: 1px 0 0 #f85325, -1px 0 0 #f85325, 0 1px 0 #f85325, 0 -1px 0 #f85325;
+		}
+		
+		.greeting_card_preview_make textarea,
+		.word_text {
+			width: 80%;
+			height: 100px;
+			line-height: 24px;
+			border: 0;
+			resize: none;
+			font-size: 14px;
+			text-indent: 28px;
+			margin-left: 30px;
+			color: #fff;
+			background: rgba(255, 255, 255, 0);
+			text-shadow: 1px 0 0 #f85325, -1px 0 0 #f85325, 0 1px 0 #f85325, 0 -1px 0 #f85325;
+		}
+		
+		.drag_drop_icon {
+			position: absolute;
+			bottom: -16px;
+			right: -10px;
+			display: inline-block;
+			height: 30px;
+			width: 30px;
+			background: url(__HOME_IMAGES__/drag_drop.svg) no-repeat;
+			background-size: cover;
+		}
+		
+		.greeting_card_preview_make input[name="my_name"] {
+			float: right;
+			text-align: right;
+		}
+		
+		.preview_info {
+			border: 1px dashed #999;
+			border-radius: 10px;
+			position: relative;
+		}
+		
+		.greeting_card_preview_make {
+			padding: 10px;
+			margin: 10px;
+			height: 195px;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+
+		<div class="mui-content ">
+			<include file="Public/hekaNav" />
+			<div class="zzc_heka_buju" style="background-image:url({$data.pic})">
+				<div id="moveid" class="greeting_card_preview_make preview_info" style="transform: matrix(0.8, 0, 0, 0.8, -10, -67); backface-visibility: hidden; transform-origin: 50% 50% 0px; cursor: move; transition: none;">
+					<input disabled="" type="text" name="your_friend" value="{$data.title}">
+					<textarea id="color" disabled="">{$data.content}</textarea>
+					<input disabled="" type="text" name="my_name" value="{$data.phone}">
+					<i class="drag_drop_icon"></i>
+				</div>
+			</div>
+
+		</div>
+		<form action="{:U('Home/Greeting/editUsersGcard')}" method="post" id="form" enctype="multipart/form-data">
+			<input type="hidden" name="do" value="{$Think.get.do}">
+			<input type="hidden" name="jump_url" value="">
+			<input type="hidden" name="id" value="{$Think.get.id}">
+			<input type="hidden" name="type" value="{$Think.get.do}">
+			<input type="hidden" name="content_y" value="{$data.content_y}">
+		</form>
+		<div class="clear"></div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="__HOME_JS__/jquery.panzoom.min.js"></script>
+	<script>
+		(function() {
+			var $panzoom = $('#moveid').panzoom({
+				startTransform: 'scale(0.9)',
+				maxScale: 0.9,
+				increment: 0.1,
+				contain: true
+
+				
+			}).panzoom('zoom', true);
+
+		})();
+		mui('.mui-scroll-wrapper').scroll();
+		
+		// console.log(height);
+		$("#save").on("click",function(){
+			 var height = $("#moveid").offset().top;
+			 window.localStorage.setItem('height', height);
+			$("#moveid").css("transform","matrix(0.8, 0, 0, 0.8, -10, "+ (height-131.5)+")");
+			var jump_url = "{:U('Home/Greeting/templetPreview?id='.I('get.id'))}";
+			location.href = jump_url;
+		})
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

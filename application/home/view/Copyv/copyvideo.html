@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>复制视频</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .cont {
+            padding-bottom: .7rem;
+        }
+
+        .big {
+            width: 3.51rem;
+            height: 1.6rem;
+            left: .24rem;
+            margin-top: .16rem;
+            position: relative;
+        }
+
+        .video {
+            width: 3.07rem;
+            height: 1.6rem;
+            background: yellow;
+            position: relative;
+        }
+
+        .check_box {
+            width: .18rem;
+            height: .18rem;
+            top: .71rem;
+            right: .13rem;
+            position: absolute;
+        }
+
+        .check_box img {
+            width: .18rem;
+            height: .18rem;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .check_boxd {
+            width: .18rem;
+            height: .18rem;
+            top: .2rem;
+            left: .16rem;
+            position: absolute;
+        }
+
+        .check_boxd img {
+            width: .18rem;
+            height: .18rem;
+            background-size: 100% 100%;
+        }
+
+        .videosd {
+            width: 2.95rem;
+            height: .2rem;
+            line-height: .2rem;
+            bottom: 0;
+            padding-left: .12rem;
+            position: absolute;
+            opacity: 0.5;
+            background: #000;
+            font-size: 12px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sure {
+            width: 100%;
+            height: .56rem;
+            bottom: 0;
+            margin: 0 auto;
+            position: fixed;
+            background:#fff;
+            border-top: 1px solid #F6F6F6;
+        }
+
+        .clsure {
+            width: 3.43rem;
+            height: .4rem;
+            line-height: .4rem;
+            background: rgba(50, 206, 160, 1);
+            border-radius: .04rem;
+            position: absolute;
+            border: 0;
+            left: .16rem;
+            bottom: .1rem;
+            font-size: .16rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color:#fff;
+            letter-spacing:.22rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="big">
+            <div class="video"></div>
+            <div class="videosd">最具魅力的城市之一，你看到了这个秘密</div>
+            <div class="check_box">
+                <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            </div>
+        </div>
+        <div class="big">
+            <div class="video"></div>
+            <div class="videosd">最具魅力的城市之一，你看到了这个秘密</div>
+            <div class="check_box">
+                <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            </div>
+        </div>
+        <div class="big">
+            <div class="video"></div>
+            <div class="videosd">最具魅力的城市之一，你看到了这个秘密</div>
+            <div class="check_box">
+                <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            </div>
+        </div>
+        <div class="big">
+            <div class="video"></div>
+            <div class="videosd">最具魅力的城市之一，你看到了这个秘密</div>
+            <div class="check_box">
+                <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            </div>
+        </div>
+        <div class="big">
+            <div class="video"></div>
+            <div class="videosd">最具魅力的城市之一，你看到了这个秘密</div>
+            <div class="check_box">
+                <img class="check" src="__HOME_IMAGES__/icon_lian_gray@2x.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="sure">
+        <button class="clsure" value="确定">确定</button>
+    </div>
+</body>
+<script>
+    // 点击选择
+    var num = 0;
+    $(".big").on("click", ".check_box", function () {
+        $(this).toggleClass("checked");
+        if ($(this).hasClass("checked")) {
+            $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+            num++;
+            dels()
+        } else {
+            $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+            num--;
+            dels()
+
+        }
+        var checked = $(".checked");
+        var all = $(".check")
+        if (checked.length == all.length) {
+            $(".del_box").addClass("checked_all").find("img").attr("src",
+                "__HOME_IMAGES__/icon_lian_lv@2x.png")
+        } else {
+            $(".del_box").removeClass("checked_all").find("img").attr("src",
+                "__HOME_IMAGES__/icon_lian_gray@2x.png")
+        }
+    })
+
+    $(".check_boxd ").on("click", function () {
+        console.log(1233333333);
+        $(this).toggleClass("checked_all");
+        var all;
+        if ($(this).hasClass("checked_all")) {
+            $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_lv@2x.png")
+            $(".check_box").each(function (i, e) {
+                $(e).addClass("checked").find("img").attr("src",
+                    "__HOME_IMAGES__/icon_lian_lv@2x.png");
+                all = i
+            })
+            num = all + 1
+            dels();
+
+        } else {
+            $(this).find("img").attr("src", "__HOME_IMAGES__/icon_lian_gray@2x.png")
+            $(".check_box").each(function (i, e) {
+                $(e).removeClass("checked").find("img").attr("src",
+                    "__HOME_IMAGES__/icon_lian_gray@2x.png");
+            })
+            num = 0;
+            dels();
+        }
+    })
+
+    function dels() {
+        console.log(12345)
+        $(".chekwz").text("全选删除(" + num + ")条");
+    }
+</script>
+
+</html>

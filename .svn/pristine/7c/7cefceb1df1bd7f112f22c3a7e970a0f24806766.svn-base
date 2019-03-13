@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>兑换记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navigation {
+            width: 100%;
+            height: .33rem;
+            margin: .25rem 1%;
+            border-radius: .02rem;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .navigation li {
+            width: 32%;
+            height: .31rem;
+            float: left;
+            color: #616161;
+            font-weight: 500;
+            line-height: .33rem;
+            font-size: .12rem;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #46D1A9;
+            font-family: PingFangSC-Medium;
+
+        }
+
+        .fist {
+            width: 100%;
+            display: none;
+            /* background: pink; */
+
+        }
+
+        .secd {
+            width: 100%;
+            display: none;
+        }
+
+        .three {
+            width: 100%;
+            display: none;
+        }
+
+        .massage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+
+        .masage {
+            width: 100%;
+            height: .71rem;
+            position: relative;
+            border-bottom: 1px solid #E7E7E7;
+        }
+
+        .prep {
+            /* width: .28rem; */
+            height: .2rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .2rem;
+            position: absolute;
+            top: .31rem;
+            left: .19rem;
+        }
+
+        .time {
+            position: absolute;
+            left: .19rem;
+            bottom: .08rem;
+        }
+
+        .time li {
+            float: left;
+            width: .7rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #9b9b9b;
+
+        }
+
+        .dell {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            right: .19rem;
+            top: .31rem;
+        }
+
+        .ball {
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #32CEA0;
+            line-height: .21rem;
+            position: absolute;
+            right: .19rem;
+            top: .31rem;
+        }
+
+        .detail {
+            width: .62rem;
+            height: .24rem;
+            background: rgba(255, 157, 73, 1);
+            border-radius: 12px 0px 0px 12px;
+            position: absolute;
+            right: 0;
+            z-index: 9;
+            /* top: .2rem; */
+            /* position: relative; */
+        }
+
+        .detail img {
+            width: .11rem;
+            height: .14rem;
+            position: absolute;
+            background-size: 100% 100%;
+            top: .05rem;
+            right: .1rem;
+        }
+
+        .detail li {
+            height: .16rem;
+            font-size: .14rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #fff;
+            position: absolute;
+            top: .03rem;
+            right: .25rem;
+        }
+
+        .sele {
+            width: .5rem;
+            height: .24rem;
+            background: rgba(255, 157, 73, 1);
+            border-radius: 12px 0px 0px 12px;
+            position: absolute;
+            right: 0;
+            border: none;
+            outline: none;
+        }
+
+        .qs {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: #00000085;
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+
+        .dx {
+            width: 50%;
+            height: .3rem;
+            font-size: .14rem;
+            color: #fff;
+            text-align: center;
+            line-height: .3rem;
+            background: #00000085;
+            position: fixed;
+            top: 50%;
+            left: 25%;
+            border-radius: .04rem;
+            display: none;
+        }
+
+        select {
+            -webkit-appearance: none;
+            background-size: 0.3rem;
+            background-position-x: 96%;
+        }
+
+        .loading {
+            width: 7.5rem;
+            height: 4.5rem;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            font-size: 0.8rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -3.75rem;
+            margin-top: -2.25rem;
+            border-radius: .5rem;
+            display: none;
+        }
+
+        .loading p {
+            color: #fff;
+            font-size: 0.6rem;
+        }
+
+        .loading img {
+            width: 1.4rem;
+            height: 1.4rem;
+            display: block;
+            margin: .5rem auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="top">
+            <ul class="navigation">
+                <li class="fistone">兑换中</li>
+                <li class="secdone">已兑换</li>
+                <li class="threeone">未通过</li>
+            </ul>
+            <!-- 兑换中 -->
+            <div class="fist">
+                <div class="detail">
+                    <span class="sel">
+                        <select class="sele bankname1">
+                            <option value="1">七天</option>
+                            <option value="2">上月</option>
+                            <option value="0" selected>全部</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="class1">
+
+                </div>
+
+                <!-- <div class="massage">
+                    <span class="prep">2018-09-23</span>
+                    <span class="dell">-15.50</span>
+                </div> -->
+            </div>
+            <!-- 已兑换 -->
+            <div class="secd">
+                <div class="detail">
+                    <span class="sel">
+                        <select class="sele bankname2">
+                            <option value="1">七天</option>
+                            <option value="2">上月</option>
+                            <option value="0" selected>全部</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="class2">
+
+                </div>
+                <!-- <div class="massage">
+                    <span class="prep">2018-09-23</span>
+                    <span class="dell">-15.50</span>
+                </div> -->
+            </div>
+            <!-- 未通过 -->
+            <div class="three">
+                <div class="detail">
+                    <span class="sel">
+                        <select class="sele bankname3">
+                            <option value="1">七天</option>
+                            <option value="2">上月</option>
+                            <option value="0" selected>全部</option>
+                        </select>
+                    </span>
+                </div>
+                <div class="class3">
+
+                </div>
+                <!--  <div class="zs">
+                    <div class="massage">
+                        <span class="prep">2018-09-23</span>
+                        <span class="dell">-15.50</span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="qs"></div>
+    </div>
+</body>
+
+<script>
+    var user_id = '{$unionid}';
+    // var type1=0;
+    // var type2=0;
+    // var type3=0;
+    $(function () {
+
+        initData();
+
+
+        $("select.sele").on("change", function () {
+            var t = this;
+            if ($(t).hasClass("bankname1")) {
+                var type1 = $(t).val();
+                tixian1(2, type1);
+            } else if ($(t).hasClass("bankname2")) {
+                var type2 = $(t).val();
+                tixian2(1, type2);
+            } else if ($(t).hasClass("bankname3")) {
+                var type3 = $(t).val();
+                // console.log(type3);
+                tixian3(3, type3);
+            }
+
+
+        })
+
+        // 点击兑换中
+        $('.navigation').on('click', '.fistone', function () {
+            var get_type = '2';
+            tixian1(get_type, 0);
+            $(this).css('background', '#46D1A9');
+            $('.secdone').css('background', '#fff');
+            $('.threeone').css('background', '#fff');
+            $('.fist').show();
+            $('.secd').hide();
+            $('.three').hide();
+        })
+        // 点击已兑换1
+        $('.navigation').on('click', '.secdone', function () {
+
+            var get_type = '1';
+
+
+            tixian2(get_type, 0);
+            $(this).css('background', '#46D1A9');
+            $('.fistone').css('background', '#fff');
+            $('.threeone').css('background', '#fff');
+            $('.fist').hide();
+            $('.secd').show();
+            $('.three').hide();
+        })
+        // 点击未通过3
+        $('.navigation').on('click', '.threeone', function () {
+
+            var get_type = '3';
+            tixian3(get_type, 0);
+            $(this).css('background', '#46D1A9');
+            $('.fistone').css('background', '#fff');
+            $('.secdone').css('background', '#fff');
+            $('.fist').hide();
+            $('.secd').hide();
+            $('.three').show();
+        })
+
+
+
+        function initData() {
+            var get_type = '2';
+            tixian1(get_type, 0);
+            $("li.fistone").css('background', '#46D1A9');
+            $('.secdone').css('background', '#fff');
+            $('.threeone').css('background', '#fff');
+            $('.fist').show();
+            $('.secd').hide();
+            $('.three').hide();
+        }
+
+        function tixian1(get_typ, type) {
+
+            $.ajax({
+                url: '/index.php?s=/Api/Profit/GetTiXian',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    get_type: get_typ,
+                    type: type
+                },
+                success: function (res) {
+                    console.log(res)
+
+                    var dhz = '';
+                    $.each(res.AppendData, function (k, v) {
+                        dhz += '<div class="massage">'
+                        dhz += '<span class="prep">' + v.add_time_date + '</span>'
+                        dhz += '<span class="dell">' + v.money + '</span>'
+                        dhz += '</div>'
+                    })
+                    $('.class1').html(dhz)
+                    if (res.AppendData.length == 0) {
+                        $(".qs").text("暂无兑换中记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+
+
+
+
+
+
+            // 下拉加载
+            var index = 0;
+            var scrollFlag = true;
+            $(window).scroll(function () {
+                //已经滚动到上面的页面高度
+                var scrollTop = $(this).scrollTop();
+                //页面高度
+                var scrollHeight = $(document).height();
+                //浏览器窗口高度
+                var windowHeight = $(this).height();
+                if (!scrollFlag) {
+                    return false;
+                }
+                if (scrollTop + windowHeight == scrollHeight) {
+                    index += 10;
+                    $(".dx").text("我是有底线的喔").stop(true).fadeIn(500).fadeOut(3000);
+                    scrollFlag = false;
+
+                    $.ajax({
+                        url: 'index.php?s=/Api/User/myMessage',
+                        type: 'post',
+                        data: {
+                            unionid: user_id,
+                        },
+                        beforeSend: function () {
+                            $(".loading").show()
+                        },
+                        success: function (res) {
+                            $(".loading").hide()
+                            console.log(res);
+                            scrollFlag = true;
+                            if (res.AppendData.length == 0) {
+                                scrollFlag = false;
+                                $(".loading").show().html("没有更多数据了").css({
+                                    color: "#fff",
+                                    "line-height": "4.5rem"
+                                }).fadeOut(2000)
+                            }
+                            var dhz = '';
+                            $.each(res.AppendData, function (k, v) {
+                                dhz += '<div class="massage">'
+                                dhz += '<span class="prep">' + v.add_time_date +
+                                    '</span>'
+                                dhz += '<span class="dell">' + v.money + '</span>'
+                                dhz += '</div>'
+                            })
+                            $('.class1').html(dhz)
+                            if (res.AppendData.length == 0) {
+                                $(".qs").text("暂无兑换中记录").stop(true).fadeIn(500).fadeOut(
+                                    3000);
+                            }
+                        },
+                    });
+                }
+            });
+
+
+
+
+
+
+
+
+        }
+
+        function tixian2(get_typ, type) {
+            $.ajax({
+                url: 'index.php?s=/Api/Profit/GetTiXian',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    get_type: get_typ,
+                    type: type
+                },
+                success: function (res) {
+                    console.log(res)
+                    var ydh = '';
+
+                    $.each(res.AppendData, function (k, v) {
+                        ydh += '<div class="massage">'
+                        ydh += '<span class="prep">' + v.add_time_date + '</span>'
+                        ydh += '<span class="dell">' + v.money + '</span>'
+                        ydh += '</div>'
+                    })
+                    $('.class2').html(ydh)
+                    if (res.AppendData.length == 0) {
+
+                        $(".qs").text("暂无已兑换记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+        }
+
+        function tixian3(get_typ, type) {
+
+            $.ajax({
+                url: 'index.php?s=/Api/Profit/GetTiXian',
+                type: 'post',
+                data: {
+                    unionid: user_id,
+                    get_type: get_typ,
+                    type: type
+                },
+                success: function (res) {
+                    console.log(res)
+                    var wtg = '';
+
+                    $.each(res.AppendData, function (k, v) {
+                        wtg += '<div class="massage">'
+                        wtg += '<span class="prep">' + v.add_time_date + '</span>'
+                        wtg += '<span class="dell">' + v.money + '</span>'
+                        wtg += '</div>'
+                    })
+                    $('.class3').html(wtg)
+                    if (res.AppendData.length == 0) {
+                        $(".qs").text("暂无未通过记录").stop(true).fadeIn(500).fadeOut(3000);
+                    }
+                }
+            })
+        }
+    })
+</script>
+
+</html>

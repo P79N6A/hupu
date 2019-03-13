@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="referrer" content="never">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>我的文章</title>
+		<link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+		<link rel="stylesheet" href="__HOME_CSS__/vhome/article/mytext.css">
+		<script src="__HOME_JS__/whjs/js/rem.js"></script>
+		<script src="__HOME_JS__/whjs/js/jquery-3.2.1.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<script src="__HOME_JS__/whjs/js/mytext.js"></script>
+		<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+		<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+		<script src="__HOME_CSS__/bs3/sea.js"></script>
+		<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+		<script src="__HOME_JS__/mui.min.js"></script>
+		<link rel="stylesheet" href="__HOME_CSS__/mui.min.css" />
+		<style type="text/css">
+			.ck:visited {
+				color: #666 !important;
+			}
+			
+			.ck:active {
+				color: #2FB3D3 !important;
+				text-decoration: none !important;
+			}
+			
+			.button-primary {
+				color: #ffffff;
+				background-color: #32CEA0;
+				border-color: #32CEA0;
+			}
+			
+			.xiugai {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			a:link {
+				font-size: 0.6rem;
+				color: #fff;
+				text-decoration: none;
+			}
+			
+			a:visited {
+				font-size: 0.6rem;
+				color: #fff;
+				text-decoration: none;
+			}
+			
+			a:hover {
+				font-size: 0.6rem;
+				color: #fff;
+				text-decoration: none;
+			}
+			
+			.xz {
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 0.05rem solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				float:left;
+				margin: 1.725rem 0.8rem 1.725em 0;
+				display: none;
+			}
+			
+			
+			.xz:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			
+			
+		</style>
+	</head>
+
+	<body>
+		<div id="content">
+			<div id="Article">
+				<notempty name="list">
+					<foreach name="list" item="vo">
+						<div class="art_cen">
+							<div class="art_big">
+								<a class="Article_box clearfix" href="javascript:;" data-id="{$vo['id']}">
+									<label class="checkBox">
+										<input name="id" class="xz" type="radio">
+									</label>
+									<div class="right">
+										<img src="{$vo.thumb}" alt="">
+									</div>
+									<div class="title fl">
+										<p class="nick_name">{$vo.title}</p>
+										<div class="img_tips clearfix">
+											<div class="fl box">
+												<img class="img_item  fl" src="__HOME_IMAGES__/newvnet/article/list_icon_eye@2x.png" alt="">
+												<div class="bk fr">{$vo.visit}</div>
+											</div>
+											<!-- <div class="fl box">
+												<span class="img_item fl"></span>
+												<div class="bk fr"></div>
+											</div> -->
+											<div class="fl box t_right">
+												<img class="img_item time fl" src="__HOME_IMAGES__/newvnet/article/list_icon_time@2x.png" alt="">
+												<div class="bk fr">{$vo.add_time}</div>
+											</div>
+										</div>
+									</div>
+
+								</a>
+								<div class="tit_right">
+									<a href="/index.php?s=/Home/Articlegrab/addArticle/id/{$vo['id']}" class="xiu_gai">修改</a>
+									<a href="/index.php?s=/Home/Articlegrab/previewArticle/id/{$vo['id']}" class="yu_lan">预览</a>
+									<a href="javascript:;" onclick="zzc_dialog_title({$vo.id})" class="san_chu">删除</a>
+								</div>
+							</div>
+						</div>
+					</foreach>
+				</notempty>
+			</div>
+
+		</div>
+	</body>
+	<script>
+		// $(function(){
+
+		 	var type = '{$type}';
+		// 	alert(type_id);
+		// })
+
+		$(".Article_box .right").each(function() {
+			var src = $(this).find("img").attr("src"); //获取图片路径
+			if(src == '') {
+				$(this).find("img").attr("src",'__HOME_IMAGES__/newvnet/article/picture_icon@2x.png')
+				//				console.log($(this));
+//				$(this).css("display", "none");
+				$(this).prev().css("width", "100%");
+			} else {
+				$(this).prev().css("width", "70%");
+			}
+		});
+
+//		function goto(id) {
+//			
+//			window.location.href = "/index.php?s=/Home/Article/myListArticle/type_id=" + id;
+//		}
+//
+//		function addArticleType() {
+//			window.location.href = "{:url('Home/Article/addArticleCategory')}";
+//		}
+
+		function zzc_dialog_title(id) {
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '确定要删除么?',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+								var _url = "/index.php?s=/Home/Article/delArticle";
+								$.post(_url, {
+									"id": id
+								}, function(res) {
+									if(res.status == 1) {
+										mui.toast(res.msg);
+										setTimeout(function() {
+											top.location.href = "/index.php?s=/Home/Articlegrab/articlelist.html";
+										}, 500);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						}
+					]
+				});
+			});
+		}
+
+		//侧滑
+		var x1, x2, bl;
+		var p = 0;
+		$(".art_big").on("touchstart", function() {
+			x1 = event.targetTouches[0].pageX;
+			// console.log(x1)
+			bl = true;
+		})
+		$(".art_big").on("touchmove", function() {
+			// console.log(event.targetTouches[0].pageX);
+			if(bl) {
+				x2 = event.targetTouches[0].pageX;
+				if(x2 - x1 < -20) {
+					$(this).css({
+						"transform": 'translateX(-10rem)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+
+				if(x2 - x1 > 20) {
+					$(this).css({
+						"transform": 'translateX(0rem)',
+						"transition": 'transform 1s'
+					});
+					bl = false;
+				}
+			}
+		});
+		
+		if(type==3){
+			$(".xz").show();
+			$(".Article_box .title").css("width","53%")
+			$(".Article_box ").click(function(){
+				var num = $(this).attr("data-id")
+				window.location.href ="/index.php?s=/Home/Share/previewArticle/id/"+num+".html";
+			})
+		}else{
+			$(".xz").hide();
+			$(".Article_box .title").css("width","63.84%")
+			$(".Article_box ").click(function(){
+				var num = $(this).attr("data-id")
+				window.location.href ="/index.php?s=/Home/Articlegrab/previewArticle/id/"+num+".html";
+			})
+		}
+	</script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+
+</html>

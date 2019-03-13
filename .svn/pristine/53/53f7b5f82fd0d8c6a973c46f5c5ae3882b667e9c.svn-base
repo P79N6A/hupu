@@ -1,0 +1,176 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+	<style>
+		.zzc_heka_music {
+			padding: 10px 8%;
+			border-top: 1px solid #EEEEEE;
+			margin: 10px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		
+		.zzc_heka_nav_bottom {
+			border-top: 1px solid #EEEEEE;
+			margin-top: 10px;
+		}
+		
+		.zzc_heka_nav_bottom_checked {
+			border-bottom: 1px solid #EEEEEE;
+			width: 90%;
+			margin: auto;
+			font-size: 14px;
+			color: #999CA0;
+		}
+		
+		.zzc_heka_nav_bottom_checked label {
+			line-height: 20px;
+		}
+		
+		.zzc_heka_nav_bottom_checked input[type=checkbox] {
+			right: 0px;
+		}
+		
+		.zzc_heka_nav_bottom_checked input[type=checkbox]:before {
+			color: #2FB3D3!important;
+		}
+		
+		.zzc_heka_music_ico,
+		.zzc_heka_music_ico2 {
+			position: absolute;
+			top: 10px;
+			width: 50px;
+			height: 50px;
+			display: block;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		
+		.zzc_heka_music_ico img,
+		.zzc_heka_music_ico2 img {
+			width: 100%;
+		}
+		
+		.zzc_heka_music_ico {
+			right: 5%;
+		}
+		
+		.zzc_heka_music_ico2 {
+			right: 20%;
+		}
+		
+		.zzc_heka_nav {
+			overflow: hidden;
+			width: 100%;
+			position: relative;
+			padding: 10px 5%;
+			margin: 10px auto 0px auto;
+		}
+		
+		.zzc_heka_nav_li {
+			width: 20%;
+			float: left;
+			list-style: none;
+			text-align: center;
+		}
+		
+		.zzc_heka_nav_li img {
+			border-radius: 50%;
+			width: 70%;
+			margin: auto;
+			font-size: 13px;
+		}
+		
+		.zzc_heka_nav_li_title {
+			font-size: 13px;
+			color: #333333;
+		}
+		
+		.zzc_heka_nav_textarea {
+			width: 90%;
+			margin: auto;
+		}
+		
+		.zzc_heka_nav_textarea textarea {
+			font-size: 14px;
+			border: none;
+			background: #f6f6f7;
+			color: #333333;
+			border-radius: 0px;
+		}
+		
+		.zzc_heka_nav_textarea input {
+			background: #AAAAAA;
+			color: #FFFFFF;
+			font-size: 14px;
+			border-radius: 5px;
+			padding: 3px 15px;
+		}
+		
+		.zzc_heka_title {
+			width: 90%;
+			margin: 0px auto;
+			padding: 10px 0px;
+			border-bottom: 1px solid #EEEEEE;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+
+		<div class="mui-content ">
+			<include file="Public/hekaNav" />
+
+			<div class="zzc_heka_music">
+				{$data.music_name}<br/><span style="color:13px;color: #999;">down</span>
+				<a href="#" id="music_play" class="zzc_heka_music_ico"><img class="" src="__HOME_IMAGES__/play.png"></a>
+				<a href="#" id="music_stop" class="zzc_heka_music_ico2"><img class="" src="__HOME_IMAGES__/stop.png"></a>
+			</div>
+			<div class="zzc_heka_nav_bottom">
+				<div class="zzc_heka_title">站内音乐</div>
+				<form action="{:U('Home/Greeting/editUsersGcard')}" method="post" id="form" enctype="multipart/form-data">
+					<input type="hidden" name="do" value="{$Think.get.do}">
+					<input type="hidden" name="id" value="{$Think.get.id}">
+					<input type="hidden" name="type" value="{$Think.get.do}">
+					<input type="hidden" name="jump_url" value="">
+
+					<volist name="music" id="vo">
+						<div class="mui-input-row mui-radio mui-right zzc_heka_nav_bottom_checked">
+							<label>
+                        {$vo.name}
+                    </label>
+							<input name="music_id" value="{$vo.id}" data-url="{$vo.url}" type="radio" <if condition="$vo['id']==$data['music_id']">checked</if> >
+						</div>
+					</volist>
+				</form>
+			</div>
+
+			<audio src="" id="audio"></audio>
+		</div>
+	</body>
+</block>
+<block name="js_extend">
+	<script>
+		$(function() {
+			var audio = document.getElementById('audio');
+			$("#music_stop").on("touchend", function() {
+				audio.src = $("input[name=music_id]:checked").attr("data-url");
+				audio.pause();
+			});
+			$("#music_play").on("touchend", function() {
+				audio.src = $("input[name=music_id]:checked").attr("data-url");
+				audio.play();
+			});
+		})
+		//        mui('.mui-scroll-wrapper').scroll();
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

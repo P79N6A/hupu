@@ -1,0 +1,101 @@
+/**
+ *createUser:JAVA_TOM
+ * FileName: login.js
+ * Author:   14562
+ * Date:     2018/10/15 18:25
+ * Description:
+ *
+ */
+layui.use(['layer','jquery'],function(){
+    var form = layui.form,
+        layer = parent.layer === undefined ? layui.layer : top.layer
+    $ = layui.jquery;
+
+    $(".loginBody .seraph").click(function(){
+        layer.msg("请用账号密码登录，短信登录开发中",{
+            time:5000
+        });
+    })
+    // form.on("submit(login)",function(data){
+    //     return false;
+    // })
+    //登录按钮
+    $("#loginsubmint").on("click",function(){
+        var username=$("#userName").val();
+        var userpaw=$("#password").val();
+       // var code=$("#code").val().toLocaleLowerCase();
+        //var logocode= window.localStorage.getItem("logocode").toLocaleLowerCase();
+       // console.log(code);
+         var t=$(this);
+
+        // if(code!=logocode)
+        // {
+        //     layer.msg("验证码错误",{
+        //         time:3000
+        //     });
+        //     $("#code").val('')
+        //     return;
+        // }
+       t.text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+        $.ajax({
+            type: "POST",
+            url: "/index.php?s=/Api/AgencySystem/login",
+            data:{
+                "account":username,
+                "pwd":userpaw
+            },
+            dataType: 'json',
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function(res) {
+                console.log(res);
+                t.text("登录").removeAttr("disabled").removeClass("layui-disabled");
+                if(res.ResultType==-1){
+                    layer.msg(res.Message,{
+                        time:3000
+                    });
+                  $("#userName").val('');
+                  $("#password").val('');
+                  $("#code").val('');
+
+                }else{
+                    setCookie('adminuuid',res.AppendData.id, 7);
+                    setCookie('pctoken',res.AppendData.pctoken, 7);
+                    window.localStorage.setItem("usename",res.AppendData.usename);
+                    window.localStorage.setItem("topimgurl",res.AppendData.topimgurl);
+                    window.localStorage.setItem("uuid",res.AppendData.id);
+                    window.location.href="/index.php?s=/Agency/Index/index";
+                }
+
+            },
+            error: function() {    t.text("登录").removeAttr("disabled").removeClass("layui-disabled");}
+        })
+        return false;
+
+    })
+    function setCookie(name,value,Days)
+    {
+
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    //表单输入效果
+    $(".loginBody .input-item").click(function(e){
+        e.stopPropagation();
+        $(this).addClass("layui-input-focus").find(".layui-input").focus();
+    })
+    $(".loginBody .layui-form-item .layui-input").focus(function(){
+        $(this).parent().addClass("layui-input-focus");
+    })
+    $(".loginBody .layui-form-item .layui-input").blur(function(){
+        $(this).parent().removeClass("layui-input-focus");
+        if($(this).val() != ''){
+            $(this).parent().addClass("layui-input-active");
+        }else{
+            $(this).parent().removeClass("layui-input-active");
+        }
+    })
+})

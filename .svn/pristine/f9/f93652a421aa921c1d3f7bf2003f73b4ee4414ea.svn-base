@@ -1,0 +1,363 @@
+<extend name="./base" />
+<block name="css_extend">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+        <script src="/Public/Home/js/rem.js"></script>
+        <link rel="stylesheet" href="/Public/Home/css/rjl/Myform.css">
+
+        <style>
+            body {
+                background: #f7f7f7 !important;
+            }
+
+            .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+                color: inherit;
+                border: 0;
+                width: 100%;
+            }
+
+            .mui-slider-indicator.mui-segmented-control {
+                position: relative;
+                bottom: auto;
+                background: #666;
+                color: #fff;
+                height: 2.475rem;
+                text-align: center;
+                line-height: 2.475rem;
+            }
+
+            
+
+            .mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+                width: 100%;
+                height: 2.475rem;
+                white-space: nowrap;
+            }
+
+            .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+                color: #fff;
+                font-size: .75rem;
+                text-align: center;
+            }
+
+            .fuuc {
+                width: 70px;
+                height: 70px;
+                text-align: left;
+                background: url(/Public/Home/images/inco_huodong_tianjia.png);
+                border-radius: 50%;
+                z-index: 2;
+                right: 1.1rem;
+                position: fixed;
+                bottom: 4rem;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                -moz-box-shadow: 0 0 10px #2AB7CF;
+            }
+            
+            .base>a{
+            	display: block;
+            	width: 100%;
+            	height:100%;
+            }
+
+            a {
+                list-style: none;
+                color: #2AB7CF;
+            }
+
+            a:active {
+                list-style: none;
+                color: #2AB7CF;
+            }
+
+            .renjl {
+                font-size: .75rem;
+                height: 2.475rem;
+                line-height: 2.475rem !important;
+            }
+
+            .shanc {
+                width: 25px;
+                height: 25px;
+                background: url(/Public/Home/images/inco_neirong_de.png);
+                background-size: 100% 100%;
+                position: absolute;
+                right: 20px;
+                border-radius: 50%;
+            }
+
+            .tip {
+                width: 7.5rem;
+                height: 5rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-top: -5.5rem;
+                margin-left: -3.75rem;
+                text-align: center;
+                display: none;
+
+            }
+
+            .tip p {
+                font-size: .75rem;
+                color: #333;
+            }
+
+            .tip button {
+                background: #FF9D49;
+                font-size: .6rem;
+                border: 0;
+                width: 98px;
+                height: 37px;
+                
+
+            }
+
+            .tip button a {
+                color: #fff;
+                font-size:15px !important;
+            }
+
+            .loading {
+                width: 100%;
+                text-align: center;
+                display: none;
+                font-size: 0.8rem;
+
+            }
+
+            .loading p {
+                color: #000;
+                font-size: 0.6rem;
+
+            }
+
+            .loading img {
+                width: 1.4rem;
+                height: 1.4rem;
+                display: block;
+                margin: 0 auto;
+
+            }
+
+            .cotins .cont ul {
+                font-size: 2px;
+            }
+
+            .clearfix:after {
+                content: ".";
+                display: block;
+                height: 0;
+                visibility: hidden;
+                clear: both;
+            }
+        </style>
+    </head>
+</block>
+<block name="body">
+
+    <body>
+        <div class="cotins">
+
+        </div>
+        <div class="loading">
+            <img src="/Public/Home/images/new_load.gif" alt="">
+            <p>加载中...</p>
+        </div>
+
+
+        <div class="fuuc" onclick="javascript:window.location.href='/index.php?s=/Home/Activity/Addactivity.html'">
+
+        </div>
+        <div class="tip">
+            <p>您暂时没有发布活动！</p>
+            <button>
+                <a href="/index.php?s=/Home/Activity/Addactivity.html">点击发布</a>
+            </button>
+        </div>
+
+        <script>
+            $(function () {
+
+
+                var length = 10;
+                var user_id = '{$unionid}';
+                var Is_my = 1;
+
+                $.ajax({
+                    type: 'post',
+                    url: "index.php?s=/Api/SignUpApi/sign_up_list",
+                    data: {
+                        unionid: user_id,
+                        start: 0,
+                        length: length,
+                        is_my: Is_my,
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        var list_data = res.AppendData;
+                        var list = '';
+                        $.each(list_data, function (k, v) {
+                            list += '<div class="cont">'
+                            list += '<div class="shanc"  data-id="' + v.id + '"></div>'
+                            list += '<div class="phon">'
+                            list += '<span>' + v.title + '</span>'
+                            list += '</div>'
+                            list += '<div class="base">'
+                            list +=
+                                '<a href="/index.php?s=/Home/Activity/Fullpreview.html&id= ' +
+                                v.id + '">'
+                            list += '<img src="' + v.cover_img + '">'
+                            list += '</a>'
+                            list += '</div>'
+                            list += '<div class="yuan clearfix">'
+                            list += '<ul>'
+                            list += '<li class="tsay">' + v.addtime + '</li>'
+                            list += '<li class="ta">' + v.join_num + '人参与'
+                            list += '</li>'
+                            list += '<li class="tas">' + v.look + '人查看</li>'
+                            list += '</ul>'
+                            list += '</div>'
+                            list += '</div>'
+                        })
+                        $(".cotins").html(list);
+
+                        if ($(".cotins .cont").length == 0) {
+                            $(".tip").show()
+                        } else {
+                            $(".tip").hide()
+                        }
+                    },
+                    error: function () {
+                        alert("异常！");
+                    }
+                });
+
+
+                var index = 0;
+                var scrollFlag = true;
+                $(window).scroll(function () {
+
+                    //已经滚动到上面的页面高度
+                    var scrollTop = $(this).scrollTop();
+                    //页面高度
+                    var scrollHeight = $(document).height();
+                    //浏览器窗口高度
+                    var windowHeight = $(this).height();
+                    //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                    if (!scrollFlag) {
+                        return false;
+                    }
+
+                    if (scrollTop + windowHeight == scrollHeight) {
+                        index += 10;
+                        console.log("到底了");
+
+                        scrollFlag = false;
+
+                        $.ajax({
+                            type: 'post',
+                            url: "index.php?s=/Api/SignUpApi/sign_up_list",
+                            data: {
+                                unionid: user_id,
+                                start: index,
+                                length: length,
+                                is_my: Is_my,
+                            },
+                            beforeSend: function () {
+                                $(".loading").show();
+                            },
+                            success: function (res) {
+                                $(".loading").hide();
+                                scrollFlag = true;
+                                console.log(res);
+                                if (res.AppendData.length == 0) {
+                                    scrollFlag = false;
+                                    $(".loading").show().html("没有更多数据了");
+                                }
+                                var list = '';
+                                $.each(res.AppendData, function (k, v) {
+                                    list += '<div class="cont">'
+                                    list += '<div class="shanc"  data-id="' + v.id +
+                                        '"></div>'
+                                    list += '<div class="phon">'
+                                    list += '<span>' + v.title + '</span>'
+                                    list += '</div>'
+                                    list += '<div class="base">'
+                                    list +=
+                                        '<a href="/index.php?s=/Home/Activity/Fullpreview.html&id= ' +
+                                        v.id + '">'
+                                    list += '<img src="' + v.cover_img + '">'
+                                    list += '</div>'
+                                    list += '<div class="yuan clearfix">'
+                                    list += '<ul>'
+                                    list += '<li class="tsay">' + v.addtime +
+                                        '</li>'
+                                    list += '<li class="ta">' + v.join_num + '人参与'
+                                    list += '</li>'
+                                    list += '<li class="tas">' + v.look +
+                                        '人查看</li>'
+                                    list += '</ul>'
+                                    list += '</div>'
+                                    list += '</div>'
+                                })
+                                $(".cotins").append(list)
+                            },
+                            error: function () {
+                                $(".loading").hide();
+                                alert("异常！");
+                            }
+                        });
+                    }
+
+                });
+
+                //删除报名
+                var user_id = '{$unionid}';
+
+                $('.cotins').on('click', '.shanc', function () {
+                    var delid = $(this).attr("data-id");
+                    var that = $(this);
+                    mui.confirm("确认删除吗？", "提示", ["否", "是"], function (res) {
+                        if (res.index == 1) {
+                            that.parent().remove();
+                            $.ajax({
+                                type: 'post',
+                                url: "index.php?s=/Api/SignUpApi/del_sign",
+                                data: {
+                                    unionid: user_id,
+                                    sign_id: delid,
+                                },
+                                success: function (res) {
+                                    console.log(res)
+                                    if ($(".cotins .cont").length == 0) {
+                                        $(".tip").show()
+                                    } else {
+                                        $(".tip").hide()
+                                    }
+                                },
+                                error: function () {
+                                    alert("服务器繁忙，请稍后再试！")
+                                }
+                            })
+                        }
+                    })
+                })
+            })
+        </script>
+    <!-- 禁止分享 -->
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+                // 通过下面这个API隐藏右上角按钮hideOptionMenu
+                WeixinJSBridge.call('hideOptionMenu');
+            });
+        </script>
+    </body>
+</block>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <title>{$title}</title>
+    <style>
+        body,html{
+            background: #eee;
+        }
+        .header{
+            width: 100%;
+        }
+
+         .header .fw{
+             padding: .09rem 0 .09rem .2rem;
+             font-size: .13rem;
+             color: #a3a3a3;
+         }
+
+        .header .js_lx_box{
+            padding-left: .2rem;
+            box-sizing: border-box;
+            background: #fff;
+        }
+
+           .header .js_lx_box a{
+               display: block;
+               padding: .2rem .2rem .15rem 0;
+               box-sizing: border-box;   
+               position: relative; 
+               color: #2b2b2b;
+               font-weight: 600;
+           }
+
+             .header .js_lx_box a img{
+                 position: absolute;
+                 width: .07rem;
+                 height: .12rem;
+                 top: 50%;
+                 right: .23rem;
+                 margin-top: -0.06rem;
+             }
+
+             #go_out{
+                 width: 3.26rem;
+                 height: .4rem;
+                 line-height: .4rem;
+                 text-align: center;
+                 color: #fff;
+                 border-radius: .04rem;
+                 /* position: fixed; */
+                 position: absolute;
+                 bottom: .4rem;
+                 left: 50%;
+                 margin-left: -1.63rem;
+                 outline: none;
+                 border: 0;
+                 background: #32CEA0;
+             }
+    
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="fw">服务</div>
+        <div class="js_lx_box">
+            <a href="/index.php?s=/Home/Video/index.html">
+                V网介绍
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+            <a href="/index.php?s=/Home/Card/contactUs.html">
+                联系我们
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+        </div>
+    </div>
+    <div class="header">
+        <div class="fw">设置</div>
+        <div class="js_lx_box">
+            <a href="/index.php?s=/Home/Set/signpassword.html">
+                登录密码
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+            <a href="/index.php?s=/Home/Set/paypassword.html">
+                支付密码
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+            <a href="/index.php?s=/Home/User/binding.html">
+                绑定微信
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+            <a href="/index.php?s=/Home/Set/protect.html">
+                隐私保护
+                <img src="__HOME_IMAGES__/wh/icon_jump@2x.png" alt="">
+            </a>
+        </div>
+    </div>
+    <button id="go_out">退出登录</button>
+	<script>
+		$("#go_out").on("click",function(){
+			// window.location.href="/index.php?s=/Home/Mycenter/login.html"
+            window.location.href='/index.php?s=/Home/User/checkout.html'
+		})
+	</script>
+    
+</body>
+</html>

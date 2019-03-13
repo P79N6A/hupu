@@ -1,0 +1,7 @@
+<?php
+namespace app\Common\controller;
+
+class Base extends Controller
+{
+
+}

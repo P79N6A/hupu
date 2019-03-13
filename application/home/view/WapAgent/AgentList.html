@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>申请信息列表</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+    <script src="__AGENCY__/wap/public.js"></script>
+
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .mint-cell .mint-cell-wrapper{
+            background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 0%, transparent 0%);
+            background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 0%, transparent 0%)
+            }
+        ul,li{ padding:0;margin:0;list-style:none}
+        .popup3{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        .serachbnt button{width: 40%;margin-left: 5%;margin-top: 10px}
+        .serachdata input{background: #fff}
+        .mint-header{background-color: #1f6f9e;}
+        .page-loadmore-desc {
+            text-align: center;
+            color: #666;
+            padding-bottom: 5px;
+            margin-top: 12rem;
+        }
+</style>
+</head>
+<body>
+<div id="app">
+    <mt-header title="申请信息列表">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button  slot="right" @click="popupVisible=true">刷选</mt-button>
+    </mt-header>
+    <!--刷选-->
+    <div>
+
+        <mt-popup v-model="popupVisible" position="right" pop-transition="popup-fade" modal="false" class="popup3">
+                <div class="serachdata">
+                    <p>申请人姓名</p>
+                    <mt-field label="申请人姓名" placeholder="请输入申请人姓名" v-model="serachpojo.nagent_name"></mt-field>
+                    <p>申请人手机号</p>
+                    <mt-field label="申请人手机号" placeholder="请输入申请人手机号" v-model="serachpojo.nagent_phone"></mt-field>
+
+                </div>
+
+                <div class="serachbnt">
+
+                    <mt-button type="default" @click="popupVisible=false">取消</mt-button>
+                    <mt-button type="primary" @click="serachs">查询</mt-button>
+                </div>
+
+        </mt-popup>
+
+    </div>
+    <div>
+
+            <ul v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+                <li v-for="(item,index) in tableData" @click="tiaozhuang(item.uuid)" >
+                    <mt-cell :title="item.nagent_name" :value="item.nagent_phone"></mt-cell>
+                    <mt-cell title="合同编号" :value="item.contract_name"></mt-cell>
+                    <mt-cell title="当前状态" :value="item.nstate"></mt-cell>
+
+                </li>
+                <li class="more_loading" v-show="!queryLoading && tableData.length>8" style="text-align: center;font-size: 12px;margin-top: 10px">
+
+                    <mt-spinner type="triple-bounce" color="#00ccff" :size="40" v-show="moreLoading&&!allLoaded"></mt-spinner>
+
+                    <span v-show="allLoaded">----我也是有底线的----</span>
+                    <span v-show="!allLoaded">加载中...</span>
+                </li>
+                <li class="more_loading" v-show="!queryLoading && tableData.length==0" style="text-align: center;font-size: 12px;margin-top: 10px">
+                    <p class="page-loadmore-desc">您还没有申请信息</p>
+                </li>
+            </ul>
+       <!--http://localhost:801/index.php?s=/Home/Customer/receptionlist.html-->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data: {
+            popupVisible:false,
+            //动态数据
+            //动态数据
+            allLoaded:false,
+            //是否显示提示
+            queryLoading:false,
+            //显示加载特效
+            moreLoading:false,
+
+            dataallLoaded:false,
+
+            tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            pojo:{
+
+            },
+            paylist: [],
+            loading: false,
+            serachpojo:{
+                nagent_name:'',
+                nagent_phone:'',
+            },
+            isserach:false,
+
+
+
+
+        },
+        methods: {
+            tiaozhuang:function(r){
+                window.location.href="/index.php?s=/Home/WapAgent/Agent_show&pojouuid="+r;
+            },
+            loadBottom:function() {
+
+                var t=this;
+               t.postTableData();
+            },
+            serachs:function(){
+                var t=this;
+                t.allLoaded=false;
+                //是否显示提示
+                t.queryLoading=false;
+                //显示加载特效
+                t.moreLoading=false;
+
+                t.dataallLoaded=false;
+                t.isserach=true;
+                t.popupVisible=false;
+                t.n=1;
+                t.postTableData();
+            },
+            postTableData: function() {
+                var _this = this;
+                if(_this.dataallLoaded){
+                    _this.moreLoading = true;
+                    return;
+                }
+                if(_this.allLoaded){
+                    return;
+                }
+                _this.moreLoading = !_this.allLoaded;
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?s=/Api/AgencyWeb/my_agent_list",
+                    data: {
+                        n: _this.n,
+                        nagent_name:_this.serachpojo.nagent_name,
+                        nagent_phone:_this.serachpojo.nagent_phone,
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+
+                    crossDomain: true,
+                    success: function(res) {
+                        isRole(res);
+                        var data = res.AppendData;
+
+                        for(var a in data.list){
+                            if(data.list[a]["nstate"]>=1 && data.list[a]["nstate"]<=3){
+                                data.list[a]["nstate"]="申请:审核中";
+                            }else if(data.list[a]["nstate"]==4 || data.list[a]["nstate"]==5){
+                                data.list[a]["nstate"]="数据修改中";
+                            }else if(data.list[a]["nstate"]>=6 && data.list[a]["nstate"]<=8){
+                                data.list[a]["nstate"]="升级:审核中";
+                            }else if(data.list[a]["nstate"]==9){
+                                data.list[a]["nstate"]="初审未通过";
+                            }else if(data.list[a]["nstate"]==10){
+                                data.list[a]["nstate"]="审核已通过";
+                            }else if(data.list[a]["nstate"]==-1){
+                                data.list[a]["nstate"]="数据已过期";
+                            }
+                        }
+                      //  console.log(res)
+                        var c= _this.tableData;
+                        if(_this.isserach){
+                            _this.tableData = data.list;
+                            _this.isserach=false;
+                        }else{
+                            for( var i in data.list){
+                                c.push(data.list[i]);
+                            }
+                            _this.tableData = c;
+                        }
+
+                        if(data.list.length<10){
+                            _this.allLoaded=true;
+                        }else{
+                            _this.n= _this.n+1;
+                            _this.allLoaded=false;
+                        }
+
+                    },
+                    error: function() {}
+                })
+            },
+
+
+        },
+        mounted: function () {
+            var t=this;
+            t.postTableData();
+        },
+
+    })
+</script>
+</body>
+
+</html>

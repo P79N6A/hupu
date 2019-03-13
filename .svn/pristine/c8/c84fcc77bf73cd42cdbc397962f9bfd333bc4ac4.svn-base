@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/parameter.css">
+    <script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- <script src="__HOME_CSS__/add/js/mui.min.js"></script> -->
+    <script src="__HOME_JS__/whjs/js/jquery-3.2.1.js"></script>
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <!--<script src="__HOME_JS__/whjs/js/parameter.js"></script>-->
+
+    <title>产品参数</title>
+ 
+</head>
+<body>
+    <!-- <div class="cus clearfix">
+                <input class="fl" type="text" value="" placeholder="请输入参数名" />
+                <span class="line fl">-</span>
+                <input class="fl" type="text" value="" placeholder="请输入参数值" />
+                <span class="mui-icon mui-icon-close fr"></span>
+        </div>
+        <div class="cus clearfix">
+            <input class="fl" type="text" value="" placeholder="请输入参数名" />
+            <span class="line fl">-</span>
+            <input class="fl" type="text" value="" placeholder="请输入参数值" />
+            <span class="mui-icon mui-icon-close fr"></span>
+        </div> -->
+    <div class="parameter_box" id="content">
+        
+    </div>
+    <div class="add_parameter">
+        点击添加产品参数
+    </div> 
+    <div class="bt"></div>
+    <div class="Choice clearfix">
+    <!-- javascript:history.back(-1) -->
+        <a class="fl" href="javascript:void(0)" onclick="retur()">
+        	取消	
+        </a>
+        <a  class="fl" href="javascript:void(0)" id="submit">
+        	保存
+        </a>
+    </div>
+
+        <!-- 删除提示 -->
+        <div class="mui-popup mui-popup-in">
+            <div class="mui-popup-inner">
+                <div class="mui-popup-title">提示</div>
+                <div class="mui-popup-text">是否删除？</div>
+            </div>
+            <div class="mui-popup-buttons">
+                <span id="btn1" class="mui-popup-button">否</span>
+                <span id="btn2" class="mui-popup-button mui-popup-button-bold">是</span>
+            </div>
+        </div>
+        <div class="mui-popup-backdrop mui-active"></div>
+        
+    <script>
+        function retur(){
+            var pid='{$pid}';
+            window.location.href='__ROOT__/index.php?s=/Home/Chat/group/id/'+pid;
+        }
+        $(function(){
+            var id='{$id}';
+            var pid='{$pid}';
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "index.php?s=/Api/IndexApi/product_detail" ,//url 
+                data: {"id":id,"product_id":pid},
+                // async: false,
+                success: function (result) {
+                    // alert(result.ResultType);
+                    //console.log(result);
+                    if (result.ResultType == 0) {
+                        var str=" ";
+                        $.each(result.AppendData.product_parameter,function(idx,item){
+                            // alert(idx);
+                            // str+="<span class='pic_" + idx + "'><img id='preview_" + idx + "' src='"+item.img+"' class='preview' style='margin-left:0.1rem'/><img src='__HOME_IMAGES__/x.png' class='xx' onclick='del_img(this)' alt=''><input type='hidden' name='img[pic_" + idx + "]' value='" + item.img + "'></span>";
+                            str+="<div class='cus clearfix'>";
+                            str+="    <input class='fl' type='text' value='"+item.title+"' id='title' placeholder='请输入参数名' data-ids='"+item.id+"'/>";
+                            str+="    <span class='line fl'>-</span>";
+                            str+="    <input class='fl' type='text' value='"+item.content+"' id='content' placeholder='请输入参数值' data-id='"+item.id+"'/>";
+                            str+="    <span class='mui-icon mui-icon-close fr'></span>";
+                            str+="</div>";
+                        }); 
+
+                        $('#content').append(str);
+                    }                       
+                },
+                error : function() {
+                    alert("服务器繁忙，请稍后再试！");
+                }                    
+            });
+        });
+        $("#submit").click(function(){
+            var arr=[];
+            
+            // $.each($(".parameter_box").children(".cus"),function(idx,item){
+            //     alert($(this).html());
+            //     // alert($(this).children(".cus clearfix").children("#title").val());
+            //     // alert(idx);
+            //     product_parameter[idx][name] = $(this).children(".cus").children("#title").val();
+            //     product_parameter[idx][val] = $(this).children(".cus").children("#content").val();
+            // })
+            // console.log(product_parameter);
+            // var product_parameter=[];
+            $.each($(".parameter_box").children(".cus"),function(idx,item){
+                if($(this).children("#title").val() && $(this).children("#content").val()){
+                    var product_parameters=[$(this).children("#title").val(),$(this).children("#content").val()];
+                }
+                
+                // product_parameters["name"]=$(this).children("#title").val();
+                // product_parameters['val']=$(this).children("#content").val();
+                // product_parameters[];
+                arr.push(product_parameters);
+
+            });
+
+              // console.log(arr);
+            var id='{$id}';
+            var pid='{$pid}';
+            var product_para=arr;
+            // var s=[];
+            // for(var  a in arr)
+            //    {
+            //      s.push({'name':arr[a].name,'val':arr[a].val})
+            //    } 
+
+             // console.log(arr);
+            //    console.log(s);
+            // console.log(JSON.stringify(s));
+            // console.log(JSON.stringify(product_para));
+            // var product_para=JSON.stringify(arr);
+           // var product_para=[{"name":"za","val":4},{"name":"za","val":4}];
+        
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                  // traditional: true,
+                url: "index.php?s=/Api/IndexApi/add_edit_product_para" ,//url 
+                data: {"id":id,"product_id":pid,"product_para":product_para},
+                // async: false,
+                success: function (result) {
+                    console.log(result);
+                    if (result.ResultType == 0) {
+                        mui.toast("提交成功！");
+                        window.location.href='__ROOT__/index.php?s=/Home/Chat/group/id/'+pid;
+                    }                       
+                },
+                error : function() {
+                    alert("服务器繁忙，请稍后再试！");
+                }                    
+            });
+        });
+
+
+$(function(){
+
+    $(".parameter_box").on("click", ".mui-icon-close", function () {
+
+        var ids=$(this).parent().children().attr('data-ids');
+
+        // if(ids){
+            $(".mui-popup.mui-popup-in").css("display","block");
+            $(".mui-popup-backdrop.mui-active").css("display","block");
+
+            var parent = $(this).parent();
+
+           $("#btn2").on("click", function () {
+                parent.remove();
+                $(".mui-popup.mui-popup-in").css("display", "none");
+                $(".mui-popup-backdrop.mui-active").css("display", "none");
+                var id='{$id}';
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    url: "index.php?s=/Api/IndexApi/del_product_parm" ,//url
+                    data: {"id":id,"parm_id":ids},
+                    // async: false,
+                    success: function (result) {
+                        // alert(result.ResultType);
+                        if (result.ResultType == 0) {
+                            $(".mui-popup.mui-popup-in").css("display", "none");
+                            $(".mui-popup-backdrop.mui-active").css("display", "none");
+                            parent.remove();
+                        }
+                    },
+                    error : function() {
+                        alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+           })
+        // }else{
+            // alert("参数内容为空");
+        // }
+                                
+    })
+
+
+
+
+
+
+
+    
+    $("#btn1").on("click",function(){
+             $(".mui-popup.mui-popup-in").css("display", "none");
+             $(".mui-popup-backdrop.mui-active").css("display", "none");
+    })
+
+    $(".add_parameter").on("click",function(){
+        if ($(".cus").length <= 10) {
+             var strdiv = '';
+             strdiv += ' <div class="cus clearfix">';
+             strdiv += ' <input class="fl" type="text" value="" id="title" placeholder="请输入参数名" />';
+             strdiv += ' <span class="line fl">-</span>';
+             strdiv += ' <input class="fl" type="text" value="" id="content" placeholder="请输入参数值" />';
+             strdiv += ' <span class="mui-icon mui-icon-close fr"></span>';
+             strdiv += ' </div>';
+             $(".parameter_box").append(strdiv);
+        }else{
+            return false;
+        }
+       
+    })
+
+})
+    </script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+</body>
+</html>
+

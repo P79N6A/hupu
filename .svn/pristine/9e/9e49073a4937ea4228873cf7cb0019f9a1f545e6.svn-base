@@ -1,0 +1,483 @@
+<?php
+
+namespace app\admin\controller;
+
+use think\App;
+use think\Db;
+use think\db\Where;
+use think\Request;
+
+class UserInfo extends Base
+{
+
+    public $class;
+
+    public function __construct(App $app = null)
+    {
+        parent::__construct($app);
+
+        $this->class = getClass(get_class(), 1);
+
+    }
+
+    public function index()
+    {
+
+        //        当前类名称
+        $class = $this->class;
+        $this->assign('class', $class);
+
+        $lists = Db::name('vip_group')
+            ->alias('svg')
+            ->join('user_info sui ', 'svg.id=sui.vip_group_id')
+            ->group('svg.id,svg.vip_name')
+            ->field('svg.id,svg.vip_name,count(svg.id) as cnt')
+            ->select();
+
+        $this->assign('lists', $lists);
+
+        return $this->fetch();
+    }
+
+    public function vipIndex()
+    {
+        //        当前类名称
+        $class = $this->class;
+        $this->assign('class', $class);
+
+        $lists = Db::name('vip_group')
+            ->alias('svg')
+            ->join('user_info sui ', 'svg.id=sui.vip_group_id')
+            ->group('svg.id,svg.vip_name')
+            ->field('svg.id,svg.vip_name,count(svg.id) as cnt')
+            ->select();
+
+        $this->assign('lists', $lists);
+
+        return $this->fetch();
+
+    }
+
+        public function statIndex()
+    {
+        //        当前类名称
+        $class = $this->class;
+        $this->assign('class', $class);
+
+
+
+
+        $lists = Db::name('vip_group')->select();
+
+        $this->assign('lists', $lists);
+
+        $lists = Db::name('region')->where(array('parent_id'=>0))->select();
+        $this->assign('province_list', $lists);
+
+        return $this->fetch();
+
+    }
+
+    public function getVipList()
+    {
+        //        分页必备参数
+        $Nowpage = input('get.page') ? input('get.page') : 1;
+        $limits = input('get.limit');// 获取总条数
+
+        $condition = [];//查询条件
+
+        if (input('nick_name') || input('phone')) {
+            $condition[] = ['A.vip_id', 'egt', 0];
+
+        } else {
+            $condition[] = ['A.vip_id', 'gt', 3];
+        }
+
+        $param = input('vipGroup');
+        if ('' != $param) {
+            $condition[] = ['E.id', '=', $param];
+        }
+
+
+        $param = input('city_id');
+        if ('' != $param) {
+            $condition[] = ['A.city_id', '=', $param];
+
+        }
+        $param = input('province_id');
+        if ('' != $param) {
+            $condition[] = ['A.province_id', '=', $param];
+
+        }
+        $param = input('nick_name');
+        if ('' != $param) {
+            $condition[] = ['A.nick_name', 'like', "%{$param}%"];
+
+        }
+        $param = input('phone');
+        if ('' != $param) {
+            $condition[] = ['G.phone', '=', $param];
+
+        }
+        $param = input('vip_name');
+        if ('' != $param) {
+            $condition[] = ['E.id', '=', $param];
+        }
+
+        $model = $this->getModelClass();
+        $data = $model
+            ->alias('A')
+            ->join("vip_group E ", "E.id=A.vip_group_id", "left")
+            ->join("vip_list F ", "F.id=A.vip_id", "left")
+            ->join("member G ", "G.id=A.member_id", "left")
+            ->join("user_info H ", " H.id=A.rec_user_id", "left")
+            ->where($condition)
+            ->order('A.id desc')
+            ->field('A.*, E.vip_name, F.money as v_money, H.nick_name as rec_name, G.phone, G.status');
+
+        $lists = $data->page($Nowpage, $limits)->select();
+
+//        foreach ($lists as $key => $list) {
+//            $lists[$key]['balance'] = number_format(($lists[$key]['money'] + $lists[$key]['frozen_money'] + $lists[$key]['already_money']), 2, ".", "");
+//        }
+        $count = $data->count();
+        return toJson(0, $condition, $count, $lists);
+    }
+
+
+//    获取用户统计数据
+    public function getStatList()
+    {
+        //        分页必备参数
+        $Nowpage = input('get.page') ? input('get.page') : 1;
+        $limits = input('get.limit');// 获取总条数
+
+        $condition = [];//查询条件
+
+        $condition[] = ['vip_id','gt',0];
+        $condition[] = ['H.level','=',1];
+
+//            $where['u.nick_name|m.phone'] = input['name'];
+//        if(input['startDate'])
+//            $where['uf.add_time'] = array('between',array(strtotime(input['startDate']."00:00:00"),strtotime(input['overDate']
+//                ."23:59:59")));
+
+        $param = input('vipGroup');
+        if ('' != $param) {
+            $condition[] = ['A.vip_group_id', '=', $param];
+        }
+
+        $param = input('nick_name');
+        if ('' != $param) {
+            $condition[] = ['A.nick_name', '=', $param];
+        }
+
+        $param = input('city_id');
+        if ('' != $param) {
+            $condition[] = ['A.city_id', '=', $param];
+        }
+        $param = input('province_id');
+        if ('' != $param) {
+            $condition[] = ['A.province_id', '=', $param];
+        }
+
+        $start_at = input('start_at');
+        $end_at = input('end_at');
+        if ('' != $start_at) {
+            $start_at = strtotime($start_at);
+
+            if ('' != $end_at) {
+                $end_at = strtotime($end_at);
+                $condition[] = array('H.add_time','between', [$start_at,$end_at]);
+            }
+            if ($start_at) {
+                $condition[] = array('H.add_time','>=', $start_at);
+            }
+        }
+
+
+        $model = $this->getModelClass();
+        $data = $model
+            ->alias('A')
+            ->join("users_fans H ", " H.user_id=A.id", "left")
+            ->join("member G ", "G.id=A.member_id", "left")
+            ->join("vip_group E ", "E.id=A.vip_group_id", "left")
+            ->field('A.id,E.vip_name,A.nick_name,A.give_vip1_count,A.give_vip3_count,A.give_vip4_count,A.give_vip5_count,G.phone,count(*) as fans_num')
+            ->where($condition)
+            ->group('A.id')
+            ->order('fans_num desc  ');
+
+
+        $lists = $data->page($Nowpage, $limits)->select();
+        $count = $data->count();
+        return toJson(0, $condition, $count, $lists);
+    }
+
+
+    public function getList()
+    {
+        //        分页必备参数
+        $Nowpage = input('get.page') ? input('get.page') : 1;
+        $limits = input('get.limit');// 获取总条数
+
+        $condition = [];//查询条件
+
+        $param = input('isPay');
+        if ('' != $param) {
+            if ($param == 1) {
+                $condition['A.vip_group_id'] = 1;
+            } else {
+                $condition['A.vip_group_id'] = array('neq', 0);
+            }
+        }
+
+        $param = input('vipGroup');
+        if ('' != $param) {
+            $condition['E.id'] = $param;
+        }
+
+        $param = input('phone');
+        if ('' != $param) {
+            $condition['G.phone'] = $param;
+        }
+
+        $param = input('mobile');
+        if ('' != $param) {
+            $condition['A.mobile'] = $param;
+        }
+        $param = input('nick_name');
+        if ('' != $param) {
+            $condition['A.nick_name'] = ['like', "%{$param}%"];
+        }
+
+//        $start_at = input('start_at');
+//        $end_at = input('end_at');
+//        if ('' != $start_at) {
+//            $start_at = strtotime($param);
+//
+//            if ('' != $end_at) {
+//                $end_at = strtotime($end_at);
+//                $condition['A.add_time'] = array('elt', $end_at);
+//            }
+//            if ($start_at) {
+//                $condition['A.add_time'] = array('egt', $start_at);
+//            }
+//        }
+
+
+        $model = $this->getModelClass();
+        $data = $model
+            ->alias('A')
+            ->join("region B ", "B.region_id=A.province_id", "left")
+            ->join("region C ", "C.region_id=A.city_id", "left")
+            ->join("region D ", "D.region_id=A.district_id", "left")
+            ->join("vip_group E ", "E.id=A.vip_group_id", "left")
+            ->join("vip_list F ", "F.id=A.vip_id", "left")
+            ->join("member G ", "G.id=A.member_id", "left")
+            ->join("user_info H ", " H.id=A.rec_user_id", "left")
+            ->where($condition)
+            ->order('A.id desc')
+            ->field('A.*, B.region_name as province_name, C.region_name as city_name, D.region_name as district_name, E.vip_name, F.money as v_money, H.nick_name as rec_name, G.phone, G.status');
+
+
+        $lists = $data->page($Nowpage, $limits)->select();
+
+        foreach ($lists as $key => $list) {
+            $lists[$key]['balance'] = number_format(($lists[$key]['money'] + $lists[$key]['frozen_money'] + $lists[$key]['already_money']), 2, ".", "");
+        }
+        $count = $data->count();
+        return toJson(0, $condition, $count, $lists);
+
+    }
+
+
+    public
+    function getUserOne()
+    {
+
+        $id = input('id');//类别
+        $model = $this->getModelClass();
+        $data = $model->getOneMember($id);
+
+        return toJson(0, '', 1, $data);
+
+    }
+
+    public function blocking()
+    {
+        $id = input('id');
+
+        $model = $this->getModelClass();
+        $data = $model->getOneMember($id);
+
+        return toJson(0, '', 1, $data);
+
+    }
+
+
+    public
+    function add(Request $request)
+    {
+
+        if ($request->isAjax()) {
+
+            $param = $request->param();
+
+            $param['addtime'] = time();
+            $param['admin_id'] = 1;
+            $param['status'] = 1;
+
+            $model = $this->getModelClass();
+            $flag = $model->insertMember(json_encode($param));
+
+            return json(['code' => $flag['code'], 'data' => $flag['data'], 'msg' => $flag['msg']]);
+        }
+
+        $lists = Db::name('article_type')->where('user_id=0')->select();
+        $this->assign('lists', $lists);
+
+        return $this->fetch();
+    }
+
+
+    public
+    function edits()
+    {
+        $model = $this->getModelClass();
+        if (request()->isAjax()) {
+            $param = input('post.');
+
+            $flag = $model->editMember($param);
+
+            return json(["code" => $flag["code"], "data" => $flag["data"], "msg" => $flag["msg"]]);
+        }
+
+        $id = input('id');
+        if (!$id) {
+            return $this->fetch('index');
+        }
+
+        $data = $model->getOneMember($id);
+        $this->assign('data', $data);
+
+        $lists = Db::name('article_type')->where('user_id=0')->select();
+        $this->assign('lists', $lists);
+
+        return $this->fetch();
+    }
+
+
+    /**
+     * 修改字段
+     * @return \think\response\Json
+     */
+    public
+    function editStatus()
+    {
+        $id = input('param.id');
+        //判断当前状态情况
+        $status = Db::name('member')->where('id', $id)->value('status');
+
+        if ($status == 1) {
+
+            $flag = Db::name('member')->where('id', $id)->setField(['status' => 2]);
+            return json(['code' => 1, 'data' => $flag, 'dd' => $status, 'msg' => '冻结成功']);
+
+        } else {
+            $flag = Db::name('member')->where('id', $id)->setField(['status' => 1]);
+            return json(['code' => 0, 'data' => $flag, 'dd' => $status, 'msg' => '已解冻']);
+
+        }
+
+    }
+
+    /**
+     * 批量删除选中的记录
+     * @return \think\response\Json
+     */
+    public
+    function delSelecteds()
+    {
+        $ids = input('ids');
+        $class = getClass(get_class());
+        return deletes($class, $ids, '');
+    }
+
+    /**
+     * 删除单个实例
+     * @return mixed
+     */
+    public
+    function del()
+    {
+        $id = input('id');
+        $model = $this->getModelClass();
+        $flag = $model->del($id, get_class());
+        return $flag;
+    }
+
+    /**
+     * 假删除
+     */
+    function delMember()
+    {
+
+        $id = input('id', 0);
+        if ($id == 0) {
+            return ['code' => 0, 'data' => '', 'msg' => '缺省参数id'];
+        }
+        $model = $this->getModelClass();
+        $flag = $model->delMember($id, 'status', 0);
+        return $flag;
+    }
+
+    function showRec()
+    {
+        //        当前类名称
+        $class = $this->class;
+        $this->assign('class', $class);
+
+        $this->assign('user_id', input('id'));
+
+        return $this->fetch();
+
+    }
+
+    public function getRecUsers()
+    {
+        // 分页必备参数
+        $Nowpage = input('get.page') ? input('get.page') : 1;
+        $limits = input('get.limit');// 获取总条数
+        $id = input('id', 0);
+        $condition['A.rec_user_id'] = $id;
+
+        $param = input('isPay');
+        if ('' != $param) {
+            if ($param == 1) {
+                $condition['A.vip_group_id'] = 1;
+            } else {
+                $condition['A.vip_group_id'] = array('neq', 0);
+            }
+        }
+
+        $model = $this->getModelClass();
+        $data = $model
+            ->alias('A')
+            ->join('vip_group B', 'B.id=A.vip_group_id', 'left')
+            ->join('user_info C', 'C.id=A.rec_user_id', 'left')
+            ->where($condition)
+            ->field('A.*,B.vip_name,C.nick_name as rec_name');
+
+        $count = $data->count();
+
+        $lists = $data->page($Nowpage, $limits)->select();
+
+        foreach ($lists as $key => $list) {
+            $lists[$key]['balance'] = number_format(($lists[$key]['money'] + $lists[$key]['frozen_money'] + $lists[$key]['already_money']), 2, ".", "");
+        }
+
+        return toJson(0, '', $count, $lists);
+
+    }
+
+}

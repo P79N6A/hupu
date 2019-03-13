@@ -1,0 +1,29 @@
+<script src="__ADMIN_JS__/jquery-3.2.1.min.js"></script>
+
+<script src="__ADMIN_JS__/jquery.form.js"></script>
+
+<!--<script src="__ADMIN_JS__/jquery.min.js?v=2.1.4"></script>-->
+<!--<script src="__JS__/bootstrap.min.js?v=3.3.6"></script>-->
+<!--<script src="__JS__/content.min.js?v=1.0.0"></script>-->
+<!--<script src="__JS__/plugins/chosen/chosen.jquery.js"></script>-->
+<!--<script src="__JS__/plugins/iCheck/icheck.min.js"></script>-->
+<!--<script src="__JS__/plugins/laydate/laydate.js"></script>-->
+<!--<script src="__JS__/plugins/switchery/switchery.js"></script>&lt;!&ndash;IOS开关样式&ndash;&gt;-->
+<!--<script src="__JS__/layer/layer.js"></script>-->
+<!--<script src="__JS__/laypage/laypage.js"></script>-->
+<!--<script src="__JS__/laytpl/laytpl.js"></script>-->
+<!--<script src="__JS__/lunhui.js"></script>-->
+<!--<script src="__JS__/plugins/layui/layui.js"></script>-->
+
+
+<script src="__IFRAME__/layuiadmin/layui/layui.all.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laydate.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/layer.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laypage.js"></script>
+<script src="__IFRAME__/layuiadmin/layui/lay/modules/laytpl.js"></script>
+
+
+
+<script src="__ADMIN_JS__/lunhui.js"></script>
+
+

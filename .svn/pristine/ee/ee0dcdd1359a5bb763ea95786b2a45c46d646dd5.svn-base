@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>体验卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .top {
+            width: 100%;
+            height: .46rem;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .topdao li {
+            float: left;
+            width: 50%;
+            height: .46rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 400;
+            color: #A1A1A1;
+            line-height: .46rem;
+            text-align: center;
+        }
+
+        .pingz {
+            /* width: .17rem; */
+            height: .46rem;
+            padding: .12rem 0;
+            color: #2B2B2B;
+            font-size: .14rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            border-bottom: .03rem solid #2B2B2B;
+        }
+
+        .mid {
+            width: 100%;
+            height: .48rem;
+            background: #F7F7F7;
+        }
+
+        .midsp{
+            width: 1rem;
+            height: .18rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #666;
+            line-height: .18rem;
+        }
+        .midan{
+            width:1rem;
+            height: .18rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #666;
+            line-height: .18rem;
+        }
+
+        .one {
+            width: 100%;
+            height: .71rem;
+            background: pink;
+            position: relative;
+        }
+
+        .right {
+            width: .73rem;
+            height: .28rem;
+            background: #32CEA0;
+            border-radius: .15rem;
+            position: absolute;
+            right: .16rem;
+            top: .24rem;
+        }
+
+        .teen {
+            width: .37rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: .17rem;
+            position: absolute;
+            line-height: .17rem;
+            top:.11rem;
+            left:.15rem;
+        }
+
+        .sixa {
+            width: 1.14rem;
+            height: .25rem;
+            font-size: .18rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(74, 74, 74, 1);
+            line-height: .25rem;
+            position: absolute;
+            left:.17rem;
+            bottom:.12rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top">
+            <ul class="topdao">
+                <li class="fone"><span>未使用</span></li>
+                <li class="sone"><span>已使用</span></li>
+            </ul>
+        </div>
+        <div class="mid">
+            <span class="midsp">总数：1996</span>
+            <span class="midan">已使用数：419</span>
+        </div>
+        <div class="last">
+            <div class="one">
+                <span class="teen">体验码</span>
+                <span class="sixa">41237986754</span>
+                <div class="right"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    //未使用
+    $(".fone").click(function () {
+        console.log(111)
+        $(".fone span").addClass("pingz");
+        $(".sone span").removeClass("pingz");
+    })
+    // 已使用
+    $(".sone").click(function () {
+        console.log(111)
+        $(".sone span").addClass("pingz");
+        $(".fone span").removeClass("pingz");
+    })
+</script>
+
+</html>

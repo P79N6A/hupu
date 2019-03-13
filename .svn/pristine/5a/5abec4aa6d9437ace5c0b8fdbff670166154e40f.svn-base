@@ -1,0 +1,347 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	
+	<style>
+	
+		.zzc_heka_bage {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			background: #CCCCCC;
+			background-size: 100%;
+			background-repeat: no-repeat;
+		}
+		
+		.zzc_heka_bage_div {
+			color: #FFFFFF;
+			z-index: 99;
+			position: absolute;
+			top: 100px;
+			left: 10%;
+			font-size: 14px;
+			line-height: 25px;
+			width: 80%;
+			overflow: hidden;
+		}
+		
+		.zzc_heka_bage_img {
+			position: absolute;
+			width: 80px;
+			bottom: 30px;
+			left: 50%;
+			margin-left: -40px;
+			text-align: center;
+			color: #FFFFFF;
+			font-size: 14px;
+		}
+		
+		.zzc_heka_bage_img img {
+			width: 80%;
+			border-radius: 50%;
+			margin: 10px auto;
+			border: 2px solid #FFFFFF;
+			box-shadow: 0px 0px 20px #FFFFFF;
+		}
+		
+		#moveid {
+			top: {
+				$data.content_y;
+			}
+			width: 100%;
+		}
+		
+		#moveid>* {
+			color: {
+				$data.font_color
+			}
+			;
+			font-size: 25px;
+			text-shadow: 1px 0px 0px {
+				$data.font_border_color
+			}
+			,
+			-1px 0px 0px {
+				$data.font_border_color
+			}
+			,
+			0px 1px 0px {
+				$data.font_border_color
+			}
+			,
+			0px -1px 0px {
+				$data.font_border_color
+			}
+			;
+		}
+		
+		.greeting_card_preview_make input {
+			background: rgba(255, 255, 255, 0);
+			width: 100%;
+			height: 45px;
+			border: 0;
+			font-size: 14px;
+			outline: 0;
+			padding: 5px 0;
+			text-align: left;
+			margin-bottom: 0px;
+			margin-left: 30px;
+			color: #fff;
+			text-shadow: 1px 0 0 #f85325, -1px 0 0 #f85325, 0 1px 0 #f85325, 0 -1px 0 #f85325;
+		}
+		
+		.greeting_card_preview_make textarea,
+		.word_text {
+			width: 80%;
+			height: 100px;
+			line-height: 24px;
+			border: 0;
+			resize: none;
+			font-size: 14px;
+			text-indent: 28px;
+			/* margin-left: 30px; */
+			color: #fff;
+			background: rgba(255, 255, 255, 0);
+			text-shadow: 1px 0 0 #f85325, -1px 0 0 #f85325, 0 1px 0 #f85325, 0 -1px 0 #f85325;
+		}
+		
+		.drag_drop_icon {
+			position: absolute;
+			bottom: -16px;
+			right: -10px;
+			display: inline-block;
+			height: 30px;
+			width: 30px;
+			background: url(__HOME_IMAGES__/drag_drop.svg) no-repeat;
+			background-size: cover;
+		}
+		
+		.greeting_card_preview_make input[name="my_name"] {
+			float: right;
+			text-align: right;
+		}
+		
+		.preview_info {
+			border-radius: 10px;
+			position: relative;
+		}
+		
+		.greeting_card_preview_make {
+			padding: 10px;
+			margin: 10px;
+			height: 195px;
+		}
+		
+		.zzc_heka_bage_img span {
+			color: #fff;
+		}
+		
+		.music_btn {
+			width: 50px;
+			height: 50px;
+			background-size: 100%;
+			background-image: url(__HOME_IMAGES__/music_ban.png);
+			position: absolute;
+			right: 8px;
+			top: 15px;
+			z-index: 999;
+		}
+		
+		.music_btn.open {
+			background-image: url(__HOME_IMAGES__/music_open.png);
+		}
+
+		#txt{
+			text-align: left;
+			width: 20rem;
+		}
+
+	</style>
+</block>
+<block name="body">
+	
+
+	<body class="">
+		<div class="mui-content ">
+			<div class="music_btn open" data-url="{$data.music_url}"></div>
+			<div class="zzc_heka_bage" style="background-image:url({$data.pic})"> 
+				
+			</div>
+			<div id="moveid" class="greeting_card_preview_make preview_info" style=" transform-origin: 50% 50% 0px; cursor: move; transition: none;"> <input disabled="" type="text" name="your_friend" value="{$data.title}">
+				<div  style="line-height:40px;">{$data.content}</div> 
+				<input disabled="" type="text" name="my_name" value="{$data.phone}"> </div>
+			<div class="zzc_heka_bage_img">
+				<a href="{:U('Home/Nologin/card_jump/id/'.$data['user_id'])}">
+					<div style="width:80px;height:80px">
+						<img src="{$data.user.headimg}" style="width:80%;height:80%" alt="" />
+					</div>
+					<br/><span>我的V网</span>
+				</a>
+
+			</div>
+
+		</div>
+		<audio src="{$data.music_url}" autoplay="autoplay" id="audio" loop="loop"></audio>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="__HOME_JS__/jquery.autotype.js"></script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+	<script>
+
+        $(function() {
+            var share_url = "{$share_url}";
+
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST", //方法类型
+                dataType: "json", //预期服务器返回的数据类型
+                url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                data:{share_url:share_url},
+                async: true,
+
+                // async: false,
+                success: function(result) {
+
+
+
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                        appId: result.AppendData.appId,
+                        timestamp: result.AppendData.timestamp,
+                        nonceStr: result.AppendData.nonceStr,
+                        signature: result.AppendData.signature,
+                        jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                            'checkJsApi',
+                            'onMenuShareTimeline', //
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'getLocation'
+                        ]
+                    });
+
+                    wx.ready(function() {
+                        //分享到朋友圈
+                        wx.onMenuShareTimeline({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享给朋友
+                        wx.onMenuShareAppMessage({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            type: '', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ
+                        wx.onMenuShareQQ({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到腾讯微博
+                        wx.onMenuShareWeibo({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                        //分享到QQ空间
+                        wx.onMenuShareQZone({
+                            title: "{$sharetitle}", // 分享链接
+                            desc: "{$desc}", // 分享链接
+                            link: window.location.href, //分享出去后的链接，这里可以将链接设置为另一个页面。
+                            imgUrl: "{$imgUrl}", // 分享链接
+                            success: function() {
+                                // 用户确认分享后执行的回调函数
+                                sharePush();
+                            },
+                            cancel: function() {
+                                // 用户取消分享后执行的回调函数
+                            }
+                        });
+                    });
+
+                },
+                error: function() {
+                    alert("服务器繁忙，请稍后再试！");
+                }
+            });
+
+        });
+	</script>
+	<script>
+
+
+
+
+
+
+		var h = window.localStorage.getItem('height');
+		console.log(h)
+		$("#moveid").autotype();
+		$("#moveid").css("transform","matrix(0.8, 0, 0, 0.8, -10,"+(h-124)+")");
+
+		audio = document.getElementById('audio');
+
+		$(".music_btn").on("touchend", function() {
+			var url = $(this).attr("data-url");
+
+			if($(this).hasClass("open")) {
+				audio.pause();
+				$(this).removeClass('open');
+			} else {
+				audio.play();
+				$(this).addClass('open');
+			}
+		});
+		mui('.mui-scroll-wrapper').scroll();
+
+		wx.ready(function() {
+			audio.play();
+			
+		});
+
+		
+
+
+		
+	</script>
+</block>

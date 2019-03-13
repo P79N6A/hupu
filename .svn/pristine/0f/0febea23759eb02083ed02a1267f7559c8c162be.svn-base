@@ -1,0 +1,1 @@
+<?php//团队表 数据层namespace app\api\model;use think\Model;class Team extends Model{    protected $table = 's_team';}

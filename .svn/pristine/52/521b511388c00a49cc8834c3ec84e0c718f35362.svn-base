@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>{$title}</title>
+    <style>
+        #template{
+            width: 100%;
+            padding: .10rem .08rem;
+            box-sizing: border-box;
+            
+        }
+
+        #template li{
+            margin-right: 1.8%;
+            text-align: center;
+            margin-bottom: .2rem;
+            width: 48%;
+        }
+
+          #template li .item_img{
+              width: 100%;
+              height: 2.4rem;
+              display: block;
+              margin: 0 auto;
+          }
+
+           #template li .user_box div:nth-child(1){
+             font-size: .16rem;
+             padding-top: .1rem;
+         }
+
+            #template li .user_box div:nth-child(2){
+              font-size: .12rem;
+              margin-top: .12rem;
+              margin-left: .05rem;
+              background: #32CEA0;
+              color: #fff;
+              padding: .01rem .03rem;
+              border-radius: .02rem;
+          }
+    
+    
+    </style>
+</head>
+<body>
+    <ul class="clearfix" id="template">
+        <!-- <li class="fl">
+            <img class="item_img" src="__HOME_IMAGES__/wh/Template1@2x.png" alt="">
+            <div class="clearfix user_box">
+                <div class="fl">简约清新</div>
+                <div class="fl">默认</div>
+            </div>
+        </li> -->
+
+    </ul>
+</body>
+</html>
+<script>
+$(function(){
+
+
+    var unionid = '{$unionid}';
+    $.ajax({
+        type:'post',
+        url:'/index.php?s=/Api/NewCardApi/style_list',
+        data:{
+            unionid:unionid
+        },
+        success:function(res){
+            console.log(res)
+            if(res.ResultType == 0){
+                var data = res.AppendData;
+                var template = '';
+                $.each(data,function(k,v){
+                    template+= '<li class="fl" data-id="'+v.id+'" >'
+                    template+=  '<img class="item_img" src="'+v.img+'" alt="">'
+                    if(v.type == 1){
+                        template+= '<div class="clearfix user_box">'
+                        template+= '<div class="fl">'+v.title+'</div>'
+                        template+= '<div class="fl" style="color:#fff;background:#4E95FB"  >免费</div>'
+                        template+= '</div>'
+                    }
+                    template+=  '</li>'
+                })
+
+                $('#template').html(template)
+                var expect = '';
+                    expect+= '<li class="fl" data-id="">'
+                    expect+= '<img class="item_img" src="__HOME_IMAGES__/wh/jqqd.png" alt="">'
+                    expect+= '<div class="clearfix user_box">'
+                    expect+=  '<div class="fl" style="text-align:center;width:100%;">敬请期待更多模板</div>'
+                    // expect+= '<div class="fl">默认</div>'
+                    expect+='</div>'
+                    expect+='</li>'
+                $('#template').append(expect)
+            }
+        }
+    })
+
+
+    $('ul').on('click','li',function(){
+        var id = $(this).attr('data-id');
+        if(id == ""){
+            return false;
+        }else{
+            location.href = '/index.php?s=/Home/Selecttemplate/choicetemplate&id='+id+''
+        }
+        
+    })
+
+
+})
+</script>

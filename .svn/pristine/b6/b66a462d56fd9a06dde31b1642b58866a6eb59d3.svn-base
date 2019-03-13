@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>{$title}</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			.out {
+				width: 100%;
+				height: 6.35rem;
+				background: #F6F6F6;
+				padding-bottom: 0.8rem;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 100000;
+			}
+			
+			.top {
+				width: 90%;
+				height: 2.3rem;
+				line-height: 3rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+				margin: 0 auto;
+			}
+			
+			.tab {
+				width: 90%;
+				height: 2.05rem;
+				line-height: 1.5rem;
+				color: #999;
+				font-size: 0.6rem;
+				margin: 0 auto;
+			}
+			
+			.tab_left {
+				float: left;
+				width: 35%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.move {
+				width: 20%;
+				height: 100%;
+				float: left;
+				text-align: right;
+				overflow: hidden;
+			}
+			
+			.move_img {
+				display: block;
+				float: left;
+				width: 1rem;
+				height: 100%;
+			}
+			
+			.move_img>img {
+				display: block;
+				width: 0.8rem;
+				height: 0.75rem;
+				margin-top: 0.35rem;
+			}
+			
+			.del {
+				width: 25.5%;
+				height: 100%;
+				float: left;
+				text-align: right;
+				overflow: hidden;
+			}
+			
+			.del_img {
+				display: block;
+				float: left;
+				width: 1rem;
+				height: 100%;
+			}
+			
+			.del_img>img {
+				display: block;
+				width: 0.8rem;
+				height: 0.75rem;
+				margin-top: 0.35rem;
+			}
+			
+			.del_txt,
+			.sort_txt,
+			.move_txt {
+				width: auto;
+				height: 100%;
+				float: left;
+			}
+			
+			.sort {
+				width: 19.5%;
+				height: 100%;
+				float: left;
+				text-align: right;
+				overflow: hidden;
+			}
+			
+			.sort_img {
+				display: block;
+				float: left;
+				width: 0.8rem;
+				height: 100%;
+			}
+			
+			.sort_img>img {
+				display: block;
+				width: 0.55rem;
+				height: 0.75rem;
+				margin-top: 0.35rem;
+			}
+			
+			.add {
+				width: 90%;
+				height: 2rem;
+				background: #F8C85E;
+				border-radius: 0.2rem;
+				margin: 0 auto;
+				text-align: center;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #fff;
+			}
+			
+			.add>a {
+				display: block;
+				text-decoration: none;
+				color: #fff;
+			}
+			
+			.max {
+				width: 100%;
+				height: auto;
+				/*overflow: hidden;*/
+				position: relative;
+				margin-top: 6.35rem;
+			}
+			
+			.add_img {
+				width: 90%;
+				height: auto;
+				padding: 1.5rem 0;
+				background: #fff;
+				margin: 0 auto 2rem;
+				overflow: auto;
+				position: absolute;
+				top: 0;
+				left: 5%;
+				display: none;
+			}
+			
+			.add_cen,
+			.d_cen {
+				width: 100%;
+				height: auto;
+				overflow: hidden;
+				font-stretch: 0.8rem;
+				color:#333;
+				text-align: center;
+				line-height:2.5rem ;
+			}
+			
+			.a_img {
+				width: 31.114%;
+				height: 7.2rem;
+				margin-bottom: 0.5rem;
+				float: left;
+				position: relative;
+			}
+			
+			.a_img>a {
+				text-decoration: none;
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.a_img:nth-child(3n-1) {
+				margin: 0 3.329%;
+			}
+			
+			.i_img {
+				width: 100%;
+				height: 6rem;
+			}
+			
+			.i_img>img {
+				width: 100%;
+				height: 100%;
+				border-radius: 0.1rem;
+			}
+			
+			.a_tit {
+				width: 100%;
+				height: 1.2rem;
+				line-height: 1.2rem;
+				font-size: 0.6rem;
+				color: #777777;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.on {
+				display: block;
+			}
+			
+			.add>span {
+				margin-right: 0.25rem;
+			}
+			
+			.add>a>span>img {
+				width: 0.9rem;
+				height: 0.8rem;
+				vertical-align: middle;
+			}
+			
+			.d_img {
+				width: 0.9rem;
+				height: 0.9rem;
+				position: absolute;
+				top: 0.4rem;
+				right: 0.4rem;
+				z-index: 1000;
+				cursor: pointer;
+			}
+			
+			.d_img>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.confirm {
+				width: 100%;
+				height: 2rem;
+				background: #fff;
+				padding: 0.2rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				z-index: 1000;
+				display: none;
+			}
+			
+			.save {
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.25rem;
+				line-height: 2rem;
+				border-radius: 0.2rem;
+			}
+			
+			.confirms {
+				width: 100%;
+				height: 2rem;
+				background: #fff;
+				padding: 0.2rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				z-index: 1000;
+				display: none;
+			}
+			
+			.saves {
+				width: 90%;
+				height: 2rem;
+				margin: 0 auto;
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-align: center;
+				color: #fff;
+				letter-spacing: 0.25rem;
+				line-height: 2rem;
+				border-radius: 0.2rem;
+			}
+			/*删除按钮*/
+			
+			.xz {
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 0.05rem solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				position: absolute;
+				top: 0.4rem;
+				right: 0.4rem;
+				display: none;
+			}
+			
+			.xzs {
+				display: block;
+				width: 0.9rem;
+				height: 0.9rem;
+				-webkit-appearance: none;
+				border: 2px solid rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+				outline: none;
+				margin: 0.95rem 0.5rem 0.95rem 0;
+				/*display: none;*/
+			}
+			
+			.xz:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			
+			.xzs:checked {
+				background: url("__HOME_IMAGES__/newvnet/imgtxt/icon_lian_lv@2x.png")no-repeat center;
+				background-size: 100% 100%;
+				border: 0.05rem solid #32CEA0;
+				border-radius: 50%;
+			}
+			
+			.delete {
+				width: 90%;
+				height: 2.8rem;
+				background: #fff;
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				border-top: 0.05rem solid #F6F6F6;
+				padding: 0 5%;
+				display: none;
+				overflow: hidden;
+				z-index: 1000000;
+			}
+			
+			.del_left {
+				width: 50%;
+				height: 100%;
+				display: flex;
+				color: #777777;
+				font-size: 0.6rem;
+				line-height: 2.8rem;
+				float: left;
+			}
+			
+			.del_right {
+				width: 50%;
+				height: 2rem;
+				background: #32CEA0;
+				border-radius: 0.2rem;
+				margin: 0.4rem 0;
+				line-height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				color: #fff;
+				letter-spacing: 0.25rem;
+				font-weight: 600;
+				float: left;
+			}
+			/*删除按钮*/
+			/*加载动效*/
+			
+			#loadId {
+				display: none;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				color: #333;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading>img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="out">
+			<div class="top"></div>
+			<div class="tab">
+				<div class="tab_left">
+					<span class="t_num"></span>
+					<span>个图文</span>
+				</div>
+				<div class="move">
+					<span class="move_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/move_icon@2x.png" alt="" />
+					</span>
+					<span class="move_txt">移动</span>
+				</div>
+				<div class="del li">
+					<span class="del_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_delete@2x.png" alt="" />
+					</span>
+					<span class="del_txt">批量删除</span>
+				</div>
+				<div class="sort li">
+					<span class="sort_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/paixu.png" alt="" />
+					</span>
+					<span class="sort_txt">手动排序</span>
+				</div>
+			</div>
+			<div class="add">
+				<a href="/index.php?s=/Home/vhome/addgraphic/type_id/{$type_id}/title/{$title}">
+					<span>
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_tu_photo@2x.png" alt="" />
+					</span>
+					<span>添加图文</span>
+				</a>
+			</div>
+		</div>
+		<div class="max">
+			<div class="add_img in on">
+				<div class="add_cen">
+
+				</div>
+				<!--<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />
+					</div>
+					<label class="checkBox"><input class="xz" type="checkbox"></label>
+				</div>-->
+				<div class="loading" id="loadId">
+					<img src="__HOME_IMAGES__/loading.png" alt="">
+					<span>正在加载中...</span>
+				</div>
+
+			</div>
+
+			<div id="drag" class="add_img">
+				<div id="dr_cen" class="d_cen">
+
+				</div>
+				<!--<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">1岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">1岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">张良梅</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">1岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">1岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>
+				<div class="a_img">
+					<div class="i_img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="a_tit">1岁月教会了你什么哈哈哈</div>
+					<div class="d_img">
+						<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />
+					</div>
+				</div>-->
+				<div class="loading" id="loadId">
+					<img src="__HOME_IMAGES__/loading.png" alt="">
+					<span>正在加载中...</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="confirm">
+			<div class="save">
+				保存
+			</div>
+		</div>
+		<div class="confirms">
+			<div class="saves">
+				确定
+			</div>
+		</div>
+
+		<div class="delete">
+			<div class="del_left">
+				<span>
+					<label class="checkBoxs"><input id="qx" class="xzs" type="checkbox"></label>
+				</span>
+				<span>全选删除</span>
+			</div>
+			<div class="del_right">确定</div>
+		</div>
+		<div class="model"></div>
+		<script src="__HOME_JS__/yb/js/sortable.js"></script>
+		<script>
+			Sortable.create(dr_cen, {});
+		</script>
+		<script>
+			$(".top").html('{$title}')
+			var isok = true;
+			//选项切换
+			$(".li").click(function() {
+				$(".add_img").eq($(".li").index(this)).addClass("on").siblings().removeClass('on');
+			});
+
+			//移动
+			$(".move").click(function() {
+				$(".d_img").hide();
+				$(".xz").show();
+				$(".xzs").show();
+				$(".confirm").hide();
+				$(".delete").hide();
+				$(".confirms").show();
+
+			});
+
+			//排序
+			$(".sort").click(function() {
+				$(".d_img").show();
+				$(".confirm").show();
+				$(".delete").hide();
+				isok = false;
+				//				$('.out').animate({
+				//					'height':"0px"
+				//				})
+			})
+			//删除
+			$(".del").click(function() {
+				$(".d_img").hide();
+				$(".xz").show();
+				$(".xzs").show();
+				$(".confirm").hide();
+				$(".delete").show();
+				//				$('.out').animate({
+				//					'height':"0px"
+				//				})
+
+			});
+
+			$("#qx").click(function() {
+				var qxs = $(this).prop("checked");
+				var ck = $(".xz").prop("checked", qxs);
+			})
+			var unionid = "{$unionid}";
+			var type_id = "{$type_id}";
+			var title = "{$title}"
+			console.log(type_id)
+			var length = 0;
+			var list = "";
+			var lists = "";
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type_id: type_id,
+					start: 0,
+					length: 1000
+				},
+				success: function(res) {
+					if(res.AppendData == "") {
+						$(".add_cen").html("您还没有图文哦!请去添加图文")
+						$(".d_cen").html("您还没有图文哦!请去添加图文");
+					}
+					if(res.ResultType == 0) {
+						$(res.AppendData).each(function(v, i) {
+							list += '<div class="a_img">'
+							list += '<a href="/index.php?s=/Home/vhome/addgraphic/type_id/' + type_id + '/show_id/' + i.id + '/title/'+title+'">'
+							list += '<div class="i_img">'
+							list += '<img src="' + i.thumb + '" alt="" />'
+							list += '</div>'
+							list += '<div class="a_tit">' + i.title + '</div>'
+							list += '<div class="d_img" data-id="' + i.id + '">'
+							list += '<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />'
+							list += '</div>'
+							list += '<label class="checkBox"><input name="id" class="xz" value="' + i.id + '" type="checkbox"></label>'
+							list += '</a>'
+							list += '</div>'
+							lists += '<div class="a_img" data-id="' + i.id + '">'
+							lists += '<a href="/index.php?s=/Home/vhome/addgraphic/type_id/' + type_id + '/show_id/' + i.id + '">'
+							lists += '<div class="i_img">'
+							lists += '<img src="' + i.thumb + '" alt="" />'
+							lists += '</div>'
+							lists += '<div class="a_tit">' + i.title + '</div>'
+							lists += '<div class="d_img">'
+							lists += '<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />'
+							lists += '</div>'
+							lists += '<label class="checkBox"><input class="xz" type="checkbox"></label>'
+							lists += '</a>'
+							lists += '</div>'
+						})
+						$(".add_cen").html(list);
+						$(".d_cen").html(lists);
+					}
+				},
+			});
+			
+
+//			$(window).scroll(function() {
+//				//已经滚动到上面的页面高度
+//				var scrollTop = $(this).scrollTop();
+//				var list = "";
+//				var lists = "";
+//				//页面高度
+//				var scrollHeight = $(document).height();
+//				//浏览器窗口高度
+//				var windowHeight = $(this).height();
+//				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+//				if(!scrollFlag) {
+//					return false;
+//				}
+//				//				console.log(scrollTop + windowHeight)
+//				//				console.log(scrollHeight)
+//				if(scrollTop + windowHeight + 1 >= scrollHeight) {
+//
+//					length += 12;
+//					//					console.log(length)
+//					scrollFlag = false;
+//					$.ajax({
+//						url: '/index.php?s=/Api/AppApi/show_list',
+//						type: "post",
+//						dataType: 'json',
+//						data: {
+//							unionid: unionid,
+//							start: length,
+//							type_id: type_id,
+//							length: 6,
+//						},
+//						beforeSend: function() {
+//							$(".loading").show();
+//						},
+//						success: function(res) {
+//							//							console.log(res);
+//							scrollFlag = true;
+//							$(".loading").hide();
+//
+//							if(res.AppendData.length <= 0) {
+//								$(".in").append("<div class='loading'>我也是有底线的哟！</div>");
+//								$("#drag").append("<div class='loading'>我也是有底线的哟！</div>");
+//								scrollFlag = false;
+//							}
+//							if(res.ResultType == 0) {
+//								$(res.AppendData).each(function(m, n) {
+//									list += '<div class="a_img">'
+//									list += '<a href="/index.php?s=/Home/vhome/addgraphic/type_id/' + type_id + '/show_id/' + n.id + '">'
+//									list += '<div class="i_img">'
+//									list += '<img src="' + n.thumb + '" alt="" />'
+//									list += '</div>'
+//									list += '<div class="a_tit">' + n.title + '</div>'
+//									list += '<div class="d_img" data-id="' + n.id + '">'
+//									list += '<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_delete@2x.png" alt="" />'
+//									list += '</div>'
+//									list += '<label class="checkBox"><input name="id" class="xz" value="' + n.id + '" type="checkbox"></label>'
+//									list += '</a>'
+//									list += '</div>'
+//									lists += '<div class="a_img" data-id="' + n.id + '">'
+//									lists += '<a href="/index.php?s=/Home/vhome/addgraphic/type_id/' + type_id + '/show_id/' + n.id + '">'
+//									lists += '<div class="i_img">'
+//									lists += '<img src="' + n.thumb + '" alt="" />'
+//									lists += '</div>'
+//									lists += '<div class="a_tit">' + n.title + '</div>'
+//									lists += '<div class="d_img" >'
+//									lists += '<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_jin_paixu@2x.png" alt="" />'
+//									lists += '</div>'
+//									lists += '<label class="checkBox"><input class="xz" type="checkbox"></label>'
+//									lists += '</a>'
+//									lists += '</div>'
+//								})
+//								$(".add_cen").append(list);
+//								$(".d_cen").append(lists);
+//								list = "";
+//								lists = "";
+//							}
+//						}
+//
+//					})
+//
+//				}
+//			});
+
+			//单个删除
+			$(document).on("click", ".d_img", function(event) {
+				var d_id = $(this).attr("data-id")
+				var unionid = "{$unionid}";
+				event.stopPropagation();
+                event.preventDefault();
+				$.ajax({
+					url: "/index.php?s=/Api/NewShowListApi/show_list_del",
+					type: 'post',
+					data: {
+						unionid: unionid,
+						show_ids: d_id
+					},
+					success: function(res) {
+						console.log(res);
+						window.location.reload();
+					},
+				})
+			})
+
+			//排序保存
+			var content = ""
+			$(".save").on("click", function() {
+				var unionid = "{$unionid}";
+				var arr = [];
+				var arry = [];
+				var str = ""
+				$("#dr_cen .a_img").each(function(i, e) {
+					arr.push($(this).attr("data-id"));
+					arry.push(i + 1);
+					content = "" + arr[i] + "=" + arry[i] + ""
+					str += '' + content + '' + ','
+				});
+				console.log(str);
+				$.ajax({
+					url: "/index.php?s=/Api/NewShowListApi/show_list_sort",
+					type: 'post',
+					data: {
+						unionid: unionid,
+						content: str,
+					},
+					success: function(res) {
+						console.log(res)
+						window.location.reload();
+					},
+				})
+
+			})
+			$(".del_right").on("click", function() {
+				var unionid = "{$unionid}";
+				var id_array = new Array();
+				$('input[name="id"]:checked').each(function() {
+					id_array.push($(this).val()); //向数组中添加元素  
+				});
+				var idstr = id_array.join(','); //将数组元素连接起来以构建一个字符串  
+
+				$.ajax({
+					url: "/index.php?s=/Api/NewShowListApi/show_list_del",
+					type: 'post',
+					data: {
+						unionid: unionid,
+						show_ids: idstr
+					},
+					success: function(res) {
+						//						console.log(res);
+						window.location.reload();
+					},
+				})
+			})
+			//图文数量
+			var unionid = "{$unionid}";
+			var type_id = "{$type_id}";
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type_id: type_id
+				},
+				success: function(res) {
+
+					$(".t_num").html(res.AppendData.length)
+
+				},
+			});
+
+			$('.saves').on('click', function() {
+
+				var id_array = new Array();
+				$('input[name="id"]:checked').each(function() {
+					id_array.push($(this).val()); //向数组中添加元素  
+				});
+				console.log(id_array.length);
+
+				if(id_array.length == 0) {
+					$(".model").show();
+					$(".model").html('请至少选择一个移动项');
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					return false;
+				}
+				var idstr = id_array.join(','); //将数组元素连接起来以构建一个字符串  
+				console.log(idstr)
+
+				location.href = '/index.php?s=/Home/vhome/move&str=' + idstr + ''
+
+			})
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

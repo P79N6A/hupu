@@ -1,0 +1,62 @@
+<extend name="./base" />
+
+<block name="css_extend">
+    <style type="text/css">
+        .show_content {
+            margin: 10px;
+            padding: 20px 10px;
+            background-color: white;
+        }
+
+        .show_content p {
+            color: #BEC3C7;
+        }
+
+        .mui-btn-primary {
+            color: #fff;
+            border: 1px solid #32CEA0;
+            background-color: #32CEA0;
+        }
+
+        .zzc_header {
+            background: #32CEA0;
+            color: #FFFFFF;
+            clear: both;
+        }
+    </style>
+</block>
+
+<block name="body">
+
+    <body class="zzc_body_bg">
+
+        <if condition="$regulate eq 0">
+            <header class="mui-bar mui-bar-nav zzc_header">
+                <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+            </header>
+        </if>
+        <div class="mui-content zzc_mui_content_bg">
+            <div class="show_content">
+                给{$userInfo['nick_name']}留言
+                <br />
+                <form action="{:url('Home/Chat/addMessage?id='.I('get.id'))}" method="post">
+                    <div>
+                        <textarea name="content"></textarea>
+                    </div>
+                    <input name="id" value="{$user_id}" type="hidden">
+                    <button class="mui-btn mui-btn-primary">提交</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            // 通过下面这个API隐藏右上角按钮hideOptionMenu
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+    </script>
+</block>

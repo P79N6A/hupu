@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+
+    <script src="__HOME_JS__/whjs/js/hammer.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/lrz.all.bundle.js"></script>
+    <script src="__HOME_JS__/whjs/js/iscroll-zoom-min.js"></script>
+    <script src="__HOME_JS__/whjs/js/PhotoClip.js"></script>
+    <title>{$title}</title>
+    <style>
+
+        body,html{
+            background: #fff;
+        }
+        #content{
+            padding: .12rem 0 .12rem .12rem;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+    .header{
+        width: 100%;
+        padding-bottom: .12rem;
+        border-bottom: 1px solid #f6f6f6;
+
+    }
+
+    .header p{
+        font-size: .18rem;
+        font-weight: bold;
+        padding-bottom: .04rem
+
+    }
+
+    .header input{
+        outline: none;
+        border: 0;
+    }
+
+    input::input-placeholder{color:#c5c5c5!important;} 
+    .thumb_box{
+        width: 100%;
+        height: .6rem;
+        line-height: .6rem;
+        border-bottom: 1px solid #f6f6f6;
+
+    }
+
+    .thumb_box p{
+        font-size: .16rem;
+        font-weight: bold;
+    }
+
+    .thumb_box .thumb{
+        width: .41rem;
+        height: .41rem;
+        position: relative;
+        margin-top: .1rem;
+        margin-right: .12rem;
+    }
+
+      .thumb_box .thumb input{
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          left: 0;
+      }
+
+       .thumb_box .thumb img{
+           display: block;
+           width: 100%;
+           height: 100%;
+           border-radius: .02rem;
+           position: absolute;
+           top: 0;
+           left: 0;
+       }
+
+       .updata_video .text{
+           font-size: .16rem;
+           font-weight: bold;
+           padding-top: .12rem;
+           margin-bottom: .4rem;
+       }
+       .updata_video .list{
+           width: 100%;
+
+       }
+
+         .updata_video .list li{
+            width: 1.1rem;
+            height: 1.1rem;
+             background: #eaeaea;
+             position: relative;
+             border-radius: .02rem;
+         }
+
+          .updata_video .list li input{
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              position: relative;
+              z-index: 2;
+          }
+
+           .updata_video .list li .play{
+               width: .28rem;
+               height: .28rem;
+               display: block;
+               position: absolute;
+               top: 50%;
+               left: 50%;
+               margin-top: -.14rem;
+               margin-left: -.14rem;
+           }
+
+            .updata_video .list li p{
+                position: absolute;
+                bottom: .1rem;
+                width: 100%;
+                text-align: center;
+                color: #9b9b9b;
+            }
+
+            .keep{
+                width: 3.06rem;
+                height: .4rem;
+                line-height: .4rem;
+                background: #32CEA0;
+                color: #fff;
+                border-radius: .3rem;
+                outline: none;
+                border: 0;
+                position: fixed;
+                bottom: .32rem;
+                left: 50%;
+                margin-left: -1.53rem;
+            }  
+
+            .loading {
+                width: 155px;
+                height: 120px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-left: -77.5px;
+                margin-top: -60px;
+                text-align: center;
+                display: none;
+                background-color: rgba(0, 0, 0,0.5);
+                border-radius: 5px;
+                z-index: 1001;
+            }
+
+            .loading img {
+                width: 40px;
+                height: 40px;
+                margin-top: 18px;
+                animation: change 3s linear infinite;
+            }
+            .loading span {
+                display: block;
+                color: #fff;
+                margin-top: 12px;
+                font-size: 16px;
+            }
+
+            @-webkit-keyframes change {
+            0% {
+            -webkit-transform: rotate(0deg);
+            }
+            50% {
+            -webkit-transform: rotate(180deg);
+            }
+            100% {
+            -webkit-transform: rotate(360deg);
+            }
+            }
+
+            .tips{
+                width: 1.4rem;
+                color: #fff;
+                background: rgba(0, 0, 0,0.5);
+                border-radius: .02rem;
+                text-align: center;
+                padding: .05rem .1rem;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                margin-left: -0.7rem;
+                display: none;
+            }
+
+            .video_img{
+                width: 1.1rem;
+                height: 1.1rem;
+            }
+
+            .del_img{
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: .15rem;
+                height: .15rem;
+            }
+
+
+
+              /* 截图的 */
+
+            	.btun {
+				width: 274px;
+				height: 10%;
+				margin: 0 auto;
+			}
+			
+			#clipBtn {
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #32CEA0;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				z-index: 999;
+                border-radius: 5px;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 26%;
+				position: relative;
+				z-index: 999;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 229;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				position: absolute;
+				top: 32%;
+				left: 34%;
+			}
+
+            #clipArea {
+				height: 85%;
+                width: 100%;
+			}
+
+            .clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+            *{ -webkit-tap-highlight-color: rgba(0,0,0,0);-webkit-tap-highlight-color: transparent; /* For some Androids */ }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="mask"></div>
+    <div class="loading">
+        <img src="__HOME_IMAGES__/loadad.gif" alt="">
+        <span>正在上传图片中...</span>
+    </div>
+
+    <div id="content">
+        <div class="header">
+            <p>视频标题</p>
+            <input type="text" placeholder="请输入标题..." class="title">
+        </div>
+        <div class="thumb_box clearfix">
+            <p class="fl">封面</p>
+            <div class="fr thumb">
+                <input type="file" accept="image/*" id="upload_img">
+                <img class="cover" src="__HOME_IMAGES__/thumb.png" alt="">
+            </div>
+        </div>
+        <div class="updata_video">
+            <p class="text">视频内容</p>
+            <ul class="list">
+                <li class="fl">
+                    <input type="file" accept="video/*" id="upload_video">
+                    <img class="play" src="__HOME_IMAGES__/player.png" alt="">
+                    <p>上传视频</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button class="keep">保存</button>
+    <div class="tips"></div>
+    <!-- //截图的 -->
+    <div class="clip">
+        <div class="gif">
+            <img src="__HOME_IMAGES__/new_load.gif" alt="" />
+        </div>
+        <div id="clipArea"></div>
+        <div class="btun">
+            <button id="cancel">取消</button>
+            <button id="clipBtn">截取</button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+   
+    $(function () {
+         var user_id = '{$id}';
+         var downimg;
+         var judge_flag = false;
+
+        function GetQueryString(name) {
+        if (window.location.href.indexOf('?') > -1) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+            if (r != null) return unescape(r[2]);
+        }
+        return ''; //便于容错处理
+    }
+
+    var video_type = GetQueryString('typeid');
+    var edit_video = GetQueryString('edit_video');
+    var tit = GetQueryString('title');
+    console.log(video_type)
+    console.log(edit_video)
+
+
+         //上传图片
+        // $("#upload_img").on("change", function () {
+        //         var that = $(this);
+        //     if (window.FileReader) {
+        //         var fileimg = this.files[0];
+        //         // var filesize = this.files[0].size;
+        //         // if (filesize >= 1024 * 1024 * 10) {
+        //         //     mui.toast("请上传小于10M的图片");
+        //         //     return false;
+        //         // }
+        //         var render = new FileReader();
+        //         render.readAsDataURL(fileimg);
+        //         render.onload = function (res) {
+        //             var imgsrc = res.target.result;
+
+
+        //             $.ajax({
+        //                 url: "/index.php?s=/Api/IndexApi/uploads_img",
+        //                 type: "post",
+        //                 data: {
+        //                     unionid: user_id,
+        //                     img: imgsrc,
+        //                     start_name: "video"
+        //                 },
+        //                 beforeSend: function () {
+        //                     $(".mask").show();
+        //                     $(".loading").show().find("span").text("图片上传中...");
+        //                 },
+        //                 success: function (res) {
+        //                     $(".mask").hide();
+        //                     $(".loading").hide();
+        //                     downimg = res.AppendData;
+        //                    that.next().attr("src",downimg)
+        //                    judge_flag = true;
+        //                    if($(".video_img")[0]){
+        //                        $(".video_img").attr("src",downimg);
+        //                    }
+        //                 },
+        //                 error: function () {
+        //                     $(".mask").hide();
+        //                     $(".loading").hide();
+        //                 }
+        //             })
+        //         }
+        //     } else {
+        //         alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！")
+        //     }
+
+        // })
+
+
+     $('.thumb').on('click',function(){
+         $('.clip').show()
+     })       
+    var clipArea = new PhotoClip("#clipArea", {
+        size: [336, 224],
+        outputSize: [640, 640],
+        file: "#upload_img",
+        ok: "#clipBtn",
+        loadStart: function () {
+            $('.gif').show();
+        },
+        loadComplete: function () {
+            $('.gif').hide();
+        },
+        done: function (dataURL) {
+            var imgsrc = dataURL;
+            $.ajax({
+                url: "/index.php?s=/Api/IndexApi/uploads_img",
+                type: "post",
+                data: {
+                    unionid: user_id,
+                    img: imgsrc,
+                    start_name: "video"
+                },
+                beforeSend: function () {
+                    $(".mask").show();
+                    $(".loading").show().find("span").text("图片上传中...");
+                },
+                success: function (res) {
+                    $(".mask").hide();
+                    $(".loading").hide();
+                    downimg = res.AppendData;
+                    // that.next().attr("src",downimg)
+                   $('.cover').attr("src",downimg)
+                    judge_flag = true;
+                    if($(".video_img")[0]){
+                        $(".video_img").attr("poster",downimg);
+                    }
+
+                },
+                error: function () {
+                    console.log('走了错误')
+                    $(".mask").hide();
+                    $(".loading").hide();
+                }
+            })
+
+        }
+    });
+
+    $('#fileup').on('click', function () {
+        $('.clip').show();
+    })
+
+    $('#clipBtn,#cancel').on('click', function () { //截取 取消
+        $('.clip').hide();
+
+    })
+
+
+        
+        $(".list").on("change","#upload_video",function(){
+                var that = $(this);
+                var files = this.files[0];
+                var formdate = new FormData();
+                formdate.append("unionid",user_id);
+                formdate.append("img",files);
+                formdate.append("start_name","video");
+                $.ajax({
+                    url:"/index.php?s=/Api/IndexApi/upload_video",
+                    type:"post", 
+                    data:formdate,
+                    processData: false,
+                    contentType: false,
+                beforeSend:function(){
+                    $(".mask").show()
+                    $(".loading").show().find("span").text("视频上传中...");
+                },
+                success:function(res){
+                     console.log(res)
+                    $(".mask").hide()
+                    $(".loading").hide()
+                    if(res.ResultType == 0){
+                        var data_video = res.AppendData;
+                        videos = data_video;
+                        var video_box = '';
+                        var imgsrc = $('.cover').attr('src');
+                        video_box+= '<li class="fl">';
+                            video_box+= '<video class="video_img" src="'+data_video+'" poster="" controls="controls"/></video>';
+                            video_box+= '<img class="del_img" src="__HOME_IMAGES__/wh/icon_de@2x.png" alt="">';
+                            video_box+= '</li>';
+                        $(".list").html(video_box);
+						if(imgsrc == '__HOME_IMAGES__/thumb.png'){
+                        	$(".video_img").attr("poster",data_video+"?x-oss-process=video/snapshot,t_7000,f_jpg,w_210,h_120,m_fast")
+                        }else{
+                        	$(".video_img").attr("poster",imgsrc);
+                        }
+                    }
+                
+            
+                }
+            })
+
+          
+        })
+
+        $(".list").on("click",".del_img",function(){
+            $(this).parent().remove();
+            var updata = '';
+                updata+= '<li class="fl">'
+                updata+= '<input type="file" accept="video/*" id="upload_video">'
+                updata+= '<img class="play" src="__HOME_IMAGES__/player.png" alt="">'
+                updata+= '<p>上传视频</p>'
+                updata+= '</li>'
+            $(".list").html(updata)
+            videos = '';
+            console.log(judge_flag)
+        })
+
+        var tips = $(".tips");
+        var videos = '';
+        $(".keep").on("click",function(){
+                var title = $(".title").val();
+                var video_cover = $(".video_img").attr("poster");
+                if(title == ''){
+                    tips.text("标题不能为空哦").stop(false).fadeIn(1000).fadeOut(2000);
+                    return false;
+                }
+          
+                if(videos == ''){
+                        tips.text('请上传视频').stop(false).fadeIn(1000).fadeOut(2000);
+                        return false;
+                }
+
+                $.ajax({
+                    url:'/index.php?s=/Api/UserVideoApi/add_user_video',
+                    type:'post',
+                    data:{
+                        unionid:user_id,
+                        title:title,
+                        video:videos,
+                        video_cover:video_cover,
+                        video_id:edit_video,
+                        type_id:video_type
+                    },
+                    success:function(res){
+                        if(res.ResultType == 0){
+                            tips.text('视频保存成功').stop(false).fadeIn(1000).fadeOut(2000);
+                            setTimeout(function(){
+                               location.href = '/index.php?s=/Home/Newnetwork/my_video.html&typeid='+video_type+'&title='+tit+''
+                            },1000)
+                        }
+                        
+                    }
+                })
+        })
+
+
+
+        // 修改视频
+        if(!video_type == '' && !edit_video == ''){
+            
+            $.ajax({
+                url:'/index.php?s=/Api/AppApi/video_list',
+                type:'post',
+                data:{
+                    unionid:user_id,
+                    start:0,
+                    length:999,
+                    type_id:video_type
+                },
+                success:function(res){
+                    console.log(res)
+                    if(res.ResultType == 0){
+                        var data_edit = res.AppendData;
+                        var ed_da;
+                        $.each(data_edit,function(k,v){
+                            if(v.id == edit_video){
+                                console.log(v)
+                                ed_da = v;
+                            }
+                        })
+                        judge_flag = true;
+                        $('.title').val(ed_da.title);     //这是标题
+                        $('.cover').attr('src',ed_da.video_cover)   //封面
+                        var video_list = '';
+                        video_list+= '<li class="fl">'
+                        video_list+= '<img class="video_img" data-video="'+ed_da.video+'" src="'+ed_da.video_cover+'" alt="">'
+                        video_list+= '<img class="del_img" src="__HOME_IMAGES__/wh/icon_de@2x.png" alt="">'
+                        video_list+= '</li>'
+                        videos = ed_da.video;
+                        $('.list').html(video_list)
+
+
+
+                    }
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+    })
+</script>

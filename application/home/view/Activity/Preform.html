@@ -1,0 +1,135 @@
+<extend name="./base" />
+<block name="css_extend">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <script src="__HOME_JS__/rem.js"></script>
+        <link rel="stylesheet" href="__HOME_CSS__/rjl/preform.css">
+        <title>添加活动</title>
+    </head>
+
+</block>
+<block name="body">
+
+    <body>
+        <div class="conrjl">
+            <div class="conter">
+
+            </div>
+
+        </div>
+        <div class="rjl_thir">
+            <a href="/index.php?s=/Home/Activity/EventsPlaza.html">查看全部</a>
+        </div>
+        <script>
+            var user_id = '{$unionid}';
+            console.log(user_id)
+
+            function GetQueryString(name) {
+                if (window.location.href.indexOf('?') > -1) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                    var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+                    if (r != null) return unescape(r[2]);
+                }
+                return ''; //便于容错处理
+            }
+
+            var Renid = GetQueryString("Renid");
+            console.log(Renid);
+
+            $.ajax({
+                type: 'post',
+                url: "index.php?s=/Api/SignUpApi/sign_detail",
+                data: {
+                    unionid: user_id,
+                    sign_id: Renid,
+
+                },
+                success: function (res) {
+                    console.log(res)
+
+
+                    var detail = res.AppendData.detail;
+                    console.log(detail)
+                    var list = '';
+                    list += '<div class="ylfst">'
+                    list += '<div class="yltp">'
+                    list += '<img src="' + res.AppendData.cover_img + '" class="zhuq">'
+                    list += '<div class="fstdan">'
+                    list += '<img src="' + res.AppendData.headimg + '" class="quest">'
+                    list += '</div>'
+                    list += '</div>'
+                    list += '<div class="yltit">'
+                    list += '<div class="rjl_text">' + res.AppendData.title + '</div>'
+                    list += '<div class="rjl_time">' + res.AppendData.addtime + '</div>'
+                    list += '</div>'
+                    list += '<span class="fad">' + res.AppendData.nick_name + '</span>'
+                    list += '</div>'
+                    list += '<div class="tiact">'
+                    list += '<div class="rjl_wz">'
+                    list += '<span id="jiegou"></span>'
+                    list += '</div>'
+                    list += '</div>'
+                    list += '</div>'
+                    $(".conter").html(list);
+                    $("#jiegou").html(res.AppendData.content);
+
+                    $(".add_parameter").each(function (i, e) {
+                        $(e).remove();
+                    })
+                    $(".check").each(function (i, e) {
+                        $(e).remove();
+                    })
+
+                    $(".editor_boxcontent").each(function (i, e) {
+                        $(e).remove();
+                    })
+                    // videoForm 
+                    $('.updata').remove();
+
+                    $(".cleartext").each(function (i, e) {
+                        $(e).remove();
+                    })
+
+                    $(".addvideo_img").each(function (i, e) {
+                        $(e).remove();
+                    })
+
+                    $(".ryc").each(function (i, e) {
+                        if ($(e).attr("src") == '__HOME_IMAGES__/home_moren.png') {
+                            $(e).remove();
+                        }
+                    })
+
+                    $(".cookerl").each(function(){
+                            $(this).remove();
+                        })
+
+
+                    var baoming = '';
+                    $.each(detail, function (k, v) {
+                        baoming += '<div class="sec_one">'
+                        baoming += '<input type="text" class="hair" value=请输入' + v.title +
+                            ' disabled>'
+                        baoming += '<div class="sec_onet">' + v.title + '</div>'
+                        baoming += '</div>'
+                    })
+
+                    $(".secall").html(baoming)
+
+                },
+                error: function () {
+                    mui.alert("异常！")
+                },
+
+            })
+        </script>
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+    </body>
+</block>

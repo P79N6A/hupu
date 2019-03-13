@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<title>积分转赠</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/choose.css" />
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+	</head>
+
+	<body>
+		<div class="one">
+			<div class="top">
+				<div class="top_cen">
+					<div class="per">
+						<input type="text" class="top_ipt" placeholder="请输入对方昵称/手机号" onkeyup="this.value=this.value.replace(/<\/?[^>]*>/g,'')" />
+					</div>
+					<div class="search">
+						<img src="__HOME_IMAGES__/002_03.png" alt="" />
+					</div>
+				</div>
+			</div>
+			<div class="hint">积分转入对方账户，无法退换</div>
+		</div>
+		<div class="list">
+			<ul>
+				<!--<li>
+					<div class="checkbox-group">
+						<input type="checkbox" id="one" />
+						<label for="one"></label>
+					</div>
+					<div class="Img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="mess">
+						<div class="name">姚波</div>
+						<div class="post">前端开发工程师未来世界的领导者以及主宰你的世界</div>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-group">
+						<input type="checkbox" id="two" name="dan" />
+						<label for="two"></label>
+					</div>
+					<div class="Img">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="mess">
+						<div class="name">姚波</div>
+						<div class="post">前端开发工程师未来世界的领导者以及主宰你的世界</div>
+					</div>
+				</li>-->
+
+			</ul>
+		</div>
+		<div class="foot">
+			<a href="javascript:;">下一步</a>
+		</div>
+		<div class="privacy">
+			<div class="up">温馨提示</div>
+			<div class="down">您还没有选择赠送好友哦！</div>
+		</div>
+		<div class="allcity-masks"></div>
+		<script type="text/html" id="list">
+			{{each AppendData v i}}
+			<li>
+				<div class="checkbox-group">
+					<input type="radio" name="box" id="one_{{i}}" value="{{v.id}}" />
+					<label for="one_{{i}}"></label>
+				</div>
+				<div class="Img" data-id="{{v.id}}">
+					<img src="{{v.headimg}}" alt="" />
+				</div>
+				<div class="mess">
+					<div class="name" data-id="{{v.id}}">{{v.nick_name}}</div>
+					<div class="post" data-id="{{v.id}}">{{v.phone}}</div>
+				</div>
+			</li>
+			{{/each}}
+		</script>
+		<script>
+			var id = '{$unionid}';
+			$(function() {
+				$(".top_ipt").keydown(function(e) {
+					var name = $(".top_ipt").val();
+					if(e.keyCode == 13) {
+						if((name.indexOf(" ") >= 0 || name == "")) {
+							$('.allcity-masks').show();
+							$(".privacy").show();
+							$(".down").html("输入不能为空，请重新输入");
+							setTimeout(function() {
+								$('.privacy').hide();
+								$('.allcity-masks').hide();
+							}, 1500);
+							return false;
+
+						}
+						$.ajax({
+							type: "post",
+							dataType: "json",
+							url: "index.php?s=/Api/IntegralApi/inte_user_list",
+							data: {
+								"unionid": id,
+								"name": name,
+							},
+							success: function(result) {
+								//								console.log(result);
+								$(".list ul").html(template("list", result));
+								$(".list").show();
+							},
+							error: function() {
+								alert("服务器繁忙，请稍后再试！");
+							}
+						});
+					}
+				});
+			});
+			$(".search").click(function() {
+				var name = $(".top_ipt").val();
+				if((name.indexOf(" ") >= 0 || name == "")) {
+					$('.allcity-masks').show();
+					$(".privacy").show();
+					$(".down").html("输入不能为空，请重新输入");
+					setTimeout(function() {
+						$('.privacy').hide();
+						$('.allcity-masks').hide();
+					}, 1500);
+					return false;
+				}
+				$.ajax({
+					type: "post",
+					dataType: "json",
+					url: "index.php?s=/Api/IntegralApi/inte_user_list",
+					data: {
+						"unionid": id,
+						"name": name,
+					},
+					success: function(result) {
+						//								console.log(result);
+						$(".list ul").html(template("list", result));
+						$(".list").show();
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			})
+			$(".list").on("click", ".checkbox-group", function() {
+				$(this).addClass("checked").parent().siblings().find(".checkbox-group").removeClass("checked")
+			})
+			$(".foot").click(function() {
+				var arr = [];
+				$("input:radio[name='box']:checked").each(function(i) {
+					arr[i] = $(this).val();
+					//					console.log($(this).val());
+				});
+
+				if($(".checkbox-group").hasClass("checked")) {
+					$(".foot").find("a").attr("href", "/index.php?s=/Home/Chat/give.html&nameid=" + arr + "");
+				} else {
+					$('.allcity-masks').show();
+					$(".privacy").show();
+					setTimeout(function() {
+						$('.privacy').hide();
+						$('.allcity-masks').hide();
+					}, 1500);
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

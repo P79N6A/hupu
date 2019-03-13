@@ -1,0 +1,164 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<script src="__HOME_JS__/rem.js"></script>
+	<style>
+		html {
+			margin-bottom: 60px;
+		}
+
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		ul {
+			list-style: none;
+		}
+
+		.sans {
+			width: 100%;
+			height: auto;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+
+		#tj{
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+
+		}
+	
+
+		.list {
+			width: 6rem;
+			margin: 0 0.1rem;
+		}
+
+		.list>img {
+			width: 100%;
+			height:9rem;
+			vertical-align: top;
+			
+		}
+
+		.add {
+			text-align: center;
+			width: 100%;
+			height: 1.6rem;
+			line-height: 1.6rem;
+			background-color:#32CEA0;
+			color: #fff;
+			font-size: 0.7rem;
+			border-radius: 1px;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+		<div class="sans">
+			<ul id='tj'>
+			
+			</ul>
+		</div>
+		<input type="hidden" id="mids" value="" />
+		<script>
+			$(function () {
+				function GetQueryString(name) {
+					if (window.location.href.indexOf('?') > -1) {
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+						var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+						if (r != null) return unescape(r[2]);
+					}
+					return ''; //便于容错处理
+				}
+
+				var model_id = GetQueryString("model_id");
+				var id = '{$id}';
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					data: {
+						unionid: id,
+						model_id: model_id
+					},
+					success: function (result) {
+						console.log(result);                    
+						if (result.ResultType == 0) {
+							var htmlstr = '';
+							$.each(result.AppendData.content_detail, function (idx, item) {
+								htmlstr += '<li class="list">';
+								htmlstr += '	<img src="' + item.img + '" alt="" />';
+								htmlstr += '	<p class="add" onclick="adds(' + item.id + ')">添加</p>';
+								htmlstr += '</li>';
+							});
+							$("#tj").append(htmlstr);
+						}
+						console.log(result)
+					},
+					error: function () {
+						console.log("走了错误")
+					}
+				});
+
+
+			})
+			
+			var flag = true;
+			function adds(a) {
+				function GetQueryString(name) {
+					if (window.location.href.indexOf('?') > -1) {
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+						var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+						if (r != null) return unescape(r[2]);
+					}
+					return ''; //便于容错处理
+				}
+
+				var cid = GetQueryString('cids');
+				var id = '{$id}';
+				var cxid = GetQueryString('id');
+				if(!flag){
+					return false;
+				}
+				flag = false;
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/add_album_template", //url 
+					data: {
+						unionid: id,
+						my_id: cxid,
+						content_id: a
+					},
+					success: function (result) {
+						console.log(result);
+						if (result.ResultType == 0) {
+							mui.toast("添加成功");
+							setTimeout(function () {
+								// location.href = "/index.php?s=/Home/Photo/album_edit&id=" + cxid + "&cids=" + cid + "";
+								location.href = "/index.php?s=/Home/Android/photo_edit&preview=" + cxid + "&cids=" + cid + "&unionid="+id;
+							}, 2000);
+						}
+					},
+					error: function () {
+						console.log("走了错误")
+					}
+				});
+			}
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+</block>

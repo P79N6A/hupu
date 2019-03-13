@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+		<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1,target-densitydpi=device-dpi ">
+		<title>积分记录</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			.top {
+				background-color: #fff;
+				width: 100%;
+				height: 2.25rem;
+				font-size: 0.75rem;
+				position: fixed;
+				left: 0;
+				top: 0;
+				box-shadow: 0px 0.05rem 0.2rem 0px rgba(0, 0, 0, 0.08);
+				margin-bottom: 0.5rem;
+
+			}
+			
+			.top>div {
+				float: left;
+				width: 50%;
+				height: 100%;
+				line-height: 2.25rem;
+				text-align: center;
+			}
+			
+			.tab,
+			.tabs,
+			.give{
+				color: #666;
+			}
+			
+			.active {
+				color: #32CEA0;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			.narrate {
+				width: 100%;
+				height: auto;
+				font-size: 0;
+				margin-top: 2.25rem;
+			}
+			
+			.narrate>ul>li>span {
+				display: inline-block;
+				float: left;
+				height: 100%;
+			}
+			
+			.narrate>ul>li {
+				width: 90%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				margin: 0 auto;
+				border-bottom: 2px solid #f3f3f3;
+			}
+			
+			.narrate {
+				display: none;
+			}
+			
+			.on {
+				display: block;
+			}
+			
+			.sign {
+				display: inline-block;
+				width: 50%;
+				font-size: 0.8rem;
+			}
+			
+			.num {
+				font-size: 0.6rem;
+				display: inline-block;
+				width: 25%;
+				color: #999;
+			}
+			
+			.date {
+				display: inline-block;
+				width: 25%;
+				font-size: 0.6rem;
+				color: #999;
+			}
+			
+			.date {
+				text-align: right;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				color: #656565;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			#loadId {
+				display: none;
+			}
+			
+			.load {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				color: #656565;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.load img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			#loadid {
+				display: none;
+			}
+			
+			.null {
+				width: 100%;
+				line-height: 20rem;
+				font-size: 0.875rem;
+				height: 100%;
+				color: #000;
+				text-align: center;
+			}
+			
+			.not {
+				width: 100%;
+				line-height: 20rem;
+				font-size: 0.875rem;
+				height: 100%;
+				color: #000;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="tab active" type-id="0">获取记录</div>
+			<div class="tabs" type-id="1">使用记录</div>
+		</div>
+		<div class="narrate on">
+			<div class='not'>您还没有获取记录哦！！！</div>
+			<ul id="ul">
+
+				<!--<li>
+					<span class="sign">签到</span>
+					<span class="num">2积分</span>
+					<span class="date">2018.05.20</span>
+				</li>-->
+			</ul>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中</span>
+			</div>
+		</div>
+		<div class="narrate">
+			<div class='null'>您还没有使用记录哦！！！</div>
+			<ul id="myul">
+
+				<!--<li>
+					<span class="sign">注册</span>
+					<span class="num">10积分</span>
+					<span class="date">2018.05.21</span>
+				</li>-->
+			</ul>
+			<div class="load" id="loadid">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中</span>
+			</div>
+		</div>
+		<script>
+			window.onload = function() {
+				$(".tab").click()
+			}
+			var scrollFlag = true;
+			var type = 0;
+			var id = '{$id}';
+			var index = 0;
+			var one = true;
+			var two = true;
+			var onenum = 0;
+			var twonum = 0;
+			var oneis = true;
+			var twois = true;
+
+			function initData(type, index, id) {
+				$.ajax({
+					type: "post",
+					url: "index.php?s=Api/IntegralApi/get_intlist",
+
+					data: {
+						id: id,
+						start: index,
+						type: type
+					},
+					success: function(res) {
+
+//						console.log(res);
+						var list = '';
+						var lists = '';
+						$.each(res.AppendData, function(k, v) {
+							if(v.type == 0) {
+								list += '<li>';
+								list += '<span class="sign">' + v.title + '</span>';
+								list += '<span class="num">' + v.inte + '分</span>';
+								list += '<span class="date">' + v.addtime + '</span>';
+								list += '</li>'
+
+							}
+							if(v.type == 1) {
+								lists += '<li>';
+								lists += '<span class="sign">' + v.title + '</span>';
+								lists += '<span class="num">' + v.inte + '分</span>';
+								lists += '<span class="date">' + v.addtime + '</span>';
+								lists += '</li>'
+							}
+
+						})
+						if(type == 0) {
+							$("#ul").html(list);
+						} else {
+							$("#myul").html(lists);
+						}
+
+						if($("#ul li").length <= 0) {
+							$(".not").show()
+						} else {
+							$(".not").hide();
+						}
+						if($("#myul li").length <= 0) {
+							$(".null").show()
+						} else {
+							$(".null").hide();
+						}
+
+						//													var tit= res.AppendData
+						//													console.log(tit);
+
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+
+			}
+			$(".top div").on("click", function() {
+				index = 0;
+				scrollFlag = true;
+
+				$(this).addClass("active").siblings().removeClass("active");
+				type = $(this).attr("type-id");
+				//$(".narrate").hide().eq($(this).index()).show()
+				$(document).scrollTop(0);
+				//   $(document).height(0);
+				$(".narrate").hide().eq($(this).index()).show();
+
+				if(type == 0) {
+
+					if(!one) {
+						return;
+					}
+
+					one = false;
+					initData(type, index, id);
+				} else {
+					if(!two) {
+
+						return;
+					}
+					two = false;
+					initData(type, index, id);
+
+				}
+
+				//				console.log(type)
+			})
+			//			console.log(id);
+
+			$(window).scroll(function() {
+
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+
+				//页面高度
+				var scrollHeight = $(document).height();
+
+				//同步高度
+				if(type == 0) {
+					if(onenum <= scrollTop && oneis) {
+						onenum = scrollTop;
+					} else {
+						return;
+					}
+				} else {
+
+					if(twonum <= scrollTop && twois) {
+						twonum = scrollTop;
+					} else {
+
+						return;
+					}
+				}
+
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+				//alert(8);
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				//alert(scrollFlag);
+				if(!scrollFlag) {
+					//alert(10);
+					return false;
+				}
+				//	alert(scrollTop);
+				//alert(scrollTop + windowHeight);
+				//alert(scrollHeight);
+				//1027  1387
+				//1844 2320
+				if((scrollTop + windowHeight) >= scrollHeight) {
+					index += 15;
+					//					console.log(index)
+					//				console.log(index+"这是index")
+					//alert(9)
+					scrollFlag = false;
+					$.ajax({
+						type: "post",
+						url: "index.php?s=Api/IntegralApi/get_intlist",
+						data: {
+							id: id,
+							start: index,
+							type: type,
+						},
+						beforeSend: function() {
+							//	alert(10)
+							$('#loadId').show();
+							$('#loadid').show();
+						},
+						success: function(res) {
+							//alert(11)
+							//alert(JSON.stringify(res))
+							scrollFlag = true;
+							$('#loadId').hide();
+							$('#loadid').hide();
+//							console.log(res);
+							var list = '';
+							var lists = '';
+							$.each(res.AppendData, function(k, v) {
+								if(v.type == 0) {
+									list += '<li>';
+									list += '<span class="sign">' + v.title + '</span>';
+									list += '<span class="num">' + v.inte + '分</span>';
+									list += '<span class="date">' + v.addtime + '</span>';
+									list += '</li>'
+
+								}
+								if(v.type == 1) {
+									lists += '<li>';
+									lists += '<span class="sign">' + v.title + '</span>';
+									lists += '<span class="num">' + v.inte + '分</span>';
+									lists += '<span class="date">' + v.addtime + '</span>';
+									lists += '</li>'
+								}
+							})
+							if(type == 0) {
+								$("#ul").append(list);
+							} else {
+								$("#myul").append(lists);
+							}
+
+							if(res.AppendData.length <= 0) {
+								scrollFlag = false;
+								if(type == 0) {
+									if($("#ul li").length <= 0) {
+										$(".not").show()
+										oneis = false;
+										return;
+									} else {
+										$(".not").hide();
+									}
+									oneis = false;
+									$("#ul").append("<div class='loading'>没有更多数据了</div>");
+								} else {
+									if($("#myul li").length <= 0) {
+										$(".null").show();
+										twois = false;
+										return;
+									} else {
+										$(".null").hide();
+									}
+									twois = false;
+									$("#myul").append("<div class='loading'>没有更多数据了</div>");
+								}
+							} else {
+								scrollFlag = true;
+
+							}
+
+						},
+						error: function() {
+							alert("服务器繁忙，请稍后再试！");
+						}
+
+					})
+
+				}
+			});
+		</script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

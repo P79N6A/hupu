@@ -1,0 +1,507 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			footer ul li:nth-child(2) p {
+				background: url(__HOME_CSS__/add/image/xiaoxii_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+			
+			.dong2 {
+				height: 1.3rem;
+				background: #233239;
+			}
+			
+			.sou2 {
+				float: left;
+				width: 4.5rem;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				background: #565b61;
+				border-radius: 20px;
+				margin-top: 0.3rem;
+				margin-left: 0.2rem;
+			}
+			
+			.sou2 input {
+				width: 3.6rem;
+				height: 0.4rem;
+				font-size: 0.22rem;
+				background: #565b61;
+				border: none;
+				margin-left: 0.2rem;
+			}
+			
+			.sou2 span {
+				display: inline-block;
+				width: 0.4rem;
+				height: 0.4rem;
+				position: absolute;
+				left: 4.1rem;
+				top: 0.4rem;
+				background: url(__HOME_CSS__/add/image/sousbai_icon.png);
+				background-size: 100% 100%;
+			}
+			
+			.erwei {
+				width: 0.4rem;
+				height: 0.4rem;
+				background: url(__HOME_CSS__/add/image/erweim_icon.png);
+				background-size: 100% 100%;
+				float: left;
+				margin-top: 0.4rem;
+				margin-left: 0.3rem;
+			}
+			
+			.jilv {
+				width: 0.35rem;
+				height: 0.4rem;
+				background: url(__HOME_CSS__/add/image/xinjian_icon.png);
+				background-size: 100% 100%;
+				float: left;
+				margin-top: 0.4rem;
+				margin-left: 0.5rem;
+			}
+			
+			.dian {
+				width: 50%;
+				height: 0.6rem;
+				line-height: 0.6rem;
+				text-align: center;
+				float: left;
+				background: #191f28;
+				color: #ccc;
+			}
+			
+			.dian1 {
+				border-right: 1px solid #C0C0C0;
+			}
+			
+			.dianz {
+				color: #fff;
+			}
+			
+			.di1 {
+				display: none;
+			}
+			
+			.chengyuan {
+				width: 1rem;
+				text-align: center;
+				float: left;
+				margin-top: 0.2rem;
+			}
+			
+			.chengyuan img {
+				width: 0.7rem;
+				height: 0.7rem;
+				border-radius: 5px;
+			}
+			
+			.chengyuan p {
+				font-size: 0.26rem;
+				margin-top: 0.1rem;
+			}
+			
+			.chengyuan p span {
+				display: inline-block;
+				width: 0.7rem;
+				font-size: 0.22rem;
+				height: 0.26rem;
+				line-height: 0.26rem;
+				background: #2FB3D3;
+				border-radius: 5px;
+				color: #fff;
+				margin-top: 0.1rem;
+			}
+			
+			.tongxunlu h4 {
+				height: 0.6rem;
+				line-height: 0.6rem;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.neir3 i {
+				width: 0.5rem;
+				height: 0.5rem;
+			}
+			
+			.maodian {
+				position: fixed;
+				top: 3.7rem;
+				left: 6.3rem;
+				color: #000000;
+				width: 0.2rem;
+			}
+			
+			.maodian a {
+				color: #999;
+				width: 0.2rem;
+				text-align: center;
+			}
+			
+			.erwm {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				background: rgba(0, 0, 0, 0.6);
+				text-align: center;
+				z-index: 2;
+			}
+			
+			.erbj {
+				width: 4.5rem;
+				margin: 0 auto;
+				margin-top: 1.5rem;
+				background: url(__HOME_CSS__/add/image/erweima_bj.png);
+				background-size: 100% 100%;
+				height: 6.8rem;
+			}
+			
+			.erbj .er_1p {
+				padding-top: 0.58rem;
+				font-size: 0.32rem;
+				color: #fff;
+			}
+			
+			.erbj p span {
+				font-size: 0.26rem
+			}
+			
+			.erbj .img1 {
+				margin-top: 0.1rem;
+				width: 1.4rem;
+				height: 1.4rem;
+				border-radius: 50%;
+				border: 1px solid #fff;
+			}
+			
+			.erbj .img2 {
+				width: 3rem;
+				height: 3rem;
+				margin-top: 0.2rem;
+			}
+			
+			.er_2p {
+				color: #999;
+				margin-top: 0.2rem;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div class="dong2">
+
+			<div class="sou2">
+				<input type="text" id="" value="" placeholder="按商会名称或者地区搜索" />
+				<span></span>
+			</div>
+			<div class="erwei"></div>
+			<div class="jilv"></div>
+		</div>
+
+		<div class="erwm">
+			<div class="erbj">
+				<p class="er_1p">{$trade.name}<br />
+					<span>诚意邀请您的加入</span>
+				</p>
+				<img src="../../{$trade.logo}" alt="" class="img1" />
+				<br />
+				<img src="__HOME_CSS__/add/image/erweima.png" alt="" class="img2" />
+				<p class="er_2p">保存二维码分享给好友</p>
+			</div>
+		</div>
+
+		<div class="dian dian1 dianz">
+			动态
+		</div>
+		<div class="dian dian2">
+			成员<span>(1</span>人)
+		</div>
+
+		<div class="cont">
+			<div class="di1">
+
+				<div class="zhuye" style="margin-top: 1rem;">
+					<a href="">
+						<h5>文章标题文章标题文章标题文章标题文章标题文章标题文章</h5>
+						<div>
+							<p>文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容</p>
+							<span><img src="__HOME_CSS__/add/image/banner.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="zhuye">
+					<a href="">
+						<h5>文章标题文章标题文章标题文章标题文章标题文章标题文章</h5>
+						<div>
+							<p>文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容</p>
+							<span><img src="__HOME_CSS__/add/image/banner.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+				<div class="zhuye">
+					<a href="">
+						<h5>文章标题文章标题文章标题文章标题文章标题文章标题文章</h5>
+						<div>
+							<p>文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容文章文章内容</p>
+							<span><img src="__HOME_CSS__/add/image/banner.png" alt="" /></span>
+						</div>
+					</a>
+				</div>
+			</div>
+
+			<div class="di2">
+				<div class="chengyuan">
+					<img src="__HOME_CSS__/add/image/img_peitu.png" alt="" />
+					<p>张三 <br />
+						<span>会长</span>
+					</p>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="tongxunlu">
+					<h4 id="A">A</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br />
+							<span><i></i>2132564656</span>
+						</p>
+					</div>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br />
+							<span><i></i>2132564656</span>
+						</p>
+					</div>
+					<h4 id="B">B</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+
+					<h4 id="C">C</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="D">D</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="E">E</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="F">F</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="G">G</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="H">H</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="I">I</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="J">J</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="K">K</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="L">L</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="M">M</h4>
+					<div class="neir2 neir3">
+						<img src="i__HOME_CSS__/add/mage/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="N">N</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="O">O</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="P">P</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="Q">Q</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="R">R</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="S">S</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="T">T</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="U">U</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="V">V</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="W">W</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="X">X</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+					<h4 id="Y">Y</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+
+					<h4 id="Z">Z</h4>
+					<div class="neir2 neir3">
+						<img src="__HOME_CSS__/add/image/banner.png" alt="" />
+						<p>维维<br /><span><i></i>2132564656</span></p>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="maodian">
+			<a href="#A">A</a>
+			<a href="#B">B</a>
+			<a href="#C">C</a>
+			<a href="#D">D</a>
+			<a href="#E">E</a>
+
+			<a href="#F">F</a>
+			<a href="#G">G</a>
+			<a href="#H">H</a>
+			<a href="#I">I</a>
+			<a href="#J">J</a>
+
+			<a href="#K">K</a>
+			<a href="#L">L</a>
+			<a href="#M">M</a>
+			<a href="#N">N</a>
+			<a href="#O">O</a>
+
+			<a href="#P">P</a>
+			<a href="#Q">Q</a>
+			<a href="#R">R</a>
+			<a href="#S">S</a>
+			<a href="#T">T</a>
+
+			<a href="#U">U</a>
+			<a href="#V">V</a>
+			<a href="#W">W</a>
+			<a href="#X">X</a>
+			<a href="#Y">Y</a>
+
+			<a href="#Z">Z</a>
+		</div>
+
+		<footer>
+			<ul>
+				<li>
+					<p></p>
+					<span>动态</span>
+				</li>
+				<li>
+					<p></p>
+					<span>消息</span>
+				</li>
+				<li>
+					<p></p>
+					<span>商会</span>
+				</li>
+				<li>
+					<p></p>
+					<span>我的</span>
+				</li>
+			</ul>
+		</footer>
+
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(".dian1").click(function() {
+				$(".di1").show()
+				$(".di2").hide()
+			})
+			$(".dian2").click(function() {
+				$(".di2").show()
+				$(".di1").hide()
+			})
+			$(".erwei").click(function() {
+				$(".erwm").show()
+				$(".di1").hide()
+			})
+			$(".erwm").click(function() {
+				$(".erwm").hide()
+			})
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

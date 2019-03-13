@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/LArea.min.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<title>商脉搜索</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				/*padding: .8rem;*/
+				background: #FFF;
+			}
+			
+			img {
+				width: 100%;
+				height: 200px;
+			}
+			
+			.bottom {
+				padding: .8rem;
+			}
+			
+			.ttile {
+				color: #2FB3D3;
+				/*border-bottom: 1px solid #E5E5E5;*/
+				/*height: 30px;*/
+			}
+			
+			ul {
+				margin-top: 8px;
+				overflow: hidden;
+				border-top: 1px solid #E5E5E5;
+				border-bottom: 1px solid #E5E5E5;
+				margin-bottom: 10px;
+			}
+			
+			ul li {
+				list-style: none;
+				width: 30%;
+				margin: 5px 0px;
+				margin-left: 3%;
+				float: left;
+			}
+			
+			button {
+				/*position: absolute;
+            left: 0;
+            bottom: 0;*/
+				width: 100%;
+				height: 50px;
+				border-radius: 0;
+				background: #2FB3D3;
+				color: #FFF;
+			}
+			
+			.search {
+				width: 100%;
+				height: 50px;
+				background: #2C3239;
+				padding: 0 20px;
+				margin-top: -5px;
+				color: #FFF;
+			}
+			
+			#sss {
+				width: 70%!important;
+				margin-top: 5px;
+				border-radius: 50px!important;
+				color: #909389!important;
+				background: #565B61!important;
+			}
+			
+			i {
+				font-size: 30px!important;
+			}
+			
+			.sel {
+				width: 100%;
+				height: 40px;
+				padding: 0 20px;
+				padding-top: 10px;
+			}
+			
+			.sele {
+				width: 100%;
+				height: 55px;
+				padding: 0 20px;
+			}
+			
+			.sel select {
+				float: left;
+				width: 45%;
+				margin-bottom: 0;
+				background: #E7E7E7;
+			}
+			
+			.sele select {
+				float: left;
+				width: 45%;
+				margin-bottom: 0;
+				background: #E7E7E7;
+			}
+			
+			.content-block {
+				position: absolute;
+				top: 16rem;
+				left: 0.8rem;
+			}
+			
+			.content-block input {
+				width: 21rem;
+				border: none;
+			}
+			
+			button {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				border-radius: 0;
+				background: #2FB3D3;
+				color: #FFF;
+			}
+			
+			.bottom {
+				margin-bottom: 50px;
+			}
+			
+			.bottom li {
+				padding: 8px;
+			}
+			
+			.bottom li .mui-icon {
+				display: none;
+			}
+			
+			.bottom li.on {
+				background: #2FB3D3;
+				color: #FFF;
+				position: relative;
+			}
+			
+			.bottom li.on .mui-icon {
+				color: #fff;
+				position: absolute;
+				right: 0;
+				display: inline;
+			}
+			
+			.f-color {
+				color: #fff;
+			}
+			
+			.out {
+				padding-left: 20px;
+			}
+			
+			.gender {
+				color: #2FB3D3;
+			}
+			
+			.year {
+				color: #2FB3D3;
+			}
+			
+			.sex,
+			.age {
+				display: block;
+				/*background: #E7E7E7;*/
+			}
+			
+			#sexlist {
+				font-size: 17px;
+			}
+			
+			#agelist {
+				font-size: 17px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<img src="__HOME_CSS__/add/image/shangmaisous_bj1.png" alt="" />
+		<form id="signform" action="{:U('Home/Trade/search')}" method="post" class="form-horizontal">
+			<div class="search">
+				<input type="text" name="keyword" placeholder="请输入关键词" id="sss" />
+				<i class="mui-icon mui-icon-search" id="search"></i>
+				<a class="f-color" href="{:U('Home/Trade/setting')}"><i class="mui-icon mui-icon-gear" style="margin-left: 10px;"></i></a>
+			</div>
+			<div class="sel">
+				<div class="ttile">
+					地区
+				</div>
+			</div>
+			<div class="sele">
+				<select name="province_id" id="province_id">
+					<option value="0">请选择省/市</option>
+					<volist name="province_list" id="province">
+						<option value="{$province.region_id}">{$province.region_name}</option>
+					</volist>
+				</select>
+
+				<select name="city_id" id="city_id" style="margin-left:8%">
+					<option value="0">请选择市/区</option>
+					<volist name="city_list" id="city">
+						<option value="{$city.region_id}" selected="selected">{$city.region_name}</option>
+					</volist>
+				</select>
+			</div>
+			<div class="out">
+				<span class="gender">性别</span>
+				<span class="sex">
+					<select name="sex" id="sexlist">
+						<option value="-1">请选择性别</option>
+						<option value="0">男</option>
+						<option value="1">女</option>
+					</select>
+					<!--<img src="__HOME_IMAGES__/arr.png" alt="" />-->
+				</span>
+			</div>
+			<div class="out">
+				<span class="year">年龄</span>
+				<span class="age">
+				<select name="age_id" id="agelist">
+					<option value="0">请选择年龄</option>
+					<volist name="age_list" id="vo">
+						<option value="{$vo.id}">{$vo.age_group}</option>
+					</volist>
+				</select>
+				<!--<img src="__HOME_IMAGES__/arr.png" alt="" />-->
+			</span>
+			</div>
+			<div class="bottom">
+				<volist name="type" id="vo">
+					<div class="ttile">
+						{$vo.name}
+					</div>
+					<?php $types=M("sqtype")->where("parent_id=".$vo['id'])->select();?>
+					<ul>
+						<volist name="types" id="v">
+							<li value="{$v.id}" class="">{$v.name}<span class="mui-icon mui-icon-checkmarkempty"></span></li>
+						</volist>
+					</ul>
+				</volist>
+			</div>
+			<input type="hidden" name="type_id">
+			<button type="button" onclick="add()">确定</button>
+		</form>
+
+		<script src="__HOME_CSS__/add/js/LAreaData1.js"></script>
+		<script src="__HOME_CSS__/add/js/LAreaData2.js"></script>
+		<script src="__HOME_CSS__/add/js/LArea.js"></script>
+		<script type="text/javascript">
+			function add() {
+				var types = $(".bottom li.on");
+				var ids = [];
+				for(var i = 0; i < types.length; i++) {
+					ids.push($(types[i]).attr('value'));
+				}
+				var type_id = ids.join(',');
+				$("input[name=type_id]").val(type_id);
+				document.getElementById("signform").submit();
+			}
+			$(".bottom li").on("click", function() {
+				if($(this).hasClass('on')) {
+					$(this).removeClass("on");
+				} else {
+					$(this).addClass("on");
+				}
+			});
+
+			$("#search").on("click", function() {
+				var types = $(".bottom li.on");
+				var ids = [];
+				for(var i = 0; i < types.length; i++) {
+					ids.push($(types[i]).attr('value'));
+				}
+				var type_id = ids.join(',');
+				$("input[name=type_id]").val(type_id);
+				document.getElementById("signform").submit();
+			});
+
+			$("#province_id").change(function() {
+				var province_id = $(this).val();
+				$.ajax({
+					url: '/Home/User/get_citys',
+					Type: "POST",
+					data: "province_id=" + province_id,
+					dataType: "json",
+					success: function(data) {
+						var city = data.city;
+						var option = $("<option></option>");
+						$(option).val("0");
+						$(option).html("请选择");
+						var option1 = $("<option></option>");
+						$(option1).val("0");
+						$(option1).html("请选择");
+						$("#city_id").html(option);
+						$("#district_id").html(option1);
+						for(var i in city) {
+							var option = $("<option></option>");
+							$(option).val(city[i]['region_id']);
+							$(option).html(city[i]['region_name']);
+							$("#city_id").append(option);
+						}
+					}
+
+				});
+			});
+
+			var area1 = new LArea();
+			area1.init({
+				'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+				'valueTo': '#value1', //选择完毕后id属性输出到该位置
+				'keys': {
+					id: 'id',
+					name: 'name'
+				}, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+				'type': 1, //数据源类型
+				'data': LAreaData //数据源
+			});
+			area1.value = [1, 13, 3]; //控制初始位置，注意：该方法并不会影响到input的value
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

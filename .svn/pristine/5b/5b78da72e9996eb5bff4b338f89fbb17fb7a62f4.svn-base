@@ -1,0 +1,475 @@
+<extend  name="./base"/>
+
+<block name="css_extend">
+    <link title="" rel="stylesheet" type="text/css" href="__ADMIN__/Lay/css/layui.css">
+    <script type="text/javascript" src="__COM_JS__/layer.js"></script>
+<script type="text/javascript" src="__ADMIN__/Lay/layui.js"></script>
+    <link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+    <link href="__HOME_CSS__/vmpArticlePromotion.css" rel="stylesheet" />
+    <style>
+    .zzc_myruanwen_from_input input[type=text],#content{width: 100%;}
+    </style>
+    <script src="__HOME_CSS__/bs3/sea.js"></script>
+    <script src="__HOME_JS__/gteditor-full-source-1.0.js"></script>
+    <script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+    <script src="__HOME_JS__/jquery.form.js"></script>
+
+    
+    <script>
+
+        var _atype_id =  $('#atype_id').val();
+
+        function choose(id, name) {
+            _atype_id = id;
+
+            $('#atype_id').val(id);
+            $('#zzc_title').text(name);
+            fromcat_click();
+
+        }
+
+        function fromcat_click(){
+
+            $(".zzc_from_cat_tan").toggle();
+            $(".zzc_from_cat_hidden").toggle();
+        }
+
+        function sumit_click(){
+
+            // var isActive = document.getElementById("mySwitch").classList.contains("mui-active");
+            var _article_reward = 0;
+            // if(isActive){
+            //     _article_reward = 1;
+            // }else{
+            //     _article_reward = 0;
+            // }
+
+            var _title = $("#title").val();
+            doRestoreZone();
+            var _content = $("#article_content").html();
+            if (_content.indexOf("\n") >= 0) {
+               _content = _content.replace(/\n/g,'<br>');
+            }
+
+            var _id = $('#id').val();
+
+            BUI.use('bui/overlay',function(overlay){
+                BUI.Message.Show({
+                    title : '提示',
+                    msg : '你正在编辑状态，是否保存修改？',
+                    icon : 'question',
+                    buttons : [
+                        {
+                            text:'取消',
+                            elCls : 'button',
+                            handler : function(){
+                                this.close();
+                            }
+                        },
+                        {
+                            text:'确定',
+                            elCls : 'button button-primary',
+                            handler : function(){
+
+                                if ( _atype_id <= 0 ) {
+                                    mui.toast('请选择分类');
+                                    this.close();
+                                    return false;
+                                }
+                                if ( _title.length <= 0 ) {
+                                    mui.toast('标题不能为空');
+                                    this.close();
+                                    return false;
+                                }
+                                if ( _content.length <= 0 ) {
+                                    mui.toast('内容不能为空');
+                                    this.close();
+                                    return false;
+                                }
+
+                                var _url = "{:U('Home/Article/addArticle')}";
+                                $.post(_url,{"id":_id, 'title':_title, 'content':_content, 'atype_id':_atype_id, 'article_reward':_article_reward},function(res){
+                                    if(res.status==1){
+                                        mui.toast(res.msg);
+                                        setTimeout(function(){
+                                            top.location.href="{:U('Home/Article/myListArticle')}";
+                                        },1000);
+                                    }else{
+                                        mui.toast(res.msg);
+                                    }
+                                });
+                                this.close();
+                            }
+                        }
+                    ]
+                });
+//                show();
+            });
+
+//            mui.confirm("你正在编辑状态，是否保存修改？","提示");
+        }
+
+        function addArticleType() {
+            window.location.href= "{:U('Home/Article/addArticleCategory')}";
+        }
+
+    </script>
+    <style>
+    .mask-editor{
+        width: 250px;
+        padding: 10px;
+    }
+    .mask-editor h2{text-align: center;margin-bottom: 10px;}
+    .upload_img{
+        border: 1px dashed #9a9a9a;
+        height: 80px;
+        width: 50%;
+        display: inline-table;
+        margin: .25rem .1rem;
+        background: #fff url(__HOME_IMAGES__/i-add.svg) no-repeat center/0.8rem;
+    }
+    .mask-editor input[type=text]{height: 30px;border: 1px solid #ccc;padding: 10px;}
+    .mask-editor textarea{width: 100%;}
+    .mask-editor .mui-button-row{margin-top: 10px;text-align: center;}
+    .mui-input-row{margin-bottom: 10px;text-align: center;}
+    </style>
+</block>
+
+<block name="body">
+    <body>
+        <div class="mask-editor dn">
+            <h2>插入内容</h2>
+            
+            <div class="mui-input-row">
+                <form id="jvForm" action="" method="post" enctype="multipart/form-data">  
+                    <div class="upload_img">
+                        <img src="" alt="" id="allUrl" width="100%">
+                    </div>
+                    <input id="fileUpload0" name="upload_img" type="file" accept="image/png,image/gif,image/jpeg,image/bmp" style="opacity: 0;">
+                </form>
+            </div>
+
+            <div class="mui-input-row">
+                <label>图片链接</label>
+                <input type="text" class="mui-input-clear" id="uploadImgLink" placeholder="格式如：http://">
+            </div>
+            <div class="mui-input-row">
+                <label>文本内容</label>
+                
+            </div>
+            <textarea class="border2 min-h4 plr15 ptb10" id="radio_txt_textarea"></textarea>
+            <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-primary" onclick="insConfirm()" >确认</button>
+        <button type="button" class="mui-btn mui-btn-danger" onclick="layer.closeAll()" >取消</button>
+    </div>
+        </div>
+        <div class="mui-content" style="margin-bottom: 60px;">
+            <div class="zzc_myruanwen_from_cat" >
+                <div class="zzc_from_div"><span id="zzc_title">选择分类</span> <span class="mui-icon mui-icon-arrowdown zzc_from_cat_ico" onclick="fromcat_click()"></span></div>
+                <div class="zzc_from_cat_tan"></div>
+                <div class="zzc_from_cat_hidden">
+                    <!--<a href="" class="zzc_from_car_a">选择分类1</a>-->
+                    <notempty name="article_type">
+                        <foreach name="article_type" item="type">
+
+                            <if condition="$type['id'] eq $res['atype_id']">
+                                <script>
+                                    (choose({$res['atype_id']}, "{$type['name']}"));
+                                </script>
+                            </if>
+                            <a href="javascript:void (0)" onclick="choose({$type.id}, '{$type.name}')" class="zzc_from_car_a">{$type.name}</a>
+                        </foreach>
+                    </notempty>
+                    <button class="zzc_from_cat_button" onclick="addArticleType()">+增加分类</button>
+                </div>
+
+            </div>
+            <div class="zzc_myruanwen_from_input">
+                <input type="hidden" name="id" id="id" value="{$res.id}">
+                <input type="hidden" name="atype_id" id="atype_id" value="{$res.atype_id}" />
+                <input type="text" name="title" class="zzc_from_text" id="title" value="{$res.title}" placeholder="填写标题" />
+            </div>
+            <div class="zzc_myruanwen_from_textarea">
+                <div id="article_content" class="article_content plr32 pb40 fs-26 bg-c2 border-top"> <div class="editBox">{$res.content}</div></div>
+            </div>
+
+            <div class="zzc_myruanwen_from_li">
+                <div class="zzc_myruanwen_from_li_div">
+                    底部广告
+                    <if condition="$condition['article_advert'] eq 1">
+                        <a href="{:U('Home/Advertisement/listArticleAD')}" style="color: green">已开启<span class="mui-icon mui-icon-arrowright"></span></a>
+                    <else/>
+                        <a href="{:U('Home/Advertisement/listArticleAD')}" class="zzc_a_red">已关闭<span class="mui-icon mui-icon-arrowright"></span></a>
+                    </if>
+                </div>
+            </div>
+            <div class="zzc_myruanwen_from_li">
+                <div class="zzc_myruanwen_from_li_div">
+                    微缩V网
+                    <if condition="$condition['article_cards'] eq 1">
+                        <a href="{:U('Home/Article/addMicroCard')}" style="color: green">已开启<span class="mui-icon mui-icon-arrowright"></span></a>
+                        <else/>
+                        <a href="{:U('Home/Article/addMicroCard')}" class="zzc_a_red">已关闭<span class="mui-icon mui-icon-arrowright"></span></a>
+                    </if>
+                </div>
+            </div>
+            <!--<div class="zzc_myruanwen_from_li zzc_border_bottom">-->
+                <!--<div class="zzc_myruanwen_from_li_div">-->
+                    <!--文章打赏-->
+                    <!--<div class="zzc_from_but">-->
+                        <!--&lt;!&ndash;<div class="mui-switch mui-switch-mini mui-active zzc_from_but2">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="mui-switch-handle"></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<if condition="$condition['article_reward'] eq 1">-->
+
+                            <!--<div class="mui-switch mui-switch-mini zzc_from_but1 mui-active" id="mySwitch">-->
+                                <!--<div class="mui-switch-handle"></div>-->
+                            <!--</div>-->
+
+                            <!--<else/>-->
+
+                            <!--<div class="mui-switch mui-switch-mini zzc_from_but1" id="mySwitch">-->
+                                <!--<div class="mui-switch-handle"></div>-->
+                            <!--</div>-->
+
+                        <!--</if>-->
+                        <!--&lt;!&ndash;<div class="mui-switch mui-switch-mini zzc_from_but1" id="mySwitch">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="mui-switch-handle"></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+        </div>
+        <div class="zzc_myranwen_bottom">
+            <input type="button" name="预览" id="" value="预览" onclick="goto('/Home/Article/previewArticle/id/{$Think.get.id}.html')" class="zzc_myruanwen_bottom_button" />
+            <input type="button" name="保存" id="" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+        </div>
+    </body>
+</block>
+
+<block name="js_extend">
+    
+
+    <script type="text/javascript">
+		function goto(url){
+			top.location.href=url;
+		}
+        $(function () {
+            $(document).on("click","#article_content a",function(event){
+                 event.preventDefault();
+            });
+            $("#fileUpload0").on("change",function(){
+                // 上传设置  
+                var options = {  
+                    // 规定把请求发送到那个URL  
+                    url: "{:U('Home/Article/uploadimg')}",  
+                    // 请求方式  
+                    type: "post",  
+                    // 服务器响应的数据类型  
+                    dataType: "json",  
+                    // 请求成功时执行的回调函数  
+                    success: function(data, status, xhr) {  
+                        // 图片显示地址  
+                        $("#allUrl").attr("src", data.url);  
+                    }  
+                };  
+                $("#jvForm").ajaxSubmit(options);  
+            });
+            $(".upload_img").on("touchend",function(){
+                $("#fileUpload0").click();
+            });
+            var id = $('#id').val();
+            if ( !id ) {
+                fromcat_click();
+            }
+        })
+
+    </script>
+    <script type="text/javascript">
+
+    function insConfirm(){
+        var htmlStr;
+
+ 
+
+        var v=$('#radio_txt_textarea').val();
+        $('#radio_txt_textarea').val('');
+        htmlStr='';
+        if(v && v!=''){
+            htmlStr=htmlStr+v;
+        }
+        createContentItem(htmlStr,'txt');
+
+        htmlStr='';
+        var v=$('#allUrl').attr('src');
+        var v1=$('#uploadImgLink').val();
+        $('#uploadImgLink').val('');
+        $('#uploadImgPreview').attr('src','');
+        if(v && v!=''){
+            if(v1 && v1!=''){
+                htmlStr='<a href="'+v1+'">';
+            }
+            htmlStr=htmlStr+'<img src="'+v+'">';
+            if(v1 && v1!=''){
+                htmlStr=htmlStr+'</a>';
+            }
+            createContentItem(htmlStr,'img');
+        }
+
+        layer.closeAll();
+        
+
+    }
+    function createContentItem(htmlStr,type){
+        var parentObj=$("#article_content [current=1]");
+        var nObj=document.createElement("div");  // 以 DOM 创建新元素
+        nObj.innerHTML=htmlStr;
+        $(nObj).attr("class","editBox");
+        $(nObj).click(function(){
+            editZoneClick($(this));
+        });
+        parentObj.after(nObj);
+    }
+    var category = parseInt("0");
+    if(category!=0 && category!=''){
+        var text = $("dd[id='"+category+"']").text();
+        $("#articleCatId").val(text).attr("data-id",category);
+    }
+
+    $("dd").on("click",function () {
+       var data_id = $(this).attr("id");
+       var text = $(this).text();
+        $("#articleCatId").val(text).attr("data-id",data_id);
+    });
+
+
+    $("dl:last-child").on("a","click",function (e) {
+        e.stopPropagation();
+
+    });
+
+    function insBlock(){   //插入广告
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true,
+            skin: 'yourclass',
+            scrollbar: false,
+            content: $(".mask-editor")
+        });
+    }
+    var li_instype = '编辑图文';
+    $(".mask-editor .tab li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".tab-content").hide().eq($(this).index()).show();
+        li_instype = $(this).text();
+    });
+//    $(".tab-content .simple-list li").click(function(){
+//        $(this).addClass("bg-c0").siblings().removeClass("bg-c0");
+//    });
+
+    $('.drop').click(function(e){
+        $('.drop-down').slideToggle(300);
+        $(".m-mask").toggle();
+        e.stopPropagation();
+    });
+    $("body").on("click", function(e) {
+        $(".drop-down").slideUp(300);
+        $(".m-mask").hide();
+    });
+
+</script> <script type="text/javascript">
+        layer.config({
+            extend: ['skin/moon/style.css'], //加载新皮肤
+            skin: 'layer-ext-moon' //一旦设定，所有弹层风格都采用此主题。
+        });
+
+        $(function(){
+            $(".header-left").attr("href","#");
+            $(".header-left").click(function() {
+                var url="wap.php?act=article&do=captArticleList";
+                checkLeavePage(url);
+            });
+
+            $(".friends").attr("href","#");
+            $(".friends").click(function() {
+                var url="wap.php?act=auth&do=index";
+                checkLeavePage(url);
+            });
+        });
+
+        function preview(id){
+            var url="wap.php?act=article&do=captArticleView&id="+id;
+            checkLeavePage(url);
+        }
+
+
+
+        function submitForm(){
+            var dispStr=$("#editBar").css("display");
+            if(dispStr=="block"){
+                layer.confirm('您正在编辑状态，是否保存所作修改？', {icon: 3, btn: ['确定','取消'] }, function(){
+                    confirmModifyAndSave();
+                }, function(){
+                    cancelModifyAndSave();
+                });
+            }else{
+                doSubmitForm();
+            }
+        }
+
+        function backToList(){
+            var url="wap.php?act=article&do=captArticleList";
+            location.href=url;
+        }
+
+        function doSubmitForm(url){
+            $("#article_content a").each(function() {
+                $(this).attr("href", $(this).attr("a_orig_href"));
+            });
+
+            var $titleStr=$('#article_title').val();
+            var $id=$('#id').val();
+            var $contentStr=$("#article_content").html();
+            var $articleCatId=$('#articleCatId').attr("data-id");
+                        var $article_reward = $("input[type='checkbox']").is(":checked") ? 1 : 0;
+
+            $saveUrl=$('#form1').attr('action');
+
+            $.ajax({
+                url: $saveUrl,
+                dataType: "json",
+                timeout: 15000,
+                type: "post",
+                data: {
+                    id:$id,
+                    title:$titleStr,
+                    articleCatId:$articleCatId,
+                    content:$contentStr,
+                                        article_reward:$article_reward
+                },
+                success:function(data){
+                    layer.msg('保存成功', {icon: 1, time:1000},function(){
+                        if(url){
+                            location.href=url;
+                        }else{
+                            backToList();
+                        }
+                    });
+                    //if(data && data.code && data.code==1){
+                    //  window.location.href=data.msg;
+                    //}
+                },
+
+                error:function(){
+                    layer.msg('保存失败！', {icon: 2, time:1000});
+                }
+            })
+        }
+
+    </script>
+</block>

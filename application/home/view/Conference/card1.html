@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+	<title>洋小秘第十届特训营---参会证</title>
+	<link rel="stylesheet" href="__HOME_JS__/yb/css/card.css" />
+	<script src="__HOME_JS__/yb/js/rem.js"></script>
+	<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+	<style type="text/css">
+		#myimg{
+			width :100%;
+			height:auto;
+		}
+		/*body{background:#2fb3d3 }*/
+	</style>
+</head>
+<body>
+<div class="max" >
+	<img id="myimg" src="" height="">
+</div>
+<script>
+    var h = $(window).height();
+    $(".max").css("height", h )
+    var id = '{$nameid}';
+    //console.log(id)
+
+    $.ajax({
+        //几个参数需要注意一下
+        type: "POST", //方法类型
+        dataType: "json", //预期服务器返回的数据类型
+        url: "index.php?s=/Api/ActivityCheck/find_user_by_id", //url
+        data: {
+            useruuid: id,
+        },
+        success: function(res) {
+            console.log(res.AppendData)
+            //alert(res.AppendData);
+            //$(".cen_img>img").attr("src",res.AppendData.s_usertopimgurl);
+            $("#myimg").attr("src",res.AppendData);
+            // $(".name").html(res.AppendData.s_username);
+            // $(".rank").html(res.AppendData.s_grade);
+            // $(".iphone").html(res.AppendData.s_userphone);
+            // $(".nums").html(res.AppendData.s_name);
+            // $(".recommend").html(res.AppendData.s_referee);
+            // $(".num").html(res.AppendData.s_activityname);
+            // $(".date_num").html(res.AppendData.s_act_datatime);
+
+        },
+        error: function() {
+            alert("服务器繁忙，请稍后再试！");
+        }
+    })
+
+
+
+
+
+
+
+</script>
+</body>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>
+</html>
+

@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="yes" name="apple-touch-fullscreen" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="wap-font-scale" content="no">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<title>幸运大转盘抽奖</title>
+<meta name="keywords" content="" />
+<meta name="description" content="">
+<link href="__HOME_CSS__/rjl/component.css" rel="stylesheet" type="text/css">
+<link href="__HOME_CSS__/rjl/style.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="__HOME_CSS__/rjl/swiper-3.4.2.min.css">
+
+<script type="text/javascript" src="__HOME_JS__/rjljs/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="__HOME_JS__/rjljs/swiper-3.4.2.min.js"></script>
+
+<script type="text/javascript" src="__HOME_JS__/rjljs/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="__HOME_JS__/rjljs/awardRotate.js"></script>
+<script type="text/javascript" src="__HOME_JS__/rjljs/index.js"></script>
+
+</head>
+<body>
+	
+	<!-------------抽奖页面-------------->
+	<div class="ml-main" id="ml-main">
+        <!-- <div src="images/jjj.png"></div>
+         <div src="images/rrr.png"></div>
+          <div src="images/llll.png"></div> -->
+
+            <div class="kePublic">
+            <!--转盘效果开始-->
+            <div style="max-width:640px; margin:0 auto">
+                <div class="banner">
+                    <div class="turnplate" style="background-image:url(__HOME_IMAGES__/turnplate-bg_2.png);background-size:100% 100%;">
+                        <canvas class="item" id="wheelcanvas" width="516" height="516"></canvas>
+                        <img id="tupBtn" class="pointer" src="__HOME_IMAGES__/turnplate-pointer_2.png"/>
+                        <!--<button id="tupBtn"><img src="images/turnplate-pointer_2.png"/></button>-->
+                    </div>
+                </div>
+            </div>
+            <!--转盘效果结束-->
+            <div class="clear"></div>
+        </div>
+	</div>
+    
+    <!-------------中奖弹窗页面-------------->
+    <div class="zj-main" id="zj-main">
+            <div class="txzl">
+            	<h1>恭喜你中奖啦！</h1>
+                <!-- <h2>恭喜抽中<br /> </h2> -->
+                <div class="trp"><img src="__HOME_IMAGES__/turnplate-bg_21.png"/></div>
+                    <h3><span id="jiangpin"></span></h2>
+                <!-- <p>请填写资料领取奖品：</p>
+                <label>姓名：<input type="text" name="username" /></label>
+                <label>地址：<input type="text" name="userphone" /></label>
+                <h4><sub>*</sub>未提交个人资料将视为放弃领取此次奖品</h4> -->
+                <h4><sub>*</sub>当前剩余积分：<span style="font-size:24px;">666</span></h4>
+                <!-- <div class="info_tj">再抽一次</div> -->
+                <div style="height:20px;"></div>
+                 <div class="bbt"> 再抽一次</div>
+            </div>
+            <div class="close_zj"><img src="__HOME_IMAGES__/close_1.png" /></div>
+	</div>
+    
+    <!-- 谢谢参与弹窗 -->
+     <div class="xxcy-main" id="xxcy-main">
+        <div class="xxcy">
+            <h3>谢谢参与！</h3>
+            <p>很遗憾你没有中奖！</p>
+            <p>* 剩余积分666</p>
+            <div class="bbt"> 再抽一次</div>
+        </div>
+        <div class="close_xxcy"><img src="__HOME_IMAGES__/close_1.png" /></div>
+    </div>
+
+    <!-- 积分不够弹窗 -->
+     <div class="xcy-main" id="xcy-main">
+        <div class="xcy">
+            <h3>很遗憾！</h3>
+            <p>您的积分不够了</p>
+            <div style="height:40px;"></div>
+            <p>* 剩余积分9</p>
+            <div class="bbtt"> 获取积分</div>
+        </div>
+        <div class="close_xcy"><img src="__HOME_IMAGES__/close_1.png" /></div>
+    </div>
+
+    <!-- 获取积分 -->
+     <div class="cy-main" id="cy-main">
+        <div class="cy">
+            <h3>怎样获取积分？</h3>
+            <div class="duan">
+               <div class="zyd">
+                   <p>1.每日签到</p>
+                   <div class="lele">去签到</div>
+               </div>
+               <div class="zyd">
+                   <p>2.分享文章</p>
+                   <div class="lele">去签到</div>
+               </div>
+               <div class="zyd">
+                   <p>3.分享文章</p>
+                   <div class="lele">去签到</div>
+               </div>
+               <div class="zyd">
+                   <p>3.分享文章</p>
+                   <div class="lele">去签到</div>
+               </div>
+            </div>
+        </div>
+        <div class="close_cy"><img src="__HOME_IMAGES__/close_1.png" /></div>
+    </div>
+    
+    <!-- 我的奖品 -->
+    <div class="rjl-main" id="rjl-main" >
+            <div class="txrjl">
+                <h1>我的奖品</h1>
+                <div class="bbk">
+                    <div class="ttp"><img src="__HOME_IMAGES__/turnplate-bg_21.png"/></div>
+                    <div class="ttp1"><img src="__HOME_IMAGES__/turnplate-bg_21.png"/></div>
+                    <div class="ttp2"><img src="__HOME_IMAGES__/turnplate-bg_21.png"/></div>
+                    <!-- <div class="ttp"><img src="images/turnplate-bg_21.png"/></div>
+                    <div class="ttp"><img src="images/turnplate-bg_21.png"/></div>
+                    <div class="ttp"><img src="images/turnplate-bg_21.png"/></div> -->
+                </div>
+                <div class="drrjl">请填写地址，奖品不日将会送到哦！</div>
+                 <div class="bbl"> 填写地址</div>
+            </div>
+            <div class="close_rjl"><img src="__HOME_IMAGES__/close_1.png" /></div>
+    </div>
+    
+
+    <!-------------提交成功弹窗-------------->
+    <!-- <div class="tjcg-main" id="tjcg-main">
+    	<div class="tjcg">
+        	<h3>恭喜您提交成功</h3>
+            <p>请于3日内<br />前到总部领取奖品</p>
+            
+        </div>
+    	<div class="close_tjcg"><img src="images/close_1.png" /></div>
+    </div> -->
+
+    <div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+        <div class="swiper-slide">恭喜123****4673用户获得<span style="color:yellow;">大礼包</span></div>
+    </div>
+</div>
+
+
+    <div class="renjl">我的奖品</div>
+    <div class="rjl">——抽奖规则——</div>
+    <div class="ljr">1.点击转盘进行抽奖，抽奖一次消耗20积分。</br>2.奖项将会以快递形式进行送达。 </div>
+</body>
+</html>
+<script>
+    $(function(){
+        
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: true,//可选选项，自动滑动
+            speed:1000, //速度
+            direction: 'vertical', //垂直
+            loop:true, //循环
+            observer: true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true//修改swiper的父元素时，自动初始化swiper
+        })
+    })
+
+
+
+</script>

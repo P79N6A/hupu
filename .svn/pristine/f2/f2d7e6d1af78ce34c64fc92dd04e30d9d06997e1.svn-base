@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>排序</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				padding-top: 1.2rem;
+			}
+			
+			#out {
+				width: 100%;
+				height: auto;
+			}
+			
+			.sort {
+				width: 76%;
+				height: 4rem;
+				background: rgba(0, 0, 0, 0.5);
+				margin: 0 auto;
+				display: flex;
+				line-height: 4rem;
+				margin-bottom: 0.8rem;
+			}
+			
+			.s_left {
+				width: 2.107%;
+				height: 100%;
+				margin-right: 1.5rem;
+			}
+			
+			.s_cen {
+				width: 67%;
+				height: 100%;
+				color: #fff;
+				font-size: 1rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.s_rgt {
+				width: 30.893%;
+				height: 100%;
+				line-height: 4.3rem;
+				text-align: center;
+			}
+			
+			.s_rgt>img {
+				width: 0.9rem;
+				height: 0.6rem;
+			}
+			
+			.one {
+				background: #FFCA3F;
+			}
+			
+			.two {
+				background: #ED755B;
+			}
+			
+			.three {
+				background: #77A252;
+			}
+			
+			.four {
+				background: #059998;
+			}
+			
+			.five {
+				background: #6892C3;
+			}
+			
+			.bot {
+				width: 60%;
+				height: 2.15rem;
+				line-height: 2.15rem;
+				text-align: center;
+				font-size: 0.8rem;
+				margin: 2rem auto 0;
+			}
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="out">
+
+		</div>
+		<div class="bot">
+			完成排序
+		</div>
+		<div class="model"></div>
+	</body>
+	<script src="__HOME_JS__/yb/js/sortable.js"></script>
+	<script>
+		Sortable.create(out, {});
+
+		var unionid = "{$unionid}";
+		var styles = "{$style}"
+		var list = "";
+		var plate = "";
+		console.log(unionid);
+		$.ajax({
+			type: 'post',
+			url: 'index.php?s=/Api/NewCardApi/plate_order_list',
+			dataType: 'json',
+			data: {
+				unionid: unionid,
+			},
+			success: function(res) {
+				console.log(res)
+
+				if(res.ResultType == 0) {
+					//						console.log(res.AppendData.个人展示);
+					var _sort_list = [];
+					_sort_list[parseInt(res.AppendData["产品中心"])] = {
+						"template_name": '产品中心',
+						"template_classname": "three"
+					};
+					_sort_list[parseInt(res.AppendData["展示一切"])] = {
+						"template_name": '展示一切',
+						"template_classname": "show"
+					};
+					_sort_list[parseInt(res.AppendData["视频"])] = {
+						"template_name": '视频',
+						"template_classname": "intro"
+					};
+					_sort_list[parseInt(res.AppendData["链接一切"])] = {
+						"template_name": '链接一切',
+						"template_classname": "life"
+					};
+					_sort_list[parseInt(res.AppendData["个人展示"])] = {
+						"template_name": '个人展示',
+						"template_classname": "per"
+					};
+
+					for(var index = 0; index < _sort_list.length; index++) {
+						if(_sort_list[index] == null || _sort_list[index] == undefined) {
+							continue;
+						}
+
+						if(_sort_list[index].template_classname == "life") {
+							list += '<div class="sort life">'
+							list += '<div class="s_left two"></div>'
+							list += '<div class="s_cen">链接一切</div>'
+							list += '<div class="s_rgt">'
+							list += '<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />'
+							list += '</div>'
+							list += '</div>'
+							continue;
+						}
+						if(_sort_list[index].template_classname == "per") {
+							list += '<div class="sort per">'
+							list += '<div class="s_left one"></div>'
+							list += '<div class="s_cen">个人展示</div>'
+							list += '<div class="s_rgt">'
+							list += '<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />'
+							list += '</div>'
+							list += '</div>'
+							continue;
+						}
+						if(_sort_list[index].template_classname == "three") {
+							list += '<div class="sort pro">'
+							list += '<div class="s_left three"></div>'
+							list += '<div class="s_cen">产品中心</div>'
+							list += '<div class="s_rgt">'
+							list += '<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />'
+							list += '</div>'
+							list += '</div>'
+							continue;
+						}
+						if(_sort_list[index].template_classname == "intro") {
+							list += '<div class="sort intro">'
+							list += '<div class="s_left  four"></div>'
+							list += '<div class="s_cen">视频</div>'
+							list += '<div class="s_rgt">'
+							list += '<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />'
+							list += '</div>'
+							list += '</div>'
+							continue;
+						}
+						if(_sort_list[index].template_classname == "show") {
+							list += '<div class="sort show">'
+							list += '<div class="s_left five"></div>'
+							list += '<div class="s_cen">展示一切</div>'
+							list += '<div class="s_rgt">'
+							list += '<img src="__HOME_IMAGES__/newvnet/vhome/sort@2x.png" alt="" />'
+							list += '</div>'
+							list += '</div>'
+							continue;
+						}
+					}
+				}
+				$("#out").html(list);
+
+			},
+			error: function() {
+				console.log("错误")
+			}
+		});
+		
+		
+
+		$(".bot").click(function() {
+			var sort_obj_list = $("#out div.sort");
+			var _sort_list = [];
+
+			for(var a = 0; a < sort_obj_list.length; a++) {
+
+				if($(sort_obj_list[a]).hasClass("life")) {
+					_sort_list.push({
+						"template_name": '链接一切',
+						"template_classname": "life"
+					});
+					continue;
+				}
+				if($(sort_obj_list[a]).hasClass("pro")) {
+					_sort_list.push({
+						"template_name": '产品中心',
+						"template_classname": "pro"
+					});
+					continue;
+				}
+				if($(sort_obj_list[a]).hasClass("show")) {
+					_sort_list.push({
+						"template_name": '展示一切',
+						"template_classname": "show"
+					});
+					continue;
+				}
+				if($(sort_obj_list[a]).hasClass("intro")) {
+					_sort_list.push({
+						"template_name": '视频',
+						"template_classname": "intro"
+					});
+					continue;
+				}
+				if($(sort_obj_list[a]).hasClass("per")) {
+					_sort_list.push({
+						"template_name": '个人展示',
+						"template_classname": "per"
+					});
+					continue;
+				}
+			}
+			var plate = '';
+			for(var a in _sort_list) {
+				if(a == (_sort_list.length - 1)) {
+					plate += _sort_list[a].template_name + "=" + a;
+					continue;
+				}
+				plate += _sort_list[a].template_name + "=" + a + ",";
+			}
+			// var numa = $(".per").index();
+			// var numb = $(".life").index();
+			// var numc = $(".pro").index();
+			// var numd = $(".intro").index();
+			// var nume = $(".show").index();
+			// plate="个人展示=0,链接一切=3,产品中心=5,视频=1,展示一切=2";// 用index 不行
+			// plate = "个人展示="+numa+",链接一切="+numb+",产品中心="+numc+",视频="+numd+",展示一切="+nume+""
+			// console.log(plate)
+			// console.log(unionid)
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/NewCardApi/plate_order',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					plate: plate
+				},
+				success: function(res) {
+//					console.log(res)
+					if(res.ResultType == 0) {
+						$(".model").show();
+						$(".model").html("完成排序");
+						setTimeout(function() {
+							$(".model").hide();
+						}, 1000)
+						setTimeout(function() {
+							window.location.href = "/index.php?s=/Home/Vhome/index/style/{$style}.html"
+						}, 1100)
+
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+		})
+		if(styles==7){
+        	$("body").css({
+	    		'background': '#4D4F5E',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+			});	
+			$(".bot").css({
+				'border': '0.05rem solid #FFCA3F',
+    			'color':'#FFCA3F'
+			})
+        }
+		
+		if(styles==9){
+        	$("body").css({
+	    		'background': 'url("/Public/Home/images/stencil/v1.png")',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+			});	
+			$(".bot").css({
+				'color':'#FFCA3F',
+				'border': '0.05rem solid #FFCA3F',
+			})
+        }
+		
+		if(styles==11){
+        	$("body").css({
+	    		'background': '#3E93E2',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+			});	
+			$(".bot").css({
+				'color':'#FFF',
+				'border': '0.05rem solid #FFF',
+			})
+        }
+		if(styles==13){
+        	$("body").css({
+	    		'background': '#32cea0',
+		            'background-repeat': 'no-repeat',
+	                'background-position': 'center',
+	                'background-size': 'cover',
+	                'height': '100vh',
+			});	
+			$(".bot").css({
+				'color':'#FFF',
+				'border': '0.05rem solid #FFF',
+			})
+        }
+		
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		// 通过下面这个API隐藏右上角按钮hideOptionMenu
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>
+</html>

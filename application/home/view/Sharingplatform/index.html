@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="x5-fullscreen" content="true">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/sharing.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/jquery.countdown.min.js"></script>
+    <title>推广共享平台</title>
+    <style>
+        body,
+        html {
+            background: #eee;
+            /* height: 100%; */
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            padding-bottom: .6rem;
+
+
+        }
+
+        .userinfo_box {
+            margin-top: .1rem;
+            background: #fff;
+        }
+
+        .userinfo {
+            width: 92%;
+            height: .65rem;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        .userinfo .item_img {
+            width: 15%;
+            height: 100%;
+            position: relative;
+        }
+
+        .userinfo .item_img img {
+            display: block;
+            width: .4rem;
+            height: .4rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            margin-top: -.2rem;
+        }
+
+        .userinfo .item_name {
+            width: 35%;
+            height: 100%;
+            line-height: .65rem;
+            font-size: .13rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .userinfo .item_count {
+            width: 50%;
+            height: 100%;
+            position: relative;
+        }
+
+        .userinfo .item_count .lead {
+            width: 1rem;
+            height: .205rem;
+            line-height: .205rem;
+            font-size: .13rem;
+            text-align: center;
+            background: #FFECDB;
+            color: #5C544E;
+            border-radius: .02rem;
+            position: absolute;
+            bottom: .15rem;
+            right: 0;
+        }
+
+        .userinfo .item_count .end_count {
+            height: .25rem;
+            line-height: .25rem;
+            /* width: 1.5rem; */
+            font-size: .13rem;
+            text-align: center;
+            background: #FFECDB;
+            color: #5C544E;
+            border-radius: .02rem;
+            position: absolute;
+            right: 0;
+            top: -.02rem;
+            padding: 0 0.05rem;
+        }
+
+        .show_img_box {
+            width: 92%;
+            height: 1.74rem;
+            margin: 0 auto;
+            position: relative;
+            border-radius: .08rem;
+            overflow: hidden;
+            box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.19);
+         
+        }
+
+        .show_img_box img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .show_img_box .Extension {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: .4rem;
+            line-height: .4rem;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+            color: #fff;
+            text-indent: .11rem;
+            font-size: .16rem;
+        }
+
+        .number_box {
+            display: flex;
+            width: 92%;
+            margin: 0 auto;
+            justify-content: space-around;
+            margin-top: .195rem;
+
+        }
+
+        .number_box p {
+            background: #FFECDB;
+            flex-wrap: nowrap;
+            border-radius: .15rem;
+            text-align: center;
+            color: #5C544E;
+            font-size: .12rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: .05rem .08rem;
+            box-sizing: border-box;
+            transform: scale(0.9);
+        }
+
+        .join_box {
+            width: 100%;
+            padding-bottom: .15rem;
+        }
+
+        .join_box .join {
+            background: #32CEA0;
+            color: #fff;
+            border: 0;
+            font-size: .14rem;
+            display: block;
+            margin: 0 auto;
+            margin-top: .19rem;
+            outline: none;
+            border-radius: .3rem;
+          
+
+        }
+
+         .join_box .join a{
+             display: block;
+             color: #fff;
+             font-size: .14rem;
+             padding: 0.08rem 0.15rem;
+             
+         }
+
+        .want_too {
+            height: .49rem;
+            width: 100%;
+            background: #32CEA0;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            z-index: 999;
+
+        }
+
+        .want_too a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            line-height: .49rem;
+            color: #fff;
+            font-size: .18rem;
+            text-align: center;
+        }
+
+        .user {
+            width: .7rem;
+            height: .7rem;
+            position: fixed;
+            bottom: .735rem;
+            right: .165rem;
+        }
+
+        .user a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .user a img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tip_box {
+            width: 3.4rem;
+            height: 1rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -1.7rem;
+            margin-top: -0.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        .tip_box p {
+            margin-bottom: .25rem;
+        }
+
+        .tip_box a {
+            display: block;
+            width: 1rem;
+            height: .37rem;
+            line-height: .37rem;
+            color: #fff;
+            background: #FF9D49;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+
+        .loading{
+            width:2.5rem;
+            height: 1.1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: .05rem;
+            color: #fff;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -.55rem;
+            margin-left: -1.2rem;
+            z-index: 999;
+            text-align: center;
+            display: none;
+        }
+
+        .loading img{
+            display: block;
+            width: .4rem;
+            height: .4rem;
+            margin: 0.15rem auto;
+        }
+        .end_count{
+            color: #FA861F !important;
+            box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.19);
+        }
+        .end_count .san{
+            position: absolute;
+            top: 0;
+            left: -3px;
+            overflow:hidden;
+            font-size: 0;     
+            line-height: 0; 
+            border-width:2px 3px 0 0;
+            border-style:solid;
+            border-color:transparent #E4BFA0 transparent transparent; 
+        }
+        .end_count .day{
+            background:rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 0 0.02rem;
+        }
+        .end_count .time{
+            background:rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 0 0.02rem;
+        }
+        .lead{
+            color: #FA861F !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+
+    </div>
+    <!-- 缺省提示 -->
+    <div class="tip_box">
+        <p>暂时没有发布活动哦！</p>
+        <a href="/index.php?s=/Home/Sharingplatform/Advertise.html">点击发布</a>
+    </div>
+
+
+    <!-- 个人信息 -->
+    <div class="user">
+        <a href="/index.php?s=/Home/Sharingplatform/MyRelevant.html">
+            <img src="__HOME_IMAGES__/user_info.png" alt="">
+        </a>
+    </div>
+
+
+    <div class="want_too">
+        <a href="/index.php?s=/Home/Sharingplatform/Advertise.html">我也要打广告</a>
+    </div>
+
+
+    <input type="hidden" id="user" value="{$id}">
+
+    <input type="hidden" id="share_user_id" value="{$user_id}">
+
+
+    <div class="loading">
+        <img src="__HOME_IMAGES__/new_load.gif" alt="">
+        <p>加载中...</p>
+    </div>
+</body>
+
+</html>
+<script type="text/html" id="home">
+    {{each AppendData v i}}
+    <div class="userinfo_box">
+        <!-- 信息时间 -->
+        <div class="userinfo clearfix">
+            <div class="fl item_img">
+                <img src="{{v.headimg}}" alt="">
+            </div>
+
+            <p class="fl item_name">{{v.user_id == $user_id ? '我发布的活动' : v.nick_name}}</p>
+            <div class="fl item_count">
+                <div id="end_count{{i}}" class="end_count"></div>
+                <div class="lead">已领人数:{{v.share_user_count}}人</div>
+            </div>
+        </div>
+
+
+
+        <!-- 展示任务图片 -->
+        <div class="show_img_box">
+            <img src="{{v.cover_img}}" alt=""> 
+            {{if v.activity_id == 2}}
+            <p class="Extension">相册展示推广</p>
+            {{/if}} 
+            {{if v.activity_id == 1}}
+            <p class="Extension">V网展示推广</p>
+            {{/if}} 
+            {{if v.activity_id == 3}}
+            <p class="Extension">文章推广展示</p>
+            {{/if}}
+             {{if v.activity_id == 4}}
+            <p class="Extension">活动征集展示</p>
+            {{/if}}
+        </div>
+        <!-- set数据 -->
+        <div class="number_box">
+            <p>总佣金:{{v.amount}}元</p>
+            <p>点击量:{{v.count}}次</p>
+            <p>单次佣金:{{v.single_amount}}元</p>
+        </div>
+        <div class="join_box">
+            <button class="join">
+                <a class="join_url" href="javascript:;" data-url="{{v.activity_url}}" data-share_id="{{v.id}}" >我也要参与</a>
+            </button>
+        </div>
+    </div>
+    {{/each}}
+
+
+
+
+</script>

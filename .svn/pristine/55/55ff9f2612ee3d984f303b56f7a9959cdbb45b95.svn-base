@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<link rel="stylesheet" href="__HOME_CSS__/dist/css/swiper.min.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<title>微官网</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				background: #fff;
+			}
+			
+			.top {
+				width: 100%;
+				height: 8rem;
+				position: relative;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-pagination-bullet {
+				width: 0.4rem;
+				height: 0.4rem;
+				display: inline-block;
+				border-radius: 100%;
+				background: #000;
+				opacity: .6;
+			}
+			
+			.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet {
+				margin: 0 0.2rem;
+			}
+			
+			.swiper-pagination-bullet-active {
+				border: 0.05rem solid #32CEA0;
+				opacity: 1;
+			}
+			
+			.dec {
+				width: 95%;
+				height: 12.45rem;
+				padding: 0 2.5%;
+				border-bottom: 0.05rem solid #F6F6F6;
+			}
+			
+			.d_top {
+				width: 100%;
+				height: 3.85rem;
+				text-align: center;
+				color: #333;
+				font-size: 0.8rem;
+			}
+			
+			.tit {
+				width: 100%;
+				height: 2.1rem;
+				font-size: 0.8rem;
+				color: #333;
+				text-align: center;
+				line-height: 2.7rem;
+				font-weight: 600;
+			}
+			
+			.line {
+				width: 3.2rem;
+				height: 0.05rem;
+				background: #777777;
+				margin: 0 auto;
+			}
+			
+			.num {
+				width: 3.2rem;
+				height: 1.7rem;
+				line-height: 1rem;
+				font-size: 0.6rem;
+				color: #333;
+				text-align: right;
+				margin: 0 auto;
+			}
+			
+			.con {
+				width: 100%;
+				height: 5rem;
+				font-size: 0.7rem;
+				color: #333;
+				text-align: center;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 5;
+				overflow: hidden;
+				margin-bottom: 1.125rem;
+				letter-spacing: 0.04rem;
+				line-height: 1rem;
+			}
+			
+			.more {
+				width: 4.8rem;
+				height: 1.5rem;
+				border: 0.1rem solid #32CEA0;
+				margin: 0.8rem auto 0;
+				font-size: 0.6rem;
+				text-align: center;
+				line-height: 1.5rem;
+			}
+			
+			.m_link {
+				display: block;
+				width: 100%;
+				height: 100%;
+				font-size: 0.6rem;
+				color: #333;
+				text-decoration: none;
+			}
+			
+			.m_link>img {
+				width: 0.55rem;
+				height: 0.425rem;
+			}
+			
+			.culture {
+				width: 100%;
+				height: 20.75rem;
+				border-bottom: 0.05rem solid #F6F6F6;
+			}
+			
+			.c_img {
+				width: 100%;
+				height: 15.5rem;
+				position: relative;
+			}
+			
+			.c_bg {
+				width: 100%;
+				height: 8.45rem;
+				margin: 3.425rem 0;
+			}
+			
+			.bg_cen {
+				width: 92%;
+				height: 100%;
+				margin: 0 auto;
+				position: absolute;
+				top: 0;
+				left: 4%;
+			}
+			
+			.bg_left {
+				width: 4.65rem;
+				height: 4.25rem;
+				position: absolute;
+				left: 0;
+				top: 3.425rem;
+			}
+			
+			.bg_up {
+				width: 10.65rem;
+				height: 7.675rem;
+				position: absolute;
+				top: 0;
+				left: 4.85rem;
+			}
+			
+			.bg_down {
+				width: 5.95rem;
+				height: 7.65rem;
+				position: absolute;
+				bottom: 0;
+				left: 4.85rem;
+			}
+			
+			.bg_right {
+				width: 6.3rem;
+				height: 4rem;
+				position: absolute;
+				bottom: 3.625rem;
+				right: 0;
+			}
+			
+			.c_more {
+				width: 4.8rem;
+				height: 1.5rem;
+				border: 0.1rem solid #32CEA0;
+				margin: 0 auto;
+				font-size: 0.6rem;
+				text-align: center;
+				line-height: 1.5rem;
+				position: absolute;
+				right: 0;
+				bottom: 0;
+			}
+			
+			.team {
+				width: 100%;
+				height: 16rem;
+				border-bottom: 0.05rem solid #F6F6F6;
+			}
+			
+			.t_lb {
+				width: 97%;
+				height: 9rem;
+				overflow: auto;
+				margin-left: 3%;
+			}
+			
+			.ts_cen {
+				width: 26.8rem;
+				height: 100%;
+				overflow: auto;
+				display: flex;
+			}
+			
+			.t_list {
+				width: 6rem;
+				height: 100%;
+				margin-right: 0.75rem;
+			}
+			
+			.t_list>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+			}
+			
+			.peop {
+				width: 6rem;
+				height: 6rem;
+			}
+			
+			.peop>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.name {
+				width: 100%;
+				height: 1.8rem;
+				overflow: hidden;
+			}
+			
+			.n_name {
+				display: block;
+				float: left;
+				width: 45.5%;
+				height: 1.8rem;
+				line-height: 2rem;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #333;
+				margin-right: 2.5%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.founder {
+				width: auto;
+				height: 0.8rem;
+				float: left;
+				background: #F8C85E;
+				font-size: 0.6rem;
+				color: #fff;
+				/*padding: 0 5%;*/
+				line-height: 0.8rem;
+				margin: 0.6rem 0 0;
+			}
+			
+			.pop_dec {
+				width: 100%;
+				height: 1.2rem;
+				font-size: 0.55rem;
+				color: #000;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.history {
+				width: 100%;
+				height: auto;
+				padding-bottom: 0.8rem;
+				border-bottom: 0.05rem solid #F6F6F6;
+			}
+			
+			.h_img {
+				width: 100%;
+				height: 45.8rem;
+			}
+			
+			.h_img>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.join_me {
+				width: 100%;
+				height: 23.65rem;
+			}
+			
+			.join_me>a{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.join_me>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			
+			.honor{
+				width: 100%;
+				height: auto;
+			}
+			
+			.hon_img {
+				width: 97%;
+				height: 6rem;
+				margin-left: 3%;
+				overflow: auto;
+			}
+			
+			.hon_cen {
+				width: 59rem;
+				height: 6rem;
+				display: flex;
+				overflow: hidden;
+			}
+			
+			.hon_imgs {
+				width: 8rem;
+				height: 6rem;
+				margin-right: 0.4rem;
+			}
+			
+			.hon_imgs>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.hon_imgs>a>img {
+				width: 100%;
+				height: 100%;
+			}
+			.h_more {
+				width: 4.8rem;
+				height: 1.5rem;
+				border: 0.1rem solid #32CEA0;
+				margin: 1.2rem auto 0.8rem;
+				font-size: 0.6rem;
+				text-align: center;
+				line-height: 1.5rem;
+			}
+			.coo{
+				width: 100%;
+				height: 10.75rem;
+			}
+			.coo>img{
+				width: 100%;
+				height: 100%;
+			}
+			.here{
+				width: 100%;
+				height: 6.25rem;
+			}
+			.here>a{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			.here>a>img{
+				width: 100%;
+				height: 100%;
+			}
+			.site{
+				width: 100%;
+				height: 3.5rem;
+				margin-top: -0.025rem;
+			}
+			.site>img{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<a href="https://mp.weixin.qq.com/s/KMg0ouRIOd5yXGQQB-VXyw">
+							<img src="__HOME_IMAGES__/uccn/yxm/559821016927552861.png" alt="" />
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="https://mp.weixin.qq.com/s/pELPB8RnADYN_MFRpXr_gQ">
+							<img src="__HOME_IMAGES__/uccn/yxm/917464474049945312.png" alt="" />
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="https://mp.weixin.qq.com/s/NTQ1DrX4TR2o8EGM7uORTw">
+							<img src="__HOME_IMAGES__/uccn/yxm/331755136550619138.png" alt="" />
+						</a>
+					</div>
+				</div>
+				<!-- Add Pagination -->
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+		<div class="dec">
+			<div class="d_top">
+				<div class="tit">集团介绍</div>
+				<div class="line"></div>
+				<div class="num">01</div>
+			</div>
+			<div class="con">上海互浦科技有限公司为上海明鑫集团旗下子公司，是一家集互联网科技、技术开发、营销策划、企业管理咨询、商务信息咨询、电子商务为一体的新型科技平台型公司。公司愿汇聚海内外资源和各界行业杰出人才，期待与众多有志之士一起合并梦想，共创未来!</div>
+			<div class="more">
+				<a class="m_link" href="http://mp.weixin.qq.com/s?__biz=MzU4MzcyNDQ3NQ==&mid=100000137&idx=1&sn=39a8e38fdeca129b1b06da8cb71b8fe0&chksm=7da5fd5d4ad2744b72aef7ce0f123cba89d11b4d2d8988fe3b6a52cfa3c4a0114e5a74118005#rd">
+					查看更多
+					<img src="__HOME_IMAGES__/uccn/yxm/next.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="culture">
+			<div class="d_top">
+				<div class="tit">企业文化</div>
+				<div class="line"></div>
+				<div class="num">02</div>
+			</div>
+			<div class="c_img">
+				<img class="c_bg" src="__HOME_IMAGES__/uccn/yxm/background@2x.png" alt="" />
+				<div class="bg_cen">
+					<img class="bg_left" src="__HOME_IMAGES__/uccn/yxm/402043766911768405.png" alt="" />
+					<img class="bg_up" src="__HOME_IMAGES__/uccn/yxm/20181026193814 (1).jpg" alt="" />
+					<img class="bg_down" src="__HOME_IMAGES__/uccn/yxm/20181026194936.png" alt="" />
+					<img class="bg_right" src="__HOME_IMAGES__/uccn/yxm/20181026200152.jpg" alt="" />
+				</div>
+			</div>
+		</div>
+		<div class="team">
+			<div class="d_top">
+				<div class="tit">团队风采</div>
+				<div class="line"></div>
+				<div class="num">03</div>
+			</div>
+			<div class="t_lb">
+				<div class="ts_cen">
+					<div class="t_list">
+						<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/19">
+							<div class="peop">
+								<img src="__HOME_IMAGES__/uccn/yxm/20181026212733.png" alt="" />
+							</div>
+							<div class="name">
+								<span class="n_name">杨明鑫</span>
+								<span class="founder">创始人</span>
+							</div>
+							<div class="pop_dec">明鑫集团董事长</div>
+						</a>
+					</div>
+					<div class="t_list">
+						<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/62">
+							<div class="peop">
+								<img src="__HOME_IMAGES__/uccn/yxm/760479003515095434.png" alt="" />
+							</div>
+							<div class="name">
+								<span class="n_name">郭树良</span>
+								<span class="founder">联合创始人</span>
+							</div>
+							<div class="pop_dec">洋小秘总顾问</div>
+						</a>
+					</div>
+					<div class="t_list">
+						<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/64">
+							<div class="peop">
+								<img src="__HOME_IMAGES__/uccn/yxm/902490980173382942.png" alt="" />
+							</div>
+							<div class="name">
+								<span class="n_name">廖君龙</span>
+								<span class="founder">联合创始人</span>
+							</div>
+							<div class="pop_dec">洋小秘首席产品官</div>
+						</a>
+					</div>
+					<div class="t_list">
+						<a href="http://wx.yxm360.com/index.php?s=/Home/Nologin/card_jump/id/56">
+							<div class="peop">
+								<img src="__HOME_IMAGES__/uccn/yxm/911777208732977419.png" alt="" />
+							</div>
+							<div class="name">
+								<span class="n_name">雨华</span>
+								<span class="founder">联合创始人</span>
+							</div>
+							<div class="pop_dec">洋小秘事业部总裁</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="more">
+				<a class="m_link" href="{:U('Home/Uccns/tmien')}">
+					查看更多
+					<img src="__HOME_IMAGES__/uccn/yxm/next.png" alt="" />
+				</a>
+			</div>
+		</div>
+
+		<div class="history">
+			<div class="d_top">
+				<div class="tit">发展历程</div>
+				<div class="line"></div>
+				<div class="num">04</div>
+			</div>
+			<div class="h_img">
+				<img src="__HOME_IMAGES__/uccn/yxm/background@2x(1).png" alt="" />
+			</div>
+			<div class="more f_more">
+				<a class="m_link" href="{:U('Home/Uccns/develop')}">
+					查看更多
+					<img src="__HOME_IMAGES__/uccn/yxm/next.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="honor">
+			<div class="d_top">
+				<div class="tit">公司荣誉</div>
+				<div class="line"></div>
+				<div class="num">05</div>
+			</div>
+			<div class="hon_img">
+				<div class="hon_cen">
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/1@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/2@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/3@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/4@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/5@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/6@2x.png" alt="" />
+						</a>
+					</div>
+
+					<div class="hon_imgs">
+						<a href="{:U('Home/Uccns/honor')}">
+							<img src="__HOME_IMAGES__/uccn/yxm/7@2x.png" alt="" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="h_more">
+				<a class="m_link" href="/index.php?s=/Home/Uccns/honor.html">
+					查看更多
+					<img src="/Public/Home/images/uccn/yxm/next.png" alt="">
+				</a>
+			</div>
+		</div>
+		<div class="coo">
+			<img src="__HOME_IMAGES__/uccn/yxm/861175736008529921.png" alt="" />
+		</div>
+		<div class="here">
+			<a href="http://api.map.baidu.com/marker?location=31.1655009698,121.3613481119&title=上海互浦科技有限公司&content=上海互浦科技有限公司&output=html&src=webapp.baidu.openAPIdemo">
+				<img src="__HOME_IMAGES__/uccn/yxm/145738931455044222.png" alt="" />
+			</a>
+		</div>
+		<div class="site">
+			<img src="__HOME_IMAGES__/uccn/yxm/817821510953431724.png" alt="" />
+		</div>
+		<script src="__HOME_CSS__/dist/js/swiper.min.js"></script>
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+			var swiper = new Swiper('.swiper-container', {
+				loop: true,
+				autoplay: true,
+				pagination: {
+					el: '.swiper-pagination',
+				},
+			});
+
+			var swiperA = new Swiper('.swiper-containerA', {
+				slidesPerView: 3,
+				spaceBetween: 30,
+			});
+
+			//分享
+			$(function() {
+				var share_url = "{$share_url}";
+
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/WeShare/getSignPackage", //url
+					data: {
+						share_url: share_url
+					},
+					async: true,
+
+					// async: false,
+					success: function(result) {
+
+						var title = "洋小秘";
+						var desc = "上海明鑫集团，是一家新商业战略投资公司， 是全球中小企业联盟(联合国工业发展组织咨商机构) 中国区重点合作企业。";
+						var link = "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/Uccns/yxm')}";
+						var img_url = "http://wx.yxm360.com/Public/Home/images/mplogo.jpg";
+
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+							appId: result.AppendData.appId,
+							timestamp: result.AppendData.timestamp,
+							nonceStr: result.AppendData.nonceStr,
+							signature: result.AppendData.signature,
+							jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+								'checkJsApi',
+								'onMenuShareTimeline', //
+								'onMenuShareAppMessage',
+								'onMenuShareQQ',
+								'onMenuShareWeibo',
+								'getLocation'
+							]
+						});
+						wx.ready(function() {
+							//分享到朋友圈
+							wx.onMenuShareTimeline({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享给朋友
+							wx.onMenuShareAppMessage({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								type: '', // 分享类型,music、video或link，不填默认为link
+								dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ
+							wx.onMenuShareQQ({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到腾讯微博
+							wx.onMenuShareWeibo({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+							//分享到QQ空间
+							wx.onMenuShareQZone({
+								title: title, // 分享标题
+								desc: desc, // 分享简介
+								link: link, //分享出去后的链接，这里可以将链接设置为另一个页面。
+								imgUrl: img_url, // 分享封面
+								success: function() {
+									// 用户确认分享后执行的回调函数
+									// sharePush();
+								},
+								cancel: function() {
+									// 用户取消分享后执行的回调函数
+								}
+							});
+
+						});
+
+					},
+					error: function() {
+						console.log("走了错误")
+					}
+				});
+
+			});
+		</script>
+	</body>
+
+</html>

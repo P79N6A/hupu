@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商圈</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/rjl/swiper-3.4.2.min.css" />
+		<script src="__HOME_JS__/rjljs/swiper-3.4.2.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/rem.js"></script>
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.rejl {
+				width: 10%;
+				height: 20px;
+				background: pink;
+			}
+			
+			body,
+			html {
+				height: 100%;
+			}
+			
+			img {
+				border: 0;
+				vertical-align: middle;
+				height: auto;
+				width: 100%;
+			}
+			
+			input[type=text] {
+				line-height: 21px;
+				width: 100%;
+				margin-bottom: 15px;
+				border: 0px solid rgba(0, 0, 0, .2);
+				border-radius: 3px;
+				outline: 0;
+				background-color: #fff;
+				-webkit-appearance: none;
+				box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.1);
+			}
+			
+			input[type=search] {
+				font-size: 16px;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				height: 50px;
+				/*text-align: center;*/
+				border: 0;
+				border-radius: 5px;
+				background-color: rgb(255, 255, 255);
+				width: 90%;
+				margin-left: 5%;
+				margin-top: 0px;
+				z-index: 9;
+				box-shadow: 1px 2px 2px 0px #0000003b;
+			}
+			
+			.mui-search .mui-placeholder {
+				font-size: 16px;
+				line-height: 34px;
+				/*position: absolute;
+    			z-index: 1;*/
+				top: 10px;
+				right: 0;
+				bottom: 0;
+				left: 10px;
+				display: inline-block;
+				height: 34px;
+				text-align: LEFT;
+				color: #999;
+				border: 0;
+				border-radius: 6px;
+				background: 0 0;
+				width: 90%;
+				margin-left: 5%;
+			}
+			
+			.xudao {
+				width: 100%;
+				height: 56px;
+				position: absolute;
+				z-index: 999;
+				bottom: 0;
+				bottom: -28px;
+			}
+			
+			.yslm {
+				width: 100%;
+				margin: 0 auto;
+				height: auto;
+				background: #fff;
+				float: left;
+				/* margin-left: -3%; */
+				padding-bottom: 20px;
+				padding-top: 15px;
+				border-top: 1px solid #DFDFDF;
+				border-bottom: 1px solid #E8E8E8;
+				margin-top: 45px;
+			}
+			
+			ul li {
+				list-style: none;
+			}
+			
+			.yslm>ul>li {
+				/*width: 19%;*/
+				height: 33px;
+				background: #f1f1f1;
+				color: #666;
+				float: left;
+				margin-right: 3%;
+				margin-top: 3%;
+				text-align: center;
+				line-height: 33px;
+				border-radius: 3px;
+				font-size: .65rem;
+				text-overflow: ellipsis;
+				padding: 2px 10px;
+			}
+			
+			.zbyz {
+				color: #39B1D1;
+				margin-left: 4%;
+				font-size: .75rem;
+				line-height: 30px;
+				height: 38px;
+				font-weight: bolder;
+				line-height: 50px;
+			}
+			
+			.mui-btn,
+			button,
+			input[type=button],
+			input[type=reset],
+			input[type=submit] {
+				font-size: 14px;
+				font-weight: 400;
+				position: relative;
+				display: inline-block;
+				margin-bottom: 0;
+				padding: 15px 15px;
+				width: 17%;
+				height: 100%;
+				cursor: pointer;
+				-webkit-transition: all;
+				transition: all;
+				-webkit-transition-timing-function: linear;
+				transition-timing-function: linear;
+				-webkit-transition-duration: .2s;
+				transition-duration: .2s;
+				text-align: center;
+				vertical-align: top;
+				white-space: nowrap;
+				color: #fff;
+				border-top-right-radius: 6px;
+				border-bottom-right-radius: 6px;
+				background-color: #39B1D1;
+				background-clip: padding-box;
+				margin-left: -17%;
+				border: none;
+				position: absolute;
+			}
+			
+			.active {
+				background: #39B1D1 !important;
+				color: #fff !important;
+			}
+			
+			.clearfix::after {
+				content: ".";
+				clear: both;
+				display: block;
+				overflow: hidden;
+				font-size: 0;
+				height: 0;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.fr {
+				float: right;
+			}
+			
+			.item {
+				width: 90%;
+				margin: 0 auto;
+				border-bottom: 1px solid #e8e8e8;
+				padding-bottom: 20px;
+			}
+			
+			#sea {
+				width: 80px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 100%;
+			}
+			
+			.search {
+				position: relative;
+				width: 90%;
+				margin: 0 auto;
+				height: 100%;
+			}
+			
+			.search_key {
+				height: 100% !important;
+				text-indent: 30px;
+				background: skyblue;
+			}
+			
+			.search_img {
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				top: 50%;
+				margin-top: -10px;
+				left: 5%;
+			}
+			
+			a {
+				color: #fff;
+			}
+			
+			.trjl {
+				height: 2.45rem;
+				font-size: .75rem;
+				font-weight: 400;
+				/* line-height: 1.42; */
+				position: relative;
+				display: inline-block;
+				margin-bottom: 0px;
+				padding: 17px 16px;
+				width: 17%;
+				height: 100%;
+				cursor: pointer;
+				-webkit-transition: all;
+				transition: all;
+				-webkit-transition-timing-function: linear;
+				transition-timing-function: linear;
+				-webkit-transition-duration: .2s;
+				transition-duration: .2s;
+				text-align: center;
+				vertical-align: top;
+				white-space: nowrap;
+				color: #fff;
+				border-top-right-radius: 3px;
+				border-bottom-right-radius: 3px;
+				background-color: #39B1D1;
+				background-clip: padding-box;
+				margin-left: -17%;
+				border: none;
+				position: absolute;
+				margin-top: 0px;
+			}
+			
+			.swiper-container {
+				margin: 0 auto;
+				height: 3rem;
+				overflow: hidden;
+				position: relative;
+			}
+			
+			.swiper-slide {
+				height: 3rem;
+			}
+			
+			.swiper-container {
+				/*width: 900px;*/
+				height: 225px;
+			}
+			
+			.swiper-wrapper {
+				height: 300px;
+			}
+			
+			#content {
+				position: relative;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<!--swiper开始-->
+		<div id="content">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<!--<div class="swiper-slide box1">-->
+					<!--<a href="#"><img src="https://wap.yxm360.com/Uploads/User/2018-04-20/5ad9ba6b249c21290.jpg"></a>-->
+					<!--</div>-->
+					<!--<div class="swiper-slide box2">-->
+					<!--<a href="#"><img src="https://wap.yxm360.com/Uploads/User/2018-04-20/5ad9c3700d4eb3905.jpg"></a>-->
+					<!---->
+					<!--</div>-->
+					<!--<div class="swiper-slide box3">-->
+					<!--<a href="#"><img src="https://wap.yxm360.com/Uploads/User/2018-04-20/5ad9ba6b249c21290.jpg"></a>-->
+					<!--</div>-->
+
+				</div>
+			</div>
+
+			<div class="xudao">
+				<div class="search">
+					<form>
+						<input type="text" id='search_key' class="search_key" placeholder="请输入关键词" name="" style="padding:17.2px 15px;">
+						<div id="sea" class="trjl">搜索
+							<!-- <a href="/index.php?s=/Home/Trade/Quotientsearch.html">搜索</a> -->
+						</div>
+						<img class="search_img" src="__HOME_IMAGES__/searchrjl.png" alt="">
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="yslm" id="boxfater">
+
+			<!-- <p class="zbyz" >|商务-营销</p> -->
+			<!-- <ul id="ulbox"> -->
+			<!-- <li>销售</li>
+				<li>房地产</li>
+				<li>保险</li>
+				<li>销售</li>
+				<li>房地产</li>
+				<li>保险</li>
+				<li>销售</li>
+				<li>金融</li>
+				<li>房地产</li>
+				<li>房地产</li>
+				<li>销售</li>
+				<li>房地产</li>
+				<li>保险</li>
+				<li>销售</li>
+				<li>房地产</li>
+				<li>保险</li>
+				<li>销售</li>
+				<li>金融</li>
+				<li>房地产</li>
+				<li>房地产</li> -->
+			<!-- </ul> -->
+		</div>
+		<!--这里是轮播图的js-->
+		<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/html" id="hy">
+			{{each AppendData v i}}
+			<p class="zbyz">|&nbsp;&nbsp;{{v.name}}</p>
+			<ul class="clearfix item">
+				{{each v.two_list v i}}
+				<li class="fl" data-id="{{v.id}}">{{v.name}}</li>
+				{{/each}}
+			</ul>
+			{{/each }}
+		</script>
+
+		<!--<script src="__HOME_JS__/rjljs/liw.js"></script>-->
+
+		<script type="text/javascript">
+			var id = '{$id}';
+//			console.log(id)
+			$.ajax({
+				type: 'post',
+				url: "index.php?s=/Api/IndexApi/industry_list",
+				data: {
+					unionid: id,
+				},
+				dataType: 'json',
+				success: function(res) {
+//					console.log(res);
+
+					$("#boxfater").html(template("hy", res));
+				},
+				error: function() {
+					alert("异常！");
+				}
+			});
+
+			// 点击选择二级行业
+			var type_id;
+			var keyWord;
+			$(".yslm").on("click", "li", function() {
+				$(".yslm").find("li").removeClass("active");
+				$(this).addClass("active");
+				type_id = $(this).attr("data-id");
+//				console.log(type_id);
+				window.sessionStorage.setItem('sqtype', type_id);
+				window.location.href = '/index.php?s=/Home/Trade/Quotientsearch.html&id=' + type_id + '';
+
+			});
+
+			$("#sea").on("click", function() {
+				keyWord = $('#search_key').val();
+				window.sessionStorage.setItem('keykey', keyWord);
+				window.location.href = '/index.php?s=/Home/Trade/Quotientsearch.html&keyWord=' + keyWord + '';
+
+			});
+
+			// start
+			var body = $('body');
+
+			body.delegate('.fl', 'click', function() {
+				// let tabs = $(this).text();
+				// window.location.href = location.origin + '/index.php?s=/Home/Trade/Quotientsearch.html&keyWord='+tabs+'&id='+type_id+'';
+
+				// $('#search_key').val(tabs);
+				//
+			});
+
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: "index.php?s=/Api/IndexApi/search_img",
+				data: {
+					unionid: id
+				},
+				dataType: 'json',
+				success: function(res) {
+//					console.log('Here is res:', res);
+					var AppendData = res.AppendData;
+					if((res.ResultType === '0') || (res.ResultType === 0)) {
+//						console.log(AppendData);
+
+						for(var r = 0; r < AppendData.length; r++) {
+							$('.swiper-wrapper').append(
+								'<div class="swiper-slide box1">' +
+								'<a href="' + AppendData[r].jump_url + '"><img src="' + AppendData[r].img + '"></a>' +
+								'</div>'
+							);
+						}
+
+					}
+
+					setTimeout(function() {
+						var gallery = mui('.mui-slider');
+						gallery.stopped = false;
+						gallery.slider({
+							interval: 2000, //自动轮播周期，若为0则不自动播放，默认为0；
+							auto: true
+						});
+					}, 800)
+				},
+				error: function() {
+					console.log("异常！")
+				}
+			});
+
+			//	swiper开始
+
+			$(function() {
+				var swiper = new Swiper('.swiper-container', {
+					pagination: '.swiper-pagination',
+					paginationClickable: true,
+					speed: 2000,
+					loop: true,
+					observer: true,
+					observeParents: true,
+					autoplayDisableOnInteraction: false,
+					autoplay: 1000
+				});
+			})
+
+			//	swiper结束
+			
+			
+
+			//获取位置
+			$(function() {
+				var share_url = "{$share_url}";
+				var unionid = "{$unionid}";
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/WeShare/getSignPackage", //url
+					data: {
+						share_url: share_url
+					},
+					async: true,
+
+					// async: false,
+					success: function(result) {
+						wx.config({
+							debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+							appId: result.AppendData.appId,
+							timestamp: result.AppendData.timestamp,
+							nonceStr: result.AppendData.nonceStr,
+							signature: result.AppendData.signature,
+							jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+								'checkJsApi',
+								'onMenuShareTimeline', //
+								'onMenuShareAppMessage',
+								'onMenuShareQQ',
+								'onMenuShareWeibo',
+								'getLocation'
+							]
+						});
+						wx.ready(function() {
+							wx.checkJsApi({
+								jsApiList: [
+									'getLocation'
+								],
+								success: function(res) {
+									// alert(JSON.stringify(res));
+									// alert(JSON.stringify(res.checkResult.getLocation));
+									if(res.checkResult.getLocation == false) {
+										alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+										return;
+									}
+								}
+							});
+							wx.getLocation({
+								success: function(res) {
+									var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+									var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+									var speed = res.speed; // 速度，以米/每秒计
+									var accuracy = res.accuracy; // 位置精度
+//									
+//									alert('纬度位置：'+latitude+'经度位置：'+longitude);//弹出经纬度，就这样就获取到了用户的位置
+									$.ajax({
+										//几个参数需要注意一下
+										type: "POST", //方法类型
+										dataType: "json", //预期服务器返回的数据类型
+										url: "/index.php?s=/Api/User/uptLocation", //url
+										data: {
+											unionid:unionid,
+											latitude:latitude,
+											longitude:longitude 
+										},
+//										async: true,
+										// async: false,
+										success: function(result) {
+											console.log(result);
+										},
+										error: function() {
+											console.log("走了错误")
+										}
+									})
+									
+								},
+								cancel: function(res) {
+									alert('用户拒绝授权获取地理位置');
+								}
+							});
+
+						});
+					},
+					error: function() {
+						console.log("走了错误")
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

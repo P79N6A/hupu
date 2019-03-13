@@ -1,0 +1,457 @@
+<!-- 侧边菜单 -->
+<div class="layui-side layui-side-menu">
+    <div class="layui-side-scroll">
+        <div class="layui-logo" lay-href="{:url('admin/index/console')}">
+            <span>layuiAdmin</span>
+        </div>
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+            lay-filter="layadmin-system-side-menu">
+
+
+            <li data-name="home" class="layui-nav-item ">
+                <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <cite>主页</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+
+                        <a lay-href="{:url('admin/index/console')}">控制台</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="{:url('admin/index/homepage1')}">主页一</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="{:url('admin/index/homepage2')}">主页二</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>权限管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" class="layui-this">
+                        <a lay-href="admin/admin/index">后台管理员</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="admin/role/index">角色管理</a>
+                    </dd>
+                    <dd>
+                        <a lay-href="admin/inteLog/index">积分日志</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/adminLog/index">操作日志</a>
+                    </dd>
+                    <dd data-name="console">
+                        <!--<a lay-href="admin/node/index">节点管理</a>-->
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>文章管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/ArticleType/index">文章分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/ArticleList/index">文章列表</a>
+                    </dd>
+                    <dd data-name="console">
+
+                        <a lay-href="admin/SystemArticle/index">系统文章列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/VideoCourses/index">视屏教程</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>用户管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/UserInfo/showRec?id=1">运营列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/UserInfo/index">会员列表</a>
+                    </dd>
+                    <dd data-name="console">
+
+                        <a lay-href="admin/Sqtype/index">行业列表</a>
+                    </dd>
+
+                    <dd data-name="console">
+
+                        <a lay-href="admin/Inte/index">积分列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/PayCode/index">付款码列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/oilCard/index">油卡码列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/SearchImg/index">商脉搜索导航图片列表</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>分销管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/CapitalLog/index">分销列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/UserInfo/vipIndex">代理商</a>
+                    </dd>
+                    <dd data-name="console">
+
+                        <a lay-href="admin/VipList/index">会员类型</a>
+                    </dd>
+
+                    <dd data-name="console">
+
+                        <a lay-href="admin/VipGroup/index">代理商类型</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/UserInfo/statIndex">用户数据统计</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>订单管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/VipOrder/index">订单列表</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>节日贺卡</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/gcardType/index">贺卡分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/GcardText/index">贺词管理</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/Gcard/index">贺卡管理</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>音乐库</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/MusicType/index">音乐分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/Music/index">音乐列表</a>
+                    </dd>
+                </dl>
+            </li>
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>下载中心</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/DownloadType/index">下载中心分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/DownloadCenter/index">下载中心</a>
+                    </dd>
+                </dl>
+            </li>
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>明星之声</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/Video/index">视频列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/VideoType/index">视频分类</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>意见管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/Opinion/index">意见列表</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>资金记录</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/Withdraw/index?status=2">提现列表(审核中)</a>
+                    </dd>
+                     <dd data-name="console" >
+                        <a lay-href="admin/Withdraw/index?status=4">提现列表(转帐中)</a>
+                    </dd>
+                     <dd data-name="console" >
+                        <a lay-href="admin/Withdraw/index?status=1">提现列表(已审核)</a>
+                    </dd>
+                     <dd data-name="console" >
+                        <a lay-href="admin/Withdraw/index?status=3">提现列表(不通过)</a>
+                    </dd>
+                     <dd data-name="console" >
+                        <a lay-href="admin/Withdraw/index">提现列表(全部数据)</a>
+                    </dd>
+
+
+    <!--<a href="Capital/index?status=2')}">-->
+        <!--<span class="sublist-icon glyphicon glyphicon-record"></span>-->
+        <!--<span class="sub-title">提现列表(审核中)</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<div class="showtitle" style="width:100px;">-->
+            <!--<img src="__ADMIN_IMAGES__/leftimg.png" />-->
+        <!--</div>-->
+        <!--<a href="Capital/index?status=4')}">-->
+            <!--<span class="sublist-icon glyphicon glyphicon-record"></span>-->
+            <!--<span class="sub-title">提现列表(转帐中)</span>-->
+        <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<div class="showtitle" style="width:100px;">-->
+            <!--<img src="__ADMIN_IMAGES__/leftimg.png" />-->
+        <!--</div>-->
+        <!--<a href="Capital/index?status=1')}">-->
+            <!--<span class="sublist-icon glyphicon glyphicon-record"></span>-->
+            <!--<span class="sub-title">提现列表(已审核)</span>-->
+        <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<div class="showtitle" style="width:100px;">-->
+            <!--<img src="__ADMIN_IMAGES__/leftimg.png" />-->
+        <!--</div>-->
+        <!--<a href="Capital/index?status=3')}">-->
+            <!--<span class="sublist-icon glyphicon glyphicon-record"></span>-->
+            <!--<span class="sub-title">提现列表(不通过)</span>-->
+        <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+        <!--<div class="showtitle" style="width:100px;">-->
+            <!--<img src="__ADMIN_IMAGES__/leftimg.png" />-->
+        <!--</div>-->
+        <!--<a href="Capital/index')}">-->
+            <!--<span class="sublist-icon glyphicon glyphicon-record"></span>-->
+            <!--<span class="sub-title">提现列表(全部数据)</span>-->
+        <!--</a>-->
+
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>海报管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console" >
+                        <a lay-href="admin/PosterType/index">海报分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/UserPoster/index">用户海报</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/PosterImg/index">海报模板</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>壁纸管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="admin/userWallpaper/index">用户壁纸</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/WallpaperImg/index">壁纸模板</a>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>相册管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="admin/albumType/index">相册分类</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/UserAlbum/index">用户相册</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/Album/index">相册模板</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>产品管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="admin/ProductType/index">分类列表</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/Product/index">产品列表</a>
+                    </dd>
+                </dl>
+            </li>
+
+
+
+            <li data-name="user" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="文章管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>抽奖管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="console">
+                        <a lay-href="admin/Luck/index">奖项设置</a>
+                    </dd>
+                    <dd data-name="console">
+                        <a lay-href="admin/LuckOrder/index">订单管理</a>
+                    </dd>
+                </dl>
+            </li>
+
+            
+            <li data-name="app" class="layui-nav-item" style="display: none">
+                <a href="javascript:;" lay-tips="应用" lay-direction="2">
+                    <i class="layui-icon layui-icon-app"></i>
+                    <cite>应用</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd data-name="content">
+                        <a href="javascript:;">内容系统</a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="list"><a lay-href="app/content/list.html">文章列表</a></dd>
+                            <dd data-name="tags"><a lay-href="app/content/tags.html">分类管理</a></dd>
+                            <dd data-name="comment"><a lay-href="app/content/comment.html">评论管理</a></dd>
+                        </dl>
+                    </dd>
+                    <dd data-name="forum">
+                        <a href="javascript:;">社区系统</a>
+                        <dl class="layui-nav-child">
+                            <dd data-name="list"><a lay-href="app/forum/list.html">帖子列表</a></dd>
+                            <dd data-name="replys"><a lay-href="app/forum/replys.html">回帖列表</a></dd>
+                        </dl>
+                    </dd>
+                    <dd>
+                        <a lay-href="app/message/index.html">消息中心</a>
+                    </dd>
+                    <dd data-name="workorder">
+                        <a lay-href="app/workorder/list.html">工单系统</a>
+                    </dd>
+                </dl>
+            </li>
+            <li data-name="senior" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="高级" lay-direction="2">
+                    <i class="layui-icon layui-icon-senior"></i>
+                    <cite>高级</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a layadmin-event="im">LayIM 通讯系统</a>
+                    </dd>
+                    <dd data-name="echarts">
+                        <a href="javascript:;">Echarts集成</a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="senior/echarts/line.html">折线图</a></dd>
+                            <dd><a lay-href="senior/echarts/bar.html">柱状图</a></dd>
+                            <dd><a lay-href="senior/echarts/map.html">地图</a></dd>
+                        </dl>
+                    </dd>
+                </dl>
+            </li>
+
+            <li data-name="set" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="设置" lay-direction="2">
+                    <i class="layui-icon layui-icon-set"></i>
+                    <cite>设置</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd class="layui-nav-itemed">
+                        <a href="javascript:;">系统设置</a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="set/system/website.html">网站设置</a></dd>
+                            <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
+                        </dl>
+                    </dd>
+                    <dd class="layui-nav-itemed">
+                        <a href="javascript:;">我的设置</a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        </dl>
+                    </dd>
+                </dl>
+            </li>
+            <li data-name="get" class="layui-nav-item">
+                <a href="javascript:;" lay-href="//www.layui.com/admin/#get" lay-tips="授权" lay-direction="2">
+                    <i class="layui-icon layui-icon-auz"></i>
+                    <cite>授权</cite>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

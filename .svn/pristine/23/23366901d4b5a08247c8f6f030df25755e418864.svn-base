@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>接待记录查询</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+
+
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .mint-cell .mint-cell-wrapper{
+            background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 0%, transparent 0%);
+            background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 0%, transparent 0%)
+            }
+        ul,li{ padding:0;margin:0;list-style:none}
+        .popup3{
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+        }
+        .serachbnt button{width: 40%;margin-left: 5%;margin-top: 10px}
+        .serachdata input{background: #fff}
+</style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="接待信息列表">
+        <router-link to="/" slot="left">
+            <mt-button icon="back" @click="window.history.go(-1);">返回</mt-button>
+        </router-link>
+        <mt-button  slot="right" @click="popupVisible=true">刷选</mt-button>
+    </mt-header>
+    <!--刷选-->
+    <div>
+
+        <mt-popup v-model="popupVisible" position="right" pop-transition="popup-fade" modal="false" class="popup3">
+                <div class="serachdata">
+                    <p>时间段查询</p>
+                    <mt-field label="开始时间" placeholder="请输入录入时间" type="date" v-model="serachpojo.starttime"></mt-field>
+                    <mt-field label="终止时间" placeholder="请输入终止时间" type="date" v-model="serachpojo.endtime"></mt-field>
+                    <p>客户姓名</p>
+                    <mt-field label="客户姓名" placeholder="请输入客户姓名" v-model="serachpojo.username"></mt-field>
+                    <p>接待人</p>
+                    <mt-field label="接待客服名" placeholder="请输入接待客服名" v-model="serachpojo.lr_customer_name"></mt-field>
+                    <p>推荐人</p>
+                    <mt-field label="推荐人名" placeholder="请输入推荐人" v-model="serachpojo.userreferee"></mt-field>
+                </div>
+                <div class="serachbnt">
+
+                    <mt-button type="default" @click="popupVisible=false">取消</mt-button>
+                    <mt-button type="primary" @click="serachs">查询</mt-button>
+                </div>
+
+        </mt-popup>
+
+    </div>
+    <div>
+
+            <ul v-infinite-scroll="loadBottom" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+                <li v-for="(item,index) in tableData">
+                    <mt-cell :title="item.username" :value="item.usertype"></mt-cell>
+                    <mt-cell title="接待时间" :value="item.one_time"></mt-cell>
+                    <mt-cell title="当前状态" :value="item.s_start==1?'接待结果未确认':'资料已完善'"></mt-cell>
+                    <mt-cell-swipe
+                            title="接待人"
+                            :value="item.bcname + '  <<'"
+                            :right="[
+    {
+      content: '详情',
+      style: { background: 'lightgray', color: '#fff' },
+      handler: () => showx(item.rid)
+    }
+  ]">
+
+                    </mt-cell-swipe>
+                </li>
+                <li class="more_loading" v-show="!queryLoading && tableData.length>8" style="text-align: center;font-size: 12px;margin-top: 10px">
+
+                    <mt-spinner type="triple-bounce" color="#00ccff" :size="40" v-show="moreLoading&&!allLoaded"></mt-spinner>
+
+                    <span v-show="allLoaded">----我也是有底线的----</span>
+                    <span v-show="!allLoaded">加载中...</span>
+                </li>
+
+            </ul>
+       <!--http://localhost:801/index.php?s=/Home/Customer/receptionlist.html-->
+    </div>
+</div>
+<script type="text/javascript">
+
+    new Vue({
+        el: "#app",
+        data: {
+            popupVisible:false,
+            //动态数据
+            //动态数据
+            allLoaded:false,
+            //是否显示提示
+            queryLoading:false,
+            //显示加载特效
+            moreLoading:false,
+
+            dataallLoaded:false,
+
+            tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            pojo:{
+
+            },
+            paylist: [],
+            loading: false,
+            serachpojo:{
+                starttime:'',
+                endtime:'',
+                username:'',
+                lr_customer_name:'',
+                ismy:'',
+                userreferee:''
+            },
+            isserach:false,
+
+
+
+
+        },
+        methods: {
+            showx:function(id){
+                window.location.href="/index.php?s=/Home/Customer/receptiondetails.html&rid="+id;
+            },
+            showb:function(id,start){
+               // console.log(id);
+                var t=this;
+                if(start!=1){
+                    t.$toast('接待结果已确认')
+                    return;
+                }
+                window.location.href="/index.php?s=/Home/Customer/receptionend.html&rid="+id;
+            },
+            loadBottom:function() {
+
+                var t=this;
+               t.postTableData();
+            },
+            serachs:function(){
+                var t=this;
+                t.allLoaded=false;
+                //是否显示提示
+                t.queryLoading=false;
+                //显示加载特效
+                t.moreLoading=false;
+
+                t.dataallLoaded=false;
+                t.isserach=true;
+                t.popupVisible=false;
+                t.n=1;
+                t.postTableData();
+            },
+            postTableData: function() {
+                var _this = this;
+                if(_this.dataallLoaded){
+                    _this.moreLoading = true;
+                    return;
+                }
+                if(_this.allLoaded){
+                    return;
+                }
+                _this.moreLoading = !_this.allLoaded;
+                $.ajax({
+                    type: "POST",
+                    url: '{:U("/Api/CustomerService/f_reception")}',
+                    data: {
+                        n: _this.n,
+                        starttime:_this.serachpojo.starttime,
+                        endtime:_this.serachpojo.endtime,
+                        username:_this.serachpojo.username,
+                        lr_customer_name:_this.serachpojo.lr_customer_name,
+                        ismy:_this.serachpojo.ismy,
+                        userreferee:_this.serachpojo.userreferee
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        var data = res.AppendData;
+                        console.log(res)
+                        var c= _this.tableData;
+                        if(_this.isserach){
+                            _this.tableData = data.list;
+                            _this.isserach=false;
+                        }else{
+                            for( var i in data.list){
+                                c.push(data.list[i]);
+                            }
+                            _this.tableData = c;
+                        }
+
+                        if(data.list.length<10){
+                            _this.allLoaded=true;
+                        }else{
+                            _this.n= _this.n+1;
+                            _this.allLoaded=false;
+                        }
+
+                    },
+                    error: function() {}
+                })
+            },
+
+
+        },
+        mounted: function () {
+            var t = this //很重要！！
+            t.serachpojo.ismy='{$isstr}'
+            t.postTableData();
+            t.cuuid = $.cookie('k_cuuid');
+            if(t.cuuid==null || t.cuuid==''){
+
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+        },
+
+    })
+</script>
+</body>
+
+</html>

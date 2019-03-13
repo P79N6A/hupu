@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>下载中心</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				background: #fff;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			.out_top{
+				width: 100%;
+				height: 3.2rem;
+				background: #fff;
+				position: fixed;
+				top:0rem;
+				left:0rem;
+				z-index: 10000;
+			}
+			
+			.top {
+				width: 8rem;
+				height: 3.2rem;
+				margin: 0 auto;
+				display: flex;
+				border-radius: 0.2rem;
+			}
+			
+			.t_cen {
+				width: 4rem;
+				height: 1.6rem;
+				line-height: 1.6rem;
+				background: #f6f6f6;
+				font-size: 0.7rem;
+				color: #333;
+				text-align: center;
+				margin: 0.8rem 0;
+			}
+			
+			.vdo {
+				border-top-left-radius: 0.2rem;
+				border-bottom-left-radius: 0.2rem;
+			}
+			
+			.img {
+				border-top-right-radius: 0.2rem;
+				border-bottom-right-radius: 0.2rem;
+			}
+			
+			.active {
+				background: #32CEA0;
+				font-size: 0.8rem;
+				font-weight: 550;
+				color: #fff;
+			}
+			
+			.con {
+				width: 100%;
+				height: auto;
+				display: none;
+			}
+			
+			.con_img {
+				width: 100%;
+				height: auto;
+				overflow: hidden;
+			}
+			
+			.vido {
+				width: 92%;
+				height: auto;
+				overflow: hidden;
+				margin: 0 auto 0.6rem;
+			}
+			
+			.v_cen {
+				float: left;
+				width: 48%;
+				height: auto;
+				margin-right: 2%;
+			}
+			
+			.v_right {
+				margin-right: 0;
+				margin-left: 2%;
+			}
+			
+			.v_cen>a {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+			
+			.v_link {
+				width: 8.287rem;
+				height: auto;
+				position: relative;
+			}
+			
+			.v_link>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.v_tit {
+				width: 100%;
+				height: 1.65rem;
+				font-size: 0.6rem;
+				color: #333;
+				margin-top: 0.2rem;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			
+			.c_img {
+				position: absolute;
+				left: 0;
+				top: 3.2rem;
+			}
+			
+			.act {
+				display: block;
+			}
+			
+			.not,
+			.null {
+				width: 100%;
+				height: 100%;
+				color: #000;
+				text-align: center;
+				display: none;
+				position: absolute;
+				left: 50%;
+				top: 30%;
+				transform: translate(-50%, 0%);
+			}
+			
+			#loadid {
+				display: none;
+			}
+			
+			#loadId {
+				display: none;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				color: #656565;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			.load {
+				width: 100%;
+				height: 3.25rem;
+				text-align: center;
+				display: block;
+				color: #656565;
+				font-size: .6rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.load>img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			.loading>img {
+				width: .6rem;
+				height: .625rem;
+				animation: change 3s linear infinite;
+			}
+			
+			
+			
+			.con_vdo {
+				width: 100%;
+				height: auto;
+			}
+			
+			.not_img,
+			.null_img {
+				width: 9.25rem;
+				height: 7.45rem;
+				margin: 0 auto;
+			}
+			
+			.not_img>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.null_img>img {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.not_tit,
+			.null_tit {
+				width: 100%;
+				height: 3.75rem;
+				line-height: 3.75rem;
+				font-size: 0.9rem;
+				color: #777;
+				font-weight: 550;
+			}
+			
+			.btn {
+				width: 2rem;
+				height: 1.2rem;
+				background: #F8C85E;
+				border-radius: 0.1rem;
+				font-size: 0.6rem;
+				color: #fff;
+				text-align: center;
+				line-height: 1.2rem;
+				position: absolute;
+				right: 0.4rem;
+				bottom: 0.4rem;
+				z-index: 100;
+			}
+			.big{
+				position: fixed;
+				top:0;
+				left:0;
+				width: 100%;
+				height: 100%;
+				background: #333;
+				z-index: 10000;
+				overflow: hidden;
+				display: none;
+			}
+			.big_img{
+				width: 100%;
+				height: 91.8%;
+				overflow: hidden;
+				text-align: center;
+			}
+			.big_img>img{
+				width: auto;
+				height: 100%;
+			}
+			.hint{
+				width: 100%;
+				height: 2.05rem;
+				line-height: 2.05rem;
+				background: #fff;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 550;
+				position: fixed;
+				bottom:0;
+				left:0;
+				z-index: 10000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="out_top">
+			<div class="top">
+				<div class="t_cen vdo" isid="1">图片</div>
+				<div class="t_cen img" isid="2">视频</div>
+			</div>
+		</div>
+
+		<div class="con c_img act">
+			<div class='not'>
+				<div class="not_img">
+					<img src="__HOME_IMAGES__/style/picture_icon@2x.png" alt="" />
+				</div>
+				<div class="not_tit">还没有上传图片</div>
+			</div>
+			<div class="con_img">
+
+			</div>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+
+		<div class="con c_vdo">
+			<div class='null'>
+				<div class="null_img">
+					<img src="__HOME_IMAGES__/style/picture_icon@2x.png" alt="" />
+				</div>
+				<div class="null_tit">还没有上传视频</div>
+			</div>
+			<div class="con_vdo">
+
+			</div>
+			<div class="load" id="loadid">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+		<div class="big">
+			<div class="big_img">
+				<img src="" alt="" />
+			</div>
+			<div class="hint">长按保存到相册</div>
+		</div>
+
+		<script>
+			window.onload = function() {
+				$(".vdo").click()
+			}
+			var typeid = "{$id}";
+			var scrollFlag = true;
+			var isid = 1;
+			var id = "{$unionid}";
+			var one = true;
+			var two = true;
+			var onenum = 0;
+			var twonum = 0;
+			var oneis = true;
+			var twois = true;
+			var length = 0;
+
+			function initData(isid, id) {
+				console.log(isid, id)
+				$.ajax({
+					type: "post",
+					url: "index.php?s=/Api/DownloadApi/download_center",
+					data: {
+						unionid: id,
+						start: 0,
+						length: 10,
+						type: typeid,
+						is_img: isid,
+					},
+					success: function(res) {
+						console.log(res)
+						if(isid == 2 && res.AppendData.length == 0) {
+							$(".null").show()
+						} else if(isid == 1 && res.AppendData.length == 0) {
+							$(".not").show()
+						}
+						var list = ' ';
+						var lists = ' ';
+						var count = res.AppendData.length - 1;
+
+						$.each(res.AppendData, function(k, v) {
+							if(isid == 2) {
+								if(k % 2 == 0) {
+									list += '<div class = "vido" >'
+								}
+								var cls = k % 2 == 0 ? 'v_cen' : 'v_cen v_right';
+								list += '<div class = "' + cls + '" >'
+								list += '<div class = "v_link" >'
+								list += '<img src = "' + v.img + '" alt = "" / >'
+								list += '<div class="btn">下载</div>'
+								list += '</div>'
+								list += '<div class = "v_tit" >' + v.title + ' </div>'
+								list += '</div>'
+								if(k % 2 == 1 || k == count) {
+									list += '</div>'
+								}
+							}
+
+							if(isid == 1) {
+								if(k % 2 == 0) {
+									lists += '<div class = "vido" >'
+								}
+								var cls = k % 2 == 0 ? 'v_cen' : 'v_cen v_right';
+								lists += '<div class = "' + cls + '" >'
+								lists += '<div class = "v_link" >'
+								lists += '<img src = "' + v.img + '" alt = "" / >'
+								lists += '</div>'
+								lists += '<div class = "v_tit" >' + v.title + ' </div>'
+								lists += '</div>'
+								if(k % 2 == 1 || k == count) {
+									lists += '</div>'
+								}
+							}
+
+						})
+
+						if(isid == 2) {
+							$(".con_vdo").html(list);
+						} else if(isid == 1) {
+							$(".con_img").html(lists);
+						}
+
+					},
+					error: function() {
+						console.log("服务器繁忙，请稍后再试！");
+					}
+				})
+
+			}
+			$(".t_cen").on("click", function() {
+
+				scrollFlag = true;
+				$(this).addClass("active").siblings().removeClass("active");
+				isid = $(this).attr("isid");
+				//$(".narrate").hide().eq($(this).index()).show()
+				$(document).scrollTop(0);
+				//   $(document).height(0);
+				$(".con").eq($(".t_cen").index(this)).addClass("act").siblings().removeClass('act');
+				//				console.log("type==>"+type)
+				if(isid == 2) {
+					if(!one) {
+						return;
+					}
+
+					one = false;
+					initData(isid, id);
+				} else if(isid == 1) {
+					if(!two) {
+
+						return;
+					}
+					two = false;
+					initData(isid, id);
+
+				}
+			})
+
+			$(window).scroll(function() {
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+
+				//页面高度
+				var scrollHeight = $(document).height();
+
+				//同步高度
+				if(isid == 2) {
+					if(onenum <= scrollTop && oneis) {
+						onenum = scrollTop;
+					} else if(isid == 1) {
+						return;
+					}
+				} else {
+
+					if(twonum <= scrollTop && twois) {
+						twonum = scrollTop;
+					} else {
+
+						return;
+					}
+				}
+
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+//								alert(8);
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				//alert(scrollFlag);
+				if(!scrollFlag) {
+					return false;
+				}
+				//				alert(scrollTop);
+				//				alert(scrollTop + windowHeight);
+				//				alert(scrollHeight);
+				//1027  1387
+				//1844 2320
+				if((scrollTop + windowHeight) >= scrollHeight) {
+					console.log(1)
+					length += 10;
+					scrollFlag = false;
+					$.ajax({
+						type: "post",
+						url: "index.php?s=/Api/DownloadApi/download_center",
+						data: {
+							unionid: id,
+							start: length,
+							length: 10,
+							type: typeid,
+							is_img: isid
+						},
+						beforeSend: function() {
+							$('#loadId').show();
+							$('#loadid').show();
+						},
+						success: function(res) {
+							//							console.log("2222222")
+														console.log(res)
+							//							alert(length);
+							//							alert(JSON.stringify(res))
+							scrollFlag = true;
+							$('#loadId').hide();
+							$('#loadid').hide();
+							//							console.log(res);
+							var list = '';
+							var lists = '';
+							var count = res.AppendData.length - 1;
+							$.each(res.AppendData, function(k, v) {
+								if(isid == 2) {
+
+									if(k % 2 == 0) {
+										list += '<div class = "vido" >'
+									}
+									var cls = k % 2 == 0 ? 'v_cen' : 'v_cen v_right';
+									list += '<div class = "' + cls + '" >'
+									list += '<div class = "v_link" >'
+									list += '<img src = "' + v.img + '" alt = "" / >'
+									list += '<div class="btn">下载</div>'
+									list += '</div>'
+									list += '<div class = "v_tit" >' + v.title + ' </div>'
+									list += '</div>'
+									if(k % 2 == 1 || k == count) {
+										list += '</div>'
+									}
+
+								}
+								if(isid == 1) {
+									if(k % 2 == 0) {
+										lists += '<div class = "vido" >'
+									}
+									var cls = k % 2 == 0 ? 'v_cen' : 'v_cen v_right';
+									lists += '<div class = "' + cls + '" >'
+									lists += '<div class = "v_link" >'
+									lists += '<img src = "' + v.img + '" alt = "" / >'
+									lists += '</div>'
+									lists += '<div class = "v_tit" >' + v.title + ' </div>'
+									lists += '</div>'
+									if(k % 2 == 1 || k == count) {
+										lists += '</div>'
+									}
+								}
+							})
+							if(isid == 2) {
+								$(".con_vdo").append(list);
+							} else if(isid == 1) {
+								$(".con_img").append(lists);
+							}
+
+							if(res.AppendData.length <= 2) {
+								scrollFlag = false;
+								if(isid == 2) {
+									if($(".con_vdo>div").length <= 0) {
+										$(".null").show()
+										oneis = false;
+										return;
+									} else if(isid == 1) {
+										$(".null").hide();
+									}
+									oneis = false;
+									$(".con_vdo").append("<div class='loading'>我也是有底线的哟！</div>");
+								} else {
+									if($(".con_img>div").length <= 0) {
+										$(".not").show();
+										twois = false;
+										return;
+									} else {
+										$(".not").hide();
+									}
+									twois = false;
+									$(".con_img").append("<div class='loading'>我也是有底线的哟！</div>");
+								}
+							} else {
+								scrollFlag = true;
+							}
+						},
+						error: function() {
+							console.log("服务器繁忙，请稍后再试！");
+						}
+
+					})
+
+				}
+			});
+		$(document).on("click",".v_link",function(){
+			var urlimg=$(this).find("img").attr("src")
+			$(".big").show();
+			$(".big_img").find("img").attr("src",urlimg);
+		})
+		$(document).on("click",".big",function(){
+			$(".big").hide();
+		})
+				
+			
+		</script>
+	</body>
+
+</html>

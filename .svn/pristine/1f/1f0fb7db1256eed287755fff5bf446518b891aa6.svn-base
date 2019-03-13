@@ -1,0 +1,869 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 邱明振
+ * Date: 2017/8/27
+ * Time: 22:20
+ */
+
+namespace Admin\Controller;
+use Common\Controller\AdminBaseController;
+
+/**
+ * 会员管理
+ *
+ * Class UsersController
+ * @package Admin\Controller
+ */
+class UsersController extends  AdminBaseController
+{
+
+    /**
+     * 会员列表
+     */
+    public function index() {
+
+        $data = I('request.');
+        unset($data['PHPSESSID']);
+        $nick_name = $data['nick_name'];
+        $mobile = $data['mobile'];
+        $vipgroup = $data['vipgroup'];
+        $phone=$data['phone'];
+        $is_pay=$data['is_pay'];
+        $start_at = strtotime(I('start_at'));
+        $end_at =strtotime(I('end_at'));
+        $map = [];
+        if ( $nick_name != '' ) {$map['u.nick_name'] = ['like', "%{$nick_name}%"];$this->_nick_name = $nick_name;};
+        if ( $mobile != '' ) {$map['u.mobile'] = $mobile;$this->_mobile = $mobile;};
+        if ( $vipgroup != '' ){$map['vg.id'] = $vipgroup;$this->_vipgroup = $vipgroup;};
+        if ( $phone != '' ) {$map['mem.phone'] = $phone;$this->_phone = $phone;};
+        if ( $is_pay == 1 ) {$map['u.vip_group_id'] = array('neq',0);$this->_is_pay = $is_pay;};
+        if ( $is_pay == 2 ) {$map['u.vip_group_id'] = 0;$this->_is_pay = $is_pay;};
+        if ( $start_at ) {$map['u.add_time'] = array('egt', $start_at);$this->assign('start_at', $start_at);}
+        if ( $end_at ) {$map['u.add_time'] = array('elt', $end_at);$this->assign('end_at', $end_at);}
+        if ( $start_at && $end_at){$map['u.add_time'] = array('between', array($start_at,$end_at));$this->assign('start_at', $start_at);$this->assign('end_at', $end_at);}
+        $fields = ['u.*', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name','vg.vip_name','vl.money as v_money','ui.nick_name as rec_name','mem.phone','mem.status'];
+
+        $Page = new \Think\Page(M('user_info')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')
+            ->where($map)->count(),20);
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =  $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list =M('user_info')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')
+            ->where($map)->field($fields)->order('u.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+
+        $this->assign('_list', $list);
+        $this->assign('_show', $show);
+        $vipGroupMod = M('vip_group')->alias('svg')
+            ->join('inner join s_user_info sui on svg.id=sui.vip_group_id')
+            ->group('svg.id,svg.vip_name')
+            ->field('svg.id,svg.vip_name,count(svg.id) as cnt')
+            ->select();
+        $this->assign('vipGroup', $vipGroupMod);
+        $this->display();
+
+    }
+    /**
+     *公司账户信心
+     */
+    public function company_detail(){
+        header("location:".U("Admin/Users/showRec",array('id'=>1)));
+    }
+
+
+    /**
+     * 会员列表
+     */
+    public function user_index() {
+
+        $data = I('request.');
+        unset($data['PHPSESSID']);
+        $nick_name = $data['nick_name'];
+        $mobile = $data['mobile'];
+        $vipgroup = $data['vipgroup'];
+        $map = [];
+        if ( $nick_name != '' ) {$map['u.nick_name'] = ['like', "%{$nick_name}%"];$this->_nick_name = $nick_name;};
+        if ( $mobile != '' ) {$map['u.mobile'] = $mobile;$this->_mobile = $mobile;};
+        if ( $vipgroup != '' ){$map['vg.id'] = $vipgroup;$this->_vipgroup = $vipgroup;};
+
+        $fields = ['u.*', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name','vg.vip_name','vl.money as v_money','ui.nick_name as rec_name'];
+
+        $Page = new \Think\Page(M('users')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')
+            ->where($map)->count(),20);
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =  $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list =M('users')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_users ui ON ui.id = u.rec_user_id')
+            ->where($map)->field($fields)->order('u.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('_list', $list);
+        $this->assign('_show', $show);
+        $vipGroupMod = M('vip_group')->alias('svg')
+            ->join('inner join s_users sui on svg.id=sui.vip_group_id')
+            ->group('svg.id,svg.vip_name')
+            ->field('svg.id,svg.vip_name,count(svg.id) as cnt')
+            ->select();
+        $this->assign('vipGroup', $vipGroupMod);
+        $this->display();
+
+    }
+    /**
+     * 用户详情
+     */
+    public function user_detail(){
+        $user_id = I('get.user_id');
+        $list = M('user_info')->find($user_id);
+//        var_dump($list);die;
+        $this->vo=$list;
+        $this->display();
+    }
+
+    /**
+     * 删除用户
+     */
+    public function delUser() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+        $user_info = M('user_info')->find($id);
+        $res = M('member')->where(array('id'=>$user_info['member_id']))->save(array('status'=>2));
+        if ($res) {
+            $this->success('冻结成功');
+        }
+        $this->error('冻结失败');
+
+    }
+
+    /**
+     * 设置推荐人
+     */
+    public function setRec(){
+        if(IS_POST){
+//            var_dump($_POST);die;
+            if($_POST['rec_user_id'] == $_POST['id']){
+                $this->error('不能设置为自己');
+            }
+            //原来的推荐人
+            $old_man = M('user_info')->alias('u')->join('left join s_user_info ui on ui.id = u.rec_user_id')->where(array('u.id'=>$_POST['id']))->getField('ui.nick_name');
+            $new_man = M('user_info')->where(array('id'=>$_POST['rec_user_id']))->getField('nick_name');
+            $flag=D("Api/User",'Logic')->changeRec(array(
+                'user_id'=>$_POST['rec_user_id'],
+                'object_id'=> $_POST['id'],
+            ));//推荐人添加粉丝
+            $this->admin_log(1,$_POST['id'],'推荐人：'.$old_man.'改成'.$new_man);
+            $this->success('修改成功');
+        }
+        $userList = M('user_info')->alias('u')->join('left join s_member m ON u.member_id = m.id')->field('u.id,u.nick_name,u.mobile,m.phone')->select();
+        $select = array(array('k'=>0,'v'=>'请选择'));
+        foreach($userList as $v) {
+            if($v['id'] == $_GET['id']){
+                $currentUser = $v;
+            }
+            $select[] = array('k' => $v['id'], 'v' => $v['nick_name']);
+        }
+        $this->assign('json',json_encode($userList));
+        $this->assign('selectList',$select);
+        $this->assign('currentUser',$currentUser);
+        $this->display();
+    }
+
+    /**
+     * 显示旗下用户
+     */
+    public function showRec(){
+        if($_GET['id']) {
+            $is_pay = I('is_pay');
+            $map['u.rec_user_id'] = $_GET['id'];
+            if ($is_pay == 1) {
+                $map['vg.id'] = array('neq', 0);
+                $this->_is_pay = $is_pay;
+            };
+            if ($is_pay == 2) {
+                $map['vg.id'] = array('eq', 0);
+                $this->_is_pay = $is_pay;
+            };
+            $userMod = M('user_info')->alias('u')
+                ->join('left join s_vip_group vg ON vg.id = u.vip_group_id')
+                ->join('left join s_user_info ui ON ui.id = u.rec_user_id');
+
+            $userList = $this->lists($userMod, $map, 'id desc', null, ['u.*', 'vg.vip_name', 'ui.nick_name as rec_name']);
+//        var_dump($userList);die;
+            $this->assign('userList', $userList);
+        }else{
+            $this->error('参数有误');
+        }
+        $this->display();
+    }
+
+    /**
+     * 商脉搜索导航图片列表
+     */
+    public function search_img() {
+        $list = M('search_img')->order('sort asc')->select();
+        $this->_list = $list;
+        $this->display();
+    }
+
+
+
+    /**
+     * 商脉搜索导航图片列表
+     */
+    public function add_search_img() {
+        if($_POST){
+            $data = I('post.');
+            if($_FILES['pic']['name']){
+                if(substr($_SERVER['HTTP_HOST'],0,1) == 'w'){
+                    $start_name = 'search_img';
+                }else{
+                    $start_name = 'test';
+                }
+                $end_name = trim(strrchr($_FILES['pic']['name'], '.'),'.');
+                if($end_name == 'jpeg'){
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.jpg';
+                }else{
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.'.$end_name;
+                }
+                $Upload = new \Admin\Controller\UploadsController();
+                $data['img'] = $Upload->Uploads($save_name,$_FILES['pic']);
+//                if($res->rt){
+//                    $data['img'] = str_replace(C('UPLOADS_IMAGE')['name1'],C('UPLOADS_IMAGE')['name2'],$res->objUrl);
+//                }
+            }
+            if($data['id']){
+                //修改
+                $res = M('search_img')->where(array('id'=>$data['id']))->save($data);
+
+            }else{
+                unset($data['id']);
+                $data['addtime'] = time();
+                //添加
+                if(!$data['img']){
+                    $this->error('请上传图片');
+                }
+                $res = M('search_img')->add($data);
+            }
+            if($res){
+                $this->success('保存成功', U('Users/search_img'));
+            }else{
+                $this->error('保存失败');
+            }
+        }
+        if(I('get.id')){
+            $this->data = M('search_img')->find(I('get.id'));
+        }
+        $this->display();
+    }
+
+
+
+    /**
+     * 删除商脉搜索导航图
+     */
+    public function del_search_img(){
+        if(I('get.id')){
+            $res = M('search_img')->where(array('id'=>I('get.id')))->delete();
+            if($res){
+                $this->success('删除成功');
+            }else{
+                $this->error('删除失败');
+            }
+        }else{
+            $this->error('删除失败');
+        }
+    }
+
+
+
+
+    /**
+     * 短信发送未付费用户
+     */
+    public function send_msg2(){
+        set_time_limit(0);
+
+        $smsapi = "http://47.95.217.41:8088/";
+        $user = "shmingxin"; //短信平台帐号
+        $pass = 'shmingxin123321'; //短信平台密码
+//        $content="您好,我是洋小秘客户,您在我们这边注册的账号还未付费,点击链接即可打开了解我的一切:".urlencode("http://wx.yxm360.com/index.php?s=/Home/User/myinfo.html");//要发送的短信内容
+        $content = "4天4晚免费港澳游！邀您参加12月10日《2018全球移动互联网营销大会》，名额有限！点击公众号：互浦科技→回复：报名";
+        $list = M('user_info')->alias('u')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->where(array('u.vip_id'=>1,'u.id'=>array('lt',93810)))->field('m.phone')->order('u.id desc')->select();
+        var_dump($list);die;
+        foreach ($list as $v){
+            $sendurl = $smsapi."sms.aspx?action=send&userid=12&&account=".$user."&password=".$pass."&mobile=".$v['phone']."&content=".$content."&sendTime=&extno=";
+            simplexml_load_string(file_get_contents($sendurl));
+//                    var_dump($v['phone']);die;
+
+        }
+        var_dump('2成功');
+    }
+
+    //导出数据方法
+    public function export()
+    {
+        set_time_limit(0);
+        $nick_name = I('post.nick_name', '', 'trim');
+        $mobile = I('post.mobile', '', 'trim');
+        $vipgroup = I('post.vipgroup', '', 'trim');
+        $phone=I('post.phone', '', 'trim');
+        $map = [];
+        if ( $nick_name != '' ) $map['u.nick_name'] = ['like', "%{$nick_name}%"];
+        if ( $mobile != '' ) $map['u.mobile'] = $mobile;
+        if ( $vipgroup != '' ) $map['vg.id'] = $vipgroup;
+        if ( $phone != '' ) $map['mem.phone'] = $phone;
+        //print_r($goods_list);exit;
+        $fields = ['u.*', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name','vg.vip_name','vl.money','ui.nick_name as rec_name,mem.phone'];
+        $userMod = M('user_info')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')->
+        field($fields)->
+        where($map)->
+        order('u.id desc')->
+        select();
+
+        $data = array();
+        foreach ($userMod as $k=>$goods_info){
+            $data[$k]['id'] = $goods_info['id'];
+            $data[$k]['用户名'] = $goods_info['nick_name'];
+            $data[$k]['注册手机号'] = $goods_info['phone'];
+            $data[$k]['地区'] =  $goods_info['province_name'].'-'.$goods_info['city_name'].'-'.$goods_info['district_name'];
+            $data[$k]['职位'] = $goods_info['position'];
+            $data[$k]['公司名称'] = $goods_info['company'];
+            $data[$k]['行业标签'] = $goods_info['industry_tag'];
+            $data[$k]['qq号码'] = $goods_info['qq'];
+            $data[$k]['电子邮箱'] = $goods_info['email'];
+            $data[$k]['个人网址'] = $goods_info['site'];
+            $data[$k]['累计收入'] = number_format($goods_info['money']+$goods_info['frozen_money']+$goods_info['already_money'],2,".","");
+            $data[$k]['余额'] = $goods_info['money'];
+            $data[$k]['注册时间'] = date('Y-m-d H:i:s',$goods_info['add_time']);
+            $data[$k]['推荐人'] = $goods_info['rec_name'];
+            $data[$k]['成为vip时间'] = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',$goods_info['vip_orver_time']).'-1 year'));
+            $data[$k]['vip等级'] = $goods_info['vip_name'];
+//            $data[$k]['年费'] = $goods_info['money'];
+
+        }
+        $headArr=array('ID','用户名','注册手机号','地区','职位','公司名称','行业标签','qq号码','电子邮箱','个人网址','累计收入','余额','注册时间','推荐人','成为vip时间','vip等级');
+        //print_r($goods_list);
+        //print_r($data);exit;
+
+
+
+        $filename="userslist";
+
+        $this->getExcel($filename,$headArr,$data);
+    }
+
+
+
+    /**
+     * 导出所有创投及以上等级未开展下线人员
+     */
+    public function all_vip_excel(){
+
+        $fields = ['u.*', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name','vg.vip_name','vl.money','ui.nick_name as rec_name'];
+        $userMod = M('user_info')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')->
+        field($fields)->
+        where(array('u.vip_group_id'=>array('gt',2)))->
+        select();
+        foreach ($userMod as $k=>$li){
+            $aa = M('user_info')->where(array('rec_user_id'=>$li['id']))->getField('id');
+            if($aa){
+                unset($userMod[$k]);
+            }
+        }
+        $data = array();
+        foreach ($userMod as $k=>$goods_info){
+            $data[$k]['id'] = $goods_info['id'];
+            $data[$k]['用户名'] = $goods_info['nick_name'];
+            $data[$k]['手机号'] = $goods_info['mobile'];
+            $data[$k]['地区'] =  $goods_info['province_name'].'-'.$goods_info['city_name'].'-'.$goods_info['district_name'];
+            $data[$k]['职位'] = $goods_info['position'];
+            $data[$k]['公司名称'] = $goods_info['company'];
+            $data[$k]['行业标签'] = $goods_info['industry_tag'];
+            $data[$k]['qq号码'] = $goods_info['qq'];
+            $data[$k]['电子邮箱'] = $goods_info['email'];
+            $data[$k]['个人网址'] = $goods_info['site'];
+            $data[$k]['累计收入'] = number_format($goods_info['money']+$goods_info['frozen_money']+$goods_info['already_money'],2,".","");
+            $data[$k]['余额'] = $goods_info['money'];
+            $data[$k]['注册时间'] = date('Y-m-d H:i:s',$goods_info['add_time']);
+            $data[$k]['推荐人'] = $goods_info['rec_name'];
+            $data[$k]['成为vip时间'] = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',$goods_info['vip_orver_time']).'-1 year'));
+            $data[$k]['vip等级'] = $goods_info['vip_name'];
+
+        }
+        $headArr=array('ID','用户名','手机号','地区','职位','公司名称','行业标签','qq号码','电子邮箱','个人网址','累计收入','余额','注册时间','推荐人','成为vip时间','vip等级');
+        $filename="所有创投及以上等级未开展下线人员";
+        $this->getExcel($filename,$headArr,$data);
+    }
+
+
+
+    /**
+     * 导出所有创投及以上等级粉丝数
+     */
+    public function all_vip_fans_excel(){
+
+        $fields = ['u.*', 'a.region_name as province_name','b.region_name as city_name','c.region_name as district_name','vg.vip_name','vl.money','ui.nick_name as rec_name'];
+        $userMod = M('user_info')->alias('u')->
+        join('left join s_region a ON u.province_id = a.region_id')->
+        join('left join s_region b ON u.city_id = b.region_id')->
+        join('left join s_region c ON u.district_id = c.region_id')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')->
+        field($fields)->
+        where(array('u.vip_group_id'=>array('gt',2)))->
+        order('u.vip_group_id asc')->
+        select();
+        foreach ($userMod as &$li){
+            $li['direct'] = M('users_fans')->where(array('user_id'=>$li['id'],'level'=>1))->count();
+            $li['indirect'] = M('users_fans')->where(array('user_id'=>$li['id'],'level'=>array('neq',1)))->count();
+        }
+        $data = array();
+        foreach ($userMod as $k=>$goods_info){
+            $data[$k]['id'] = $goods_info['id'];
+            $data[$k]['用户名'] = $goods_info['nick_name'];
+            $data[$k]['手机号'] = $goods_info['mobile'];
+            $data[$k]['地区'] =  $goods_info['province_name'].'-'.$goods_info['city_name'].'-'.$goods_info['district_name'];
+            $data[$k]['职位'] = $goods_info['position'];
+            $data[$k]['公司名称'] = $goods_info['company'];
+            $data[$k]['行业标签'] = $goods_info['industry_tag'];
+            $data[$k]['qq号码'] = $goods_info['qq'];
+            $data[$k]['电子邮箱'] = $goods_info['email'];
+            $data[$k]['个人网址'] = $goods_info['site'];
+            $data[$k]['累计收入'] = number_format($goods_info['money']+$goods_info['frozen_money']+$goods_info['already_money'],2,".","");
+            $data[$k]['余额'] = $goods_info['money'];
+            $data[$k]['注册时间'] = date('Y-m-d H:i:s',$goods_info['add_time']);
+            $data[$k]['推荐人'] = $goods_info['rec_name'];
+            $data[$k]['成为vip时间'] = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',$goods_info['vip_orver_time']).'-1 year'));
+            $data[$k]['vip等级'] = $goods_info['vip_name'];
+            $data[$k]['直接粉丝数'] = $goods_info['direct'];
+            $data[$k]['间接粉丝数'] = $goods_info['indirect'];
+
+        }
+        $headArr=array('ID','用户名','手机号','地区','职位','公司名称','行业标签','qq号码','电子邮箱','个人网址','累计收入','余额','注册时间','推荐人','成为vip时间','vip等级','直接粉丝数','间接粉丝数');
+        $filename="所有创投及以上等级粉丝数";
+        $this->getExcel($filename,$headArr,$data);
+    }
+    /**
+     * 行业管理
+     * @param $headArr
+     * @param $data
+     */
+    public function industry(){
+        $list = M('sqtype')
+            ->where(array('parent_id'=>0))
+            ->select();
+//        var_dump($list);die;
+        $this->_list = $list;
+        $this->display();
+    }
+    /**
+     * 添加一级行业
+     */
+    public function add_industry(){
+        $model = M('sqtype');
+        if($_POST){
+            $name = I('post.name');
+            $id = I('post.id');
+            $parent_id = I('post.parent_id');
+//            var_dump(I('post.'));die;
+            $data = array(
+                'name'=>$name,
+                'id'=>$id,
+                'parent_id'=>$parent_id
+            );
+            if($id){
+                //修改
+                $res = $model->data($data)->save();
+            }else{
+                $res = $model->add($data);
+            }
+            if(I('post.parent_name')){
+                if($res){
+                    $this->success('修改成功');
+                }else{
+                    $this->error('修改失败');
+                }
+                $this->redirect('/Admin/Users/industry_detail&id='.$parent_id);
+            }else{
+                if($res){
+                    $this->success('修改成功');
+                }else{
+                    $this->error('修改失败');
+                }
+                $this->redirect('/Admin/Users/industry');
+            }
+        }
+        $id = I('get.id');
+        $type = I('get.type');
+        $parent_id = I('get.parent_id');
+        if($type == 1){
+            $data = $model->where(array('id'=>$id))->find();
+            if($id){
+                $title = '行业大类修改';
+            }else{
+                $title = '行业大类添加';
+            }
+        }else{
+            if($parent_id){
+                $list = $model->where(array('id'=>$parent_id))->find();
+                $data = array('parent_name'=>$list['name'],'parent_id'=>$list['id']);
+                $title = '行业添加';
+            }else{
+                $data = $model->join('left join s_sqtype s on s.id = s_sqtype.parent_id')
+                    ->field('s_sqtype.*,s.name as parent_name')
+                    ->where(array('s_sqtype.id'=>$id))->find();
+                $title = '行业修改';
+            }
+        }
+        $this->title = $title;
+        $this->data = $data;
+        $this->type = $type;
+        $this->display();
+    }
+    /**
+     * 行业管理详情
+     * @param $headArr
+     * @param $data
+     */
+    public function industry_detail(){
+        $id = I('get.id');
+        $list = M('sqtype')->where(array('parent_id'=>$id))->select();
+//        var_dump($list);die;
+        $this->_list = $list;
+        $this->parent_id = $id;
+        $this->display();
+
+    }
+
+    /**
+     *  积分列表
+     * @param $headArr
+     * @param $data
+     */
+    public function inte_list(){
+        $list = M('inte')->select();
+        $this->_list = $list;
+        $this->display();
+    }
+
+    /**
+     * 添加积分
+     * @param $headArr
+     * @param $data
+     */
+    public function add_inte(){
+        if(IS_POST){
+            $postData = I('post.');
+//            var_dump($postData);die;
+            if($postData['id']){
+                $res = M('inte')->data($postData)->save();
+            }else{
+                $postData['addtime'] = time();
+                $res = M('inte')->add($postData);
+            }
+            if($res){
+                $this->success('修改成功');
+            }else{
+                $this->error('修改失败');
+            }
+            $this->redirect('/Admin/Users/inte_list');
+        }
+        $this->title = '添加积分项';
+        if(I('get.id')){
+            $this->title = '修改积分项';
+            $data = M('inte')->where(array('id'=>I('get.id')))->find();
+            $this->data = $data;
+        }
+        $this->display();
+    }
+
+    /**
+     *  付款码列表
+     * @param $headArr
+     * @param $data
+     */
+    public function pay_code_list(){
+
+        $data = I('request.');
+        unset($data['PHPSESSID']);
+        $res_name = $data['res_name'];
+        $nick_name = $data['nick_name'];
+        $res_phone = $data['res_phone'];
+        $phone = $data['phone'];
+        $status = $data['status'];
+        $type = $data['type'];
+        $this->assign('_status', -1);
+        $this->assign('_type', -1);
+        $map = [];
+        if ( $res_name != '' ) {$map['ui.nick_name'] = ['like', "%{$res_name}%"];$this->assign('_res_name', $res_name);};
+        if ( $res_phone != '' ) {$map['mm.phone'] = $res_phone;$this->assign('_res_phone', $res_phone);};
+        if ( $nick_name != '' ) {$map['u.nick_name'] = ['like', "%{$nick_name}%"];$this->assign('_nick_name', $nick_name);};
+        if ( $phone != '' ) {$map['m.phone'] = $phone;$this->assign('_phone', $phone);};
+        if ( $status > -1 ){$map['p.status'] = $status;$this->assign('_status', $status);};
+        if ( $type > -1 ){$map['p.type'] = $type;$this->assign('_type', $type);};
+
+        $fields = ['p.*,ui.nick_name as res_name,mm.phone as res_phone,u.nick_name,m.phone'];
+
+        $Page = new \Think\Page( M('pay_code')->alias('p')
+            ->join('left join s_user_info ui on ui.id = p.user_id')
+            ->join('left join s_member mm on mm.id = ui.member_id')
+            ->join('left join s_pay_code_log l on l.code_id=p.id')
+            ->join('left join s_user_info u on u.id = l.user_id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->where($map)->count(),20);
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =  $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list = M('pay_code')->alias('p')
+            ->join('left join s_user_info ui on ui.id = p.user_id')
+            ->join('left join s_member mm on mm.id = ui.member_id')
+            ->join('left join s_pay_code_log l on l.code_id=p.id')
+            ->join('left join s_user_info u on u.id = l.user_id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->where($map)->field($fields)->order('p.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('_list', $list);
+        $this->assign('_show', $show);
+        $this->display();
+    }
+    /**
+     *  添加付款码
+     * @param $headArr
+     * @param $data
+     */
+    public function add_pay_code(){
+        if(IS_POST){
+            $post = I('post.');
+            $num = $post['num'];
+            $data['type'] = $post['type'];
+            if($post['type'] == 0){
+                $data['user_id'] = $post['name_num'];
+            }
+            if($num > 0){
+                $array = array();
+                for($i=0;$i<$num;$i++){
+                    $array[$i]['code'] = getRandomString(11,'0123456789');
+                    $array[$i]['addtime'] = time();
+                    $array[$i]['type'] = $post['type'];
+                    if($post['type'] == 0){
+                        $array[$i]['user_id'] = $post['name_num'];
+                    }
+                }
+                $res = M('pay_code')->addAll($array);
+                if($res){
+                    $this->success('修改成功');
+                }else{
+                    $this->error('修改失败');
+                }
+            }else{
+                $this->error('数量必须填');
+            }
+
+            $this->redirect('/Admin/Users/pay_code_list');
+        }
+        $this->title = '添加付款码';
+        $this->display();
+    }
+    //导出数据方法
+    public function pay_code_export()
+    {
+        set_time_limit(0);
+        $nick_name = I('post.nick_name', '', 'trim');
+        $phone = I('post.phone', '', 'trim');
+        $status = I('post.status', '', 'trim');
+        $map = [];
+        if ( $nick_name != '' ) $map['u.nick_name'] = ['like', "%{$nick_name}%"];
+        if ( $status != '' ) $map['p.status'] = $status;
+        if ( $phone != '' ) $map['m.phone'] = $phone;
+        //print_r($goods_list);exit;
+        $fields = ['p.*,u.nick_name,m.phone'];
+
+        $userMod = M('pay_code')->alias('p')
+            ->join('left join s_pay_code_log l on l.code_id=p.id')
+            ->join('left join s_user_info u on u.id = l.user_id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->where($map)->field($fields)->order('p.id desc')->select();
+//        var_dump($userMod);die;
+        $data = array();
+        foreach ($userMod as $k=>$goods_info){
+            $data[$k]['id'] = $goods_info['id'];
+            $data[$k]['用户名'] = $goods_info['nick_name'];
+            $data[$k]['注册手机号'] = $goods_info['phone'];
+            $data[$k]['付款码'] =  $goods_info['code'];
+            $data[$k]['是否有效'] = $goods_info['status'] == 0?'有效':'已使用';
+
+        }
+        $headArr=array('ID','用户名','注册手机号','付款码','是否有效');
+
+        $filename="付款码列表";
+
+        $this->getExcel($filename,$headArr,$data);
+    }
+
+    /**
+     *  油卡列表
+     * @param $headArr
+     * @param $data
+     */
+    public function oil_card_list(){
+
+        $data = I('request.');
+        unset($data['PHPSESSID']);
+        $status = $data['status'];
+        $this->assign('_status', -1);
+        $maps = array();
+        $map['l.type'] = 3;
+        if ( $status > -1 ){$maps['status'] = $status;$this->assign('_status', $status);};
+
+        $Page = new \Think\Page( M('oil_card')->where($maps)->count(),20);
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =  $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list = M('oil_card')->where($maps)->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        foreach ($list as $k=>$v){
+            if($v['status'] != 0){
+                $map['l.aid'] = $v['id'];
+                $user = M('luck_order')->alias('l')
+                    ->join('left join s_user_info u on u.id = l.uid')
+                    ->join('left join s_member m on m.id = u.member_id')
+                    ->where($map)
+                    ->field('u.nick_name,m.phone')
+                    ->find();
+                $list[$k]['nick_name'] = $user['nick_name'];
+                $list[$k]['phone'] = $user['phone'];
+            }
+        }
+        $this->assign('_list', $list);
+        $this->assign('_show', $show);
+        $this->display();
+    }
+    /**
+     *  添加付款码
+     * @param $headArr
+     * @param $data
+     */
+    public function add_oil_card(){
+        if(IS_POST){
+            $code = I('post.code');
+            if($code){
+                $res = M('oil_card')->add(array('code'=>$code,'addtime'=>time()));
+                if($res){
+                    $this->success('修改成功');
+                }else{
+                    $this->error('修改失败');
+                }
+            }else{
+                $this->error('油卡码必须填');
+            }
+            $this->redirect('/Admin/Users/oil_card_list');
+        }
+        $this->title = '添加油卡码';
+        $this->display();
+    }
+
+
+
+    private  function getExcel($fileName,$headArr,$data){
+        //导入PHPExcel类库，因为PHPExcel没有用命名空间，只能inport导入
+        //import("Org.Util.PHPExcel");
+        //import("Org.Util.PHPExcel.Writer.Excel5");
+        //import("Org.Util.PHPExcel.IOFactory.php");
+        Vendor('PHPExcel.PHPExcel');
+        $date = date("Y_m_d",time());
+        $fileName .= "_{$date}.xls";
+
+        //创建PHPExcel对象，注意，不能少了\
+        $objPHPExcel = new \PHPExcel();
+        $objProps = $objPHPExcel->getProperties();
+
+        //设置表头
+        $key = ord("A");
+        //print_r($headArr);exit;
+        foreach($headArr as $v){
+            $colum = chr($key);
+            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
+            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
+            $key += 1;
+        }
+
+        $column = 2;
+        $objActSheet = $objPHPExcel->getActiveSheet();
+
+        //print_r($data);exit;
+        foreach($data as $key => $rows){ //行写入
+            $span = ord("A");
+            foreach($rows as $keyName=>$value){// 列写入
+                $j = chr($span);
+                $objActSheet->setCellValue($j.$column, $value);
+                $span++;
+            }
+            $column++;
+        }
+
+        $fileName = iconv("utf-8", "gb2312", $fileName);
+
+        //重命名表
+        //$objPHPExcel->getActiveSheet()->setTitle('test');
+        //设置活动单指数到第一个表,所以Excel打开这是第一个表
+        $objPHPExcel->setActiveSheetIndex(0);
+        ob_end_clean();//清除缓冲区,避免乱码
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=\"$fileName\"");
+        header('Cache-Control: max-age=0');
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output'); //文件通过浏览器下载
+        exit;
+    }
+
+
+}

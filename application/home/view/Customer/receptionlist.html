@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>接待记录</title>
+
+    <script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+    <script src="__AGENCY__/js/jquery.cookie.min.js"></script>
+    <script src="__AGENCY__/js/vue/vue"></script>
+    <script src="__AGENCY__/js/vue/mint-ui/index.js"></script>
+    <link href="__AGENCY__/js/vue/mint-ui/style.css" rel="stylesheet">
+
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .mint-cell .mint-cell-wrapper{
+            background-image: -webkit-linear-gradient(top, #d9d9d9, #d9d9d9 0%, transparent 0%);
+            background-image: linear-gradient(0deg, #d9d9d9, #d9d9d9 0%, transparent 0%)
+            }
+        ul,li{ padding:0;margin:0;list-style:none}
+</style>
+</head>
+
+<body>
+<div id="app">
+    <mt-header title="接待信息列表">
+        <router-link to="/" slot="left" @click="window.history.go(-1);">
+            <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+    </mt-header>
+    <div style="overflow: scroll;">
+
+
+       <mt-loadmore  :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" >
+
+            <ul>
+                <li v-for="(item,index) in tableData">
+                    <mt-cell :title="item.username + index" :value="item.usertype"></mt-cell>
+                    <mt-cell title="接待时间" :value="item.one_time"></mt-cell>
+                    <mt-cell-swipe
+                            title="接待人"
+                            :value="item.bcname + '<<'"
+                            :right="[
+    {
+      content: '详情',
+      style: { background: 'lightgray', color: '#fff' },
+      handler: () => this.$messagebox('delete')
+    },
+     {
+      content: '资料录入',
+      style: { background: 'red', color: '#fff' },
+      handler: () => this.$messagebox('delete')
+    }
+  ]">
+
+                    </mt-cell-swipe>
+                </li>
+
+            </ul>
+        </mt-loadmore>
+
+
+        <!--http://localhost:801/index.php?s=/Home/Customer/receptionlist.html-->
+    </div>
+</div>
+<script type="text/javascript">
+
+    // <mt-cell-swipe
+    // title="标题文字"
+    // :right="[
+    // {
+    //     content: 'Delete',
+    //         style: { background: 'red', color: '#fff' },
+    //     handler: () => this.$messagebox('delete')
+    // }
+    // ]"></mt-cell-swipe>
+    new Vue({
+        el: "#app",
+        data: {
+            //动态数据
+            //动态数据
+            allLoaded:false,
+            tableData: [],
+
+            //分页变量
+            pagination: {
+                pageNum: 0,
+                pageSize: 0,
+                pageTotal: 0
+            },
+            //当前所在页
+            n: 1,
+            pojo:{
+            one_customer_id: '',
+                lr_customer_name:'',
+                lr_customer_id:'',
+                one_re_adess:'',
+                rid: '',
+            username: '11',
+            usertype: '',
+            userphone: '',
+            usersubscribeid: '',
+            usercauseid: '',
+            usercause: '',
+            userreferee: '',
+            one_job_img: '',
+                two_customer_id:'',
+
+                two_dis:'',// varchar(250) comment '接待详情',
+                two_job_img:'',// varchar(150),
+                two_result :'',//varchar(250) comment '接待结果',
+                two_time:'',//datetime comment '送出时间',
+                createtime :'',//datetime  comment '创建时间',
+                s_start:''// int comment '状态'
+            },
+            paylist: [],
+            loading: false,
+
+
+            gradeList: [{
+                value: '创客',
+                label: '创客'
+            },
+                {
+                    value: '创投',
+                    label: '创投'
+                },
+                {
+                    value: '创业家',
+                    label: '创业家'
+                },
+                {
+                    value: '创业导师',
+                    label: '创业导师'
+                }, {
+                    value: '创业领袖',
+                    label: '创业领袖'
+                }
+            ]
+        },
+        // components: {
+        //     'v-loadmore':Loadmore  //
+        // },
+        methods: {
+            showx:function(id){
+                console.log(id)
+            },
+            showb:function(id){
+                console.log(id)
+            },
+            loadBottom:function() {
+
+                var t=this;
+                console.log(1);
+
+               t.postTableData();
+               t.$refs.loadmore.onBottomLoaded();
+               //t.$refs.loadmore.onBottomLoaded();
+            },
+            loadTop:function () {
+                var t=this;
+                t.postTableData();
+                //console.log(2);
+               // this.$broadcast('onBottomLoaded', id);
+            },
+            postTableData: function() {
+                var _this = this;
+              // alert(1);
+                $.ajax({
+                    type: "POST",
+                    url: '{:url("/Api/CustomerService/f_reception")}',
+                    data: {
+                        n: _this.n,
+                    },
+                    dataType: 'json',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        console.log(res);
+                        var data = res.AppendData;
+                       // _this.tableData = data.list;
+                        var c= _this.tableData;
+                        for( var i in data.list){
+                            c.push(data.list[i]);
+                        }
+                        _this.tableData = c;
+                        if(data.list.length<10){
+                            _this.allLoaded=true;
+                            console.log("11111111")
+                        }else{
+                            _this.n= _this.n+1;
+                        }
+                        // var paginstion = {
+                        //     pageNum: parseInt(data.pageNum),
+                        //     pageSize: data.pageSize,
+                        //     pageTotal: parseInt(data.pageTotal)
+                        // };
+                    //    _this.pagination = paginstion
+                    },
+                    error: function() {}
+                })
+            },
+
+
+        },
+
+        mounted: function () {
+            var t = this //很重要！！
+            t.cuuid=$.cookie('k_cuuid');
+            if( t.cuuid ==null ||  t.cuuid =='' ){
+                window.location.href="/index.php?s=/Home/Customer/att_login.html";
+            }
+            t.postTableData();
+
+
+        },
+
+    })
+</script>
+</body>
+
+</html>

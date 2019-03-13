@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/productlist.css">
+
+
+    <script src="__HOME_JS__/whjs/js/jquery-3.2.1.js"></script>
+    <script src="__HOME_JS__/whjs/js/swiper-3.4.2.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <script src="__HOME_JS__/whjs/js/productlist.js"></script>
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <title>产品中心</title>
+</head>
+
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- 轮播图数据 -->
+        </div>
+        <div class="swiper-pagination swiper-pagination-bullets">
+        </div>
+    </div>
+
+
+    <div class="brand clearfix">
+        <!-- 地址标题价钱信息 -->
+    </div>
+
+    <div class="look_see">
+        <div class="look_see_text">
+            <span class="look_see_text_one">规格</span>
+            <span class="look_see_text_two" id="see">
+                <a href="javascript:;">
+                    点击查看 产品参数
+                </a>
+            </span>
+            <img src="__HOME_IMAGES__/san.png" alt="">
+        </div>
+    </div>
+
+    <div class="details">
+        <p>商品详情</p>
+        <div class="line"></div>
+        <div class="imgbox">
+            <!-- <img src="__HOME_IMAGES__/2.jpg" alt="">
+            <img src="__HOME_IMAGES__/3.jpg" alt=""> -->
+        </div>
+    </div>
+
+    <div class="Product_Center clearfix">
+        <button class="fl product_one">
+            <a href="javascript:;" onClick="javascript :history.back(-1);"> 产品中心</a>
+        </button>
+        <button class="fl product_two">
+            在线咨询
+            <img src="__HOME_IMAGES__/message.png" alt="">
+        </button>
+    </div>
+
+    <div id="content">
+
+    </div>
+    <div class="mask"></div>
+    <div class="mask_er"></div>
+
+    <div class="allcity-boxss">
+        <ul class="content">
+            <li style="display: block;">
+                <img src="{:U('Home/Card/myCode?id='.$user_id)}" style="width:100%;height: 100%" alt="" />
+            </li>
+            <li>
+                <img src="__PUBLIC__/Home/images/8.jpg" style="width:100%;height: 100%" alt="" />
+            </li>
+            <li>
+                <img src="{$wx_erweima}" style="width:100%;height: 100%" alt=""/>
+            </li>
+        </ul>
+        <div class="er">长按识别二维码</div>
+        <ul class="tab">
+            <li class="dian">v网二维码</li>
+            <li><a href="tel:{$mobile}" style="color:#fff;">拨打手机号</a></li>
+            <li>微信二维码</li>
+        </ul>
+    </div>
+
+    
+    <input type="hidden" class="user_id" value="{$user_id}">
+    <input type="hidden" class="product_id" value="{$product_id}">
+
+</body>
+
+</html>
+<script type="text/html" id="swiper">
+        {{each img v i }}
+        <div class="swiper-slide">
+                <a href="javascript:;">
+                    <img src="{{v.img}}" alt="">
+                </a>
+        </div>
+        {{/each}}
+</script>
+
+<script type="text/html" id="message">
+        <div class="brand_text fl">
+            <p class="brand_text_one">{{title}}</p>
+            <p class="brand_text_two">{{address}}</p>
+        </div>
+        <div class="price fr">
+            ￥{{price}}元
+        </div>
+</script>
+
+<script type="text/html" id="tips">
+     <div class="tips" id="tip">
+            <p>产品参数</p>
+            <div class="line"></div>
+            <div class="brands_box">
+            {{each product_parameter as v }}
+            <div class="brands clearfix">
+                <p class="fl">{{v.title}}</p>
+                <p class="fl">{{v.content}}</p>
+            </div>
+            {{/each}}
+            </div>
+            <div class="know" id="knows">我知道了</div>
+        </div>
+</script>
+
+<script type="text/html" id="imgbox">
+    {{each img_detail v i}}
+        <img src="{{v.img}}" alt="">
+    {{/each}}
+
+</script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+<script>
+
+
+
+    $(function() {
+        var share_url = "{$share_url}";
+
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "index.php?s=/Api/WeShare/getSignPackage", //url
+            data:{share_url:share_url},
+            async: true,
+
+            // async: false,
+            success: function(result) {
+
+
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+
+                wx.ready(function() {
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ
+                    wx.onMenuShareQQ({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    /* 分享到腾讯微博 */
+                    wx.onMenuShareWeibo({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ空间
+                    wx.onMenuShareQZone({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                });
+
+
+
+            },
+            error: function() {
+                alert("服务器繁忙，请稍后再试！");
+            }
+        });
+
+    });
+
+
+</script>

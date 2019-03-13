@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+
+    <title>小秘币兑换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f9f9f9;
+        }
+
+        .top {
+            width: 100%;
+            height: 1.62rem;
+            background: #fff;
+            position: relative;
+        }
+
+        .slj {
+            /* width: 1.05rem; */
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(43, 43, 43, 1);
+            line-height: .21rem;
+            position: absolute;
+            top: .24rem;
+            left: .15rem;
+        }
+
+        .topleft {
+            width: 1.2rem;
+            height: .4rem;
+            border-radius: .02rem;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left: -0.6rem;
+            margin-top: -0.1rem;
+        }
+
+        .topleftone {
+            width: 1.56rem;
+            height: 1.2rem;
+            border-radius: .02rem;
+            position: absolute;
+            left: 50%;
+            bottom: 0%;
+            z-index: 99;
+            display: none;
+            text-align: center;
+            margin-left: -0.78rem;
+            margin-top: -0.6rem;
+        }
+
+        .toprgtone {
+            width: 1.56rem;
+            height: .78rem;
+            background: #46D1A9;
+            border-radius: .02rem;
+            position: absolute;
+            right: .17rem;
+            bottom: .24rem;
+            z-index: 99;
+            display: none;
+        }
+        
+        .toprgtone img{
+            width:.4rem;
+            height:.4rem;
+            top:.18rem;
+            left:.14rem;
+            border-radius: 50%;
+            position: absolute;
+            background-size:100% 100%; 
+        }
+        .toprgt {
+            width: 1.56rem;
+            height: .78rem;
+            background: #F7F7F7;
+            border-radius: .02rem;
+            position: absolute;
+            right: .17rem;
+            bottom: .24rem;
+        }
+
+        .djbd {
+            width: 100%;
+            height: 100%;
+            background: #46D1A9;
+            border-radius: .01rem;
+            border: none;
+            outline: none;
+            font-size: .1rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: #fff;
+            display: block;
+        }
+
+        .djti {
+            width: .61rem;
+            height: .24rem;
+            background: #46D1A9;
+            border-radius: .01rem;
+            border: none;
+            outline: none;
+            font-size: .1rem;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            line-height: .24rem;
+            color: #fff;
+            position: absolute;
+            top: .4rem;
+            left: .48rem;
+        }
+
+        .tis {
+            width: .75rem;
+            height: .18rem;
+            font-size: .13rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(176, 176, 176, 1);
+            line-height: .18rem;
+            position: absolute;
+            left: .42rem;
+            top: .13rem;
+            text-align: center;
+        }
+        .tiss {
+            width: auto;
+            height: auto;
+            font-size: .16rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #000;
+            line-height: 1.2rem;
+        }
+        .secd{
+        width:100%;
+        height:1.1rem;
+        margin-top:.08rem;
+        background: #fff;
+        position: relative;
+    }
+    .secdk{
+        width:100%;
+        height:.87rem;
+        margin-top:.08rem;
+        background: #fff;
+        position: relative;
+    }
+    .secdone{
+        width:90%;
+        height:.21rem;
+        font-size:.15rem;
+        top:.18rem;
+        left:.15rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        line-height:.21rem;
+        position: absolute;
+    }
+    .pepp{
+        /* width:.19rem; */
+        height:.28rem;
+        font-size:.2rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        line-height:.28rem;
+        position: absolute;
+        left: .15rem;
+        bottom:.28rem;
+    }
+    .txtz{
+        font-size:.13rem;
+        font-family:PingFangSC-Medium;
+        font-weight:500;
+        color:rgba(43,43,43,1);
+        position: absolute;
+        left: .15rem;
+        bottom:.17rem;
+    }
+    .xmje{
+        width:1.6rem;
+        height:.2rem;
+        font-size:.14rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:#2B2B2B;
+        line-height:.2rem;
+        border: none;
+        outline: none;
+        position: absolute;
+        top:.58rem;
+        left:.36rem;
+        background: #ffffff00;
+    }
+    .nail{
+        /* width:.9rem; */
+        height:.17rem;
+        font-size:.12rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(219,82,69,1);
+        line-height:.17rem;
+        position: absolute;
+        top:.22rem;
+        right:.15rem;
+    }
+    .naik{
+        /* width:.9rem; */
+        height:.17rem;
+        font-size:.12rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(219,82,69,1);
+        line-height:.17rem;
+        position: absolute;
+        top:.35rem;
+        right:.15rem;
+    }
+    .tiswz{
+        height:.18rem;
+        font-size:.13rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        line-height:.18rem;
+        position: absolute;
+        top:.25rem;
+        left:.61rem;
+    }
+    .topleftone img{
+        width:.64rem;
+        height:.64rem;
+        top:35%;
+        left:50%;
+        border-radius: 50%;
+        margin-left: -0.32rem;
+        margin-top: -0.36rem;
+        position: absolute;
+        background-size:100% 100%; 
+    }
+    .last{
+        width:3.75rem;
+        height:.52rem;
+        background:#fff;
+        position: fixed;
+        bottom:0;
+    }
+    .sure{
+        width:3.4rem;
+        height:.4rem;
+        background:#32CEA0;
+        border-radius:.04rem;
+        position: fixed;  
+        border:none;
+        margin-top:.08rem;
+        margin-left:.19rem;
+        font-size:.16rem;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
+        line-height: .4rem;
+        color:#fff;
+        outline: none;
+    }
+    .detail{
+        width:.62rem;
+        height:.24rem;
+        background:rgba(255,157,73,1);
+        border-radius:.12rem 0px 0px .12rem;
+        position: absolute;
+        right:0;
+        top:.2rem;
+        /* position: relative; */
+    }
+    .detail img{
+        width:.11rem;
+        height:.14rem;
+        position: absolute;
+        background-size: 100% 100%;
+        top:.05rem;
+        right:.36rem;
+    }
+    .detail span{
+        width:.3rem;
+        height:.16rem;
+        font-size:.11rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color: #fff;
+        position: absolute;
+        line-height: .24rem;
+        right:.02rem;
+    }
+     /* 绑定微信 */
+
+         .tip_mssg {
+      background: #fff; 
+      position: fixed;
+      top: 50%; 
+      left: 50%;  
+      margin-top: -0.57rem;  
+      margin-left: -1.24rem;        
+      border-radius: .1rem;        
+      text-align: center;
+      display: none;
+      z-index: 1001;    
+} 
+    .tip_mssg p:nth-child(1)    { 
+        font-size: .16rem;        
+        padding: .1rem 1.06rem;   
+         }    
+    .tip_mssg p:nth-child(2){         
+         font-size: .12rem;         
+         padding: 0 .52rem .215rem .52rem;    
+    }    
+    .tip_mssg .check{       
+          width: 100%;       
+           border-top: 1px solid #979797;    
+    }       
+    .tip_mssg .check .cancel{          
+          border-right: 1px solid #979797;           
+          color: #666666;      
+          padding:.12rem 0; 
+    }        
+    .tip_mssg .check .confrirm{            
+         color: #46D1A9;        
+    }    
+    .tip_mssg .check .cancel,.confrirm{        
+        padding: .1rem .525rem .1rem .465rem;    
+        font-size: .15rem;
+    }
+    .fl{
+        float: left;
+    }
+    .cancel-btn{
+        width: 1rem;
+        height: .48rem;
+        line-height: .4rem;
+        background: url("../res/h5tel_btn_blueline_300x120.png") center no-repeat;
+        background-size: 100%;
+        color: #46D1A9;
+        font-size: .15rem;
+        /* border: none; */
+        border:1px solid #ccc;
+        outline: none;
+    }
+    .confirm-btn{
+        width: 1rem;
+        height:.48rem;
+        line-height: .4rem;
+        background: url("../res/h5tel_btn_blue_300x120.png") center no-repeat;
+        background-size: 100%;
+        color: #46D1A9;
+        font-size: .15rem;
+        border: 1px solid #ccc;
+        outline: none;
+}
+    .mask {
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 998;
+        display: none;
+    }
+    
+    /* 绑定微信结束 */
+    .xqimg{
+        width:100%;
+        height: .2rem;
+        background: pink;
+        /* display: none; */
+    }
+    .xqimg img{
+        width:100%;
+        /* position: absolute; */
+        background-size: 100% 100%;
+    }
+    .payz{
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 998;
+        display: none;
+    }
+    .pay{
+        width:3.11rem;
+        height:3rem;
+        top:1.05rem;
+        left:.33rem;
+        background: #fff;
+        position: relative;
+        z-index: 20;
+    }
+    .tspan{
+        height:.25rem;
+        color:#333;
+        top:.31rem;
+        left:.92rem;
+        position: absolute;
+        font-size: .18rem;
+        text-align: center;
+    }
+    .addt{
+        width:2.75rem;
+        height:.45rem;
+        background:#f7f7f7;
+        border-radius:.03rem;
+        border:none;
+        outline: none;
+        left:.18rem;
+        top:.83rem;
+        position: absolute;
+        text-align: center;
+    }
+    .forget{
+        height:.17rem;
+        font-size:.12rem;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(255,157,73,1);
+        line-height:.17rem;
+        position: absolute;
+        top:1.41rem;
+        right:.17rem;
+    }
+    .suremm{
+        width:2.4rem;
+        height:.4rem;
+        border-radius:.2rem;
+        background:#46D1A9;
+        position: absolute;
+        bottom:.28rem;
+        left:.33rem;
+        border:none;
+        outline: none;
+        color:#fff;
+        font-size: .14rem;
+    }
+    .guanb{
+        width:.2rem;
+        height:.2rem;
+        position: absolute;
+        border-radius:50%;
+        top:.1rem;
+        right:.17rem;
+        z-index: 99;
+    }
+    .guanb img{
+        width:100%;
+        height: 100%;
+        position: absolute;
+        background-size: 100% 100%;
+    }
+    /*设置密码缺省页开始*/
+.payt{
+    width:100%;
+    height:2.5rem;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    display: none;
+    z-index:2;
+    font-size: .15rem;
+}
+.oneth{
+    width:100%;
+    color:#333;
+    font-size:15px;
+    text-align: center;
+    margin:.2rem 0;
+    background:#fff;
+    font-weight:600;
+}
+.ques {
+    width: 80%;
+    height: .5rem;
+    background: #fff;
+    color: #333;
+    font-size: .1rem;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.ques p {
+    text-align: center;
+    background: #fff;
+    font-size: .15rempx;
+    font-weight: 500;
+}
+.szan {
+    width: 1.14rem;
+    height: .36rem;
+    border: 0;
+    font-size: .13rem;
+    color: #fff;
+    background: #FF9D49;
+    position: absolute;
+    top: .35rem;
+    left: .9rem;
+    border-radius: .02rem;
+}
+.ques{
+    width:80%;
+    height:.5rem;
+    background:#fff;
+    color:#333;
+    font-size:.1rem;
+    margin:0 auto;
+    text-align: center;
+    position: relative;
+}
+.ques p{
+    text-align: center;
+    background:#fff;
+    font-size: .15rempx;
+    font-weight:500;
+}
+.szan{
+    width:1.14rem;
+    height:.36rem;
+    border:0;
+    font-size: .13rem;
+    color:#fff;
+    background:#FF9D49;
+    position: absolute;
+    bottom:.2rem;
+    left:.9rem;
+    border-radius:.02rem;
+}
+/*设置密码缺省页结束*/
+.tipmoney{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    width: 1.8rem;
+    font-size: .12rem;
+    padding: 0.05rem 0 ;
+    margin-left: -0.9rem;
+    border-radius: .05rem;
+    display: none;
+}
+.forget a{
+    color: rgba(255,157,73,1);
+    text-decoration: none;
+}
+.bd{
+	font-size: 0.16rem;
+	color:#777;
+	position: absolute;
+    top: .45rem;
+    left: .15rem;
+    display: none;
+}
+    </style>
+</head>
+
+<body>
+    <div class="cont">
+        <div class="top">
+            <span class="slj">微信兑换</span>
+            <span class="bd">已绑定</span>
+            <div class="detail">
+                <img src="Public/Home/images/slicesrjl/copyrjl.png" alt="">
+                <span>记录</span>
+            </div>
+            <div class="topleft">
+                <button class="djbd">点击绑定</button>
+            </div>
+            <!-- 点击显示绑定 -->
+            <div class="topleftone">
+                <!--<img src="Public/Home/images/slicesrjl/copyrjl.png" alt="" class="headerimg">-->
+            </div>
+            
+            <div class="toprgtone">
+                <!--<img src="Public/Home/images/slicesrjl/copyrjl.png" alt="">-->
+            </div>
+            <!-- 绑定微信确定弹框 -->
+            <div class="mask">
+                <div class="tip_mssg">
+                    <p>提示</p>
+                    <p class="text">是否前往设置绑定微信?</p>
+                    <div class="clearfix check">
+                        <div class="fl cancel">取消</div>
+                        <div class="fl confrirm">确定</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="secd">
+            <div class="secdone">您还有<span style="color:#32CEA0;">{$money}</span>个小秘币</div>
+            <span class="pepp">￥</span>
+            <input type="text" class="xmje" value="" placeholder="请输入100倍数的金额" name="money" id="yb">
+            <span class="nail">注：人工审核</span>
+        </div>
+        <div class="secdk">
+            <div class="secdone">温馨提示</div>
+            <span class="txtz">关于提现收取3.6%税点的通知</span>
+            <span class="naik">查看详情</span>
+        </div>
+        <div class="xqimg">
+            <img src="Public/Home/images/slicesrjl/tixiantongzhid.png" alt="">
+        </div>
+        <div class="last">
+            <button class="sure">确认兑换</button>
+        </div>
+        <div class="payz">
+            <div class="pay">
+                <div class="guanb">
+                    <img src="Public/Home/images/slicesrjl/Group42.png" alt="">
+                </div>
+                <span class="tspan">请输入支付密码</span>
+                <input type="password" class="addt" placeholder="请输入六位数的支付密码" name="pwad" maxlength="6" id="addt">
+                <span class="forget"> <a href="/index.php?s=/Home/Set/paypassword.html">忘记密码？</a></span>
+                <button class="suremm">确定</button>
+            </div>
+        </div>
+
+        <div class="payt">
+            <div class="closer"></div>
+            <div class="oneth">请输入支付密码</div>
+            <div class="ques">
+                <p>您暂未设定支付密码，请前往设置</p>
+                <button class="szan">点击设置支付密码</button>
+            </div>
+        </div>
+        <div class="tipmoney">每人每天只能提现一次</div>
+    </div>
+</body>
+
+
+<script>
+    // alert('2019年1月28日——2月12日仅支持微信提现\n' +
+    //     '（注：法定节假日2月4日——2月10日及周末不提现）\n' +
+    //     '由此给您带来的不便，敬请谅解。');
+    //点击记录查看详情detail
+    $('.top').on('click', '.detail', function () {
+        window.location.href = "/index.php?s=/Home/income/reoutward.html"
+    })
+
+    // 点击确定绑定微信跳转
+    $(".confrirm").on("click", function () {
+        window.location.href = '/index.php?s=/Home/User/binding/num/1.html';
+    })
+
+    // 密码缺省页设置跳转
+    $(".szan").on("click", function () {
+        window.location.href = '/index.php?s=/Home/Set/paypassword.html';
+    })
+
+    var user_id = '{$unionid}';
+
+    var ischeckWechat = '';
+    var bank_id = '';
+
+// 点击选择绑定银行卡
+//  $('.toprgt').on('click', '.djti', function () {
+//      ischeckWechat = '';
+//      $('.topleftone').hide();
+//      $.ajax({
+//          type: 'post',
+//          url: "/index.php?s=/Api/Wechat/capital_index",
+//          data: {
+//              unionid: user_id,
+//          },
+//          success: function (res) {
+//              console.log(res);
+//              if (res.ResultType == 1) {
+//                  $(".tipmoney").text("请先设置您的支付密码！").stop(true).fadeIn(1000).fadeOut(2000);
+//                  setTimeout(function () {
+//                      window.location.href = '/index.php?s=/Home/Set/paypassword.html';
+//                  }, 3000)
+//              }
+//              if (res.ResultType == 2) {
+//                  $(".tipmoney").text(res.AppendData.Message).stop(true).fadeIn(1000).fadeOut(
+//                      2000);
+//                  setTimeout(function () {
+//                      window.location.href = '/index.php?s=/Home/Income/income.html';
+//                  }, 3000)
+//              }
+//
+//              var mac = '';
+//              if (res.AppendData.bank_name == '') {
+//                  $(".fangs .yinh").html('暂未绑定银行卡').css("text-indent", '0.08rem'); //银行卡卡号填充
+//                  $(".mask").show();
+//                  $(".tip_msg").fadeIn(1000).find(".text").text("是否前往我的中心绑定银行卡?");
+//                  mac += '<img src="Public/Home/images/slicesrjl/288063919612123470.png" alt="">'
+//                  mac += '<div class="tiswz">未绑定</div>'
+//              } else {
+//                  bank_id = res.AppendData.bank_id;
+//                  mac += '<img src="Public/Home/images/slicesrjl/288063919612123470.png" alt="">'
+//                  mac += '<div class="tiswz">' + res.AppendData.bank_name + '</div>'
+//                  $('.toprgtone').show();
+//              }
+//              $('.toprgtone').html(mac);
+//          },
+//          error: function () {}
+//      })
+//
+//  })
+
+
+
+
+
+    // 确定绑定微信获取微信信息
+        bank_id = ''
+        $.ajax({
+            url: '/index.php?s=/Api/Wechat/is_wechat',
+            type: 'post',
+            data: {
+                unionid: user_id,
+            },
+            success: function (res) {
+                console.log(res)
+                var list = ''
+
+                if (res.ResultType != 2) {
+                    $(".bd").show();
+                    $('.topleftone').hide();
+                    $(".bd").html("未绑定");
+                    $(".bd").css("color","#db5245");
+                    $(".fangs .yinh").html('暂未绑定微信号').css("text-indent", '0.08rem'); //微信号填充
+                    $(".mask").show();
+                    $(".tip_mssg").fadeIn(1000).find(".text").text("是否需要绑定微信?");
+                } else {
+                    ischeckWechat = 1;
+                    $(".topleft").hide();
+                    $(".bd").show();
+                    $('.topleftone').show();
+                    $(".bd").html("已绑定");
+                     $(".bd").css("color","#777");
+                    list += '<img src="' + res.AppendData.headimg + '" alt="" class="headerimg">'
+                    list += '<span class="tiss">' + res.AppendData.nickname + '</span>'
+                }
+
+                $('.topleftone').html(list);
+                $('.toprgtone').hide();
+                $('.tip_mssg').show();
+            }
+        })
+
+        //取消微信绑定
+        $(".cancel").on("click", function () {
+            $(".tip_msg").hide();
+            $(".mask").hide();
+        })
+        
+        $(".topleft").on("click",function(){
+        	window.location.href = '/index.php?s=/Home/User/binding/num/1.html';
+        })
+
+    $(function () {
+
+        //点击提交弹出输入密码框
+        $('.last').on('click', '.sure', function () {
+
+            var money = $("#yb").val() - 0;
+            var controller_money = '{$money}';
+            var newmoney = controller_money - 0;
+
+            //未选择金额则不跳转
+            if (ischeckWechat == 1 && money > 20000) {
+                $(".tipmoney").text("微信每日金额最高20000元").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+            if (ischeckWechat == '' && bank_id == '') {
+                $(".tipmoney").text("请点击选择提现方式").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+            if ($("#yb").val() == '') {
+                $(".tipmoney").text("请输入提现金额").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+            if (money % 100 != 0) {
+                $(".tipmoney").text("提现金额必须是100的整数倍").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+            if (money > newmoney) {
+                $(".tipmoney").text("您的小秘币余额不足").stop(true).fadeIn(1000).fadeOut(2000);
+                return;
+            }
+
+
+            $('.payz').show();
+
+        })
+
+        // 点击关闭支付弹框
+        $('.pay').on('click', '.guanb', function () {
+            $('.payz').hide();
+        })
+
+        $(".chosetkzz .closer").on("click", function () {
+            $(".chosetkzz").hide();
+        })
+
+
+        $(".suremm").on("click", function () {
+            var pwd = $("#addt").val();
+            var Type = bank_id ? 2 : 1;
+            var money = $("#yb").val() - 0;
+            if ($("#addt").val() == '') {
+                $(".tipmoney").text("请输入您的提现密码").stop(true).fadeIn(1000).fadeOut(2000);
+                return false;
+            }
+            if ($("#addt").val().length != '6') {
+                $(".tipmoney").text("请正确输入您的提现密码").stop(true).fadeIn(1000).fadeOut(2000);
+                return false;
+            }
+            $.ajax({
+                type: 'post',
+                url: "/index.php?s=/Api/Wechat/capital_out",
+                data: {
+                    unionid: user_id,
+                    pwd: pwd,
+                    type: Type,
+                    money: money,
+                    bank_id: bank_id,
+                },
+                success: function (res) {
+                    $(".mask").hide()
+                    $(".payz").hide()
+                    $("#textinput").val("");
+                    if (res.ResultType == 2) {
+                        $(".tipmoney").text(res.Message).stop(true).fadeIn(1000).fadeOut(
+                            2000);
+                    } else {
+                        window.location.href ='/index.php?s=/Home/Capital/Auditre.html&type=' +Type + '';
+                    }
+                },
+                error: function () {
+                    $("#textinput").val("")
+                    $(".mask").hide()
+                    // alert("异常!")
+                }
+            })
+        })
+    })
+</script>
+
+</html>

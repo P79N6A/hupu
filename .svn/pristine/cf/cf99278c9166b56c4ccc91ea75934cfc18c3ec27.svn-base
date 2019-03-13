@@ -1,0 +1,40 @@
+/**
+ *createUser:JAVA_TOM
+ * FileName: public.js
+ * Author:   14562
+ * Date:     2018/11/5 14:14
+ * Description:
+ *
+ */
+
+$(function () {
+    if($.cookie("wapuuid")=="" || $.cookie("wapuuid")==null || $.cookie('waptoken')==""||  $.cookie("waptoken")==null ){
+        $.cookie('mydatetime', "");
+        $.cookie('waptoken', "");
+        window.location.href="/index.php?s=/Home/WapAgent/sign"; return;
+
+    }
+})
+
+function isRole(res) {
+    if(res.Message=="Invalid token"){
+        alert("登陆标识失效，请重新登录");
+        rocookie('waptoken');
+        rocookie('wapuuid');
+        window.location.href="/index.php?s=/Home/WapAgent/sign"; return;
+
+    }else if(res.Message=="token not find"){
+        alert("登陆标识未找到，请重新登录");
+        window.location.href="/index.php?s=/Home/WapAgent/sign"; return;
+    }
+
+}
+
+function rocookie(name) {
+//获取当前时间
+    var date=new Date();
+//将date设置为过去的时间
+    date.setTime(date.getTime()-10000);
+//将userId这个cookie删除
+    document.cookie=name+"=''; expires="+date.toGMTString();
+}

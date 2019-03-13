@@ -1,0 +1,55 @@
+<?php
+/** 访问管理 */
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+use app\api\logic\VisitLog  as visitLogic;
+use think\Db;
+
+class Visit extends HomeBase 
+{
+	private $visit_logic = null;
+	function initialize()
+ 	{
+ 		parent::initialize();
+ 		$this->visit_logic = new visitLogic();
+    }
+    
+    /**
+     * 访客统计
+     */
+    public function count()
+    {
+    	$data = $this->visit_logic->getLogData(array('object_id' =>$this->userInfo['id']));
+    	$this->data = $data;
+    	return  $this->fetch();
+    }
+
+    // 新版访客统计
+    public function data_index()
+    {
+        $this->headimg = $this->userInfo['headimg'];
+        return  $this->fetch();
+    }
+    
+    // 新版访客统计--app
+    public function data_index_app()
+    {
+        $this->unionid = input('get.unionid','');
+        $this->headimg = Db::table('s_user_info')->where(array('unionid' =>$_GET['unionid']))->column('headimg');
+        return  $this->fetch('Visit/data_index');
+    }
+
+    //访客统计二级页面
+    public function data_detail()
+    {
+        return  $this->fetch();
+    }
+    
+    //访客统计二级页面--app
+    public function data_detail_app()
+    {
+        $this->unionid = input('get.unionid','');
+        return  $this->fetch('Visit/data_detail');
+    }
+
+}

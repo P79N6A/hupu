@@ -1,0 +1,41 @@
+<?php
+/**小秘广场二级列表  */
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+class Xmsquare extends HomeBase
+{
+
+    /**
+     *  小秘广场二级文章列表
+    */
+	public function articlelist()
+	{
+		$this->assign('id',$this->userInfo['id']);
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+    
+    //小秘广场视频
+    public function xmvideo()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+    
+    //小秘广场视频
+    public function xmproduct()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+    
+    //新鲜事文章
+    public function newarticle()
+    {
+	 	$this->assign('id',$this->userInfo['id']);
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+      
+}

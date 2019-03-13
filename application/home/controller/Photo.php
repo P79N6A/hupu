@@ -1,0 +1,155 @@
+<?php
+/** 相册管理 */
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+
+class Photo extends HomeBase
+{
+    /**
+     *相册
+     */
+    public function index()
+    {
+    	$this->id=$this->userInfo['id'];
+    	$this->cids=$_GET['cids'];
+        $this->title="相册展示";
+        
+        return json();
+    }
+
+	public function preview()
+	{
+		$this->id=$this->userInfo['id'];
+		$this->sid=Input('get.id',0);
+		$this->mid=Input('get.mid',0);
+		$this->pids=Input('get.pids',0);
+		$this->cids=Input('get.cids',0);
+		
+        return json();
+	}
+
+	public function compile()
+	{
+		$this->pid=Input('get.pid',0);
+		$this->tid=Input('get.tid',0);
+		$this->cids=$_GET['cids'];
+		$this->id=$this->userInfo['id'];
+		
+        return json();
+	}
+
+	public function show()
+	{
+		$this->sid=Input('get.id',0);
+		$this->id=$this->userInfo['id'];
+		$this->type_id=Input('get.type',0);
+		$this->music_id=Input('get.musi',0);
+		$this->cids=$_GET['cids'];
+		
+        return json();
+	}
+
+	public function music()
+	{
+		$this->title="音乐列表";
+		$this->id=$this->userInfo['unionid'];
+		$this->pid=Input('get.pid',0);
+		$this->sid=Input('get.sid',0);
+		
+        return json();
+	}
+
+	public function detail()
+	{
+		$this->tid=Input('get.tid',0);
+		$this->pid=Input('get.pid',0);
+		
+        return json();
+	}
+
+	public function all()
+	{
+		$this->title="此模板所有类型";
+		$this->id=$this->userInfo['unionid'];
+		$this->sid=Input('get.sid',0);
+		$this->mids=Input('get.mids',0);
+		
+        return json();
+	}
+
+	//相册修改页
+	public function album_edit()
+	{
+		$this->title="此模板所有类型";
+		$this->id=$this->userInfo['unionid'];
+		$this->sid=Input('get.sid',0);
+		$this->mids=Input('get.mids',0);
+		
+        return json();
+	}
+
+	//相册分享页面
+	public function share_msg()
+	{
+		$this->title="此模板所有类型";
+		$this->id=$this->userInfo['unionid'];
+		$this->sid=Input('get.sid',0);
+		$this->mids=Input('get.mids',0);
+
+        return json();
+	}
+
+    // 相册排序页面
+    public function photo_sort()
+    {
+		$this->title="此模板所有类型";
+		$this->id=$this->userInfo['unionid'];
+		$this->sid=Input('get.sid',0);
+		$this->mids=Input('get.mids',0);
+		
+        return json();
+	}
+
+	// 新版v网4.0相册首页
+	public function photo_index() 
+	{
+		$this->id=$this->userInfo['id'];
+		return json();
+	}
+
+	//新版v网4.0相册预览
+	public function photo_preview() 
+	{
+		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$this->assign('share_url', $url);
+		
+		$this->preview=Input('get.preview',0);
+		$this->modify=Input('get.modify',0);
+		$this->uid=Input('get.uid',0);
+
+		$this->share=Input('get.share',0);
+
+		$this->id=Input('get.id',0);
+		return json();
+	}
+	
+	//新版v网4.0相册编辑
+	public function photo_edit() 
+	{
+		$this->userid=$this->userInfo['id'];
+		$this->preview=Input('get.preview',0);
+		$this->modify=Input('get.modify',0);
+		$this->uid=Input('get.uid',0);
+		$this->id=Input('get.id',0);
+
+		return json();
+	}
+
+	// 选择音乐
+	public function photo_music() 
+	{
+		return json();
+	}
+
+}

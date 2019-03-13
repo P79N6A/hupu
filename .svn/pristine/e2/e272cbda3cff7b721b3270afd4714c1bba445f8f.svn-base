@@ -1,0 +1,667 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 邱明振
+ * Date: 2017/8/27
+ * Time: 22:25
+ */
+
+namespace Admin\Controller;
+use Common\Controller\AdminBaseController;
+
+/**
+ * 分销管理
+ *
+ * Class Distribute
+ * @package Admin\Controller
+ */
+class DistributeController extends AdminBaseController
+{
+
+
+    /**
+     * 分销列表
+     */
+    public function index() {
+        $data = I('request.');
+        $where = array();
+
+        if($data['level'])
+            $where['v.level'] = $data['level'];
+        if($data['type'])
+            $where['c.type'] = $data['type'];
+        if($data['city_id'])
+            $where['u.city_id'] = $data['city_id'];
+        if($data['province_id'])
+            $where['u.province_id'] = $data['province_id'];
+        if($data['name'])
+            $where['u.nick_name'] = array('like',"%{$data['name']}%");
+        if($data['startDate'])
+            $where['c.add_time'] = array('between',array(strtotime($data['startDate']."00:00:00"),strtotime($data['overDate']."23:59:59")));
+        if($data['vip_id'])
+            $where['u.vip_id'] = $data['vip_id'];
+            $Page       = new \Think\Page( M('capital_log')->alias('c')
+                ->join(' LEFT JOIN __USER_INFO__ u ON c.user_id = u.id')
+            ->join(' LEFT JOIN  __VIP_GROUP__ v ON c.vip_group = v.id')
+            ->where($where)->order('c.id desc')->count(),20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =   $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list = M('capital_log')->alias('c')->join(' LEFT JOIN __USER_INFO__ u ON c.user_id = u.id')
+            ->join(' LEFT JOIN  __VIP_GROUP__ v ON c.vip_group = v.id')
+            ->field('c.*,u.nick_name,u.mobile,v.proportion')
+            ->where($where)->order('c.id desc')->limit($Page->firstRow.','.$Page->listRows)->select();//
+        $total = M('capital_log')->alias('c')->join(' LEFT JOIN __USER_INFO__ u ON c.user_id = u.id')
+            ->join(' LEFT JOIN  __VIP_GROUP__ v ON c.vip_group = v.id')
+            ->field('sum(c.money) as money')
+            ->where($where)->find();//
+//        var_dump($total);exit;
+        $this->assign('_list', $list);
+        $this->assign('total', $total);
+        $listprovince = M('region')->where(array('parent_id'=>0))->select();
+        $this->assign("province_list",$listprovince);
+        $this->assign('page',$show);// 赋值分页输出
+        $this->assign('search',$data);// 赋值分页输出
+        $this->display();
+
+    }
+
+
+    /**
+     *代理商
+     */
+    public function vipIndex(){
+        $data = I('request.');
+        if($data['nick_name'] || $data['phone']){
+            $where = array('u.vip_id'=>array('egt',0));
+        }else{
+            $where = array('u.vip_id'=>array('gt',3));
+        }
+        if($data['city_id'])
+            $where['u.city_id'] = $data['city_id'];
+        if($data['province_id'])
+            $where['u.province_id'] = $data['province_id'];
+        if($data['nick_name'])
+            $where['u.nick_name'] = $data['nick_name'];
+        if($data['phone'])
+            $where['m.phone'] = $data['phone'];
+        if($data['vip_name'])
+            $where['g.id'] = $data['vip_name'];
+        $Page = new \Think\Page(M('user_info')->alias('u')->join(' LEFT JOIN __VIP_GROUP__ g ON u.vip_group_id = g.id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->join(' LEFT JOIN __VIP_LIST__ l ON u.vip_id = l.id')
+            ->join('left join s_user_info i on i.id = u.rec_user_id')
+            ->where($where)->count(),20);
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =  $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list = M('user_info')->alias('u')->join(' LEFT JOIN __VIP_GROUP__ g ON u.vip_group_id = g.id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->join(' LEFT JOIN __VIP_LIST__ l ON u.vip_id = l.id')
+            ->join('left join s_user_info i on i.id = u.rec_user_id')
+            ->where($where)->field('u.*,g.proportion,l.money,g.vip_name,m.phone,i.nick_name as rec_name')->order('id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $this->assign('list',$list);
+        $this->assign('page',$show);// 赋值分页输出
+
+
+
+
+        $listprovince = M('region')->where(array('parent_id'=>0))->select();
+        $vip_list = M('vip_group')->field('id,level,vip_name')->select();
+        //昨天的全部注册人数
+        $y_data_a = M('user_info')->where(array('add_time'=>array('between',array(mktime(18,0,0,date('m'),date('d')-2,date('Y')),mktime(18,0,0,date('m'),date('d')-1,date('Y'))))))->count();
+        //今天的全部注册人数
+        $t_data_a = M('user_info')->where(array('add_time'=>array('between',array(mktime(18,0,0,date('m'),date('d')-1,date('Y')),strtotime(date('Ymd 18:0:0'))))))->count();
+        //昨天的付费人数
+        $y_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(mktime(18,0,0,date('m'),date('d')-2,date('Y')),mktime(18,0,0,date('m'),date('d')-1,date('Y'))))))->count();
+        //今天的付费人数
+        $t_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(mktime(18,0,0,date('m'),date('d')-1,date('Y')),strtotime(date('Ymd 18:0:0'))))))->count();
+        //上上周的全部注册人数
+        $lw_data_a = M('user_info')->where(array('add_time'=>array('between',array(strtotime(date('Ymd 24:0:0',strtotime('-3 week Sunday'))),strtotime(date('Ymd 23:59:59',strtotime('-2 week Sunday')))))))->count();
+        //上周的全部注册人数
+        $w_data_a = M('user_info')->where(array('add_time'=>array('between',array(strtotime(date('Ymd 24:0:0',strtotime('-2 week Sunday'))),strtotime(date('Ymd 23:59:59',strtotime('-1 week Sunday')))))))->count();
+        //上上周的付费用户数
+        $lw_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(strtotime(date('Ymd 24:0:0',strtotime('-3 week Sunday'))),strtotime(date('Ymd 23:59:59',strtotime('-2 week Sunday')))))))->count();
+        //上周的付费人数
+        $w_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(strtotime(date('Ymd 24:0:0',strtotime('-2 week Sunday'))),strtotime(date('Ymd 23:59:59',strtotime('-1 week Sunday')))))))->count();
+        //月初日期
+        $firstday = date("Ym01");
+        //上上月的全部注册人数
+        $lm_data_a = M('user_info')->where(array('add_time'=>array('between',array(strtotime(date("Ymd",strtotime("$firstday -2 month"))),strtotime(date("Ymd",strtotime("$firstday -1 month")))))))->count();
+        //上月的全部注册人数
+        $m_data_a = M('user_info')->where(array('add_time'=>array('between',array(strtotime(date("Y-m-d",strtotime("$firstday -1 month"))),strtotime(date("Ym01"))))))->count();
+        //上上月的付费用户数
+        $lm_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(strtotime(date("Ymd",strtotime("$firstday -2 month"))),strtotime(date("Ymd",strtotime("$firstday -1 month")))))))->count();
+        //上月的付费人数
+        $m_data = M('user_info')->where(array('vip_id'=>array('neq',0),'add_time'=>array('between',array(strtotime(date("Ymd",strtotime("$firstday -1 month"))),strtotime(date("Ym01"))))))->count();
+
+        $this->assign("province_list",$listprovince);
+        $this->assign("vip_list",$vip_list);
+        $this->assign('search',$data);// 赋值分页输出
+        $this->assign('pay_data',round((($t_data-$y_data)/$y_data)*100,2));// 今日/昨日付费百分比
+        $this->assign('all_data',round((($t_data_a-$y_data_a)/$y_data_a)*100,2));// 今日/昨日全部百分比
+        $this->assign('w_all_data',round((($w_data_a-$lw_data_a)/$lw_data_a)*100,2));// 上周/上上周全部百分比
+        $this->assign('w_pay_data',round((($w_data-$lw_data)/$lw_data)*100,2));// 上周/上上周付费百分比
+        $this->assign('m_all_data',round((($m_data_a-$lm_data_a)/$lm_data_a)*100,2));// 今日/昨日全部百分比
+        $this->assign('m_pay_data',round((($m_data-$lm_data)/$lm_data)*100,2));// 今日/昨日全部百分比
+        $this->display();
+    }
+
+
+    public function userList(){
+        $phone=I("get.mobile");
+        if($phone){
+            $where['vip_id'] = array('gt',0);
+            $where['_string']='phone LIKE "%'.$phone.'%" or nick_name LIKE "%'.$phone.'%"';
+            $list=D("Api/UserView")->where($where)->select();
+        }
+        $this->assign("_list",$list);
+        $this->display();
+    }
+    public function vipTypeIndex(){
+        //vip会员类型
+        $list=M("vipList")->select();
+        foreach ($list as $key => $value) {
+            $list[$key]['vip_name']=M("VipGroup")->where(['id'=>$value['vip_group_id']])->getField('vip_name');
+        }
+        $this->assign('list',$list);
+        $this->display();
+    }
+    public function addVipType(){
+        //添加vip会员类型
+        if(IS_POST){
+            $post=I("post.");
+            if($post['id']){
+                if(!isset($post['status'])) {
+                    $post['status'] = 2;
+                }
+                //编辑
+                $is=M("vipList")->where(['id'=>$post['id']])->save($post);
+            }else{
+                $post['add_time']=time();
+                $is=M("vipList")->add($post);
+            }
+            if($is){
+                $this->success("操作成功");
+
+            }else{
+                $this->error("操作失败");
+            }
+            exit;
+        }else{
+            $id=I("get.id");
+            $data=M("vipList")->where(['id'=>$id])->find();
+            $vip_group=M("VipGroup")->select();
+
+
+            $this->assign('vip_group',$vip_group);
+            $this->assign('res',$data);
+        }
+
+        $this->display();
+    }
+    public function delVipType(){
+        //删除vip会员类型
+        $id=I("get.id");
+        $is=M("vipList")->where(['id'=>$id])->delete();
+        if($is){
+            $this->success("删除成功");
+
+        }else{
+            $this->error("删除失败");
+        }
+        exit;
+        $this->display();
+    }
+    public function dailiIndex(){
+        $list=M("vipGroup")->select();
+        $this->assign('list',$list);
+        $this->display();
+    }
+    public function addDaili(){
+        //添加代理类型
+        if(IS_POST){
+            $post=I("post.");
+            if($post['id']){
+                //编辑
+                $is=M("vipGroup")->where(['id'=>$post['id']])->save($post);
+            }else{
+                $post['add_time']=time();
+                $is=M("vipGroup")->add($post);
+            }
+            if($is){
+                $this->success("操作成功");
+
+            }else{
+                $this->error("操作失败");
+            }
+            exit;
+        }else{
+            $id=I("get.id");
+            $data=M("vipGroup")->where(['id'=>$id])->find();
+            $this->assign('res',$data);
+        }
+
+        $this->display();
+    }
+    public function delDaili(){
+        //删除代理类型
+        $id=I("get.id");
+        $is=M("vipGroup")->where(['id'=>$id])->delete();
+        if($is){
+            $this->success("删除成功");
+
+        }else{
+            $this->error("删除失败");
+        }
+        exit;
+    }
+    /**
+     *
+     */
+    public function addVip(){
+        if(IS_POST){
+            if(I('post.vid')>0){
+                //判断身份
+                $user_id = I('post.user_id');
+                $res_ = M('user_info')->where(array('id'=>$user_id))->getField('vip_id');
+                $this->ajaxReturn(array('code'=>1,'msg'=>$res_));
+                exit;
+            }
+            if(I('post.name_id')>0){
+                //判断名额
+                $vip_id = I('post.vipId');
+                $name_id = I('post.name_id');
+                $res_ = M('user_info')->where(array('id'=>$name_id))->getField('give_vip'.($vip_id-1).'_count');
+                $this->ajaxReturn(array('code'=>1,'msg'=>$res_));
+                exit;
+            }
+            $postData = I('post.');
+            $user=M("UserInfo")->where(array('id'=>$postData['user_id']))->find();
+            $user_id=$user['id'];
+            $vip_id = I('post.vipId');
+//            $vipList = M('vip_list')->where(array('id'=>$vip_id))->find();
+//            $vipGroup=M('vip_group')->where(array('id'=>$vipList['vip_group_id']))->find();
+            $vip = M('vip_list')->alias('v')
+                ->join('left join s_vip_group vg on vg.id = v.vip_group_id')
+                ->field('v.money,v.vip_group_id,vg.give_vip1_count,vg.give_vip2_count,vg.give_vip3_count,vg.give_vip4_count,vg.give_vip5_count,vg.vip_name')
+                ->where(array('v.id'=>$vip_id))
+                ->find();
+
+            // 添加订单
+            $order['order_no']=getOrderSn();
+            $order['user_id']=$postData['user_id'];
+            $order['vip_list_id']=$vip_id;
+            $order['price']=$vip['money'];
+            $order['pay_status']=1;
+            $order['add_time']=time();
+            $order_id=M('vip_order')->add($order);
+
+            $userData['give_vip1_count']=$vip['give_vip1_count'];
+            $userData['give_vip2_count']=$vip['give_vip2_count'];
+            $userData['give_vip3_count']=$vip['give_vip3_count'];
+            $userData['give_vip4_count']=$vip['give_vip4_count'];
+            $userData['give_vip5_count']=$vip['give_vip5_count'];
+            $userData['vip_id']=$vip_id;
+            $userData['places_id']=$postData['name_num'];
+            $userData['vip_group_id']=$vip['vip_group_id'];
+            $userData['vip_orver_time']=strtotime('+1 year');//1年过期
+            M('user_info')->where(array('id'=>$user_id))->save($userData);
+            $data['order_sn']=$order['order_no'];//微信订单号
+            $data['user_id']=$user_id;
+            $data['object_id']=$vip_id;
+            $data['as']=2;//减少
+            $data['money']=$vip['money'];
+            $data['msg']="会员购买";
+            $data['type']=3;
+            $data['add_time']=time();
+            M('capital_log')->add($data);
+            M('user_info')->where(array('id'=>$postData['name_num']))->setDec('give_vip'.($postData['vipId']-1).'_count');
+            if ($userData['vip_group_id'] > 2) {//成为创投以上角色，分销断开，从我开始
+                //todo 获取我下面的粉丝,我是B，A->B->C->D,改变B对CD参与分销，取消A对CD的分销
+                $model = M('users_fans');
+                $fan = $model->where(array('object_id' => $user_id, 'is_distribute' => 1))->find();
+                if ($fan) {
+//                    $fan['is_distribute'] = 0;//参与我分销的上级A，取消其分销权限（因为userid提升为创投后，依然对userid具有管理分佣的提取权限
+//                    $model->save($fan);
+                    $myFans = $model->where(array('user_id' => $user_id, 'is_distribute' => 0))->select();//CD粉丝，改为B能参与分销
+                    if (count($myFans)) {
+                        foreach ($myFans as $myFan) {
+                            $myFan['is_distribute'] = 1;
+                            $model->save($myFan);
+                            $fans = $model->where(array('user_id' => $fan['user_id'], 'object_id' => $myFan['object_id'], 'is_distribute' => 1))->select();//取消A对CD粉丝的分销权限
+                            if ($fans) {
+                                foreach ($fans as $f) {
+                                    $f['is_distribute'] = 0;
+                                    $model->save($f);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+//提升会员等级不涉及到线上计算
+//            $FansLogic=D('Api/UsersFans','Logic');
+//            $FansLogic->nexus(array(
+//                'user_id'=>$user_id,
+//                'vip_id'=>$vip_id,
+//                'level'=>$vipGroup['level'],
+//                'money'=>$data['money'],
+//                'order_sn'=>$data['order_sn'],
+//                'vip_name'=>$vipGroup['vip_name']
+//            ));//分佣计算
+            //添加日志
+            $this->admin_log(1,$user_id,'vip等级升级为'.$vip['vip_name']);
+            $this->setMsg('13816701660',$user['nick_name'],$vip['vip_name']);
+            $this->setMsg('15221211323',$user['nick_name'],$vip['vip_name']);
+            $this->success('添加成功',U('Admin/Distribute/vipIndex'));
+            exit;
+        }
+        if($_GET['id']){
+            $res = M('vip_group')->where(array('id'=>$_GET['id']))->find();
+            $this->assign('res',$res);
+        }
+        // 获取用户列表
+//        $userList = M('user_info')->select();
+//        $this->assign('userList',$userList);
+        $vipList = M('vip_list')->alias('v')->join(' LEFT JOIN __VIP_GROUP__ g ON v.vip_group_id = g.id')->field('v.id,v.money,g.vip_name')->where(array('v.id'=>array('gt',3)))->select();
+//        var_dump($vipList);exit;
+        $this->assign('vipList',$vipList);
+        $this->display();
+    }
+
+    public function setVip(){
+        if(IS_POST){
+            $userData['give_vip1_count']=$_POST['give_vip1_count'];
+            $userData['give_vip2_count']=$_POST['give_vip2_count'];
+            $userData['give_vip3_count']=$_POST['give_vip3_count'];
+            $userData['give_vip4_count']=$_POST['give_vip4_count'];
+            $userData['give_vip5_count']=$_POST['give_vip5_count'];
+
+            M('user_info')->where(array('id'=>$_POST['id']))->save($userData);
+            $this->success('修改成功');
+        }
+        $id = I('get.id');
+        $userInfo = M('user_info')->where(array('id'=>$id))->find();
+        $this->assign('res',$userInfo);
+        $this->display();
+    }
+
+    /**
+     * 删除案例
+     */
+    public function delVip() {
+
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+
+        if ( M('vip_group')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+
+    }
+
+    /**
+     * 导出Excel
+     */
+    public function excel(){
+        set_time_limit(0);
+
+        $data = I('post.');
+        $where = array();
+
+        if($data['level'])
+            $where['v.level'] = $data['level'];
+        if($data['type'])
+            $where['c.type'] = $data['type'];
+        if($data['city_id'])
+            $where['u.city_id'] = $data['city_id'];
+        if($data['province_id'])
+            $where['u.province_id'] = $data['province_id'];
+        if($data['name'])
+            $where['u.nick_name'] = array('like',"%{$data['name']}%");
+        if($data['startDate'])
+            $where['c.add_time'] = array('between',array(strtotime($data['startDate']."00:00:00"),strtotime($data['overDate']."23:59:59")));
+        if($data['vip_id'])
+            $where['u.vip_id'] = $data['vip_id'];
+
+        $Page       = new \Think\Page( M('capital_log')->alias('c')->join(' LEFT JOIN __USER_INFO__ u ON c.user_id = u.id')
+            ->join(' LEFT JOIN  __VIP_GROUP__ v ON c.vip_group = v.id')
+            ->where($where)->count(),20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $list = M('capital_log')->alias('c')->join(' LEFT JOIN __USER_INFO__ u ON c.user_id = u.id')
+            ->join(' LEFT JOIN  __VIP_GROUP__ v ON c.vip_group = v.id')
+            ->field('c.*,u.nick_name,u.mobile,v.proportion')
+            ->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();//
+        $data = array();
+        $headArr[]='账户';
+        $headArr[]='手机';
+        $headArr[]='金额';
+        $headArr[]='状态';
+        $headArr[]='类型';
+        $headArr[]='说明';
+        $headArr[]='返点';
+        $headArr[]='返额';
+        $data[] = $headArr;
+        foreach ($list as $k=>$v){
+            $tmp = array();
+            $tmp['nick_name'] = $v['nick_name'];
+            $tmp['mobile'] = $v['mobile'];
+            $tmp['money'] = $v['money'];
+            $tmp['status'] = $tmp['status'] == 1 ? '正常' : '异常';
+            if ($v['type'] == 1) {
+                $tmp['type'] = '推荐红包';
+            }
+            if ($v['type'] == 2) {
+                $tmp['type'] = '打赏红包';
+            }
+            if ($v['type'] == 3) {
+                $tmp['type'] = '购买会员';
+            }
+            if ($v['type'] == 4) {
+                $tmp['type'] = '视频打赏';
+            }
+            if ($v['type'] == 5) {
+                $tmp['type'] = '会员续费';
+            }
+            $tmp['msg'] = $v['msg'];
+            $tmp['proportion'] = $v['proportion'];
+            $tmp['proportion1'] = $v['money']*$v['proportion'];
+            $data[] = $tmp;
+        }
+
+        $filename="分销列表";
+        create_xls($data, $filename);
+    }
+
+    /**
+     * 数据统计
+     *
+     */
+    public function dataStat(){
+        $data = I('request.');
+        $where['vip_id'] = array('gt',0);
+        $where['uf.level'] = 1;
+        if($data['vip_id'])
+            $where['u.vip_id'] = $data['vip_id'];
+        if($data['city_id'])
+            $where['u.city_id'] = $data['city_id'];
+        if($data['province_id'])
+            $where['u.province_id'] = $data['province_id'];
+        if($data['name'])
+            $where['u.nick_name|m.phone'] = $data['name'];
+        if($data['startDate'])
+            $where['uf.add_time'] = array('between',array(strtotime($data['startDate']."00:00:00"),strtotime($data['overDate']."23:59:59")));
+        $Page       = new \Think\Page(count(M('user_info')->alias('u')
+            ->join(' LEFT JOIN s_users_fans uf ON uf.user_id = u.id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->join('left join s_vip_group v on v.id = u.vip_group_id')
+            ->field('u.id')
+            ->where($where)->group('u.id')->select()),20);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        //分页跳转的时候保证查询条件
+        foreach($data as $key=>$val) {
+            $Page->parameter[$key]   =   $val;
+        }
+        $show       = $Page->show();// 分页显示输出
+        $list = M('user_info')->alias('u')
+            ->join('LEFT JOIN s_users_fans uf ON uf.user_id = u.id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->join('left join s_vip_group v on v.id = u.vip_group_id')
+            ->field('u.id,v.vip_name,u.nick_name,u.give_vip1_count,u.give_vip3_count,u.give_vip4_count,u.give_vip5_count,m.phone,count(*) as fans_num')
+            ->where($where)
+            ->group('u.id')
+            ->order('fans_num desc')
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
+
+//        var_dump($data);die;
+        $this->province_list = M('region')->where(array('parent_id'=>0))->select();
+        $this->vip_group = M('vip_group')->select();
+        $this->_list = $list;
+        $this->_page = $show;
+        $this->search = $data;
+        $this->display();
+    }
+    /**
+     * 导出统计数据Excel
+     */
+    public function datastat_excel(){
+        set_time_limit(0);
+
+        $data = I('post.');
+        $where['vip_id'] = array('gt',0);
+        $where['uf.level'] = 1;
+        if($data['vip_id'])
+            $where['u.vip_id'] = $data['vip_id'];
+        if($data['city_id'])
+            $where['u.city_id'] = $data['city_id'];
+        if($data['province_id'])
+            $where['u.province_id'] = $data['province_id'];
+        if($data['name'])
+            $where['u.nick_name|m.phone'] = $data['name'];
+        if($data['startDate'])
+            $where['uf.add_time'] = array('between',array(strtotime($data['startDate']."00:00:00"),strtotime($data['overDate']."23:59:59")));
+
+        //分页跳转的时候保证查询条件
+        $list = M('user_info')->alias('u')
+            ->join('LEFT JOIN s_users_fans uf ON uf.user_id = u.id')
+            ->join('left join s_member m on m.id = u.member_id')
+            ->join('left join s_vip_group v on v.id = u.vip_group_id')
+            ->field('u.id,v.vip_name,u.nick_name,u.give_vip1_count,u.give_vip3_count,u.give_vip4_count,u.give_vip5_count,m.phone,count(*) as fans_num')
+            ->where($where)
+            ->group('u.id')
+            ->order('fans_num desc')
+            ->limit(20)
+            ->select();
+        $datas = array();
+        $headArr[]='用户名';
+        $headArr[]='手机';
+        $headArr[]='身份';
+        $headArr[]='剩余创客名额';
+        $headArr[]='剩余创投名额';
+        $headArr[]='剩余创业家名额';
+        $headArr[]='剩余创导名额';
+        $headArr[]='直接粉丝数';
+
+        $datas[] = $headArr;
+        foreach ($list as $k=>$v){
+            $tmp = array();
+            $tmp['nick_name'] = $v['nick_name'];
+            $tmp['phone'] = $v['phone'];
+            $tmp['vip_name'] = $v['vip_name'];
+            $tmp['give_vip1_count'] = $v['give_vip1_count'];
+            $tmp['give_vip3_count'] = $v['give_vip3_count'];
+            $tmp['give_vip4_count'] = $v['give_vip4_count'];
+            $tmp['give_vip5_count'] = $v['give_vip5_count'];
+            $tmp['fans_num'] = $v['fans_num'];
+            $datas[] = $tmp;
+
+        }
+        $filename="用户数据统计";
+        create_xls($datas, $filename);
+    }
+    /**
+     * 导出本月付费创客（上月20#----本月19#）
+     */
+    //导出数据方法
+    public function export()
+    {
+        set_time_limit(0);
+        ini_set('memory_limit','1024M');
+        $vipgroup = I('post.vip_name', '', 'trim');
+        $start_at = strtotime(date('Ym20',strtotime(" -1 month")));
+        $end_at =strtotime(date('Ym20'));
+        if($vipgroup == 1){
+            $name = '创客';
+        }elseif($vipgroup == 3){
+            $name = '创投';
+        }elseif($vipgroup == 4){
+            $name = '创业家';
+        }elseif($vipgroup == 5){
+            $name = '创导';
+        }elseif ($vipgroup == 6){
+            $name = '创业领袖';
+        }
+        $name .= '('.date('Ym20',strtotime(" -1 month")).'---'.date('Ym19').'）';
+        $map = [];
+        if(!$vipgroup){
+            $this->error('请选择等级');exit;
+        }
+        $map['u.vip_group_id'] = $vipgroup;
+//        $map['u.vip_group_id'] = array('between', array(3,6));
+        if ( $start_at && $end_at){$map['u.add_time'] = array('between', array($start_at,$end_at));}
+        $fields = ['u.*','vg.vip_name','ui.nick_name as rec_name,mem.phone'];
+        $userMod = M('user_info')->alias('u')->
+        join('left join s_vip_group vg ON vg.id = u.vip_group_id')->
+        join('left join s_vip_list vl ON vl.id = u.vip_id')->
+        join('left join s_user_info ui ON ui.id = u.rec_user_id')->
+        join('left join s_member mem ON u.member_id = mem.id')->
+        field($fields)->
+        where($map)->
+        order('u.id desc')->
+        select();
+
+        $data = array();
+        $headArr=array('ID','用户名','注册手机号','提现处理中','已提现','余额','注册时间','推荐人','成为vip时间','vip等级');
+        $data[] = $headArr;
+        foreach ($userMod as $k=>$goods_info){
+            $k++;
+            $data[$k]['id'] = $goods_info['id'];
+            $data[$k]['用户名'] = $goods_info['nick_name'];
+            $data[$k]['注册手机号'] = $goods_info['phone'];
+            $data[$k]['提现处理中'] = $goods_info['frozen_money'];
+            $data[$k]['已提现'] = $goods_info['already_money'];
+            $data[$k]['余额'] = $goods_info['money'];
+            $data[$k]['注册时间'] = date('Y-m-d H:i:s',$goods_info['add_time']);
+            $data[$k]['推荐人'] = $goods_info['rec_name'];
+            $data[$k]['成为vip时间'] = date('Y-m-d H:i:s',strtotime(date('Y-m-d H:i:s',$goods_info['vip_orver_time']).'-1 year'));
+            $data[$k]['vip等级'] = $goods_info['vip_name'];
+
+        }
+        $filename=$name;
+        create_xls($data, $filename);
+    }
+    /**
+     * 发送短信
+     * @param $phone
+     * @param $code
+     * @return array
+     */
+    private function setMsg($phone,$user_name,$vip_name){
+
+        $content=$user_name.",vip等级升级为".$vip_name.",时间：".date('Y-m-d H:i:s').",退订回复TD";//要发送的短信内容
+
+        $url = 'http://intapi.253.com/send/json';
+        $post_data['account']       = 'I4612514';
+        $post_data['password']      = 'b8fW1R4HZkd53e';
+        $post_data['msg'] = '【洋小秘】'.$content;
+        $post_data['mobile']    = '86'.$phone;
+        $res = $this->request_post($url, $post_data,true);
+        if($res['code'] == 0){
+            M('new_msg')->add(array('msgid'=>$res['msgid'],'mobile'=>$post_data['mobile'],'code'=>$content,'addtime'=>time()));
+        }
+
+    }
+}

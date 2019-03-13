@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <title>联系我们</title>
+    <style>
+        .first {
+            width: 99%;
+            height: 1.03rem;
+            margin: .09rem 0;
+            margin: .09rem 0;
+            border-radius: .08rem;
+            z-index: 9;
+            position: relative;
+            box-shadow: 0px 3px 7px 0px rgba(188, 188, 188, 0.31);
+        }
+
+        .delimg {
+            width: .71rem;
+            height: .71rem;
+            background-size: 100% 100%;
+            border-radius: 50%;
+            position: absolute;
+            top: .15rem;
+            left: .12rem;
+            background: paleturquoise;
+        }
+
+        .delimg img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .name {
+            width: .74rem;
+            height: .22rem;
+            left: .97rem;
+            top: .26rem;
+            /* background:plum; */
+            position: absolute;
+            font-size: 16px;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: #2b2b2b;
+            line-height: .22rem;
+            text-align: left;
+        }
+
+        .namelast {
+            width: 1.72rem;
+            top: .5rem;
+            left: .97rem;
+            /* background:yellow; */
+            position: absolute;
+            font-size: 14px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #707070;
+            line-height: 20px;
+        }
+
+        .phone {
+            width: .24rem;
+            height: .24rem;
+            top: .17rem;
+            right: .26rem;
+            position: absolute;
+            /* background:paleturquoise; */
+        }
+
+        .phone img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        /* .phone a{
+            width: .24rem;
+            height: .24rem;
+            top: .17rem;
+            right: .26rem;
+            position: absolute;
+            background:pink;
+        } */
+        .cont {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .cont img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .conta {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .conta img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .contb {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .contb img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .contc {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .contc img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .contd {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .contd img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .conte {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .conte img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .contf {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .contf img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .contg {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .contg img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+        .conth {
+            width: .21rem;
+            height: .21rem;
+            right: .26rem;
+            bottom: .16rem;
+            position: absolute;
+            z-index: 20;
+            text-align: left;
+        }
+
+        .conth img {
+            width: 100%;
+            height: 100%;
+            background-size: 100% 100%;
+            position: absolute;
+        }
+
+
+        .zhez {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zheza {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezb {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezc {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezd {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zheze {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezf {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezg {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+        .zhezh {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            z-index: 99;
+            display: none;
+        }
+
+
+        .erwm {
+            width: 2.76rem;
+            height: 3.59rem;
+            top: 15%;
+            left: 14%;
+            border-radius: .1rem;
+            position: absolute;
+            background: #fff;
+        }
+
+        .erwm b {
+            width: 1.07rem;
+            height: .21rem;
+            font-size: .15rem;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: .21rem;
+            position: absolute;
+            top: .44rem;
+            left: .84rem;
+        }
+
+        .erwm span {
+            width: 1.10rem;
+            height: .17rem;
+            font-size: .12rem;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #5F5F5F;
+            line-height: .17rem;
+            position: absolute;
+            left: .83rem;
+            bottom: .92rem;
+        }
+
+        .pictp {
+            width: 1.58rem;
+            height: 1.58rem;
+            /* background: purple; */
+            position: absolute;
+            left: .59rem;
+            top: .84rem;
+        }
+
+        .pictp img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+
+        .closer {
+            width: .16rem;
+            height: .16rem;
+            top: 4.8rem;
+            right: 1.8rem;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 100;
+            display: none;
+        }
+
+        .closer img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-size: 100% 100%;
+        }
+
+        .phone a {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <!--<div class="first">-->
+            <!--<div class="delimg">-->
+                <!--<img src="Public/Home/images/kflx/WX20181016-173044.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="name">-->
+                <!--客服-涵涵-->
+            <!--</div>-->
+            <!--<div class="namelast">-->
+                <!--客户接待、投诉问题处理-->
+            <!--</div>-->
+
+            <!--<div class="phone">-->
+                <!--<a href="tel:15295011557">-->
+                    <!--<img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="cont">-->
+                <!--<img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="first">-->
+            <!--<div class="delimg">-->
+                <!--<img src="Public/Home/images/kflx/WX20181016-173017.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="name">-->
+                <!--客服-贝贝-->
+            <!--</div>-->
+            <!--<div class="namelast">-->
+                <!--客户接待、投诉问题处理-->
+            <!--</div>-->
+            <!--<div class="phone">-->
+                <!--<a href="tel:13621961504">-->
+                    <!--<img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="conta">-->
+                <!--<img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/3dc7c9b18462fa6f4f06592a422c7e5d_1.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小念
+            </div>
+            <div class="namelast">
+                开通蓝牙、技术问题、提现问题、后台审核
+            </div>
+            <div class="phone">
+                <a href="tel:15601828910">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="contb">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/292144537102813178.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小龙
+            </div>
+            <div class="namelast">
+                开通蓝牙、技术问题、提现问题、后台审核
+            </div>
+            <div class="phone">
+                <a href="tel:18101815002">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="contc">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/753429019044528588.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小洋
+            </div>
+            <div class="namelast">
+                开通蓝牙、技术问题、提现问题、后台审核
+            </div>
+            <div class="phone">
+                <a href="tel:13764923945">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="contd">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/51563038253821915.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小朋
+            </div>
+            <div class="namelast">
+                接听电话、电访拉群、v网教学、合同寄发
+            </div>
+            <div class="phone">
+                <a href="tel:17312892608">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="conte">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <!-- <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/54703456854052240.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小萌
+            </div>
+            <div class="namelast">
+                接通电话、技术问题、接待客户
+            </div>
+            <div class="phone">
+                <a href="tel:15197637000">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="contf">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div> -->
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/WX20181016-172945.png" alt="">
+            </div>
+            <div class="name">
+                客服-小浩
+            </div>
+            <div class="namelast">
+                接听电话、电访拉群、v网教学、合同寄发
+            </div>
+            <div class="phone">
+                <a href="tel:13655945702">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="contg">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <div class="first">
+            <div class="delimg">
+                <img src="Public/Home/images/kflx/57971320522895370.jpg" alt="">
+            </div>
+            <div class="name">
+                客服-小天
+            </div>
+            <div class="namelast">
+                奖品寄发、对外宣传资料管理、代理商资料补齐跟进
+            </div>
+            <div class="phone">
+                <a href="tel:13028513206">
+                    <img src="Public/Home/images/vwzz/icon_phone@2x.png" alt="">
+                </a>
+            </div>
+            <div class="conth">
+                <img src="Public/Home/images/vwzz/icon_message@2x.png" alt="">
+            </div>
+        </div>
+        <div class="zhez">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/494893621829355687.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zheza">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/506078714406307307.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezb">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/353961683096783738.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezc">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/251849441510174267.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezd">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/472953667702181767.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zheze">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/WX20181016-173120.png" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezf">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/WX20181016-172857.png" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezg">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/449192934617107085.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+        <div class="zhezh">
+            <div class="erwm">
+
+                <b>个人信息二维码</b>
+                <div class="pictp">
+                    <img src="Public/Home/images/kflx/222729051030007110.jpg" alt="">
+                </div>
+                <span>扫一扫，加好友咨询</span>
+            </div>
+            <div class="closer">
+                <img src="Public/Home/images/vwzz/closer.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.first').on('click', '.cont', function () {
+            $('.zhez').show();
+        })
+        $('.first').on('click', '.conta', function () {
+            $('.zheza').show();
+        })
+        $('.first').on('click', '.contb', function () {
+            $('.zhezb').show();
+        })
+        $('.first').on('click', '.contc', function () {
+            $('.zhezc').show();
+        })
+        $('.first').on('click', '.contd', function () {
+            $('.zhezd').show();
+        })
+        $('.first').on('click', '.conte', function () {
+            $('.zheze').show();
+        })
+        $('.first').on('click', '.contf', function () {
+            $('.zhezf').show();
+        })
+        $('.first').on('click', '.contg', function () {
+            $('.zhezg').show();
+        })
+        $('.first').on('click', '.conth', function () {
+            $('.zhezh').show();
+        })
+        // 
+        $('.content').on('click', '.zhez', function () {
+            $('.zhez').hide();
+        })
+        $('.content').on('click', '.zheza', function () {
+            $('.zheza').hide();
+        })
+        $('.content').on('click', '.zhezb', function () {
+            $('.zhezb').hide();
+        })
+        $('.content').on('click', '.zhezc', function () {
+            $('.zhezc').hide();
+        })
+        $('.content').on('click', '.zhezd', function () {
+            $('.zhezd').hide();
+        })
+        $('.content').on('click', '.zheze', function () {
+            $('.zheze').hide();
+        })
+        $('.content').on('click', '.zhezf', function () {
+            $('.zhezf').hide();
+        })
+        $('.content').on('click', '.zhezg', function () {
+            $('.zhezg').hide();
+        })
+        $('.content').on('click', '.zhezh', function () {
+            $('.zhezh').hide();
+        })
+
+    </script>
+
+</body>
+
+</html>

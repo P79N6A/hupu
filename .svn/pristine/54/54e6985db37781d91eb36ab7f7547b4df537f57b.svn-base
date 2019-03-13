@@ -1,0 +1,83 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.zzc_jieri_imgheader {
+			width: 100%;
+			height: 170px;
+			overflow: hidden;
+			border-bottom: 1px solid #CCCCCC;
+		}
+		
+		.zzc_jieri_imgheader_title {
+			padding: 10px 5%;
+			border-bottom: 1px solid #EEEEEE;
+		}
+		
+		.zzc_jieri_imgheader_title span {
+			color: #333;
+			border-radius: 50%;
+		}
+		
+		.zzc_jieri_imgheader_li img {
+			border-radius: 10px;
+		}
+		
+		.zzc_heka_imgdiv {
+			width: 100%;
+			overflow: hidden;
+			position: relative;
+			background: #FFFFFF;
+			border: none;
+		}
+		
+		.zzc_heka_title {
+			width: 90%;
+			margin: 0px auto;
+			padding: 10px 0px;
+			border-bottom: 1px solid #CCCCCC;
+		}
+		
+		.zzc_heka_liimg img {
+			border-radius: 10px;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+		<div class="mui-content ">
+			<div class="zzc_jieri_imgheader_title">
+				{$type} <span class="mui-icon mui-icon-arrowright zzc_right"></span>
+			</div>
+			<div class="zzc_heka_imgdiv">
+
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<div class="mui-slider-item">
+							<ul class="mui-table-view mui-grid-view zzc_heka_liimg">
+								<volist name="data" id="vo">
+									<li class="mui-table-view-cell mui-media mui-col-xs-4">
+										<a href="{:url('Home/Greeting/createCard?id='.$vo['id'])}">
+											<img class="mui-media-object" src="{$vo.pic}"></a>
+									</li>
+								</volist>
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

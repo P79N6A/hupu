@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="/Public/Home/js/whjs/js/newrem.js"></script>
+    <link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+    <script src="/Public/Home/js/whjs/js/highcharts.js"></script>
+    <title>访客统计</title>
+    <style>
+        .highcharts-credits {
+            display: none;
+        }
+
+        .header {
+            width: 100%;
+            height: 1.18rem;
+            background: linear-gradient(135deg, rgba(97, 233, 206, 1) 0%, rgba(50, 206, 160, 1) 100%);
+            position: relative;
+            margin-bottom: .86rem;
+        }
+
+        .header .data_box {
+            width: 3.12rem;
+            height: 1.5rem;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.56rem;
+            margin-bottom: -0.75rem;
+            z-index: 10;
+            border-radius: 4px;
+        }
+
+        .data_box .user_box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            box-shadow: 0px 2px 11px 0px rgba(181, 181, 181, 0.5);
+            border-radius: 4px;
+        }
+
+        .user_box .user_img {
+            width: .64rem;
+            height: .64rem;
+            position: absolute;
+            left: 50%;
+            margin-left: -.32rem;
+            top: 0;
+            margin-top: -.32rem;
+            border-radius: 50%;
+        }
+
+        .user_box .Month {
+            padding-top: .38rem;
+        }
+
+        .Month p:nth-child(1) {
+            color: #32CEA0;
+            font-size: .18rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .Month p:nth-child(2) {
+            color: #777777;
+            font-size: .12rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .total_browsing {
+            width: 100%;
+            display: flex;
+            padding-top: .1rem;
+        }
+
+        .total_browsing a {
+            display: block;
+            width: 33.33%;
+            height: 100%;
+
+        }
+
+        .total_browsing .item {
+            width: 100%;
+            height: 100%;
+        }
+
+        .total_browsing .item p:nth-child(1) {
+            font-size: .18rem;
+            width: 100%;
+            color: #32CEA0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .total_browsing .item p:nth-child(2) {
+            font-size: .12rem;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #777777;
+        }
+
+        .mian {
+            width: 100%;
+            margin-top: .75rem;
+        }
+
+
+        .param {
+            width: 100%;
+            height: .26rem;
+            position: relative;
+        }
+
+        .param .box {
+            width: 2rem;
+            height: 100%;
+            position: absolute;
+            right: 0;
+        }
+
+        .param .box p {
+            width: 40%;
+            height: 100%;
+            line-height: 0.26rem;
+            text-align: center;
+            color: #777777;
+            font-size: .13rem;
+        }
+
+        .param .box button {
+            width: 27%;
+            height: 100%;
+            font-size: .12rem;
+            border: 0;
+            margin-right: 1%;
+            background: #fff;
+            border: 1px solid #32CEA0;
+            color: #32CEA0;
+            outline: none;
+
+        }
+
+        .active {
+            background: #32CEA0 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="data_box">
+            <div class="user_box">
+                <img class="user_img" src="{$headimg}" alt="">
+                <div class="Month">
+                    <p>0</p>
+                    <p>总浏览量</p>
+                </div>
+                <div class="total_browsing">
+                    <a href="/index.php?s=/Home/Visit/data_detail&date=0">
+                        <div class="item today">
+                            <p>0</p>
+                            <p>今日浏览量</p>
+                        </div>
+                    </a>
+                    <a href="/index.php?s=/Home/Visit/data_detail&date=1">
+                        <div class="item yesterday">
+                            <p>0</p>
+                            <p>昨日浏览量</p>
+                        </div>
+                    </a>
+                    <a href="/index.php?s=/Home/Visit/data_detail&date=2">
+                        <div class="item week">
+                            <p>0</p>
+                            <p>本周浏览量</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="top_line">
+        <div class="param">
+            <div class="box clearfix switch_date">
+                <p class="fl date"></p>
+                <button class="fl" data-next="-1">前一天</button>
+                <button class="fl" data-next="1">后一天</button>
+            </div>
+        </div>
+        <div id="container" style="min-width:320px;height:200px;"></div>
+    </div>
+    <div id="piecontainer" style="min-width:320px;height:200px;"></div>
+    <div id="barcontainer" style="min-width:320px;height:200px;"></div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var unionid = '{$unionid}';
+
+        var options_spline = {
+            chart: {
+                type: 'spline',
+                marginBottom: 60,
+            },
+            title: {
+                text: '当天浏览统计图',
+                verticalAlign: 'bottom',
+                style: {
+                    'fontSize': '13px'
+                }
+            },
+            xAxis: {
+                tickWidth: 0,
+                categories: [], //['00:00', '03:00', '90:00', '12:00', '15:00', '18:00', '21:00'],
+                lineColor: '#32CEA0',
+                title: {
+                    text: '时间',
+                    align: 'high',
+                    style: {
+                        color: '#32CEA0',
+                        fontSize: '14px'
+                    }
+
+                }
+            },
+            yAxis: {
+                lineColor: '#32CEA0',
+                lineWidth: 1,
+                minorTickInterval: 'auto',
+                title: {
+                    text: '频次',
+                    style: {
+                        color: '#32CEA0',
+                    }
+                },
+                gridLineColor: '#cfe3ff',
+            },
+
+            colors: ['#32CEA0', '#7cb5ec', '#ED561B'], //绘制的线条颜色
+
+            series: [
+                // {
+                //     name: '总查看次数',
+                //     data: [1, 3, 10, 5, 4, 3, 4]
+                // }
+            ],
+
+            legend: {
+                enabled: false,
+            },
+
+        }
+        var chart_spline; //曲线图初始化函数
+
+        var options_pie = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                marginBottom: 30
+                // spacing : [100, 0 , 40, 0],
+            },
+            title: {
+                text: '本周浏览统计图',
+                verticalAlign: 'bottom',
+                align: 'center',
+                x: 60,
+                style: {
+                    'fontSize': '13px'
+                }
+
+            },
+            colors: ['#32CEA0', '#F84241', '#FE9C2A', '#3385ff', '#FFCEC7'],
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                borderWidth: 0,
+                verticalAlign: 'middle',
+                y: 10,
+                x: 20,
+                symbolHeight: 8,
+                symbolWidth: 8,
+                itemMarginBottom: 20,
+                itemStyle: {
+                    color: '#000',
+                    fontSize: '13px',
+                    fontWeight: 'normal',
+
+
+                },
+
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f}%', //%
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    },
+                    point: {
+                        events: {
+                            click: function (e) { // 同样的可以在点击事件里处理
+                                // chart.setTitle({
+                                //     text: e.point.name+ '\t'+ e.point.y + '' //%
+                                // });
+                            }
+                        }
+                    },
+                    showInLegend: true, //显示图例
+                }
+
+            },
+            series: [
+                //     {
+                //     type: 'pie',
+                //     innerSize: '80%',
+                //     name: '查看次数',
+                //     data: [
+                //         {
+                //             name: '访问V网',
+                //             y: 120
+                //         },
+                //         {
+                //             name: '查看文章',
+                //             y: 45
+                //         },
+                //         {
+                //             name: '推广广告',
+                //             y: 30
+                //         }
+                //     ]
+                // }
+            ]
+
+        }
+        var chart_pie; //本周饼形图初始化
+
+        var options_bar = {
+            chart: {
+                type: 'column',
+                marginBottom: 30
+            },
+            title: {
+                text: '本月浏览统计图',
+                verticalAlign: 'bottom',
+                x: 60,
+                style: {
+                    'fontSize': '13px'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                borderWidth: 0,
+                verticalAlign: 'middle',
+                y: 30,
+                x: 20,
+                symbolHeight: 8,
+                symbolWidth: 8,
+                itemMarginBottom: 20,
+                itemStyle: {
+                    color: '#000',
+                    fontSize: '13px',
+                    fontWeight: 'normal',
+
+
+                },
+
+            },
+            colors: ['#32CEA0', '#F84241', '#FE9C2A', '#3385ff', '#FFCEC7'],
+            yAxis: {
+                lineWidth: 0,
+                gridLineWidth: 0, //去除网格y轴的线条
+                title: {
+                    text: null,
+
+                },
+                labels: { //不显示y轴数值 
+                    enabled: false
+                }
+
+            },
+            xAxis: {
+                tickWidth: 0, //去除x轴的刻度线
+                lineWidth: 0,
+                labels: {
+                    enabled: false
+                }
+
+
+            },
+            series: [
+
+                // {
+                //     name: '访问V网',
+                //     data: [{
+                //         name: '查看次数',
+                //         y: 120
+                //     }]
+                // },
+                // {
+                //     name: '查看文章',
+                //     data: [{
+                //         name: '查看次数',
+                //         y: 99
+                //     }]
+                // },
+                // {
+                //     name: '推广广告',
+                //     data: [{
+                //         name: '查看次数',
+                //         y: 67
+                //     }]
+                // }
+            ]
+        }
+        var chart_bar; // 这是月份柱形图
+
+        var judge; //判断
+        $.ajax({ //进入页面的数据
+            type: 'post',
+            url: '/index.php?s=/Api/Stats/index',
+            data: {
+                unionid: unionid
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.ResultType == 0) {
+                    var data = res.AppendData;
+                    $('.today p:nth-child(1)').html(data.today) //今日浏览量
+                    $('.yesterday p:nth-child(1)').html(data.yestoday) //昨日浏览量
+                    $('.week p:nth-child(1)').html(data.weeks) //本周浏览量
+                    $('.Month p:nth-child(1)').html(data.total_num) //总数的
+                    curday = data.curDay;
+                    judge = data.curDay;
+                    var todat_date = data.curDay;
+                    todat_date = todat_date.substring(4, 6) + '/' + todat_date.substring(6, 8);
+                    $('.box .date').html(todat_date) //当天日期
+
+                    var today = data.today_data; //今日
+                    var week = data.week_data; //周
+                    var months = data.months_data; //月
+                    var month_obj = []; //月份统计数据
+                    var week_obj = []; //周统计数据
+                    var week_smalldata = []; //周统计小数据
+                    var tday = []; //今天的数据
+                    var timedata = []; //时间段日期
+                    $.each(months, function (k, v) { //这是本月的
+                        v.control = v.control.toLowerCase(v.control);
+                        v.action = v.action.toLowerCase(v.control);
+                        v.num = v.num - 0;
+                        if (v.control == 'nologin' && v.action == 'card_jump') {
+                            $(v)[0].control = '访问V网'
+                        }
+                        if (v.control == 'nologin' && v.action == 'previewarticle') {
+                            $(v)[0].control = '查看文章'
+                        }
+                        if (v.control == 'share' && v.action == 'preview') {
+                            $(v)[0].control = '推广广告'
+                        }
+                        month_obj.push({
+                            'name': v.control,
+                            data: [{
+                                'name': '查看次数',
+                                'y': v.num
+                            }]
+                        })
+                    })
+                    options_bar.series = month_obj; //这个是月统计的
+                    chart_bar = Highcharts.chart('barcontainer', options_bar) //柱形图初始化
+
+                    $.each(week, function (k, v) { //这是本周的饼行数据统计
+                        v.control = v.control.toLowerCase(v.control);
+                        v.action = v.action.toLowerCase(v.control);
+                        v.num = v.num - 0;
+                        if (v.control == 'nologin' && v.action == 'card_jump') {
+                            $(v)[0].control = '访问V网'
+                        }
+                        if (v.control == 'nologin' && v.action == 'previewarticle') {
+                            $(v)[0].control = '查看文章'
+                        }
+                        if (v.control == 'share' && v.action == 'preview') {
+                            $(v)[0].control = '推广广告'
+                        }
+
+                        week_smalldata.push({
+                            'name': v.control,
+                            'y': v.num
+                        });
+
+                    })
+                    week_obj.push({
+                        'type': 'pie',
+                        'innerSize': '80%',
+                        'name': '查看次数'
+                    })
+                    week_obj[0].data = week_smalldata;
+                    options_pie.series = week_obj;
+                    chart_pie = Highcharts.chart('piecontainer', options_pie);
+
+                    $.each(today, function (k, v) { //今日的v网推广文章时间段的数据统计
+                        timedata.push(v.hours);
+                        tday.push(v.num);
+                    })
+                    var today_obj = [];
+                    today_obj.push({
+                        'name': '总查看次数'
+                    })
+                    today_obj[0].data = tday;
+                    options_spline.xAxis.categories = timedata;
+                    options_spline.series = today_obj;
+                    chart_spline = Highcharts.chart('container', options_spline);
+
+
+
+
+                }
+            }
+        })
+
+
+        var curday;
+
+        $('.switch_date').on('click', 'button', function () {
+            var swit = $(this).attr('data-next');
+            $(this).addClass('active').siblings().removeClass('active');
+            if (judge == curday && swit == '1') {
+                return false;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/index.php?s=/Api/Stats/ajaxGetStats',
+                data: {
+                    unionid: unionid,
+                    next: swit,
+                    curDay: curday
+                },
+                success: function (res) {
+                    console.log(res)
+                    if (res.ResultType == 0) {
+                        var day = res.AppendData;
+                        curday = day.curDay;
+                        var todat_date = day.curDay;
+                        todat_date = todat_date.substring(4, 6) + '/' + todat_date.substring(
+                            6, 8);
+                        $('.box .date').html(todat_date) //当天日期
+                        var timearr = [];
+                        var count = [];
+                        var container_date = [];
+                        $.each(day.today_data, function (k, v) {
+                            timearr.push(v.hours);
+                            count.push(v.num);
+                        })
+                        container_date.push({
+                            'name': '总查看次数'
+                        })
+                        container_date[0].data = count;
+
+                        options_spline.xAxis.categories = timearr;
+                        options_spline.series = container_date;
+                        chart_spline = Highcharts.chart('container', options_spline);
+
+
+
+
+
+
+                    }
+
+                }
+            })
+
+        })
+
+    })
+</script>

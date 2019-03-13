@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<title>绑定微信</title>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			.top {
+				width: 75%;
+				height: 5.555rem;
+				background: #fff;
+				box-shadow: 0px 0.1rem 0.6rem 0px rgba(151, 151, 151, 0.5);
+				margin: 1.75rem auto 1.5rem;
+				padding: 1.25rem 1rem;
+				overflow: hidden;
+				display: flex;
+			}
+			
+			.left {
+				width: 40%;
+				height: 100%;
+				border-radius: 50%;
+				float:left;
+			}
+			
+			.right {
+				width: 40%;
+				height: 100%;
+				background: #fff;
+				border-radius: 50%;
+				box-shadow:0px 10px 24px 0px rgba(151,151,151,0.5);
+				float:left;
+			}
+			
+			.cen {
+				width: 10%;
+				height: 0.7rem;
+				margin: 18% 5%;
+				float:left;
+			}
+			
+			.left>img {
+				width: 95%;
+				height: 95%;
+				margin: 2.5%;
+				border-radius: 50%;
+				
+			}
+			.right>img {
+				width: 70%;
+				height: 70%;
+				margin: 15%;
+
+			}
+			
+			.cen>img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.tit {
+				width: 100%;
+				height: 3rem;
+				font-size: 0.85rem;
+				text-align: center;
+				color: #333;
+			}
+			
+			.mess {
+				width: 70%;
+				height: 5rem;
+				margin: 0 auto;
+			}
+			
+			.num {
+				width: 100%;
+				height: 2rem;
+				border-bottom: 1px solid #E7E7E7;
+				font-size: 0;
+				margin-bottom: 0.1rem;
+			}
+			
+			.mess_left {
+				display: inline-block;
+				width: 25%;
+				height: 100%;
+				line-height: 2.5rem;
+				font-size: 0.75rem;
+				color: #777;
+			}
+			
+			.mess_right {
+				display: inline-block;
+				width: 75%;
+				height: 100%;
+				line-height: 2.5rem;
+				font-size: 0.75rem;
+				color: #333;
+			}
+			
+			.code {
+				width: 100%;
+				height: 2rem;
+				border-bottom: 1px solid #E7E7E7;
+				font-size: 0;
+				padding-top: 1rem;
+			}
+			
+			.code_left {
+				float: left;
+				width: 25%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0.75rem;
+				color: #777;
+			}
+			
+			.code_right {
+				float: left;
+				width: 45%;
+				height: 2rem;
+				line-height: 2rem;
+				font-size: 0rem;
+				color: #999;
+			}
+			
+			.code_right>input::-webkit-input-placeholder {
+				color: #999;
+				font-size: 0.75rem;
+				line-height: 2rem;
+			}
+			
+			.code_right>input {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				border: none;
+				color: #999;
+				font-size: 0.75rem;
+			}
+			
+			.code_btn {
+				float: left;
+				width: 30%;
+				height: 2rem;
+				border: none;
+				color: #2FB3D3;
+				font-size: 0.75rem;
+			}
+			
+			.code_btn>input {
+				width: 100%;
+				height: 100%;
+				color: #32CEA0;
+				line-height: 2rem;
+				border: none;
+				background: none;
+				font-size: 0.75rem;
+			}
+			
+			.done {
+				width: 85%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.85rem;
+				color: #fff;
+				text-align: center;
+				background: #32CEA0;
+				border-radius: 1.5rem;
+				margin: 4rem auto 0;
+			}
+			
+			.done>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+				text-decoration: none;
+				color: #fff;
+			}
+			
+			.model {
+				width: auto;
+				height: 2.5rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				line-height: 2.5rem;
+				font-size: 0.75rem;
+				border-radius: 0.25rem;
+				text-align: center;
+				position: absolute;
+				bottom: 7rem;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-moz-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				-o-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				display: none;
+				padding:0 0.5rem;
+				white-space:nowrap;
+			}
+			.hints{
+				width: 15rem;
+				height: 9rem;
+				border-radius: 0.5rem;
+				background: #fff;
+				position:fixed;
+				top:50%;
+				left:50%;
+				margin-left: -7.5rem;
+				margin-top: -4.5rem;
+				font-size: 0.75rem;
+				color:#333;
+				z-index: 10;
+				text-align: center;
+				display: none;
+			}
+			.h_top{
+				width: 100%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.9rem;
+				color:#333;
+			}
+			.h_bot{
+				width: 90%;
+				height: 4rem;
+				line-height: 1.1rem;
+				font-size: 0.75rem;
+				color:#333;
+				margin: 0 auto;
+			}
+			.masks{
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.5);
+				position: fixed;
+				top:0;
+				left:0;
+				z-index: 1;
+				display: none;
+			}
+			.qud{
+				width: 100%;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				text-align: center;
+				color:#666;
+				font-size: 0.75rem;
+				border-top: 1px solid #999;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="left">
+				<img class="left_img" src="" alt="" />
+			</div>
+			<div class="cen">
+				<img src="__HOME_IMAGES__/slicesrjl/icon_jiaohuan@2x.png" alt="" />
+			</div>
+			<div class="right">
+				<img src="__HOME_IMAGES__/mplogobackup.jpg" alt="" />
+			</div>
+		</div>
+		<div class="tit">
+			授权绑定微信
+		</div>
+		<div class="mess">
+			<div class="num">
+				<span class="mess_left">账号</span>
+				<span class="mess_right">{$phone}</span>
+			</div>
+			<div class="code">
+				<span class="code_left">验证码</span>
+				<span class="code_right">
+					<input type="text" class="yzm" value="" placeholder="请输入验证码"/>
+				</span>
+				<span class="code_btn">
+					<input type="button" id="btn" value="获取验证码" onclick="sendemail()" /> 
+				</span>
+			</div>
+		</div>
+		<div class="done">
+			完成绑定
+		</div>
+		<div class="model">请输入验证码</div>
+		<div class="hints">
+			<div class="h_top">温馨提示</div>
+			<div class="h_bot">获取微信个人信息失败! 请重新登录，并检查您的微信昵称，是否带有表情或特殊字符。</div>
+			<div class="qud">确定</div>
+		</div>
+		<div class="masks"></div>
+		<script>
+			var countdown = 60;
+			var iphone = $(".mess_right").html();
+		 	var unionid = '{$unionid}';
+		 	var ycode = 1;
+//			console.log(phone)
+			
+			$.ajax({
+				type: "post",
+				url: '/index.php?s=/Api/Wechat/is_wechat', //后台处理程序
+				dataType: 'json', //接受数据格式    
+				data: {
+					unionid: unionid,
+				}, //要传递的数据
+				success: function(res){
+					console.log(res);
+					if(res.ResultType == 0){
+						$(".left_img").attr('src',res.AppendData.headimg);
+					}
+					
+					if(res.ResultType == 1){
+						$(".hints").show();
+						$(".masks").show();
+						$(".qud").click(function(){
+							$(".hints").hide();
+							$(".masks").hide();
+							window.location.href="{:url('Home/User/usercenter')}";
+							return false;
+						})
+						return false;
+					}
+					if(res.ResultType == 2){
+						window.location.href="{:url('Home/User/unbound')}";
+						return false;
+					}
+				},
+				error: function() {
+					console.log("服务器繁忙，请稍后再试！");
+				}
+			});
+			
+			
+			
+			function sendemail() {
+				var obj = $("#btn");
+				$.ajax({
+					type: "post",
+					url: '/index.php?s=/Api/IndexApi/send_phone_code', //后台处理程序
+					dataType: 'json', //接受数据格式    
+					data: {
+						unionid: unionid,
+						phone: iphone,
+						type: 8,
+					}, //要传递的数据
+					success: function(res) {
+						if(res.ResultType == 0) {
+							$(".model").html("获取成功");
+							$(".model").show();
+							setTimeout(function() {
+								$('.model').hide();
+							}, 1500);
+							ycode = res.AppendData
+						} else {
+							$(".model").html("获取失败")
+							$(".model").show()
+							setTimeout(function() {
+								$('.model').hide();
+							}, 1500);
+						}
+
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+				settime(obj);
+			}
+
+			function settime(obj) { //发送验证码倒计时
+				if(countdown == 0) {
+					obj.attr('disabled', false);
+					//obj.removeattr("disabled"); 
+					obj.val("获取验证码");
+					
+					countdown = 60;
+					return;
+				} else {
+					obj.attr('disabled', true);
+					if(countdown < 10) {
+						obj.val("0" + countdown + "S");
+					} else {
+						obj.val(countdown + "S");
+					}
+					countdown--;
+				}
+				setTimeout(function() {
+
+					settime(obj)
+				}, 1000)
+			}
+			
+			$(".done").click(function(){
+				var yzm = $(".yzm").val();
+				var num = '{$num}'
+				if($(".yzm").val() == "") {
+					$(".model").show();
+					$(".model").html("请输入验证码");
+					setTimeout(function() {
+						$('.model').hide();
+					}, 1500);
+					return false;
+				} else {
+					$(".model").hide()
+				}
+				if(yzm != ycode) {
+					$(".model").show()
+					setTimeout(function() {
+						$('.model').hide();
+					}, 1500);
+					$(".model").html("验证码不正确");
+					return false;
+				} else {
+					$(".model").hide()
+				}	
+			$.ajax({
+					type: "post",
+					url: '/index.php?s=/Api/Wechat/bind_wechat', //后台处理程序
+					dataType: 'json', //接受数据格式   
+					data: {
+						unionid: unionid,
+						code:yzm
+					}, 
+					success: function(res) {
+//						console.log(res);
+						if(res.ResultType == 0) {
+							$(".model").show()
+							$(".model").html("绑定成功");
+							setTimeout(function() {
+								$('.model').hide();
+							}, 1500);
+							if(num == 1){
+								setTimeout(function() {
+									window.location.href="/index.php?s=/Home/income/changexmb.html";
+								}, 2000);
+							}else{
+								setTimeout(function() {
+									window.location.href="{:url('Home/User/usercenter')}";
+								}, 2000);
+							}
+							
+						} else if(res.ResultType == 2){
+							$(".model").show()
+							$(".model").html("验证码不正确");
+							setTimeout(function() {
+								$('.model').hide();
+							}, 1500);
+						}
+					},
+					error: function() {
+						console.log("服务器繁忙，请稍后再试！");
+					}
+				})	
+ 			});
+			
+			$(function() {
+				var phone = $('.mess_right').html();
+				var mphone = phone.substr(0, 3) + '****' + phone.substr(7);
+				$('.mess_right').html(mphone)
+			});
+			
+		</script>
+	</body>
+</html>

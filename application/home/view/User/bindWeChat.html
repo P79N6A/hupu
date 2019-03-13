@@ -1,0 +1,38 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+</block>
+<block name="body">
+
+</block>
+
+<block name="js_extend">
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">绑定微信</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content">
+			<div class="bangding_img_div">
+				<div class="bangding_img"><img src="{$info.headimgurl}" /></div>
+			</div>
+			<div class="bangding_text_div">
+				<div class="text1">{$info.nickname}</div>
+				<div class="text2"><span class="mui-icon mui-icon-weixin zzc_ico_blue"></span> 该账户已经绑定微信</div>
+			</div>
+		</div>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+</block>

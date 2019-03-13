@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/newrem.js"></script>
+    <script src="__HOME_JS__/whjs/js/tool.js"></script>
+    <title>{$title}</title>
+    <style>
+
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #f6f6f6;
+            width: 100%;
+            padding: 0 .1rem;
+            box-sizing: border-box;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            
+
+        }
+
+    
+
+        .header .list {
+            height: 100%;
+            width: 100%;
+            height: .46rem;
+            white-space: nowrap;
+            display: block;
+            overflow-x: scroll;
+            position: relative;
+            font-size: 0;
+           
+            
+
+        }
+
+
+        .header .list li {
+            width: 100px;
+            height: 100%;
+            line-height: .46rem;
+            color: #777777;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+             margin-right: 5px;
+             font-size: .13rem;
+
+        }
+        .line{
+            width:100px;
+            height: .03rem;
+            /* background: #32CEA0; */
+            position: absolute;
+            bottom:0;
+            left: 0;
+            z-index: 2;
+            background: linear-gradient(80deg, transparent 30%, #32CEA1 20%, #32CEA0 70%, transparent 40%) !important;
+            
+        }
+
+        .active {
+            color: #32CEA0 !important;
+            font-size: .16rem !important;
+        }
+
+        .main {
+            padding-left: .16rem;
+            box-sizing: border-box;
+            padding-top: .47rem;
+        }
+
+        .main .link {
+            width: 100%;
+            border-bottom: 1px solid #f6f6f6;
+            background: #fff;
+
+        }
+
+        .main .link a {
+            display: block;
+            padding: .115rem .12rem .14rem 0;
+        }
+
+        .main .link a .shop_imgbox img {
+            width: .54rem;
+            height: .52rem;
+            display: block;
+            border-radius: .05rem;
+        }
+
+        .main .link a .ms {
+            padding-left: .1rem;
+            box-sizing: border-box;
+            width: 80%;
+        }
+
+        .main .link a .ms p {
+            font-size: .18rem;
+            padding-bottom: .08rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+
+        }
+
+        .main .link a .ms .clearfix {
+            width: 100%;
+        }
+
+        .main .link a .ms .clearfix .fl {
+            border-radius: .02rem;
+            padding: 0 .05rem;
+            margin-right: .08rem;
+            font-size: .14rem;
+        }
+        .tpp{
+            text-align: center;
+            font-size: .14rem;
+            margin-top: .4rem;
+        }
+
+          /* 加载中 */
+        .loading{
+            width: 100%;
+            height: .4rem;
+            display: none;
+
+        }
+
+        .loading .load_box{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+         .load_box img{
+             width: .2rem;
+             height: .2rem;
+             position: absolute;
+             top: 50%;
+             margin-top: -.1rem;
+             margin-left: -.1rem;
+             left: 40%;
+         }
+
+        .load_box p{
+            font-size: .16rem;
+            height: .2rem;
+            width: .6rem;
+            position: absolute;
+            top: 50%;
+            margin-top: -0.1rem;
+            left: 50%;
+            margin-left: -0.1rem;
+
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <ul class="list">
+            <!-- 分类数据 -->
+        </ul>
+    </div>
+    <div class="main">
+        <!-- 全部链接一切的数据 -->
+    </div>
+    <div class="loading">
+        <div class="load_box">
+            <img src="__HOME_IMAGES__/loadad.gif" alt="">
+            <p>加载中...</p>
+        </div>
+    </div>
+    <input type="hidden" id="user_id" value="{$id}">
+</body>
+
+</html>
+<script>
+    $(function () {
+        var i = 0;
+        var type;
+        var user_id = $("#user_id").val();
+        $(".list").on("click", "li", function () {
+            var index = $(this).index();
+            $(this).addClass("active").siblings().removeClass("active");
+            var li_width = ($(this).width() + 5);
+            $(".list .line").stop(false, true).animate({
+                'left': index * li_width + "px",
+                'bottom': '0px'
+            }, 100);
+            
+            var tip = '';
+            tip+= '<div class="load_box">'
+            tip+= '<img src="__HOME_IMAGES__/loadad.gif" alt="">'
+            tip+= '<p>加载中...</p>'
+            tip+= '</div>'
+            $('.loading').html(tip).hide();
+            $('body,html').scrollTop('0px');
+            type = $(this).attr('data-tyid');
+            i = 0;
+            scrollFlag = true;
+            render(type, i);
+
+        })
+
+        var types = 0; //链接一切
+
+        function callback(res) {
+            console.log(res)
+            type = res[0].id
+            render(type, i);
+        }
+
+        tools.render_type(user_id, types, callback);
+
+
+
+        function render(type, index) {
+
+            $.ajax({
+                type: "post",
+                url: "/index.php?s=/Api/AppApi/link_list",
+                dataType: 'json',
+                data: {
+                    unionid: user_id,
+                    type_id: type,
+                    start: index,
+                    length: 10
+
+                },
+                beforeSend: function () {
+                    $('.loading').show();
+                },
+                success: function (res) {
+                    console.log(res)
+                    $('.loading').hide();
+                    scrollFlag = true;
+                    if (res.AppendData.length == 0 && index == 0) {
+                        $('.main').html(
+                            '<p style="text-align:center;margin-top: 50px;">您的当前分类下暂时没有数据哦</p>'
+                        )
+                    } else if (res.AppendData.length == 0 && index > 0) {
+                        scrollFlag = false;
+                        $('.loading').html(
+                            '<p style="text-align:center;line-height:0.4rem;">没有更多数据了</p>').show();
+                    }
+                    if (res.ResultType == 0) {
+                        var data = res.AppendData;
+                        var list = '';
+                        $.each(data, function (k, v) {
+                            list += '<div class="link" data-id="' + v.id + '">'
+                            list += '<a class="clearfix" href="' + v.jump_url + '">'
+                            list += '<div class="fl shop_imgbox">'
+                            list += '<img src="' + v.icon_url + '" alt="">'
+                            list += '</div>'
+                            list += '<div class="fl ms">'
+                            list += '<p>' + v.name + '</p>'
+                            list += '<div class="clearfix">'
+                            if (v.tab == '' || v.tab == null) {
+                                list +=
+                                    '<div class="fl" style="color:#c5c5c5; background:#e8e8e8; ">未选</div>'
+                            } else {
+                                $.each(v.tab, function (i, e) {
+                                    list += '<div class="fl" style="color:' + e.color +
+                                        '; background:' + e.background + '; ">' + e
+                                        .name + '</div>'
+                                })
+                            }
+                            list += '</div>'
+                            list += '</div>'
+                            list += '</a>'
+                            list += '</div>'
+                        })
+
+                        if (!i == 0) {
+                            $('.main').append(list);
+                        } else {
+                            $('.main').html(list)
+                        }
+                    }
+
+
+                },
+                error: function () {
+                    $('.loading').hide();
+                }
+
+
+            })
+
+        }
+
+
+        var scrollFlag = true;
+        $(window).scroll(function () {
+
+            //已经滚动到上面的页面高度
+            var scrollTop = $(this).scrollTop();
+            //页面高度
+            var scrollHeight = $(document).height();
+            //浏览器窗口高度
+            var windowHeight = $(this).height();
+            if (!scrollFlag) {
+                return false
+            }
+            if (scrollTop + windowHeight >= scrollHeight) {
+                i += 10;
+                scrollFlag = false;
+                render(type, i)
+
+            }
+
+
+        })
+
+
+
+
+
+
+
+    })
+</script>

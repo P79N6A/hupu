@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<title>积分</title>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/Integral_type.css" />
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+	</head>
+
+	<body>
+		<div class="max">
+			<div class="one">
+				<a href="{:url('Home/Chat/Integral_record')}">
+					<div class="one_img">
+						<img src="__HOME_IMAGES__/huodong@3x.png" alt="" />
+					</div>
+					<div class="one_txt">
+						<div class="one_first">活动积分记录</div>
+						<div class="one_two">通过V网任务或活动的积分详情</div>
+					</div>
+					<div class="icon">
+						<img src="__HOME_IMAGES__/icon1.png" alt="" />
+					</div>
+				</a>
+			</div>
+			<div class="two">
+				<a href="{:url('Home/Chat/record')}">
+					<div class="one_img">
+						<img src="__HOME_IMAGES__/giff-gaff.png" alt="" />
+					</div>
+					<div class="two_txt">
+						<div class="one_first">转赠积分记录</div>
+						<div class="one_two">互赠所得的积分详情</div>
+					</div>
+					<div class="num"></div>
+					<div class="icon">
+						<img src="__HOME_IMAGES__/icon1.png" alt="" />
+					</div>
+				</a>
+			</div>
+		</div>
+		<script>
+			var id = '{$unionid}';
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				url: "index.php?s=/Api/IntegralApi/give_inte_log",
+				data: {
+					"unionid": id,
+					"num": 1,
+					"type":2
+				},
+				success: function(result) {
+					if(result.ResultType==3){
+//						$('.num').hide()
+						return false;
+					}
+					if(result.AppendData>=100){
+						$(".num").html("99.."+"条未读");
+					}else{
+						$(".num").html(result.AppendData+"条未读");
+					}
+					
+				},
+				error: function() {
+					alert("服务器繁忙，请稍后再试！");
+				}
+			});
+		</script>
+	</body>
+
+</html>

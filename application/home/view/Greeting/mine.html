@@ -1,0 +1,153 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<style>
+		.zzc_jieri_imgheader {
+			width: 100%;
+			height: 170px;
+			overflow: hidden;
+			border-bottom: 1px solid #CCCCCC;
+		}
+		
+		.zzc_jieri_imgheader_title {
+			padding: 10px 5%;
+			border-bottom: 1px solid #EEEEEE;
+		}
+		
+		.zzc_jieri_imgheader_title span {
+			color: #333;
+			border-radius: 50%;
+		}
+		
+		.zzc_jieri_imgheader_li img {
+			border-radius: 10px;
+		}
+		
+		.zzc_heka_imgdiv {
+			width: 100%;
+			overflow: hidden;
+			position: relative;
+			background: #FFFFFF;
+			border: none;
+		}
+		
+		.zzc_heka_title {
+			width: 90%;
+			margin: 0px auto;
+			padding: 10px 0px;
+			border-bottom: 1px solid #CCCCCC;
+		}
+		
+		.zzc_heka_meone,
+		.zzc_heka_metwo,
+		.zzc_heka_methree {
+			color: #FFFFFF;
+			padding: 5px 0px;
+			width: 33.33%;
+			float: left;
+			text-align: center;
+			font-size: 14px;
+		}
+		
+		.zzc_heka_meone {
+			background: #ed5564;
+		}
+		
+		.zzc_heka_metwo {
+			background: #BBBBBB;
+		}
+		
+		.zzc_heka_methree {
+			background: #2FB3D3;
+		}
+		
+		.mui-table-view-cell .mui-media-body {
+			height: auto!important;
+		}
+		
+		.zzc_heka_mobject_title {
+			border: 1px solid #dfdfdf;
+			margin-top: -5px;
+			padding: 5px 0px;
+			background: #F2F2F2;
+			color: #abadb0;
+			font-size: 14px;
+		}
+	</style>
+</block>
+<block name="body">
+
+	<body class="">
+		<div class="mui-content ">
+
+			<div class="zzc_heka_imgdiv">
+
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<div class="mui-slider-item">
+							<ul id="lis" class="mui-table-view mui-grid-view zzc_heka_liimg">
+								<volist name="Gcard" id="vo">
+									<li class="mui-table-view-cell mui-media mui-col-xs-6">
+										<img class="mui-media-object" src="{$vo.pic}">
+										<div class="zzc_heka_mobject_title">
+											{$vo.title}
+										</div>
+										<div class="mui-media-body" style="overflow: hidden;">
+											<a href="javascript:;" class="zzc_heka_meone" data-id="{$vo['id']}">删除</a>
+											<a href="{:url('Home/Greeting/createCardStart?do=card_word&id='.$vo['id'])}" class="zzc_heka_metwo">修改</a>
+											<a href="index.php?s=/Home/Holidaycard/grats/caid/"></a>
+											<a href="{:url('Home/Greeting/templetPreview?id='.$vo['id'])}" class=" zzc_heka_methree">预览</a>
+
+										</div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+	</script>
+</block>
+
+<block name="js_extend">
+	<script>
+		$(".zzc_heka_meone").on('touchend', function() {
+			var id = $(this).attr('data-id');
+			var me = $(this);
+			mui.confirm("是否要删除该贺卡", "", ["否", "是"], function(res) {
+				if(res.index == 1) {
+					$.post("{:url('Home/Greeting/delGcard')}", {
+						'id': id
+					}, function(res) {
+						mui.toast("删除成功");
+						me.parent().parent().remove();
+						goback();
+
+						function goback() {
+							var lis = $("#lis li");
+							if(lis.length == '0') {
+								// console.log(lis.length)
+
+								window.location.href = "{:url('/Home/Greeting/index')}&" + (new Date().getTime());
+
+							}
+
+						}
+
+					});
+				}
+			})
+		});
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

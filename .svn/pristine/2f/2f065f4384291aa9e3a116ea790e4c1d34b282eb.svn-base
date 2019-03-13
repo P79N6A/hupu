@@ -1,0 +1,172 @@
+<?php
+/**
+ * /**
+ *createUser:JAVA_TOM
+ * FileName: CustomerServiceController
+ * Author:   14562
+ * Date:     2018/8/22 9:42
+ * Description: 客服系统api
+ *
+ */
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: 14562
+ * Date: 2018/8/22
+ * Time: 9:42
+ */
+
+namespace app\api\controller;
+use app\common\controller\ApiBase;
+use app\common\model\UserStats;
+
+class Stats extends ApiBase { 
+
+	protected function _initialize()
+    {
+        parent::_initialize();
+        $this->stats_model  = new UserStats();
+    }
+    
+	/*
+     * 首页
+     */
+    public  function  index()
+    {        
+    	$uid = $this->userInfo['id'];
+    	$today = strtotime(date('Ymd'));
+    	$day = 3600*24;
+    	$time = $today+$day;
+    	
+    	$map = array("uid"=>$uid);
+    	$map['control'] = array('in',array('nologin','share'));
+    	$total_num = $this->stats_model->where($map)->count();
+    	$map['add_time'] = array('between',array($today,$time));
+    	$today_num = $this->stats_model->where($map)->count();
+    	//分组查询曲线数据并处理
+   		$today_data = $this->stats_model->field("from_unixtime(add_time,'%H') as hours,count(*) as num")->where($map)->group("from_unixtime(add_time,'%H')")->select();
+    	$todaydata = $this->lineData($today_data);
+    	
+		$map['add_time'] = array('between',array($today-$day,$today));
+    	$yestoday = $this->stats_model->where($map)->count();
+    	
+		$map['add_time'] = array('between',array($today-6*$day,$time));
+    	$weeks = $this->stats_model->where($map)->count();
+    	$wdata = $this->stats_model->field('control,action,count(*) as num')->where($map)->group("control,action")->select();
+    	
+		$map['add_time'] = array('between',array($today-30*$day,$time));
+    	$months = $this->stats_model->where($map)->count();
+    	$mdata = $this->stats_model->field('control,action,count(*) as num')->where($map)->group("control,action")->select();
+    	
+    	$data = array('curDay'=>date('Ymd'),'total_num'=>$total_num,'today'=>$today_num,'yestoday'=>$yestoday,'weeks'=>$weeks,'months'=>$months,
+    	'today_data'=>$todaydata,'week_data'=>$wdata,'months_data'=>$mdata,);
+        $this->array_return['ResultType'] = self::__OK__;
+        $this->array_return['Message'] = "操作成功";
+        $this->array_return['AppendData'] = $data;
+        
+        return json($this->array_return);
+    }
+    
+    /*
+     * ajax请求当日数据
+     */
+    public  function  ajaxGetStats()
+    {  
+    	//默认为当天
+   		$today = $_REQUEST['curDay'] ? strtotime($_REQUEST['curDay']) : strtotime(date('Ymd'));
+   		$next = $_REQUEST['next'] ? trim($_REQUEST['next']) : 0;
+    	$time = 3600*24;//1天秒
+    	
+    	$curDay = date('Ymd');
+    	$uid = $this->userInfo['id'];
+    	$map = array("uid"=>$uid);
+    	$map['control'] = array('in',array('nologin','share'));
+   		$map['add_time'] = array('between',array($today,$today+$time));
+   		if ($next == 1) {
+   			$tomorrow = $today+$time;
+   			$map['add_time'] = array('between',array($tomorrow,$tomorrow+$time));
+			$curDay = date('Ymd',$tomorrow);
+   		}elseif ($next == -1){
+   			$yestoday = $today-$time;
+			$map['add_time'] = array('between',array($yestoday,$today));
+			$curDay = date('Ymd',$yestoday);
+   		}
+    	//分组查询后处理数据
+   		$today_data = $this->stats_model->field("from_unixtime(add_time,'%H') as hours,count(*) as num")->where($map)->group("from_unixtime(add_time,'%H')")->select();
+     	$todaydata = $this->lineData($today_data);
+    	
+   		$data = array('curDay'=>$curDay,'today_data'=>$todaydata);
+        $this->array_return['ResultType'] = self::__OK__;
+        $this->array_return['Message'] = "操作成功";
+        $this->array_return['AppendData'] = $data;
+        
+        return json($this->array_return);
+    }
+	
+    /*
+     * 访客统计
+     */
+    public  function  lists()
+    {  
+    	$uid = $this->userInfo['id'];
+   		$type = $_REQUEST['type'] ? trim($_REQUEST['type']) : '';
+   		$day = $_REQUEST['day'] ? trim($_REQUEST['day']) : 0;
+   		$map = array("uid"=>$uid);
+   		if ($type) {
+   			$ctr_act = explode('-', $type);
+   			$map['control'] = $ctr_act[0];
+   			if (isset($ctr_act[1])) {
+   				$map['action'] = $ctr_act[1];
+   			}
+   		}
+   		
+   		//当天
+   		$today = strtotime(date('Ymd'));
+    	$time = 3600*24;//1天秒
+   		$map['add_time'] = array('between',array($today,$today+$time));
+   		if ($day == 1) {
+			$map['add_time'] = array('between',array($today-$time,$today));
+   		}elseif ($day == 2){
+   			$week = $today - 7*$time;
+			$map['add_time'] = array('between',array($week,$today));
+   		}
+   		
+   		$data = $this->stats_model->where($map)->select(); 
+   		$this->array_return['ResultType'] = self::__OK__;
+        $this->array_return['Message'] = "操作成功";
+        $this->array_return['AppendData'] = $data;
+        
+        return json($this->array_return);
+    }
+    
+     /*
+     * 曲线数据统计
+     */
+    private function lineData($today_data)
+    {
+    	//初始化数组
+    	$todaydata = array(array('hours'=>'00:00','num'=>0),array('hours'=>'03:00','num'=>0),array('hours'=>'06:00','num'=>0),array('hours'=>'09:00','num'=>0),
+    	array('hours'=>'12:00','num'=>0),array('hours'=>'15:00','num'=>0),array('hours'=>'18:00','num'=>0),array('hours'=>'21:00','num'=>0));
+    	foreach ($today_data as $item) {
+    		if($item['hours']>20){
+    		 	$todaydata[0]['num'] += $item['num'];
+    		}elseif ($item['hours']>17){
+    			$todaydata[7]['num'] += $item['num'];
+    		}elseif ($item['hours']>14){
+    			$todaydata[6]['num'] += $item['num'];
+    		}elseif ($item['hours']>11){
+    			$todaydata[5]['num'] += $item['num'];
+    		}elseif ($item['hours']>8){
+    			$todaydata[4]['num'] += $item['num'];
+    		}elseif ($item['hours']>5){
+    			$todaydata[3]['num'] += $item['num'];
+    		}elseif ($item['hours']>2){
+    			$todaydata[2]['num'] += $item['num'];
+    		}else{
+    			$todaydata[1]['num'] += $item['num'];
+    		}
+    	}
+    	
+    	return $todaydata;
+    }
+}

@@ -1,0 +1,486 @@
+<?php
+/*
+**********
+用户粉丝表逻辑层
+************
+ */
+namespace app\api\logic;
+use think\Db;
+use think\Model;
+use app\api\model\UserInfo  as userModel;
+use app\api\model\Member  as memberModel;
+use app\api\model\UsersFans  as fansModel;
+use app\api\model\VipList  as vipModel;
+use app\api\model\VipGroup  as vipGropModel;
+use app\api\model\CapitalLog  as capitalModel;
+use app\api\model\MsgList  as msgModel;
+
+class UsersFans extends Model
+{
+    private $Fans=null;
+    private $User=null;
+    private $VipGroup=null;
+    private $Vip=null;
+    private $Member=null;
+    private $CapitalLog=null;
+    private $MsgLogic=null;
+    
+    function __construct()
+    {
+        $this->Fans = new fansModel();
+        $this->Member = new memberModel();
+        $this->User = new userModel();
+        $this->VipGroup = new vipGropModel();
+        $this->Vip = new vipModel();
+        $this->CapitalLog = new capitalModel();
+        $this->MsgLogic = new msgModel();
+    }
+    
+    public function getRecUser($options=array())
+    {
+        //获取推荐人资料
+        $field=array("nick_name","mobile", "member_id","headimg","position","vip_group_id","id","unionid");
+        $rec_user_id = $this->User->where(array('id'=>$options['user_id']))->column('rec_user_id');
+        if($rec_user_id==0){
+            $rec_user=[];
+        }else{
+            $rec_user=$this->User->field($field)->where(array('id'=>$rec_user_id))->find();
+            $rec_user['username']=$this->Member->where(array('id'=>$rec_user['member_id']))->column('phone');
+        }
+        
+        $rec_user['vip_group_name']=$this->VipGroup->where(array('id'=>$rec_user['vip_group_id']))->column('vip_name');
+        $rec_user['headimg']=ToOpenWxImage($rec_user['headimg']);
+
+        return $rec_user;
+    }
+
+    /**
+     * @param array $options
+     * @return array|mixed
+     */
+    public function getManagerUser($options=array())
+    {
+        //获取推荐人资料
+        $field=array(
+            "nick_name",
+            "mobile",
+            "member_id",
+            "headimg",
+            "position",
+            "vip_group_id",
+            "id"
+        );
+        $rec_user=$this->User->where(array('id'=>$options['user_id']))->field($field)->find();
+        if(!$rec_user){
+           return false;//没有找到上级创投
+        }else{
+            if($rec_user['vip_group_id']>=3)
+            {
+                return $rec_user;
+            }else{
+               return  getManagerUser($rec_user['rec_user_id']);
+            }
+        }
+    }
+
+    public function getFans($options=array(),$start=0,$length=9999)
+    {
+        //获取粉丝列表
+        $list=array();
+        if(isset($options['vip_group_id'])){
+            $where1 = array('u.vip_group_id'=>$options['vip_group_id'],'uf.user_id'=>$options['user_id'],'uf.level'=>1);
+            $where2 = array('u.vip_group_id'=>$options['vip_group_id'],'uf.user_id'=>$options['user_id'],'uf.level'=>2);
+        }else{
+            $where1 = array('uf.user_id'=>$options['user_id'],'uf.level'=>1);
+            $where2 = array('uf.user_id'=>$options['user_id'],'uf.level'=>2);
+        }
+
+        $list['level_1'] = Db::table('s_users_fans')->alias('uf')->leftJoin(' s_user_detail u','u.id = uf.object_id')
+            ->leftJoin(' s_vip_group v','v.id = u.vip_group_id')->leftJoin(' s_member m','m.id = u.member_id')
+            ->where($where1)->field('v.vip_name,m.phone as username,u.id as user_id,u.add_time,u.nick_name,u.headimg,u.unionid')
+            ->order('u.add_time desc')->select();
+
+        $list['level_1_count']=count($list['level_1']);
+        $list['level_2'] = Db::table('s_users_fans')->alias('uf')
+            ->leftJoin(' s_user_detail u','u.id = uf.object_id')
+            ->leftJoin(' s_vip_group v','v.id = u.vip_group_id')
+            ->leftJoin(' s_member m','m.id = u.member_id')->where($where2)
+            ->field('v.vip_name,m.phone as username,u.id as user_id,u.add_time,u.nick_name,u.headimg,u.unionid')
+            ->order('u.add_time desc')->limit($start,$length)->select();
+
+        $list['level_2_count']=count($list['level_2']);
+        $list['count']=$list['level_1_count']+$list['level_2_count'];
+        foreach ($list['level_1'] as $key => $value) {
+            //过渡
+            if(!$value['username'])
+                unset($list['level_1'][$key]);
+            if(substr($value['headimg'],0,4) != 'http')
+                $list['level_1'][$key]['headimg'] = 'https://wap.yxm360.com'.$value['headimg'];
+        }
+
+        foreach ($list['level_2'] as $key => $value) {
+            //过渡
+            if(!$value['username'])
+                unset($list['level_2'][$key]);
+            if(substr($value['headimg'],0,4) != 'http' && $value['headimg'])
+                $list['level_2'][$key]['headimg'] = 'https://wap.yxm360.com'.$value['headimg'];
+        }
+        
+        return $list;
+    }
+
+    public function addFans($options=array())
+    {
+        //添加粉丝操作
+        $user=$this->User->where(array('id'=>$options['user_id']))->find();//推荐人信息
+        $newuser=$this->User->where(array('id'=>$options['object_id']))->find();//推荐人信息
+        if ($user['rec_user_id'] == 0) {//没有上级,直接粉丝,参与分销
+            $fans=$this->Fans->where(array('user_id'=>$options['user_id'],'object_id'=>$options['object_id'],'level'=>1))->find();
+            if(!$fans){
+                //防止重复添加
+                $_data=array();
+                $_data['user_id']=$options['user_id'];
+                $_data['object_id']=$options['object_id'];
+                $_data['level']=1;//我的直接粉丝
+                $_data['is_distribute']=1;
+                $_data['add_time']=time();
+                $this->Fans->insert($_data);
+                $this->MsgLogic->addMsg(array(
+                    'user_id'=>$_data['user_id'],
+                    'object_id'=>$_data['object_id'],
+                    'msg'=>"您有一位新的粉丝",
+                    'type'=>2,
+
+                ));//消息添加
+                $rec_member=$this->Member->where(array('id'=>$user['member_id']))->column('openid');
+                if($rec_member){
+                    sendWxTemplateMessages('SendBindInfo',array( 'wecha_id' => $rec_member,'href'=>get_current_Host().url('/Home/Income/myfans'), 'first' => '您有新的粉丝：'.$newuser['mobile'], 'keyword1' =>$newuser['nick_name'], 'keyword2' => $newuser['mobile'], 'keyword3'=> date("Y-m-d H:i:s"),'remark' => '该用户刚刚注册，还没有成为创客，点击查看'));
+                }
+            }
+        } else {
+            //todo 推荐人有上级
+            $fans=$this->Fans->where(array('user_id'=>$options['user_id'],'object_id'=>$options['object_id'],'level'=>1))->find();
+            if(!$fans){
+                //防止重复添加
+                $_data=array();
+                $_data['user_id']=$options['user_id'];
+                $_data['object_id']=$options['object_id'];
+                $_data['level']=1;//我的直接粉丝
+                $_data['is_distribute']=0;
+                if ($user['vip_group_id'] >= 3) $_data['is_distribute']=1;//是创投以上角色,参与分销，即拿那35%；
+                $_data['add_time']=time();
+                $this->Fans->insert($_data);
+                $this->MsgLogic->addMsg(array(
+                    'user_id'=>$_data['user_id'],
+                    'object_id'=>$_data['object_id'],
+                    'msg'=>"您有一位新的粉丝",
+                    'type'=>2,
+
+                ));//消息添加
+                //发送模板消息
+                $rec_member=$this->Member->where(array('id'=>$user['member_id']))->column('openid');
+                if($rec_member){
+                    sendWxTemplateMessages('SendBindInfo',array( 'wecha_id' => $rec_member,'href'=>get_current_Host().url('/Home/Income/myfans'), 'first' => '您有新的粉丝：'.$newuser['mobile'], 'keyword1' =>$newuser['nick_name'], 'keyword2' => $newuser['mobile'], 'keyword3'=> date("Y-m-d H:i:s"),'remark' => '该用户刚刚注册，还没有成为创客，点击查看'));
+                }
+                unset($_data);
+            }
+            //todo 推荐人的上级 添加相应的粉丝信息
+            $fans = Db::table('s_users_fans')->where(array('object_id' => $user['id']))->select();
+            $new_mobile = substr($newuser['mobile'],0,3).'****'.substr($newuser['mobile'],7);
+            $new_nick_name = substr($newuser['nick_name'],0,3).'****'.substr($newuser['nick_name'],7);
+            if (count($fans)) {
+                $fans_array = array();
+                $msg_array = array();
+                foreach ($fans as $fan) {//遍历我的所有上级，关联这个新粉丝
+                    $fans=$this->Fans->where(array('user_id'=>$fan['user_id'],'object_id'=>$options['object_id'],'level'=>2))->find();
+                    if(!$fans){
+                        //防止重复添加
+                        $fanUser=$this->User->where(array('id'=>$fan['user_id']))->find();//上级人信息
+                        $_data=array();
+                        $_data['user_id']=$fan['user_id'];
+                        $_data['object_id']=$options['object_id'];
+                        $_data['level']=2;//我的上级的间接粉丝
+                        if ($user['vip_group_id'] < 3 && $fanUser['vip_group_id'] >= 3 && $fan['is_distribute']) {
+                            $_data['is_distribute']=1;//我不是创投以上，我的上级是创投以上，则参与分销
+                        }else{
+                            $_data['is_distribute']=0;
+                        }
+                        $_data['add_time']=time();
+                        $fans_array[] = $_data;
+                        $data = array();
+                        $data['user_id']=$_data['user_id'];
+                        $data['object_id']=$_data['object_id'];
+                        $data['type']=2;
+                        $data['msg']='您有一位新的粉丝';
+                        $data['status']=1;
+                        $data['is_read']=0;
+                        $data['add_time']=time();
+                        $msg_array[] = $data;
+
+                        $rec_member=$this->Member->where(array('id'=>$fanUser['member_id']))->column('openid');//根据memberid找推荐人的openid来发送微信推送
+                        if($rec_member){
+                            sendWxTemplateMessages('SendBindInfo',array( 'wecha_id' => $rec_member,'href'=>get_current_Host().url('/Home/Income/myfans'), 'first' => '您有新的用户：'.$new_mobile, 'keyword1' =>$new_nick_name, 'keyword2' => $new_mobile, 'keyword3'=> date("Y-m-d H:i:s"),'remark' => '该用户刚刚注册，还没有成为创客，点击查看'));
+                        }
+                        unset($_data);
+                        unset($data);
+                    }
+                }
+                
+                Db::table('s_users_fans')->addAll($fans_array);
+                Db::table('s_msg_list')->addAll($msg_array);
+            }
+        }
+    }
+
+    public function changeRec($options=array())
+    {
+        //更改推荐人
+        //TODO:使用事务
+        $this->Fans->where(array('object_id'=>$options['object_id']))->delete();//TODO:给相关人员发信息
+        $this->addFans($options);
+    }
+    
+    public function nexus($options=array())
+    {
+        //计算会员分销
+        $directFan = $this->Fans->where(array('object_id'=>$options['user_id'],'level'=>1))->find();
+        //TODO:直接分佣
+        $is_in_give_count=$this->nexus_1(array(
+            'user_id'=>$options['user_id'],
+            'rec_user_id'=>$directFan['user_id'],
+            'vip_id'=>$options['vip_id'],
+            'level'=>$options['level'],
+            'money'=>$options['money'],
+            'order_sn'=>$options['order_sn'],
+            'vip_name'=>$options['vip_name']
+        ));
+
+        //间接上级
+        //todo 查询我能分销的间接上级 移到一级分佣中，因为二级分佣也要和是不是在300以内有关系，现在单纯地进行一级分佣直接反了100
+        if(!$is_in_give_count)//不在赠送范围之内才进行二级分佣，否则是全额返现
+        {
+            $fan = $this->Fans->where(array('object_id'=>$options['user_id'],'is_distribute'=>1))->find();
+                //去掉了间接的判断，因为现在的处理逻辑是先分40%，上级有分销权的人（上级创投，获得35%）
+                $this->nexus_2(array(
+                    'user_id'=>$options['user_id'],
+                    'rec_user_id'=>$fan['user_id'],
+                    'vip_id'=>$options['vip_id'],
+                    'level'=>$options['level'],
+                    'money'=>$options['money'],
+                    'order_sn'=>$options['order_sn'],
+                    'vip_name'=>$options['vip_name']
+                ));//二级分销计算
+        }
+    }
+    
+    public function nexus_1($options=array())
+    {
+        //1级分销计算
+        //        是否在可分配范围之内
+        //	      是
+        //		    全额返
+        //        否
+        //		    否则返40%
+        //        返省和市代理分佣，共10%
+        $user=$this->User->where(array('id'=>$options['user_id']))->find();
+        $rec_user=$this->User->where(array('id'=>$options['rec_user_id']))->find();//我的参与分销的上级
+        //推荐人会员等级
+        $vip_price=$options['money'];
+        $is_in_give=false;
+        $level='';
+        switch ($options['level']) {
+            case 1:
+                $level='创客';
+                if($rec_user['give_vip1_count']>0)
+                {
+                    $this->User->where(array('id'=>$options['rec_user_id']))->setDec('give_vip1_count',1);//赠送数量-1
+                    $is_in_give=true;
+                }
+                break;
+            case 2:
+                $level='小创投';
+                if($rec_user['give_vip2_count']>0)
+                {
+                    $this->User->where(array('id'=>$options['rec_user_id']))->setDec('give_vip2_count',1);//赠送数量-1
+                    $is_in_give=true;
+                }
+                break;
+            case 3:
+                $level='创投';
+                if($rec_user['give_vip3_count']>0)
+                {
+                    $this->User->where(array('id'=>$options['rec_user_id']))->setDec('give_vip3_count',1);//赠送数量-1
+                    $is_in_give=true;
+                }
+                break;
+            case 4:
+                $level='创业家';
+                if($rec_user['give_vip4_count']>0){
+                    $this->User->where(array('id'=>$options['rec_user_id']))->setDec('give_vip4_count',1);//赠送数量-1
+                $is_in_give=true;
+                }
+
+                break;
+            case 5:
+                $level='创业导师';
+			if($rec_user['give_vip5_count']>0) {
+                $is_in_give = true;
+                $this->User->where(array('id' => $options['rec_user_id']))->setDec('give_vip5_count', 1);//赠送数量-1
+            }
+                break;
+            default:
+                break;
+        }
+        if(!$is_in_give){
+            //赠送完按照1级比例提成需要 判断会员等级，推荐人是创投+获得75%，推荐人是创客，获得40%，同时结算省和市的分佣
+            $money=$vip_price*config('scale_1');
+            $data['is_give']=0;//赠送
+        }else{
+            //按照会员原价返佣
+            $money=$vip_price;
+            $data['is_give']=1;//赠送
+        }
+        $data['vip_id']=$options['vip_id'];
+        $data['vip_group']=$options['level'];
+        $data['user_id']=$rec_user['id'];
+        $data['object_id']=$options['user_id'];
+        $data['as']=1;//增加
+        $data['money']=$money;
+        $data['order_sn']=$options['order_sn'];
+        $data['msg']=$user['nick_name']."购买了[".$options['vip_name']."] —— 粉丝贡献";
+        $data['type']=1;
+        $data['add_time']=time();
+        $this->CapitalLog->insert($data);//资金记录插入
+        $this->User->where(array('id'=>$options['rec_user_id']))->setInc('money',$money);
+        //TODO:给新会员发推送消息 ，给一级分佣人发送模板消息
+
+        $themember=$this->Member->where(array('id'=>$user['member_id']))->find();
+        $recmember=$this->Member->where(array('id'=>$rec_user['member_id']))->find();
+        sendWxTemplateMessages('SendBindInfo',array( 'wecha_id' => $themember['openid'],'href'=>get_current_Host().url('/Home/User/usercenter'), 'first' => '您己成为洋小秘平台会员，您的会员等级是：'.$level, 'keyword1' =>$user['nick_name'], 'keyword2' => $themember['phone'], 'keyword3'=> date("Y-m-d H:i:s"),'remark' => '马上创建您的V网吧！'));
+        sendWxTemplateMessages('SendBindInfo',array( 'wecha_id' => $recmember['openid'],'href'=>get_current_Host().url('/Home/Income/income'), 'first' => '您有新的粉丝：'.$themember['phone'].'，等级是'.$level, 'keyword1' =>$user['nick_name'], 'keyword2' => $themember['phone'], 'keyword3'=> date("Y-m-d H:i:s"),'remark' => '您获得小秘币:'.$money));
+        
+        return $is_in_give;//返回是否300以外，以备计算二级分销
+    }
+    
+    public function nexus_2($options=array())
+    {
+        //2级分销计算
+        $rec_user=$this->User->where(array('id'=>$options['rec_user_id']))->find();//我的参与分销的上级
+        $rec_member=$this->Member->where(array('id'=>$rec_user['member_id']))->find();
+        $new_user=$this->User->where(array('id'=>$options['user_id']))->find();//新入的会员
+        if($rec_member) {
+            $vip_price = $options['money'];
+            $money = $vip_price * config('scale_2');
+            $data['reward'] = 0;
+            $data['vip_group'] = $options['level'];
+            $data['vip_id'] = $options['vip_id'];
+            $data['user_id'] = $rec_user['id'];
+            $data['object_id'] = $options['user_id'];
+            $data['as'] = 1;//增加
+            $data['money'] = $money;
+            $data['order_sn'] = $options['order_sn'];
+            $data['msg'] = "购买了[" . $options['vip_name'] . "] —— 用户贡献";
+            $data['type'] = 6;
+            $data['add_time'] = time();
+            $this->CapitalLog->insert($data);//资金记录插入
+            $this->User->where(array('id' => $options['rec_user_id']))->setInc('money', $money);
+            //TODO:给二级分佣人发送模板消息（己完成）
+            $new_mobile = substr($new_user['mobile'],0,3).'****'.substr($new_user['mobile'],7,4);
+            $new_nick_name = substr($new_user['nick_name'],0,3).'****'.substr($new_user['nick_name'],7,4);
+            sendWxTemplateMessages('SendBindInfo', array('wecha_id' => $rec_member['openid'], 'href' => get_current_Host() . url('/Home/Income/income'), 'first' => '您有新的用户：' . $new_mobile . '，等级是' . $options['vip_name'], 'keyword1' => $new_nick_name, 'keyword2' => $new_mobile, 'keyword3' => date("Y-m-d H:i:s"), 'remark' => '您获得小秘币:' . $money));
+        }
+        //TODO:给二级分佣人的上级创投（管理人）分佣5%
+        $MangerFan = $this->Fans->where(array('object_id'=>$rec_user['id'],'is_distribute'=>1))->find();
+        $MangerUser=$this->User->where(array('id'=>$MangerFan['user_id']))->find();//我的参与分销的上级
+        $MangerMember=$this->Member->where(array('id'=>$MangerUser['member_id']))->find();
+        if($MangerMember) {
+            $vip_price = $options['money'];
+            $money = $vip_price * config('scale_3');
+            $data['reward'] = 0;
+            $data['vip_group'] = $options['level'];
+            $data['vip_id'] = $options['vip_id'];
+            $data['user_id'] = $MangerFan['user_id'];
+            $data['object_id'] = $options['user_id'];//产生人还是新创客，而不是上级创投
+            $data['as'] = 1;//增加
+            $data['money'] = $money;
+            $data['order_sn'] = $options['order_sn'];
+            $data['msg'] = $new_user['nick_name'] . "购买了[" . $options['vip_name'] . ']他的上级创投[' . $rec_user['nick_name'] . ']是您的下属创投 —— 您获得业绩贡献';
+            $data['type'] = 7;//TODO:暂时先不改，1推荐直接2打赏红包3购买会员4视频打赏5会员续费,6、间接,7、管理 8 推荐直接市代9 推荐直接省代
+            $data['add_time'] = time();
+            $this->CapitalLog->insert($data);//资金记录插入
+            $this->User->where(array('id' => $MangerFan['user_id']))->setInc('money', $money);
+            //TODO:给管理人发送模板消息
+            sendWxTemplateMessages('SendBindInfo', array('wecha_id' => $MangerMember['openid'], 'href' => get_current_Host() . url('/Home/Income/income'), 'first' => '您有新的业绩贡献：' .$new_mobile . '，等级是' . $options['vip_name'], 'keyword1' => $new_nick_name, 'keyword2' => $new_mobile, 'keyword3' => date("Y-m-d H:i:s"), 'remark' => '您获得小秘币:' . $money));
+        }
+        //TODO:给省和市代理分佣各分5%并发模板消息
+    }
+
+    /**
+     * 年费分佣
+     */
+    public function year_money($options = array())
+    {
+        $rec_id = $this->Fans->where(array('object_id'=>$options['user_id'],'is_distribute'=>1))->column('user_id');//上级>=创投
+        if($rec_id) {
+            $user  = Db::table('s_member')->alias('m')
+                ->leftJoin(' s_user_detail u','u.member_id = m.id')
+                ->field('m.phone,u.nick_name,m.openid')
+                ->where(array('u.id'=>$options['user_id']))->find();
+            $rec_member = Db::table('s_member')->alias('m')
+                ->leftJoin(' s_user_detail u','u.member_id = m.id')
+                ->field('m.openid')->where(array('u.id'=>$rec_id))->find();
+            $vip_id = $this->User->where(array('id'=>$rec_id))->column('vip_id');
+            if($vip_id >3){
+                if($vip_id == 4){
+                    $money = 2;
+                }elseif($vip_id == 5){
+                    $money = 4;
+                }elseif($vip_id == 6){
+                    $money = 6;
+                }elseif($vip_id == 7){
+                    $money = 8;
+                }
+                $data['reward'] = 0;
+                $data['vip_group'] = $user['vip_group_id'];
+                $data['vip_id'] = $user['vip_id'];
+                $data['user_id'] = $rec_id;
+                $data['object_id'] = $options['user_id'];
+                $data['as'] = 1;//增加
+                $data['money'] = $money;
+                $data['order_sn'] = $options['order_sn'];
+                $data['msg'] = "年费贡献";
+                $data['type'] = 8;
+                $data['add_time'] = time();
+                $this->CapitalLog->insert($data);//资金记录插入
+                $this->User->where(array('id' => $rec_id))->setInc('money', $money);
+
+                //TODO:给支付年费的人发消息（己完成）
+                sendWxTemplateMessages('SendYearInfo', array('wecha_id' => $user['openid'], 'href' => get_current_Host() . url('/Home/User/usercenter'), 'first' => '您已续费会员成功!', 'keyword1' => $user['nick_name'], 'keyword2' => '365天', 'keyword3' => date("Y-m-d H:i:s")));
+                //TODO:给获得年费的人发送模板消息（己完成）
+                sendWxTemplateMessages('SendYearInfo', array('wecha_id' => $rec_member['openid'], 'href' => get_current_Host() . url('/Home/Income/income'), 'first' => '您有新的年费贡献', 'keyword1' => $user['nick_name'], 'keyword2' => '365天', 'keyword3' => date("Y-m-d H:i:s"), 'remark' => '您获得小秘币:' . $money));
+                if($vip_id != 7){
+                    $er_id = $this->Fans->where(array('object_id'=>$rec_id,'is_distribute'=>1))->column('user_id');//上级>=创投
+                    if($er_id){
+                        $rec = Db::table('s_member')->alias('m')->leftJoin(' s_user_detail u','u.member_id = m.id')
+                            ->field('m.openid')->where(array('u.id'=>$er_id))->find();
+                        $data['reward'] = 0;
+                        $data['vip_group'] = $user['vip_group_id'];
+                        $data['vip_id'] = $user['vip_id'];
+                        $data['user_id'] = $er_id;
+                        $data['object_id'] = $options['user_id'];
+                        $data['as'] = 1;//增加
+                        $data['money'] = 2;
+                        $data['order_sn'] = $options['order_sn'];
+                        $data['msg'] = "年费贡献";
+                        $data['type'] = 8;
+                        $data['add_time'] = time();
+                        $this->CapitalLog->insert($data);//资金记录插入
+                        $this->User->where(array('id' => $er_id))->setInc('money', 2);
+                        //TODO:给获得年费的人发送模板消息（己完成）
+                        sendWxTemplateMessages('SendYearInfo', array('wecha_id' => $rec['openid'], 'href' => get_current_Host() . url('/Home/Income/income'), 'first' => '您有新的年费贡献', 'keyword1' => $user['nick_name'], 'keyword2' => '365天', 'keyword3' => date("Y-m-d H:i:s"), 'remark' => '您获得小秘币:2'));
+                    }
+                }
+            }
+        }
+    } 
+}

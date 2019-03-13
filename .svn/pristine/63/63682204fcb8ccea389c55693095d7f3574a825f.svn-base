@@ -1,0 +1,771 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<!-- Link Swiper's CSS -->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+	<link rel="stylesheet" href="__HOME_JS__/whjs/js/jquery.fullPage.css">
+	<link rel="stylesheet" href="__HOME_JS__/whjs/js/animate.min.css">
+	<script src="__HOME_JS__/whjs/js/jquery.fullPage.js"></script>
+	<script src="__HOME_JS__/whjs/js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+	<!-- Demo styles -->
+	<style>
+		html,
+		body {
+			position: relative;
+			height: 100%;
+		}
+
+		.clearfix::after {
+			content: ".";
+			clear: both;
+			display: block;
+			overflow: hidden;
+			font-size: 0;
+			height: 0;
+		}
+
+		.fl {
+			float: left;
+		}
+
+		.fr {
+			float: right;
+		}
+
+
+		.section {
+			text-align: center;
+			font: 15px "Microsoft Yahei";
+			color: #fff;
+			overflow: hidden;
+		}
+
+		.text {
+			width: 67%;
+			height: auto;
+			position: relative;
+			font-size: 1rem;
+		}
+
+		.section0 .text {
+			position: relative;
+			left: -120%;
+		}
+
+		.section1 .text {
+			position: relative;
+			left: -120%;
+		}
+
+		.section2 .text {
+			position: relative;
+			bottom: -120%;
+		}
+
+		.section3 .text {
+			position: relative;
+			display: none;
+		}
+
+		.random .text {
+			position: relative;
+			display: none;
+
+		}
+
+		@keyframes down {
+			0% {
+				transform: translateY(0px);
+			}
+
+			25% {
+				transform: translateY(-5px);
+			}
+
+			35% {
+				transform: translateY(-7px);
+			}
+
+			50% {
+				transform: translateY(-10px);
+			}
+
+			75% {
+				transform: translateY(-12px);
+			}
+
+			100% {
+				transform: translateY(-15px)
+			}
+
+			;
+		}
+
+		.up {
+			width: 25px;
+			height: auto;
+			position: fixed;
+			z-index: 2;
+			bottom: 25px;
+			left: 50%;
+			margin-left: -12.5px;
+			animation: down 0.8s infinite linear;
+		}
+
+		.up img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		.share_text {
+			width: 5rem;
+			height: 2.3rem;
+			line-height: 2.3rem;
+			background: rgba(0, 0, 0, .6);
+			position: fixed;
+			z-index: 999;
+			top: 1rem;
+			right: 0.5rem;
+			text-align: center;
+			color: #fff;
+			border-radius: 2rem;
+		}
+
+		.share_text .box_ {
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		.share_text img {
+			width: 1rem;
+			height: 1rem;
+			position: absolute;
+			top: 50%;
+			left: 15%;
+			margin-top: -0.5rem;
+		}
+
+		.share_text p {
+			height: 1rem;
+			line-height: 1rem;
+			color: #fff;
+			position: absolute;
+			top: 50%;
+			margin-top: -0.5rem;
+			right: 20%;
+		}
+
+		.tips {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			left: 0;
+			z-index: 999;
+			top: 0;
+			background: rgba(0, 0, 0, .6);
+			display: none;
+		}
+
+		.tips .content {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			color: #fff;
+		}
+
+		.content .Arrow {
+			display: block;
+			position: absolute;
+			top: .35rem;
+			right: 1.7rem;
+			width: 6rem;
+			height: 4rem;
+		}
+
+		.content p {
+			color: #fff;
+		}
+
+		.content .tip_one {
+			position: absolute;
+			width: 16rem;
+			font-size: 1.2rem;
+			top: 10%;
+			left: 50%;
+			margin-left: -8rem;
+
+		}
+
+		.content .tips_two {
+			position: absolute;
+			width: 18rem;
+			height: 3rem;
+			line-height: 3rem;
+			font-size: 1.2rem;
+			top: 17%;
+			left: 50%;
+			margin-left: -8rem;
+		}
+
+		.content .tips_two img {
+			width: 2.8rem;
+			height: 2.8rem;
+		}
+
+		.content .tips_two .fl+.fl {
+			margin-left: 10px;
+		}
+
+		.content .tips_three {
+			position: absolute;
+			width: 18rem;
+			height: 3rem;
+			line-height: 3rem;
+			font-size: 1.2rem;
+			top: 29%;
+			left: 50%;
+			margin-left: -8rem;
+		}
+
+		.tips_three img {
+			width: 2.8rem;
+			height: 2.8rem;
+		}
+
+		.tips_three .fl+.fl {
+			margin-left: 10px;
+		}
+
+		.konw {
+			width: 10rem;
+			height: 3rem;
+			line-height: 3rem;
+			text-align: center;
+			border: 2px solid #fff;
+			border-radius: 2rem;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -5rem;
+			margin-top: -1.5rem;
+		}
+
+		.choise {
+			width: 5rem;
+			height: 2.5rem;
+			position: fixed;
+			bottom: 1rem;
+			right: 1rem;
+			z-index: 999;
+			border-radius: .2rem;
+			overflow: hidden;
+
+		}
+
+		.choise a {
+			display: block;
+			width: 100%;
+			height: 100%;
+			color: #fff;
+			text-align: center;
+			line-height: 2.5rem;
+			background: #32CEA0;
+		}
+	</style>
+
+
+</block>
+
+<block name="body">
+
+	<body>
+
+		<div id="fullpage">
+			<!-- 相册展示的数据 -->
+		</div>
+
+
+		<div class="up">
+			<img src="/Public/Home/images/uptouch.png" alt="">
+		</div>
+
+		<div class="share_text">
+			<div class="box_">
+				<img src="/Public/Home/images/2x.share_msg.png" alt="">
+				<p> 分享</p>
+			</div>
+		</div>
+
+
+		<div class="tips">
+			<div class="content">
+
+
+				<img class="Arrow" src="/Public/Home/images/inco_youshang@2x.png" alt="">
+				<p class="tip_one">1.点击右上角</p>
+
+
+				<div class="tips_two clearfix">
+					<div class="fl">2.点击</div>
+					<img class="fl" src="/Public/Home/images/inco_fasong@2x.png" alt="">
+					<div class="fl">或者</div>
+					<img class="fl" src="/Public/Home/images/2x-friend.png" alt="">
+					<div class="fl">分享</div>
+
+				</div>
+
+
+				<div class="tips_three clearfix">
+					<div class="fl">3.点击</div>
+					<img class="fl" src="/Public/Home/images/inco_lianjie@2x.png" alt="">
+					<div class="fl">复制链接</div>
+				</div>
+				<div class="konw">我知道了</div>
+				<audio id="audio" src=""></audio>
+			</div>
+		</div>
+
+
+
+
+
+		<if condition="$hidden eq 1">
+
+
+			<else />
+
+			<!-- 注册v网 -->
+			<div class="choise">
+				<a href="javascript:;">选定</a>
+				<!-- /index.php?s=/Home/Sharingplatform/PerfectInformation&type=2&href=/Home/Share/preview -->
+			</div>
+
+
+		</if>
+
+
+
+
+
+		<script>
+			//点击分享
+			$(".share_text").on("click", function () {
+				$(this).hide();
+				$(".tips").show();
+			})
+
+
+
+
+			function GetQueryString(name) {
+				if (window.location.href.indexOf('?') > -1) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+					var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+					if (r != null) return unescape(r[2]);
+				}
+				return ''; //便于容错处理
+			}
+
+
+
+
+			var userid = GetQueryString("userid");
+
+
+			console.log(userid+"lelele");
+
+
+
+			//我知道了
+			$(".konw").on("click", function () {
+				$(".tips").hide();
+				$(".share_text").show();
+			});
+
+
+
+
+			var sid = '{$sid}';
+			var unionid = '{$unionid}';
+
+
+			console.log(unionid);
+
+			var mid = '{$mid}';
+			var pids = '{$pids}';
+			var cids = '{$cids}';
+
+
+            console.log(sid+"tttttt");
+
+
+			if (mid == 1) {
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					async: false,
+					data: {
+						unionid: unionid,
+						my_id: sid
+					},
+					success: function (result) {
+
+
+						console.log(result);
+
+
+						$("#audio").attr("src", result.AppendData.music_url);
+						wx.ready(function () {
+							$("#audio")[0].play()
+						})
+
+						if (result.ResultType == 0) {
+							var htmlstr = '';
+							$.each(result.AppendData.content_detail, function (idx, item) {
+								if (pids) {
+									if (item.id == pids) {
+										htmlstr += '<div class="section section' + (idx + 1) + '" style="background:url(' + item.img +
+											') no-repeat;background-size:100% 100%">';
+										htmlstr += '	<div class="text animated" style="color:' + item.font_color +
+											';text-align:left" data-x="' + (item.font_x * 1.25) +
+											'" data-y="' + (item.font_y * 1.28) + '">' + item.content + '</div>';
+										htmlstr += '</div>';
+									}
+								}
+								if (pids == 0) {
+									htmlstr += '<div class="section section' + (idx + 1) + '" style="background:url(' + item.img +
+										') no-repeat;background-size:100% 100%">';
+									htmlstr += '	<div class="text animated" style="color:' + item.font_color +
+										';text-align:left" data-x="' + (item.font_x * 1.25) +
+										'" data-y="' + (item.font_y * 1.28) + '">' + item.content + '</div>';
+									htmlstr += '</div>';
+
+								}
+
+							});
+
+
+
+							$("#fullpage").append(htmlstr);
+							$(".section").each(function (i, e) {
+								if (i > 2) {
+									$(this).addClass("random");
+								}
+								if (i <= 1) {
+									$(".up").hide()
+								} else {
+									$(".up").show()
+								}
+
+							})
+
+							function randomnum() {
+								var arr = ['rotateIn', 'flip', 'bounceInDown', 'bounce', 'zoomIn', 'jackInTheBox', 'flipInX',
+									'rubberBand', 'swing', 'tada', 'slideInUp', 'slideInDown', 'zoomInDown', 'fadeInDown',
+									'rotateInDownLeft', 'rotateInUpRight', 'lightSpeedIn'
+								];
+								var random = Math.floor(Math.random() * arr.length + 1) - 1;
+								return arr[random];
+
+							}
+
+
+							$('#fullpage').fullpage({
+								verticalCentered: false,
+								afterRender: function () {
+
+									var x = $('.section1').find(".text").attr('data-x');
+									var y = $('.section1').find(".text").attr('data-y');
+									$('.section1').find(".text").delay(500).addClass("rotateIn").animate({
+										top: y + "px",
+										left: x + "px"
+									}, 1000, function () {
+										$('.section1').find(".text").removeClass("rotateIn");
+									});
+								},
+
+
+								afterLoad: function (anchorLink, index) {
+									if (index == 1) {
+										var x = $('.section1').find(".text").attr('data-x');
+										var y = $('.section1').find(".text").attr('data-y');
+										$('.section1').find(".text").delay(500).addClass("rotateIn").animate({
+											left: x + "px",
+											top: y + "px"
+										}, 1000)
+									}
+									if (index == 2) {
+										var x = $('.section2').find(".text").attr('data-x');
+										var y = $('.section2').find(".text").attr('data-y');
+										$('.section2').find('.text').addClass("rubberBand").delay(500).animate({
+											top: y + "px",
+											left: x + "px"
+										}, 1000);
+									}
+									if (index == 3) {
+										var x = $('.section3').find(".text").attr('data-x');
+										var y = $('.section3').find(".text").attr('data-y');
+										$('.section3').find('.text').fadeIn(500).addClass("rubberBand").delay(500).animate({
+											top: y + "px",
+											left: x + "px"
+										}, 1000);
+									}
+
+									if (index > 3) {
+										var x = $('#fullpage .active').find(".text").attr('data-x');
+										var y = $('#fullpage .active').find(".text").attr('data-y');
+										var randomclass = randomnum();
+										console.log(randomclass)
+										$(".random").find('.text').fadeIn(500).delay(500).addClass(randomclass).animate({
+											top: y + "px",
+											left: x + "px"
+										}, 1000, function () {
+											$(this).removeClass(randomclass)
+										})
+									}
+
+									if (index == $('.section').length) {
+										$(".up").hide()
+									} else {
+										$(".up").show()
+									}
+
+
+
+								},
+								onLeave: function (index, direction) {
+									if (index == 1) {
+										$('.section1').find(".text").delay(500).animate({
+											left: '-120%',
+											top: '0px'
+										});
+									}
+									if (index == 2) {
+										$('.section2').find('.text').delay(500).animate({
+											bottom: '-120%',
+										}, 1500, function () {
+											$(this).css("top", "auto");
+										});
+									}
+									if (index == 3) {
+										$('.section3').find('.text').delay(500).fadeOut(500).animate({
+											top: '0px'
+										})
+									}
+
+									if (index > 3) {
+										$(".random").find('.text').fadeOut().animate({
+											top: '0px',
+										})
+									}
+
+								}
+							});
+
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+			}
+
+			if (mid == 2) {
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "index.php?s=/Api/IndexApi/get_album_list", //url 
+					async: false,
+					data: {
+						unionid: unionid,
+						model_id: sid
+					},
+
+					success: function (result) {
+
+						console.log(result);
+
+
+						$("#audio").attr("src", result.AppendData.music_url);
+						wx.ready(function () {
+							$("#audio")[0].play()
+						})
+
+						if (result.ResultType == 0) {
+							var htmlstr = '';
+							$.each(result.AppendData.content_detail, function (idx, item) {
+								htmlstr += '<div class="section section' + idx + '" style="background:url(' + item.img +
+									') no-repeat;background-size:100% 100%">';
+								htmlstr += '	<div class="text">' + item.content + '</div>';
+								htmlstr += '</div>';
+
+							});
+
+
+
+							console.log(htmlstr);
+
+							$("#content").append(htmlstr);
+
+						}
+					},
+					error: function () {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+			}
+
+
+
+		</script>
+
+		<script>
+
+            $(function() {
+                var share_url = "{$share_url}";
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST", //方法类型
+                    dataType: "json", //预期服务器返回的数据类型
+                    url: "index.php?s=/Api/WeShare/getSignPackage", //url
+                    data:{share_url:share_url},
+                    async: true,
+                    success: function(result) {
+
+                        wx.config({
+                            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                            appId: result.AppendData.appId,
+                            timestamp: result.AppendData.timestamp,
+                            nonceStr: result.AppendData.nonceStr,
+                            signature: result.AppendData.signature,
+                            jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                                'checkJsApi',
+                                'onMenuShareTimeline', //
+                                'onMenuShareAppMessage',
+                                'onMenuShareQQ',
+                                'onMenuShareWeibo',
+                                'getLocation'
+                            ]
+                        });
+
+
+                        wx.ready(function () {
+                            //分享到朋友圈
+                            wx.onMenuShareTimeline({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: '{$imgUrl}', // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享给朋友
+                            wx.onMenuShareAppMessage({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: '{$imgUrl}', // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ
+                            wx.onMenuShareQQ({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到腾讯微博
+                            wx.onMenuShareWeibo({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            //分享到QQ空间
+                            wx.onMenuShareQZone({
+                                title: "{$sharetitle}", // 分享链接
+                                desc: "{$desc}", // 分享链接
+                                link: "{$link_url}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                                imgUrl: "{$imgUrl}", // 分享链接
+                                success: function () {
+                                    // 用户确认分享后执行的回调函数
+
+                                },
+                                cancel: function () {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+
+                        });
+
+                    },
+                    error: function() {
+                        alert("服务器繁忙，请稍后再试！");
+                    }
+                });
+
+            });
+
+		</script>
+
+
+
+		<script>
+			function GetQueryString(name) {
+				if (window.location.href.indexOf('?') > -1) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+					var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+					if (r != null) return unescape(r[2]);
+				}
+				return ''; //便于容错处理
+			}
+
+			var vid = GetQueryString("vid");
+			var userid = GetQueryString("userid");
+
+			console.log(vid);
+			console.log(userid);
+
+
+			$(".choise a").attr("href","/index.php?s=/Home/Sharingplatform/PerfectInformation&type=2&href=/Home/Share/preview/id/" + vid + "/mid/1/uid/" +userid + "");
+
+		</script>
+	</body>
+</block>

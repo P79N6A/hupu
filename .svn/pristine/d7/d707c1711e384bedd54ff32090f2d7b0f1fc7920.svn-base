@@ -1,0 +1,467 @@
+<?php
+
+/**
+
+ * Created by PhpStorm.
+
+ * User: 邱明振
+
+ * Date: 2017/8/27
+
+ * Time: 22:28
+
+ */
+
+
+
+namespace Admin\Controller;
+
+use Common\Controller\AdminBaseController;
+
+
+
+/**
+ * 相册管理
+ * Class PosterControoler
+ * @package Admin\Controller
+ */
+class AlbumController extends AdminBaseController
+{
+    /**
+     * 分类列表
+     */
+    public function albumType() {
+        $name = I('get.name', '', 'trim');
+        $map = [];
+        if ( $name != '' ) $map['name'] = ['like', "%{$name}%"];
+        $list = $this->lists('album_type', $map, 'id asc', null);
+        // var_dump($list);exit;
+        $this->assign('_list', $list);
+        $this->display();
+    }
+    /**
+     * 添加与编辑相册分类
+     */
+    public function addAlbumType() {
+        if ( IS_POST ) {
+            $rules = [
+                ['name', 'require', '分类名称不能为空'],
+            ];
+            $gcardTypesMod = M('album_type');
+            $data = $gcardTypesMod->validate($rules)->create();
+            if ( !$data ) $this->error( $gcardTypesMod->getError() );
+            if ( $data['id'] > 0 ) {
+                $data['title']=$_POST['name'];
+                //编辑
+                if ( $gcardTypesMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Album/albumType'));
+                $this->error( $gcardTypesMod->getError() );
+            } else {
+                //添加
+                unset( $data['id'] );
+                $data['addtime'] = time();
+                $data['title'] = $_POST['name'];
+                if ( $gcardTypesMod->add($data) ) $this->success('添加成功', U('Album/albumType') );
+                $this->error( $gcardTypesMod->getError() );
+            }
+        } else {
+            $id = I('get.id', 0);
+            $title = '添加分类';
+            if ( $id ) {
+                $res = M('album_type')->where(['id' => $id])->find();
+                // var_dump($res);exit;
+                $this->assign('res', $res);
+                $title = '编辑分类';
+            }
+            $this->assign('title', $title);
+            $this->display();
+        }
+    }
+    /**
+     * 删除相册分类
+     */
+    public function delAlbumType() {
+        $id = I('id', 0, 'intval');
+        if ( $id <= 0 ) $this->error('参数错误');
+        if ( M('album_type')->delete($id) ) $this->success('删除成功');
+        $this->error('删除失败');
+    }
+    /**
+     * 用户相册列表
+     */
+    public function albums() {
+        $fields = ['a.*', 'u.nick_name as user_name', 't.title as type_name'];
+        $gcardMod = M('user_album')->alias('a')->join('left join s_user_info u ON u.id = a.user_id')->join('left join s_album_type t ON t.id = a.type_id');
+        $list = $this->lists($gcardMod, $map, 'id desc', null,$fields);
+        $this->assign('list', $list);
+        $this->display();
+    }
+
+    /**
+     * 用户相册详情
+     */
+
+    public function albumTail(){
+        $id=I('id',0,'intval');
+        $albumtail=M("user_album_detail")->where(array('id'=>$id))->select();
+        foreach($albumtail as $k=>$v){
+            $username=M('user_info')->where(array('id'=>$v['user_id']))->field('nick_name')->select();
+            $typename=M('album_type')->where(array('id'=>$v['sort']))->field('title')->select();
+            $albumtail[$k]['user_name']=$username[0]['nick_name'];
+            $albumtail[$k]['type_name']=$typename[0]['title'];
+        }
+        $this->assign('list',$albumtail);
+        $this->display();
+    }
+
+    /**
+     * 模板相册列表
+     */
+    public function albumTpl() {
+        $fields = ['a.*', 't.title as type_name', 'm.name as music_name'];
+        $gcardMod = M('album')->alias('a')->join('left join s_album_type t ON t.id = a.type_id')->join('left join s_music m ON m.id = a.music_id');
+        $list = $this->lists($gcardMod, $map, 'id desc', null,$fields);
+        $this->assign('list', $list);
+        $this->display();
+    }
+    /**
+     * 模板相册详情
+     */
+    public function albumModelTail() {
+        $id=I('id',0,'intval');
+        $albumtail=M("album_detail")->where(array('album_id'=>$id))->order('sort asc')->select();
+        foreach($albumtail as $k=>$v){
+            $username=M('user_info')->where(array('id'=>$v['user_id']))->field('nick_name')->select();
+            $albumtail[$k]['user_name']=$username[0]['nick_name'];
+        }
+        $this->id=$id;
+        $this->assign('list',$albumtail);
+        $this->display();
+    }
+
+    /**
+     * 添加与编辑相册模板
+     */
+    public function addAlbumTpl() {
+        if ( IS_POST ) {
+            $rules = [
+                ['name', 'require', '分类名称不能为空'],
+            ];
+            $gcardMod = M('album');
+            $data = $gcardMod->validate($rules)->create();
+            if ( !$data ) $this->error( $gcardMod->getError() );
+            //图片上传
+            $img = '';
+            if($_FILES['pic']['name'] != null){
+                if(substr($_SERVER['HTTP_HOST'],0,1) == 'w'){
+                    $start_name = 'photo';
+                }else{
+                    $start_name = 'test';
+                }
+                $end_name = trim(strrchr($_FILES['pic']['name'], '.'),'.');
+                if($end_name == 'jpeg'){
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.jpg';
+                }else{
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.'.$end_name;
+                }
+                $Upload = new \Admin\Controller\UploadsController();
+                $img = $Upload->upload_video_to_aliyun($save_name,$_FILES['pic']);
+            }
+            if ( $data['id'] > 0 ) {
+                //编辑
+                if ( $img ) {
+                    $data['cover_img'] = $img;
+                }
+                if ( $gcardMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Album/albumTpl'));
+                $this->error( $gcardMod->getError() );
+            } else {
+                //添加
+                if ( !$img ) $this->error('请上传图片');
+                unset( $data['id'] );
+                $data['cover_img'] = $img;
+                $data['addtime'] = time();
+                $data['share_title'] = $_POST['share_title'];
+                $data['share_content'] = $_POST['share_content'];
+                $data['type_id'] = $_POST['type_id'];
+                $data['music_id'] = $_POST['music_id'];
+                if ( $gcardMod->add($data) )     $this->success('添加成功', U('Album/albumTpl') );
+                $this->error( $gcardMod->getError() );
+            }
+        } else {
+            $id = I('get.id', 0);
+            $title = '添加相册';
+            if ( $id ) {
+                $res = M('album')->where(['id' => $id])->find();
+                $this->assign('res', $res);
+                $title = '编辑相册';
+            }
+            //查找海报分类
+            $photo_type = M('album_type')->select();
+            $music_name = M('music')->select();
+            $this->assign('photo_type', $photo_type);
+            $this->assign('music_name', $music_name);
+            $this->assign('title', $title);
+            $this->display();
+        }
+    }
+    /**
+     * 删除相册
+     */
+    public function delAlbum() {
+
+
+
+        $id = I('id', 0, 'intval');
+
+        // $id= $_GET['id'];
+
+        if ( $id <= 0 ) $this->error('参数错误');
+
+
+
+        if ( M('album')->delete($id)){
+
+            $delData= M('album_detail')->where(array('album_id'=>$id))->select();
+
+            foreach($delData as $k=>$v){
+
+                $k=M('album_detail')->delete($v['id']);
+
+            }
+
+            $this->success('删除成功');
+
+        }
+
+        $this->error('删除失败');
+
+
+
+    }
+
+
+
+    /**
+
+     * 添加与编辑相册详情
+
+     */
+
+    public function addAlbumTail() {
+
+        $sid = I('get.sid', 0);
+
+        $this->sid=$sid;
+
+        if ( IS_POST ) {
+
+            // var_dump($_POST);exit;
+
+            $gcardMod = M('album_detail');
+
+            $data = $gcardMod->validate($rules)->create();
+
+            if ( !$data ) $this->error( $gcardMod->getError() );
+
+
+
+            //图片上传
+
+            $img = '';
+
+            if($_FILES['pic']['name'] != null){
+
+                //     $upload = new \Think\Upload();// 实例化上传类
+
+                //     $upload->maxSize   =     31457280 ;// 设置附件上传大小
+
+                //     $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+
+                //     $upload->rootPath  =      './Uploads/Album/'; // 设置附件上传根目录
+
+                //     $upload->savePath  =      ''; // 设置附件上传（子）目录
+
+                //     // 上传文件
+
+                //     $info   =   $upload->upload();
+
+                //     if(!$info) {// 上传错误提示错误信息
+
+                //         $this->error($upload->getError());
+
+                //     }else{// 上传成功 获取上传文件信息
+
+                //         foreach($info as $file){
+
+                //              $img = 'https://wap.yxm360.com/Uploads/Album/'.$file['savepath'].$file['savename'];
+
+                //         }
+
+                //     }
+
+                if(substr($_SERVER['HTTP_HOST'],0,1) == 'w'){
+
+                    $start_name = 'photo';
+
+                }else{
+
+                    $start_name = 'test';
+
+                }
+
+                $end_name = trim(strrchr($_FILES['pic']['name'], '.'),'.');
+
+                if($end_name == 'jpeg'){
+
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.jpg';
+
+                }else{
+
+                    $save_name = $start_name.'/'.date('Ymd').'/'.time().rand(1,9999).'.'.$end_name;
+
+                }
+
+                $Upload = new \Admin\Controller\UploadsController();
+
+                $img = $Upload->upload_video_to_aliyun($save_name,$_FILES['pic']);
+
+//                 if($res->rt){
+//
+//                     $img = str_replace(C('UPLOADS_IMAGE')['name1'],C('UPLOADS_IMAGE')['name2'],$res->objUrl);
+//
+//                 }
+
+            }
+
+
+
+            if ( $data['id'] > 0 ) {
+
+                //编辑
+
+                if ( $img ) {
+
+                    // unlink($data['img']);
+
+                    $data['img'] = $img;
+
+                }
+
+                // var_dump($_POST);exit;
+
+                if ( $gcardMod->where(['id' => $data['id']])->save($data) !== false ) $this->success('编辑成功', U('Album/albumModelTail',array('id'=>$_POST['sid'])));
+
+                $this->error( $gcardMod->getError() );
+
+
+
+            } else {
+
+
+
+                //添加
+
+                if ( !$img ) $this->error('请上传图片');
+
+                unset( $data['id'] );
+
+
+
+                $data['img'] = $img;
+
+                $data['addtime'] = time();
+
+
+
+                $data['content'] = $_POST['content'];
+
+                $data['font_color'] = $_POST['font_color'];
+
+                $data['font_x'] = $_POST['font_x'];
+
+                $data['font_y'] = $_POST['font_y'];
+
+                $data['album_id'] =$_POST['sid'];
+
+                $data['sort'] =$_POST['sort'];
+
+                // var_dump($data);exit;
+
+                // var_dump($data);exit;
+
+                if ( $gcardMod->add($data) )     $this->success('添加成功', U('Album/albumModelTail',array('id'=>$_POST['sid'])) );
+
+                $this->error( $gcardMod->getError() );
+
+            }
+
+
+
+        } else {
+
+
+
+            $id = I('get.id', 0);
+
+            $this->id=$id;
+
+            $title = '图片添加';
+
+            if ( $id ) {
+
+                $res = M('album_detail')->where(['id' => $id])->find();
+
+                $this->assign('res', $res);
+
+                // var_dump($res);exit;
+
+                $title = '图片编辑';
+
+            }
+
+
+
+            //查找海报分类
+
+            $this->assign('title', $title);
+
+            $this->display();
+
+
+
+        }
+
+
+
+    }
+
+
+
+    /**
+
+     * 删除相册图片
+
+     */
+
+    public function delAlbumImg() {
+
+
+
+        $id = I('id', 0, 'intval');
+
+        // $id= $_GET['id'];
+
+        if ( $id <= 0 ) $this->error('参数错误');
+
+
+
+        if ( M('album_detail')->delete($id) ) $this->success('删除成功');
+
+        $this->error('删除失败');
+
+
+
+    }
+
+
+
+}

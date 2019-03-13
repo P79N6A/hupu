@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+		<script src="/Public/Home/js/whjs/js/newrem.js"></script>
+		<link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+		<link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+		<script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+		<title>推广文章</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body,
+			html {
+				background: #fff;
+				padding-bottom: .5rem;
+			}
+			
+			.tab {
+				width: 100%;
+				height: 0.33rem;
+				display: flex;
+				border-bottom: 1px solid #eeeeee;
+				background: #fff;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 1000;
+			}
+			
+			.tab .item {
+				flex: 1;
+				color: #777777;
+				text-align: center;
+				line-height: 0.25rem;
+				position: relative;
+				font-size: 0.16rem;
+				font-weight: 550;
+			}
+			
+			.nav-active {
+				color: #32CEA0 !important;
+			}
+			
+			.item p {
+				margin: .03rem 0;
+			}
+			
+			p {
+				font-size: 14px;
+			}
+			
+			.item .line {
+				width: .3rem;
+				height: 2px;
+				background: #32CEA0;
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				margin-left: -.15rem;
+				display: none;
+			}
+			
+			.item p {
+				margin: .03rem 0;
+			}
+			
+			.acticle_box {
+				width: 100%;
+				background: #fff;
+				margin-top: 0.33rem;
+			}
+			
+			.art_cen {
+				width: 100%;
+				height: auto;
+				background: #fff;
+			}
+			
+			.acticle_box .acticle-item {
+				width: 100%;
+				height: 0.88rem;
+				padding: .1rem .1rem;
+				display: block;
+				box-sizing: border-box;
+				font-size: .12rem;
+				border-bottom: 0.01rem solid #f6f6f6;
+			}
+			
+			.acticle_box .acticle-item .item-left {
+				width: 30%;
+				height: 100%;
+			}
+			
+			.acticle_box .acticle-item .item-right {
+				width: 70%;
+				height: 100%;
+				padding-left: .1rem;
+				box-sizing: border-box;
+			}
+			
+			.acticle_box .acticle-item .item-right .title {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				margin-bottom: .1rem;
+			}
+			
+			.acticle_box .acticle-item .item-left img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.date {
+				width: 100%;
+				height: .2rem;
+				color: #777777;
+			}
+			
+			.time-box-left img {
+				width: .13rem;
+				height: .09rem;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.045rem;
+			}
+			
+			.time-box-left p {
+				width: .8rem;
+				white-space: nowrap;
+				padding-left: .2rem;
+				box-sizing: border-box;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.time-box-right img {
+				width: .13rem;
+				height: .13rem;
+				position: absolute;
+				top: 50%;
+				left: .1rem;
+				margin-top: -0.065rem;
+			}
+			
+			.time-box-right p {
+				width: 1.5rem;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				padding-left: .3rem;
+				box-sizing: border-box;
+			}
+			
+			.time-box-left,
+			.time-box-right {
+				position: relative;
+			}
+			
+			.look-all {
+				width: 100%;
+				height: .5rem;
+				display: block;
+				position: relative;
+			}
+			
+			.look-all p {
+				position: absolute;
+				top: 50%;
+				height: .22rem;
+				width: .8rem;
+				margin-top: -.11rem;
+				left: 50%;
+				margin-left: -.4rem;
+				text-align: center;
+				font-size: .14rem;
+				color: #777777;
+			}
+			
+			.look-all img {
+				width: .1rem;
+				height: .12rem;
+				position: absolute;
+				top: 50%;
+				left: 60%;
+				margin-top: -0.065rem;
+			}
+			
+			#loadId {
+				display: none;
+			}
+			
+			.loading {
+				width: 100%;
+				height: 0.65rem;
+				text-align: center;
+				display: block;
+				color: #333;
+				font-size: .12rem;
+				margin-top: 10px;
+				z-index: 1000;
+			}
+			
+			@-webkit-keyframes change {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			.loading>img {
+				width: .12rem;
+				height: .125rem;
+				animation: change 3s linear infinite;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="tab vague">
+			<div class="item nav-active" data-id="1">
+				<p>热门</p>
+				<div class="line" style="display:block;"></div>
+			</div>
+			<div class="item" data-id="2">
+				<p>最新</p>
+				<div class="line"></div>
+			</div>
+			<div class="item" data-id="3">
+				<p>推荐</p>
+				<div class="line"></div>
+			</div>
+		</div>
+		<!-- 文章列表 -->
+		<div class="acticle_box vague">
+			<div class="art_cen">
+
+			</div>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+		<script>
+			//热门文章渲染
+			var unionid = '{$unionid}';
+			var lista = "";
+			var length = 0;
+			$.ajax({
+				type: 'post',
+				url: '/index.php?s=/Api/SquareApi/article_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					type: 1,
+					start: 0,
+					length: 10
+				},
+
+				success: function(res) {
+					//			console.log(res)
+					if(res.ResultType == 0) {
+						$.each(res.AppendData, function(c, d) {
+							lista += '<a class="acticle-item clearfix" href="javascript:;" data-id="' + d.id + '" target="_blank">'
+							lista += '<div class="item-left fl">'
+							lista += '<img src="' + d.cover_img + '" alt="">'
+							lista += '</div>'
+							lista += '<div class="item-right fl">'
+							lista += '<p class="title">' + d.title + '</p>'
+							lista += '<div class="date">'
+							lista += '<div class=" time-box-left fl">'
+							lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">'
+							lista += '<p class="fr">' + d.visit + '</p>'
+							lista += '</div>'
+							lista += '<div class=" time-box-right fl">'
+							lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">'
+							lista += '<p class="fr">' + d.addtime + '</p>'
+							lista += '</div>'
+							lista += '</div>'
+							lista += '</div>'
+							lista += '</a>'
+						})
+						$(".art_cen").html(lista)
+					}
+
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+			var type = ""
+			$(".item").on("click", function() {
+				$(this).addClass("nav-active").siblings().removeClass("nav-active")
+				$(this).find(".line").show().parent().siblings().find(".line").hide();
+				type = $(this).attr("data-id");
+
+				//文章渲染
+				var unionid = "{$unionid}";
+				var lista = ""
+				var length = 0;
+				console.log(type)
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/SquareApi/article_list',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						type: type,
+						start: 0,
+						length: 10,
+					},
+					success: function(res) {
+						console.log(res)
+						if(res.ResultType == 0) {
+
+							$.each(res.AppendData, function(c, d) {
+								lista += '<a class="acticle-item clearfix" href="javascript:;" data-id="' + d.id + '" target="_blank">'
+								lista += '<div class="item-left fl">'
+								lista += '<img src="' + d.cover_img + '" alt="">'
+								lista += '</div>'
+								lista += '<div class="item-right fl">'
+								lista += '<p class="title">' + d.title + '</p>'
+								lista += '<div class="date">'
+								lista += '<div class=" time-box-left fl">'
+								lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">'
+								lista += '<p class="fr">' + d.visit + '</p>'
+								lista += '</div>'
+								lista += '<div class=" time-box-right fl">'
+								lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">'
+								lista += '<p class="fr">' + d.addtime + '</p>'
+								lista += '</div>'
+								lista += '</div>'
+								lista += '</div>'
+								lista += '</a>'
+							})
+							$(".art_cen").html(lista);
+						}
+						lista = ""
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+
+			})
+
+			//文章上拉加载
+			var scrollFlag = true;
+
+			$(window).scroll(function() {
+				//已经滚动到上面的页面高度
+				var scrollTop = $(this).scrollTop();
+				var lista = "";
+				//页面高度
+				var scrollHeight = $(document).height();
+				//浏览器窗口高度
+				var windowHeight = $(this).height();
+				//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				if(!scrollFlag) {
+					return false;
+				}
+				console.log(scrollTop + windowHeight)
+				console.log(scrollHeight)
+				if(scrollTop + windowHeight + 1 >= scrollHeight) {
+					length += 10;
+					//					console.log(length)
+					scrollFlag = false;
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/SquareApi/article_list',
+						dataType: 'json',
+						data: {
+							unionid: unionid,
+							start: length,
+							length: 10,
+							type: type
+						},
+						beforeSend: function() {
+							$(".loading").show();
+						},
+						success: function(res) {
+							console.log(res);
+							scrollFlag = true;
+							$(".loading").hide();
+
+							if(res.AppendData.length <= 0) {
+								$(".art_cen").append("<div class='loading'>我也是有底线的哟！</div>");
+								scrollFlag = false;
+							}
+							if(res.ResultType == 0) {
+								$.each(res.AppendData, function(c, d) {
+									lista += '<a class="acticle-item clearfix" href="javascript:;" data-id="' + d.id + '" target="_blank">'
+									lista += '<div class="item-left fl">'
+									lista += '<img src="' + d.cover_img + '" alt="">'
+									lista += '</div>'
+									lista += '<div class="item-right fl">'
+									lista += '<p class="title">' + d.title + '</p>'
+									lista += '<div class="date">'
+									lista += '<div class=" time-box-left fl">'
+									lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">'
+									lista += '<p class="fr">' + d.visit + '</p>'
+									lista += '</div>'
+									lista += '<div class=" time-box-right fl">'
+									lista += '<img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">'
+									lista += '<p class="fr">' + d.addtime + '</p>'
+									lista += '</div>'
+									lista += '</div>'
+									lista += '</div>'
+									lista += '</a>'
+								})
+								$(".art_cen").append(lista)
+							}
+							lista = ""
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			});
+			//推广后的文章
+			$(document).on("click", ".acticle-item", function() {
+				var id = '{$id}';
+				var article_id = $(this).attr("data-id");
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST", //方法类型
+					dataType: "json", //预期服务器返回的数据类型
+					url: "/index.php?s=/Api/IndexApi/extend_system_article", //url
+					data: {
+						"id": id,
+						"article_id": article_id
+					},
+					success: function(result) {
+						console.log(result)
+						if(result.ResultType == 2) {
+							var aid = result.AppendData;
+							window.location.href = "/index.php?s=/Home/Articlegrab/artpreview/kid/2/aid/" + aid + "";
+						}
+						if(result.ResultType == 0) {
+
+							var aid = result.AppendData;
+							window.location.href = "/index.php?s=/Home/Articlegrab/artpreview/kid/2/aid/" + aid + "";
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

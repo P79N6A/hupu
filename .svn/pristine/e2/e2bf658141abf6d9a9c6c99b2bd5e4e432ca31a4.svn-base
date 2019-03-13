@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<script src="/Public/Home/js/whjs/js/jquery-1.8.3.min.js"></script>
+		<script src="/Public/Home/js/whjs/js/newrem.js"></script>
+		<link rel="stylesheet" href="/Public/Home/js/whjs/js/swiper-3.4.2.min.css">
+		<link rel="stylesheet" href="/Public/Home/css/wh/base.css">
+		<script src="/Public/Home/js/whjs/js/swiper-3.4.2.min.js"></script>
+		<title>小秘广场</title>
+		<style>
+			body,
+			html {
+				background: #f6f6f6;
+				padding-bottom: .5rem;
+			}
+			
+			
+			.header {
+				width: 100%;
+				padding: .05rem .16rem;
+				background: #fff;
+				box-sizing: border-box;
+				box-shadow: 0px 2px 4px 0px rgba(242, 242, 242, 0.5);
+			}
+			
+			.header .header_box {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			
+			.header .header_box input {
+				width: 100%;
+				height: .3rem;
+				background: rgba(246, 246, 246, 1);
+				font-size: .12rem;
+				text-indent: .36rem;
+				border: 0;
+				outline: none;
+			}
+			
+			.header .header_box img {
+				position: absolute;
+				width: .16rem;
+				height: .16rem;
+				top: 50%;
+				left: .1rem;
+				margin-top: -.08rem;
+			}
+			
+			.swiper_box {
+				width: 100%;
+				height: 1.875rem;
+			}
+			
+			.swiper-container {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-slide a img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.swiper-pagination-bullet {
+				background: #D8D8D8;
+			}
+			
+			.swiper-pagination-bullet-active {
+				background: #32CEA0;
+			}
+			
+			.article {
+				display: flex;
+				width: 100%;
+				padding: .1rem .1rem 0 .1rem;
+				box-sizing: border-box;
+				background: #fff;
+			}
+			
+			.article a {
+				display: block;
+				flex: 1;
+				text-align: center;
+			}
+			
+			.article a img {
+				width: .5rem/* 50/100 */
+				;
+				height: .5rem/* 50/100 */
+				;
+				margin: 0 auto;
+				display: block;
+				margin-bottom: .05rem/* 5/100 */
+				;
+			}
+			
+			.article a p {
+				padding-bottom: .16rem;
+				color: #777777;
+			}
+			
+			.tab {
+				width: 100%;
+				display: flex;
+				border-bottom: 1px solid #eeeeee;
+				padding-bottom: .05rem;
+				background: #fff;
+			}
+			
+			.tab .item {
+				flex: 1;
+				color: #777777;
+				text-align: center;
+				position: relative;
+			}
+			
+			.nav-active {
+				color: #32CEA0 !important;
+			}
+			
+			.item .line {
+				width: .25rem;
+				height: 2px;
+				background: #32CEA0;
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				margin-left: -.125rem;
+				display: none;
+			}
+			
+			.item p {
+				margin: .03rem 0;
+			}
+			
+			.acticle_box {
+				width: 100%;
+				background: #fff;
+			}
+			
+			.art_cen {
+				width: 100%;
+				height: auto;
+				background: #fff;
+			}
+			
+			.acticle_box .acticle-item {
+				width: 100%;
+				height: 0.88rem;
+				padding: .1rem .1rem;
+				display: block;
+				box-sizing: border-box;
+				font-size: .12rem;
+				border-bottom: 0.01rem solid #f6f6f6;
+			}
+			
+			.acticle_box .acticle-item .item-left {
+				width: 30%;
+				height: 100%;
+			}
+			
+			.acticle_box .acticle-item .item-right {
+				width: 70%;
+				height: 100%;
+				padding-left: .1rem;
+				box-sizing: border-box;
+			}
+			
+			.acticle_box .acticle-item .item-right .title {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				margin-bottom: .1rem;
+			}
+			
+			.acticle_box .acticle-item .item-left img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.date {
+				width: 100%;
+				height: .2rem;
+				color: #777777;
+			}
+			
+			.time-box-left img {
+				width: .13rem;
+				height: .09rem;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.045rem;
+			}
+			
+			.time-box-left p {
+				width: .8rem;
+				white-space: nowrap;
+				padding-left: .2rem;
+				box-sizing: border-box;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			
+			.time-box-right img {
+				width: .13rem;
+				height: .13rem;
+				position: absolute;
+				top: 50%;
+				left: .1rem;
+				margin-top: -0.065rem;
+			}
+			
+			.time-box-right p {
+				width: 1.5rem;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				padding-left: .3rem;
+				box-sizing: border-box;
+			}
+			
+			.time-box-left,
+			.time-box-right {
+				position: relative;
+			}
+			
+			.look-all {
+				width: 100%;
+				height: .5rem;
+				display: block;
+				position: relative;
+			}
+			
+			.look-all p {
+				position: absolute;
+				top: 50%;
+				height: .22rem;
+				width: .8rem;
+				margin-top: -.11rem;
+				left: 50%;
+				margin-left: -.4rem;
+				text-align: center;
+				font-size: .14rem;
+				color: #777777;
+			}
+			
+			.look-all img {
+				width: .1rem;
+				height: .12rem;
+				position: absolute;
+				top: 50%;
+				left: 60%;
+				margin-top: -0.065rem;
+			}
+			
+			.hot {
+				width: 100%;
+				background: #fff;
+				padding: 0 .16rem;
+				box-sizing: border-box;
+				margin-top: .12rem;
+			}
+			
+			.hot .hot-title {
+				width: 100%;
+				height: .4rem;
+				line-height: .4rem;
+			}
+			
+			.hot-title .hot-item-left {
+				position: relative;
+			}
+			
+			.hot-title .hot-item-left .line {
+				width: .02rem;
+				height: .2rem;
+				;
+				background: #32CEA0;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.1rem;
+			}
+			
+			.hot-title .hot-item-left p {
+				padding-left: .05rem;
+			}
+			
+			.hot-item-right {
+				position: relative;
+			}
+			
+			.hot-item-right>a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.hot-item-right p {
+				margin-right: .15rem;
+				font-size: .13rem;
+				color: #777777;
+			}
+			
+			.hot-item-right img {
+				position: absolute;
+				width: .1rem;
+				height: .14rem;
+				top: 50%;
+				margin-top: -0.07rem;
+				right: 0;
+			}
+			
+			.video_box {
+				width: 100%;
+			}
+			
+			.video_box .video-item {
+				width: 100%;
+				height: 1.6rem;
+				margin-bottom: .12rem;
+				position: relative;
+			}
+			
+			.video_box .video-item p {
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+				color: #fff;
+				background: rgba(0, 0, 0, 1);
+				opacity: 0.5;
+				padding-left: .1rem;
+				box-sizing: border-box;
+			}
+			
+			.video_box .video-item video {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.hot_center {
+				margin-top: .12rem;
+				width: 100%;
+				background: #fff;
+				padding: 0 .16rem;
+				box-sizing: border-box;
+			}
+			
+			.hot_center .hot-title-center {
+				width: 100%;
+				height: .4rem;
+				line-height: .4rem;
+			}
+			
+			.hot-title-center .hot-item-left {
+				position: relative;
+			}
+			
+			.hot-title-center .hot-item-left .line {
+				width: .02rem;
+				height: .2rem;
+				;
+				background: #32CEA0;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.1rem;
+			}
+			
+			.hot-title-center .hot-item-left p {
+				padding-left: .05rem;
+			}
+			
+			.hot-item-right {
+				position: relative;
+			}
+			
+			.hot-item-right p {
+				margin-right: .15rem;
+				font-size: .13rem;
+				color: #777777;
+			}
+			
+			.hot-item-right img {
+				position: absolute;
+				width: .1rem;
+				height: .14rem;
+				top: 50%;
+				margin-top: -0.07rem;
+				right: 0;
+			}
+			
+			.product-box {
+				width: 100%;
+			}
+			
+			.product-box .proitem a {
+				display: block;
+				height: 1.6479rem;
+				width: 100%;
+				position: relative;
+			}
+			
+			.proitem a img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.proitem a p {
+				background: #F8C85E;
+				color: #fff;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				padding-left: .1rem;
+				box-sizing: border-box;
+			}
+			
+			.proitem .title {
+				padding: .08rem 0 .04rem 0;
+				box-sizing: border-box;
+			}
+			
+			.proitem .text {
+				font-size: .13rem;
+				color: #777777;
+				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			
+			.hot_enter_box {
+				width: 100%;
+				display: flex;
+				justify-content: space-around;
+				flex-wrap: wrap;
+			}
+			
+			.hot_enter_box .product-box {
+				width: 48%;
+				padding-bottom: .1rem;
+			}
+			
+			.hot_enter_box .product-box:nth-child(2n) {
+				margin-left: 4%;
+			}
+			
+			.down {
+				width: .1rem !important;
+				height: 0.08rem !important;
+				position: absolute !important;
+				top: 50% !important;
+				margin-top: -0.04rem !important;
+				right: .05rem !important;
+			}
+			
+			.xs {
+				width: .9rem;
+				height: .2rem;
+				line-height: .2rem;
+				border: 1px solid #c5c5c5;
+				margin-top: .1rem;
+				text-align: center;
+				border-radius: .3rem;
+				position: relative;
+				margin-right: 0 !important;
+			}
+			
+			.heading-box {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+			}
+			
+			.heading-box .head-box {
+				width: .64rem;
+				height: .64rem;
+				border-radius: 50%;
+				margin-bottom: .12rem;
+				position: relative;
+			}
+			
+			.head-box .user-img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.head-box .leven {
+				width: .28rem;
+				height: .16rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+			}
+			/* 底部的 */
+			
+			.footer-bar {
+				width: 100%;
+				height: .5rem;
+				background: #fff;
+				box-shadow: 0px 1px 2px 3px rgba(242, 242, 242, 0.5);
+				position: fixed;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.footer-bar .bar {
+				width: 100%;
+				height: 100%;
+				display: flex;
+			}
+			
+			.footer-bar .bar li {
+				flex: 1.2;
+			}
+			
+			.footer-bar .bar li a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.footer-bar .bar li a img {
+				display: block;
+				width: .16rem;
+				height: .2rem;
+				margin: .06rem auto .02rem auto;
+			}
+			
+			.footer-bar .bar li a .img2 {
+				width: .21rem;
+				height: .2rem;
+			}
+			
+			.footer-bar .bar li a .img3 {
+				width: .2rem;
+				height: .2rem;
+			}
+			
+			.footer-bar .bar li a .img4 {
+				width: .19rem;
+				height: .19rem;
+			}
+			
+			.footer-bar .bar li a p {
+				text-align: center;
+				color: #C5C5C5;
+			}
+			
+			.footer-bar .bar li:nth-child(3) {
+				flex: 1.5;
+			}
+			
+			#Make {
+				width: .8rem;
+				height: .4rem;
+				line-height: .4rem;
+				font-size: .18rem;
+				color: #fff;
+				background: #32CEA0;
+				border: 0;
+				outline: none;
+				text-align: center;
+				margin: .05rem auto 0 auto;
+				display: block;
+				border-radius: .2rem;
+			}
+			
+			/*.make {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				z-index: 999;
+				top: 0;
+				left: 0;
+				background: rgba(246, 246, 246, 0.2);
+				display: none;
+			}
+			
+			.make ul {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				margin-top: 0.8rem;
+			}
+			
+			.make ul li {
+				width: 1.68rem;
+				height: 1.2rem;
+				margin-bottom: .16rem;
+			}
+			
+			.make .close {
+				width: .32rem;
+				height: .32rem;
+				margin: 0 auto;
+				margin-top: .5rem;
+			}
+			
+			.make .close img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.make ul li a {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.make ul li a img {
+				width: 100%;
+				height: 100%;
+			}*/
+			/* 底部结束 */
+		</style>
+	</head>
+
+	<body>
+		<!--<div class="header vague">
+			<div class="header_box">
+				<input type="search" placeholder="搜索你喜欢的类型">
+				<img src="/Public/Home/images/wh/icon_search@2x.png" alt="">
+			</div>
+		</div>-->
+		<!-- 轮播图 -->
+		<div class="swiper_box vague">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<!--<div class="swiper-slide">
+						<a href="javascript:;">
+							<img src="/Public/Home/images/wh/make_entrace_wallpaper@2x.png" alt="">
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="javascript:;">
+							<img src="/Public/Home/images/wh/make_entrance_album@2x.png" alt="">
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a href="javascript:;">
+							<img src="/Public/Home/images/wh/make_entrance_copy@2x.png" alt="">
+						</a>
+					</div>-->
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+		<!-- 文章栏目 -->
+		<div class="article vague">
+			<!-- <a href="/index.php?s=/Home/Articlegrab/grab.html">
+				<img src="/Public/Home/images/wh/Entrance_icon_grab@2x.png" alt="">
+				<p>抓取文章</p>
+			</a>
+			<a href="/index.php?s=/Home/Articlegrab/articleeditor.html">
+				<img src="/Public/Home/images/wh/Entrance_icon_write@2x.png" alt="">
+				<p>编写文章</p>
+			</a>
+			<a href="/index.php?s=/Home/Articlegrab/articlelist.html">
+				<img src="/Public/Home/images/wh/Entrance_icon_my@2x.png" alt="">
+				<p>我的文章</p>
+			</a> -->
+		</div>
+		<!-- 推荐 -->
+		<div class="tab vague">
+			<div class="item nav-active" data-id="1">
+				<p>热门</p>
+				<div class="line" style="display:block;"></div>
+			</div>
+			<div class="item" data-id="2">
+				<p>最新</p>
+				<div class="line"></div>
+			</div>
+			<div class="item" data-id="3">
+				<p>推荐</p>
+				<div class="line"></div>
+			</div>
+		</div>
+		<!-- 文章列表 -->
+		<div class="acticle_box vague">
+			<div class="art_cen">
+
+			</div>
+			<a class="look-all" href="/index.php?s=/Home/Xmsquare/articlelist.html">
+				<p>查看全部</p>
+				<img src="/Public/Home/images/wh/icon_jump@2x.png" alt="">
+			</a>
+
+		</div>
+		<!-- hot video -->
+		<!--<div class="hot vague">
+			<div class="hot-title clearfix">
+				<div class="hot-item-left fl">
+					<div class="line"></div>
+					<p>热推视频</p>
+				</div>
+				<div class="hot-item-right fr">
+					<a href="/index.php?s=/Home/xmsquare/Xmvideo.html">
+						<p>查看全部</p>
+						<img src="/Public/Home/images/wh/icon_jump@2x.png" alt="">
+					</a>
+				</div>
+			</div>
+			<div class="video_box">
+			
+			</div>
+		</div>-->
+		<!-- 热门产品 -->
+		<div class="hot_center vague">
+			<div class="hot-title-center clearfix">
+				<div class="hot-item-left fl">
+					<div class="line"></div>
+					<p>热门产品</p>
+				</div>
+				<div class="hot-item-right fr">
+					<a href="/index.php?s=/Home/Xmsquare/xmproduct.html">
+						<p>查看全部</p>
+						<img src="/Public/Home/images/wh/icon_jump@2x.png" alt="">
+					</a>
+				</div>
+			</div>
+			<div class="hot_enter_box">
+
+			</div>
+		</div>
+		<!-- 优秀v网认证 -->
+		<div class="hot vague">
+			<div class="hot-title clearfix">
+				<div class="hot-item-left fl">
+					<div class="line"></div>
+					<p>周边V网</p>
+				</div>
+				<!--<div class="hot-item-right fr">
+					<p class="xs">销售行业
+						<img class="down" src="/Public/Home/images/downx.png" alt="">
+					</p>
+
+				</div>-->
+			</div>
+			<div class="heading-box">
+
+			</div>
+
+		</div>
+		<!-- 底部 -->
+		<div class="footer-bar vague">
+			<ul class="bar">
+				<li>
+					<a href="/index.php?s=/Home/User/square.html">
+						<img src="/Public/Home/images/wh/square_icon@2x.png" alt="">
+						<p style="color:#32CEA0;">广场</p>
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/Trade/trad.html">
+						<img class="img2" src="/Public/Home/images/wh/label_icon_Resources_default@2x.png" alt="">
+						<p>商圈</p>
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/Vmake/vmakee.html">
+						<button id="Make">制作</button>
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/Vhome/card_jump.html">
+						<img class="img3" src="/Public/Home/images/wh/table_icon_Template_default@2x.png" alt="">
+						<p>V网</p>
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/User/usercenter.html">
+						<img class="img4" src="/Public/Home/images/wh/table_icon_my_default@2x.png" alt="">
+						<p>我的</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!--<div class="make">
+			<ul>
+				<li>
+					<a href="/index.php?s=/Home/Vmake/vmakee.html">
+						<img src="/Public/Home/images/wh/Make_Entrance_V@2x.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/Copyv/vcopy.html">
+						<img src="/Public/Home/images/wh/make_entrance_copy@2x.png" alt="">
+					</a>
+				</li>
+				
+				<li>
+					<a href="/index.php?s=/Home/Poster/poster_index.html">
+						<img src="/Public/Home/images/wh/make_entrance_poster@2x.png" alt="">
+					</a>
+				</li>
+				
+				<li>
+					<a href="/index.php?s=/Home/Greeting/greet_index.html">
+						<img src="/Public/Home/images/wh/make_entrance_festival@2x.png" alt="">
+					</a>
+				</li>
+				
+				<li>
+					<a href="/index.php?s=/Home/Photo/photo_index">
+						<img src="/Public/Home/images/wh/make_entrance_album@2x.png" alt="">
+					</a>
+				</li>
+				<li>
+					<a href="/index.php?s=/Home/Poster/lockwallpaper">
+						<img src="/Public/Home/images/wh/make_entrace_wallpaper@2x.png" alt="">
+					</a>
+				</li>
+			</ul>
+			<div class="close">
+				<img src="/Public/Home/images/wh/make_icon_close@2x.png" alt="">
+			</div>
+		</div>-->
+
+	</body>
+
+</html>
+<script>
+	// 制作
+//	$("#Make").on("click", function() {
+//		$(".vague").css({
+//			"-webkit-filter": "blur(8px)",
+//			"-moz-filter": "blur(8px)",
+//			"-o-filter": "blur(8px)",
+//			"-ms-filter": "blur(8px)"
+//		})
+//
+//		$(".make").show();
+//		$('body,html').css('overflow', 'hidden');
+//	})
+//	$(".make .close").on("click", function() {
+//		$(".make").slideUp(500, function() {
+//			$(".vague").removeAttr("style");
+//			$('body,html').css('overflow', 'visible');
+//		});
+//
+//	})
+
+//	$('.make').on('touchmove', function(e) {
+//		e.stopPropagation();
+//		e.preventDefault()
+//	})
+
+	//轮播图渲染
+	var unionid = "{$unionid}";
+	var lista = "";
+	$.ajax({
+		type: 'post',
+		url: 'index.php?s=/Api/SquareApi/banner_img',
+		dataType: 'json',
+		data: {
+			unionid: unionid,
+		},
+		success: function(res) {
+//			console.log(res)
+			$.each(res.AppendData, function(a, b) {
+				lista += '<div class="swiper-slide">'
+				lista += '<a href="'+b.jump_url+'">'
+				lista += '<img src="' + b.img + '" alt="">'
+				lista += '</a>'
+				lista += '</div>'
+			})
+			$(".swiper-wrapper").html(lista);
+			var mySwiper = new Swiper('.swiper-container', {
+				// autoplay: 5000,//可选选项，自动滑动
+				pagination: '.swiper-pagination',
+			})
+
+		},
+		error: function() {
+			console.log("错误")
+		}
+	});
+
+	//热门文章渲染
+	var unionid = "{$unionid}";
+	var listb = "";
+	$.ajax({
+		type: 'post',
+		url: '/index.php?s=/Api/SquareApi/article_list',
+		dataType: 'json',
+		data: {
+			unionid: unionid,
+			type: 1,
+			types: 1
+		},
+		success: function(res) {
+//			console.log(res)
+			$.each(res.AppendData, function(c, d) {
+				listb += '<a class="acticle-item clearfix" href="javascript:;" data-id="' + d.id + '" target="_blank">'
+				listb += '<div class="item-left fl">'
+				listb += '<img src="' + d.cover_img + '" alt="">'
+				listb += '</div>'
+				listb += '<div class="item-right fl">'
+				listb += '<p class="title">' + d.title + '</p>'
+				listb += '<div class="date">'
+				listb += '<div class=" time-box-left fl">'
+				listb += '<img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">'
+				listb += '<p class="fr">' + d.visit + '</p>'
+				listb += '</div>'
+				listb += '<div class=" time-box-right fl">'
+				listb += '<img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">'
+				listb += '<p class="fr">' + d.addtime + '</p>'
+				listb += '</div>'
+				listb += '</div>'
+				listb += '</div>'
+				listb += '</a>'
+			})
+
+			$(".art_cen").html(listb)
+		},
+		error: function() {
+			console.log("错误")
+		}
+	});
+
+	//文章渲染
+
+	$(".item").on("click", function() {
+		$(this).addClass("nav-active").siblings().removeClass("nav-active")
+		$(this).find(".line").show().parent().siblings().find(".line").hide();
+		type = $(this).attr("data-id");
+		var unionid = "{$unionid}";
+		var listb = "";
+		$.ajax({
+			type: 'post',
+			url: '/index.php?s=/Api/SquareApi/article_list',
+			dataType: 'json',
+			data: {
+				unionid: unionid,
+				type: type,
+				types: 1
+			},
+			success: function(res) {
+//				console.log(res)
+				$.each(res.AppendData, function(e, f) {
+					listb += '<a class="acticle-item clearfix" href="javascript:;" data-id="' + f.id + '" target="_blank">'
+					listb += '<div class="item-left fl">'
+					listb += '<img src="' + f.cover_img + '" alt="">'
+					listb += '</div>'
+					listb += '<div class="item-right fl">'
+					listb += '<p class="title">' + f.title + '</p>'
+					listb += '<div class="date">'
+					listb += '<div class=" time-box-left fl">'
+					listb += '<img class="fl" src="/Public/Home/images/wh/list_icon_eye@2x.png" alt="">'
+					listb += '<p class="fr">' + f.visit + '</p>'
+					listb += '</div>'
+					listb += '<div class=" time-box-right fl">'
+					listb += '<img class="fl" src="/Public/Home/images/wh/list_icon_time@2x.png" alt="">'
+					listb += '<p class="fr">' + f.addtime + '</p>'
+					listb += '</div>'
+					listb += '</div>'
+					listb += '</div>'
+					listb += '</a>'
+				})
+
+				$(".art_cen").html(listb)
+
+			},
+			error: function() {
+				console.log("错误")
+			}
+		});
+	})
+
+	//视频渲染
+	var unionid = "{$unionid}";
+	var listc = "";
+	$.ajax({
+		type: 'post',
+		url: '/index.php?s=/Api/SquareApi/video_list',
+		dataType: 'json',
+		data: {
+			unionid: unionid,
+			type: 1
+		},
+		success: function(res) {
+//						console.log(res)
+			$.each(res.AppendData, function(g, h) {
+				listc += '<div class="video-item">'
+				listc += '<video src="' + h.video + '" controls="controls"></video>'
+				listc += '<p>' + h.title + '</p>'
+				listc += '</div>'
+			})
+			$(".video_box").html(listc)
+
+		},
+		error: function() {
+			console.log("错误")
+		}
+	});
+
+	//产品渲染
+	var unionid = "{$unionid}";
+	console.log(unionid)
+	var listd = "";
+	$.ajax({
+		type: 'post',
+		url: '/index.php?s=/Api/SquareApi/product_list',
+		dataType: 'json',
+		data: {
+			unionid: unionid,
+			type: 1
+		},
+		success: function(res) {
+						console.log(res)
+			$.each(res.AppendData, function(i, j) {
+				listd += '<div class="product-box">'
+				listd += '<div class="proitem">'
+				listd += '<a href="index.php?s=/Home/vhome/propreview/unionid/'+j.unionid+'/typeid//p_id/' + j.id + '">'
+				listd += '<img src="' + j.cover_img + '" alt="">'
+				listd += '</a>'
+				listd += '<p class="title">' + j.title + '</p>'
+				if(j.describe==null||j.describe==""||j.describe==undefined){
+					listd += '<div class="text"></div>'
+				}else{
+					listd += '<div class="text">' + j.describe + '</div>'
+				}
+				listd += '</div>'
+				listd += '</div>'
+			})
+			$(".hot_enter_box").html(listd)
+
+		},
+		error: function() {
+			console.log("错误")
+		}
+	});
+
+	//优秀V网
+
+	var unionid = "{$unionid}";
+	console.log(unionid)
+	var liste = "";
+	$.ajax({
+		type: 'post',
+		url: 'index.php?s=/Api/IndexApi/trade_search',
+		dataType: 'json',
+		data: {
+			unionid: unionid,
+		},
+		success: function(res) {
+			console.log(res);
+			$.each(res.AppendData.userlist, function(m, n) {
+				liste += '<div class="head-box"  data-id="' + n.id + '">'
+				liste += '<img class="user-img" src="' + n.headimg + '" alt="">'
+				if(m == 0) {
+					liste += '<img src="/Public/Home/images/wh/no.1@2x.png" alt="" class="leven">'
+				}
+				if(m == 1) {
+					liste += '<img src="/Public/Home/images/wh/no.2@2x.png" alt="" class="leven">'
+				}
+				if(m == 2) {
+					liste += '<img src="/Public/Home/images/wh/no.3@2x.png" alt="" class="leven">'
+				}
+
+				liste += '</div>'
+			})
+			$(".heading-box").html(liste)
+
+		},
+		error: function() {
+			console.log("错误")
+		}
+	});
+
+    $(document).on("click",".head-box", function() {
+        var article_id = $(this).attr("data-id");
+        window.location.href="/index.php?s=/Home/Nologin/card_jump/id/"+article_id;
+
+        });
+	//推广后的文章
+	$(document).on("click",".acticle-item", function() {
+		var id = '{$id}';
+		var article_id = $(this).attr("data-id");
+		$.ajax({
+			//几个参数需要注意一下
+			type: "POST", //方法类型
+			dataType: "json", //预期服务器返回的数据类型
+			url: "/index.php?s=/Api/IndexApi/extend_system_article", //url
+			data: {
+				"id": id,
+				"article_id": article_id
+			},
+			success: function(result) {
+				if(result.ResultType == 2) {
+					var aid = result.AppendData;
+					window.location.href="/index.php?s=/Home/Articlegrab/artpreview/kid/2/aid/" + aid + "";
+				}
+				if(result.ResultType == 0) {
+					
+					var aid = result.AppendData;
+					window.location.href="/index.php?s=/Home/Articlegrab/artpreview/kid/2/aid/" + aid + "";
+				}
+			},
+			error: function() {
+				alert("服务器繁忙，请稍后再试！");
+			}
+		});
+	})
+	
+	$(document).ready(function () {
+
+     	if(location.href.indexOf("#reloaded")==-1){
+	        location.href=location.href+"#reloaded";
+	        location.reload();
+    	}
+ 	})
+</script>

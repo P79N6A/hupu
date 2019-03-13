@@ -1,0 +1,14 @@
+<?php
+//留言表 数据层namespace app\api\model;use think\Model;
+
+class Blog extends Model
+{
+    protected $table = 's_blog';
+//    protected $_link = array(
+//        'user_info' => array(
+//            'mapping_type'      =>  self::HAS_ONE,
+//            'foreign_key'       => 'id',
+//            'mapping_key'         => 'object_id'
+//        )
+//    );
+}

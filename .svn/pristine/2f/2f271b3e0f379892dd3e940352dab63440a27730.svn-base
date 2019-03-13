@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{$_card.title}</title>
+    <link rel="stylesheet" href="__HOME_CSS__/contentDetail.css" />
+    <script src="__HOME_JS__/rem.js"></script>
+    <script src="__HOME_JS__/jquery.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/swiper.min.css">
+    <script src="__HOME_JS__/whjs/js/modernizr.min.js"></script>
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/normalize.css">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__HOME_JS__/whjs/js/stylevideo.css">
+    <style>
+
+        /* body,html{
+            overflow-x: hidden;
+            overflow-y: scroll;
+        } */
+        .word{
+            width: 17.5rem;
+            height: auto;
+            margin: 1rem auto;
+            font-size: 0.75rem;
+        }
+        .allcity-mask {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #000;
+            opacity: .7;
+            width: 100%;
+            z-index: 1;
+            cursor: pointer;
+            height: 100%;
+        }
+        .swiper-container {
+            margin: 0 auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            list-style: none;
+            padding: 0;
+            z-index: -2;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .swiper-slide{
+        	overflow: auto;
+        }
+        .swiper-slide>img {
+            width: 100%;
+            height: auto;
+        }
+        .base {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2.45rem;
+            line-height: 2.45rem;
+            z-index: 600;
+            color: #fff;
+            text-align: center;
+            font-size: 0.75rem;
+            z-index: 1;
+        }
+        .base>img{
+        	width: 100%;
+        	height: 100%;
+        }
+        .blank{
+            width: 100%;
+            height: 2.5rem;
+        }
+        .asdsd{
+            color:#fff
+        }
+
+		.wrapper{
+		    margin-bottom: 0.5rem;
+		    overflow: hidden;
+		    max-width: 750px;
+		}
+		.s_img{
+			width: 100%;
+			height: auto;
+		}
+		
+		.s_img,.s_img img{
+            width: 100%;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+		
+		.tit-li,.tit-li img{
+            width: 100%;
+            -webkit-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+            user-drag: none;
+        }
+        .pinch-zoom-container{
+        	width: 100%;
+        	height: auto;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="id1">{$_card.title}</div>
+<div class="word">{$_card.content}</div>
+<div class="title">
+    <ul>
+        <foreach name="_content_detail" item="vo">
+            <if condition="$vo.type eq 1">
+                 <li class="tit-li">
+                <img src="{$vo.data_url}" alt="" />
+                </li>
+            <else/>
+                <!-- <li class="box_list"> -->
+                    <!-- <video id="video" class="plays" preload="auto" controls poster="http://mvimg10.meitudata.com/5b28a45e02fd36945.jpg!thumb480" width="640" height="260"> -->
+                    <!-- <source src="http://mvvideo11.meitudata.com/5b28a45e03e874335_H264_13.mp4?k=9c6244b7f90c4c653d7361f7f8bca64d&t=5b2e2561" type="video/mp4"> -->
+                        <!-- https://wap.yxm360.com/Content/UploadFile/7DC195C017FD806A/97350ca7-f5ba-4ef9-8276-734dbab0e126.jpg -->
+                        <!-- http://mvvideo10.meitudata.com/5a8efae329d8577.mp4?k=7c625ca2dd6c5610e2ea8c28af811d60&t=5b2e01e0 -->
+                        <!-- {$vo.data_url} -->
+                        <!-- {$vo.thumb} -->
+                <!-- </video> -->
+                <!-- </li> -->
+
+<!-- <li class="box_list">
+<video class="js-media" x5-video-player-type="h5" x5-video-orientation="h5" x5-video-player-fullscreen="true" poster="https://wap.yxm360.com/Content/UploadFile/7DC195C017FD806A/97350ca7-f5ba-4ef9-8276-734dbab0e126.jpg">
+<source src="http://mvvideo10.meitudata.com/5a8efae329d8577.mp4?k=7c625ca2dd6c5610e2ea8c28af811d60&t=5b2e01e0" type="video/mp4"
+/>
+        <p>你的浏览器不支持 HTML5 Video。</p>
+    </video>
+</li> -->
+
+<div class="wrapper">
+    <div class="js-video">
+<video  controls preload="auto" poster="{$vo.thumb}">
+<source src="{$vo.data_url}" type="video/mp4" />
+    <!-- <p>你的浏览器不支持 HTML5 Video。</p> -->
+</video>
+        <!-- <i data-playPause class="playPause fa fa-play ui-icon">
+            <span></span>
+        </i> -->
+        <!-- <div class="ui">
+            <div>
+                <div data-progress class="progress">
+                    <div data-buffer class="progress-buffer"></div>
+                    <div data-time class="progress-time"></div>
+                </div>
+              
+            </div>
+            <div>
+                <span class="timeDisplay">
+                    <i data-currentTime>0:00</i> /
+                    <i data-duration>0:00</i>
+                </span>
+            </div>
+            <div>
+                <i data-mute class="fa fa-volume-up ui-icon"></i>
+            </div>
+            <div>
+                <div data-volume="100" class="volumeControl">
+                    <span class="ui-slider-handle"></span>
+                </div>
+            </div>
+        </div> -->
+      
+        <!-- <i data-fullscreen class="fullscreen iconicfill-fullscreen" title="fullscreen"></i> -->
+    </div>
+ 
+</div>            
+  </if>
+        </foreach>
+    </ul>
+</div>
+<div class="blank"></div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <foreach name="_content_detail" item="vo">
+            <if condition="$vo.type eq 1">
+                <div class="swiper-slide">
+                	<div class="s_img">
+                    	<img src="{$vo.data_url}" alt="" />
+                    </div>
+                </div>
+            </if>
+        </foreach>
+    </div>
+</div>
+<a  class="footer" href="{:url('Home/User/register',array('share_id'=>$_card['user_id']))}"><div class="base"><img src="__HOME_IMAGES__/miss.gif" alt="" /></div></a>
+<div class="allcity-mask"></div>
+<script src="__HOME_JS__/swiper.min.js"></script>
+<script src="__HOME_JS__/contentDetail.js"></script>
+<script src="__HOME_JS__/whjs/js/vedio.js"></script>
+<script src="__HOME_JS__/scale.js"></script>
+<script>
+
+
+
+    $(".tit-li").on('click', function() {
+        event.stopPropagation();
+        $(".swiper-container").css({
+            "z-index": '10',
+            "opacity": '1'
+        });
+        $(".allcity-mask").show();
+    });
+    $(".allcity-mask,.swiper-slide>img,.swiper-container").on('click', function() {
+        $(".allcity-mask").hide();
+        $(".swiper-container").css({
+            "z-index": '-2',
+            "opacity": '0'
+        });
+    });
+
+	 $(function () {
+        $('.tit-li').each(function () {
+            new RTP.PinchZoom($(this), {});
+        });
+         $('.s_img').each(function () {
+            new RTP.PinchZoom($(this), {});
+        });
+
+
+        $('.del').remove();
+
+
+
+
+
+    })
+</script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+
+
+
+<script>
+
+
+
+    $(function() {
+        var share_url = "{$share_url}";
+
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST", //方法类型
+            dataType: "json", //预期服务器返回的数据类型
+            url: "/index.php?s=/Api/WeShare/getSignPackage", //url
+            data:{share_url:share_url},
+            async: true,
+
+            // async: false,
+            success: function(result) {
+
+
+
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+                    appId: result.AppendData.appId,
+                    timestamp: result.AppendData.timestamp,
+                    nonceStr: result.AppendData.nonceStr,
+                    signature: result.AppendData.signature,
+                    jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+                        'checkJsApi',
+                        'onMenuShareTimeline', //
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'getLocation'
+                    ]
+                });
+
+                wx.ready(function() {
+                    //分享到朋友圈
+                    wx.onMenuShareTimeline({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享给朋友
+                    wx.onMenuShareAppMessage({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        type: '', // 分享类型,music、video或link，不填默认为link
+                        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ
+                    wx.onMenuShareQQ({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    /* 分享到腾讯微博 */
+                    wx.onMenuShareWeibo({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                    //分享到QQ空间
+                    wx.onMenuShareQZone({
+                        title: "{$sharetitle}", // 分享链接
+                        desc: '{$desc}', // 分享链接
+                        link: "{$link}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+                        imgUrl: "{$imgUrl}", // 分享链接
+                        success: function() {
+                            // 用户确认分享后执行的回调函数
+                            // sharePush();
+                        },
+                        cancel: function() {
+                            // 用户取消分享后执行的回调函数
+                        }
+                    });
+                });
+
+
+
+            },
+            error: function() {
+                //alert("服务器繁忙，请稍后再试！");
+            }
+        });
+
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

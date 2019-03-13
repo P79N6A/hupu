@@ -1,0 +1,195 @@
+var lunhui = {
+
+    test: function (){
+        alert('test');
+    },
+
+    //成功弹出层
+    success: function (message, url) {
+        layer.msg(message, {icon: 1, time: 2000}, function (index) {
+            layer.close(index);
+            window.location.href = url;
+        });
+    },
+
+    // 错误弹出层
+    error: function (message) {
+        layer.msg(message, {icon: 2, time: 2000}, function (index) {
+            layer.close(index);
+        });
+    },
+
+    // 确认弹出层
+    confirm: function (id, url) {
+        layer.confirm('确认删除此条记录吗?', {icon: 3, title: '提示'}, function (index) {
+            $.getJSON(url, {'id': id}, function (res) {
+                if (res.code == 1) {
+                    layer.msg(res.msg, {icon: 1, time: 1500, shade: 0.1});
+                } else {
+                    layer.msg(res.msg, {icon: 0, time: 1500, shade: 0.1});
+                }
+            });
+            layer.close(index);
+        })
+    },
+
+    //删除
+    delete: function (id, url) {
+        console.log(id);
+        console.log(url);
+        $.getJSON(url, {'id': id}, function (res) {
+            if (res.code == 1) {
+                layer.msg(res.msg, {icon: 1, time: 1500, shade: 0.1});
+            } else {
+                layer.msg(res.msg, {icon: 0, time: 1500, shade: 0.1});
+            }
+        });
+    },
+
+    //状态
+    status: function (id, url) {
+        $.post(url, {id: id}, function (data) {
+            if (data.code == 1) {
+                var a = '<span class="label label-danger">禁用</span>'
+                $('#zt' + id).html(a);
+                layer.msg(data.msg, {icon: 2, time: 1500, shade: 0.1,});
+                return false;
+            } else {
+                var b = '<span class="label label-info">开启</span>'
+                $('#zt' + id).html(b);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+            }
+        });
+        return false;
+    },
+
+    //状态
+    info: function (id, url) {
+        $.post(url, {id: id}, function (data) {
+            if (data.code == 1) {
+                var a = '<span class="label label-primary">未处理</span>'
+                $('#zt' + id).html(a);
+                layer.msg(data.msg, {icon: 2, time: 1500, shade: 0.1,});
+                return false;
+            } else {
+                var b = '<span class="label  label-info">已处理</span>'
+                $('#zt' + id).html(b);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+            }
+        });
+        return false;
+    },
+
+    //状态
+    lock: function (id, url) {
+        $.post(url, {id: id}, function (data) {
+            if (data.code == 1) {
+                var a = '<span class="label label-danger">已冻结</span>'
+                $('#zt' + id).html(a);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+            } else {
+                var b = '<span class="label label-info">正常</span>'
+                $('#zt' + id).html(b);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+            }
+        });
+        return false;
+    },
+
+
+    //状态
+    type: function (id, url) {
+        $.post(url, {id: id}, function (data) {
+            if (data.code == 1) {
+                var b = '<span class="label label-info">添加</span>'
+                $('#zt' + id).html(b);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+            } else {
+                var a = '<span class="label label-danger">扣除</span>'
+                $('#zt' + id).html(a);
+                layer.msg(data.msg, {icon: 1, time: 1500, shade: 0.1,});
+                return false;
+
+            }
+        });
+        return false;
+    },
+
+        // 删除确认弹出层
+    deletes : function(ids,url) {
+        layer.confirm('确认删除选中的记录吗?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON(url, {'ids' : ids}, function(res){
+                if(res.code == 1){
+                    layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                    window.location.href=window.location.href;
+                }else{
+                    layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+                }
+            });
+            layer.close(index);
+        })
+    },
+    // 编辑确认弹出层
+    edits : function(ids,url) {
+        layer.confirm('确认修改选中的记录吗?', {icon: 3, title:'提示'}, function(index){
+            $.getJSON(url, {'ids' : ids}, function(res){
+                if(res.code == 1){
+                    layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                    window.location.href=window.location.href;
+                }else{
+                    layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+                }
+            });
+            layer.close(index);
+        })
+    },
+
+
+};
+
+
+function timetrans(date) {
+    var date = new Date(date * 1000);//如果date为13位不需要乘1000
+    var Y = date.getFullYear() + '-';
+    Y = Y.substring(2);
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+    var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+    return Y + M + D + h + m + s;
+}
+
+
+//删除会员
+function del_member(id,action='./del') {
+    lunhui.delete(id, action);
+}
+
+//状态
+function edit_status(id) {
+    lunhui.status(id, './editStatus');
+}
+
+//状态
+function edit_lock(id) {
+    lunhui.lock(id, './editStatus');
+}
+
+//状态
+function edit_type(id,url='./editStatus') {
+    lunhui.type(id, url);
+}
+//状态
+function edit_info(id,url='./editStatus') {
+    lunhui.info(id, url);
+}
+
+function add_user() {
+    window.location.href = "./add";
+}

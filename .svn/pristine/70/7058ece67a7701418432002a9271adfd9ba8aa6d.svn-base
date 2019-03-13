@@ -1,0 +1,51 @@
+/**
+ *createUser:JAVA_TOM
+ *
+ * Author:   14562
+ * Date:     2018/10/15 21:51
+ * Description:
+ *
+ */
+isLogin();
+function $_GetKey(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
+
+function isLogin() {
+            var a=window.localStorage.getItem("uuid");
+            if(a==null || a==''){
+                alert("您还未登陆，或登陆已失效");
+                window.location.href="/index.php?s=/Agency/Login/login";
+            }
+}
+function isRole(res) {
+    if(res.Message=="token not find"){
+        alert("登陆标识失效，请重新登录");
+        rocookie("adminuuid");
+        rocookie("pctoken");
+        window.location.href="/index.php?s=/Agency/Login/login"; return;
+    }else if(res.Message=="user not find"){
+        alert("用户未找到，请联系管理员");
+        window.location.href="/index.php?s=/Agency/Main/f404"; return;
+    }else if(res.Message=="Invalid token"){
+        alert("您暂无权限");
+        rocookie("adminuuid");
+        rocookie("pctoken");
+        window.location.href="/index.php?s=/Agency/Main/f404"; return;
+    }
+    else if(res.Message=="no authority"){
+        alert("此资源您无权限");
+        return;
+    }
+}
+function rocookie(name) {
+//获取当前时间
+    var date=new Date();
+//将date设置为过去的时间
+    date.setTime(date.getTime()-10000);
+//将userId这个cookie删除
+ document.cookie=name+"=''; expires="+date.toGMTString();
+}

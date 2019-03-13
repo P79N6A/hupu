@@ -1,0 +1,266 @@
+<?php
+namespace app\api\controller;
+use app\common\controller\ApiBase;
+use app\api\logic\ShareList;
+use think\Db;
+
+require_once EXTEND_PATH.'/Alioss/autoload.php';
+
+
+class Share extends ApiBase {
+
+	private $share_model = null;
+	
+	public function initialize()
+    {
+        parent::initialize();
+        $this->share_model  = new ShareList();
+    }
+    
+    
+    public function share_list()
+    {
+        $data = $this->request->post();
+        $map['page'] = $data['page'] ? $data['page'] : 1;
+        $map['pageNum'] = 10;
+        $share_list = $this->share_model->getShareList($map);
+        if ($share_list){
+            $this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = "操作成功";
+            $this->array_return['AppendData'] = $share_list;
+        }else{
+            $this->array_return['ResultType'] = self::__ERROR4__;
+            $this->array_return['Message'] = "没有数据";
+        }
+
+        return json($this->array_return);
+    }
+
+    public function select_type()
+    {
+        $data = $this->request->post();
+        $activity_id = $data['activity_id'];
+        if (!$activity_id || !is_numeric($activity_id)){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"未输入活动类型"]);
+        }
+
+        $activity_url = $data['activity_url'];
+        if (!$activity_url){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"未输入活动链接"]);
+        }
+
+        $cover_img = $data['cover_img'];
+        if (!$cover_img){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"未输入封面图"]);
+        }
+
+        $title = $data['title'];
+        if (!$title){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"未输入标题"]);
+        }
+
+        $content = $data['content'];
+        if (!$content){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"未输入内容"]);
+        }
+        
+        $share_data['activity_id'] = $activity_id;
+        $share_data['activity_url'] = $activity_url;
+        $share_data['title'] = $title;
+        $share_data['cover_img'] = $cover_img;
+        $share_data['content'] = $content;
+        $share_data['status'] = 1;
+        $res = $this->share_model->insert($share_data);
+
+        if (!$res){
+            return json(['ResultType'=>self::__ERROR2__,'Message'=>"操作失败"]);
+        }else{
+            return json(['ResultType'=>self::__OK__,'Message'=>"操作成功",'AppendData'=>$res]);
+        }
+    }
+
+    public function create_share()
+    {
+        $data = $this->request->post();
+        $user_id = $this->userInfo['id'];
+
+        $amount = $data['amount'];
+        if (!$amount || !is_numeric($amount)){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"输入佣金错误"]);
+        }
+
+        $count = $data['count'];
+        if (!$count || !is_numeric($count)){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"输入点击量错误"]);
+        }
+
+        $user_info = Db::table('s_user_detail')->where(['id'=>$user_id])->field('money,ad_money')->find();
+        if ($amount > $user_info['money'] && $amount > $user_info['ad_money']){
+        	return json(['ResultType'=>self::__ERROR5__,'Message'=>"小秘币余额不足"]);
+        }
+        
+    	$share_id = $data['share_id'];
+        $activity_id = $this->share_model->where(['id'=>$share_id])->getField('activity_id');
+        if (!$share_id || !is_numeric($share_id) || !$activity_id){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"确实参数"]);
+        }
+        
+        $single_amount = round($amount/$count,2);
+        $create_time = time();
+        $expire_time = time()+7*3600*24;
+
+        $share_data['user_id'] = $user_id;
+        $share_data['amount'] = $amount;
+        $share_data['count'] = $count;
+        $share_data['single_amount'] = $single_amount;
+        $share_data['create_time'] = $create_time;
+        $share_data['expire_time'] = $expire_time;
+        $share_data['status'] = 2;
+
+        $res = $this->share_model->where(['id'=>$share_id])->save($share_data);
+        if (!$res){
+            return json(['ResultType'=>self::__ERROR2__,'Message'=>"操作失败"]);
+        }else{
+        	//保持消费记录表
+        	if ($amount < $user_info['ad_money']) {
+        		$fields = 's_ad_money';
+        		$tables = 's_ad_consume';
+        		$share_consume['share_id'] = $share_id;
+        		$share_consume['money'] = 0 - $amount;
+        		$share_consume['type'] = $activity_id;
+            	$share_consume['add_time'] = $create_time;
+        	} else {
+        		$fields = 's_money';
+        		$tables = 's_user_consume';
+        		$share_consume['money'] = $amount;
+        		$share_consume['type'] = 1;
+            	$share_consume['create_time'] = $create_time;
+        	}
+        	
+            $user_info_res = Db::table('s_user_detail')->where(['id'=>$user_id])->setDec($fields,$amount);
+            $share_consume['user_id'] = $user_id;
+            $consume_res = Db::table($tables)->insert($share_consume);
+
+            if (!$user_info_res || !$consume_res){
+                return json(['ResultType'=>self::__ERROR5__,'Message'=>"操作失败"]);
+            }
+
+            return json(['ResultType'=>self::__OK__,'Message'=>"操作成功",'AppendData'=>$res]);
+        }
+    }
+
+    public function receive_activity()
+    {
+        $data = $this->request->post();
+        $user_id = $this->userInfo['id'];
+        $share_id = $data['share_id'];
+
+        if (!$share_id){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"参数错误"]);
+        }
+
+        $share_log_clicked_count =  Db::table('s_share_user_list')->where(['share_id'=>$share_id,'share_user_id'=>$user_id])->count();
+        if ($share_log_clicked_count > 0){
+            return json(['ResultType'=>self::__ERROR5__,'Message'=>"您已经领取过该广告任务了"]);
+        }
+
+        $share_activity =  $this->share_model->where(['id'=>$share_id])->field('count,activity_id,clicked_count,single_amount')->find();
+        if ($share_activity['clicked_count'] >= $share_activity['count']){
+            return json(['ResultType'=>self::__ERROR4__,'Message'=>"活动已结束，请刷新再试！"]);
+        }
+
+        $share_user_list_data['share_id'] = $share_id;
+        $share_user_list_data['share_user_id'] = $user_id;
+        $share_user_list_data['total_money'] = 0;//数据库没有默认为0
+        $share_user_list_data['activity_id'] = $share_activity['activity_id'];
+        $share_user_list_data['create_time'] = time();
+        $res = Db::table('s_share_user_list')->insert($share_user_list_data);
+
+        if ($res){
+        	$this->share_model->where(['id'=>$share_id])->setInc('share_user_count',1);
+        	$this->array_return['ResultType'] = self::__OK__;
+            $this->array_return['Message'] = "活动领取成功";
+            $this->array_return['AppendData'] = $user_info_res;
+        }else{
+            $this->array_return['ResultType'] = self::__ERROR4__;
+            $this->array_return['Message'] = "活动领取失败";
+        }
+
+        return json($this->array_return);
+    }
+
+    public function my_activity_list()
+    {
+        $data = $this->request->post();
+        $user_id = $this->userInfo['id'];
+        $type = $data['type']?$data['type']:0;
+
+        $map['page'] = $data['page'] ? $data['page'] : 1;
+        $map['pageNum'] = 10;
+        $map['user_id'] = $user_id;
+
+        $my_share_list = [];
+        if ($type == 0){
+            $my_share_list = $this->share_model->getMyPublishList($map);
+        }
+        if ($type == 1){
+            $my_share_list = $this->share_model->getMyShareList($map);
+        }
+
+        if ($my_share_list){
+            return json(['ResultType'=>self::__OK__,'Message'=>"操作成功",'AppendData'=>$my_share_list]);
+        }else{
+            return json(['ResultType'=>self::__ERROR4__,'Message'=>"未查到数据",'AppendData'=>[]]);
+        }
+    }
+
+    public function my_pay_detail()
+    {
+        $data = $this->request->post();
+        if (empty($data['user_id'])){
+            $user_id = $this->userInfo['id'];
+        }else{
+            $user_id = $data['user_id'];
+        }
+
+        $share_id = $data['share_id'];
+        if (empty($share_id)){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"参数错误",'AppendData'=>[]]);
+        }
+
+        $map['page'] = $data['page'] ? $data['page'] : 1;
+        $map['pageNum'] = 10;
+        $map['share_user_id'] = $user_id;
+        $map['share_id'] = $share_id;
+
+        $my_pay_detail = $this->share_model->getMyPayDetail($map);
+
+        if ($my_pay_detail){
+            return json(['ResultType'=>self::__OK__,'Message'=>"操作成功",'AppendData'=>$my_pay_detail]);
+        }else{
+            return json(['ResultType'=>self::__ERROR4__,'Message'=>"未查到数据",'AppendData'=>[]]);
+        }
+    }
+
+
+    public function my_activity_pay_list()
+    {
+        $data = $this->request->post();
+        $share_id = $data['share_id'];
+        if (empty($share_id)){
+            return json(['ResultType'=>self::__ERROR__,'Message'=>"参数错误",'AppendData'=>[]]);
+        }
+
+        $map['page'] = $data['page'] ? $data['page'] : 1;
+        $map['pageNum'] = 10;
+        $map['share_id'] = $share_id;
+
+        $my_pay_detail = $this->share_model->getMyActivityPayDetail($map);
+        if ($my_pay_detail){
+            return json(['ResultType'=>self::__OK__,'Message'=>"操作成功",'AppendData'=>$my_pay_detail]);
+        }else{
+            return json(['ResultType'=>self::__ERROR4__,'Message'=>"未查到数据",'AppendData'=>[]]);
+        }
+    }
+
+}

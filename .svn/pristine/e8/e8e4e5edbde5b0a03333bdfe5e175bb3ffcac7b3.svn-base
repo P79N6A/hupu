@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>添加图文</title>
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/yb/js/jquery-3.1.1.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background: #fff;
+			}
+			
+			.max {
+				width: 100%;
+				height: 5.275rem;
+				box-shadow: 0px 0.1rem 0.5rem 0px rgba(191, 191, 191, 0.25);
+				margin-bottom: 0.6rem;
+				position: fixed;
+				top: 0;
+				left: 0;
+			}
+			
+			.top {
+				width: 90%;
+				height: 2.1rem;
+				line-height: 2.5rem;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.top_left {
+				width: 50%;
+				height: 100%;
+				font-weight: 600;
+				color: #333;
+				font-size: 0.8rem;
+			}
+			
+			.top_right {
+				width: 50%;
+				height: 100%;
+				text-align: right;
+				color: #777;
+				font-size: 0.6rem;
+			}
+			
+			.tab {
+				width: 90%;
+				height: 3.175rem;
+				line-height: 3.175rem;
+				border-top: 0.025rem solid #F6F6F6;
+				display: flex;
+				margin: 0 auto;
+			}
+			
+			.add {
+				width: 28.5%;
+				height: 1.6rem;
+				line-height: 1.6rem;
+				margin-top: 0.7875rem;
+				margin-bottom: 0.7875rem;
+				border-radius: 0.8rem;
+				text-align: center;
+				font-size: 0.6rem;
+				font-weight: 600;
+				letter-spacing: 0.05rem;
+			}
+			
+			.word {
+				background: #FFCEC7;
+				color: #EF7B6B;
+			}
+			
+			.imgs {
+				background: #C3E1FF;
+				color: #57A9F9;
+				margin-left: 7.25%;
+				margin-right: 7.25%;
+			}
+			
+			.vdo {
+				background: #FFF3C5;
+				color: #E6B600;
+			}
+			
+			.txt {
+				width: 100%;
+				height: 4.8rem;
+				background: #fff;
+				box-shadow: 0px 0.1rem 0.5rem 0px rgba(191, 191, 191, 0.25);
+				position: relative;
+				margin-bottom: 0.6rem;
+			}
+			
+			.txt_cen {
+				width: 92%;
+				height: 3.6rem;
+				padding: 0.6rem 0;
+				display: flex;
+				margin-left: 5%;
+			}
+			
+			.txt_cen>textarea {
+				width: 90%;
+				height: 4.2rem;
+				border: none;
+				font-size: 0.6rem;
+				color: #333;
+				outline: none;
+				line-height: 1rem;
+				letter-spacing: 0.08rem;
+				z-index: 9999;
+			}
+			
+			textarea::placeholder {
+				color: #C5C5C5;
+			}
+			
+			.del {
+				width: 10%;
+				height: 4.05rem;
+			}
+			
+			.del_img {
+				width: 100%;
+				height: 3.23rem;
+				text-align: right;
+			}
+			
+			.del_img>img {
+				width: 0.6rem;
+				height: 0.6rem;
+			}
+			
+			.words {
+				width: 1.6rem;
+				height: 0.85rem;
+				background: #FFCEC7;
+				color: #666;
+				font-size: 0.5rem;
+				text-align: center;
+				line-height: 0.85rem;
+				border-bottom-left-radius: 0.425rem;
+				border-top-left-radius: 0.425rem;
+				position: absolute;
+				bottom: 0.6rem;
+				right: 0;
+			}
+			
+			.txt_left {
+				width: 90%;
+				height: 100%;
+			}
+			
+			.txt_left>img {
+				width: 6rem;
+				height: 100%;
+			}
+			
+			.txt_left>video {
+				width: 6rem;
+				height: 100%;
+			}
+			
+			.words_img {
+				background: #C3E1FF;
+			}
+			
+			.words_vdo {
+				background: #FFEB9D;
+			}
+			
+			.big {
+				width: 100%;
+				height: auto;
+				margin-bottom: 3.5rem;
+				margin-top: 5.875rem;
+			}
+			
+			#file {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.fil_vdo {
+				display: block;
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			
+			.complete {
+				width: 100%;
+				height: 2rem;
+				line-height: 2rem;
+				text-align: center;
+				font-size: 0.8rem;
+				font-weight: 600;
+				padding: 0.4rem 0;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: #fff;
+				border-top: 0.05rem solid #F6F6F6;
+			}
+			
+			.comp_cen {
+				width: 90%;
+				height: 100%;
+				margin: 0 auto;
+				display: flex;
+			}
+			
+			.preview {
+				width: 36%;
+				height: 100%:
+			}
+			
+			.preview>a {
+				display: block;
+				text-decoration: none;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				color: #333;
+			}
+			
+			.com_cen {
+				width: 64%;
+				height: 100%;
+				border-radius: 0.2rem;
+				text-align: center;
+				background: #32CEA0;
+				color: #fff;
+				letter-spacing: 0.25rem;
+			}
+			
+			.mesk {
+				width: 3.75rem;
+				height: 3rem;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 0.125rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -1.5rem;
+				margin-left: -1.875rem;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mesk img {
+				width: 1rem;
+				height: 1rem;
+				display: block;
+				margin: 0 auto;
+				margin-top: 0.5rem;
+				margin-bottom: 0.5rem;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mesk p {
+				color: #fff;
+				text-align: center;
+			}
+			
+			.model {
+				position: fixed;
+				bottom: 10rem;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				width: auto;
+				height: 2.2rem;
+				padding: 0 0.75rem;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				font-size: 0.8rem;
+				text-align: center;
+				line-height: 2.2rem;
+				border-radius: 0.26rem;
+				white-space: nowrap;
+				display: none;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="out">
+			<div class="max">
+				<div class="top">
+					<div class="top_left">添加内容</div>
+					<div class="top_right">拖动栏目进行排序</div>
+				</div>
+				<div class="tab">
+					<div class="add word">添加文字</div>
+					<div class="add imgs">添加图片</div>
+					<input type="file" id="file" accept="image/*" />
+					<div class="add vdo">添加视频</div>
+					<input id="file_v" class="fil_vdo" type="file" accept="video/*" />
+				</div>
+			</div>
+			<div id="out" class="big">
+				<!--<div class="txt">
+				<div class="txt_cen">
+					<textarea class="tra" name="" rows="" cols="" placeholder=" 请输入内容"></textarea>
+					<div class="del">
+						<div class="del_img">
+							<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />
+						</div>
+						<div class="words">文字</div>
+					</div>
+				</div>
+			</div>
+			<div class="txt">
+				<div class="txt_cen">
+					<div class="txt_left">
+						<img src="__HOME_IMAGES__/yuantiao.jpg" alt="" />
+					</div>
+					<div class="del">
+						<div class="del_img">
+							<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />
+						</div>
+						<div class="words words_img">图片</div>
+					</div>
+				</div>
+			</div>
+			<div class="txt">
+				<div class="txt_cen">
+					<div class="txt_left">
+						<video src="__HOME_IMAGES__/newvnet/vhome/mingzhu.mp4"></video>
+					</div>
+					<div class="del">
+						<div class="del_img">
+							<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />
+						</div>
+						<div class="words words_vdo">视频</div>
+					</div>
+				</div>
+			</div>-->
+			</div>
+			<div class="complete">
+				<div class="comp_cen">
+					<div class="preview">
+						<a href="/index.php?s=/Home/vhome/preview/show_id/{$show_id}">预览</a>
+					</div>
+					<div class="com_cen">
+						保存
+					</div>
+				</div>
+			</div>
+			<div class="mesk">
+				<img src="/Public/Home/images/loadad.gif" alt="">
+				<p>图片上传中</p>
+			</div>
+			<div class="model"></div>
+		</div>
+		<script src="__HOME_JS__/yb/js/sortable.js"></script>
+		<script>
+			Sortable.create(out, {});
+		</script>
+		<script>
+			var unionid = "{$unionid}";
+			var show_id = "{$show_id}";
+			$.ajax({
+				type: 'post',
+				url: 'index.php?s=/Api/AppApi/show_list',
+				dataType: 'json',
+				data: {
+					unionid: unionid,
+					show_id: show_id
+				},
+				success: function(res) {
+					console.log(res)
+					if(res.ResultType == 0) {
+						$(".big").html(res.AppendData.content)
+					}
+				},
+				error: function() {
+					console.log("错误")
+				}
+			});
+
+			$(".word").on("click", function() {
+
+				$(".big").append(
+					'<div class="txt">' +
+					'<div class="txt_cen">' +
+					'<textarea class="tra" name="" rows="" cols="" placeholder=" 请输入内容"></textarea>' +
+					'<div class="del">' +
+					'<div class="del_img">' +
+					'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+					'</div>' +
+					'<div class="words">文字</div>' +
+					'</div>' +
+					'</div>' +
+					'</div>'
+				)
+
+			});
+
+			//添加图片
+			$(".imgs").click(function() {
+				$("#file").click();
+			})
+			$("#file").change(function() {
+				var that = $(this)
+				var file_img = this.files[0];
+				var unionid = "{$unionid}";
+				var formdata = new FormData();
+				formdata.append("img", file_img);
+				formdata.append("start_name", 'Cards');
+				formdata.append("unionid", unionid);
+				var render = new FileReader();
+				render.readAsDataURL(file_img)
+				render.onload = function(res) {
+					$.ajax({
+						type: 'post',
+						url: '/index.php?s=/Api/IndexApi/uploads_img',
+						dataType: 'json',
+						data: formdata,
+						processData: false,
+						contentType: false,
+						beforeSend: function() {
+							$(".mesk").show();
+						},
+						success: function(result) {
+							$(".mesk").hide();
+							if(result.ResultType == 0) {
+								$(".big").append(
+									'<div class="txt">' +
+									'<div class="txt_cen">' +
+									'<div class="txt_left">' +
+									'<img src="' + result.AppendData + '" alt="" />' +
+									'</div>' +
+									'<div class="del">' +
+									'<div class="del_img">' +
+									'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+									'</div>' +
+									'<div class="words words_img">图片</div>' +
+									'</div>' +
+									'</div>' +
+									'</div>'
+								)
+							}
+						},
+						error: function() {
+							console.log("错误")
+						}
+					});
+				}
+			})
+
+			$(".vdo").click(function() {
+				$(".fil_vdo").click();
+
+			})
+
+			$('.fil_vdo').change(function() {
+				var videosize = document.getElementById("file_v").files[0].size;
+				var type = $("#file_v").val();
+				console.log(type)
+				var unionid = '{$unionid}';
+				var files = this.files[0];
+				var formdata = new FormData();
+				formdata.append("img", files);
+				formdata.append("start_name", 'Cards');
+				formdata.append("unionid", unionid);
+
+				$.ajax({
+					type: "post",
+					url: "/index.php?s=/Api/IndexApi/upload_video",
+					data: formdata,
+					processData: false,
+					contentType: false,
+					beforeSend: function() {
+						$(".mesk").show();
+						$(".mesk").show().find('p').text("视频上传中");
+					},
+					success: function(res) {
+						console.log(res)
+						$(".mesk").hide();
+						type = type.substr(type.lastIndexOf('.'));
+						if(type == '.quicktime') {
+							mui.toast("不支持此视频格式，请上传其他视频格式视频");
+							return false;
+						}
+						if(videosize > 1024 * 1024 * 30) {
+							mui.toast("请上传小于30M的视频");
+							return false;
+						}
+						$(".big").append(
+							'<div class="txt">' +
+							'<div class="txt_cen">' +
+							'<div class="txt_left">' +
+							'<video src="' + res.AppendData + '"  controls="controls"></video>' +
+							'</div>' +
+							'<div class="del">' +
+							'<div class="del_img">' +
+							'<img src="__HOME_IMAGES__/newvnet/imgtxt/icon_add_de@2x.png" alt="" />' +
+							'</div>' +
+							'<div class="words words_vdo">视频</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>'
+						)
+					}
+				})
+
+			});
+
+			$(".com_cen").on("click", function() {
+				var content = $(".big").html();
+				var unionid = '{$unionid}';
+				if($(".big").height() == "") {
+					$(".model").show();
+					setTimeout(function() {
+						$(".model").hide();
+					}, 1500)
+					$(".model").html("请添加内容");
+					return false;
+				}
+				$.ajax({
+					type: 'post',
+					url: '/index.php?s=/Api/Article/addArticle',
+					dataType: 'json',
+					data: {
+						unionid: unionid,
+						content: content
+					},
+					success: function(res) {
+						console.log(res)
+						if(res.ResultType == 0) {
+
+							window.location.href = '/index.php?s=/Home/vhome/myres.html'
+						}
+					},
+					error: function() {
+						console.log("错误")
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

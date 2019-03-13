@@ -1,0 +1,97 @@
+<extend name="./base" />
+
+<block name="css_extend">
+	<link href="__HOME_CSS__/bs3/dpl.css" rel="stylesheet" />
+	<link href="__HOME_CSS__/bs3/bui.css" rel="stylesheet" />
+	<script src="__HOME_CSS__/bs3/sea.js"></script>
+	<script src="https://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+</block>
+
+<block name="body">
+
+	<body>
+		<div class="mui-content zzc_magrin_bottom">
+			<div class="zhuaqu">
+				<div class="title">请将文章链接URL粘贴到输入框：</div>
+				<textarea class="textarea" name="url" id="url" rows="10" cols="10" placeholder="iphone版微信只需要轻点输入框左上侧就能出现粘贴选项，安卓版微信则可能需要长按输入框来粘贴"></textarea>
+			</div>
+			<div class="zhuaqu_bottom">
+				说明：<br/> 1、目前支持微信文章、今日头条文章抓取；
+				<br/>
+				<!--2、住区其他网页可能会不能正常显示或编辑；<br/>-->
+				2、用户需遵循
+				<a href="http://weixin.qq.com/cgi-bin/readtemplate?t=weixin_external_links_content_management_specification">《微信外部链接内容管理规范》</a>；<br/><br/>
+
+				<!--<div style=""><a href="http://weixin.sogou.com/">更多文章来源</a></div>-->
+			</div>
+
+		</div>
+		<div class="zzc_myranwen_bottom">
+			<input type="button" name="" onclick="empty()" id="" value="清空" class="zzc_myruanwen_bottom_button" />
+			<input type="button" name="保存" id="" value="保存" class="zzc_myruanwen_bottom_button zzc_blue_bg" onclick="sumit_click()" />
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+
+	<script>
+		function empty() {
+			$("#url").val("");
+		}
+
+		function sumit_click() {
+
+			var _url = $("#url").val(); //要抓取的文章URL
+			if(_url.length <= 0) {
+				mui.toast("请填写url");
+				return;
+			}
+			BUI.use('bui/overlay', function(overlay) {
+				BUI.Message.Show({
+					title: '提示',
+					msg: '是否前往抓取，部分文章有可能抓取失败？',
+					icon: 'question',
+					buttons: [{
+							text: '取消',
+							elCls: 'button',
+							handler: function() {
+								this.close();
+							}
+						},
+						{
+							text: '确定',
+							elCls: 'button button-primary',
+							handler: function() {
+
+								$.post("{:U('Home/Article/catchArticle')}", {
+									"url": _url
+								}, function(res) {
+									// console.log(res.id);return ;
+									if(res.status == 1) {
+										mui.toast(res.msg);
+										setTimeout(function() {
+											top.location.href = "/Home/Article/addArticles?id=" + res.id;
+											// top.location.href="http://192.168.100.217/index.php?s=/Home/Article/addArticle/id/"+res.id;
+										}, 500);
+									} else {
+										mui.toast(res.msg);
+									}
+								});
+								this.close();
+							}
+						}
+					]
+				});
+			});
+
+		}
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

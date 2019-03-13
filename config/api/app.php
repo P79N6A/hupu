@@ -1,0 +1,94 @@
+<?php
+//配置文件
+define('XCX_APP_ID', 'wx96d696b078c646e5');
+define('XCX_APP_SECRET', 'f886fd741a9afbb2df1a8138cd8d31d9');
+//define('XCX_APP_SECRET', '988f51e8c4b2b70f5d197274f63afd41');
+// SDK路径
+//define('WX_SDK_PATH', VENDOR_PATH.'/Weixin/');
+// 若使用demo自带的文件存储，请创建数据文件存储的目录，并保证目录可写
+// 为避免数据泄露，请不要使用默认路径
+define('XCX_STORE_PATH', __DIR__ . '/_store/');
+// RSA密钥地址
+define('XCX_RSA_PRIVATE_KEY', __DIR__ . '/_key/rsa_private.key');
+// 加密登录票据(token、密码等)的盐
+// 为避免暴力破解，请不要使用默认值
+define('XCX_SALT', 'YXMXCX');
+// 票据相关时间，单位为秒
+define('WX_LOGIN_TOKEN_EXPIRE_CREATE_TIME', 60*60*24*30);
+define('WX_LOGIN_TOKEN_EXPIRE_LAST_LOGIN_TIME', 60*60*24*7);
+define('WS_SESSION_KEY_EXPIRE_TIME', 60*60);
+
+return array(
+    //'配置项'=>'配置值'
+    // 无须登陆
+    'NO_APP_LOGIN' => array(
+        'appapi' =>['app_login','reset_password','res_user','is_register','wx_pay_back'],
+        'article'=>[],
+        'bigdata'=>[],
+        'common'=>['getsysteminfo','getarticleseditinfo'],
+        'indexapi'=>['send_phone_code','region_list'],
+        'content'=>[],
+        'friend'=>[],
+        'integralapi'=>[],
+        'luck'=>[],
+        'message'=>[],
+        'paycodeapi'=>[],
+        'profit'=>[],
+        'signupapi'=>['sign_detail','add_sign_user'],
+		'user'=>array('loginbind','getopenid','getcode','updatewxheader','getusershare','getareas','registnobuy','share','getmy','bindgetcode','getviplist'),
+	 	'newshowlistapi'=>['add_show_list'],
+    ),
+
+    //javtom 安全配置用于代理商网站前端以及后端以及javatom写的杂代码
+    'No_Verification' => array(
+        'agencyweb' =>['chang_pwd','is_agencyphone','agency_login'],
+        'agencysystem'=>['login'],
+        'agencyadmin'=>[],
+        'activitycheck'=>[],
+        'customerservice'=>[],
+
+    ),
+
+	/******************************************支付宝*******************************************************/
+	  'alipay_config'=>array(
+       'partner' =>'2088131038256603',   //这里是你在成功申请支付宝接口后获取到的PID；
+        'key'=>'szaws9ks1vweymnvyqmlc0ptuv7868r1',//这里是你在成功申请支付宝接口后获取到的Key
+        'sign_type'=>strtoupper('MD5'),
+        'input_charset'=> strtolower('utf-8'),
+        'cacert'=> getcwd().'\\cacert.pem',
+        'transport'=> 'http',
+      ),
+     //以上配置项，是从接口包中alipay.config.php 文件中复制过来，进行配置；
+    'alipay'   =>array(
+     //这里是卖家的支付宝账号，也就是你申请接口时注册的支付宝账号
+        'seller_email'=>'fuwu@yxm360.com',
+        //这里是异步通知页面url，提交到项目的Pay控制器的notifyurl方法；
+        'notify_url'=>'http://wx.yxm360.com/Api/AliPay/index',
+        //这里是页面跳转通知url，提交到项目的Pay控制器的returnurl方法；
+        'return_url'=>'http://wx.yxm360.com/Home/User/success',
+        //支付成功跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参payed（已支付列表）
+        'successpage'=>'http://wx.yxm360.com/Home/User/success',   
+        //支付失败跳转到的页面，我这里跳转到项目的User控制器，myorder方法，并传参unpay（未支付列表）
+        'errorpage'=>'http://wx.yxm360.com/Home/Capital/recharge', 
+    ),
+
+    //*********************************微信支付******************************************
+    'WEIXINPAY_CONFIG'       => array(
+        'APPID'              => 'wx4cc2b44cf67fbf21', // 微信支付APPID
+        'APPSECRET'          => '5fe63a1a6bfe9b5adb7d8a3da7080fd4',  //公众帐号secert
+        'MCHID'         =>'1512255861',
+        'KEY'         =>'ea9a841c863650d610c165392a59d36e',
+        'NOTIFY_URL'         => 'http://wx.yxm360.com/hotel/notify/', // 接收支付状态的连接
+        'TOKEN'              =>  'ANTIPHON',
+        'XCX_APPID'         =>'wx96d696b078c646e5',
+        'XCX_MCHID'         =>'1497167762',
+        'XCX_KEY'         =>'javatomjavatomjavatomjavatomjava',
+        'XCX_APPSECRET'         =>'f886fd741a9afbb2df1a8138cd8d31d9',
+        'APP_APPID'=>'wx6eb3f7a03d8aa91f',
+        'APP_MCHID'=>'1512255861',
+        'APP_APPSECRET'=>'ea9a841c863650d610c165392a59d36e',
+        'APP_PAYBACK'=>'http://wx.yxm360.com/Api/AppApi/wx_pay_back/'
+    ),
+    
+
+);

@@ -1,0 +1,6 @@
+<?php
+//用户信息 数据层namespace app\api\model;use think\Model;
+class UserInfo extends Model
+{
+    protected $table = 's_user_detail';
+}

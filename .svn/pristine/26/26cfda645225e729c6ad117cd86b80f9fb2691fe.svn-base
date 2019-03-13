@@ -1,0 +1,77 @@
+<extend name="Public:base" />
+<block name="main">
+    <div class="page-header">
+        <div class="pull-left">
+            <h4>相册分类</h4>
+        </div>
+        <a href="{:U('Album/addAlbumType')}" class="btn btn-primary pull-right margin-top">添加分类</a>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!--<div class="panel panel-default">-->
+    <!--&lt;!&ndash; Default panel contents &ndash;&gt;-->
+    <!--<div class="panel-heading">内容查询</div>-->
+    <!--<div class="panel-body">-->
+    <!--<form method="get" action="{:U('Greeting/greetingType')}">-->
+    <!--<div class="row">-->
+    <!--<div class="col-sm-3">-->
+    <!--<div class="form-group">-->
+    <!--<label class="control-label">名称</label>-->
+    <!--<input type="text" name="goods_name" class="form-control">-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+    <!--<div class="col-sm-12 text-right">-->
+    <!--<button class="btn btn-info" type="submit">查询</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</form>-->
+
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="clearfix"></div>
+
+    <div class="table-margin">
+        <table class="table  table-header">
+            <thead>
+            <tr>
+                <td>#</td>
+                <td>分类名</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="_list" item="vo">
+                <tr>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+                    <td>
+                        <a href="{:U('Album/addAlbumType', array('id' => $vo['id']))}">编辑</a>
+                        <span class="text-explode">|</span>
+                        <!-- <a href="{:U('Album/delAlbumType', array('id' => $vo['id']))}">删除</a> -->
+                        <a href="javascript:void (0)" onclick=del("{:U('Album/delAlbumType', array('id' => $vo['id']))}")>删除</a>
+                    </td>
+                </tr>
+            </foreach>
+            <!--<tr><td colspan="9">没有数据</td></tr>-->
+            </tbody>
+        </table>
+        <div style="float: right"></div>
+    </div>
+    <div class="result page">{$page}</div>
+    <script>
+        function del(url) {
+            layer.confirm("确定删除？",{icon: 3, title:'提示'},
+                function () {
+                    self.location = url
+                },
+                function (index) {
+                    layer.close(index);
+                }
+            );
+        }
+    </script>
+</block>

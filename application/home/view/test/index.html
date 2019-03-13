@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__HOME_JS__/jquery-1.8.3.min.js"></script>
+    <title>上传过滤</title>
+    <style>
+        div {
+            width: 100%;
+
+        }
+
+        div img {
+            width: 100px;
+            height: 100px;
+        }
+
+        button {
+            margin: 50px 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <button>上传</button>
+    <div class="content">
+
+    </div>
+
+</body>
+
+</html>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script>
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: "{$signPackage['appId']}", // 必填，公众号的唯一标识
+        timestamp: "{$signPackage['timestamp']}", // 必填，生成签名的时间戳
+        nonceStr: "{$signPackage['nonceStr']}", // 必填，生成签名的随机串
+        signature: "{$signPackage['signature']}", // 必填，签名，见附录1
+        jsApiList: [
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+        ]
+    });
+
+
+
+    $("button").on("click", function () {
+
+        var localIds = null;
+        var idx = 0;
+        var serverIds = '';
+        wx.ready(function () { //配置web jssdk通过执行
+            //调用图片上传接口
+            wx.chooseImage({ //返回本地图片id 也可做为img路径显示图片 
+                success: function (res) { //上传本地图片成功 
+                    localIds = res.localIds; //本地图片id数组，下标从0开始
+                    //调用上传递归函数
+                    setTimeout(function () {
+                        wxUploadImg(localIds);
+                    }, 1000);
+                    var list = '';
+                    $.each(localIds, function (i, e) {
+                        list += '<img src="' + e + '" alt="">';
+                    })
+                    $(".content").append(list);
+
+
+                }
+            });
+
+            function wxUploadImg(localIds) {
+
+                wx.uploadImage({ //获取图片媒体ID
+                    localId: localIds[idx].toString(), // 需要上传的图片的本地ID
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) { //获取成功
+                        idx++;
+                        //存储图片媒体ID，用，号分割
+                        serverIds += res.serverId + ',';
+                        if (idx < localIds.length) { //本地图片ID 还没全部获取完图片媒体ID
+                            //调用上传递归函数
+                            wxUploadImg(localIds);
+                        } else {
+                            //上传序号归零
+                            alert(serverIds + "这是上传成功返回的图片id");
+                            idx = 0;
+
+                            serverIds = '';
+                            return true;
+                        }
+
+                    }
+
+                });
+            }
+        })
+
+
+    })
+
+
+    // $.ajax({
+    //                     type: "post",
+    //                     url: "{:url('Home/Test/add_img')}",
+    //                     data: {
+    //                         ewm_id: serverIds
+    //                     },
+    //                     success: function (res) {
+    //                         alert(res + "这是ajax返回的");
+
+    //                     }
+    //                 })
+</script>
+
+ymw1
+
+oyyp
+
+rmk_
+5irl

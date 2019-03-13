@@ -1,0 +1,39 @@
+<?php
+/** 新V网首页*/
+namespace app\home\controller;
+use app\common\controller\HomeBase;
+use app\api\logic\User  as userLogic;
+
+class Copyv extends HomeBase
+{
+
+    public function vcopy()
+    {
+        if(isPost){
+            $res = Input('post.');
+            $user_id=$this->userInfo['id'];
+            $object_id=$res['user_id'];//复制人id
+            
+            $user_logic = new userLogic();
+            $user_logic->copyCard($user_id,$object_id);
+            $this->assign('id',$this->userInfo['unionid']);
+            exit;
+        }
+
+        $this->assign('id',$this->userInfo['unionid']);
+        $this->title="复制V网";
+        return  $this->fetch();
+    }
+    
+    public function vcopc()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();    
+    }
+
+    public function copychos()
+    {
+        $this->assign('unionid',$this->userInfo['unionid']);
+        return  $this->fetch();
+    }
+}

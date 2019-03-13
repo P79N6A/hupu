@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>消息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<script src="__HOME_CSS__/add/js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__HOME_CSS__/add/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			.myshang2 {
+				height: 3rem;
+			}
+			
+			.myshang2 img {
+				height: 3rem;
+				width: 100%;
+			}
+			
+			.diz {
+				height: 0.8rem;
+				line-height: 0.6rem;
+				/*width: 1.2rem;*/
+				border-bottom: 1px solid #999;
+			}
+			
+			.diz_l {
+				height: 0.6rem;
+				width: 1.2rem;
+				border-right: 1px solid #999;
+				margin-top: 0.2rem;
+				float: left;
+			}
+			
+			.diz_r {
+				float: left;
+				margin-top: 0.2rem;
+				margin-left: 0.2rem;
+			}
+			
+			.diz .diz_l span {
+				display: inline-block;
+				width: 0.2rem;
+				height: 0.25rem;
+				background: url(__HOME_CSS__/add/image/dingwei_icon.png);
+				background-size: 100% 100%;
+			}
+			
+			.neir2 {
+				height: 1.2rem;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.neir2 img {
+				width: 0.8rem;
+				height: 0.8rem;
+				float: left;
+				margin-top: 0.2rem;
+				border-radius: 5px;
+			}
+			
+			.neir2 p {
+				padding-top: 0.2rem;
+				color: #000000;
+				float: left;
+				margin-left: 0.2rem;
+			}
+			
+			.neir2 span {
+				color: #999;
+			}
+			
+			.riqi {
+				margin-top: 0.2rem;
+				float: right;
+			}
+			
+			.riqi span:nth-child(1) {
+				color: #000;
+			}
+			
+			.riqi .weichuli {
+				display: inline-block;
+				width: 1.3rem;
+				height: 0.4rem;
+				line-height: 0.4rem;
+				border-radius: 10px;
+				color: #FFFFFF;
+				text-align: center;
+				background: #2FB3D3;
+			}
+			
+			.riqi .yichuli {
+				background: #ccc;
+			}
+			
+			footer ul li:nth-child(2) p {
+				background: url(__HOME_CSS__/add/image/xiaoxii_icon_l.png)no-repeat;
+				background-size: 100% 100%;
+				width: 0.4rem;
+			}
+		</style>
+		<script type="text/javascript">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div class="dong">
+			<a href="{:U('Home/User/usercenter')}">
+				<div class="home"></div>
+			</a>
+			<div class="sou">
+				<input type="text" id="" value="" onclick="search()" placeholder="按商会名称或者地区搜索" />
+				<span></span>
+			</div>
+			<a href="{:U('Home/Vhome/card_jump')}">
+				<div class="ren"></div>
+			</a>
+		</div>
+
+		<div class="cont">
+			<volist name="messages" id="vo">
+				<if condition="($vo.status neq 1) ">
+					<a href="{:U('Home/Trade/messageInfo',array('id'=>$vo['id']))}">
+						<div class="neir2">
+							<img src="../../{$vo.logo}" alt="" />
+							<p>这里是商会名称
+								<br />
+								<span>验证成功，你已经能加入</span></p>
+							<div class="riqi">
+								<span>{$vo.send_time||date="Y-m-d",###}<span>
+								<br />
+							<span class="weichuli yichuli">已查看<span>
+						</div>
+					</div>
+					</a>
+				<else />
+					<a href="{:U('Home/Trade/messageInfo',array('id'=>$vo['id']))}">
+					<div class="neir2">
+						<img src="../../{$vo.logo}" alt="" />
+						<p>{$vo.name}
+							<br />
+							<span>请等待验证</span></p>
+								<div class="riqi">
+									<span>{$vo.send_time||date="Y-m-d",###}<span>
+								<br />
+							<span class="weichuli">未处理<span>
+						</div>
+					</div>
+					</a>
+				</if>
+
+			</volist>
+		</div>
+		
+		
+		<footer>
+			<ul>
+				<li>
+					<a href="{:U('Home/Trade/article')}">
+						<p></p>
+						<span>动态</span>
+					</a>
+					</li>
+
+					<li>
+						<a href="{:U('Home/Trade/message')}">
+							<p></p>
+							<span>消息</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="{:U('Home/Trade/trades')}">
+							<p></p>
+							<span>商会</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="{:U('Home/Trade/myTrades')}">
+							<p></p>
+							<span>我的</span>
+						</a>
+					</li>
+					</ul>
+					</footer>
+
+					<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+					<script type="text/javascript">
+						function search() {
+							top.location.href = "/Home/Trade/joinTrades";
+						}
+					</script>
+					<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+					<script type="text/javascript">
+						document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+							// 通过下面这个API隐藏右上角按钮hideOptionMenu
+							WeixinJSBridge.call('hideOptionMenu');
+						});
+					</script>
+	</body>
+
+</html>

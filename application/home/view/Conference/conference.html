@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>洋小秘第九届特训营---参会证</title>
+		<link rel="stylesheet" href="__HOME_JS__/yb/css/conference.css" />
+		<script src="__HOME_JS__/yb/js/rem.js"></script>
+		<script src="__HOME_JS__/jquery-2.1.1.min.js"></script>
+	</head>
+	<body>
+		<div class="top">
+			<div class="gain">
+				<div class="gain_top">一键获取参会证</div>
+				<div class="gain_bot">TO GET CERTIFICATE</div>
+			</div>
+			<div class="logo">
+				<img src="__HOME_IMAGES__/yyyxxm.png" alt="" />
+			</div>
+		</div>
+		<div class="foot">
+			<div class="foot_top"></div>
+			<div class="foot_bot">
+				<div class="inp">
+					<span class="inp_left"> 
+						<img src="__HOME_IMAGES__/icon_phone@2x.png" alt="" />
+					</span>
+					<span class="inp_right">
+						<input class="iphone" type="text" value="" placeholder="请输入注册手机号"/>
+					</span>
+				</div>
+				<div class="inpt">
+					<span class="inpt_left "> 
+						<img src="__HOME_IMAGES__/icon_mina@2x.png" alt="" />
+					</span>
+					<span class="inpt_cen">
+						<input type="text" class="num" value="" placeholder="请输入验证码"/>
+					</span>
+					<span class="code">
+						<input type="button" id="btn" value="点击获取" onclick="sendemail()" /> 
+					</span>
+				</div>
+				<div class="hint">请输入正确的验证码</div>
+			</div>
+			<div class="affirm">确认</div>
+		</div>
+		<div class="model">请输入注册手机号</div>
+		<script type="text/javascript">
+			var countdown = 60;
+			var code = 0;
+			function sendemail() {
+				var obj = $("#btn");
+				var id = '{$unionid}';
+				var phone = $(".iphone").val();
+				if($(".iphone").val() == "") {
+					$(".model").show()
+					setTimeout(function() {
+						$('.model').hide();
+					}, 1000);
+					return false;
+				} else {
+					$(".model").hide()
+				};
+
+				$.ajax({
+					type: "post",
+					url: '/index.php?s=/Api/ActivityCheck/user_login', //后台处理程序
+					dataType: 'json', //接受数据格式    
+					data: {
+						phone: phone,
+					}, //要传递的数据
+					success: function(res) {
+                        console.log(res);
+						if(res.ResultType >= 2) {
+
+							//return;
+							$.ajax({
+								type: "post",
+								url: '/index.php?s=/Api/IndexApi/send_phone_code', //后台处理程序
+								dataType: 'json', //接受数据格式    
+								data: {
+									unionid: id,
+									phone: phone,
+									type: 6,
+								}, //要传递的数据
+								success: function(res) {
+									if(res.ResultType == 0) {
+										$(".model").html("获取成功")
+										$(".model").show()
+										setTimeout(function() {
+											$('.model').hide();
+										}, 1500);
+									 code = res.AppendData
+									} else {
+										$(".model").html("获取失败")
+										$(".model").show()
+										setTimeout(function() {
+											$('.model').hide();
+										}, 1500);
+									}
+
+								},
+								error: function() {
+									alert("服务器繁忙，请稍后再试！");
+								}
+							});
+							settime(obj);
+						} else {
+							$(".model").html(res.Message)
+							$(".model").show()
+							setTimeout(function() {
+								$('.model').hide();
+							}, 1500);
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+
+			}
+			function settime(obj) { //发送验证码倒计时
+				if(countdown == 0) {
+					obj.attr('disabled', false);
+					obj.val("点击获取");
+					countdown = 60;
+					return;
+				} else {
+					obj.attr('disabled', true);
+					if(countdown < 10) {
+						obj.val("0" + countdown + "S");
+					} else {
+						obj.val(countdown + "S");
+					}
+					countdown--;
+				}
+				setTimeout(function() {
+					settime(obj)
+				}, 1000)
+			}
+			
+			$(".affirm").click(function() {
+				var phone = $(".iphone").val();
+				var num =$(".num").val();
+				if($(".iphone").val() == "") {
+					$(".model").show()
+					setTimeout(function() {
+						$('.model').hide();
+					}, 1500);
+					return false;
+				} else {
+					$(".model").hide()
+				}
+
+				if($(".num").val() == "") {
+					$(".model").html("请输入验证码")
+					$(".model").show()
+					setTimeout(function() {
+						$('.model').hide();
+					}, 1500);
+					return false;
+				} else {
+					$(".model").hide()
+				}
+				if(num != code) {
+					$(".hint").show()
+					return false;
+				} else {
+					$(".hint").hide()
+				}
+				$.ajax({
+					type: "post",
+					url: '/index.php?s=/Api/ActivityCheck/user_login', //后台处理程序
+					dataType: 'json', //接受数据格式    
+					data: {
+						phone: phone,
+					}, //要传递的数据
+					success: function(res) {
+					    console.log(res)
+						if(res.ResultType=="0"){
+							$(".model").html("此用户不存在")
+						} 
+						if(res.ResultType=="1"){
+							$(".model").html("此用户未付费")
+						}
+						if(res.ResultType=="2"){
+							console.log(1111)
+							window.location.href="/index.php?s=/Home/Conference/photograph.html&nameid="+ res.AppendData + "";
+						}
+						if(res.ResultType=="3" || res.ResultType=="4"){
+                            console.log(2222)
+							window.location.href="/index.php?s=/Home/Conference/card.html&nameid="+ res.AppendData + "";
+						}
+					},
+					error: function() {
+						alert("服务器繁忙，请稍后再试！");
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

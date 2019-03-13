@@ -1,0 +1,187 @@
+<extend name="./base" />
+
+<block name="css_extend">
+
+</block>
+
+<block name="body">
+
+	<body class="zzc_body_bg">
+
+		<header class="mui-bar mui-bar-nav zzc_header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left zzc_header_fan">返回</a>
+			<h1 class="mui-title zzc_header_title">隐私保护</h1>
+			<span class="mui-icon mui-icon-more zzc_right"></span>
+		</header>
+		<div class="mui-content zzc_mui_content_bg">
+			<div class="zzc_qiehuan_div" style="margin-top:0px;">
+				<ul class="mui-table-view">
+					<!--<li class="mui-table-view-cell">-->
+						<!--姓名-->
+						<!--<div class="mui-switch  mui-switch-mini <if condition=" $info.is_nickname neq 1 ">mui-active</if>" name="is_nickname" id="onSwitch">-->
+							<!--<div class="mui-switch-handle"></div>-->
+						<!--</div>-->
+					<!--</li>-->
+					<li class="mui-table-view-cell">
+						手机号码
+						<div class="mui-switch mui-switch-mini <if condition=" $info.is_phone neq 1 ">mui-active</if>" name="is_phone" id="onSwitch1">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						微信
+						<div class="mui-switch mui-switch-mini <if condition=" $info.is_wechat neq 1 ">mui-active</if>" name="is_wechat" id="onSwitch2">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<!--<li class="mui-table-view-cell">-->
+						<!--QQ-->
+						<!--<div class="mui-switch mui-switch-mini <if condition=" $info.is_qq neq 1 ">mui-active</if>" name="is_qq" id="onSwitch3">-->
+							<!--<div class="mui-switch-handle"></div>-->
+						<!--</div>-->
+					<!--</li>-->
+					<!--<li class="mui-table-view-cell">-->
+						<!--固话-->
+						<!--<div class="mui-switch mui-switch-mini <if condition=" $info.is_tel neq 1 ">mui-active</if>" name="is_tel" id="onSwitch4">-->
+							<!--<div class="mui-switch-handle"></div>-->
+						<!--</div>-->
+					<!--</li>-->
+					<!--<li class="mui-table-view-cell">-->
+						<!--邮箱-->
+						<!--<div class="mui-switch mui-switch-mini <if condition=" $info.is_email neq 1 ">mui-active</if>" name="is_email" id="onSwitch5">-->
+							<!--<div class="mui-switch-handle"></div>-->
+						<!--</div>-->
+					<!--</li>-->
+				</ul>
+
+			</div>
+
+		</div>
+	</body>
+</block>
+
+<block name="js_extend">
+	<script>
+		// document.getElementById("onSwitch").addEventListener('toggle', function(event) {
+		// 	var value = 1;
+		// 	if(event.detail.isActive)
+		// 		value = 0;
+		// 	data = {
+		// 		'name': $(this).attr('name'),
+		// 		'value': value,
+		// 	};
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: "{:U('Home/User/security')}",
+		// 		data: data,
+		// 		success: function() {
+        //
+		// 		},
+		// 		dataType: 'json'
+		// 	});
+        //
+		// });
+		document.getElementById("onSwitch1").addEventListener('toggle', function(event) {
+			var value = 1;
+			if(event.detail.isActive)
+				value = 0;
+			data = {
+				'name': $(this).attr('name'),
+				'value': value,
+			};
+			$.ajax({
+				type: 'POST',
+				url: "{:U('Home/User/security')}",
+				data: data,
+				success: function() {
+
+				},
+				dataType: 'json'
+			});
+
+		});
+		document.getElementById("onSwitch2").addEventListener('toggle', function(event) {
+			var value = 1;
+			if(event.detail.isActive)
+				value = 0;
+			data = {
+				'name': $(this).attr('name'),
+				'value': value,
+			};
+			$.ajax({
+				type: 'POST',
+				url: "{:U('Home/User/security')}",
+				data: data,
+				success: function() {
+
+				},
+				dataType: 'json'
+			});
+
+		});
+		// document.getElementById("onSwitch3").addEventListener('toggle', function(event) {
+		// 	var value = 1;
+		// 	if(event.detail.isActive)
+		// 		value = 0;
+		// 	data = {
+		// 		'name': $(this).attr('name'),
+		// 		'value': value,
+		// 	};
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: "{:U('Home/User/security')}",
+		// 		data: data,
+		// 		success: function() {
+        //
+		// 		},
+		// 		dataType: 'json'
+		// 	});
+        //
+		// });
+		// document.getElementById("onSwitch4").addEventListener('toggle', function(event) {
+		// 	var value = 1;
+		// 	if(event.detail.isActive)
+		// 		value = 0;
+		// 	data = {
+		// 		'name': $(this).attr('name'),
+		// 		'value': value,
+		// 	};
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: "{:U('Home/User/security')}",
+		// 		data: data,
+		// 		success: function() {
+        //
+		// 		},
+		// 		dataType: 'json'
+		// 	});
+        //
+		// });
+		// document.getElementById("onSwitch5").addEventListener('toggle', function(event) {
+		// 	var value = 1;
+		// 	if(event.detail.isActive)
+		// 		value = 0;
+		// 	data = {
+		// 		'name': $(this).attr('name'),
+		// 		'value': value,
+		// 	};
+		// 	$.ajax({
+		// 		type: 'POST',
+		// 		url: "{:U('Home/User/security')}",
+		// 		data: data,
+		// 		success: function() {
+        //
+		// 		},
+		// 		dataType: 'json'
+		// 	});
+
+		// });
+	</script>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+			// 通过下面这个API隐藏右上角按钮hideOptionMenu
+			WeixinJSBridge.call('hideOptionMenu');
+		});
+	</script>
+</block>

@@ -1,0 +1,641 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>广告轮播图</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/index.css" />
+		<link rel="stylesheet" type="text/css" href="__HOME_CSS__/add/css/style.css" />
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet">
+		<script src="/Public/Home/js/mui.min.js"></script>
+
+		<script src="__HOME_JS__/ljcut/jquery-2.1.3.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/Sortableone.js"></script>
+		<script src="/Public/Home/js/whjs/js/sonic.js"></script>
+		<script src="/Public/Home/js/whjs/js/comm.js"></script>
+		<script src="/Public/Home/js/whjs/js/hammer.js"></script>
+		<script src="/Public/Home/js/whjs/js/iscroll-zoom.js"></script>
+		<script src="/Public/Home/js/whjs/js/jquery.photoClip.js"></script>
+
+		<style type="text/css">
+			body {
+				background: #f0eff6;
+			}
+			
+			.in {
+				width: 90%;
+				margin: 0 auto;
+				height: 1rem;
+				background: #fff;
+				margin-top: 0.3rem;
+				line-height: 1rem;
+				position: relative;
+			}
+			
+			.in span {
+				margin-left: 0.3rem;
+				color: #4e4b4b;
+			}
+			
+			.in2 span {
+				margin-left: 0.3rem;
+				color: #909389;
+			}
+			
+			.in1 input {
+				width: 1rem;
+				height: 0.5rem;
+				float: right;
+				margin-right: 0.2rem;
+				border-radius: 3px;
+				margin-top: 0.3rem;
+				border: none;
+				background: #2FB3D3;
+				color: #fff;
+			}
+			
+			.in2 span:nth-child(2) {
+				float: right;
+				margin-right: 0.5rem;
+			}
+			
+			.in1 input::placeholder,
+			.in2 input::placeholder {
+				color: #C8C7CC;
+				font-size: 0.22rem
+			}
+			
+			.content {
+				width: 94%;
+				position: relative;
+				margin: 0 auto;
+				line-height: 2rem;
+				padding-bottom: 2rem;
+			}
+			
+			.xx {
+				width: 0.3rem;
+				position: absolute;
+				top: 0.05rem;
+				right: 0.05rem;
+				z-index: 300;
+			}
+			
+			.btnbom {
+				position: fixed;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				border-radius: 0 !important;
+			}
+			
+			.btnbom input {
+				width: 50%;
+				float: left;
+				text-align: center;
+				height: 100%;
+				border: none;
+			}
+			
+			.btnbom input:nth-child(1) {
+				background: #fff;
+				color: #4e4b4b;
+			}
+			
+			.btnbom input:nth-child(2) {
+				background: #2FB3D3;
+				color: #fff;
+			}
+			
+			body {
+				margin: 0;
+				max-width: 100%;
+				display: block;
+				height: auto;
+			}
+			
+			#clipArea {
+				margin: 10px;
+				height: 87%;
+			}
+			
+			#file {
+				margin: 20px;
+			}
+			
+			input {
+				-webkit-appearance: none;
+				border-radius: 0;
+			}
+			
+			.clip {
+				background-color: #000;
+				display: none;
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				z-index: 10000;
+			}
+			
+			.photo-clip-view {
+				background-color: #fff;
+			}
+			
+			.btun {
+				width: 70%;
+				height: 10%;
+				margin: 0 auto;
+				position: relative;
+				z-index: 999;
+			}
+			
+			#clipBtn {
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				background-color: #2FB3D3;
+				color: #fff;
+				text-align: center;
+				border: none;
+				position: relative;
+				z-index: 999;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			
+			#cancel {
+				background-color: #fff;
+				color: #000;
+				width: 35%;
+				height: 40px;
+				line-height: 40px;
+				border-radius: 5px;
+				border: none;
+				margin-right: 26%;
+				position: relative;
+				z-index: 999;
+				cursor: pointer;
+			}
+			
+			.gif {
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 2;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				display: none;
+			}
+			
+			.gif>img {
+				width: 20%;
+				position: absolute;
+				left: 40%;
+				top: 36%;
+			}
+			
+			.clearfix:after {
+				clear: both;
+				content: ' ';
+				display: block;
+			}
+			
+			.fl {
+				float: left;
+			}
+			
+			.fr {
+				float: right;
+			}
+			
+			.item {
+				display: block;
+				width: 31%;
+				height: 2rem;
+				margin-left: 0.1rem;
+				margin-top: 0.1rem;
+				position: relative;
+				cursor: move;
+			}
+			
+			.mask {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				opacity: 0;
+				z-index: 199;
+			}
+			
+			.preview {
+				width: 100%;
+				height: 2rem;
+			}
+			
+			.mui-popup-backdrop {
+				position: fixed;
+				z-index: 998;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;
+				background: rgba(0, 0, 0, .4);
+				display: none;
+			}
+			
+			.mui-popup {
+				position: fixed;
+				z-index: 10000;
+				top: 50%;
+				left: 50%;
+				display: none;
+				overflow: hidden;
+				width: 4.5rem;
+				-webkit-transition-property: -webkit-transform, opacity;
+				transition-property: transform, opacity;
+				-webkit-transform: translate3d(-50%, -50%, 0) scale(1.185);
+				transform: translate3d(-50%, -50%, 0) scale(1.185);
+				text-align: center;
+				color: #000;
+				border-radius: 13px;
+				opacity: 1;
+			}
+			
+			.mui-popup-inner {
+				position: relative;
+				padding: 0.2rem;
+				border-radius: 13px 13px 0 0;
+				background: rgba(255, 255, 255, .95);
+			}
+			
+			.mui-popup-title {
+				font-size: 18px;
+				font-weight: 500;
+				text-align: center;
+			}
+			
+			.mui-popup-title+.mui-popup-text {
+				font-family: inherit;
+				font-size: 14px;
+				margin: 5px 0 0;
+			}
+			
+			.mui-popup-buttons {
+				position: relative;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				height: 44px;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+			}
+			
+			.mui-popup-button:first-child {
+				border-radius: 0 0 0 13px;
+			}
+			
+			.mui-popup-button {
+				font-size: 17px;
+				line-height: 44px;
+				position: relative;
+				display: block;
+				overflow: hidden;
+				box-sizing: border-box;
+				width: 100%;
+				height: 44px;
+				padding: 0 5px;
+				cursor: pointer;
+				text-align: center;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color: #007aff;
+				background: rgba(255, 255, 255, .95);
+				-webkit-box-flex: 1;
+			}
+			
+			.mui-popup-button.mui-popup-button-bold {
+				font-weight: 600;
+			}
+			
+			.mui-popup-button:last-child {
+				border-radius: 0 0 13px;
+			}
+			
+			.mui-popup-button {
+				font-size: 17px;
+				line-height: 44px;
+				position: relative;
+				display: block;
+				overflow: hidden;
+				box-sizing: border-box;
+				width: 100%;
+				height: 44px;
+				padding: 0 5px;
+				cursor: pointer;
+				text-align: center;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color: #007aff;
+				background: rgba(255, 255, 255, .95);
+				-webkit-box-flex: 1;
+			}
+			
+			.hint {
+				width: 90%;
+				height: 0.5rem;
+				line-height: 0.5rem;
+				margin: 0.2rem auto 0;
+				font-size: 0.25rem;
+				color: #2FB3D3;
+			}
+			
+			.zhezhao {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index: 999;
+				display: none;
+				background-color: #000;
+				opacity: 0.5;
+			}
+			
+			.privacy {
+				width: 80%;
+				height: 22%;
+				background: #fff;
+				border-radius: 0.25rem;
+				font-size: 0.75rem;
+				text-align: center;
+				background: #fff;
+				color: #000;
+				margin-bottom: 3rem;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin: -11% 0 0 -40%;
+				z-index: 999;
+				display: none;
+			}
+			
+			.up {
+				width: 100%;
+				height: 20%;
+				padding: 7.5% 0;
+				text-align: center;
+				font-size: 17px;
+				color: #000;
+			}
+			
+			.down {
+				width: 100%;
+				height: 50%;
+				text-align: center;
+				font-size: 16px;
+				color: #666;
+			}
+			
+			.photo-clip-view {
+				background: #000000;
+			}
+			
+			.photo-clip-area {
+				border: 2px dashed rgb(221, 221, 221) !important;
+			}
+			
+			.mesk {
+				width: 150px;
+				height: 120px;
+				background: rgba(0, 0, 0, 0.8);
+				border-radius: 5px;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-top: -60px;
+				margin-left: -75px;
+				display: none;
+				z-index: 100;
+			}
+			
+			.mesk img {
+				width: 40px;
+				height: 40px;
+				display: block;
+				margin: 0 auto;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				animation: rotate 3s linear infinite;
+			}
+			
+			.mesk p {
+				color: #fff;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body ontouchstart="">
+		<div class="mui-popup">
+			<div class="mui-popup-inner">
+				<div class="mui-popup-title">提示</div>
+				<div class="mui-popup-text">正在编写状态，是否要返回?</div>
+			</div>
+			<div class="mui-popup-buttons">
+				<span class="mui-popup-button">否</span>
+				<span class="mui-popup-button mui-popup-button-bold">是</span>
+			</div>
+		</div>
+		<div class="mui-popup-backdrop"></div>
+		<div class="clip">
+			<div class="gif">
+				<img src="__HOME_IMAGES__/new_load.gif" alt="" />
+			</div>
+			<div id="clipArea"></div>
+			<div class="btun">
+				<button id="cancel" style="padding:0">取消</button>
+				<button id="clipBtn" style="padding:0">截取</button>
+			</div>
+		</div>
+
+		<div class="in in1">
+			<span>广告轮播图</span>
+			<input id="add" type="button" name="" id="" value="添加" />
+			<input type="file" id="file" class="file1" name="file1" style="display: none" accept="image/*" />
+		</div>
+		<div class="hint">轮播图最多只可添加9个哦！</div>
+		<!--<form action="" id="form" method="post" enctype="multipart/form-data">-->
+		<input type="hidden" name="type" id="state" value="" />
+		<div id="content" class="content clearfix">
+			<volist name="_list" id="vo" key="k">
+				<span class="fl item pic_77{$k}">
+					<div class='mask'></div>
+					<img src="{$vo.img_url}" class='preview' alt="">
+					<input type="hidden" name="pic_77{$k}" value="{$vo.img_url}">
+					<img src="__HOME_IMAGES__/x.png" alt="" id="del" class="xx" onclick="del_img(this)">
+				</span>
+			</volist>
+		</div>
+		<!--</form>-->
+		<div class="btnbom">
+			<input class="back" type="button" name="" id="" value="取消" />
+			<input type="button" name="" id="save" value="保存" />
+		</div>
+		<div class="zhezhao"></div>
+		<div class="privacy" style="display: none;">
+			<div class="up">温馨提示</div>
+			<div class="down">轮播图最多只能添加9个哦！</div>
+		</div>
+		<div class="mesk">
+			<img src="/Public/Home/images/loadad.gif" alt="">
+			<p>图片上传中</p>
+		</div>
+		<script>
+			var num = 1;
+			$("#clipArea").photoClip({
+				width: 290,
+				height: 350,
+				file: "#file",
+				ok: "#clipBtn",
+				loadStart: function() {
+					//console.log("照片读取中");
+					$('.gif').show();
+				},
+				loadComplete: function() {
+					//console.log("照片读取完成");
+					$('.gif').hide();
+				},
+				clipFinish: function(dataURL) {
+//					console.log(dataURL)
+					var imgsize = document.getElementById('file').files[0].size;
+					if(imgsize > 1024 * 1024 * 10) {
+						mui.toast("请上传小于10M的图片");
+						return false;
+					} else {
+
+						//图片路径设置为读取的图片
+						var imgsrc = dataURL;
+						var unionid = '{$unionid}';
+						$.ajax({
+							type: "post",
+							url: "/index.php?s=/Api/IndexApi/uploads_img",
+							data: {
+								unionid: unionid,
+								img: imgsrc,
+								start_name: "Banner",
+							},
+							beforeSend: function() {
+								$(".mesk").show().find('p').text("图片上传中");
+							},
+							success: function(res) {
+								console.log(res)
+								$(".mesk").hide();
+								$('.content').append("<span class='item fl pic_" + num + "'><div class='mask'></div><img id='preview_" + num +
+									"' class='preview' /><img src='__HOME_IMAGES__/x.png' id='del' class='xx' onclick='del_img(this)' alt=''></span>"
+								);
+
+								//获取图片dom
+								var img = document.getElementById("preview_" + num);
+								img.src = res.AppendData;
+								//图片路径设置为读取的图片
+								$('.pic_' + num).append("<input type='hidden' name='pic_" + num + "' value='" + img.src + "'>");
+								num++;
+							}
+						})
+					}
+				}
+			});
+
+			$("#cancel,#clipBtn").click(function() {
+				$(".clip").hide();
+
+			})
+
+			$("#add").on("click", function() {
+				$('.gif').hide();
+			})
+
+			$(".back").on("click", function() {
+				$(".mui-popup").css("display", "block");
+				$(".mui-popup-backdrop").css("display", "block")
+			})
+			$(".mui-popup-button").on("click", function() {
+				$(".mui-popup").css("display", "none");
+				$(".mui-popup-backdrop").css("display", "none")
+			})
+
+			$(".mui-popup-button-bold").on("click", function() {
+				top.location.href = "{:U('Home/Card/NewcreateCard')}";
+			})
+
+			Sortable.create(content, {
+				group: "words",
+				draggable: ".item",
+				animation: 100,
+				filter: '.xx',
+				onFilter: function(evt) {
+					evt.item.parentNode.removeChild(evt.item);
+
+				}
+			});
+
+			$("#save").on("click", function() {
+				var arr = []
+				var unionid = '{$unionid}';
+				var imgs = $(".preview");
+				for(var i = 0; i < imgs.length; i++) {
+					arr.push(imgs[i].src);
+				}
+				$.ajax({
+					type: "post",
+					url: "/index.php?s=/Api/AppApi/save_banner",
+					data: {
+						unionid: unionid,
+						imgs: arr,
+					},
+					success: function(res) {
+						window.location.href="/index.php?s=/Home/Card/NewcreateCard.html"
+
+					}
+
+				})
+			})
+
+			$("#add").click(function() {
+				var length = $(".item").length;
+				if(length >= 9) {
+					$(".zhezhao").css("display", "block");
+					$(".privacy").show();
+					setTimeout(function() {
+						$('.privacy').hide();
+						$('.zhezhao').hide();
+					}, 1500);
+					return;
+				} else {
+					$(".zhezhao").css("display", "none");
+					$('.file1').click();
+					$('.clip').show();
+				}
+
+			})
+		</script>
+		<script src="__HOME_CSS__/add/js/index.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+				// 通过下面这个API隐藏右上角按钮hideOptionMenu
+				WeixinJSBridge.call('hideOptionMenu');
+			});
+		</script>
+	</body>
+
+</html>

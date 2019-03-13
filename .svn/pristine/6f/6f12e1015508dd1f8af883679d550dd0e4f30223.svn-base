@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布局</title>
+    <script src="__HOME_JS__/whjs/js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+    <script src="__HOME_JS__/whjs/js/rem.js"></script>
+    <script src="__HOME_JS__/jquery.panzoom.min.js"></script>
+    <script src="__HOME_JS__/whjs/js/template-web.js"></script>
+    <style>
+      body,html{
+            max-width: 750px;
+            min-width: 320px;
+            margin: 0 auto;
+            background: #f6f6f7;
+            height: 100%;
+        }
+        
+           #content{
+            width: 100%;
+            overflow: hidden;
+            background: #fff;
+            height: 100%;
+        }
+
+        .title{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 1rem;
+            height: 4.5rem;
+        }
+
+        .ulbox li{
+            width: 20%;
+            height: 3rem;
+            text-align: center;
+        }
+
+        .ulbox li p{
+            font-size: 0.6rem;
+        }
+
+        .ulbox li img{
+            width: 70%;
+        }
+
+         .fx{
+              width: 100%;
+              position: fixed;
+              bottom: 0;
+              left: 0;
+              
+          }
+
+           .fx button{
+               width: 50%;
+               height: 2.5rem;
+               border: 0;
+           }
+
+            .fx .yl{
+               background: #eee;
+           }
+            .fx .confirm{
+                color: #fff;
+                background: #2FB3D3;
+            }
+
+            .big_img{
+                width: 100%;
+                height: 570px;
+                /* background-image: url("http://wx.yxm360.com/Uploads/Card/2018-01-05/5a4f608db5a51.png"); */
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+
+            .user_msg{
+                padding: 10px;
+                margin: 10px;
+                transform: matrix(0.8, 0, 0, 0.8, -10, 0);
+                backface-visibility: hidden;
+                transform-origin: 50% 50% 0px;
+                cursor: move;
+                transition: transform 200ms ease-in-out;
+                width: 100%;
+                box-sizing: border-box;
+                border:1px dashed #999;
+                border-radius: 10px;
+                position: relative;
+            }
+
+            .user_msg input{
+                border: 0;
+                outline: none;
+                background: rgba(255, 255, 255, 0);
+                width: 100%;
+                font-size: 1rem;
+
+            }
+
+             .user_msg .last{
+                text-align: right;
+             }
+
+             .user_msg .first{
+                 text-indent: 1rem;
+             }
+
+             .user_msg #color{
+                 width: 80%;
+                 margin: 0.3rem auto;
+                 margin-left: 2rem;
+                 background: rgba(255, 255, 255, 0);
+                 resize: none;
+                 border: 0;
+                 font-size: 0.8rem;
+                 height: 100px;
+                 /* text-indent: 1rem; */
+             }
+
+             .user_msg .td{
+                 position: absolute;
+                 width: 1.2rem;
+                 height: 1.2rem;
+                 bottom: 0;
+                 right: 0;
+                 margin-right: -0.6rem;
+                 margin-bottom: -0.6rem;
+             }
+                  .save_check{
+                 width: 8rem;
+                 height: 1.8rem;
+                 line-height: 1.8rem;
+                 color: #fff;
+                 font-size: 0.9rem;
+                 background:rgba(0,0,0,.5);
+                 position: fixed;
+                 bottom: 4rem;
+                 left: 50%;
+                 margin-left: -4rem;
+                 text-align: center;
+                 border-radius: 3px;
+                 display: none;
+             }
+    
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="title">
+            <ul class="ulbox clearfix">
+                <li class="fl">
+                    <a id="href_one" href="index.php?s=/Home/Holidaycard/grats">
+                        <img src="/Public/Home/images/h_icon_1.png" alt="">
+                        <p>贺词</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_two" href="index.php?s=/Home/Holidaycard/beijing">
+                        <img src="/Public/Home/images/h_icon_2.png" alt="">
+                        <p>背景</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_three" href="index.php?s=/Home/Holidaycard/music">
+                        <img src="/Public/Home/images/h_icon_3.png" alt="">
+                        <p>音乐</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_four" href="index.php?s=/Home/Holidaycard/share">
+                        <img src="/Public/Home/images/h_icon_4.png" alt="">
+                        <p>分享</p>
+                    </a>
+                </li>
+                <li class="fl">
+                    <a id="href_five" href="index.php?s=/Home/Holidaycard/layout">
+                        <img src="/Public/Home/images/h_icon_5_on.png" alt="">
+                        <p>布局</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="contents">
+            <!-- <div class="big_img">
+                <div class="user_msg">
+                    <input class="first" disabled type="text" value="真寻小哥哥">
+                    <textarea disabled id="color">我i哦顶级设计大赛的洒落的卡萨帝大寿快乐的卡萨帝死里打碎了的艰苦拉萨点解啊数量的艰苦</textarea>
+                    <input class="last" disabled type="text" value="2018-6-2">
+                    <img class="td" src="/Public/Home/images/tuodong.png" alt="">
+                </div>
+            </div> -->
+        </div>
+        <div class="fx clearfix">
+            <button class="yl fl">预览</button>
+            <button class="confirm fl">保存</button>
+        </div>
+    </div>
+    <div class="save_check">保存成功</div>
+</body>
+</html>
+<script type="text/html" id="lays">
+{{each AppendData v i}}
+    <div class="big_img">
+        <div class="user_msg">
+            <input class="first" disabled type="text" value="{{v.title}}" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}">
+            <textarea disabled id="color" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}">{{v.content}}</textarea>
+            <input class="last" disabled type="text" value="{{v.phone}}" style="color:{{v.font_color}}; text-shadow:1px 1px {{v.font_border_color}}">
+            <img class="td" src="/Public/Home/images/tuodong.png" alt="">
+        </div>
+    </div>
+{{/each}}
+</script>
+<script>
+
+$(function(){
+    var id = '{$id}';
+
+    function GetQueryString(name) {
+        if (window.location.href.indexOf('?') > -1) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+            if (r != null) return unescape(r[2]);
+        }
+        return '';//便于容错处理
+    }
+
+    var gid = GetQueryString("gid");
+    console.log(gid)
+
+    $("#href_one").attr("href", "index.php?s=/Home/Holidaycard/grats&gid=" + gid + "");
+    $("#href_two").attr("href", "index.php?s=/Home/Holidaycard/beijing&gid=" + gid + "");
+    $("#href_three").attr("href", "index.php?s=/Home/Holidaycard/music&gid=" + gid + "");
+    $("#href_four").attr("href", "index.php?s=/Home/Holidaycard/share&gid=" + gid + "");
+    $("#href_five").attr("href", "index.php?s=/Home/Holidaycard/layout&gid=" + gid + "");
+
+    $.ajax({
+        url:"index.php?s=/Api/IndexApi/get_gcard",
+        type:"post",
+        async: false,
+        data:{
+            id:id,
+            cardid: gid,
+        },
+        success:function(res){
+            console.log(res)
+           $(".contents").html(template("lays",res));
+           $.each(res.AppendData,function(k,v){
+                 $(".big_img").css("background-image", "url('"+ v.pic+"')")
+           })
+         
+
+               var $panzoom = $('.user_msg').panzoom({
+                startTransform: 'scale(0.9)',
+                maxScale: 0.9,
+                increment: 0.1,
+                contain: true
+            }).panzoom('zoom', true);
+
+      
+        }
+    })
+
+
+    $(".confirm").on("click",function(){
+        var top_y = $(".user_msg").offset().top;
+        console.log(top_y)
+        $.ajax({
+            url:"index.php?s=/Api/IndexApi/addGcard",
+            type:"post",
+            data:{
+                id:id,
+                card_id: gid,
+                content_y: top_y
+            },
+            success:function(res){
+                console.log(res)
+                $(".save_check").text("保存成功").stop(true).fadeIn(500);
+                $(".save_check").fadeOut(2000);
+            }
+        })
+    })
+
+     $(".yl").on("click", function () {
+        location.href = "index.php?s=/Home/Holidaycard/showview/gid/" + gid + "/id/" + id + "";
+    })
+
+
+});
+
+</script>

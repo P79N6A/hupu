@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=0, minimal-ui" charset="UTF-8">
+		<meta name="x5-orientation" content="portrait">
+		<title>商圈</title>
+		<link rel="stylesheet" href="__HOME_CSS__/wh/base.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="__HOME_CSS__/vhome/busnisess/index.css?v=2">
+		<script src="__HOME_JS__/whjs/js/jquery-2.1.1.min.js"></script>
+		<script src="__HOME_JS__/whjs/js/rem.js"></script>
+		<script src="__HOME_JS__/whjs/js/template-web.js"></script>
+		<script src="__HOME_JS__/vhome/business/index.js?v=2"></script>
+	</head>
+
+	<body>
+		<div id="gd">
+			<div class="Location_search clearfix">	
+				<img class="search_img" src="__HOME_IMAGES__/newvnet/business/search_icon@2x.png" alt="">
+				<input id="entry" class="search fl" type="search" placeholder="请输入搜索关键词">
+				<div class="s_word fl">搜索</div>
+			</div>
+			<div class="information clearfix">
+				<div class="industry fl">
+					<span>行业</span>
+					<img class="down_img mg" src="__HOME_IMAGES__/newvnet/business/shangquan_lower_icon@2x.png" alt="">
+				</div>
+				<div class="long fl"></div>
+				<div class="Location_search_box fl clearfix">
+					<span>位置</span>
+					<img class="imgs mg" src="__HOME_IMAGES__/newvnet/business/shangquan_lower_icon@2x.png" alt="">
+				</div>
+				<div class=" long fl"></div>
+				<div class="more fl">
+					<span>更多筛选</span>
+					<img class="up_img mg" src="__HOME_IMAGES__/newvnet/business/shangquan_lower_icon@2x.png" alt="">
+				</div>
+				<div class="long fl"></div>
+				<a id="sz" class="fl" href="/index.php?s=Home/humancircle/setting">
+					<img src="__HOME_IMAGES__/newvnet/business/up1_icon@2x.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div id="wrapper">
+			<ul class="user_info" id="thelist">
+				<!-- 用户信息 -->
+				<!-- <li class="user_msg">
+                <a href="#" class="clearfix">
+                    <div class="img_box fl">
+                        <img class="nick_msg fl" src="__HOME_IMAGES__/timg.jpg" alt="">
+                    </div>
+                    <div class="user_msg_box fl clearfix">
+                        <div class="nick_name fl">真寻小哥哥</div>
+                        <div class="position fl">创世人阿斯顿撒多</div>
+                        <img class="check" src="__HOME_IMAGES__/check.png" alt="">
+                    </div>
+                    <div class="clearfix user_bottom">
+                        <img class="fl imgs" src="__HOME_IMAGES__/Location.png" alt="">
+                        <div class="fl text">"南通市崇川区北濠桥路锦锈花园东大门吕风海鲜"</div>
+                        <div class="fr">2.1km</div>
+                    </div>
+                </a>
+            </li> -->
+			</ul>
+			<div class="loading" id="loadId">
+				<img src="__HOME_IMAGES__/loading.png" alt="">
+				<span>正在加载中...</span>
+			</div>
+		</div>
+
+		<div class="more_screen">
+			<div class="sex">
+				<p>
+					<span class="xian"></span>
+					性别
+				</p>
+				<ul id="Human" class="clearfix">
+					<li data-id="0" class="man fl">男</li>
+					<li data-id="1" class="female fl">女</li>
+				</ul>
+			</div>
+			<div class="age">
+				<p>
+					<span class="xian"></span>
+					年龄
+				</p>
+				<ul class="clearfix">
+					<!-- 年龄的数据 -->
+				</ul>
+			</div>
+			<div class="clearfix age_btn">
+				<div class="reset fl" id="reset">取消</div>
+				<div class="check fl" id="check">确定</div>
+			</div>
+		</div>
+		<div class="industry_box">
+			<div class="industry_box_cate">
+				<!-- 行业的数据 -->
+			</div>
+
+			<div class="clearfix ck">
+				<div class="reset fl" id="reset_s">取消</div>
+				<div class="check fl" id="check_s">确定</div>
+			</div>
+		</div>
+
+		<div class="city">
+			<!--<div class="tab clearfix">
+				<div class="tab_box fl clearfix" id="cheak">
+					<img class="imgs fl" src="__HOME_IMAGES__/biglocation.png" alt="">
+					<div class="text1 fl">点击返回</div>
+				</div>
+				<input type="text" placeholder="搜索省市例如：安徽、北京、上海" id="val">
+				<img id="chis" src="__HOME_IMAGES__/search.png" alt="">
+			</div>-->
+			<div class="city_big_box">
+				<div class="city_box clearfix">
+					<ul class="clearfix fl cy">
+						<!-- <li class="fl qu">朝阳区</li> -->
+					</ul>
+					<div class="city_cq fl">
+						<ul class="clearfix msg">
+							<!-- <li class="fl"> 郑州</li> -->
+						</ul>
+
+					</div>
+					<div class="set clearfix">
+						<div class="cz fl">取消</div>
+						<div class="qd fl">确定</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div id="db"></div>
+		<!-- <div id="x">111111111</div>     -->
+
+		<input type="hidden" value="{$id}" class="id">
+		<!-- <input type="hidden" value="{$signPackage['appId']}" class="wxid">
+<input type="hidden" value="{$signPackage['timestamp']}" class="times">
+<input type="hidden" value="{$signPackage['nonceStr']}" class="str">
+<input type="hidden" value="{$signPackage['signature']}" class="sign"> -->
+		<div class="mask"></div>
+		<div class="meske">
+			<img src="/Public/Home/images/loadad.gif" alt="">
+			<p>加载中...</p>
+		</div>
+
+	</body>
+
+</html>
+
+<!-- 年龄动态数据 -->
+<script type="text/html" id="age">
+	{{each AppendData v i}}
+	<li data-id="{{v.id}}" class="fl">{{v.age_group}}</li>
+	{{/each}}
+</script>
+
+<!-- 行业数据 -->
+<script type="text/html" id="industry">
+	{{each AppendData v i}}
+	<div class="industry_msg">
+		
+		<p data-id="{{v.id}}"><span class="xian"></span>{{v.name}}</p>
+		<ul class="clearfix industryUl">
+			{{each v.two_list v i}}
+			<li id="All_li" class="fl" data-id="{{v.id}}">{{v.name}}</li>
+			{{/each}}
+		</ul>
+	</div>
+	{{/each}}
+</script>
+<!-- 用户信息 -->
+<script type="text/html" id="user_msg">
+	{{each userlist v i}}
+	<li class="user_msg">
+		<a href="__ROOT__/index.php?s=/Home/Nologin/card_jump/id/{{v.id}}">
+			<div class="img_box fl">
+				<img class="nick_msg fl" src="{{v.headimg}}" alt="">
+			</div>
+			<div class="u_infor">
+				<div class="user_msg_box" detail='{{v.unionid}}'>
+					<div class="nick_name">{{v.nick_name}}</div>
+				</div>
+				
+				<div class="clearfix user_bottom">
+					{{if v.address}}
+					<div class=" text">
+						{{v.address}}
+					</div>
+					{{else if v.address == null}}
+					<div class=" text">
+						用户未填写
+					</div>
+					{{else}}
+					<div class=" text">
+					用户未填写
+					</div>
+					{{/if}}
+				</div>
+				
+				<div class="here">
+					<img class="fl imgs" src="__HOME_IMAGES__/newvnet/business/shangquan_nearby_icon@2x.png" alt="">
+					{{if v.longitude == "" && v.latitude == ""}}
+						<div class="len fl">
+							未获取
+						</div>
+						{{else if v.distance == 0}}
+						<div class="len fl">
+							0m
+						</div>
+						{{else if v.distance <= 0.1}}
+						<div class="len fl">
+							100m内
+						</div>
+						{{ else if v.distance <= 0.2}}
+						<div class="len fl">
+							200m内
+						</div>
+						{{ else if v.distance <= 0.3}}
+						<div class="len fl">
+							300m内
+						</div>
+						{{ else if v.distance <= 0.4}}
+						<div class="len fl">
+							400m内
+						</div>
+						{{ else if v.distance <= 0.5}}
+						<div class="len fl">
+							500m内
+						</div>
+						{{ else if v.distance <= 1}}
+						<div class="len fl">
+							1km内
+						</div>
+						{{ else if v.distance > 1}}
+						<div class="len fl">
+							{{v.distance}}km
+						</div>
+					{{/if}}
+				</div>
+			</div>	
+		</a>
+		{{if v.is_friend == 0}}
+			<a href="javascript:;" class="gg add_fri">
+				+Ta聊天
+			</a>
+		{{/if}}
+		
+		{{if v.is_friend == 2}}
+			<a href="javascript:;" class="gg yj">
+				已添加
+			</a>
+		{{/if}}
+		
+		{{if v.is_friend == 1 }}
+			<div class="lnk">
+				<a href="http://mingxin365.com:2001/webdemo/h5/login.html?uname={$phone}&friend={{v.phone}}">
+					聊天
+				</a>
+			</div>
+		{{/if}}
+	
+		<!--{{if v.is_friend == 0}}
+		<a class="gg add_fri" href="javascript:;">
+			+Ta聊天
+		</a>
+		{{else}}
+		<a href="http://mingxin365.com:2001/webdemo/h5/login.html?uname={$phone}&friend={{v.phone}}" class="gg yj">
+          	聊天
+        </a> 
+		{{/if}}-->
+
+	</li>
+	{{/each}}
+</script>
+<!-- 城市信息 -->
+<script type="text/html" id="city">
+	{{each AppendData v i}}
+	<li data-id="{{v.region_id}}" class="fl qu">{{v.region_name}}</li>
+	{{/each}}
+</script>
+
+<script type="text/html" id="city_two">
+	{{each AppendData v i}}
+	<li class="fl" data-id="{{v.region_id}}">{{v.region_name}}</li>
+	{{/each}}
+</script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        // 通过下面这个API隐藏右上角按钮hideOptionMenu
+        WeixinJSBridge.call('hideOptionMenu');
+    });
+</script>
+
+<script type="text/javascript">
+	var id = '{$id}';
+//	console.log(id)
+	//我这段代码是神器，从地址栏去参数专用
+
+       function GetQueryString(name) {
+        if(window.location.href.indexOf('?') > -1){
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = decodeURIComponent(window.location.href.substr(1).split('?')[1]).match(reg);
+            if (r != null) return unescape(r[2]);
+        }
+        return '';//便于容错处理
+    }
+    
+    var keyWord=GetQueryString("keyWord");
+	var type_ids=GetQueryString("id");
+//	console.log(type_ids);
+//	console.log(keyWord);
+
+	
+	// 	if(keyWord == undefined){
+	// 		keyWord = '';
+	// 	}
+	//
+	// if(type_ids == undefined){
+	// 		type_ids = "";
+	// }
+
+
+    //我这段代码是神器，从地址栏去参数专用baoxun
+
+</script>
+
+
+<script>
+
+
+
+
+    // $(function() {
+    //
+    //
+    //     var share_url = "{$share_url}";
+    //
+    //     $.ajax({
+    //         //几个参数需要注意一下
+    //         type: "POST", //方法类型
+    //         dataType: "json", //预期服务器返回的数据类型
+    //         url: "index.php?s=/Api/WeShare/getSignPackage", //url
+    //         data:{share_url:share_url},
+    //         async: true,
+    //
+    //         // async: false,
+    //         success: function(result) {
+    //
+    //
+    //             wx.config({
+    //                 debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。移动端会通过弹窗来提示相关信息。如果分享信息配置不正确的话，可以开了看对应报错信息
+    //                 appId: result.AppendData.appId,
+    //                 timestamp: result.AppendData.timestamp,
+    //                 nonceStr: result.AppendData.nonceStr,
+    //                 signature: result.AppendData.signature,
+    //                 jsApiList: [ //需要使用的JS接口列表,分享默认这几个，如果有其他的功能比如图片上传之类的，需要添加对应api进来
+    //                     'checkJsApi',
+    //                     'onMenuShareTimeline', //
+    //                     'onMenuShareAppMessage',
+    //                     'onMenuShareQQ',
+    //                     'onMenuShareWeibo',
+    //                     'getLocation'
+    //                 ]
+    //             });
+    //
+    //
+    //             wx.ready(function() {
+    //                 //分享到朋友圈
+    //                 wx.onMenuShareTimeline({
+    //                     title: "{$sharetitle}", // 分享链接
+    //                     desc: "{$desc}", // 分享链接
+    //                     link: "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/NewCard/myCard?id='.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+    //                     imgUrl: "{$imgUrl}", // 分享链接
+    //                     success: function() {
+    //                         // 用户确认分享后执行的回调函数
+    //                         // sharePush();
+    //                     },
+    //                     cancel: function() {
+    //                         // 用户取消分享后执行的回调函数
+    //                     }
+    //                 });
+    //                 //分享给朋友
+    //                 wx.onMenuShareAppMessage({
+    //                     title: "{$sharetitle}", // 分享链接
+    //                     desc: "{$desc}", // 分享链接
+    //                     link: "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/NewCard/myCard?id='.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+    //                     imgUrl: "{$imgUrl}", // 分享链接
+    //                     type: '', // 分享类型,music、video或link，不填默认为link
+    //                     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    //                     success: function() {
+    //                         // 用户确认分享后执行的回调函数
+    //                         // sharePush();
+    //                     },
+    //                     cancel: function() {
+    //                         // 用户取消分享后执行的回调函数
+    //                     }
+    //                 });
+    //                 //分享到QQ
+    //                 wx.onMenuShareQQ({
+    //                     title: "{$sharetitle}", // 分享链接
+    //                     desc: "{$desc}", // 分享链接
+    //                     link: "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/NewCard/myCard?id='.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+    //                     imgUrl: "{$imgUrl}", // 分享链接
+    //                     success: function() {
+    //                         // 用户确认分享后执行的回调函数
+    //                         // sharePush();
+    //                     },
+    //                     cancel: function() {
+    //                         // 用户取消分享后执行的回调函数
+    //                     }
+    //                 });
+    //                 //分享到腾讯微博
+    //                 wx.onMenuShareWeibo({
+    //                     title: "{$sharetitle}", // 分享链接
+    //                     desc: "{$desc}", // 分享链接
+    //                     link: "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/NewCard/myCard?id='.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+    //                     imgUrl: "{$imgUrl}", // 分享链接
+    //                     success: function() {
+    //                         // 用户确认分享后执行的回调函数
+    //                         // sharePush();
+    //                     },
+    //                     cancel: function() {
+    //                         // 用户取消分享后执行的回调函数
+    //                     }
+    //                 });
+    //                 //分享到QQ空间
+    //                 wx.onMenuShareQZone({
+    //                     title: "{$sharetitle}", // 分享链接
+    //                     desc: "{$desc}", // 分享链接
+    //                     link: "{:'http://'.$_SERVER['HTTP_HOST'].U('Home/NewCard/myCard?id='.$user_id)}", //分享出去后的链接，这里可以将链接设置为另一个页面。
+    //                     imgUrl: "{$imgUrl}", // 分享链接
+    //                     success: function() {
+    //                         // 用户确认分享后执行的回调函数
+    //                         // sharePush();
+    //                     },
+    //                     cancel: function() {
+    //                         // 用户取消分享后执行的回调函数
+    //                     }
+    //                 });
+    //
+    //             });
+    //
+    //
+    //         },
+    //         error: function() {
+    //             alert("服务器繁忙，请稍后再试！");
+    //         }
+    //     });
+    //
+    // });
+    $(document).on("click",".add_fri",function(){
+    	
+    	var u_img=$(this).parent().find(".nick_msg").attr("src");
+    	var u_name = $(this).parent().find(".nick_name").html();
+    	var u_here = $(this).parent().find(".text").html();
+    	var u_len = $(this).parent().find(".len").html();
+    	var u_id = $(this).parent().find(".user_msg_box").attr("detail");
+    	window.location.href = '/index.php?s=/Home/Humancircle/addfriend/unionid/'+u_id+'/name/'+u_name+'/here/'+u_here+'/len/'+u_len+''
+    })
+</script>
